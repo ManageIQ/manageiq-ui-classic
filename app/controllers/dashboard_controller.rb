@@ -60,6 +60,7 @@ class DashboardController < ApplicationController
 
   # Redirect to cockpit with an api auth token
   def cockpit_redirect
+    assert_privileges("cockpit_console")
     return head(:forbidden) unless params[:redirect_uri]
 
     # We require that redirect hostname matches current host
@@ -92,6 +93,7 @@ class DashboardController < ApplicationController
   helper_method(:oidc_protected_page_logout)
 
   def iframe
+    assert_privileges("dashboard_view")
     override_content_security_policy_directives(:frame_src => ['*'])
     override_x_frame_options('')
     @layout = nil
@@ -143,6 +145,7 @@ class DashboardController < ApplicationController
 
   # New tab was pressed
   def change_tab
+    assert_privileges("dashboard_view")
     show
     render :action => "show"
   end
@@ -152,6 +155,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_chart_data
+    assert_privileges("widget_generate_content")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     widget_content = widget.contents_for_user(current_user)
     blank = widget_content.blank?
@@ -172,6 +176,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_menu_data
+    assert_privileges("widget_generate_content")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
                   role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
@@ -189,6 +194,7 @@ class DashboardController < ApplicationController
   private :widget_minimized?
 
   def widget_report_data
+    assert_privileges("widget_generate_content")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     widget_content = widget.contents_for_user(current_user)
     blank = widget_content.blank?
@@ -201,6 +207,7 @@ class DashboardController < ApplicationController
   end
 
   def show
+    assert_privileges("dashboard_view")
     @layout     = "dashboard"
     @display    = "dashboard"
     @lastaction = "show"
@@ -333,6 +340,7 @@ class DashboardController < ApplicationController
 
   # Toggle dashboard item size
   def widget_toggle_minmax
+    assert_privileges("dashboard_view")
     unless params[:widget] # Make sure we got a widget in
       head :ok
       return
@@ -360,6 +368,7 @@ class DashboardController < ApplicationController
 
   # Zoom in on chart widget
   def widget_zoom
+    assert_privileges("dashboard_view")
     unless params[:widget] # Make sure we got a widget in
       head :ok
       return
@@ -389,6 +398,7 @@ class DashboardController < ApplicationController
 
   # A widget has been dropped
   def widget_dd_done
+    assert_privileges("dashboard_add")
     if params[:col1] || params[:col2] || params[:col3]
       if params[:col1] && params[:col1] != [""]
         @sb[:dashboards][@sb[:active_db]][:col1] = params[:col1].collect { |w| w.split("_").last.to_i }
@@ -410,6 +420,7 @@ class DashboardController < ApplicationController
 
   # A widget has been closed
   def widget_close
+    assert_privileges("dashboard_view")
     if params[:widget] # Make sure we got a widget in
       w = params[:widget].to_i
       @sb[:dashboards][@sb[:active_db]][:col1].delete(w)
