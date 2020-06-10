@@ -25,7 +25,6 @@ describe "routing for SecurityGroupController" do
     quick_search
     show
     show_list
-    tag_edit_form_field_changed
     tagging_edit
   ).each do |task|
     describe "##{task}" do

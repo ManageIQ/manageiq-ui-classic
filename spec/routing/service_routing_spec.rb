@@ -64,13 +64,6 @@ describe 'routes for ServiceController' do
     end
   end
 
-  describe "#tag_edit_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/service/tag_edit_form_field_changed"))
-        .to route_to("service#tag_edit_form_field_changed")
-    end
-  end
-
   describe '#tree_autoload' do
     it 'routes with POST' do
       expect(

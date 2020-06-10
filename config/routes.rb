@@ -151,7 +151,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         wait_for_task
       ) +
         adv_search_post +
@@ -190,7 +189,6 @@ Rails.application.routes.draw do
         show_list
         tagging
         tagging_edit
-        tag_edit_form_field_changed
         tree_autoload
         tree_select
         cs_form_field_changed
@@ -224,7 +222,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         tl_chooser
         wait_for_task
       ) +
@@ -269,7 +266,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         tl_chooser
         update
         wait_for_task
@@ -409,7 +405,6 @@ Rails.application.routes.draw do
         show_list
         protect
         tagging_edit
-        tag_edit_form_field_changed
       ) +
         adv_search_post +
         exp_post +
@@ -431,7 +426,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         new
       ),
       :post => %w(
@@ -443,7 +437,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         create
         wait_for_task
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
@@ -475,7 +468,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         update
         wait_for_task
       ) +
@@ -506,7 +498,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -518,7 +509,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         update
       ) + adv_search_post + exp_post + save_post
     },
@@ -541,7 +531,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ) +
         compare_get,
       :post => %w(
@@ -560,7 +549,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         update
         wait_for_task
       ) +
@@ -579,7 +567,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -590,7 +577,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post
     },
 
@@ -605,7 +591,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         backup_restore
@@ -618,7 +603,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         update
         wait_for_task
       ) + adv_search_post + exp_post + save_post
@@ -631,7 +615,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -641,7 +624,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         wait_for_task
       ) + adv_search_post + exp_post + save_post
     },
@@ -683,7 +665,6 @@ Rails.application.routes.draw do
         wait_for_task
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         accordion_select
@@ -698,7 +679,6 @@ Rails.application.routes.draw do
         tree_autoload
         tree_select
         tagging_edit
-        tag_edit_form_field_changed
         listnav_search_selected
       ) +
                adv_search_post +
@@ -720,7 +700,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         protect
       ),
       :post => %w(
@@ -737,7 +716,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
         protect
       ) +
                adv_search_post +
@@ -759,7 +737,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         protect
       ),
       :post => %w(
@@ -776,7 +753,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
         protect
         launch_cockpit
         launch_external_logging
@@ -799,7 +775,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         protect
       ),
       :post => %w(
@@ -816,7 +791,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
         protect
       ) +
                adv_search_post +
@@ -836,7 +810,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         guest_applications
         openscap_rule_results
         openscap_html
@@ -854,7 +827,6 @@ Rails.application.routes.draw do
         show_list
         update
         tagging_edit
-        tag_edit_form_field_changed
         guest_applications
         openscap_rule_results
         protect
@@ -871,7 +843,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -885,7 +856,6 @@ Rails.application.routes.draw do
         show_list
         update
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post
     },
 
@@ -900,7 +870,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -915,7 +884,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
       ) +
                adv_search_post +
                exp_post +
@@ -935,7 +903,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -951,7 +918,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
       ) +
                adv_search_post +
                exp_post +
@@ -970,7 +936,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -984,7 +949,6 @@ Rails.application.routes.draw do
         show_list
         update
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post
     },
 
@@ -999,7 +963,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -1013,7 +976,6 @@ Rails.application.routes.draw do
         show_list
         update
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
@@ -1027,7 +989,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -1041,7 +1002,6 @@ Rails.application.routes.draw do
         show_list
         update
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post
     },
 
@@ -1055,7 +1015,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -1069,7 +1028,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
@@ -1233,7 +1191,6 @@ Rails.application.routes.draw do
         show
         show_list
         sync_users
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         update
@@ -1281,7 +1238,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         tree_autoload
@@ -1326,7 +1282,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         tree_autoload
@@ -1379,7 +1334,6 @@ Rails.application.routes.draw do
         quick_search
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         tree_autoload
@@ -1435,7 +1389,6 @@ Rails.application.routes.draw do
         listnav_search_selected
         protect
         tagging_edit
-        tag_edit_form_field_changed
         update
         update_del
         quick_search
@@ -1549,7 +1502,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         ems_container_form_fields
-        tag_edit_form_field_changed
       ),
       :post => %w(
         new
@@ -1567,7 +1519,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         tagging_edit
-        tag_edit_form_field_changed
         launch_external_logging
       ) +
                adv_search_post +
@@ -1587,7 +1538,6 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         new
@@ -1604,7 +1554,6 @@ Rails.application.routes.draw do
         quick_search
         sections_field_changed
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         update
@@ -1640,7 +1589,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         update
         wait_for_task
@@ -1673,7 +1621,6 @@ Rails.application.routes.draw do
         quick_search
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         update
         wait_for_task
@@ -1711,7 +1658,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         update
         wait_for_task
@@ -1748,7 +1694,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         update
         wait_for_task
@@ -1778,7 +1723,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         update
         wait_for_task
@@ -1819,7 +1763,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         update
         wait_for_task
       ) +
@@ -1856,7 +1799,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
       ) +
                adv_search_post +
@@ -1922,7 +1864,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         tree_autoload
@@ -1963,7 +1904,6 @@ Rails.application.routes.draw do
         reload
         show
         show_list
-        tag_edit_form_field_changed
         tagging
         tagging_edit
         tree_select
@@ -1987,7 +1927,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        tag_edit_form_field_changed
         tagging_edit
       )
     },
@@ -2022,7 +1961,6 @@ Rails.application.routes.draw do
         update_del
         quick_search
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tree_select
         x_show
@@ -2045,7 +1983,6 @@ Rails.application.routes.draw do
         search_clear
         button
         show_list
-        tag_edit_form_field_changed
         tagging_edit
       )
     },
@@ -2062,7 +1999,6 @@ Rails.application.routes.draw do
         search_clear
         button
         show_list
-        tag_edit_form_field_changed
         tagging_edit
       )
     },
@@ -2084,7 +2020,6 @@ Rails.application.routes.draw do
         new
         repository_refresh
         show_list
-        tag_edit_form_field_changed
         tagging_edit
       )
     },
@@ -2360,7 +2295,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -2378,7 +2312,6 @@ Rails.application.routes.draw do
         show
         show_list
         quick_search
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         update
@@ -2403,7 +2336,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -2420,7 +2352,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         update
@@ -2445,7 +2376,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ),
       :post => %w(
         button
@@ -2462,7 +2392,6 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tl_chooser
         update
@@ -2577,7 +2506,6 @@ Rails.application.routes.draw do
         show
         show_product_update
         smartproxy_affinity_field_changed
-        tag_edit_form_field_changed
         tl_chooser
         tree_autoload
         tree_select
@@ -2645,7 +2573,6 @@ Rails.application.routes.draw do
         stacks_ot_copy
         protect
         tagging_edit
-        tag_edit_form_field_changed
       ) +
                adv_search_post +
                compare_post +
@@ -2681,7 +2608,6 @@ Rails.application.routes.draw do
         show_list
         tagging
         tagging_edit
-        tag_edit_form_field_changed
         wait_for_task
       ] +
         adv_search_post +
@@ -2704,7 +2630,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
       ]
     },
 
@@ -2726,7 +2651,6 @@ Rails.application.routes.draw do
         show_list
         tagging
         tagging_edit
-        tag_edit_form_field_changed
         wait_for_task
       ] +
         adv_search_post +
@@ -2759,7 +2683,6 @@ Rails.application.routes.draw do
         pxe_wimg_edit
         pxe_wimg_form_field_changed
         reload
-        tag_edit_form_field_changed
         tagging_edit
         template_create_update
         template_form_field_changed
@@ -2858,7 +2781,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         tree_autoload
         quick_search
       ) +
@@ -2901,7 +2823,6 @@ Rails.application.routes.draw do
         show
         generic_object
         show_list
-        tag_edit_form_field_changed
         tagging_edit
         tree_autoload
         tree_select
@@ -2959,7 +2880,6 @@ Rails.application.routes.draw do
         storage_list
         storage_pod_list
         snapshot_files
-        tag_edit_form_field_changed
         tagging
         tagging_edit
         tree_autoload
@@ -3120,7 +3040,6 @@ Rails.application.routes.draw do
         cloud_volumes
         show
         tagging_edit
-        tag_edit_form_field_changed
         tl_chooser
         tree_autoload
         tree_select
@@ -3213,7 +3132,6 @@ Rails.application.routes.draw do
         sort_template_grid
         sort_vm_grid
         tagging_edit
-        tag_edit_form_field_changed
         tl_chooser
         tree_autoload
         tree_select
@@ -3313,7 +3231,6 @@ Rails.application.routes.draw do
         sort_iso_img_grid
         sort_vc_grid
         tagging_edit
-        tag_edit_form_field_changed
         tl_chooser
         tree_select
         users

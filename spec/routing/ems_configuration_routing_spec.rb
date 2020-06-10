@@ -39,7 +39,6 @@ describe 'routes for EmsConfiguration' do
     show_list
     tagging
     tagging_edit
-    tag_edit_form_field_changed
     wait_for_task
   ).each do |task|
     describe "##{task}" do
