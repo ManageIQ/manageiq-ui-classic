@@ -654,6 +654,17 @@ module ReportController::Widgets
         end
       end
     end
+
+    if @widget.try(:read_only)
+      t = _('Trying to change a read-only widget')
+
+      %i[title description resource_id resource_type].each do |field|
+        add_flash(t, :error) if @widget.send("#{field}_changed?")
+      end
+
+      add_flash(t, :error) if @widget.options[:col_order] != @widget.options_was[:col_order]
+    end
+
     @flash_array.nil?
   end
 end
