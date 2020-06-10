@@ -285,8 +285,6 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w(
-        catalog_item_form_fields
-        copy_catalog
         download_data
         explorer
         ot_edit
@@ -306,16 +304,11 @@ Rails.application.routes.draw do
         automate_button_field_changed
         playbook_options_field_changed
         explorer
-        get_ae_tree_edit_key
         group_create
         group_form_field_changed
         group_reorder_field_changed
         group_update
         identify_catalog
-        orchestration_template_add
-        orchestration_template_copy
-        orchestration_template_edit
-        ot_add_form_field_changed
         ot_tags_edit
         ownership_update
         prov_field_changed
@@ -323,7 +316,6 @@ Rails.application.routes.draw do
         resolve
         resource_delete
         save_copy_catalog
-        service_dialog_from_ot_submit
         servicetemplate_edit
         servicetemplate_copy
         servicetemplate_copy_cancel
@@ -335,12 +327,10 @@ Rails.application.routes.draw do
         sort_vc_grid
         sort_vm_grid
         st_catalog_edit
-        st_catalog_form_field_changed
         st_edit
         st_form_field_changed
         st_tags_edit
         st_upload_image
-        tag_edit_form_field_changed
         tree_autoload
         tree_select
         x_button
