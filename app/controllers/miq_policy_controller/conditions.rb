@@ -2,6 +2,7 @@ module MiqPolicyController::Conditions
   extend ActiveSupport::Concern
 
   def condition_edit
+    assert_privileges(params[:id] ? 'condition_edit' : 'condition_new')
     case params[:button]
     when "cancel"
       id = params[:id] || "new"
@@ -119,6 +120,7 @@ module MiqPolicyController::Conditions
   end
 
   def condition_field_changed
+    assert_privileges(params[:id] == 'new' ? 'condition_new' : 'condition_edit')
     return unless load_edit("condition_edit__#{params[:id]}", "replace_cell__explorer")
 
     @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
