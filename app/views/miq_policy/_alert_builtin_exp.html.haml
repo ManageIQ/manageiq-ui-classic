@@ -5,7 +5,7 @@
   - case option[:name]
   - when :event_types
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('event_types',
@@ -23,7 +23,7 @@
           = h(@sb[:alert][:events][@alert.expression[:options][:event_types].first])
   - when :time_threshold
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         - opts = [["<#{_('Choose')}>", nil]] + @sb[:alert][:time_thresholds].invert.sort_by(&:last)
@@ -37,7 +37,7 @@
         = h(@sb[:alert][:time_thresholds][@alert.expression[:options][:time_threshold]])
   - when :hourly_time_threshold
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         - opts = [["<#{_('Choose')}>", nil]] + @sb[:alert][:hourly_time_thresholds].invert.sort_by(&:last)
@@ -51,7 +51,7 @@
         = h(@sb[:alert][:hourly_time_thresholds][@alert.expression[:options][:hourly_time_threshold]])
   - when :rt_time_threshold
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         - opts = [["<#{_('Choose')}>", nil]] + @sb[:alert][:rt_time_thresholds].invert.sort_by(&:last)
@@ -67,7 +67,7 @@
     -# Skip these, they are handled by perf_column
   - when :perf_column
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('perf_column',
@@ -96,7 +96,7 @@
     -# Skip, handled by trend_direction
   - when :trend_direction
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('trend_direction',
@@ -121,7 +121,7 @@
           = _('Per Minute')
   - when :debug_trace
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('debug_trace',
@@ -178,7 +178,7 @@
         = h(@alert.expression[:options][:operator])
   - when :ems_id
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         - if @edit[:emss].length == 0
@@ -203,7 +203,7 @@
     - if @edit || @ems
       -# Show if editing or a valid EMS is configured
       %label.control-label.col-md-2
-        = h(option[:description])
+        = h(_(option[:description]))
       .col-md-8
         - if @edit
           - if @edit[:new][:expression][:options][:ems_id]
@@ -225,7 +225,7 @@
     -# Skip this, handled by value_mw_garbage_collector
   - when :value_mw_threshold
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('select_mw_operator',
@@ -244,7 +244,7 @@
         = h(@alert.expression[:options][:value_mw_threshold])
   - when :value_mw_garbage_collector
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = select_tag('select_mw_operator',
@@ -264,7 +264,7 @@
   - else
     -# Set up as a text input field
     %label.control-label.col-md-2
-      = h(option[:description])
+      = h(_(option[:description]))
     .col-md-8
       - if @edit
         = text_field_tag(option[:name],
