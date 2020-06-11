@@ -1129,7 +1129,6 @@ Rails.application.routes.draw do
         render_chart
         report_only
         show
-        timeline
         timeline_data
         start_url
         widget_to_pdf
@@ -1149,7 +1148,6 @@ Rails.application.routes.draw do
         timeline_data
         login_retry
         reset_widgets
-        tl_generate
         tree_select
         wait_for_task
         widget_add
