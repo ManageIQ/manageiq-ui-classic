@@ -1825,14 +1825,11 @@ Rails.application.routes.draw do
         host_services
         host_cloud_services
         index
-        list
-        new
         patches
         perf_top_chart
         protect
         show
         show_association
-        show_details
         show_list
         start
         tagging_edit
@@ -1844,7 +1841,6 @@ Rails.application.routes.draw do
       :post => %w(
         advanced_settings
         button
-        create
         drift_all
         drift_compress
         drift_differences
@@ -1852,7 +1848,6 @@ Rails.application.routes.draw do
         drift_same
         filesystems
         firewall_rules
-        firewallrules
         form_field_changed
         groups
         guest_applications

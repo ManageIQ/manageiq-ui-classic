@@ -121,12 +121,6 @@ describe "routes for HostController" do
     end
   end
 
-  describe "#firewallrules" do
-    it "routes with POST" do
-      expect(post("/host/firewallrules")).to route_to("host#firewallrules")
-    end
-  end
-
   describe "#form_field_changed" do
     it "routes with POST" do
       expect(post("/host/form_field_changed")).to route_to("host#form_field_changed")
@@ -160,12 +154,6 @@ describe "routes for HostController" do
 
     it "routes with POST" do
       expect(post("/host/host_services")).to route_to("host#host_services")
-    end
-  end
-
-  describe "#list" do
-    it "routes with GET" do
-      expect(get("/host/list")).to route_to("host#list")
     end
   end
 
@@ -228,12 +216,6 @@ describe "routes for HostController" do
   describe "#show_association" do
     it "routes with GET" do
       expect(get("/host/show_association")).to route_to("host#show_association")
-    end
-  end
-
-  describe "#show_details" do
-    it "routes with GET" do
-      expect(get("/host/show_details")).to route_to("host#show_details")
     end
   end
 
