@@ -15,6 +15,7 @@ const AsyncCredentials = ({
   formOptions,
   validateLabel,
   validationProgressLabel,
+  validationSuccessLabel,
   validateDefaultError,
   fields,
   name,
@@ -95,6 +96,7 @@ const AsyncCredentials = ({
                     {validating ? validationProgressLabel : validateLabel}
                     {validating && <ButtonSpinner /> }
                   </Button>
+                  {!meta.error && !valid.includes(false) && !isEqual(lastValid, {}) && <HelpBlock>{ validationSuccessLabel }</HelpBlock>}
                   {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
                 </Fragment>
               )}
@@ -115,6 +117,7 @@ AsyncCredentials.propTypes = {
   }).isRequired,
   validateLabel: PropTypes.string,
   validationProgressLabel: PropTypes.string,
+  validationSuccessLabel: PropTypes.string,
   validateDefaultError: PropTypes.string,
   asyncValidate: PropTypes.func.isRequired,
   edit: PropTypes.bool,
@@ -124,6 +127,7 @@ AsyncCredentials.propTypes = {
 AsyncCredentials.defaultProps = {
   validateLabel: __('Validate'),
   validationProgressLabel: __('Validating'),
+  validationSuccessLabel: __('Validation successful'),
   validateDefaultError: __('Validation Required'),
   edit: false,
   validationDependencies: [],
