@@ -62,6 +62,7 @@
             %span.input-group{:style => "width: 100%"}
               = password_field_tag("password",
                                    "",
+                                   :autocomplete      => "new-password",
                                    :maxlength         => 50,
                                    :disabled          => @edit[:new][:userid].blank? ? false : true,
                                    :placeholder       => @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
@@ -86,6 +87,7 @@
           .col-md-8
             = password_field_tag("verify",
                                  "",
+                                 :autocomplete      => "new-password",
                                  :maxlength         => 50,
                                  :class             => "form-control",
                                  "data-miq_observe" => observe_url_json)
