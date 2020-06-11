@@ -5,7 +5,6 @@ describe "routes for MiqTaskController" do
     change_tab
     index
     jobs
-    tasks_show_option
   ).each do |task|
     describe "##{task}" do
       it 'routes with GET' do
