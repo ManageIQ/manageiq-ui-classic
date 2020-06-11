@@ -290,7 +290,9 @@ class GenericObjectDefinitionController < ApplicationController
       :breadcrumbs  => [
         {:title => _("Automation")},
         {:title => _("Automate")},
-        {:title => _("Generic Objects")},
+        {:title => _("Generic Objects"), :url => url_for_only_path(:controller => 'generic_object_definition',
+                                                                   :action => 'show_list',
+                                                                   :id => 'root')},
       ],
       :record_info  => @generic_object_definition,
       :disable_tree => %w[new edit].include?(action_name),
