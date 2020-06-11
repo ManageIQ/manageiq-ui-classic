@@ -32,7 +32,6 @@ module ApplicationHelper
         ems_configuration
         ems_container
         ems_infra
-        ems_middleware
         ems_network
         ems_physical_infra
         ems_storage
@@ -43,10 +42,6 @@ module ApplicationHelper
         host
         host_aggregate
         load_balancer
-        middleware_deployment
-        middleware_domain
-        middleware_server
-        middleware_server_group
         miq_template
         network_port
         network_router

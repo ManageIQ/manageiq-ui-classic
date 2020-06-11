@@ -513,19 +513,6 @@ module Mixins
                            :kubevirt_password_exists            => !@ems.authentication_token(:kubevirt).nil?,
                            :virtualization_selection            => retrieve_virtualization_selection}
         end
-
-        if controller_name == "ems_middleware"
-          render :json => {:name                      => @ems.name,
-                           :emstype                   => @ems.emstype,
-                           :zone                      => zone,
-                           :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
-                           :default_api_port          => @ems.connection_configurations.default.endpoint.port,
-                           :default_userid            => @ems.authentication_userid.to_s,
-                           :default_security_protocol => default_security_protocol,
-                           :default_tls_ca_certs      => default_tls_ca_certs,
-                           :ems_controller            => controller_name,
-                           :default_auth_status       => default_auth_status}
-        end
       end
 
       private
@@ -539,7 +526,6 @@ module Mixins
       def security_protocol_default
         case controller_name
         when "ems_container" then "ssl-with-validation"
-        when "ems_middleware" then "non-ssl"
         else "ssl"
         end
       end
