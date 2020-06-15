@@ -8,6 +8,7 @@ class AlertsOverviewController < ApplicationController
   after_action :set_session_data
 
   def show
+    assert_privileges('monitor_alerts_overview')
     @title = _("Overview")
     if params[:id].nil?
       @breadcrumbs.clear
