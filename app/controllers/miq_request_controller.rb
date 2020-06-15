@@ -158,6 +158,7 @@ class MiqRequestController < ApplicationController
   def stamp_field_changed
     return unless load_edit("stamp_edit__#{params[:id]}", "show")
 
+    assert_privileges("miq_request_approval")
     @edit[:reason] = params[:reason] if params[:reason]
     render :update do |page|
       page << javascript_prologue
@@ -166,6 +167,7 @@ class MiqRequestController < ApplicationController
   end
 
   def prov_copy
+    assert_privileges("miq_request_copy")
     org_req = MiqRequest.where(:id => params[:req_id].to_i).first
     req = MiqRequest.new(
       :approval_state => 'pending_approval',
@@ -198,6 +200,7 @@ class MiqRequestController < ApplicationController
 
   # To handle Continue button
   def prov_continue
+    assert_privileges("miq_request_edit")
     if params[:button] == "continue" # Continue the request from the workflow with the new options
       id = params[:id] || "new"
       return unless load_edit("prov_edit__#{id}", "show_list")
@@ -234,6 +237,7 @@ class MiqRequestController < ApplicationController
   end
 
   def prov_load_tab
+    assert_privileges("miq_request_edit")
     if @options && @options[:current_tab_key] == :purpose # Need to build again for purpose tab
       build_tags_for_provisioning(@options[:wf], @options[:vm_tags], false)
     end
@@ -260,6 +264,7 @@ class MiqRequestController < ApplicationController
   WORKFLOW_METHOD_WHITELIST = {'retrieve_ldap' => :retrieve_ldap}.freeze
 
   def retrieve_email
+    assert_privileges("miq_request_edit")
     @edit = session[:edit]
     begin
       method = WORKFLOW_METHOD_WHITELIST[params[:field]]
