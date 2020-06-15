@@ -17,6 +17,8 @@ class AuthKeyPairCloudController < ApplicationController
   end
 
   def show_list
+    assert_privileges("auth_key_pair_cloud_show_list")
+
     process_show_list(:dbname => :authkeypaircloud, :gtl_dbname => :authkeypaircloud)
   end
 
