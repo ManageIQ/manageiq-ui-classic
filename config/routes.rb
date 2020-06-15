@@ -80,7 +80,6 @@ Rails.application.routes.draw do
   )
 
   evm_relationship_post = %w(
-    evm_relationship_field_changed
     evm_relationship_update
   )
 
@@ -174,14 +173,10 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         authentication_validate
-        button
         change_tab
-        delete
         edit
         explorer
-        form_field_changed
         new
-        provision
         quick_search
         refresh
         reload
@@ -384,9 +379,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         index
-        outputs
         parameters
-        resources
         show
         show_list
         tagging_edit
@@ -394,12 +387,9 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        outputs
         listnav_search_selected
-        panel_control
         parameters
         quick_search
-        resources
         sections_field_changed
         show
         show_list
@@ -431,7 +421,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         show
@@ -492,24 +481,19 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         show
         show_list
         tagging_edit
-        update
       ) + adv_search_post + exp_post + save_post
     },
 
@@ -525,7 +509,6 @@ Rails.application.routes.draw do
         snapshot_new
         edit
         delete_volumes
-        cloud_volume_tenants
         index
         new
         show
@@ -542,7 +525,6 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -571,7 +553,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         show
@@ -585,9 +566,7 @@ Rails.application.routes.draw do
         volume_select
         volume_form_choices
         download_data
-        edit
         index
-        new
         show
         show_list
         tagging_edit
@@ -595,15 +574,12 @@ Rails.application.routes.draw do
       :post => %w(
         backup_restore
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) + adv_search_post + exp_post + save_post
     },
@@ -645,7 +621,6 @@ Rails.application.routes.draw do
         filters_field_changed
         form_field_changed
         theme_changed
-        timeprofile_create
         timeprofile_delete
         timeprofile_field_changed
         timeprofile_update
@@ -669,7 +644,6 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         button
-        container_form_field_changed
         show
         show_list
         tl_chooser
@@ -693,9 +667,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         perf_top_chart
         show
         show_list
@@ -704,16 +676,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
         tl_chooser
-        update
         wait_for_task
         tagging_edit
         protect
@@ -730,9 +699,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         perf_top_chart
         show
         show_list
@@ -741,16 +708,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
         tl_chooser
-        update
         wait_for_task
         tagging_edit
         protect
@@ -768,9 +732,7 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         perf_top_chart
         show
         show_list
@@ -779,16 +741,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
         tl_chooser
-        update
         wait_for_task
         tagging_edit
         protect
@@ -804,9 +763,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
@@ -817,15 +774,12 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         tagging_edit
         guest_applications
         openscap_rule_results
@@ -837,24 +791,19 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         tagging_edit
       ) + adv_search_post + exp_post + save_post
     },
@@ -863,9 +812,7 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         perf_top_chart
         show
         show_list
@@ -873,15 +820,12 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         wait_for_task
         tagging_edit
       ) +
@@ -896,9 +840,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         perf_top_chart
         show
         show_list
@@ -906,16 +848,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
         tl_chooser
-        update
         wait_for_task
         tagging_edit
       ) +
@@ -930,24 +869,19 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         tagging_edit
       ) + adv_search_post + exp_post + save_post
     },
@@ -957,24 +891,19 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         tagging_edit
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
@@ -983,24 +912,19 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        edit
         index
-        new
         show
         show_list
         tagging_edit
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
         show
         show_list
-        update
         tagging_edit
       ) + adv_search_post + exp_post + save_post
     },
@@ -1020,7 +944,6 @@ Rails.application.routes.draw do
         button
         ct_form_field_changed
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
@@ -1177,13 +1100,10 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        dynamic_list_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
-        form_field_changed
         listnav_search_selected
         protect
-        provider_type_field_changed
         quick_search
         sections_field_changed
         show
@@ -1214,14 +1134,12 @@ Rails.application.routes.draw do
 
     :ems_cluster              => {
       :get  => %w(
-        columns_json
         dialog_load
         download_data
         download_summary_pdf
         index
         perf_top_chart
         protect
-        rows_json
         show
         show_list
         tagging_edit
@@ -1258,7 +1176,6 @@ Rails.application.routes.draw do
         download_summary_pdf
         ems_infra_form_fields
         register_nodes
-        introspect_nodes
         protect
         scaledown
         scaling
@@ -1271,9 +1188,7 @@ Rails.application.routes.draw do
         new
         button
         create
-        form_field_changed
         register_nodes
-        introspect_nodes
         listnav_search_selected
         protect
         quick_search
@@ -1285,7 +1200,6 @@ Rails.application.routes.draw do
         tree_autoload
         update
         wait_for_task
-        x_show
         scaling
         scaledown
         open_admin_ui
@@ -1337,7 +1251,6 @@ Rails.application.routes.draw do
         tree_autoload
         update
         wait_for_task
-        x_show
         launch_console
       ) +
                adv_search_post +
@@ -1356,13 +1269,9 @@ Rails.application.routes.draw do
       ),
 
       :post   =>  %w(
-        button
         listnav_search_selected
         show_list
-        create
-        create_del
         update
-        update_del
         quick_search
       ) + adv_search_post + save_post,
     },
@@ -1382,13 +1291,9 @@ Rails.application.routes.draw do
       :post   =>  %w(
         button
         show_list
-        create
-        create_del
         listnav_search_selected
         protect
         tagging_edit
-        update
-        update_del
         quick_search
         tl_chooser
         wait_for_task
@@ -1410,11 +1315,8 @@ Rails.application.routes.draw do
       ),
 
       :post   =>  %w(
-        button
         show_list
         quick_search
-        create
-        update
       )
     },
 
@@ -1426,7 +1328,6 @@ Rails.application.routes.draw do
       ),
 
       :post  => %w(
-        button
         show_list
       )
     },
@@ -1439,10 +1340,7 @@ Rails.application.routes.draw do
       ),
 
       :post  => %w(
-        button
         show_list
-        create
-        update
         quick_search
       ) + adv_search_post + save_post,
     },
@@ -1457,7 +1355,6 @@ Rails.application.routes.draw do
       ),
 
       :post  => %w(
-        button
         show_list
         quick_search
       )
@@ -1471,7 +1368,6 @@ Rails.application.routes.draw do
       ),
 
       :post   =>  %w(
-        button
         show_list
       ) +
           adv_search_post +
@@ -1482,7 +1378,6 @@ Rails.application.routes.draw do
     :ems_physical_infra_dashboard      => {
       :get => %w(
         show
-        data
         recent_servers_data
         aggregate_status_data
         servers_group_data
@@ -1506,7 +1401,6 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         protect
         quick_search
@@ -1542,13 +1436,10 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        dynamic_list_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
-        form_field_changed
         listnav_search_selected
         protect
-        provider_type_field_changed
         quick_search
         sections_field_changed
         show_list
@@ -1580,7 +1471,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         create
-        form_field_changed
         listnav_search_selected
         protect
         quick_search
@@ -1603,9 +1493,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        floating_ip_form_fields
         index
-        networks_by_ems
         new
         show
         show_list
@@ -1614,7 +1502,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         create
-        form_field_changed
         listnav_search_selected
         quick_search
         show
@@ -1633,9 +1520,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        cloud_subnet_form_fields
-        cloud_subnet_networks_by_ems
-        cloud_tenants_by_ems
         edit
         index
         new
@@ -1649,7 +1533,6 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         protect
         quick_search
@@ -1685,7 +1568,6 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         protect
         quick_search
@@ -1714,15 +1596,12 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
-        form_field_changed
         quick_search
         listnav_search_selected
         sections_field_changed
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -1751,7 +1630,6 @@ Rails.application.routes.draw do
         add_interface_select
         button
         create
-        form_field_changed
         listnav_search_selected
         protect
         quick_search
@@ -1845,7 +1723,6 @@ Rails.application.routes.draw do
         drift_same
         filesystems
         firewall_rules
-        form_field_changed
         groups
         guest_applications
         host_services
@@ -1880,7 +1757,6 @@ Rails.application.routes.draw do
         download_summary_pdf
         explorer
         hosts
-        show
         show_list
         tagging
         tagging_edit
@@ -1892,7 +1768,6 @@ Rails.application.routes.draw do
         explorer
         hosts
         listnav_search_selected
-        panel_control
         quick_search
         reload
         show
@@ -1940,7 +1815,6 @@ Rails.application.routes.draw do
       :post => %w(
         add_button_in_group
         button
-        create_del
         custom_button_group_new
         custom_button_group_edit
         custom_button_new
@@ -1951,12 +1825,10 @@ Rails.application.routes.draw do
         exp_token_pressed
         listnav_search_selected
         new
-        update_del
         quick_search
         show_list
         tagging_edit
         tree_select
-        x_show
       ) +
         adv_search_post +
         save_post
@@ -2071,7 +1943,6 @@ Rails.application.routes.draw do
     },
     :miq_ae_customization     => {
       :get  => %w(
-        dialog_accordion_json
         explorer
         editor
         export_service_dialogs
@@ -2082,14 +1953,11 @@ Rails.application.routes.draw do
         accordion_select
         automate_button_field_changed
         playbook_options_field_changed
-        cancel_import
         change_tab
         dialog_copy_editor
         dialog_edit_editor
         dialog_new_editor
         dialog_list
-        enablement_expression
-        visibility_expression
         explorer
         group_create
         group_form_field_changed
@@ -2239,7 +2107,6 @@ Rails.application.routes.draw do
         stamp
         stamp_field_changed
         vm_pre_prov
-        upload
       ) +
                dialog_runner_post
     },
@@ -2249,7 +2116,6 @@ Rails.application.routes.draw do
         change_tab
         index
         jobs
-        tasks_show_option
       ),
       :post => %w(
         button
@@ -2293,13 +2159,10 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        dynamic_list_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
-        form_field_changed
         listnav_search_selected
         protect
-        provider_type_field_changed
         quick_search
         sections_field_changed
         show
@@ -2334,13 +2197,10 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        dynamic_list_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
-        form_field_changed
         listnav_search_selected
         protect
-        provider_type_field_changed
         quick_search
         sections_field_changed
         show
@@ -2374,13 +2234,10 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        dynamic_list_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
-        form_field_changed
         listnav_search_selected
         protect
-        provider_type_field_changed
         quick_search
         sections_field_changed
         show
@@ -2590,16 +2447,12 @@ Rails.application.routes.draw do
         authentication_validate
         button
         change_tab
-        delete
         edit
-        form_field_changed
         new
         quick_search
-        refresh
         reload
         show
         show_list
-        tagging
         tagging_edit
         wait_for_task
       ] +
@@ -2637,12 +2490,10 @@ Rails.application.routes.draw do
       :post => %w[
         button
         new
-        provision
         quick_search
         reload
         show
         show_list
-        tagging
         tagging_edit
         wait_for_task
       ] +
@@ -2698,11 +2549,9 @@ Rails.application.routes.draw do
         miq_report_edit
         miq_report_new
         preview_chart
-        preview_timeline
         render_chart
         report_only
         sample_chart
-        sample_timeline
         print_report
         send_report_data
         tree_autoload
@@ -2711,7 +2560,6 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         change_tab
-        create
         dashboard_render
         db_copy
         db_edit
@@ -2793,14 +2641,12 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_load
         download_data
-        edit
         explorer
         retirement_info
         reconfigure_form_fields
         retire
         service_form_fields
         show
-        generic_object
         tagging_edit
       ),
       :post => %w(
@@ -2814,7 +2660,6 @@ Rails.application.routes.draw do
         service_edit
         service_tag
         show
-        generic_object
         show_list
         tagging_edit
         tree_autoload
@@ -2931,7 +2776,6 @@ Rails.application.routes.draw do
         policy_sim_add
         policy_sim_cancel
         policy_sim_remove
-        provision
         reconfigure
         reconfigure_form_fields
         reconfigure_update
@@ -2975,7 +2819,6 @@ Rails.application.routes.draw do
         tagging_edit
         resize
         resize_form_fields
-        migrate
         live_migrate_form_fields
         attach
         detach
@@ -2995,7 +2838,6 @@ Rails.application.routes.draw do
         button
         edit_vm
         resize_vm
-        resize_field_changed
         event_logs
         explorer
         launch_html5_console
@@ -3107,7 +2949,6 @@ Rails.application.routes.draw do
         prov_edit
         prov_field_changed
         quick_search
-        reconfigure_field_changed
         reconfigure_update
         registry_items
         reload
@@ -3117,7 +2958,6 @@ Rails.application.routes.draw do
         sections_field_changed
         security_groups
         show
-        show_list
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid
@@ -3132,7 +2972,6 @@ Rails.application.routes.draw do
         vmrc_console
         launch_cockpit
         vm_pre_prov
-        vm_vdi
         html5_console
         native_console
         wait_for_task
@@ -3169,8 +3008,6 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
-        util_report_download
-        utilization
         vm_show
       ) +
                compare_get,
@@ -3203,7 +3040,6 @@ Rails.application.routes.draw do
         prov_edit
         prov_field_changed
         quick_search
-        reconfigure_field_changed
         reconfigure_update
         registry_items
         reload
@@ -3227,7 +3063,6 @@ Rails.application.routes.draw do
         tl_chooser
         tree_select
         users
-        util_chart_chooser
         vm_pre_prov
         vmrc_console
         html5_console
@@ -3334,9 +3169,9 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  resources :ems_cloud,          :as => :ems_clouds
-  resources :ems_infra,          :as => :ems_infras
-  resources :ems_physical_infra, :as => :ems_physical_infras
-  resources :ems_container,      :as => :ems_containers
-  resources :ems_network,        :as => :ems_networks
+  resources :ems_cloud,          :as => :ems_clouds, :except => :destroy
+  resources :ems_infra,          :as => :ems_infras, :except => :destroy
+  resources :ems_physical_infra, :as => :ems_physical_infras, :except => :destroy
+  resources :ems_container,      :as => :ems_containers, :except => :destroy
+  resources :ems_network,        :as => :ems_networks, :except => :destroy
 end

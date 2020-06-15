@@ -59,12 +59,6 @@ describe 'routes for ConfigurationController' do
     end
   end
 
-  describe '#timeprofile_create' do
-    it 'routes' do
-      expect(post('/configuration/timeprofile_create')).to route_to('configuration#timeprofile_create')
-    end
-  end
-
   describe '#timeprofile_delete' do
     it 'routes' do
       expect(post('/configuration/timeprofile_delete')).to route_to('configuration#timeprofile_delete')

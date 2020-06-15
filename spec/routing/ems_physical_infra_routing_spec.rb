@@ -25,7 +25,6 @@ describe EmsPhysicalInfraController do
   %w(
     button
     create
-    form_field_changed
     listnav_search_selected
     protect
     quick_search
@@ -40,7 +39,6 @@ describe EmsPhysicalInfraController do
     protect
     scaling
     scaledown
-    x_show
   ).each do |task|
     describe "##{task}" do
       it 'routes with POST' do

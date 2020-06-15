@@ -4,7 +4,6 @@ describe EmsContainerController do
   let(:controller_name) { "ems_container" }
   %w(
     button
-    form_field_changed
     listnav_search_selected
     save_default_search
     show

@@ -121,12 +121,6 @@ describe "routes for HostController" do
     end
   end
 
-  describe "#form_field_changed" do
-    it "routes with POST" do
-      expect(post("/host/form_field_changed")).to route_to("host#form_field_changed")
-    end
-  end
-
   describe "#groups" do
     it "routes with GET" do
       expect(get("/host/groups")).to route_to("host#groups")

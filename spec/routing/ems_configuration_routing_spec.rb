@@ -28,16 +28,12 @@ describe 'routes for EmsConfiguration' do
     authentication_validate
     button
     change_tab
-    delete
     edit
-    form_field_changed
     new
     quick_search
-    refresh
     reload
     show
     show_list
-    tagging
     tagging_edit
     wait_for_task
   ).each do |task|
