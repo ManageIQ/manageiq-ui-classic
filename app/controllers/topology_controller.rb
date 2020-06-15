@@ -20,6 +20,7 @@ class TopologyController < ApplicationController
   toolbar :topology
 
   def show
+    assert_privileges("#{controller_name}_view")
     # When navigated here without id, it means this is a general view for all providers (not for a specific provider)
     # all previous navigation should not be displayed in breadcrumbs as the user could arrive from
     # any other page in the application.
@@ -34,6 +35,7 @@ class TopologyController < ApplicationController
   end
 
   def data
+    assert_privileges("#{controller_name}_view")
     render :json => {:data => generate_topology(params[:id])}
   end
 
