@@ -15,11 +15,17 @@ class ChargebackReportController < ApplicationController
   end
 
   def show_list
+    # TODO: this will be unnecessary after `chargeback_reports_show_list` gets renamed to `chargeback_report_show_list`
+    assert_privileges("chargeback_reports_show_list")
+
     process_show_list({:named_scope => :with_saved_chargeback_reports, :no_checkboxes => true})
     @title = title
   end
 
   def show
+    # TODO: this will be unnecessary after `chargeback_reports_show_list` gets renamed to `chargeback_report_show_list`
+    assert_privileges("chargeback_reports_show")
+
     @center_toolbar = 'chargeback_report'
     fetch_saved_report(params[:id])
   end
