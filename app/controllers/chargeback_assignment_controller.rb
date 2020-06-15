@@ -12,6 +12,8 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def index
+    assert_privileges("chargeback_assignments")
+
     @title = _("Chargeback Assignments")
     @tabform = ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:tab]) ? params[:tab] : "Compute"
     session[:changed] = @changed = false
@@ -20,6 +22,8 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def change_tab
+    assert_privileges("chargeback_assignments")
+
     clear_flash_msg
     @tabform = params['uib-tab']
     build_tabs
@@ -29,6 +33,8 @@ class ChargebackAssignmentController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    assert_privileges("chargeback_assignments")
+
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     get_form_vars
     render :update do |page|
@@ -42,6 +48,8 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def update
+    assert_privileges("chargeback_assignments")
+
     clear_flash_msg
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     case params[:button]
