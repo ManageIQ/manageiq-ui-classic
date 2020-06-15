@@ -51,6 +51,7 @@ class HostController < ApplicationController
   alias display_storage_adapters display_tree_resources
 
   def filesystems_subsets
+    assert_privileges('host_show')
     scope = nil
     label = _('Files')
 
@@ -64,11 +65,13 @@ class HostController < ApplicationController
   end
 
   def filesystems
+    assert_privileges('host_show')
     label, scope = filesystems_subsets
     show_association('filesystems', label, :filesystems, Filesystem, nil, scope)
   end
 
   def host_services_subsets
+    assert_privileges('host_show')
     scope = nil
     label = _('Services')
 
@@ -97,6 +100,7 @@ class HostController < ApplicationController
   end
 
   def host_cloud_services
+    assert_privileges('host_show')
     @center_toolbar = 'host_cloud_services'
     @no_checkboxes = false
     show_association('host_cloud_services', _('Cloud Services'), :cloud_services, CloudService, nil, nil)
@@ -107,11 +111,13 @@ class HostController < ApplicationController
   end
 
   def firewall_rules
+    assert_privileges('host_show')
     @display = "main"
     show_association('firewall_rules', _('Firewall Rules'), :firewall_rules, FirewallRule)
   end
 
   def guest_applications
+    assert_privileges('host_show')
     show_association('guest_applications', _('Packages'), :guest_applications, GuestApplication)
   end
 
