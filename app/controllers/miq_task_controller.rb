@@ -32,6 +32,7 @@ class MiqTaskController < ApplicationController
   ].freeze
 
   def index
+    assert_privileges('tasks_view')
     @tabform = nil
     # TODO: remove :feature => "job_my_smartproxy" and  :feature => "job_all_smartproxy" from miq_user_roles.yml
     # above features assigned to the same roles as corresponding :feature => "miq_task_my_ui"
@@ -44,6 +45,7 @@ class MiqTaskController < ApplicationController
 
   # New tab was pressed
   def change_tab
+    assert_privileges('tasks_view')
     @tabform = "tasks_#{params[:'uib-tab']}"
     jobs
     render :action => "jobs"
@@ -68,6 +70,7 @@ class MiqTaskController < ApplicationController
 
   # Show job list for the current user
   def jobs
+    assert_privileges('tasks_view')
     jobs_info
   end
 
@@ -175,6 +178,7 @@ class MiqTaskController < ApplicationController
 
   # Gather any changed options
   def tasks_change_options
+    assert_privileges('tasks_view')
     @edit = session[:edit]
     copy_params_if_present(@edit[:opts], params, %i[user_choice state_choice])
     @edit[:opts][:zone] = params[:chosen_zone] if params[:chosen_zone]
@@ -193,6 +197,7 @@ class MiqTaskController < ApplicationController
 
   # Refresh the display with the chosen filters
   def tasks_button
+    assert_privileges('tasks_view')
     @edit = session[:edit]
     if params[:button] == "apply"
       @tasks_options[@tabform] = copy_hash(@edit[:opts]) # Copy the latest changed options
