@@ -87,11 +87,13 @@ class ServiceController < ApplicationController
   end
 
   def show_list
+    assert_privileges('service_view')
     flash_to_session
     redirect_to(:action => 'explorer')
   end
 
   def explorer
+    assert_privileges('service')
     @explorer   = true
     @lastaction = "explorer"
 
@@ -125,6 +127,7 @@ class ServiceController < ApplicationController
 
   # ST clicked on in the explorer right cell
   def x_show
+    assert_privileges('service_view')
     identify_service(params[:id])
     generic_x_show
   end
@@ -171,6 +174,7 @@ class ServiceController < ApplicationController
   end
 
   def service_form_fields
+    assert_privileges('service_view')
     service = Service.find(params[:id])
 
     render :json => {
@@ -200,6 +204,16 @@ class ServiceController < ApplicationController
 
   def display_generic_objects
     nested_list(GenericObject)
+  end
+
+  def reconfigure_form_fields
+    assert_privileges('service_reconfigure')
+    super
+  end
+
+  def show
+    assert_privileges('service_view')
+    super
   end
 
   private
@@ -260,18 +274,21 @@ class ServiceController < ApplicationController
   end
 
   def service_ownership
+    assert_privileges('service_ownership')
     @explorer = true
     set_ownership
     replace_right_cell(:action => 'ownership')
   end
 
   def service_tag_edit
+    assert_privileges('service_tag')
     @explorer = true
     service_tag
     replace_right_cell(:action => 'tag')
   end
 
   def service_retire
+    assert_privileges('service_retire')
     @explorer = true
     retirevms
     replace_right_cell(:action => 'retire')
