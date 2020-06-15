@@ -5,6 +5,7 @@ class TreeController < ApplicationController
   before_action :check_privileges
 
   def automate_entrypoint
+    assert_privileges('dialog_edit_editor')
     fqname = params[:fqname]
     json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, params[:id]) do |tree|
       open_nodes_hierarchy(tree, fqname) if fqname.present?
@@ -13,6 +14,7 @@ class TreeController < ApplicationController
   end
 
   def automate_inline_methods
+    assert_privileges('miq_ae_method_admin')
     json = fetch_tree(TreeBuilderAutomateInlineMethod, :automate_inline_method_tree, params[:id])
     render :body => json, :content_type => 'application/json'
   end
