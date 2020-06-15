@@ -7,6 +7,7 @@ class AlertsMostRecentController < ApplicationController
   after_action :set_session_data
 
   def show
+    assert_privileges('monitor_alerts_most_recent')
     if params[:id].nil?
       @breadcrumbs.clear
     end
