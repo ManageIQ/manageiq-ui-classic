@@ -969,7 +969,8 @@ module OpsController::OpsRbac
   def build_rbac_feature_tree
     @role = @sb[:typ] == "copy" ? @record.dup : @record if @role.nil? # if on edit screen use @record
     @role.miq_product_features = @record.miq_product_features if @sb[:typ] == "copy"
-    TreeBuilderOpsRbacFeatures.new("features_tree", @sb, true, :role => @role, :editable => @edit.present?)
+    # The edit/noedit tree should have a different name due to a collision between RJS and Redux
+    TreeBuilderOpsRbacFeatures.new(@edit.present? ? "features_tree" : "features_tree_noedit", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
   # Set form variables for user edit
