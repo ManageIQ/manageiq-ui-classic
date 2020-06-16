@@ -547,6 +547,16 @@ class CloudVolumeController < ApplicationController
     javascript_redirect(:action => "show", :id => @volume.id)
   end
 
+  def download_data
+    assert_privileges('cloud_volume_view')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('cloud_volume_view')
+    super
+  end
+
   private
 
   def textual_group_list
