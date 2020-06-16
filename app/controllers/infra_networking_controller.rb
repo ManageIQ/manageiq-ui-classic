@@ -70,6 +70,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def x_show
+    assert_privileges("infra_networking_view")
     @switch = @record = identify_record(params[:id], Switch)
     generic_x_show
   end
@@ -94,6 +95,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def explorer
+    assert_privileges("infra_networking_view")
     @explorer = true
     @lastaction = "explorer"
 
@@ -133,12 +135,23 @@ class InfraNetworkingController < ApplicationController
   end
 
   def custom_button_events
+    assert_privileges("infra_networking_view")
     return unless init_show_variables('switch')
 
     @lastaction = "custom_button_events"
     drop_breadcrumb(:name => _("%{name} (Custom Button Events)") % {:name => @record.name},
                     :url  => "/infra_networking/custom_button_events/#{@record.id}")
     show_details(CustomButtonEvent, :association => "custom_button_events", :clickable => false)
+  end
+
+  def download_data
+    assert_privileges('infra_networking_view')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('infra_networking_view')
+    super
   end
 
   private
