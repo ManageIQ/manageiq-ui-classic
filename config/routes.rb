@@ -2585,7 +2585,6 @@ Rails.application.routes.draw do
         schedule_edit
         schedule_form_field_changed
         show_preview
-        show_saved
         tree_autoload
         tree_select
         upload

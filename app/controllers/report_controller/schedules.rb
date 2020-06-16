@@ -441,7 +441,10 @@ module ReportController::Schedules
     schedule.enabled = @edit[:new][:enabled]
     schedule.resource_type = "MiqReport" # Default schedules apply to MiqReport model for now
 
-    email_url_prefix = url_for_only_path(:controller => "report", :action => "show_saved") + "/"
+    # FIXME: the ReportController#show_saved route doesn't exist, it has to be reimplemented
+    # for more information see https://github.com/ManageIQ/manageiq-ui-classic/issues/7126
+    # email_url_prefix = url_for_only_path(:controller => "report", :action => "show_saved") + "/"
+    email_url_prefix = '/report/show_saved/'
     schedule_options = {
       :send_email       => @edit[:new][:send_email],
       :email_url_prefix => email_url_prefix,
