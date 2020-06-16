@@ -15,7 +15,6 @@ describe TreeNode::VmOrTemplate do
     template_microsoft
     template_redhat
     template_vmware
-    template_xen
   ).each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory, :name => "template", :template => true) }
@@ -45,7 +44,6 @@ describe TreeNode::VmOrTemplate do
     vm_microsoft
     vm_redhat
     vm_vmware
-    vm_xen
   ).each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
