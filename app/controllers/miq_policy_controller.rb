@@ -22,6 +22,11 @@ class MiqPolicyController < ApplicationController
     @title = _("Policies")
   end
 
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
   def export
     @breadcrumbs = []
     @layout = "miq_policy_export"

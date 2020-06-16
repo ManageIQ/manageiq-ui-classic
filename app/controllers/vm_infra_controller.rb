@@ -14,6 +14,11 @@ class VmInfraController < ApplicationController
     @table_name ||= "vm_infra"
   end
 
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
   private
 
   def features

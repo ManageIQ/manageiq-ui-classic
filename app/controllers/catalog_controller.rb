@@ -19,6 +19,11 @@ class CatalogController < ApplicationController
     @table_name ||= "service_template"
   end
 
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
   CATALOG_X_BUTTON_ALLOWED_ACTIONS = {
     'ab_button_new'                 => :ab_button_new,
     'ab_button_edit'                => :ab_button_edit,

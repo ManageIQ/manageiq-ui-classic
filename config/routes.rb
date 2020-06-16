@@ -3114,6 +3114,20 @@ Rails.application.routes.draw do
     },
   }
 
+  routes_without_index = %i[
+    cloud_tenant_dashboard
+    ems_cloud
+    ems_cloud_dashboard
+    ems_container
+    ems_infra
+    ems_infra_dashboard
+    ems_network
+    ems_physical_infra
+    ems_physical_infra_dashboard
+    miq_ae_customization
+    pxe
+  ].freeze
+
   root :to => 'dashboard#login'
 
   # Let's serve pictures directly from the DB
@@ -3127,9 +3141,7 @@ Rails.application.routes.draw do
 
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
-    unless [
-      :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_network
-    ].include?(controller_name)
+    unless routes_without_index.include?(controller_name)
       match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
     end
 
