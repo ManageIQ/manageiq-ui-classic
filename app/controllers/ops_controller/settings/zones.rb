@@ -2,6 +2,8 @@ module OpsController::Settings::Zones
   extend ActiveSupport::Concern
 
   def zone_edit
+    assert_privileges(params[:id] ? "zone_edit" : "zone_new")
+
     case params[:button]
     when "cancel"
       @edit = nil
@@ -89,6 +91,8 @@ module OpsController::Settings::Zones
 
   # AJAX driven routine to check for changes in ANY field on the user form
   def zone_field_changed
+    assert_privileges(params[:id] == "new" ? "zone_new" : "zone_edit")
+
     return unless load_edit("zone_edit__#{params[:id]}", "replace_cell__explorer")
     zone_get_form_vars
     session[:changed] = @changed = @edit[:new] != @edit[:current]

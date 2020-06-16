@@ -136,7 +136,22 @@ class OpsController < ApplicationController
     generic_x_button(OPS_X_BUTTON_ALLOWED_ACTIONS)
   end
 
+  def feature_by_button_class
+    case params[:cls]
+    when 'MiqGroup'
+      'rbac_group_view'
+    when 'Tenant'
+      'rbac_tenant_view'
+    when 'User'
+      'rbac_user_view'
+    else
+      'ops_rbac'
+    end
+  end
+
   def button
+    assert_privileges(feature_by_button_class)
+
     custom_buttons if params[:pressed] == 'custom_button'
   end
 
@@ -153,6 +168,8 @@ class OpsController < ApplicationController
   end
 
   def explorer
+    assert_privileges("ops_explorer")
+
     @explorer = true
     @trees = []
     return if perfmenu_click?
@@ -224,6 +241,8 @@ class OpsController < ApplicationController
   end
 
   def change_tab(new_tab_id = nil)
+    assert_privileges("ops_explorer")
+
     @explorer = true
     session[:changed] = false
     session[:flash_msgs] = @flash_array = nil # clear out any messages from previous screen i.e import tab
@@ -275,6 +294,8 @@ class OpsController < ApplicationController
   end
 
   def rbac_group_load_tab
+    assert_privileges(session&.fetch_path(:edit) ? "rbac_group_edit" : "rbac_group_view")
+
     tab_id = params[:tab_id]
     _, group_id = TreeBuilder.extract_node_model_and_id(x_node)
     @sb[:active_rbac_group_tab] = tab_id

@@ -2,6 +2,8 @@ module OpsController::Settings::CapAndU
   extend ActiveSupport::Concern
 
   def cu_collection_update
+    assert_privileges("region_edit")
+
     return unless load_edit("cu_edit__collection", "replace_cell__explorer")
 
     if params[:button] == "save"
@@ -60,6 +62,8 @@ module OpsController::Settings::CapAndU
   end
 
   def cu_collection_field_changed
+    assert_privileges("region_edit")
+
     return unless load_edit("cu_edit__collection", "replace_cell__explorer")
 
     cu_collection_get_form_vars

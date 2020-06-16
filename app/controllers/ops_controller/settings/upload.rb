@@ -2,21 +2,29 @@ module OpsController::Settings::Upload
   extend ActiveSupport::Concern
 
   def upload_logo
+    assert_privileges("ops_settings")
+
     logo_file = File.join(logo_dir, "custom_logo.png")
     upload_logos(logo_file, params[:upload], _('Custom logo image'), "png")
   end
 
   def upload_login_logo
+    assert_privileges("ops_settings")
+
     login_logo_file = File.join(logo_dir, "custom_login_logo.png")
     upload_logos(login_logo_file, params[:login], _('Custom login image'), "png")
   end
 
   def upload_login_brand
+    assert_privileges("ops_settings")
+
     login_logo_file = File.join(logo_dir, "custom_brand.png")
     upload_logos(login_logo_file, params[:brand], _('Custom brand'), "png")
   end
 
   def upload_favicon
+    assert_privileges("ops_settings")
+
     logo_file = File.join(logo_dir, "custom_favicon.ico")
     upload_logos(logo_file, params[:favicon], _('Custom favicon'), "ico")
   end
@@ -37,6 +45,8 @@ module OpsController::Settings::Upload
   end
 
   def upload_form_field_changed
+    assert_privileges("ops_settings")
+
     return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
 
     @edit[:new][:upload_type] = !params[:upload_type].nil? && params[:upload_type] != "" ? params[:upload_type] : nil
@@ -54,6 +64,8 @@ module OpsController::Settings::Upload
   end
 
   def upload_csv
+    assert_privileges("region_edit")
+
     return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
 
     @flash_array = []

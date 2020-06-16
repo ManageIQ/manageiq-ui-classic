@@ -43,6 +43,8 @@ module OpsController::Settings::LabelTagMapping
   }.freeze
 
   def label_tag_mapping_edit
+    assert_privileges("region_edit")
+
     case params[:button]
     when "cancel"
       @lt_map = session[:edit][:lt_map] if session[:edit] && session[:edit][:lt_map]
@@ -152,6 +154,8 @@ module OpsController::Settings::LabelTagMapping
 
   # AJAX driven routine to check for changes in ANY field on the user form
   def label_tag_mapping_field_changed
+    assert_privileges("region_edit")
+
     return unless load_edit("label_tag_mapping_edit__#{params[:id]}", "replace_cell__explorer")
 
     lt_map_get_form_vars
@@ -208,6 +212,8 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_update(id, cat_description)
+    assert_privileges("region_edit")
+
     mapping = ContainerLabelTagMapping.find(id)
     update_category = mapping.tag.classification
     update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
@@ -225,6 +231,8 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_delete
+    assert_privileges("region_edit")
+
     mapping = ContainerLabelTagMapping.find(params[:id])
     category = mapping.tag.classification
     label_name = mapping.label_name
