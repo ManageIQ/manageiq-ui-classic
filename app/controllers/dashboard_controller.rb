@@ -264,7 +264,7 @@ class DashboardController < ApplicationController
       widget_list << {
         :id    => w.id,
         :type  => :button,
-        :text  => w.title,
+        :text  => _(w.title),
         :image => image.to_s,
         :title => tip
       }
