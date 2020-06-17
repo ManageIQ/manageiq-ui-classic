@@ -2399,21 +2399,16 @@ Rails.application.routes.draw do
         dialog_load
         explorer
         fetch_audit_log
-        fetch_build
         fetch_log
         fetch_production_log
         log_collection_form_fields
         log_protocol_changed
         pglogical_subscriptions_form_fields
         schedule_form_fields
-        show
-        show_product_update
         tenant_quotas_form_fields
-        tenant_form_fields
       ),
       :post => %w(
         accordion_select
-        activate
         apply_imports
         ap_ce_delete
         ap_ce_select
@@ -2426,7 +2421,6 @@ Rails.application.routes.draw do
         category_delete
         category_edit
         category_field_changed
-        category_update
         ce_accept
         ce_delete
         ce_new_cat
@@ -2444,7 +2438,6 @@ Rails.application.routes.draw do
         diagnostics_tree_select
         edit_rhn
         explorer
-        fetch_build
         fetch_target_ids
         forest_accept
         forest_delete
@@ -2457,13 +2450,11 @@ Rails.application.routes.draw do
         label_tag_mapping_update
         label_tag_mapping_field_changed
         log_depot_edit
-        log_depot_field_changed
         log_depot_validate
         orphaned_records_delete
         perf_chart_chooser
         pglogical_save_subscriptions
         pglogical_validate_subscription
-        product_updates_list
         rbac_group_edit
         rbac_group_field_changed
         rbac_group_load_tab
@@ -2481,41 +2472,32 @@ Rails.application.routes.draw do
         rbac_user_field_changed
         rbac_users_list
         region_edit
-        region_form_field_changed
         repo_default_name
         restart_server
         rhn_buttons
         rhn_default_server
         rhn_validate
         schedule_edit
-        schedule_form_field_changed
         schedule_form_filter_type_field_changed
         schedules_list
-        schedule_update
         settings_form_field_changed
         settings_update
         settings_update_help_menu
         show
-        show_product_update
         smartproxy_affinity_field_changed
         tl_chooser
         tree_autoload
         tree_select
-        update
         upload_csv
         upload_form_field_changed
         upload_login_brand
         upload_login_logo
         upload_logo
         upload_favicon
-        validate_replcation_worker
         wait_for_task
         x_button
-        x_show
         zone_edit
         zone_field_changed
-        ls_select
-        ls_delete
       ) + exp_post + dialog_runner_post
     },
 
