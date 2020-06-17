@@ -18,6 +18,8 @@ module OpsController::Settings::LabelTagMapping
     # Global "All" categories are named "kubernetes::..." for backward compatibility.
     nil                   => MappableEntity.new("kubernetes::",
                                                 nil),
+    "_all_entities_"      => MappableEntity.new(nil,
+                                                "All Entities"),
     "Vm"                  => MappableEntity.new("amazon:vm:",
                                                 "ManageIQ::Providers::Amazon::CloudManager::Vm"),
     "VmOpenstack"         => MappableEntity.new("openstack:vm:",
@@ -92,8 +94,12 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      model = MAPPABLE_ENTITIES[entity].model
-      ui_lookup(:model => model)
+      if entity == "_all_entities_"
+        _(MAPPABLE_ENTITIES[entity].model)
+      else
+        model = MAPPABLE_ENTITIES[entity].model
+        ui_lookup(:model => model)
+      end
     else
       _("<All>")
     end
@@ -174,22 +180,24 @@ module OpsController::Settings::LabelTagMapping
     copy_params_if_present(@edit[:new], params, %i[entity label_name category])
   end
 
-  def label_tag_mapping_add(entity, label_name, cat_description)
-    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
-    cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
+  def label_tag_mapping_add(entity, label_name, cat_name)
+    # cat_prefix = MAPPABLE_ENTITIES[entity].prefix
+    # cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
+    # cat_name = Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
-    if Classification.lookup_by_name(cat_name)
-      add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
-                  {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
-      javascript_flash
-      return
-    end
+    # if Classification.lookup_by_name(cat_name)
+    #   add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
+    #               {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
+    #   javascript_flash
+    #   return
+    # end
 
+    category = Classification.lookup_by_name(cat_name)
     begin
       ActiveRecord::Base.transaction do
-        category = Classification.create_category!(:name         => cat_name,
-                                                   :description  => cat_description,
+        category ||= Classification.create_category!(:name         => cat_name,
+                                                   :description  => cat_name,
                                                    :single_value => true,
                                                    :read_only    => true)
         ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
@@ -232,7 +240,9 @@ module OpsController::Settings::LabelTagMapping
     deleted = false
     # delete mapping and category - will indirectly delete tags
     ActiveRecord::Base.transaction do
-      deleted = mapping.destroy && category.destroy
+      # XXX We're not sure that the category should ever be deleted
+      # deleted = mapping.destroy && category.destroy
+      deleted = mapping.destroy
     end
 
     if deleted
