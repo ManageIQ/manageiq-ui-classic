@@ -12,12 +12,16 @@ module OpsController::Settings::LabelTagMapping
   # In any case, this requires different providers use disjoint sets of strings.
   MappableEntity = Struct.new(:prefix, :model)
 
+  ALL_ENTITIES = "_all_entities_".freeze
+
   MAPPABLE_ENTITIES = {
     # TODO: support per-provider "All Amazon" etc?
     # Currently we have only global "All".
     # Global "All" categories are named "kubernetes::..." for backward compatibility.
     nil                   => MappableEntity.new("kubernetes::",
                                                 nil),
+    ALL_ENTITIES          => MappableEntity.new(nil,
+                                                "All Entities"),
     "Vm"                  => MappableEntity.new("amazon:vm:",
                                                 "ManageIQ::Providers::Amazon::CloudManager::Vm"),
     "VmOpenstack"         => MappableEntity.new("openstack:vm:",
@@ -92,8 +96,12 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      model = MAPPABLE_ENTITIES[entity].model
-      ui_lookup(:model => model)
+      if entity == ALL_ENTITIES
+        _(MAPPABLE_ENTITIES[entity].model)
+      else
+        model = MAPPABLE_ENTITIES[entity].model
+        ui_lookup(:model => model)
+      end
     else
       _("<All>")
     end
@@ -176,25 +184,37 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_add(entity, label_name, cat_description)
     cat_prefix = MAPPABLE_ENTITIES[entity].prefix
-    cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
+    cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
-    if Classification.lookup_by_name(cat_name)
+    label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    category_exists = cat_prefix && Classification.is_category.read_only.where(:single_value => true, :description => cat_description).exists?
+    if category_exists || label_exists || Classification.lookup_by_name(cat_name_from_label)
       add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
-                  {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
-      javascript_flash
+              {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
+        javascript_flash
       return
     end
 
     begin
       ActiveRecord::Base.transaction do
-        category = Classification.create_category!(:name         => cat_name,
-                                                   :description  => cat_description_with_prefix(entity, cat_description),
-                                                   :single_value => true,
-                                                   :read_only    => true)
-        ProviderTagMapping.create!(:labeled_resource_type => entity,
-                                   :label_name            => label_name,
-                                   :tag                   => category.tag)
+        category = Classification.lookup_by_name(cat_description) unless cat_prefix
+        # Should not create a new category if "All entities". The chosen category should exist
+        if entity == ALL_ENTITIES && category.nil?
+          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
+                      {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
+          javascript_flash
+          return
+        end
+
+        category ||= Classification.create_category!(:name => cat_name_from_label,
+                                                     :description  => cat_description_with_prefix(entity, cat_description),
+                                                     :single_value => true,
+                                                     :read_only    => true)
+
+              ProviderTagMapping.create!(:labeled_resource_type => entity,
+                                         :label_name            => label_name,
+                                         :tag                   => category.tag)
       end
     rescue StandardError => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
@@ -212,7 +232,24 @@ module OpsController::Settings::LabelTagMapping
     update_category = mapping.tag.classification
     update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
     begin
-      update_category.save!
+      if mapping.labeled_resource_type == ALL_ENTITIES
+        update_category = Classification.lookup_by_name(cat_description)
+        # Should not create a new category if "All entities". The chosen category should exist
+        if update_category.nil?
+          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
+                      {:entity => entity_ui_name_or_all(mapping.labeled_resource_type), :label => mapping.label_name}, :error)
+          javascript_flash
+          return
+        end
+        mapping.tag = update_category.tag
+
+        mapping.save!
+      else
+        update_category = mapping.tag.classification
+        update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
+
+        update_category.save!
+      end
     rescue StandardError => bang
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
@@ -230,9 +267,15 @@ module OpsController::Settings::LabelTagMapping
     label_name = mapping.label_name
 
     deleted = false
-    # delete mapping and category - will indirectly delete tags
     ActiveRecord::Base.transaction do
-      deleted = mapping.destroy && category.destroy
+      if mapping.labeled_resource_type == ALL_ENTITIES
+        # Don't delete the category in this case because it was created outside of tag mapping
+        # Note: As a side effect, taggings of this category will not be removed from resources that had this mapping
+        deleted = mapping.destroy
+      else
+        # delete mapping and category - will indirectly delete tags
+        deleted = mapping.destroy && category.destroy
+      end
     end
 
     if deleted
