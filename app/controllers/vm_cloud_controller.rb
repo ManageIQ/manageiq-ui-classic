@@ -13,6 +13,11 @@ class VmCloudController < ApplicationController
     @table_name ||= "vm_cloud"
   end
 
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
   def attach
     assert_privileges("instance_attach")
     @volume_choices = {}
