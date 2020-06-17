@@ -35,7 +35,6 @@ describe 'routes for CatalogController' do
     group_form_field_changed
     group_reorder_field_changed
     group_update
-    identify_catalog
     ot_tags_edit
     prov_field_changed
     reload

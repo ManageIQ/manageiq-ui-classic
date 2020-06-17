@@ -297,7 +297,6 @@ Rails.application.routes.draw do
         group_form_field_changed
         group_reorder_field_changed
         group_update
-        identify_catalog
         ot_tags_edit
         ownership_update
         prov_field_changed
