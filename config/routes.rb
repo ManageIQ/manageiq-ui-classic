@@ -469,7 +469,6 @@ Rails.application.routes.draw do
 
     :cloud_tenant_dashboard      => {
       :get => %w(
-        show
         data
         recent_instances_data
         recent_images_data
@@ -1004,7 +1003,6 @@ Rails.application.routes.draw do
 
     :container_dashboard      => {
       :get => %w(
-        show
         data
         ems_utilization_data
         heatmaps_data
@@ -1124,7 +1122,6 @@ Rails.application.routes.draw do
 
     :ems_cloud_dashboard      => {
       :get => %w(
-        show
         data
         recent_instances_data
         recent_images_data
@@ -1215,7 +1212,6 @@ Rails.application.routes.draw do
 
     :ems_infra_dashboard      => {
       :get => %w(
-        show
         data
         cluster_metrics_data
         ems_utilization_data
@@ -1377,7 +1373,6 @@ Rails.application.routes.draw do
 
     :ems_physical_infra_dashboard      => {
       :get => %w(
-        show
         recent_servers_data
         aggregate_status_data
         servers_group_data

@@ -6,12 +6,6 @@ class EmsCloudDashboardController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-  end
-
   def data
     render :json => {:data => collect_data(params[:id])}
   end
