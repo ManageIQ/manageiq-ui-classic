@@ -9,18 +9,6 @@ class ContainerDashboardController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def show
-    @lastaction = "show_dashboard"
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-    @title = title
-  end
-
-  def index
-    redirect_to(:action => 'show')
-  end
-
   def data
     return data_live if params[:live] == 'true'
 
