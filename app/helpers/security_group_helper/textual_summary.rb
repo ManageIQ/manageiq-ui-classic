@@ -23,7 +23,7 @@ module SecurityGroupHelper::TextualSummary
   end
 
   def textual_group_security_policy_rules
-    return nil if @record.security_policy_rules_as_source.empty? and @record.security_policy_rules_as_destination.empty?
+    return nil if @record.security_policy_rules_as_source.empty? && @record.security_policy_rules_as_destination.empty?
 
     TextualGroup.new(
       _("Security Policy Rules"),
