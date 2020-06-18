@@ -41,19 +41,7 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
   height: 48px !important;
 }
 
-// styling of brand.svg in header (upstream only)
-
-.navbar-brand {
-  margin-top: 8px !important;
-}
-
-.navbar-brand img {
-  height: 20px !important;
-}
-
-// styling of custom logo in header
-
-body.login.whitelabel {
+body.login.whitelabel { // styling of custom logo in header
   background: url($img-bg-login-whitelabel) !important;
   background-size: 100% auto !important;
 }
