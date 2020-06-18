@@ -1019,7 +1019,7 @@ module VmCommon
                          end
     else
       rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(node_id)
-      options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
+      options[:association] = @nodetype == 'az' ? 'vms' : 'vms_and_templates'
       options[:parent] = rec
       options[:named_scope] << :active
 
