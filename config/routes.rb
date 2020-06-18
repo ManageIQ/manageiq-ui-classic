@@ -652,12 +652,14 @@ Rails.application.routes.draw do
         tree_select
         tagging_edit
         listnav_search_selected
+        x_button
+        x_history
+        x_search_by_name
       ) +
                adv_search_post +
                exp_post +
                perf_post +
-               save_post +
-               x_post
+               save_post
     },
 
     :container_group          => {
@@ -1266,7 +1268,6 @@ Rails.application.routes.draw do
       :post   =>  %w(
         listnav_search_selected
         show_list
-        update
         quick_search
       ) + adv_search_post + save_post,
     },
@@ -1764,7 +1765,6 @@ Rails.application.routes.draw do
         listnav_search_selected
         quick_search
         reload
-        show
         show_list
         tagging
         tagging_edit
@@ -2561,7 +2561,6 @@ Rails.application.routes.draw do
         schedule_edit
         schedule_form_field_changed
         show_preview
-        show_saved
         tree_autoload
         tree_select
         upload
