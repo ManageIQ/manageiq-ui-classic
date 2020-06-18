@@ -73,8 +73,24 @@ class CatalogController < ApplicationController
     generic_x_button(CATALOG_X_BUTTON_ALLOWED_ACTIONS)
   end
 
+  EDIT_CATALOG_FEATURES = %w[
+    atomic_catalogitem_edit
+    catalogitem_edit
+    atomic_catalogitem_new
+    catalogitem_new
+  ].freeze
+
+  def assert_privileges_for_servicetemplate_edit
+    if params[:pressed].present? && EDIT_CATALOG_FEATURES.include?(params[:pressed])
+      assert_privileges(params[:pressed])
+    elsif params[:button].blank?
+      assert_privileges('atomic_catalogitem_edit')
+    end
+  end
+
   def servicetemplate_edit
-    assert_privileges(params[:pressed]) if params[:pressed].present?
+    assert_privileges_for_servicetemplate_edit
+
     checked_id = find_checked_items.first || params[:id]
     @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
     @record = checked_id.present? ? find_record_with_rbac(ServiceTemplate, checked_id) : ServiceTemplate.new
@@ -89,10 +105,14 @@ class CatalogController < ApplicationController
   end
 
   def ot_orchestration_managers
+    assert_privileges("orchestration_templates_view")
+
     render :json => available_orchestration_managers_for_template_type(params['template_type'])
   end
 
   def servicetemplate_copy
+    assert_privileges("catalogitem_edit")
+
     checked_id = find_checked_items.first || params[:id]
     @record = find_record_with_rbac(ServiceTemplate, checked_id)
     if !@record.template_valid?
@@ -111,6 +131,8 @@ class CatalogController < ApplicationController
   end
 
   def save_copy_catalog
+    assert_privileges("catalogitem_edit")
+
     record = find_record_with_rbac(ServiceTemplate, params[:id])
     message = nil
     if record.present?
@@ -123,6 +145,8 @@ class CatalogController < ApplicationController
   end
 
   def servicetemplate_copy_cancel
+    assert_privileges("catalogitem_new")
+
     add_flash(_("Copy of a Service Catalog Item was cancelled by the user"), :warning)
     @sb[:action] = @edit = @record = nil
     @in_a_form = false
@@ -130,6 +154,8 @@ class CatalogController < ApplicationController
   end
 
   def servicetemplate_copy_saved
+    assert_privileges("catalogitem_new")
+
     add_flash(_("Copy of a Service Catalog Item was successfully saved"))
     @sb[:action] = @edit = @record = nil
     @in_a_form = false
@@ -137,10 +163,14 @@ class CatalogController < ApplicationController
   end
 
   def servicetemplates_names
-    render :json => {:names => ServiceTemplate.all.pluck(:name)}
+    assert_privileges("catalog_items_view")
+
+    render :json => {:names => Rbac.filtered(ServiceTemplate).pluck(:name)}
   end
 
   def atomic_st_edit
+    assert_privileges(params[:id] ? 'atomic_catalogitem_edit' : 'atomic_catalogitem_new')
+
     # reset the active tree back to :sandt_tree, it was changed temporairly to display automate entry point tree in a popup div
     self.x_active_tree = 'sandt_tree'
     case params[:button]
@@ -194,6 +224,8 @@ class CatalogController < ApplicationController
   end
 
   def atomic_form_field_changed
+    assert_privileges(session&.fetch_path(:edit, :rec_id) ? "atomic_catalogitem_edit" : "atomic_catalogitem_new")
+
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
@@ -257,6 +289,8 @@ class CatalogController < ApplicationController
 
   # VM or Template show selected, redirect to proper controller
   def show
+    assert_privileges("catalog_items_view")
+
     @sb[:action] = nil
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     record = ServiceTemplate.find(params[:id])
@@ -272,6 +306,8 @@ class CatalogController < ApplicationController
   end
 
   def explorer
+    assert_privileges("catalog")
+
     @explorer = true
     @lastaction = "explorer"
     @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
@@ -328,6 +364,8 @@ class CatalogController < ApplicationController
     @sb[:action] = nil
     @explorer = true
     if x_active_tree == :stcat_tree
+      assert_privileges("catalog_items_view")
+
       if params[:rec_id]
         # link to Catalog Item clicked on catalog summary screen
         self.x_active_tree = :sandt_tree
@@ -337,8 +375,12 @@ class CatalogController < ApplicationController
         @record = ServiceTemplateCatalog.find(params[:id])
       end
     elsif x_active_tree == :ot_tree
+      assert_privileges("orchestration_templates_view")
+
       @record ||= OrchestrationTemplate.find(params[:id])
     else
+      assert_privileges("st_catalog_view")
+
       identify_catalog(params[:id])
       @record ||= ServiceTemplateCatalog.find(params[:id])
     end
@@ -347,6 +389,8 @@ class CatalogController < ApplicationController
   end
 
   def st_edit
+    assert_privileges(params[:id] ? 'catalogitem_edit' : 'catalogitem_new')
+
     # reset the active tree back to :sandt_tree, it was changed temporairly to display automate entry point tree in a popup div
     self.x_active_tree = 'sandt_tree'
     case params[:button]
@@ -418,6 +462,8 @@ class CatalogController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def st_form_field_changed
+    assert_privileges(session&.fetch_path(:edit, :rec_id) ? "catalogitem_edit" : "catalogitem_new")
+
     id = session[:edit][:rec_id] || 'new'
     return unless load_edit("st_edit__#{id}", "replace_cell__explorer")
 
@@ -442,6 +488,8 @@ class CatalogController < ApplicationController
   end
 
   def st_upload_image
+    assert_privileges("st_catalog_edit")
+
     err = false
     identify_catalog(params[:id])
     if params[:pressed]
@@ -482,6 +530,8 @@ class CatalogController < ApplicationController
   end
 
   def resource_delete
+    assert_new_or_edit_by_service_type
+
     return unless load_edit("st_edit__#{params[:id]}", "replace_cell__explorer")
 
     @edit[:new][:rsc_groups][params[:grp_id].to_i].each do |r|
@@ -550,7 +600,24 @@ class CatalogController < ApplicationController
   end
   helper_method :need_prov_dialogs?
 
+  def assert_new_or_edit_by_service_type
+    service_type = session&.fetch_path(:edit, :current, :service_type)
+    edit_feature = "atomic_catalogitem_edit"
+    new_feature  = "atomic_catalogitem_new"
+
+    if service_type == "composite"
+      edit_feature = "catalogitem_edit"
+      new_feature  = "catalogitem_new"
+    end
+
+    assert_privileges(session&.fetch_path(:edit, :rec_id) ? edit_feature : new_feature)
+  end
+
+  private :assert_new_or_edit_by_service_type
+
   def ae_tree_select_toggle
+    assert_new_or_edit_by_service_type
+
     @edit = session[:edit]
     self.x_active_tree = :sandt_tree
     at_tree_select_toggle(:automate_catalog, get_ae_tree_edit_key(@edit[:ae_field_typ]))
@@ -559,6 +626,8 @@ class CatalogController < ApplicationController
   end
 
   def ae_tree_select_discard
+    assert_new_or_edit_by_service_type
+
     ae_tree_key = get_ae_tree_edit_key(params[:typ])
     @edit = session[:edit]
     @edit[:new][params[:typ]] = nil
@@ -582,6 +651,8 @@ class CatalogController < ApplicationController
   end
 
   def ae_tree_select
+    assert_new_or_edit_by_service_type
+
     @edit = session[:edit]
     at_tree_select(get_ae_tree_edit_key(@edit[:ae_field_typ]))
     session[:edit] = @edit
@@ -626,6 +697,8 @@ class CatalogController < ApplicationController
   end
 
   def st_catalog_edit
+    assert_privileges((params[:id] || session&.fetch_path(:edit, :rec_id)) ? "st_catalog_edit" : "st_catalog_new")
+
     case params[:button]
     when "cancel"
       if session[:edit][:rec_id]
