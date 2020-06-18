@@ -13,11 +13,12 @@ class TreeBuilderTenants < TreeBuilder
 
   def tree_init_options
     {
-      :checkboxes => true,
-      :check_url  => "/catalog/#{cat_item_or_bundle}/",
-      :open_all   => false,
-      :oncheck    => @selectable ? tenant_tree_or_generic : nil,
-      :post_check => true
+      :checkboxes   => true,
+      :check_url    => "/catalog/#{cat_item_or_bundle}/",
+      :open_all     => false,
+      :oncheck      => @selectable ? tenant_tree_or_generic : nil,
+      :post_check   => true,
+      :three_checks => true
     }.compact
   end
 
