@@ -3091,6 +3091,7 @@ Rails.application.routes.draw do
 
   routes_without_index = %i[
     cloud_tenant_dashboard
+    container_dashboard
     ems_cloud
     ems_cloud_dashboard
     ems_container
