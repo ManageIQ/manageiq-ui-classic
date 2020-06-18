@@ -5,7 +5,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObject GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemplate NetworkRouter NetworkService  OrchestrationStack
+                                    MiqGroup MiqTemplate NetworkRouter NetworkService OrchestrationStack
                                     SecurityGroup SecurityPolicy SecurityPolicyRule Service ServiceTemplate Storage
                                     Switch Tenant User Vm VmOrTemplate].freeze
 

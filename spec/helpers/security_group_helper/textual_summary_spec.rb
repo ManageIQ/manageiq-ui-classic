@@ -15,9 +15,9 @@ describe SecurityGroupHelper::TextualSummary do
     end
   end
 
-  include_examples "textual_group", "Properties", %i(name description type)
+  include_examples "textual_group", "Properties", %i[name description type]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     parent_ems_cloud
     ems_network
     cloud_tenant
@@ -27,5 +27,5 @@ describe SecurityGroupHelper::TextualSummary do
     network_router
     cloud_subnet
     custom_button_events
-  )
+  ]
 end

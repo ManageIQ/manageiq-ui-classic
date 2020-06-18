@@ -72,7 +72,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
         it "show associated network_services" do
           assert_nested_list(@ems, [@network_service], 'network_services', 'All Network Services')
         end
-
       end
 
       describe "#ems_network_form_fields" do

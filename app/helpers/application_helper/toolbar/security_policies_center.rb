@@ -52,7 +52,8 @@ class ApplicationHelper::Toolbar::SecurityPoliciesCenter < ApplicationHelper::To
             :url_parms    => "main_div",
             :send_checked => true,
             :enabled      => false,
-            :onwhen       => "1+")
+            :onwhen       => "1+"
+          )
         ]
       )
     ]

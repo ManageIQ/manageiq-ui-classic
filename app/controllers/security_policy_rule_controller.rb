@@ -23,11 +23,11 @@ class SecurityPolicyRuleController < ApplicationController
   end
 
   def display_destination_security_groups
-    nested_list(SecurityGroup,:association => :destination_security_groups, :breadcrumb_title => _("Destination Security Groups"))
+    nested_list(SecurityGroup, :association => :destination_security_groups, :breadcrumb_title => _("Destination Security Groups"))
   end
 
   def display_destination_vms
-    nested_list(SecurityGroup, :association => :destination_vms, :breadcrumb_title => _("Destination Virtual Machines")    )
+    nested_list(SecurityGroup, :association => :destination_vms, :breadcrumb_title => _("Destination Virtual Machines"))
   end
 
   private
