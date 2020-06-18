@@ -57,12 +57,20 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           assert_nested_list(@ems, [@security_group], 'security_groups', 'All Security Groups')
         end
 
+        it "show associated security_policies" do
+          assert_nested_list(@ems, [@security_policy], 'security_policies', 'All Security Policies')
+        end
+
         it "show associated floating_ips" do
           assert_nested_list(@ems, [@floating_ip], 'floating_ips', 'All Floating IPs')
         end
 
         it "show associated network_ports" do
           assert_nested_list(@ems, [@network_port], 'network_ports', 'All Network Ports')
+        end
+
+        it "show associated network_services" do
+          assert_nested_list(@ems, [@network_service], 'network_services', 'All Network Services')
         end
 
       end

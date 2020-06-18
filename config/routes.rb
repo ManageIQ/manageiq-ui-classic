@@ -1664,6 +1664,70 @@ Rails.application.routes.draw do
         dialog_runner_post
     },
 
+    :security_policy          => {
+      :get  => %w(
+        dialog_load
+        edit
+        download_data
+        download_summary_pdf
+        index
+        new
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        button
+        create
+        form_field_changed
+        quick_search
+        listnav_search_selected
+        sections_field_changed
+        show
+        show_list
+        tag_edit_form_field_changed
+        tagging_edit
+        update
+        wait_for_task
+      ) +
+        adv_search_post +
+        save_post +
+        exp_post +
+        dialog_runner_post
+    },
+
+    :security_policy_rule     => {
+      :get  => %w[
+        dialog_load
+        edit
+        download_data
+        download_summary_pdf
+        index
+        new
+        show
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        button
+        create
+        form_field_changed
+        quick_search
+        listnav_search_selected
+        sections_field_changed
+        show
+        show_list
+        tag_edit_form_field_changed
+        tagging_edit
+        update
+        wait_for_task
+      ] +
+        adv_search_post +
+        save_post +
+        exp_post +
+        dialog_runner_post
+    },
+
     :floating_ip              => {
       :get  => %w(
         download_data
@@ -1840,6 +1904,34 @@ Rails.application.routes.draw do
         save_post +
         exp_post +
         dialog_runner_post
+    },
+
+    :network_service          => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        index
+        show
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        button
+        create
+        form_field_changed
+        quick_search
+        listnav_search_selected
+        sections_field_changed
+        show
+        show_list
+        tag_edit_form_field_changed
+        tagging_edit
+        update
+        wait_for_task
+      ] +
+        adv_search_post +
+        save_post +
+        exp_post
     },
 
     :flavor                   => {

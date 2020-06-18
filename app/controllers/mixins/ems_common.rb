@@ -108,6 +108,8 @@ module Mixins
           miq_templates
           network_ports
           network_routers
+          network_services
+          network_service_entries
           object_storage_managers
           orchestration_stacks
           persistent_volumes
@@ -118,6 +120,8 @@ module Mixins
           physical_switches
           physical_storages
           security_groups
+          security_policies
+          security_policy_rules
           storage_managers
           storages
           vms
@@ -222,8 +226,12 @@ module Mixins
                                        "miq_template_",
                                        "network_port_",
                                        "network_router_",
+                                       "network_service_",
+                                       "network_service_entry_",
                                        "orchestration_stack_",
                                        "security_group_",
+                                       "security_service_",
+                                       "security_service_rule_",
                                        "storage_",
                                        "vm_",
                                        "physical_server_")
@@ -273,9 +281,12 @@ module Mixins
         when "load_balancer_tag"                then tag(LoadBalancer)
         when "network_port_tag"                 then tag(NetworkPort)
         when "network_router_tag"               then tag(NetworkRouter)
+        when "network_service_tag"              then tag(NetworkService)
+        when "network_service_entry_tag"        then tag(NetworkServiceEntry)
         when "orchestration_stack_tag"          then tag(OrchestrationStack)
         when "security_group_tag"               then tag(SecurityGroup)
-
+        when "security_service_tag"             then tag(SecurityService)
+        when "security_service_rule_tag"        then tag(SecurityServiceRule)
         when "physical_server_protect"          then assign_policies(PhysicalServer)
         when "physical_server_tag"              then tag(PhysicalServer)
         when "orchestration_stack_delete"       then orchestration_stack_delete

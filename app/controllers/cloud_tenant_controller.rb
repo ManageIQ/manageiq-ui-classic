@@ -47,8 +47,8 @@ class CloudTenantController < ApplicationController
   end
 
   def self.display_methods
-    %w[instances images security_groups cloud_volumes cloud_volume_snapshots cloud_object_store_containers floating_ips
-       network_ports cloud_networks cloud_subnets network_routers custom_button_events]
+    %w[instances images security_groups security_policies cloud_volumes cloud_volume_snapshots cloud_object_store_containers
+       floating_ips network_ports cloud_networks cloud_subnets network_routers network_services custom_button_events]
   end
 
   def new

@@ -15,7 +15,7 @@ describe SecurityGroupHelper::TextualSummary do
     end
   end
 
-  include_examples "textual_group", "Properties", %i(description type)
+  include_examples "textual_group", "Properties", %i(name description type)
 
   include_examples "textual_group", "Relationships", %i(
     parent_ems_cloud

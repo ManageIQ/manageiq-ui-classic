@@ -9,5 +9,5 @@ describe CloudNetworkHelper::TextualSummary do
     floating_ips
     custom_button_events
   )
-  include_examples "textual_group", "Properties", %i(name type status ems_ref)
+  include_examples "textual_group", "Properties", %i(name description type status ems_ref)
 end

@@ -34,7 +34,11 @@ module Mixins
       when 'load_balancer_tag'                then tag(LoadBalancer)
       when 'network_port_tag'                 then tag(NetworkPort)
       when 'network_router_tag'               then tag(NetworkRouter)
+      when 'network_service_tag'              then tag(NetworkService)
+      when 'network_service_entry_tag'        then tag(NetworkServiceEntry)
       when 'security_group_tag'               then tag(SecurityGroup)
+      when 'security_policy_tag'              then tag(SecurityPolicy)
+      when 'security_policy_rule_tag'         then tag(SecurityPolicyRule)
       end
 
       @flash_array.nil? ? :finished : :continue

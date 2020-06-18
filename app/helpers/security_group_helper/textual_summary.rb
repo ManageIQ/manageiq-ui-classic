@@ -1,4 +1,5 @@
 module SecurityGroupHelper::TextualSummary
+  include TextualMixins::TextualName
   include TextualMixins::TextualDescription
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
@@ -8,7 +9,7 @@ module SecurityGroupHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[description type])
+    TextualGroup.new(_("Properties"), %i[name description type])
   end
 
   def textual_group_relationships
@@ -17,6 +18,16 @@ module SecurityGroupHelper::TextualSummary
       %i[
         parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports network_router
         cloud_subnet custom_button_events
+      ]
+    )
+  end
+
+  def textual_group_security_policy_rules
+    return nil if @record.security_policy_rules_as_source.empty? and @record.security_policy_rules_as_destination.empty?
+    TextualGroup.new(
+      _("Security Policy Rules"),
+      %i[
+        security_policy_rules_as_source security_policy_rules_as_destination
       ]
     )
   end

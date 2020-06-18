@@ -1,5 +1,5 @@
 #main_div
-  - if %w(instances network_ports security_policy_rules_as_source security_policy_rules_as_destination custom_button_events).include?(@display) && @showtype != "compare"
+  - if %w[source_security_groups destination_security_groups network_services custom_button_events].include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - elsif @showtype == 'main'
     = render :partial => "layouts/textual_groups_generic"
