@@ -9,6 +9,11 @@ class VmOrTemplateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
   private
 
   def features

@@ -43,7 +43,6 @@ describe TreeNode::ExtManagementSystem do
     # :ems_cloud                         => {},
     # :ems_container                     => {},
     # :ems_infra                         => {},
-    # :ems_middleware                    => {},
     # :ems_network                       => {},
     # :ems_storage                       => {}
   }.each do |factory, spec|

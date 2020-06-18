@@ -71,12 +71,6 @@ describe 'routes for DashboardController' do
     end
   end
 
-  describe "#timeline" do
-    it "routes with GET" do
-      expect(get("/dashboard/timeline")).to route_to("dashboard#timeline")
-    end
-  end
-
   describe "#timeline_data" do
     it "routes with GET" do
       expect(get("/dashboard/timeline_data")).to route_to("dashboard#timeline_data")
@@ -126,12 +120,6 @@ describe 'routes for DashboardController' do
   describe "#tree_select" do
     it "routes with POST" do
       expect(post("/dashboard/tree_select")).to route_to("dashboard#tree_select")
-    end
-  end
-
-  describe "#tl_generate" do
-    it "routes with POST" do
-      expect(post("/dashboard/tl_generate")).to route_to("dashboard#tl_generate")
     end
   end
 

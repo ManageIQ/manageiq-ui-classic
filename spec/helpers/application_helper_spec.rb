@@ -228,7 +228,7 @@ describe ApplicationHelper do
     context "when with @host" do
       before do
         @host = FactoryBot.create(:host)
-        @lastaction = "list"
+        @lastaction = "show_list"
       end
 
       ["Patch", "GuestApplication"].each do |d|

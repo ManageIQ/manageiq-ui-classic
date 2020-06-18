@@ -5,12 +5,6 @@ shared_examples_for "A controller that has CRUD routes" do
     end
   end
 
-  describe "#create" do
-    it "routes with POST" do
-      expect(post("/#{controller_name}/create")).to route_to("#{controller_name}#create")
-    end
-  end
-
   describe "#edit" do
     it "routes with GET" do
       expect(get("/#{controller_name}/edit/123")).to route_to("#{controller_name}#edit", :id => "123")

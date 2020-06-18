@@ -101,10 +101,6 @@ module Mixins
           hosts
           images
           instances
-          middleware_deployments
-          middleware_domains
-          middleware_server_groups
-          middleware_servers
           miq_templates
           network_ports
           network_routers
@@ -389,7 +385,6 @@ module Mixins
           ems_cloud_recheck_auth_status
           ems_container_recheck_auth_status
           ems_infra_recheck_auth_status
-          ems_middleware_recheck_auth_status
           ems_physical_infra_recheck_auth_status
         ].include?(params[:pressed])
           if params[:id]
@@ -555,7 +550,6 @@ module Mixins
         @ems_region_display = @ems.description
       end
       @nuage_api_versions = retrieve_nuage_api_versions
-      @hawkular_security_protocols = retrieve_hawkular_security_protocols
       @redfish_security_protocols = retrieve_security_protocols
     end
 
@@ -611,13 +605,6 @@ module Mixins
       [[_('SSL'), 'ssl-with-validation'],
        [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
        [_('SSL without validation'), 'ssl-without-validation']]
-    end
-
-    def retrieve_hawkular_security_protocols
-      [[_('SSL'), 'ssl-with-validation'],
-       [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
-       [_('SSL without validation'), 'ssl-without-validation'],
-       [_('Non-SSL'), 'non-ssl']]
     end
 
     # Delete all selected or single displayed ems(s)

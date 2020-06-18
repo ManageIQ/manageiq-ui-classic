@@ -9,7 +9,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range]
+      %i[hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range region]
     )
   end
 
@@ -40,6 +40,12 @@ module EmsInfraHelper::TextualSummary
   #
   # Items
   #
+
+  def textual_region
+    return nil if @record.region_id.blank?
+
+    {:label => _('Region'), :value => @record.region_id}
+  end
 
   def textual_hostname
     @record.hostname

@@ -47,8 +47,9 @@ li.menu-group {
 
 .bx--side-nav__icon > svg,
 .menu-collapse-button > svg,
-.menu-group > svg,
-.menu-search > svg {
+.menu-group svg,
+.menu-search > svg,
+.menu-user svg {
   fill: $row-fg-icon;
 }
 .bx--side-nav__icon > i {

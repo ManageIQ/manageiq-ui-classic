@@ -15,12 +15,15 @@ addons:
 env:
   matrix:
   - TEST_SUITE=spec
+  - TEST_SUITE=spec:routes
   - TEST_SUITE=spec:javascript
   - TEST_SUITE=spec:compile
   - TEST_SUITE=spec:jest
   - TEST_SUITE=spec:debride
 matrix:
   exclude:
+  - rvm: 2.5.7
+    env: TEST_SUITE=spec:routes
   - rvm: 2.5.7
     env: TEST_SUITE=spec:javascript
   - rvm: 2.5.7

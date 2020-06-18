@@ -38,6 +38,8 @@ class StorageController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
+  alias_method :index, :show_list
+
   def init_show
     return unless super
     if !@explorer && @display == "main"

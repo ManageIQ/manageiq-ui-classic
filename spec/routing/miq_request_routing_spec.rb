@@ -90,12 +90,6 @@ describe 'routes for MiqRequestController' do
     end
   end
 
-  describe '#upload' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/upload")).to route_to("#{controller_name}#upload")
-    end
-  end
-
   describe '#show' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/show")).to route_to("#{controller_name}#show")

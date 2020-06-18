@@ -22,7 +22,7 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   RSpec::Core::RakeTask.new(:spec => ["app:test:initialize", "app:evm:compile_sti_loader"]) do |t|
     spec_dir = File.expand_path("spec", __dir__)
     EvmTestHelper.init_rspec_task(t, ['--require', File.join(spec_dir, 'spec_helper')])
-    t.pattern = FileList[spec_dir + '/**/*_spec.rb'].exclude(spec_dir + '/manageiq/**/*_spec.rb')
+    t.pattern = FileList[spec_dir + '/**/*_spec.rb'].exclude(spec_dir + '/manageiq/**/*_spec.rb').exclude(spec_dir + '/routes_spec.rb')
   end
 end
 
@@ -44,6 +44,13 @@ if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../G
 end
 
 namespace :spec do
+  desc "Run all routing specs"
+  RSpec::Core::RakeTask.new(:routes => 'app:test:initialize') do |t|
+    spec_dir = File.expand_path("spec", __dir__)
+    EvmTestHelper.init_rspec_task(t, ['--require', File.join(spec_dir, 'spec_helper')])
+    t.pattern = FileList[File.expand_path('spec/routes_spec.rb', __dir__)]
+  end
+
   desc "Run all javascript specs"
   task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
 

@@ -28,6 +28,7 @@ describe EmsInfraHelper::TextualSummary do
     cpu_cores
     guid
     host_default_vnc_port_range
+    region
   )
 
   include_examples "textual_group", "Status", %i(refresh_status refresh_date orchestration_stacks_status)

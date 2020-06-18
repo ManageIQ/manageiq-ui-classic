@@ -17,12 +17,6 @@ describe EmsClusterController do
     end
   end
 
-  describe "#columns_json" do
-    it "routes with GET" do
-      expect(get("/ems_cluster/columns_json")).to route_to("ems_cluster#columns_json")
-    end
-  end
-
   describe "#dialog_load" do
     it "routes with GET" do
       expect(get("/ems_cluster/dialog_load")).to route_to("ems_cluster#dialog_load")
@@ -86,12 +80,6 @@ describe EmsClusterController do
   describe "#perf_top_chart" do
     it "routes with POST" do
       expect(post("/ems_cluster/perf_top_chart")).to route_to("ems_cluster#perf_top_chart")
-    end
-  end
-
-  describe "#rows_json" do
-    it "routes with GET" do
-      expect(get("/ems_cluster/rows_json")).to route_to("ems_cluster#rows_json")
     end
   end
 

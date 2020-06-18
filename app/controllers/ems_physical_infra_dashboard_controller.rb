@@ -8,12 +8,6 @@ class EmsPhysicalInfraDashboardController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-  end
-
   def aggregate_status_data
     render :json => {:data => aggregate_status(params[:id])}
   end

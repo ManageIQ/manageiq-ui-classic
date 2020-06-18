@@ -91,6 +91,8 @@ class ServiceController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
+  alias_method :index, :show_list
+
   def explorer
     @explorer   = true
     @lastaction = "explorer"

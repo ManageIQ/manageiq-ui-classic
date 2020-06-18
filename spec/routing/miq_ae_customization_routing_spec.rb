@@ -20,7 +20,6 @@ describe MiqAeCustomizationController do
     automate_button_field_changed
     button_create
     button_update
-    cancel_import
     change_tab
     dialog_copy_editor
     dialog_list

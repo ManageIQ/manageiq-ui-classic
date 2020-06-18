@@ -58,14 +58,6 @@ describe 'routes for VmInfra' do
     end
   end
 
-  describe '#reconfigure_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/reconfigure_field_changed")
-      ).to route_to("#{controller_name}#reconfigure_field_changed")
-    end
-  end
-
   describe '#snap_pressed' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/snap_pressed")).to route_to("#{controller_name}#snap_pressed")

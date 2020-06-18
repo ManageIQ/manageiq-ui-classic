@@ -264,7 +264,7 @@ class DashboardController < ApplicationController
       widget_list << {
         :id    => w.id,
         :type  => :button,
-        :text  => w.title,
+        :text  => _(w.title),
         :image => image.to_s,
         :title => tip
       }
@@ -589,7 +589,7 @@ class DashboardController < ApplicationController
   def change_group
     # Get the user and new group and set current_group in the user record
     db_user = current_user
-    db_user.update(:current_group => MiqGroup.find_by(:id => params[:to_group]))
+    db_user.update(:current_group => db_user.miq_groups.find_by!(:id => params[:to_group]))
 
     # Rebuild the session
     session_reset

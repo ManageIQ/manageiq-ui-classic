@@ -67,12 +67,6 @@ describe "routes for ReportController" do
     end
   end
 
-  describe "#preview_timeline" do
-    it "routes with GET" do
-      expect(get("/report/preview_timeline")).to route_to("report#preview_timeline")
-    end
-  end
-
   describe "#render_chart" do
     it "routes with GET" do
       expect(get("/report/render_chart")).to route_to("report#render_chart")
@@ -91,12 +85,6 @@ describe "routes for ReportController" do
     end
   end
 
-  describe "#sample_timeline" do
-    it "routes with GET" do
-      expect(get("/report/sample_timeline")).to route_to("report#sample_timeline")
-    end
-  end
-
   describe "#send_report_data" do
     it "routes with GET" do
       expect(get("/report/send_report_data")).to route_to("report#send_report_data")
@@ -112,12 +100,6 @@ describe "routes for ReportController" do
   describe "#change_tab" do
     it "routes with POST" do
       expect(post("/report/change_tab")).to route_to("report#change_tab")
-    end
-  end
-
-  describe "#create" do
-    it "routes with POST" do
-      expect(post("/report/create")).to route_to("report#create")
     end
   end
 
@@ -256,12 +238,6 @@ describe "routes for ReportController" do
   describe "#show_preview" do
     it "routes with POST" do
       expect(post("/report/show_preview")).to route_to("report#show_preview")
-    end
-  end
-
-  describe "#show_saved" do
-    it "routes with POST" do
-      expect(post("/report/show_saved")).to route_to("report#show_saved")
     end
   end
 

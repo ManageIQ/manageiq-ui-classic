@@ -10,7 +10,6 @@ describe VmOrTemplateController do
   it_behaves_like "A controller that has policy protect routes"
   it_behaves_like "A controller that has tagging routes"
   it_behaves_like "A controller that has timeline routes"
-  it_behaves_like "A controller that has utilization routes"
 
   describe "#explorer" do
     it "routes with GET" do
@@ -61,8 +60,6 @@ describe VmOrTemplateController do
     drift_same
     edit_vm
     event_logs
-    evm_relationship_field_changed
-    evm_relationship_update
     filesystem_drivers
     filesystems
     form_field_changed
@@ -84,7 +81,6 @@ describe VmOrTemplateController do
     processes
     prov_edit
     prov_field_changed
-    reconfigure_field_changed
     reconfigure_update
     registry_items
     reload

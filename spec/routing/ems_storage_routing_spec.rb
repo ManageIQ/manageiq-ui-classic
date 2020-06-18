@@ -24,7 +24,6 @@ describe EmsStorageController do
 
   %w(
     button
-    form_field_changed
     listnav_search_selected
     save_default_search
     show

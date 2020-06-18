@@ -1403,7 +1403,7 @@ class ApplicationController < ActionController::Base
 
   def get_db_view(db, options = {})
     if %w[ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm]
-       .include?(db) && options[:association] == "all_vms_and_templates"
+       .include?(db) && options[:association] == "vms_and_templates"
       options[:association] = nil
     end
 
@@ -1437,8 +1437,6 @@ class ApplicationController < ActionController::Base
       javascript_redirect(edit_ems_infra_path(params[:id]))
     elsif params[:pressed] == "ems_container_edit" && params[:id]
       javascript_redirect(edit_ems_container_path(params[:id]))
-    elsif params[:pressed] == "ems_middleware_edit" && params[:id]
-      javascript_redirect(edit_ems_middleware_path(params[:id]))
     elsif params[:pressed] == "ems_network_edit" && params[:id]
       javascript_redirect(edit_ems_network_path(params[:id]))
     elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]

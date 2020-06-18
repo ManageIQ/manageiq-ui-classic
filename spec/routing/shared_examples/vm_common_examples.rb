@@ -77,14 +77,6 @@ shared_examples_for 'A controller that has vm_common routes' do
     end
   end
 
-  describe '#evm_relationship_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/evm_relationship_field_changed")
-      ).to route_to("#{controller_name}#evm_relationship_field_changed")
-    end
-  end
-
   describe '#evm_relationship_update' do
     it 'routes with POST' do
       expect(

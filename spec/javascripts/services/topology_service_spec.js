@@ -104,24 +104,6 @@ describe('topologyService', function() {
       });
     });
 
-    context('middleware', function() {
-      beforeEach(function() {
-        controller.dataUrl = '/middleware_topology/data';
-
-        testService.mixinRefresh(controller);
-      });
-
-      it('Middleware > Topology', function() {
-        var url = controller.parseUrl('/middleware_topology/show');
-        expect(url).toEqual('/middleware_topology/data');
-      });
-
-      it('Middleware > Providers > detail > Topology', function() {
-        var url = controller.parseUrl('/middleware_topology/show/10000000000023');
-        expect(url).toEqual('/middleware_topology/data/10000000000023');
-      });
-    });
-
     context('network', function() {
       beforeEach(function () {
         controller.dataUrl = '/network_topology/data';
