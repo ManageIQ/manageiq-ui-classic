@@ -19,6 +19,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def change_tab
+    assert_privileges("miq_ae_class")
     # resetting flash array so messages don't get displayed when tab is changed
     @flash_array = []
     @explorer = true
@@ -85,6 +86,7 @@ class MiqAeClassController < ApplicationController
 
   # Display any Automate Domain through Tenant's textual summary
   def show
+    assert_privileges('miq_ae_domain_view')
     @sb[:action] = nil
     @explorer = true
     build_accordions_and_trees
@@ -133,6 +135,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def expand_toggle
+    assert_privileges(feature_by_action)
     render :update do |page|
       page << javascript_prologue
       if @sb[:squash_state]
@@ -569,6 +572,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_instance_field_changed
+    assert_privileges(feature_by_action)
     return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
 
     get_instances_form_vars
@@ -801,6 +805,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def validate_method_data
+    assert_privileges("miq_ae_method_edit")
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
 
     @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
@@ -839,6 +844,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    assert_privileges(feature_by_action)
     return unless load_edit("aeclass_edit__#{params[:id]}", "replace_cell__explorer")
 
     get_form_vars
@@ -847,6 +853,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def fields_form_field_changed
+    assert_privileges('miq_ae_field_edit')
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
 
     fields_get_form_vars
@@ -891,6 +898,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
+    assert_privileges(feature_by_action)
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
 
     get_method_form_vars
@@ -1106,6 +1114,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def update_fields
+    assert_privileges('miq_ae_field_edit')
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
 
     fields_get_form_vars
@@ -1401,6 +1410,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to select a classification entry
   def field_select
+    assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
     @combo_xml = build_type_options
     @dtype_combo_xml = build_dtype_options
@@ -1417,6 +1427,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to select a classification entry
   def field_accept
+    assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     @combo_xml = build_type_options
@@ -1431,6 +1442,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to delete a classification entry
   def field_delete
+    assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
     @combo_xml       = build_type_options
     @dtype_combo_xml = build_dtype_options
@@ -1451,6 +1463,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to select a classification entry
   def field_method_select
+    assert_privileges(feature_by_action)
     get_method_form_vars
     @refresh_div = "inputs_div"
     @refresh_partial = "inputs"
@@ -1474,6 +1487,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to select a classification entry
   def field_method_accept
+    assert_privileges(feature_by_action)
     get_method_form_vars
     @refresh_div = "inputs_div"
     @refresh_partial = "inputs"
@@ -1496,6 +1510,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to delete a classification entry
   def field_method_delete
+    assert_privileges(feature_by_action)
     get_method_form_vars
     @refresh_div = "inputs_div"
     @refresh_partial = "inputs"
@@ -1532,6 +1547,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from user edit form
   def fields_seq_field_changed
+    assert_privileges('miq_ae_field_seq')
     return unless load_edit("fields_edit__seq", "replace_cell__explorer")
 
     unless handle_up_down_buttons(:fields_list, _('Fields'))
@@ -1593,6 +1609,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def priority_form_field_changed
+    assert_privileges('miq_ae_domain_priority_edit')
     return unless load_edit(params[:id], "replace_cell__explorer")
 
     @in_a_form = true
@@ -1681,6 +1698,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def form_copy_objects_field_changed
+    assert_privileges(feature_by_action)
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
 
     copy_objects_get_form_vars
@@ -1696,6 +1714,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def ae_tree_select_toggle
+    assert_privileges(feature_by_action)
     @edit = session[:edit]
     self.x_active_tree = :ae_tree
     at_tree_select_toggle(:automate, :namespace)
@@ -1709,6 +1728,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def embedded_methods_add
+    assert_privileges(feature_by_action)
     submit_embedded_method(CGI.unescape(params[:fqname]))
     @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
     @changed = (@edit[:new] != @edit[:current])
@@ -1722,6 +1742,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def embedded_methods_remove
+    assert_privileges(feature_by_action)
     @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
     @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
     @changed = (@edit[:new] != @edit[:current])
@@ -1734,18 +1755,21 @@ class MiqAeClassController < ApplicationController
   end
 
   def ae_tree_select
+    assert_privileges(feature_by_action)
     @edit = session[:edit]
     at_tree_select(:namespace)
     session[:edit] = @edit
   end
 
   def x_show
+    assert_privileges('miq_ae_domain_view')
     typ, id = params[:id].split("-")
     @record = TreeBuilder.get_model_for_prefix(typ).constantize.find(id)
     tree_select
   end
 
   def refresh_git_domain
+    assert_privileges("miq_ae_git_refresh")
     if params[:button] == "save"
       begin
         git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
@@ -1768,6 +1792,15 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def feature_by_action
+    features_in_action = %w[
+      miq_ae_class_copy miq_ae_class_edit miq_ae_class_new
+      miq_ae_instance_copy miq_ae_instance_edit miq_ae_instance_new
+      miq_ae_method_copy miq_ae_method_edit miq_ae_method_new
+    ]
+    @sb[:action] if features_in_action.include?(@sb[:action])
+  end
 
   # Builds a regular expression that controls the selectable items in the ae_methods tree
   def embedded_method_regex(fqname)
@@ -1880,7 +1913,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def copy_save
-    assert_privileges(@sb[:action])
+    assert_privileges(feature_by_action)
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
 
     begin
@@ -1923,7 +1956,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def copy_cancel
-    assert_privileges(@sb[:action])
+    assert_privileges(feature_by_action)
     @record = session[:edit][:typ].find_by(:id => session[:edit][:rec_id])
     model = @edit[:selected_items].count > 1 ? :models : :model
     @sb[:action] = session[:edit] = nil # clean out the saved info
