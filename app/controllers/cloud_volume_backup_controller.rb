@@ -82,6 +82,11 @@ class CloudVolumeBackupController < ApplicationController
     end
   end
 
+  def download_data
+    assert_privileges('cloud_volume_backup_view')
+    super
+  end
+
   private
 
   def backups_delete

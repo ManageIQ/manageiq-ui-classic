@@ -11,6 +11,11 @@ class CloudVolumeTypeController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::BreadcrumbsMixin
 
+  def download_data
+    assert_privileges('cloud_volume_type_view')
+    super
+  end
+
   private
 
   def textual_group_list
