@@ -68,6 +68,7 @@ module Mixins
     end
 
     def authentication_validate
+      assert_privileges("#{privilege_prefix}_add_provider")
       find_or_build_provider
       sync_form_to_instance
       update_authentication_provider
