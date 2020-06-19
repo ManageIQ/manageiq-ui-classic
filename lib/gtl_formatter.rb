@@ -1,4 +1,6 @@
 class GtlFormatter
+  extend ActionView::Helpers::DateHelper
+
   COLUMN_WITH_ICON = {
     'policies_applied'          => 'policies_applied_image',
     'authentication_status'     => 'authentication_status_image',
@@ -33,6 +35,10 @@ class GtlFormatter
     'powering_down'             => 'pficon pficon-off',
     'unknown'                   => 'pficon pficon-unknown',
   }.freeze
+
+  COLUMN_WITH_TIME = %w[
+    last_scan_on
+  ].freeze
 
   def self.format_cols(view, row, controller)
     cols = []
@@ -94,6 +100,8 @@ class GtlFormatter
         item = {:title => text,
                 :icon  => icon,
                 :text => text}.compact
+      elsif COLUMN_WITH_TIME.include?(col)
+        celltext = format_time_for_display(row, col)
       else
         celltext = format_col_for_display(view, row, col)
       end
@@ -148,18 +156,16 @@ class GtlFormatter
       "pficon pficon-ok"
     when false
       "pficon pficon-error-circle-o"
-    else
-      "pficon pficon-unknown"
     end
   end
 
   def self.authentication_status_image(item)
-    case item.authentication_status
-    when "Error", "Invalid"
+    case item.authentication_status.downcase
+    when "error", "invalid"
       "pficon pficon-error-circle-o"
-    when "Valid"
+    when "valid"
       "pficon pficon-ok"
-    when "None"
+    when "none"
       "pficon pficon-unknown"
     else
       "pficon pficon-warning-triangle-o"
@@ -204,6 +210,16 @@ class GtlFormatter
   # Format a column in a report view for display on the screen
   def self.format_col_for_display(view, row, col, tz = Time.zone)
     view.format(col, row[col], :tz => tz).gsub(/\\/, '\&') # Call format, then escape any backslashes
+  end
+
+  # Format a time column in a report view for display on the screen
+  def self.format_time_for_display(row, col, tz = Time.zone)
+    if row[col]
+      time_str = self.time_ago_in_words(row[col].in_time_zone(tz)).titleize
+      _("%{time} Ago") % { :time => time_str }
+    else
+      _("Never")
+    end
   end
 
   def self.result_format(value)
