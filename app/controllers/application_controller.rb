@@ -1960,8 +1960,8 @@ class ApplicationController < ActionController::Base
     identify_record(params[:id], controller_to_model)
   end
 
-  def assert_privileges(feature)
-    unless role_allows?(:feature => feature)
+  def assert_privileges(*features)
+    if features.none? { |feature| role_allows?(:feature => feature) }
       raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
     end
   end
