@@ -1495,7 +1495,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        form_field_changed
         quick_search
         listnav_search_selected
         sections_field_changed
@@ -1522,7 +1521,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        form_field_changed
         quick_search
         listnav_search_selected
         sections_field_changed
@@ -1709,7 +1707,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        form_field_changed
         quick_search
         listnav_search_selected
         sections_field_changed
