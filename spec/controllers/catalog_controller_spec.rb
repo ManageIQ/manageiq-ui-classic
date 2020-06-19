@@ -1111,9 +1111,11 @@ describe CatalogController do
   end
 
   describe '#get_form_vars' do
+    let(:tenant) { FactoryBot.create(:tenant) }
+
     before do
       controller.instance_variable_set(:@edit, :new => {:tenant_ids => []}, :key => 'prov_edit__new')
-      controller.params = {:id => 'tn-1', :check => '1'}
+      controller.params = {:id => "tn-#{tenant.id}", :check => '1'}
       controller.instance_variable_set(:@sb, {})
     end
 
@@ -1141,18 +1143,21 @@ describe CatalogController do
 
     it 'gets tenant id of newly checked Tenant in the tree' do
       controller.send(:get_form_vars)
-      expect(subject).to eq([1])
+      expect(subject).to eq([tenant.id])
     end
 
     context 'unchecking Tenant in the tree' do
+      let(:tenant1) { FactoryBot.create(:tenant) }
+      let(:tenant2) { FactoryBot.create(:tenant) }
+
       before do
-        controller.instance_variable_set(:@edit, :new => {:tenant_ids => [1, 2]}, :key => 'prov_edit__new')
-        controller.params = {:id => 'tn-2', :check => '0'}
+        controller.instance_variable_set(:@edit, :new => {:tenant_ids => [tenant1.id, tenant2.id]}, :key => 'prov_edit__new')
+        controller.params = {:id => "tn-#{tenant2.id}", :check => '0'}
       end
 
       it 'removes Tenant id from @edit' do
         controller.send(:get_form_vars)
-        expect(subject).to eq([1])
+        expect(subject).to eq([tenant1.id])
       end
     end
 
