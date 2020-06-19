@@ -26,14 +26,10 @@ cols:
 - v_total_vms
 - v_total_miq_templates
 - vmm_product
-- vmm_version
-- vmm_buildnumber
 - policies_applied
 - normalized_state
 - last_compliance_status
-- ipmi_enabled
 - last_scan_on
-- region_description
 - authentication_status
 
 # Included tables (joined, has_one, has_many) and columns
@@ -57,14 +53,10 @@ col_order:
 - v_total_vms
 - v_total_miq_templates
 - vmm_product
-- vmm_version
-- vmm_buildnumber
 - policies_applied
 - normalized_state
 - last_compliance_status
-- ipmi_enabled
 - last_scan_on
-- region_description
 - authentication_status
 
 # Column titles, in order
@@ -77,14 +69,10 @@ headers:
 - Total VMs
 - Total Templates
 - Platform
-- Version
-- Build
 - Protected
 - Power
 - Compliant
-- IPMI Enabled
 - Last Analysis Time
-- Region
 - Authentication Status
 
 # Condition(s) string for the SQL query
