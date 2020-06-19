@@ -8,18 +8,22 @@ class CloudTenantDashboardController < ApplicationController
   after_action :set_session_data
 
   def data
+    assert_privileges('ems_cloud_view')
     render :json => {:data => collect_data}
   end
 
   def recent_instances_data
+    assert_privileges('ems_cloud_view')
     render :json => {:data => recent_instances}
   end
 
   def recent_images_data
+    assert_privileges('ems_cloud_view')
     render :json => {:data => recent_images}
   end
 
   def aggregate_status_data
+    assert_privileges('ems_cloud_view')
     render :json => {:data => aggregate_status}
   end
 
