@@ -18,6 +18,16 @@ class CloudVolumeSnapshotController < ApplicationController
     nested_list(CloudVolume, :association => :based_volumes)
   end
 
+  def download_data
+    assert_privileges('cloud_volume_snapshot_view')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('cloud_volume_snapshot_view')
+    super
+  end
+
   private
 
   def textual_group_list
