@@ -27,6 +27,16 @@ class CloudObjectStoreObjectController < ApplicationController
     _("Cloud Objects")
   end
 
+  def download_data
+    assert_privileges('cloud_object_store_object_view')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('cloud_object_store_object_view')
+    super
+  end
+
   private
 
   def record_class
