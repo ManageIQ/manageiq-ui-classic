@@ -64,6 +64,7 @@ module ApplicationController::Buttons
   end
 
   def group_reorder_field_changed
+    assert_privileges("ab_group_reorder")
     if params['selected_fields']
       return unless load_edit("group_reorder", "replace_cell__explorer")
 
@@ -85,10 +86,12 @@ module ApplicationController::Buttons
   end
 
   def group_create
+    assert_privileges("ab_group_new")
     group_create_update("create")
   end
 
   def group_update
+    assert_privileges("ab_group_edit")
     group_create_update("update")
   end
 
@@ -97,6 +100,8 @@ module ApplicationController::Buttons
   MODEL_WITH_OPEN_URL = %w[ExtManagementSystem Service User MiqGroup Tenant CloudTenant GenericObject Vm].freeze
 
   def automate_button_field_changed
+    assert_privileges(feature_by_action)
+
     unless params[:target_class]
       @edit = session[:edit]
       @custom_button = @edit[:custom_button]
@@ -185,10 +190,12 @@ module ApplicationController::Buttons
   end
 
   def button_update
+    assert_privileges("ab_button_edit")
     button_create_update("update")
   end
 
   def button_create
+    assert_privileges("ab_button_new")
     button_create_update("create")
   end
 
@@ -202,6 +209,7 @@ module ApplicationController::Buttons
 
   # AJAX driven routine to check for changes in ANY field on the form
   def group_form_field_changed
+    assert_privileges(params[:id] == 'new' ? 'ab_group_new' : 'ab_group_edit')
     return unless load_edit("bg_edit__#{params[:id]}", "replace_cell__explorer")
 
     group_get_form_vars
@@ -267,6 +275,11 @@ module ApplicationController::Buttons
   end
 
   private
+
+  def feature_by_action
+    features_in_action = %w[ab_button_new ab_button_edit]
+    @sb[:action] if features_in_action.include?(@sb[:action])
+  end
 
   BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
 
