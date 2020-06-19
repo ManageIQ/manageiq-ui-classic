@@ -12,11 +12,13 @@ module Mixins
     end
 
     def show_list
+      assert_privileges('automation_manager_providers_view')
       flash_to_session
       redirect_to(:action => 'explorer')
     end
 
     def explorer
+      assert_privileges('automation_manager_providers_view')
       @explorer = true
       @lastaction = "explorer"
 
@@ -56,6 +58,7 @@ module Mixins
     end
 
     def change_tab
+      assert_privileges('automation_manager_providers_view')
       @sb[:active_tab] = params[:tab_id]
       replace_right_cell
     end
@@ -66,6 +69,7 @@ module Mixins
     end
 
     def cs_form_field_changed
+      assert_privileges('automation_manager_edit_provider')
       id = params[:id]
       return unless load_edit("cs_edit__#{id}", "replace_cell__explorer")
 
