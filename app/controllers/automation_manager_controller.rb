@@ -85,6 +85,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def x_show
+    assert_privileges('automation_manager_providers_view')
     tree_record
 
     if request.format.js? && !@record
@@ -166,6 +167,16 @@ class AutomationManagerController < ApplicationController
 
   def providers_active_tree?
     x_active_tree == :automation_manager_providers_tree
+  end
+
+  def download_data
+    assert_privileges('automation_manager_providers_view')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('automation_manager_providers_view')
+    super
   end
 
   private
