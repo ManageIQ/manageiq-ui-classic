@@ -30,7 +30,7 @@ module ApplicationHelper
 
       capture do
         # FIXME: temporary fix for a webpacker issue - #1875
-        return if Rails.env.test?
+        # return if Rails.env.test?
 
         packs.each do |pack|
           concat "\n"
