@@ -12,10 +12,18 @@ class SecurityGroupController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w[instances network_ports network_routers cloud_subnets custom_button_events]
+    %w[instances network_ports network_routers cloud_subnets security_policy_rules_as_source security_policy_rules_as_destination custom_button_events]
   end
 
   menu_section :net
+
+  def display_security_policy_rules_as_source
+    nested_list(SecurityPolicyRule, :association => :security_policy_rules_as_source, :breadcrumb_title => _("Source of Security Policy Rules"))
+  end
+
+  def display_security_policy_rules_as_destination
+    nested_list(SecurityPolicyRule, :association => :security_policy_rules_as_destination, :breadcrumb_title => _("Destination of Security Policy Rules"))
+  end
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
@@ -245,7 +253,7 @@ class SecurityGroupController < ApplicationController
   end
 
   def textual_group_list
-    [%i[properties relationships], %i[firewall tags]]
+    [%i[properties relationships], %i[firewall security_policy_rules tags]]
   end
   helper_method :textual_group_list
 

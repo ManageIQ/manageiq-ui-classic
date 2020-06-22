@@ -45,6 +45,8 @@ module ApplicationHelper
         miq_template
         network_port
         network_router
+        network_service
+        network_service_entry
         orchestration_stack
         persistent_volume
         physical_rack
@@ -54,6 +56,8 @@ module ApplicationHelper
         physical_switch
         resource_pool
         security_group
+        security_policy
+        security_policy_rule
         service
       ]
       list_vm_specific_layouts = %w[

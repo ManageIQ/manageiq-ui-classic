@@ -18,7 +18,9 @@ describe CloudTenantHelper::TextualSummary do
     cloud_networks
     cloud_subnets
     network_routers
+    network_services
     security_groups
+    security_policies
     floating_ips
     network_ports
     custom_button_events

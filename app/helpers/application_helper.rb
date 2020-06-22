@@ -260,8 +260,11 @@ module ApplicationHelper
       if @explorer
         # showing a list view of another CI inside vmx
         if %w[SecurityGroup
+              SecurityPolicy
+              SecurityPolicyRule
               FloatingIp
               NetworkRouter
+              NetwokrService
               NetworkPort
               CloudNetwork
               CloudSubnet
@@ -777,6 +780,8 @@ module ApplicationHelper
        miq_template
        network_port
        network_router
+       network_service
+       network_service_entry
        offline
        orchestration_stack
        persistent_volume
@@ -784,6 +789,8 @@ module ApplicationHelper
        resource_pool
        retired
        security_group
+       security_policy
+       security_policy_rule
        service
        services
        storage
@@ -1101,6 +1108,8 @@ module ApplicationHelper
                         monitor_alerts_most_recent
                         network_port
                         network_router
+                        network_service
+                        network_service_entry
                         network_topology
                         offline
                         orchestration_stack
@@ -1113,6 +1122,8 @@ module ApplicationHelper
                         persistent_volume
                         policy
                         policy_group
+                        security_policy
+                        security_policy_rule
                         policy_profile
                         resource_pool
                         retired

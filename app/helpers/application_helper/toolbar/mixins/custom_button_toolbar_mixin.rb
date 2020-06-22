@@ -5,9 +5,9 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObject GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemplate NetworkRouter OrchestrationStack
-                                    SecurityGroup Service ServiceTemplate Storage Switch Tenant
-                                    User Vm VmOrTemplate].freeze
+                                    MiqGroup MiqTemplate NetworkRouter NetworkService OrchestrationStack
+                                    SecurityGroup SecurityPolicy SecurityPolicyRule Service ServiceTemplate Storage
+                                    Switch Tenant User Vm VmOrTemplate].freeze
 
   def custom_button_appliable_class?(model)
     # FIXME: merge with model replacement in 'custom_button_class_model'

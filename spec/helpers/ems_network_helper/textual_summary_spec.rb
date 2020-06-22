@@ -13,8 +13,10 @@ describe EmsNetworkHelper::TextualSummary do
     cloud_subnets
     network_routers
     security_groups
+    security_policies
     floating_ips
     network_ports
+    network_services
     custom_button_events
   )
 
