@@ -342,12 +342,13 @@ Rails.application.routes.draw do
     },
     :chargeback_rate => {
       :get  => %w(
+        copy
         edit
+        new
         show_list
         show
       ),
       :post => %w(
-        button
         delete
         edit
         form_field_changed
