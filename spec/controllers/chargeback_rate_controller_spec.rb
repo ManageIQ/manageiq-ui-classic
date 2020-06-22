@@ -90,10 +90,9 @@ describe ChargebackRateController do
     end
 
     it "renders edit form" do
-      post :button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      post :edit, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
-      expect(response.body).to include("window.location.href")
       expect(response.body).to include("/chargeback_rate/edit")
     end
 
@@ -455,7 +454,7 @@ describe ChargebackRateController do
     end
 
     it 'sets right cell text properly' do
-      post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+      post :delete, :params => {:id => rate.id}
       flash_array = assigns(:flash_array)
       expect(flash_array.first[:message]).to include("Delete successful")
     end
@@ -465,7 +464,7 @@ describe ChargebackRateController do
 
       it 'calls show_list method when there are no errors' do
         expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
-        post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+        post :delete, :params => {:id => rate.id}
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
       end
@@ -475,7 +474,7 @@ describe ChargebackRateController do
 
         it 'calls show_list method when there is an error' do
           expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
-          post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+          post :delete, :params => {:id => rate.id}
           flash_messages = assigns(:flash_array)
           expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
         end
@@ -485,7 +484,7 @@ describe ChargebackRateController do
     context 'deleting a rate from its details page' do
       it 'calls show_list method when there are no errors' do
         expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
-        post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+        post :delete, :params => {:id => rate.id}
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
       end
@@ -495,7 +494,7 @@ describe ChargebackRateController do
 
         it 'calls show_list method when there is an error' do
           expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
-          post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+          post :delete, :params => {:id => rate.id}
           flash_messages = assigns(:flash_array)
           expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
         end

@@ -11,116 +11,29 @@ class ChargebackRateController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  BUTTON_ALLOWED_ACTIONS = {
-    'chargeback_rates_copy'   => :cb_rate_edit,
-    'chargeback_rates_delete' => :delete,
-    'chargeback_rates_edit'   => :cb_rate_edit,
-    'chargeback_rates_new'    => :cb_rate_edit
-  }.freeze
-
-  def button
-    @edit = session[:edit]    # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    action = params[:pressed]
-
-    evaluate_button(action, BUTTON_ALLOWED_ACTIONS)
-
-    return if performed?
-
-    if action.ends_with?("_copy", "_edit", "_new") && @flash_array.nil?
-      javascript_redirect(:action => @refresh_partial,  :id => @redirect_id, :pressed => action)
-    elsif action.ends_with?("_delete")
-      javascript_redirect(:action => 'show_list')
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      super
-    end
-  end
-
-  def cb_rate_edit
-    @_params[:id] ||= find_checked_items[0]
-    rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
-    if params[:pressed] == 'chargeback_rates_edit' && rate.default?
-      add_flash(_("Default Chargeback Rate \"%{name}\" cannot be edited.") % {:name => rate.description}, :error)
-      return
-    end
-    @redirect_id = params[:id] if params[:id]
-    @refresh_partial = "edit"
-  end
-
   def edit
-    assert_privileges(params[:pressed]) if params[:pressed]
+    @_params[:pressed] ||= 'chargeback_rates_edit'
     case params[:button]
     when "cancel"
-      if params[:id]
-        flash_msg = _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
-      else
-        flash_msg = _("Add of new Chargeback Rate was cancelled by the user")
-      end
-      @edit = session[:edit] = nil # clean out the saved info
-      session[:changed] = false
-      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => flash_msg)
+      rate_cancel
     when "save", "add"
-      id = params[:button] == "save" ? params[:id] : "new"
-      return unless load_edit("cbrate_edit__#{id}")
-
-      @rate = params[:button] == "add" ? ChargebackRate.new : ChargebackRate.find(params[:id])
-      if @edit[:new][:description].nil? || @edit[:new][:description] == ""
-        render_flash(_("Description is required"), :error)
-        return
-      end
-      @rate.description = @edit[:new][:description]
-      @rate.rate_type   = @edit[:new][:rate_type] if @edit[:new][:rate_type]
-
-      cb_rate_set_record_vars
-      # Detect errors saving tiers
-      tiers_valid = @rate_tiers.all? { |tiers| tiers.all?(&:valid?) }
-
-      @rate.chargeback_rate_details.replace(@rate_details)
-      @rate.chargeback_rate_details.each_with_index do |_detail, i|
-        @rate_details[i].save_tiers(@rate_tiers[i])
-      end
-
-      tiers_valid &&= @rate_details.all? { |rate_detail| rate_detail.errors.messages.blank? }
-
-      if tiers_valid && @rate.save
-        if params[:button] == "add"
-          AuditEvent.success(build_created_audit(@rate, @edit))
-          flash_msg = _("Chargeback Rate \"%{name}\" was added") % {:name => @rate.description}
-        else
-          AuditEvent.success(build_saved_audit(@rate, @edit))
-          flash_msg = _("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description}
-        end
-        @edit = session[:edit] = nil # clean out the saved info
-        session[:changed] = @changed = false
-        javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => flash_msg)
-      else
-        @rate.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        @rate_details.each do |detail|
-          display_detail_errors(detail, detail.errors)
-        end
-        @rate_tiers.each_with_index do |tiers, detail_index|
-          tiers.each do |tier|
-            display_detail_errors(@rate_details[detail_index], tier.errors)
-          end
-        end
-        @changed = session[:changed] = (@edit[:new] != @edit[:current])
-        javascript_flash
-      end
+      rate_save_add
     when "reset", nil # displaying edit from for actions: new, edit or copy
-      @in_a_form = true
-      session[:changed] = params[:pressed] == 'chargeback_rates_copy'
-      @rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
-      cb_rate_set_form_vars
-      javascript_redirect(:action        => 'edit',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
-
+      @_params[:id] ||= find_checked_items[0]
+      @redirect_id = params[:id] if params[:id]
+      @refresh_partial = "edit"
+      rate_reset_or_set
     end
+  end
+
+  def new
+    rate_reset_or_set
+  end
+
+  def copy
+    @_params[:id] ||= find_checked_items[0]
+    @_params[:pressed] = "chargeback_rates_copy"
+    rate_reset_or_set
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -155,6 +68,7 @@ class ChargebackRateController < ApplicationController
     end
     process_cb_rates(rates, 'destroy') if rates.present?
     flash_to_session
+    javascript_redirect(:action => 'show_list')
   end
 
   # Add a new tier at the end
@@ -206,6 +120,87 @@ class ChargebackRateController < ApplicationController
   end
 
   private ############################
+
+  def rate_cancel
+    if params[:id]
+      flash_msg = _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
+    else
+      flash_msg = _("Add of new Chargeback Rate was cancelled by the user")
+    end
+    @edit = session[:edit] = nil # clean out the saved info
+    session[:changed] = false
+    javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+  end
+
+  def rate_save_add
+    assert_privileges(params[:id] ? 'chargeback_rate_edit' : 'chargeback_rate_new')
+    id = params[:button] == "save" ? params[:id] : "new"
+    return unless load_edit("cbrate_edit__#{id}")
+
+    @rate = params[:button] == "add" ? ChargebackRate.new : ChargebackRate.find(params[:id])
+    if @edit[:new][:description].nil? || @edit[:new][:description] == ""
+      render_flash(_("Description is required"), :error)
+      return
+    end
+    @rate.description = @edit[:new][:description]
+    @rate.rate_type   = @edit[:new][:rate_type] if @edit[:new][:rate_type]
+
+    cb_rate_set_record_vars
+    # Detect errors saving tiers
+    tiers_valid = @rate_tiers.all? { |tiers| tiers.all?(&:valid?) }
+
+    @rate.chargeback_rate_details.replace(@rate_details)
+    @rate.chargeback_rate_details.each_with_index do |_detail, i|
+      @rate_details[i].save_tiers(@rate_tiers[i])
+    end
+
+    tiers_valid &&= @rate_details.all? { |rate_detail| rate_detail.errors.messages.blank? }
+
+    if tiers_valid && @rate.save
+      if params[:button] == "add"
+        AuditEvent.success(build_created_audit(@rate, @edit))
+        flash_msg = _("Chargeback Rate \"%{name}\" was added") % {:name => @rate.description}
+      else
+        AuditEvent.success(build_saved_audit(@rate, @edit))
+        flash_msg = _("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description}
+      end
+      @edit = session[:edit] = nil # clean out the saved info
+      session[:changed] = @changed = false
+      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+    else
+      @rate.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      @rate_details.each do |detail|
+        display_detail_errors(detail, detail.errors)
+      end
+      @rate_tiers.each_with_index do |tiers, detail_index|
+        tiers.each do |tier|
+          display_detail_errors(@rate_details[detail_index], tier.errors)
+        end
+      end
+      @changed = session[:changed] = (@edit[:new] != @edit[:current])
+      javascript_flash
+    end
+  end
+
+  def rate_reset_or_set
+    assert_privileges('chargeback_rate_edit') if params[:button] == "reset"
+    @rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
+    if params[:pressed] == 'chargeback_rates_edit' && @rate.default?
+      add_flash(_("Default Chargeback Rate \"%{name}\" cannot be edited.") % {:name => @rate.description}, :error)
+      flash_to_session
+      redirect_to(:action => 'show_list')
+    end
+
+    @in_a_form = true
+    session[:changed] = params[:pressed] == 'chargeback_rates_copy'
+    cb_rate_set_form_vars
+    javascript_redirect(:action        => 'edit',
+                        :id            => params[:id],
+                        :flash_msg     => _("All changes have been reset"),
+                        :flash_warning => true) if params[:button] == "reset"
+  end
 
   # Common Schedule button handler routines
   def process_cb_rates(rates, task)

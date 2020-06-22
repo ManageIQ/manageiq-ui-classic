@@ -66,7 +66,7 @@ const onClick = (button) => {
       }
 
       if (button.url_parms) {
-        buttonUrl += button.url_parms;
+        buttonUrl += ['?', getParams(button.url_parms, !!button.send_checked)].join('');
       }
 
       // popup windows are only supported for urls starting with '/' (non-ajax)
