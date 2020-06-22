@@ -1292,13 +1292,16 @@ class CatalogController < ApplicationController
 
   def checked_tenants
     new_id = params[:id].split('-').pop.to_i if params[:id].starts_with?('tn')
+    tenant = Tenant.find(new_id)
+    new_ids = [new_id] + tenant.descendants.pluck(:id)
     tenant_ids = @edit[:new][:tenant_ids]
     if params[:check] == '1' # Adding/checking Tenant(s) in the tree for the Catalog Item
-      tenant_ids += [new_id] if tenant_ids.exclude?(new_id)
+      tenant_ids += new_ids
     elsif params[:check] == '0' # Unchecking selected Tenant(s)
-      tenant_ids.delete(new_id)
+      new_ids += tenant.ancestors.pluck(:id)
+      new_ids.each { |t| tenant_ids.delete(t) }
     end
-    @edit[:new][:tenant_ids] = tenant_ids.sort
+    @edit[:new][:tenant_ids] = tenant_ids.sort.uniq
   end
 
   def available_container_managers
