@@ -10,6 +10,16 @@ class NetworkPortController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
+  def download_data
+    assert_privileges('network_port_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('network_port_show')
+    super
+  end
+
   def textual_group_list
     [%i[properties tags], %i[relationships]]
   end
