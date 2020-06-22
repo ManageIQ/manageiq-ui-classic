@@ -19,6 +19,30 @@ class VmController < ApplicationController
     process_show_list(options)
   end
 
+  def breadcrumbs_options
+    if params["action"] == "policy_sim"
+      if @breadcrumbs.first[:url].include?("ems_infra")
+        {:breadcrumbs => [
+          {:title => _("Compute")},
+          {:title => _("Infrastructure")},
+          {:title => _("Providers"), :url => "/ems_infra/show_list"},
+          {:title => @breadcrumbs[1][:name], :url => @breadcrumbs[1][:url]}
+        ]}
+      elsif @breadcrumbs.first[:url].include?("ems_cloud")
+        {:breadcrumbs => [
+          {:title => _("Compute")},
+          {:title => _("Clouds")},
+          {:title => _("Providers"), :url => "/ems_cloud/show_list"},
+          {:title => @breadcrumbs[1][:name], :url => @breadcrumbs[1][:url]}
+        ]}
+      else
+        super
+      end
+    else
+      super
+    end
+  end
+
   private ####
 
   def get_session_data
