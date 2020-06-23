@@ -135,6 +135,8 @@ module ReportController::Schedules
 
   # AJAX driven routine to check for changes in ANY field on the form
   def schedule_form_field_changed
+    assert_privileges(@edit && @edit[:rpt_id] ? "miq_report_schedule_edit" : "miq_report_schedule_add")
+
     return unless load_edit("schedule_edit__#{params[:id]}", "replace_cell__explorer")
     schedule_get_form_vars
     if @edit[:new][:filter]

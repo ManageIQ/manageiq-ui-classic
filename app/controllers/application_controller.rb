@@ -329,6 +329,8 @@ class ApplicationController < ActionController::Base
 
   # Send chart data to the client
   def render_chart
+    assert_privileges("view_graph")
+
     if params[:report]
       rpt = MiqReport.for_user(current_user).find_by(:name => params[:report])
       rpt.generate_table(:userid => session[:userid])
@@ -476,6 +478,8 @@ class ApplicationController < ActionController::Base
 
   # Common method to show a standalone report
   def report_only
+    assert_privileges("report_only")
+
     # Render error message if report doesn't exist
     if params[:rr_id].nil? && @sb.fetch_path(:pages, :rr_id).nil?
       add_flash(_("This report isn't generated yet. It cannot be rendered."), :error)
