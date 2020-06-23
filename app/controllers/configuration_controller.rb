@@ -68,6 +68,7 @@ class ConfigurationController < ApplicationController
 
   # New tab was pressed
   def change_tab
+    assert_privileges('my_settings_admin')
     @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
@@ -75,6 +76,7 @@ class ConfigurationController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    assert_privileges('my_settings_visuals')
     # ui1 edit form
     return unless load_edit("config_edit__ui1", "configuration")
 
@@ -90,6 +92,7 @@ class ConfigurationController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the user form
   def filters_field_changed
+    assert_privileges('my_settings_default_filters')
     return unless load_edit("config_edit__ui3", "configuration")
 
     id = params[:id].split('-').last.to_i
@@ -109,6 +112,7 @@ class ConfigurationController < ApplicationController
 
   # AJAX driven routine for gtl view selection
   def view_selected
+    assert_privileges('my_settings_default_views')
     # ui2 form
     return unless load_edit("config_edit__ui2", "configuration")
 
@@ -124,6 +128,7 @@ class ConfigurationController < ApplicationController
 
   # AJAX driven routine for theme selection
   def theme_changed
+    assert_privileges('my_settings_visuals')
     # ui1 theme changed
     @edit = session[:edit]
     @edit[:new][:display][:theme] = params[:theme] # Capture the new setting
@@ -136,6 +141,7 @@ class ConfigurationController < ApplicationController
   end
 
   def update
+    assert_privileges('my_settings_admin')
     if params["save"]
       get_form_vars if @tabform != "ui_3"
       case @tabform
@@ -307,6 +313,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_field_changed
+    assert_privileges("tp_edit")
     return unless load_edit("config_edit__ui4", "configuration")
 
     timeprofile_get_form_vars
