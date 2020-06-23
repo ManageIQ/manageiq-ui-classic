@@ -198,6 +198,16 @@ class SecurityGroupController < ApplicationController
     end
   end
 
+  def download_data
+    assert_privileges('security_group_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('security_group_show')
+    super
+  end
+
   private
 
   def create_rule(rule)
