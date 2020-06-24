@@ -11,6 +11,8 @@ module OpsController::Settings::AnalysisProfiles
 
   # Show scanitemset list view
   def aps_list
+    assert_privileges("ap")
+
     ap_build_list
 
     if @show_list
@@ -57,6 +59,8 @@ module OpsController::Settings::AnalysisProfiles
   end
 
   def ap_ce_select
+    assert_privileges(session&.fetch_path(:edit, :current, :scan_mode) == "Vm" ? "ap_vm_edit" : "ap_host_edit")
+
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
 
     ap_get_form_vars
@@ -116,6 +120,8 @@ module OpsController::Settings::AnalysisProfiles
 
   # AJAX driven routine to delete a classification entry
   def ap_ce_delete
+    assert_privileges("ap_delete")
+
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
 
     ap_get_form_vars
@@ -354,6 +360,8 @@ module OpsController::Settings::AnalysisProfiles
   end
 
   def ap_set_active_tab
+    assert_privileges(session&.fetch_path(:edit, :current, :scan_mode) == "Vm" ? "ap_vm_edit" : "ap_host_edit")
+
     @sb[:ap_active_tab] = params[:tab_id]
     @edit = session[:edit]
     @scan = session[:edit][:scan]
@@ -365,6 +373,8 @@ module OpsController::Settings::AnalysisProfiles
 
   # AJAX driven routine to check for changes in ANY field on the form
   def ap_form_field_changed
+    assert_privileges(session&.fetch_path(:edit, :current, :scan_mode) == "Vm" ? "ap_vm_edit" : "ap_host_edit")
+
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
 
     ap_get_form_vars

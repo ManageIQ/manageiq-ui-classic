@@ -3,6 +3,8 @@ module OpsController::Diagnostics
   extend ActiveSupport::Concern
 
   def diagnostics_tree_select
+    assert_privileges("ops_diagnostics")
+
     typ, id = params[:id].split("-")
     case typ
     when "svr"
@@ -206,6 +208,8 @@ module OpsController::Diagnostics
   end
 
   def cu_repair_field_changed
+    assert_privileges("ops_diagnostics")
+
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
 
     @selected_server = Zone.find(@sb[:selected_server_id])
@@ -227,6 +231,8 @@ module OpsController::Diagnostics
   end
 
   def cu_repair
+    assert_privileges("ops_diagnostics")
+
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
 
     if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
@@ -261,6 +267,8 @@ module OpsController::Diagnostics
   end
 
   def db_backup_form_field_changed
+    assert_privileges("ops_diagnostics")
+
     require 'uri'
     schedule = MiqSchedule.find(params[:id])
     depot = schedule.file_depot
@@ -282,6 +290,8 @@ module OpsController::Diagnostics
   end
 
   def db_backup
+    assert_privileges('ops_diagnostics')
+
     if params[:backup_schedule].present?
       @schedule = MiqSchedule.find(params[:backup_schedule])
     else
@@ -355,6 +365,8 @@ module OpsController::Diagnostics
   end
 
   def log_protocol_changed
+    assert_privileges("log_depot_edit")
+
     depot = FileDepot.depot_description_to_class(params[:log_protocol]).new
     # uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
     full_uri, _query = depot.try(:uri)&.split('?')
@@ -367,6 +379,8 @@ module OpsController::Diagnostics
   end
 
   def db_gc_collection
+    assert_privileges("ops_diagnostics")
+
     begin
       MiqSchedule.run_adhoc_db_gc(:userid => session[:userid])
     rescue => bang
@@ -379,6 +393,8 @@ module OpsController::Diagnostics
 
   # to delete orphaned records for user that was delete from db
   def orphaned_records_delete
+    assert_privileges("ops_diagnostics")
+
     MiqReportResult.delete_by_userid(params[:userid])
   rescue => bang
     add_flash(_("Error during Orphaned Records delete for user %{id}: %{message}") % {:id      => params[:userid],
@@ -400,6 +416,8 @@ module OpsController::Diagnostics
   end
 
   def diagnostics_server_list
+    assert_privileges("ops_diagnostics_server_view")
+
     @lastaction = "diagnostics_server_list"
     @force_no_grid_xml = true
     if x_node.split("-").first == "z"
