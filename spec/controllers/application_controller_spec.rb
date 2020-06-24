@@ -160,7 +160,7 @@ describe ApplicationController do
     before do
       allow(User).to receive(:server_timezone).and_return("UTC")
       login_as user
-      controller.request.parameters[:pressed] = "vm_migrate"
+      controller.params[:pressed] = "vm_migrate"
     end
 
     it "returns flash message when Migrate button is pressed with list containing SCVMM VM" do
@@ -192,7 +192,7 @@ describe ApplicationController do
     before do
       login_as FactoryBot.create(:user, :features => "image_miq_request_new")
       allow(User).to receive(:server_timezone).and_return("UTC")
-      controller.request.parameters[:pressed] = "image_miq_request_new"
+      controller.params[:pressed] = "image_miq_request_new"
       controller.instance_variable_set(:@explorer, true)
     end
 
@@ -240,7 +240,7 @@ describe ApplicationController do
             allow(controller).to receive(:assert_privileges)
             allow(controller).to receive(:performed?)
             allow(controller).to receive(:template_types_for_controller).and_call_original
-            allow(request).to receive(:parameters).and_return(:controller => ctrl, :pressed => 'vm_miq_request_new')
+            controller.params = {:controller => ctrl, :pressed => 'vm_miq_request_new'}
           end
 
           it 'returns proper template type while provisioning VMs' do
@@ -256,7 +256,7 @@ describe ApplicationController do
             allow(controller).to receive(:assert_privileges)
             allow(controller).to receive(:performed?)
             allow(controller).to receive(:template_types_for_controller).and_call_original
-            allow(request).to receive(:parameters).and_return(:controller => ctrl, :pressed => 'vm_miq_request_new')
+            controller.params = {:controller => ctrl, :pressed => 'vm_miq_request_new'}
           end
 
           it 'returns proper template type while provisioning instances' do
