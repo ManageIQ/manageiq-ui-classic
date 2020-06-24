@@ -131,6 +131,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def retrieve_distinct_instances_across_domains
+    assert_privileges('generic_object_definition_ab_button_new', 'generic_object_definition_ab_button_edit')
     distinct_instances_across_domains = MiqAeClass.find_distinct_instances_across_domains(User.current_user, "SYSTEM/PROCESS").pluck(:name).sort
     render :json => {:distinct_instances_across_domains => distinct_instances_across_domains}
   end
