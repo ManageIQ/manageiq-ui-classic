@@ -15,6 +15,26 @@ class AvailabilityZoneController < ApplicationController
     %w[ems_cloud instances cloud_volumes custom_button_events]
   end
 
+  def download_data
+    assert_privileges('availability_zone_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('availability_zone_show')
+    super
+  end
+
+  def perf_top_chart
+    assert_privileges('availability_zone_perf')
+    super
+  end
+
+  def tl_chooser
+    assert_privileges('availability_zone_timeline')
+    super
+  end
+
   private
 
   def textual_group_list
