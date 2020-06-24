@@ -331,6 +331,16 @@ class NetworkRouterController < ApplicationController
     javascript_redirect(:action => "show", :id => router_id)
   end
 
+  def download_data
+    assert_privileges('network_router_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('network_router_show')
+    super
+  end
+
   private
 
   def textual_group_list
