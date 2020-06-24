@@ -28,7 +28,7 @@ const PasswordField = ({
   const secretField = {
     component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
     type: 'password',
-    autocomplete: 'new-password',
+    autoComplete: 'new-password',
     isDisabled,
     validateOnMount: rest.validateOnMount,
     validate: [validate],
@@ -61,7 +61,7 @@ const PasswordField = ({
               placeholder="●●●●●●●●"
               disabled
               type="password"
-              autocomplete="new-password"
+              autoComplete="new-password"
             />
             <InputGroup.Button>
               <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
