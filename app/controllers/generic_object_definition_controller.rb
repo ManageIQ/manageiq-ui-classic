@@ -97,14 +97,14 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def custom_button_group_new
-    assert_privileges('ab_group_new')
+    assert_privileges('generic_object_definition_ab_group_new')
     @right_cell_text = _("Add a new Custom Button Group")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
     render_form(@right_cell_text, 'custom_button_group_form')
   end
 
   def custom_button_group_edit
-    assert_privileges('ab_group_edit')
+    assert_privileges('generic_object_definition_ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
     @right_cell_text = _("Edit Custom Button Group '%{name}'") % {:name => @custom_button_group.name}
     @generic_object_definition = find_record_with_rbac(GenericObjectDefinition, @custom_button_group.set_data[:applies_to_id])
@@ -112,7 +112,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def custom_button_new
-    assert_privileges('ab_button_new')
+    assert_privileges('generic_object_definition_ab_button_new')
     @right_cell_text = _("Add a new Custom Button")
     if node_type(x_node || params[:id]) == :button_group
       @custom_button_group = CustomButtonSet.find(params[:id])
@@ -124,7 +124,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def custom_button_edit
-    assert_privileges('ab_button_edit')
+    assert_privileges('generic_object_definition_ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
     @right_cell_text = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
     render_form(@right_cell_text, 'custom_button_form')
@@ -141,6 +141,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def add_button_in_group
+    assert_privileges('generic_object_definition_ab_button_edit')
     custom_button_set = CustomButtonSet.find(params[:id])
     custom_button_set.set_data[:button_order] ||= []
     custom_button_set.set_data[:button_order].push(CustomButton.last.id)
@@ -148,6 +149,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def custom_buttons_in_set
+    assert_privileges(params[:custom_button_set_id].present? ? 'generic_object_definition_ab_group_edit' : 'generic_object_definition_ab_group_new')
     assigned_buttons = if params[:custom_button_set_id].present?
                          button_set = find_record_with_rbac(CustomButtonSet, params[:custom_button_set_id])
                          button_set.custom_buttons
