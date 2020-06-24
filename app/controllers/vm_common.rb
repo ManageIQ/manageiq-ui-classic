@@ -1234,6 +1234,10 @@ module VmCommon
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
+        if %w[pre_prov].include?(action)
+          presenter.update(:pre_prov_form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
+        end
+
         # Make sure the form_buttons_div is empty.
         # it would remain on the screen if prior to retire some action that uses the form_buttons_div was used
         # such as "edit tags" or "manage policies".
