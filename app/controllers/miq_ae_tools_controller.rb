@@ -30,6 +30,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def log
+    assert_privileges("fetch_log")
     @breadcrumbs = []
     @log = $miq_ae_logger.contents if $miq_ae_logger
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
@@ -61,6 +62,7 @@ class MiqAeToolsController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    assert_privileges('miq_ae_class_simulation')
     get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -82,6 +84,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def import_export
+    assert_privileges('miq_ae_class_import_export')
     @in_a_form = true
     @breadcrumbs = []
     drop_breadcrumb(:name => _("Import / Export"), :url => "/miq_ae_tools/import_export")
@@ -102,6 +105,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def automate_json
+    assert_privileges('miq_ae_class_import_export')
     begin
       automate_json = automate_import_json_serializer.serialize(ImportFileUpload.find(params[:import_file_upload_id]))
     rescue StandardError => e
@@ -118,6 +122,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def cancel_import
+    assert_privileges('miq_ae_class_import_export')
     automate_import_service.cancel_import(params[:import_file_upload_id])
     add_flash(_("Datastore import was cancelled or is finished"), :info)
 
@@ -127,6 +132,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def import_via_git
+    assert_privileges('miq_ae_class_import_export')
     begin
       git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
 
@@ -141,6 +147,7 @@ class MiqAeToolsController < ApplicationController
   end
 
   def import_automate_datastore
+    assert_privileges('miq_ae_class_import_export')
     if params[:selected_namespaces].present?
       selected_namespaces = determine_all_included_namespaces(params[:selected_namespaces])
       import_file_upload = ImportFileUpload.where(:id => params[:import_file_upload_id]).first
@@ -180,6 +187,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
   end
 
   def upload_import_file
+    assert_privileges('miq_ae_class_import_export')
     redirect_options = {:action => :review_import}
 
     upload_file = params.fetch_path(:upload, :file)
@@ -197,11 +205,13 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
   end
 
   def review_import
+    assert_privileges('miq_ae_class_import_export')
     @import_file_upload_id = params[:import_file_upload_id]
     @message = @flash_array.first.to_json
   end
 
   def retrieve_git_datastore
+    assert_privileges('miq_ae_class_import_export')
     git_url = params[:git_url]
 
     if git_url.blank?
@@ -235,6 +245,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
   end
 
   def check_git_task
+    assert_privileges('miq_ae_class_import_export')
     task = MiqTask.find(params[:task_id])
     json = if task.state != MiqTask::STATE_FINISHED
              {:state => task.state}
@@ -270,6 +281,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   # Import classes
   def upload
+    assert_privileges('miq_ae_class_import_export')
     if params[:upload] && params[:upload][:datastore].present?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
@@ -293,6 +305,7 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   # Send all classes and instances
   def export_datastore
+    assert_privileges('miq_ae_class_import_export')
     filename = "datastore_" + format_timezone(Time.now, Time.zone, "fname") + ".zip"
     disable_client_cache
     send_data(MiqAeDatastore.export(current_tenant), :filename => filename)
@@ -300,6 +313,7 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   # Reset all custom classes and instances to default
   def reset_datastore
+    assert_privileges('miq_ae_class_import_export')
     unless params[:task_id]                       # First time thru, kick off the report generate task
       initiate_wait_for_task(:task_id => MiqAutomate.async_datastore_reset)
       return
