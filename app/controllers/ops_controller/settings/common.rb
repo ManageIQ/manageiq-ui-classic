@@ -11,6 +11,8 @@ module OpsController::Settings::Common
 
   # AJAX driven routine to check for changes in ANY field on the form
   def settings_form_field_changed
+    assert_privileges("ops_settings")
+
     settings_get_form_vars
     return unless @edit
 
@@ -140,6 +142,8 @@ module OpsController::Settings::Common
   end
 
   def settings_update
+    assert_privileges("ops_settings")
+
     case params[:button]
     when 'verify'        then settings_update_ldap_verify
     when 'amazon_verify' then settings_update_amazon_verify
@@ -150,6 +154,8 @@ module OpsController::Settings::Common
   end
 
   def smartproxy_affinity_field_changed
+    assert_privileges("zone_admin")
+
     settings_load_edit
     return unless @edit
 
@@ -159,6 +165,8 @@ module OpsController::Settings::Common
   end
 
   def pglogical_subscriptions_form_fields
+    assert_privileges("ops_settings")
+
     replication_type = MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
@@ -170,6 +178,8 @@ module OpsController::Settings::Common
   end
 
   def pglogical_save_subscriptions
+    assert_privileges("ops_settings")
+
     case params[:replication_type]
     when "global"
       subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
@@ -191,6 +201,8 @@ module OpsController::Settings::Common
   end
 
   def pglogical_validate_subscription
+    assert_privileges("ops_settings")
+
     subscription = find_or_new_subscription(params[:id])
     valid = subscription.validate(params_for_connection_validation(params))
     if valid.nil?

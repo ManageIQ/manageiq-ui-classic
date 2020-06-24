@@ -15,6 +15,8 @@ module OpsController::Settings
 
   # Apply the good records from an uploaded import file
   def apply_imports
+    assert_privileges("ops_settings")
+
     if session[:imports]
       begin
         session[:imports].apply
@@ -47,6 +49,8 @@ module OpsController::Settings
   end
 
   def forest_form_field_changed
+    assert_privileges("ops_settings")
+
     @edit = session[:edit] # Need to reload @edit so it stays in the session
     port = params[:user_proxies_mode] == "ldap" ? "389" : "636"
     render :update do |page|
@@ -57,6 +61,8 @@ module OpsController::Settings
 
   # AJAX driven routine to select a classification entry
   def forest_select
+    assert_privileges("ops_settings")
+
     forest_get_form_vars
     if params[:ldaphost_id] == "new"
       render :update do |page|
@@ -81,6 +87,8 @@ module OpsController::Settings
 
   # AJAX driven routine to delete a classification entry
   def forest_delete
+    assert_privileges("ops_settings")
+
     forest_get_form_vars
     idx = nil
     @edit[:new][:authentication][:user_proxies].each_with_index do |f, i|
@@ -98,6 +106,8 @@ module OpsController::Settings
 
   # AJAX driven routine to add/update a classification entry
   def forest_accept
+    assert_privileges("ops_settings")
+
     forest_get_form_vars
     no_changes = true
     if @ldap_info[:ldaphost] == ""
@@ -134,6 +144,8 @@ module OpsController::Settings
   end
 
   def region_edit
+    assert_privileges("region_edit")
+
     settings_set_view_vars
     @edit = {}
     replace_right_cell(:nodetype => "root")

@@ -2,6 +2,8 @@ module OpsController::Settings::AutomateSchedules
   extend ActiveSupport::Concern
 
   def automate_schedules_set_vars
+    assert_privileges(params[:id] == "new" ? "schedule_add" : "schedule_edit")
+
     schedule = params[:id] == "new" ? MiqSchedule.new : MiqSchedule.find_by(:id => params[:id])
     automate_request = fetch_automate_request_vars(schedule)
     render :json => {
@@ -18,6 +20,8 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def fetch_target_ids
+    assert_privileges(params[:id] == "new" ? "schedule_add" : "schedule_edit")
+
     if params[:target_class] && params[:target_class] != 'null'
       targets = targets_from_class(params[:target_class])
     end
@@ -29,6 +33,8 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def fetch_automate_request_vars(schedule)
+    assert_privileges(params[:id] == "new" ? "schedule_add" : "schedule_edit")
+
     automate_request = {}
     # incase changing type of schedule
     filter = prebuild_automate_schedule(schedule)

@@ -3,12 +3,16 @@ module OpsController::Settings::Schedules
 
   # Show the main Schedules list view
   def schedules_list
+    assert_privileges("schedule")
+
     schedule_build_list
 
     update_gtl_div('schedules_list') if pagination_or_gtl_request?
   end
 
   def schedule_show
+    assert_privileges("schedule")
+
     @display = "main"
     return if record_no_longer_exists?(@selected_schedule)
 
@@ -137,6 +141,8 @@ module OpsController::Settings::Schedules
   end
 
   def schedule_form_fields
+    assert_privileges("schedule_edit")
+
     schedule = MiqSchedule.find(params[:id])
 
     if schedule_check_compliance?(schedule)
@@ -218,6 +224,8 @@ module OpsController::Settings::Schedules
   end
 
   def schedule_form_filter_type_field_changed
+    assert_privileges(params[:id] == "new" ? 'schedule_add' : 'schedule_edit')
+
     filtered_item_list = build_filtered_item_list(params[:action_type], params[:filter_type])
 
     render :json => {:filtered_item_list => filtered_item_list}
@@ -283,6 +291,8 @@ module OpsController::Settings::Schedules
   end
 
   def log_depot_validate
+    assert_privileges("schedule_admin")
+
     if params[:log_password]
       file_depot = FileDepot.new
     else
