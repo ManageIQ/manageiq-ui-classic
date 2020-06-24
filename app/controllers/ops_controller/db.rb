@@ -4,6 +4,8 @@ module OpsController::Db
 
   # Show list of VMDB tables or settings
   def db_list(exp = nil)
+    assert_privileges("ops_db_vmdb")
+
     @lastaction = "db_list"
     @force_no_grid_xml = true
     model = case @sb[:active_tab] # Build view based on tab selected
@@ -72,6 +74,8 @@ module OpsController::Db
 
   # VM clicked on in the explorer right cell
   def x_show
+    assert_privileges("ops_db_vmdb")
+
     # @explorer = true
     @record = VmdbIndex.find(params[:id])
     params[:id] = x_build_node_id(@record) # Get the tree node id

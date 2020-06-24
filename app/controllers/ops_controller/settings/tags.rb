@@ -12,6 +12,8 @@ module OpsController::Settings::Tags
 
   # AJAX driven routine to delete a category
   def category_delete
+    assert_privileges("region_edit")
+
     category = Classification.find(params[:id])
     c_name = category.name
     audit = {:event        => "category_record_delete",
@@ -35,6 +37,8 @@ module OpsController::Settings::Tags
   end
 
   def category_edit
+    assert_privileges("region_edit")
+
     case params[:button]
     when "cancel"
       @category = session[:edit][:category] if session[:edit] && session[:edit][:category]
@@ -123,6 +127,8 @@ module OpsController::Settings::Tags
 
   # AJAX driven routine to check for changes in ANY field on the user form
   def category_field_changed
+    assert_privileges("region_edit")
+
     return unless load_edit("category_edit__#{params[:id]}", "replace_cell__explorer")
     category_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
@@ -138,6 +144,8 @@ module OpsController::Settings::Tags
 
   # A new classificiation category was selected
   def ce_new_cat
+    assert_privileges("region_edit")
+
     ce_get_form_vars
     if params[:classification_name]
       @cat = Classification.find_by_name(params["classification_name"])
@@ -151,6 +159,8 @@ module OpsController::Settings::Tags
 
   # AJAX driven routine to select a classification entry
   def ce_select
+    assert_privileges("region_edit")
+
     ce_get_form_vars
     if params[:id] == "new"
       render :update do |page|
@@ -176,6 +186,8 @@ module OpsController::Settings::Tags
 
   # AJAX driven routine to add/update a classification entry
   def ce_accept
+    assert_privileges("region_edit")
+
     ce_get_form_vars
     if session[:entry] == "new"
       entry = @cat.entries.create(:name        => params["entry"]["name"],
@@ -212,6 +224,8 @@ module OpsController::Settings::Tags
 
   # AJAX driven routine to delete a classification entry
   def ce_delete
+    assert_privileges("region_edit")
+
     ce_get_form_vars
     entry = @cat.entries.find(params[:id])
     audit = {:event        => "classification_entry_delete",
