@@ -23,12 +23,17 @@ module OpsController::OpsRbac
   end
 
   def invalidate_miq_product_feature_caches
+    tenant_add_or_edit_feature = session&.fetch_path(:edit, :tenant_id) ? 'rbac_tenant_add' : 'rbac_tenant_edit'
+    assert_privileges(tenant_add_or_edit_feature)
+
     MiqProductFeature.invalidate_caches
     render :json => {}
   end
 
   # Edit user or group tags
   def rbac_tags_edit
+    assert_privileges("rbac_tenant_tags_edit")
+
     case params[:button]
     when "cancel"
       rbac_edit_tags_cancel
@@ -87,6 +92,7 @@ module OpsController::OpsRbac
 
   def rbac_group_edit
     assert_privileges("rbac_group_edit")
+
     case params[:button]
     when 'cancel'            then rbac_edit_cancel('group')
     when 'save', 'add'       then rbac_edit_save_or_add('group')
@@ -191,6 +197,8 @@ module OpsController::OpsRbac
   end
 
   def tenant_quotas_form_fields
+    assert_privileges("rbac_tenant_manage_quotas")
+
     tenant = Tenant.find(params[:id])
     tenant_quotas = tenant.get_quotas
     render :json => {
@@ -214,14 +222,20 @@ module OpsController::OpsRbac
 
   # AJAX driven routines to check for changes in ANY field on the form
   def rbac_user_field_changed
+    assert_privileges(params[:id] == "new" ? "rbac_user_add" : "rbac_user_edit")
+
     rbac_field_changed("user")
   end
 
   def rbac_group_field_changed
+    assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_edit")
+
     rbac_field_changed("group")
   end
 
   def rbac_role_field_changed
+    assert_privileges(params[:id] == "new" ? "rbac_role_add" : "rbac_role_edit")
+
     rbac_field_changed("role")
   end
 
@@ -287,18 +301,26 @@ module OpsController::OpsRbac
 
   # Show the main Users/Groups/Roles list view
   def rbac_users_list
+    assert_privileges("rbac_user_show_list")
+
     rbac_list("user")
   end
 
   def rbac_groups_list
+    assert_privileges("rbac_group_show_list")
+
     rbac_list("group")
   end
 
   def rbac_roles_list
+    assert_privileges("rbac_role_show_list")
+
     rbac_list("role")
   end
 
   def rbac_tenants_list
+    assert_privileges("rbac_tenant_view")
+
     rbac_list("tenant")
   end
 
@@ -475,6 +497,9 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_user_lookup
+    assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_edit")
+
+
     rbac_group_user_lookup_field_changed
     add_flash(_("User must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user].blank?
 

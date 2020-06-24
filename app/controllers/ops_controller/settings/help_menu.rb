@@ -2,6 +2,8 @@ module OpsController::Settings::HelpMenu
   extend ActiveSupport::Concern
 
   def settings_update_help_menu
+    assert_privileges("region_edit")
+
     return unless load_edit('customize_help_menu')
 
     begin
@@ -33,6 +35,8 @@ module OpsController::Settings::HelpMenu
   end
 
   def help_menu_form_field_changed
+    assert_privileges("region_edit")
+
     return unless load_edit('customize_help_menu')
 
     Menu::DefaultMenu.help_menu_items.each do |item|
