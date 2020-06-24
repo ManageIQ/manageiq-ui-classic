@@ -36,18 +36,22 @@ class OrchestrationStackController < ApplicationController
   end
 
   def cloud_networks
+    assert_privileges('orchestration_stack_show')
     show_association('cloud_networks', _('Cloud Networks'), :cloud_networks, CloudNetwork)
   end
 
   def outputs
+    assert_privileges('orchestration_stack_show')
     show_association('outputs', _('Outputs'), :outputs, OrchestrationStackOutput)
   end
 
   def parameters
+    assert_privileges('orchestration_stack_show')
     show_association('parameters', _('Parameters'), :parameters, OrchestrationStackParameter)
   end
 
   def resources
+    assert_privileges('orchestration_stack_show')
     show_association('resources', _('Resources'), :resources, OrchestrationStackResource)
   end
 
@@ -125,6 +129,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def stacks_ot_info
+    assert_privileges('orchestration_template_copy')
     ot = find_record_with_rbac(OrchestrationStack, params[:id]).orchestration_template
     render :json => {
       :template_id          => ot.id,
@@ -136,12 +141,23 @@ class OrchestrationStackController < ApplicationController
   end
 
   def stacks_ot_copy
+    assert_privileges('orchestration_template_copy')
     case params[:button]
     when "cancel"
       stacks_ot_copy_cancel
     when "add"
       stacks_ot_copy_submit
     end
+  end
+
+  def download_data
+    assert_privileges('orchestration_stack_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('orchestration_stack_show')
+    super
   end
 
   private
