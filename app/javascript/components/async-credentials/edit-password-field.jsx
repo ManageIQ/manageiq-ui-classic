@@ -41,6 +41,7 @@ const EditPasswordField = ({ FieldProvider, ...props }) => (
             {...rest}
             disabled={editMode || isDisabled}
             type="password"
+            autoComplete="new-password"
           />
           <InputGroup.Button>
             <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
