@@ -10,28 +10,40 @@ class ContainerDashboardController < ApplicationController
   after_action :set_session_data
 
   def data
+    assert_privileges("container_dashboard_view")
+
     return data_live if params[:live] == 'true'
 
     render :json => {:data => collect_data(params[:id])}
   end
 
   def heatmaps_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_heatmaps_data(params[:id])}
   end
 
   def ems_utilization_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_ems_utilization_data(params[:id])}
   end
 
   def network_metrics_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_network_metrics_data(params[:id])}
   end
 
   def pod_metrics_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_pod_metrics_data(params[:id])}
   end
 
   def image_metrics_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_image_metrics_data(params[:id])}
   end
 
@@ -40,6 +52,8 @@ class ContainerDashboardController < ApplicationController
   end
 
   def project_data
+    assert_privileges("container_dashboard_view")
+
     render :json => {:data => collect_project_data(params[:id]) }
   end
 
