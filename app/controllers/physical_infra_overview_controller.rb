@@ -9,6 +9,7 @@ class PhysicalInfraOverviewController < ApplicationController
   after_action :set_session_data
 
   def show
+    assert_privileges('physical_infra_overview_view')
     @lastaction = 'show_dashboard'
     if params[:id].nil?
       @breadcrumbs.clear
