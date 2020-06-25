@@ -33,6 +33,7 @@
         = _('Admin Password')
       .col-md-8
         %input.form-control{:type         => "password",
+                            :autocomplete => "off",
                             :name         => "admin_password",
                             'ng-model'    => "vm.vmCloudModel.admin_password"}
   %div{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
