@@ -69,16 +69,19 @@ class PhysicalServerController < ApplicationController
   end
 
   def console
+    assert_privileges('physical_server_remote_console')
     params[:task_id] ? console_after_task : console_before_task
   end
 
   def console_file
+    assert_privileges('physical_server_remote_console')
     miq_task = MiqTask.find(params[:task_id])
     jnlp_file_content = miq_task.task_results.resource
     send_data(jnlp_file_content, :filename => "remoteConsole.jnlp")
   end
 
   def provision
+    assert_privileges('physical_server_provision')
     provisioning_ids = find_records_with_rbac(PhysicalServer, checked_or_params).ids
 
     javascript_redirect(:controller     => "miq_request",
@@ -142,4 +145,15 @@ class PhysicalServerController < ApplicationController
       ],
     }
   end
+
+  def download_data
+    assert_privileges('physical_server_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('physical_server_show')
+    super
+  end
+
 end
