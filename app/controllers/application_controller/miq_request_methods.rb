@@ -157,6 +157,14 @@ module ApplicationController::MiqRequestMethods
     end
   end
 
+  def provisioning_is_cloud?
+    params[:template_klass] == 'cloud' || %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud].include?(params[:controller])
+  end
+
+  def provisioning_is_infra?
+    params[:template_klass] == 'infra' || %w[ems_cluster ems_infra host resource_pool storage vm_infra].include?(params[:controller])
+  end
+
   def set_pre_prov_vars
     @layout = "miq_request_vm"
     @edit = {}
@@ -164,7 +172,7 @@ module ApplicationController::MiqRequestMethods
     @edit[:vm_sortdir] ||= "ASC"
     @edit[:vm_sortcol] ||= "name"
     @edit[:prov_type] = "VM Provision"
-    @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
+    @edit[:hide_deprecated_templates] = true if provisioning_is_cloud?
 
     unless %w[image_miq_request_new miq_template_miq_request_new].include?(params[:pressed])
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", provisioning_report).to_s
@@ -186,12 +194,12 @@ module ApplicationController::MiqRequestMethods
   def get_template_kls
     # when clone/migrate buttons are pressed from a sub list view,
     # these buttons are only available on Infra side
-    return ManageIQ::Providers::InfraManager::Template if params[:prov_type]
+    return TemplateInfra if params[:prov_type]
 
-    if request.parameters[:template_klass] == 'cloud' || request.parameters[:controller] == 'vm_cloud'
-      ManageIQ::Providers::CloudManager::Template
-    elsif request.parameters[:template_klass] == 'infra' || request.parameters[:controller] == 'vm_infra'
-      ManageIQ::Providers::InfraManager::Template
+    if provisioning_is_cloud?
+      TemplateCloud
+    elsif provisioning_is_infra?
+      TemplateInfra
     else
       MiqTemplate
     end
@@ -1051,11 +1059,9 @@ module ApplicationController::MiqRequestMethods
   end
 
   def provisioning_report
-    if request.parameters[:template_klass] == 'cloud' ||
-       %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud].include?(request.parameters[:controller])
+    if provisioning_is_cloud?
       'ProvisionCloudTemplates.yaml'
-    elsif request.parameters[:template_klass] == 'infra' ||
-          %w[ems_cluster ems_infra host resource_pool storage vm_infra].include?(request.parameters[:controller])
+    elsif provisioning_is_infra?
       'ProvisionInfraTemplates.yaml'
     end
   end

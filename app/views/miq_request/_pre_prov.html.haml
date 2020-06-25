@@ -1,4 +1,5 @@
 = render :partial => "layouts/flash_msg"
+
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
   %h3
@@ -11,5 +12,10 @@
              :checked => @edit[:hide_deprecated_templates]}
         = _('Hide deprecated')
   = render :partial => "layouts/x_gtl"
+
+  #pre_prov_form_buttons_div.pull-right
+    = render :partial => 'layouts/x_edit_buttons', :locals => {:action_url      => 'pre_prov',
+                                                               :continue_button => true,
+                                                               :no_reset        => true}
   :javascript
     $(provisioningListenToRx);
