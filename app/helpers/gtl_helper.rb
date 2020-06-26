@@ -76,6 +76,7 @@ module GtlHelper
       activeTree:        options[:active_tree],
       gtlType:           options[:gtl_type_string],
       parentId:          options[:display].nil? ? nil : options[:parent_id],
+      isAscending:       options[:is_ascending],
       sortColIdx:        options[:sort_col],
       sortDir:           options[:sort_dir],
       isExplorer:        options[:explorer],
@@ -117,6 +118,7 @@ module GtlHelper
           modelName: '#{h(j_str(options[:model_name]))}',
           activeTree: '#{options[:active_tree]}',
           parentId: '#{parent_id_escaped}',
+          isAscending: '#{options[:is_ascending]}'
           sortColIdx: '#{options[:sort_col]}',
           sortDir: '#{options[:sort_dir]}',
           isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
