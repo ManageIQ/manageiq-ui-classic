@@ -12,7 +12,7 @@ module OpsController::Settings::LabelTagMapping
   # In any case, this requires different providers use disjoint sets of strings.
   MappableEntity = Struct.new(:prefix, :model)
 
-  MAPPABLE_ENTITIES = {
+    MAPPABLE_ENTITIES = {
     # TODO: support per-provider "All Amazon" etc?
     # Currently we have only global "All".
     # Global "All" categories are named "kubernetes::..." for backward compatibility.
@@ -180,27 +180,27 @@ module OpsController::Settings::LabelTagMapping
     copy_params_if_present(@edit[:new], params, %i[entity label_name category])
   end
 
-  def label_tag_mapping_add(entity, label_name, cat_name)
-    # cat_prefix = MAPPABLE_ENTITIES[entity].prefix
-    # cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
-    # cat_name = Classification.sanitize_name(label_name.tr("/", ":"))
+  def label_tag_mapping_add(entity, label_name, cat_description)
+    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
+    cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
-    # if Classification.lookup_by_name(cat_name)
-    #   add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
-    #               {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
-    #   javascript_flash
-    #   return
-    # end
+    if Classification.lookup_by_name(cat_name_from_label) && ContainerLabelTagMapping.where(:label_name => label_name).exists?
+      add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
+              {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
+        javascript_flash
+      return
+    end
 
-    category = Classification.lookup_by_name(cat_name)
     begin
       ActiveRecord::Base.transaction do
-        category ||= Classification.create_category!(:name         => cat_name,
-                                                   :description  => cat_name,
+        category = Classification.lookup_by_name(cat_description) unless cat_prefix
+        category ||= Classification.create_category!(:name => cat_name_from_label,
+                                                   :description  => cat_description,
                                                    :single_value => true,
                                                    :read_only    => true)
-        ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
+
+          ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
                                          :label_name            => label_name,
                                          :tag                   => category.tag)
       end
