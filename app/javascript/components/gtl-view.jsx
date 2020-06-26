@@ -107,10 +107,8 @@ const isCurrentControllerOrPolicies = (url) => {
 };
 
 const EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
-const activateNodeSilently = (itemId, activeTree) => {
-  // var treeId = angular.element('.collapse.in .treeview').attr('id'); // FIXME
-  console.log("TREEEEE: ", activeTree, itemId);
-  const treeId = activeTree;
+const activateNodeSilently = (itemId) => {
+  const treeId = angular.element('.collapse.in .treeview').attr('id');
   if (EXPAND_TREES.indexOf(treeId) !== -1) {
     miqTreeExpandRecursive(treeId, itemId);
   }
@@ -492,9 +490,8 @@ const GtlView = ({
     if (isExplorer && isCurrentControllerOrPolicies(targetUrl)) {
       miqSparkleOn();
       if (_.isString(targetUrl) && targetUrl.indexOf('?id=') !== -1) {
-        activateNodeSilently(
-          constructSuffixForTreeUrl(showUrl, activeTree, item), activeTree
-        );
+        var itemId = constructSuffixForTreeUrl(showUrl, activeTree, item);
+        activateNodeSilently(itemId);
       }
 
       // Seems to be related to Foreman configured systems unassigned config. profiles.
@@ -505,7 +502,7 @@ const GtlView = ({
 
       // the setExtraClasses is probably dead now
       // post(targetUrl + itemId).always(() => this.setExtraClasses());
-      miqAjax(targetUrl + item.id);
+      miqAjax(targetUrl + itemId);
       return true;
     }
 
