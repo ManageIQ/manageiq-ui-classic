@@ -5,7 +5,7 @@ import {
   Paginator,
   PaginationRow,
   PAGINATION_VIEW,
-  Toolbar,
+  Toolbar, EmptyState,
 } from 'patternfly-react';
 
 // overriding this here, to make per page drop down open downwards,
@@ -18,6 +18,15 @@ export const renderDataTableToolbar = () => {
     // onClick={onClick}
     // onViewClick={onViewClick}
     />
+  );
+};
+
+export const NoRecordsFound = () => {
+  return (
+    <EmptyState className="records-empty-state">
+      <EmptyState.Icon type="fa" name="search" />
+      <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
+    </EmptyState>
   );
 };
 

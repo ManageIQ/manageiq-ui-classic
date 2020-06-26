@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 
 import { StaticGTLView } from '../components/gtl';
+import { NoRecordsFound } from './gtl/utils';
 
 const generateParamsFromSettings = (settings) => {
   const params = {};
@@ -521,14 +522,10 @@ const GtlView = ({
     return false;
   };
 
-  /* FIXME: removig flash div */
-  /* FIXME: missing no-record formatting/partial */
   return (
     <div id="miq-gtl-view">
       { (rows.length === 0) ? (
-        <div className="no-record">
-          {__("No Records Found.")}
-        </div>
+        <NoRecordsFound/>
       ) : (
         <StaticGTLView
           pagination={computePagination(settings)}
