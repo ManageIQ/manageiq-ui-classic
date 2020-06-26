@@ -12,13 +12,15 @@ module OpsController::Settings::LabelTagMapping
   # In any case, this requires different providers use disjoint sets of strings.
   MappableEntity = Struct.new(:prefix, :model)
 
-    MAPPABLE_ENTITIES = {
+  ALL_ENTITIES = "_all_entities_".freeze
+
+  MAPPABLE_ENTITIES = {
     # TODO: support per-provider "All Amazon" etc?
     # Currently we have only global "All".
     # Global "All" categories are named "kubernetes::..." for backward compatibility.
     nil                   => MappableEntity.new("kubernetes::",
                                                 nil),
-    "_all_entities_"      => MappableEntity.new(nil,
+    ALL_ENTITIES          => MappableEntity.new(nil,
                                                 "All Entities"),
     "Vm"                  => MappableEntity.new("amazon:vm:",
                                                 "ManageIQ::Providers::Amazon::CloudManager::Vm"),
@@ -94,7 +96,7 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      if entity == "_all_entities_"
+      if entity == ALL_ENTITIES
         _(MAPPABLE_ENTITIES[entity].model)
       else
         model = MAPPABLE_ENTITIES[entity].model
@@ -195,6 +197,13 @@ module OpsController::Settings::LabelTagMapping
     begin
       ActiveRecord::Base.transaction do
         category = Classification.lookup_by_name(cat_description) unless cat_prefix
+        # Should not create a new category if "All entities". The chosen category should exist
+        if entity == ALL_ENTITIES && category.nil?
+          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
+                      {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
+          javascript_flash
+          return
+        end
         category ||= Classification.create_category!(:name => cat_name_from_label,
                                                    :description  => cat_description,
                                                    :single_value => true,
@@ -217,10 +226,26 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_update(id, cat_description)
     mapping = ContainerLabelTagMapping.find(id)
-    update_category = mapping.tag.classification
-    update_category.description = cat_description
+
     begin
-      update_category.save!
+      if mapping.labeled_resource_type == ALL_ENTITIES
+        update_category = Classification.lookup_by_name(cat_description)
+        # Should not create a new category if "All entities". The chosen category should exist
+        if update_category.nil?
+          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
+                      {:entity => entity_ui_name_or_all(mapping.labeled_resource_type), :label => mapping.label_name}, :error)
+          javascript_flash
+          return
+        end
+        mapping.tag = update_category.tag
+
+        mapping.save!
+      else
+        update_category = mapping.tag.classification
+        update_category.description = cat_description
+
+        update_category.save!
+      end
     rescue StandardError => bang
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
@@ -238,11 +263,15 @@ module OpsController::Settings::LabelTagMapping
     label_name = mapping.label_name
 
     deleted = false
-    # delete mapping and category - will indirectly delete tags
     ActiveRecord::Base.transaction do
-      # XXX We're not sure that the category should ever be deleted
-      # deleted = mapping.destroy && category.destroy
-      deleted = mapping.destroy
+      if mapping.labeled_resource_type == ALL_ENTITIES
+        # Don't delete the category in this case because it was created outside of tag mapping
+        # Note: As a side effect, taggings of this category will not be removed from resources that had this mapping
+        deleted = mapping.destroy
+      else
+        # delete mapping and category - will indirectly delete tags
+        deleted = mapping.destroy && category.destroy
+      end
     end
 
     if deleted
