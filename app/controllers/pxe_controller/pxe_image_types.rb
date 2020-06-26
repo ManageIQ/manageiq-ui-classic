@@ -62,6 +62,7 @@ module PxeController::PxeImageTypes
 
   # AJAX driven routine to check for changes in ANY field on the form
   def pxe_image_type_form_field_changed
+    assert_privileges(params[:id] == 'new' ? 'pxe_image_type_new' : 'pxe_image_type_edit')
     return unless load_edit("pxe_image_type_edit__#{params[:id]}", "replace_cell__explorer")
     pxe_image_type_get_form_vars
     render :update do |page|
@@ -92,6 +93,7 @@ module PxeController::PxeImageTypes
   end
 
   def pxe_image_type_list
+    assert_privileges('pxe_image_type_view')
     @lastaction = "pxe_image_type_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
