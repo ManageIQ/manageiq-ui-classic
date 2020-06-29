@@ -273,8 +273,21 @@ class ApplicationController < ActionController::Base
       format.js do
         render :update do |page|
           page << javascript_prologue
-          page.replace_html("center_div", :partial => "layouts/exception_contents", :locals => {:message => msg})
-          page << "miqSparkle(false);"
+
+          message = msg + " [#{params[:controller]}/#{params[:action]}]"
+
+          page << "
+            sendDataWithRx({
+              serverError: {
+                data: '#{j_str message}',
+                url: '#{j_str request.url}',
+              },
+              source: 'server',
+            });
+
+            miqSparkle(false);
+          "
+
           page << javascript_hide_if_exists("adv_searchbox_div")
         end
       end
