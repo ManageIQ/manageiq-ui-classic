@@ -11,6 +11,7 @@ import ProtocolSelector from './protocol-selector';
 import ProviderSelectField from './provider-select-field';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
+import DetectButton from './detect-button';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
@@ -146,6 +147,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
     'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
     'validate-provider-credentials': ValidateProviderCredentials,
+    'detect-button': DetectButton,
   };
 
   return (
