@@ -130,6 +130,7 @@ class ChargebackRateController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       changed = (@edit[:new] != @edit[:current])
+      page.replace('chargeback_rate_edit_form', :partial => 'cb_rate_edit_table') if params[:rate_type]
       # Update the new column with the code of the currency selected by the user
       page.replace('chargeback_rate_currency', :partial => 'cb_rate_currency')
       page << javascript_for_miq_button_visibility(changed)
@@ -221,9 +222,24 @@ class ChargebackRateController < ApplicationController
     @edit[:new][:num_tiers] = []
     @edit[:new][:description] = @rate.description
     @edit[:new][:rate_type] = @rate.rate_type || "Compute"
-    @edit[:new][:details] = []
 
+    set_rate_details
+
+    if params[:pressed] == 'chargeback_rates_copy'
+      @rate.id = nil
+      @edit[:new][:description] = "copy of #{@rate.description}"
+    end
+
+    @edit[:rec_id] = @rate.id || nil
+    @edit[:key] = "cbrate_edit__#{@rate.id || "new"}"
+    @edit[:current] = copy_hash(@edit[:new])
+    session[:edit] = @edit
+  end
+
+  def set_rate_details
+    @edit[:new][:details] = []
     tiers = []
+    @rate ||= ChargebackRate.new
     rate_details = @rate.chargeback_rate_details
     rate_details = ChargebackRateDetail.default_rate_details_for(@edit[:new][:rate_type]) if new_rate_edit?
 
@@ -264,24 +280,17 @@ class ChargebackRateController < ApplicationController
       @edit[:new][:num_tiers][detail_index] = tiers[detail_index].size
       @edit[:new][:details].push(temp)
     end
-
     @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES.map { |x, y| [x, _(y)] }.to_h
-
-    if params[:pressed] == 'chargeback_rates_copy'
-      @rate.id = nil
-      @edit[:new][:description] = "copy of #{@rate.description}"
-    end
-
-    @edit[:rec_id] = @rate.id || nil
-    @edit[:key] = "cbrate_edit__#{@rate.id || "new"}"
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit] = @edit
   end
 
   # Get variables from edit form
   def cb_rate_get_form_vars
     @edit[:new][:description] = params[:description] if params[:description]
-    @edit[:new][:rate_type] = params[:rate_type] if params[:rate_type]
+    if params[:rate_type]
+      @edit[:new][:rate_type] = params[:rate_type]
+      set_rate_details
+    end
+
     if params[:currency]
       @edit[:new][:currency] = params[:currency].to_i
       rate_detail_currency = Currency.find(params[:currency])
