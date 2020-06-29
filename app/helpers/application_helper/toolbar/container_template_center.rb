@@ -10,7 +10,10 @@ class ApplicationHelper::Toolbar::ContainerTemplateCenter < ApplicationHelper::T
           :service_dialog_from_ct,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Create Service Dialog from Container Template'),
-          t),
+          t,
+          :options => {:feature => :instantiate},
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable
+        ),
       ]
     ),
   ])
