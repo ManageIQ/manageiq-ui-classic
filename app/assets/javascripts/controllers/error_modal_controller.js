@@ -41,6 +41,9 @@ function ErrorModalController($timeout) {
     } else if (source === '$http') {
       $ctrl.contentType = err.headers('content-type');
       $ctrl.url = err.config.url;
+    } else if (source === 'server') {
+      $ctrl.contentType = null;
+      $ctrl.url = err.url;
     }
 
     $ctrl.error = err;
@@ -54,7 +57,9 @@ function ErrorModalController($timeout) {
       $ctrl.data = findError($ctrl.data);
     }
 
-    $ctrl.status = (err.status !== -1) ? err.status + ' ' + err.statusText : 'Server not responding';
+    if (source !== 'server') {
+      $ctrl.status = (err.status !== -1) ? err.status + ' ' + err.statusText : 'Server not responding';
+    }
   };
 
   $ctrl.close = function() {
@@ -92,19 +97,19 @@ angular.module('miq.error', [])
       '              </strong>',
       '              {{$ctrl.url}}',
       '            </p>',
-      '            <p>',
+      '            <p ng-if="$ctrl.status">',
       '              <strong>',
       '                Status',
       '              </strong>',
       '              {{$ctrl.status}}',
       '            </p>',
-      '            <p>',
+      '            <p ng-if="$ctrl.contentType">',
       '              <strong>',
       '                Content-Type',
       '              </strong>',
       '              {{$ctrl.contentType}}',
       '            </p>',
-      '            <p>',
+      '            <p ng-if="$ctrl.data">',
       '              <strong>',
       '                Data',
       '              </strong>',
