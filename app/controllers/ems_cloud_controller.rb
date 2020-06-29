@@ -59,6 +59,7 @@ class EmsCloudController < ApplicationController
   has_custom_buttons
 
   def sync_users
+    assert_privileges('ems_cloud_user_sync')
     ems = find_record_with_rbac(model, params[:id])
     @in_a_form = true
     drop_breadcrumb(:name => _("Sync Users"), :url => "/ems_cloud/sync_users")
@@ -115,6 +116,16 @@ class EmsCloudController < ApplicationController
                        :admin_roles          => admin_roles,
                        :member_roles         => member_roles,
                        :ems                  => ems})
+  end
+
+  def download_data
+    assert_privileges('ems_cloud_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_cloud_show')
+    super
   end
 
   def breadcrumbs_options
