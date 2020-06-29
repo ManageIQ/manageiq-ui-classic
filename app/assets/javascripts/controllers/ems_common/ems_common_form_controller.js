@@ -138,6 +138,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.default_api_port                = data.default_api_port !== undefined && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.metrics_port                    = data.metrics_port !== undefined && data.metrics_port !== '' ? data.metrics_port.toString() : '443';
       $scope.emsCommonModel.amqp_api_port                   = data.amqp_api_port !== undefined && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
+      $scope.emsCommonModel.stf_api_port                    = data.stf_api_port !== undefined && data.stf_api_port !== '' ? data.stf_api_port.toString() : '5666';
+      $scope.emsCommonModel.stf_hostname                    = data.stf_hostname
+      $scope.emsCommonModel.stf_security_protocol           = data.stf_security_protocol
+      $scope.emsCommonModel.stf_auth_status                 = data.stf_auth_status
       $scope.emsCommonModel.metrics_database_name           = data.metrics_database_name !== undefined && data.metrics_database_name !== '' ? data.metrics_database_name : data.metrics_default_database_name;
       $scope.emsCommonModel.api_version                     = data.api_version;
       $scope.emsCommonModel.default_security_protocol       = data.default_security_protocol;
@@ -246,6 +250,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
       $scope.emsCommonModel.default_api_port                = '';
       $scope.emsCommonModel.amqp_api_port                   = '5672';
+      $scope.emsCommonModel.stf_api_port                    = '5666';
       $scope.emsCommonModel.alerts_selection                = data.alerts_selection;
       $scope.emsCommonModel.prometheus_alerts_api_port      = '443';
       $scope.emsCommonModel.prometheus_alerts_auth_status   = data.prometheus_alerts_auth_status;
@@ -345,6 +350,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.amqp_hostname) &&
       ($scope.emsCommonModel.amqp_userid !== '' && $scope.angularForm.amqp_userid !== undefined && $scope.angularForm.amqp_userid.$valid &&
        $scope.emsCommonModel.amqp_password !== '' && $scope.angularForm.amqp_password !== undefined && $scope.angularForm.amqp_password.$valid)) {
+      return true;
+    } else if ($scope.currentTab === 'amqp' && $scope.emsCommonModel.event_stream_selection === 'stf' && $scope.emsCommonModel.stf_hostname &&
+      $scope.emsCommonModel.stf_security_protocol && $scope.emsCommonModel.stf_api_port) {
       return true;
     } else if (($scope.currentTab === 'console') &&
       ($scope.emsCommonModel.console_userid !== '' && $scope.angularForm.console_userid !== undefined &&
@@ -741,7 +749,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.updateAuthStatus = function(updatedValue) {
-    $scope.angularForm[$scope.currentTab + '_auth_status'].$setViewValue(updatedValue);
+    if ($scope.currentTab === 'amqp' && $scope.emsCommonModel.event_stream_selection == "stf") {
+      $scope.angularForm['stf_auth_status'].$setViewValue(updatedValue);
+    } else {
+      $scope.angularForm[$scope.currentTab + '_auth_status'].$setViewValue(updatedValue);
+    }
   };
 
   $scope.updateHostname = function(value) {
@@ -763,6 +775,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.amqp_security_protocol = $scope.postValidationModel.amqp.amqp_security_protocol;
         $scope.emsCommonModel.amqp_userid = $scope.postValidationModel.amqp.amqp_userid;
         $scope.emsCommonModel.amqp_password = $scope.postValidationModel.amqp.amqp_password;
+        $scope.emsCommonModel.stf_security_protocol = $scope.postValidationModel.amqp.stf_security_protocol;
+        $scope.emsCommonModel.stf_hostname = $scope.postValidationModel.amqp.stf_hostname;
+        $scope.emsCommonModel.stf_api_port = $scope.postValidationModel.amqp.stf_api_port;
       }
       $scope.$broadcast('clearErrorOnTab', {tab: 'amqp'});
     }
