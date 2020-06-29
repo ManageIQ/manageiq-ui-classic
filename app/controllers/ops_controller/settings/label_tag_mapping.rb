@@ -187,7 +187,9 @@ module OpsController::Settings::LabelTagMapping
     cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
-    if Classification.lookup_by_name(cat_name_from_label) && ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    category_exists = cat_prefix && Classification.is_category.read_only.where(:single_value => true, :description => cat_description).exists?
+    if category_exists || label_exists || Classification.lookup_by_name(cat_name_from_label)
       add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
               {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
         javascript_flash
