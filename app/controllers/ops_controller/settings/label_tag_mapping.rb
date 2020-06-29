@@ -182,6 +182,19 @@ module OpsController::Settings::LabelTagMapping
     copy_params_if_present(@edit[:new], params, %i[entity label_name category])
   end
 
+  def flash_message_on_validation_error_for(validation_error, entity, label_name, cat_description)
+    entity_name = entity_ui_name_or_all(entity)
+    variables = {:entity => entity_name, :label => label_name, :cat_description => cat_description}
+    message = if validation_error == :unique_mapping
+                _("Mapping for \"%{entity}\", Label \"%{label}\" and Tag Category \"%{cat_description}\" already exists") % variables
+              else
+                _("Mapping for \"%{entity}\", Label \"%{label}\": Tag Category \"%{cat_description}\" must exist") % variables
+              end
+
+    add_flash(message, :error)
+    javascript_flash
+  end
+
   def label_tag_mapping_add(entity, label_name, cat_description)
     cat_prefix = MAPPABLE_ENTITIES[entity].prefix
     cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
@@ -190,9 +203,7 @@ module OpsController::Settings::LabelTagMapping
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
     category_exists = cat_prefix && Classification.is_category.read_only.where(:single_value => true, :description => cat_description).exists?
     if category_exists || label_exists || Classification.lookup_by_name(cat_name_from_label)
-      add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
-              {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
-        javascript_flash
+      flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
       return
     end
 
@@ -201,9 +212,7 @@ module OpsController::Settings::LabelTagMapping
         category = Classification.lookup_by_name(cat_description) unless cat_prefix
         # Should not create a new category if "All entities". The chosen category should exist
         if entity == ALL_ENTITIES && category.nil?
-          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
-                      {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
-          javascript_flash
+          flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
           return
         end
         category ||= Classification.create_category!(:name => cat_name_from_label,
@@ -234,9 +243,7 @@ module OpsController::Settings::LabelTagMapping
         update_category = Classification.lookup_by_name(cat_description)
         # Should not create a new category if "All entities". The chosen category should exist
         if update_category.nil?
-          add_flash(_("Mapping for %{entity}, Label \"%{label}\", tag must already exist") %
-                      {:entity => entity_ui_name_or_all(mapping.labeled_resource_type), :label => mapping.label_name}, :error)
-          javascript_flash
+          flash_message_on_validation_error_for(:tag_not_found, mapping.labeled_resource_type, mapping.label_name, cat_description)
           return
         end
         mapping.tag = update_category.tag
