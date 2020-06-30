@@ -272,8 +272,14 @@ module Menu
       end
 
       def help_documentation
+        # note these can still be overriden via Settings.help_menu
+        href = if ::Settings.docs.product_documentation_direct_link
+                 ::Settings.docs.product_documentation_website
+               else
+                 '/support/index?support_tab=about'
+               end
         help_menu_item(:documentation, :title => N_('Documentation'),
-                                       :href  => '/support/index?support_tab=about')
+                                       :href  => href)
       end
 
       def help_product
