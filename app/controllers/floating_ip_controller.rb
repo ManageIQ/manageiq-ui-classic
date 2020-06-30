@@ -171,6 +171,16 @@ class FloatingIpController < ApplicationController
     javascript_redirect(:action => "show", :id => floating_ip_id)
   end
 
+  def download_data
+    assert_privileges('floating_ip_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('floating_ip_show')
+    super
+  end
+
   private
 
   def textual_group_list
