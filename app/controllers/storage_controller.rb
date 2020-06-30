@@ -143,10 +143,12 @@ class StorageController < ApplicationController
   end
 
   def files
+    assert_privileges('storage_show')
     show_association('files', _('All Files'), :storage_files, StorageFile, 'files')
   end
 
   def disk_files
+    assert_privileges('storage_show')
     show_association('disk_files',
                      _('VM Provisioned Disk Files'),
                      :storage_files,
@@ -155,6 +157,7 @@ class StorageController < ApplicationController
   end
 
   def snapshot_files
+    assert_privileges('storage_show')
     show_association('snapshot_files',
                      _('VM Snapshot Files'),
                      :storage_files,
@@ -163,6 +166,7 @@ class StorageController < ApplicationController
   end
 
   def vm_ram_files
+    assert_privileges('storage_show')
     show_association('vm_ram_files',
                      _('VM Memory Files'),
                      :storage_files, StorageFile,
@@ -170,6 +174,7 @@ class StorageController < ApplicationController
   end
 
   def vm_misc_files
+    assert_privileges('storage_show')
     show_association('vm_misc_files',
                      _('Other VM Files'),
                      :storage_files, StorageFile,
@@ -177,6 +182,7 @@ class StorageController < ApplicationController
   end
 
   def debris_files
+    assert_privileges('storage_show')
     show_association('debris_files',
                      _('Non-VM Files'),
                      :storage_files, StorageFile,
@@ -261,6 +267,7 @@ class StorageController < ApplicationController
   end
 
   def explorer
+    assert_privileges('storage')
     @breadcrumbs = []
     @explorer = true
     @lastaction = "explorer"
@@ -470,6 +477,16 @@ class StorageController < ApplicationController
   # called by explorer.rb x_button
   def storage_scan
     scanstorage
+  end
+
+  def download_data
+    assert_privileges('storage_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('storage_show')
+    super
   end
 
   private
