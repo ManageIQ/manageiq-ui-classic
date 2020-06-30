@@ -127,6 +127,15 @@ describe ChargebackRateController do
       expect_input(response_body, "finish_#{selector}", "")
     end
 
+    it "allows access for super_administrator when user clicks on save button" do
+      allow(controller).to receive(:load_edit).with("cbrate_edit__#{chargeback_rate.id}").and_return(false)
+
+      controller.params = {:id => chargeback_rate.id.to_s, :button => 'save'}
+      expect do
+        controller.send(:edit)
+      end.not_to raise_error
+    end
+
     it "saves edited chargeback rate" do
       controller.params = {:id => chargeback_rate.id.to_s}
       controller.send(:edit)
