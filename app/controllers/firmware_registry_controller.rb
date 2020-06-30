@@ -30,6 +30,16 @@ class FirmwareRegistryController < ApplicationController
     nested_list(FirmwareBinary, :breadcrumb_title => _('Firmware Binaries'))
   end
 
+  def download_data
+    assert_privileges('firmware_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('firmware_show')
+    super
+  end
+
   private
 
   def textual_group_list
