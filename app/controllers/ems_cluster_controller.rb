@@ -93,6 +93,16 @@ class EmsClusterController < ApplicationController
     end
   end
 
+  def download_data
+    assert_privileges('ems_cluster_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_cluster_show')
+    super
+  end
+
   private
 
   def record_class
