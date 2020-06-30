@@ -70,6 +70,7 @@ class PxeController < ApplicationController
   end
 
   def explorer
+    assert_privileges("pxe")
     @breadcrumbs = []
     @explorer = true
 
@@ -91,6 +92,11 @@ class PxeController < ApplicationController
   end
 
   private
+
+  def feature_by_action
+    features_in_action = %w[pxe_server_new pxe_server_edit]
+    @sb[:action] if features_in_action.include?(@sb[:action])
+  end
 
   def features
     [
