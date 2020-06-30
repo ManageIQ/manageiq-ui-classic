@@ -55,4 +55,9 @@ class PhysicalRackController < ApplicationController
       ],
     }
   end
+
+  def download_data
+    assert_privileges('physical_rack_show_list')
+    super
+  end
 end
