@@ -54,4 +54,15 @@ class PhysicalSwitchController < ApplicationController
       ],
     }
   end
+
+  def download_data
+    assert_privileges('physical_switch_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('physical_switch_show')
+    super
+  end
+
 end
