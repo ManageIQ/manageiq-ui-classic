@@ -4,6 +4,7 @@ module PxeController::PxeCustomizationTemplates
 
   # AJAX driven routine to check for changes in ANY field on the form
   def template_form_field_changed
+    assert_privileges(params[:id] == "new" ? "customization_template_new" : "customization_template_edit")
     return unless load_edit("ct_edit__#{params[:id]}", "replace_cell__explorer")
     @prev_typ = @edit[:new][:typ]
     template_get_form_vars
@@ -24,6 +25,7 @@ module PxeController::PxeCustomizationTemplates
   end
 
   def template_list
+    assert_privileges('customization_template_view')
     @lastaction = "template_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
@@ -85,6 +87,7 @@ module PxeController::PxeCustomizationTemplates
   end
 
   def template_create_update
+    assert_privileges(params[:id].present? ? "customization_template_edit" : "customization_template_new")
     id = params[:id] || "new"
     return unless load_edit("ct_edit__#{id}")
     template_get_form_vars

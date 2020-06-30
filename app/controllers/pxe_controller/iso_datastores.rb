@@ -23,6 +23,7 @@ module PxeController::IsoDatastores
   end
 
   def iso_datastore_create
+    assert_privileges('iso_datastore_create')
     id = params[:id] || "new"
     return unless load_edit("isd_edit__#{id}")
     iso_datastore_get_form_vars
@@ -66,6 +67,7 @@ module PxeController::IsoDatastores
 
   # AJAX driven routine to check for changes in ANY field on the form
   def iso_datastore_form_field_changed
+    assert_privileges('iso_datastore_new')
     return unless load_edit("isd_edit__#{params[:id]}", "replace_cell__explorer")
     iso_datastore_get_form_vars
     render :update do |page|
@@ -122,6 +124,7 @@ module PxeController::IsoDatastores
   end
 
   def iso_datastore_list
+    assert_privileges('iso_datastore_view')
     @lastaction = "iso_datastore_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
@@ -185,6 +188,7 @@ module PxeController::IsoDatastores
 
   # AJAX driven routine to check for changes in ANY field on the form
   def iso_img_form_field_changed
+    assert_privileges('iso_image_edit')
     return unless load_edit("iso_img_edit__#{params[:id]}", "replace_cell__explorer")
     iso_img_get_form_vars
     render :update do |page|
