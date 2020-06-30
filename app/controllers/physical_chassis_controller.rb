@@ -41,4 +41,9 @@ class PhysicalChassisController < ApplicationController
       ],
     }
   end
+
+  def download_data
+    assert_privileges('physical_chassis_show_list')
+    super
+  end
 end
