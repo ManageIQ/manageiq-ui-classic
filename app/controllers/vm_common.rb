@@ -1159,6 +1159,8 @@ module VmCommon
         locals[:create_button] = true
       end
 
+      locals[:action_url] = nil if ['chargeback'].include?(@sb[:action])
+
       if %w[ownership protect reconfigure retire tag].include?(@sb[:action])
         locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids][0] if @sb[:action] == "tag"
@@ -1230,7 +1232,7 @@ module VmCommon
             presenter.update(:form_buttons_div, '')
             presenter.remove_paging.hide(:form_buttons_div)
           end
-        elsif %w[reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
+        elsif %w[chargeback reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
@@ -1447,6 +1449,8 @@ module VmCommon
       partial = @refresh_partial
       header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
       action = 'vm_chargeback'
+      @in_a_form = true
+      @edit = {}
     when "evm_relationship"
       partial = "vm_common/evm_relationship"
       header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table),
