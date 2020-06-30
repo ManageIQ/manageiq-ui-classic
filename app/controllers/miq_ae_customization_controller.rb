@@ -37,6 +37,7 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def upload_import_file
+    assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
     if params[:upload].nil? || params[:upload][:file].blank?
       add_flash(_("Use the Choose file button to locate an import file"), :warning)
     else
@@ -64,6 +65,7 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def import_service_dialogs
+    assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
     if params[:commit] == _('Commit')
       if params[:dialogs_to_import].blank?
         javascript_flash(:spinner_off => true,
@@ -89,6 +91,7 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def export_service_dialogs
+    assert_privileges('miq_ae_customization_explorer') # feature like miq_ae_customization_service_dialog_import_export is missing
     if params[:service_dialogs].present?
       dialogs = Dialog.where(:id => params[:service_dialogs])
       dialog_yaml = DialogYamlSerializer.new.serialize(dialogs)
@@ -135,13 +138,17 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def editor
-    @record = if params[:id].present?
-                Dialog.find(params[:id])
-              elsif params[:copy].present?
-                Dialog.find(params[:copy])
-              else
-                Dialog.new
-              end
+    if params[:id].present?
+      feature = 'dialog_edit_editor'
+      @record = Dialog.find(params[:id])
+    elsif params[:copy].present?
+      feature = 'dialog_copy_editor'
+      @record = Dialog.find(params[:copy])
+    else
+      feature = 'dialog_new_editor'
+      @record = Dialog.new
+    end
+    assert_privileges(feature)
     @title = @record.id ? _("Editing %{name} Service Dialog") % {:name => @record.name} : _("Add a new Dialog")
   end
 
@@ -161,7 +168,15 @@ class MiqAeCustomizationController < ApplicationController
   def x_show
     @explorer = true
     @sb[:action] = nil
-    klass = x_active_tree == :old_dialogs_tree ? MiqDialog : Dialog
+    if x_active_tree == :old_dialogs_tree
+      klass = MiqDialog
+      feature = "old_dialogs_accord"
+    else
+      klass = Dialog
+      feature = "dialogs_accord"
+    end
+    assert_privileges(feature)
+
     @record = identify_record(params[:id], klass)
     params[:id] = x_build_node_id(@record) # Get the tree node id
     tree_select
@@ -169,6 +184,7 @@ class MiqAeCustomizationController < ApplicationController
 
   # Dialog show selected from catalog explorer
   def show
+    assert_privileges('dialog_accord')  # feature like miq_ae_customization_service_dialog_show is missing
     nodes = params[:id].split("-")
     record = Dialog.find_by(:id =>nodes.last)
     self.x_active_accord = "dialogs"
