@@ -351,6 +351,16 @@ class HostAggregateController < ApplicationController
     end
   end
 
+  def download_data
+    assert_privileges('host_aggregate_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('host_aggregate_show')
+    super
+  end
+
   private
 
   def textual_group_list
