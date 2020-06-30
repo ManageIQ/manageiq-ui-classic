@@ -38,6 +38,16 @@ class FlavorController < ApplicationController
     render :json => {:cloud_tenants => cloud_tenants}
   end
 
+  def download_data
+    assert_privileges('flavor_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('flavor_show')
+    super
+  end
+
   private
 
   def textual_group_list
