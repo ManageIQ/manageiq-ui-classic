@@ -120,6 +120,7 @@ module MiqAeCustomizationController::OldDialogs
 
   # AJAX driven routine to check for changes in ANY field on the form
   def old_dialogs_form_field_changed
+    assert_privileges(params[:id] == 'new' ? 'old_dialogs_new' : 'old_dialogs_edit')
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
     old_dialogs_get_form_vars
     render :update do |page|
@@ -135,6 +136,7 @@ module MiqAeCustomizationController::OldDialogs
   end
 
   def old_dialogs_list
+    assert_privileges('old_dialogs_accord') # feature like miq_ae_customization_old_dialogs_list is missing
     @lastaction = "old_dialogs_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
@@ -204,6 +206,7 @@ module MiqAeCustomizationController::OldDialogs
   end
 
   def old_dialogs_update
+    assert_privileges(params[:id].present? ? 'old_dialogs_edit' : 'old_dialogs_new')
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("dialog_edit__#{id}", "replace_cell__explorer")
     old_dialogs_update_create
