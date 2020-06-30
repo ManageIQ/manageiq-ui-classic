@@ -7,6 +7,7 @@ module MiqAeCustomizationController::Dialogs
   end
 
   def dialog_list
+    assert_privileges('dialog_accord') # feature like miq_ae_customization_dialog_list is missing
     @lastaction = "dialog_list"
     @explorer = true
 
@@ -56,6 +57,7 @@ module MiqAeCustomizationController::Dialogs
   end
 
   def change_tab
+    assert_privileges('ab_button')
     get_node_info
     replace_right_cell(:nodetype => x_node)
   end
