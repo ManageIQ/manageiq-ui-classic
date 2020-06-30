@@ -55,6 +55,7 @@ class OptimizationController < ApplicationController
   end
 
   def show_list
+    assert_privileges('optimization')
     if params[:id].blank?
       show_hardcoded_reports
     else
@@ -63,6 +64,7 @@ class OptimizationController < ApplicationController
   end
 
   def show
+    assert_privileges('optimization')
     @record = find_record_with_rbac(MiqReportResult, params[:id])
     @report = find_record_with_rbac(MiqReport, params[:report_id] || @record.miq_report_id)
     @title = @record.name
@@ -98,6 +100,7 @@ class OptimizationController < ApplicationController
   end
 
   def json_list
+    assert_privileges('optimization')
     columns, rows = if params[:id].blank?
                       gtl_hardcoded
                     else
