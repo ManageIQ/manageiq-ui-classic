@@ -45,4 +45,9 @@ class PhysicalStorageController < ApplicationController
       ],
     }
   end
+
+  def download_data
+    assert_privileges('physical_storage_show_list')
+    super
+  end
 end
