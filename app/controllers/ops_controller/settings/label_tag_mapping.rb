@@ -195,27 +195,39 @@ module OpsController::Settings::LabelTagMapping
     javascript_flash
   end
 
+  def classification_lookup_with_cash_by(cat_description)
+    @classification = {}
+    @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
+  end
+
   def label_tag_mapping_add(entity, label_name, cat_description)
     cat_prefix = MAPPABLE_ENTITIES[entity].prefix
     cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
 
-    # UI currently can't allow 2 mappings for same (entity, label).
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
-    category_exists = cat_prefix && Classification.is_category.read_only.where(:single_value => true, :description => cat_description).exists?
-    if category_exists || label_exists || Classification.lookup_by_name(cat_name_from_label)
-      flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
-      return
+    if entity == ALL_ENTITIES
+      category = classification_lookup_with_cash_by(cat_description)
+      # Should not create a new category if "All entities". The chosen category should exist
+      if category.nil?
+        flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
+        return
+      end
+
+      if label_exists
+        flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
+        return
+      end
+    else
+      # UI currently can't allow 2 mappings for same (entity, label).
+      category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
+      if category || label_exists || Classification.lookup_by_name(cat_name_from_label)
+        flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
+        return
+      end
     end
 
     begin
       ActiveRecord::Base.transaction do
-        category = Classification.lookup_by_name(cat_description) unless cat_prefix
-        # Should not create a new category if "All entities". The chosen category should exist
-        if entity == ALL_ENTITIES && category.nil?
-          flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
-          return
-        end
-
         category ||= Classification.create_category!(:name => cat_name_from_label,
                                                      :description  => cat_description_with_prefix(entity, cat_description),
                                                      :single_value => true,
