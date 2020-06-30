@@ -215,12 +215,13 @@ module OpsController::Settings::LabelTagMapping
           flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
           return
         end
-        category ||= Classification.create_category!(:name => cat_name_from_label,
-                                                   :description  => cat_description,
-                                                   :single_value => true,
-                                                   :read_only    => true)
 
-          ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
+        category ||= Classification.create_category!(:name => cat_name_from_label,
+                                                     :description  => cat_description,
+                                                     :single_value => true,
+                                                     :read_only    => true)
+
+        ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
                                          :label_name            => label_name,
                                          :tag                   => category.tag)
       end
