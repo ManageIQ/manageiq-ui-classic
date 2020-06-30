@@ -157,7 +157,7 @@
   - elsif record_id || export_button
     -# show button to go back
     #buttons
-      - if params[:action] == "policies" || %w(right_size).include?(@sb[:action])
+      - if params[:action] == "policies" || %w(chargeback right_size).include?(@sb[:action])
         - action = (params[:action] == "policies" ? "policy_sim" : "x_history")
         -# Button to go back to policy simulation screen from 1 VMs policies
         = button_tag(t = _('Back'),
