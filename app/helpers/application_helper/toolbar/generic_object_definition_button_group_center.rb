@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionButtonGroupCenter < App
         button(
           :custom_button_set_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Custom Button Group from Inventory'),
+          N_('Remove this Button Group from Inventory'),
           :confirm => N_("Warning: This Custom Button Group will be permanently removed!"),
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete,
         ),
