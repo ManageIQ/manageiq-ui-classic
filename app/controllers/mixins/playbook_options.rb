@@ -1,6 +1,7 @@
 module Mixins
   module PlaybookOptions
     def playbook_options_field_changed
+      assert_privileges(params[:id] == 'new' ? 'ab_button_new' : 'ab_button_edit')
       @edit = session[:edit]
       @edit[:new][:inventory_type] = params[:inventory_type] if params[:inventory_type]
       playbook_box_edit
