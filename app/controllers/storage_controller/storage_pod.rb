@@ -3,6 +3,7 @@ module StorageController::StoragePod
   extend ActiveSupport::Concern
 
   def storage_pod_list
+    assert_privileges('storage_pod_show_list')
     @lastaction = "storage_pod_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"

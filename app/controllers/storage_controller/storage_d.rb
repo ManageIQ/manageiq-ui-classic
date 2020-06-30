@@ -3,6 +3,7 @@ module StorageController::StorageD
   extend ActiveSupport::Concern
 
   def storage_list
+    assert_privileges('storage_show_list')
     @lastaction = "storage_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
