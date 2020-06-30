@@ -1,6 +1,10 @@
 - url = {:url => url_for_only_path(:action => 'policy_options', :id => @record.id)}.to_json
 - url2 = {:url => url_for_only_path(:action => 'policy_show_options', :id => @record.id)}.to_json
 #policy_options_div
+  - unless @explorer
+    %h1#explorer_title
+      %span#explorer_title_text
+        = safe_right_cell_text
   %h3
     = _('Options')
   .form-horizontal

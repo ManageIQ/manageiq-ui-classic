@@ -50,6 +50,7 @@ module ApplicationHelper::PageLayouts
       consumption
       dashboard
       dialog_provision
+      policies
       topology
     ].include?(@showtype)
 
