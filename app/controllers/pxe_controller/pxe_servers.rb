@@ -65,6 +65,7 @@ module PxeController::PxeServers
   end
 
   def pxe_server_list
+    assert_privileges('pxe_server_view')
     @lastaction = "pxe_server_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
@@ -126,6 +127,7 @@ module PxeController::PxeServers
 
   # AJAX driven routine to check for changes in ANY field on the form
   def pxe_img_form_field_changed
+    assert_privileges('pxe_image_edit')
     return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
     pxe_img_get_form_vars
     render :update do |page|
@@ -176,6 +178,7 @@ module PxeController::PxeServers
 
   # AJAX driven routine to check for changes in ANY field on the form
   def pxe_wimg_form_field_changed
+    assert_privileges("pxe_wimg_edit")
     return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
     pxe_wimg_get_form_vars
     render :update do |page|
@@ -187,6 +190,7 @@ module PxeController::PxeServers
 
   def pxe_server_async_cred_validation
     begin
+      assert_privileges(feature_by_action)
       PxeServer.verify_depot_settings(params[:pxe])
     rescue StandardError => bang
       render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
