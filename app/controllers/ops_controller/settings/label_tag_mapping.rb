@@ -222,20 +222,18 @@ module OpsController::Settings::LabelTagMapping
     category || Classification.lookup_by_name(category_name_from_label(entity, label_name))
   end
 
-  def label_tag_mapping_add(entity, label_name, cat_description)
-    error = nil
-    label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
-    error = :unique_mapping if label_exists
+  def validate_mapping(cat_description, entity, label_name)
+    return :unique_mapping if ContainerLabelTagMapping.where(:label_name => label_name).exists?
 
     if entity == ALL_ENTITIES
-      category = classification_lookup_with_cash_by(cat_description)
-      # Should not create a new category if "All entities". The chosen category should exist
-      error = :tag_not_found unless category
-    else
-      error = :unique_mapping if find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
+      :tag_not_found unless classification_lookup_with_cash_by(cat_description)
+    elsif find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
+      :unique_mapping
     end
+  end
 
-    if error
+  def label_tag_mapping_add(entity, label_name, cat_description)
+    if error = validate_mapping(cat_description, entity, label_name)
       flash_message_on_validation_error_for(error, entity, label_name, cat_description)
       return
     end
