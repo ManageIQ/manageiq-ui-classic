@@ -195,13 +195,18 @@ module OpsController::Settings::LabelTagMapping
     javascript_flash
   end
 
+  def classification_lookup_with_cash_by(cat_description)
+    @classification = {}
+    @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
+  end
+
   def label_tag_mapping_add(entity, label_name, cat_description)
     cat_prefix = MAPPABLE_ENTITIES[entity].prefix
     cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
 
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
     if entity == ALL_ENTITIES
-      category = Classification.lookup_by_name(cat_description)
+      category = classification_lookup_with_cash_by(cat_description)
       # Should not create a new category if "All entities". The chosen category should exist
       if category.nil?
         flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
