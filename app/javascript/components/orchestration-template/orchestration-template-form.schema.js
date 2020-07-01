@@ -97,6 +97,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     component: 'note',
     name: 'form-note',
     label: __('Note: Select format type below to apply syntax highlighting for better readability'),
+    className: '',
   },{
     component: 'code-editor',
     name: 'content',
