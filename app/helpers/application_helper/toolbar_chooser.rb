@@ -343,12 +343,10 @@ class ApplicationHelper::ToolbarChooser
         return "pxe_server_center_tb"
       end
     elsif x_active_tree == :customization_templates_tree
-      if x_node == "root" ||
-         x_node.split('-').length == 3
-        # root node or folder node selected
-        return "customization_templates_center_tb"
-      else
+      if x_node_split.first == 'ct'
         return "customization_template_center_tb"
+      else
+        return "customization_templates_center_tb"
       end
     elsif x_active_tree == :pxe_image_types_tree
       if x_node == "root"
