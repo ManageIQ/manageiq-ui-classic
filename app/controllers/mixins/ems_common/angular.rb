@@ -264,6 +264,10 @@ module Mixins
         kubevirt_tls_ca_certs = ""
         kubevirt_password = ""
         kubevirt_tls_verify = false
+        stf_hostname = ""
+        stf_api_port = ""
+        stf_security_protocol = ""
+        stf_auth_status = ""
 
         provider_options = @ems.options || {}
 
@@ -271,6 +275,13 @@ module Mixins
           amqp_hostname = @ems.connection_configurations.amqp.endpoint.hostname
           amqp_port = @ems.connection_configurations.amqp.endpoint.port
           amqp_security_protocol = @ems.connection_configurations.amqp.endpoint.security_protocol || 'ssl'
+        end
+
+        if @ems.connection_configurations.stf.try(:endpoint)
+          stf_hostname = @ems.connection_configurations.stf.endpoint.hostname
+          stf_api_port = @ems.connection_configurations.stf.endpoint.port
+          stf_security_protocol = @ems.connection_configurations.stf.endpoint.security_protocol || 'ssl'
+          stf_auth_status = @ems.authentication_status_ok?(:stf) if @ems.has_authentication_type?(:stf)
         end
 
         if @ems.has_authentication_type?(:amqp)
@@ -423,7 +434,11 @@ module Mixins
                            :amqp_fallback_hostname1         => amqp_fallback_hostname1 || "",
                            :amqp_fallback_hostname2         => amqp_fallback_hostname2 || "",
                            :default_url                     => @ems.endpoints.first.url,
-                           :assume_role                     => assume_role}
+                           :assume_role                     => assume_role,
+                           :stf_hostname                    => stf_hostname,
+                           :stf_security_protocol           => stf_security_protocol,
+                           :stf_api_port                    => stf_api_port,
+                           :stf_auth_status                 => stf_auth_status}
         end
 
         if controller_name == "ems_infra"
@@ -564,6 +579,9 @@ module Mixins
         amqp_fallback_hostname2 = params[:amqp_fallback_hostname2].strip if params[:amqp_fallback_hostname2]
         amqp_port = params[:amqp_api_port].strip if params[:amqp_api_port]
         amqp_security_protocol = params[:amqp_security_protocol].strip if params[:amqp_security_protocol]
+        stf_hostname = params[:stf_hostname].strip if params[:stf_hostname]
+        stf_security_protocol = params[:stf_security_protocol].strip if params[:stf_security_protocol]
+        stf_api_port = params[:stf_api_port].strip if params[:stf_api_port]
         metrics_hostname = params[:metrics_hostname].strip if params[:metrics_hostname]
         metrics_port = params[:metrics_api_port].strip if params[:metrics_api_port]
         metrics_database_name = params[:metrics_database_name].strip if params[:metrics_database_name]
@@ -582,6 +600,7 @@ module Mixins
         amqp_endpoint = {}
         amqp_fallback_endpoint1 = {}
         amqp_fallback_endpoint2 = {}
+        stf_endpoint = {}
         ceilometer_endpoint = {}
         ssh_keypair_endpoint = {}
         metrics_endpoint = {}
@@ -595,6 +614,8 @@ module Mixins
           ems.keystone_v3_domain_id = params[:keystone_v3_domain_id]
           if params[:event_stream_selection] == "amqp"
             amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
+          elsif params[:event_stream_selection] == "stf"
+            stf_endpoint = {:role => :stf, :hostname => stf_hostname, :port => stf_api_port, :security_protocol => stf_security_protocol}
           else
             ceilometer_endpoint = {:role => :ceilometer}
           end
@@ -736,6 +757,7 @@ module Mixins
         endpoints = {:default           => default_endpoint,
                      :ceilometer        => ceilometer_endpoint,
                      :amqp              => amqp_endpoint,
+                     :stf               => stf_endpoint,
                      :console           => default_endpoint,
                      :smartstate_docker => default_endpoint,
                      :amqp_fallback1    => amqp_fallback_endpoint1,
@@ -762,7 +784,7 @@ module Mixins
         authentications = build_credentials(ems, mode)
         configurations = []
 
-        %i[default ceilometer amqp amqp_fallback1 amqp_fallback2 console smartstate_docker ssh_keypair metrics hawkular prometheus prometheus_alerts kubevirt].each do |role|
+        %i[default ceilometer amqp amqp_fallback1 amqp_fallback2 stf console smartstate_docker ssh_keypair metrics hawkular prometheus prometheus_alerts kubevirt].each do |role|
           configurations << build_configuration(ems, authentications, endpoints, role)
         end
 
@@ -854,6 +876,7 @@ module Mixins
       end
 
       def retrieve_event_stream_selection
+        return 'stf' if @ems.connection_configurations.stf&.endpoint&.hostname&.present?
         return 'amqp' if @ems.connection_configurations.amqp&.endpoint&.hostname&.present?
         return 'ceilometer' if @ems.connection_configurations.ceilometer&.endpoint&.hostname&.present?
 
