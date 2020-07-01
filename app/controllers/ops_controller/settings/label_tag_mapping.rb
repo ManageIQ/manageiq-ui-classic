@@ -216,6 +216,12 @@ module OpsController::Settings::LabelTagMapping
     cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
   end
 
+  def find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
+    # UI currently can't allow 2 mappings for same (entity, label).
+    category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
+    category || Classification.lookup_by_name(category_name_from_label(entity, label_name))
+  end
+
   def label_tag_mapping_add(entity, label_name, cat_description)
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
     if label_exists
@@ -231,9 +237,7 @@ module OpsController::Settings::LabelTagMapping
         return
       end
     else
-      # UI currently can't allow 2 mappings for same (entity, label).
-      category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
-      if category || Classification.lookup_by_name(category_name_from_label(entity, label_name))
+      if find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
         flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
         return
       end
