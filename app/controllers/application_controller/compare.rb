@@ -1175,8 +1175,6 @@ module ApplicationController::Compare
       end
     end
     comp_add_footer(view)
-    @grid_rows_json = @rows.to_json.to_s.html_safe
-    @grid_cols_json = @cols.to_json.to_s.html_safe
 
     @lastaction = "compare_miq"
     @explorer = true if request.xml_http_request? && explorer_controller?
@@ -1759,9 +1757,8 @@ module ApplicationController::Compare
           drift_build_field_rows(view, section, fields)
         end
       end
-      @grid_rows_json = @rows.to_json.to_s.html_safe
-      @grid_cols_json = @cols.to_json.to_s.html_safe
     end
+
     @lastaction = "drift"
   end
 
