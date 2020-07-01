@@ -200,11 +200,25 @@ module OpsController::Settings::LabelTagMapping
     @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
   end
 
-  def label_tag_mapping_add(entity, label_name, cat_description)
-    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
-    cat_name_from_label = cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
+  def category_for_mapping(cat_description, entity, label_name)
+    if entity == ALL_ENTITIES
+      classification_lookup_with_cash_by(cat_description)
+    else
+      Classification.create_category!(:name         => category_name_from_label(entity, label_name),
+                                      :description  => cat_description,
+                                      :single_value => true,
+                                      :read_only    => true)
+    end
+  end
 
+  def category_name_from_label(entity, label_name)
+    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
+    cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
+  end
+
+  def label_tag_mapping_add(entity, label_name, cat_description)
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    
     if entity == ALL_ENTITIES
       category = classification_lookup_with_cash_by(cat_description)
       # Should not create a new category if "All entities". The chosen category should exist
@@ -220,7 +234,7 @@ module OpsController::Settings::LabelTagMapping
     else
       # UI currently can't allow 2 mappings for same (entity, label).
       category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
-      if category || label_exists || Classification.lookup_by_name(cat_name_from_label)
+      if category || label_exists || Classification.lookup_by_name(category_name_from_label(entity, label_name))
         flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
         return
       end
@@ -228,10 +242,7 @@ module OpsController::Settings::LabelTagMapping
 
     begin
       ActiveRecord::Base.transaction do
-        category ||= Classification.create_category!(:name => cat_name_from_label,
-                                                     :description  => cat_description,
-                                                     :single_value => true,
-                                                     :read_only    => true)
+        category = category_for_mapping(cat_description, entity, label_name)
 
         ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
                                          :label_name            => label_name,
