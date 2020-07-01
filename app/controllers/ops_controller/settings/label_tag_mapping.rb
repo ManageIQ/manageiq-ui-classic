@@ -12,7 +12,7 @@ module OpsController::Settings::LabelTagMapping
   # In any case, this requires different providers use disjoint sets of strings.
   MappableEntity = Struct.new(:prefix, :model)
 
-  ALL_ENTITIES = "_all_entities_".freeze
+  ALL_ENTITIES = "_all_entities_"
 
   MAPPABLE_ENTITIES = {
     # TODO: support per-provider "All Amazon" etc?
@@ -233,7 +233,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
-    if error = validate_mapping(cat_description, entity, label_name)
+    if (error = validate_mapping(cat_description, entity, label_name))
       flash_message_on_validation_error_for(error, entity, label_name, cat_description)
       return
     end
@@ -295,14 +295,14 @@ module OpsController::Settings::LabelTagMapping
 
     deleted = false
     ActiveRecord::Base.transaction do
-      if mapping.labeled_resource_type == ALL_ENTITIES
-        # Don't delete the category in this case because it was created outside of tag mapping
-        # Note: As a side effect, taggings of this category will not be removed from resources that had this mapping
-        deleted = mapping.destroy
-      else
-        # delete mapping and category - will indirectly delete tags
-        deleted = mapping.destroy && category.destroy
-      end
+      deleted = if mapping.labeled_resource_type == ALL_ENTITIES
+                  # Don't delete the category in this case because it was created outside of tag mapping
+                  # Note: As a side effect, taggings of this category will not be removed from resources that had this mapping
+                  mapping.destroy
+                else
+                  # delete mapping and category - will indirectly delete tags
+                  mapping.destroy && category.destroy
+                end
     end
 
     if deleted
