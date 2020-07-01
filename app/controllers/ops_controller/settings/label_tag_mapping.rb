@@ -218,6 +218,10 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_add(entity, label_name, cat_description)
     label_exists = ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    if label_exists
+      flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
+      return
+    end
 
     if entity == ALL_ENTITIES
       category = classification_lookup_with_cash_by(cat_description)
@@ -226,15 +230,10 @@ module OpsController::Settings::LabelTagMapping
         flash_message_on_validation_error_for(:tag_not_found, entity, label_name, cat_description)
         return
       end
-
-      if label_exists
-        flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
-        return
-      end
     else
       # UI currently can't allow 2 mappings for same (entity, label).
       category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
-      if category || label_exists || Classification.lookup_by_name(category_name_from_label(entity, label_name))
+      if category || Classification.lookup_by_name(category_name_from_label(entity, label_name))
         flash_message_on_validation_error_for(:unique_mapping, entity, label_name, cat_description)
         return
       end
