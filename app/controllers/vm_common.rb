@@ -468,6 +468,7 @@ module VmCommon
       @in_a_form = true
       replace_right_cell(:action => 'policy_sim', :refresh_breadcrumbs => false)
     else
+      @right_cell_text = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => vm_or_instance(@record))}
       @sb[:explorer] = nil
       render :template => 'vm/show'
     end
