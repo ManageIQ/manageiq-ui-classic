@@ -20,6 +20,7 @@ const fieldsMapper = {
   'dual-list-select': DualListSelect,
   'input-with-dynamic-prefix': InputWithDynamicPrefix,
   hr: () => <hr />,
+  note: props => <p>{props.label}</p>,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   [componentTypes.SELECT]: props => <components.SelectField placeholder={`<${__('Choose')}>`} {...props} />,
