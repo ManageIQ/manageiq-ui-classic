@@ -7,6 +7,16 @@ class ContainerTemplateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def download_data
+    assert_privileges('container_template_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('container_template_show')
+    super
+  end
+
   private
 
   def textual_group_list
