@@ -36,6 +36,10 @@ const validateCopyContent = (value, { name, content }, copy) => {
   return undefined;
 };
 
+const setFormat = (values) => {
+  return typeof values.content !== 'undefined' && values.content[0] === '{' ? 'json' : 'yaml';
+};
+
 const orchestrationFormSchema = (isEditing = false, isCopying = false, initialValues = {}) => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
@@ -90,9 +94,15 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     component: 'hr',
     name: 'form-separator',
   }, {
+    component: 'note',
+    name: 'form-note',
+    label: __('Note: Select format type below to apply syntax highlighting for better readability'),
+    className: '',
+  },{
     component: 'code-editor',
     name: 'content',
     label: __('Content'),
+    mode: setFormat(initialValues),
     modes: ['yaml', 'json'],
     validateOnMount: true,
     isRequired: true,
