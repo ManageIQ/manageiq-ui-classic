@@ -1,5 +1,6 @@
 module ContainersExternalLoggingSupportMixin
   def launch_external_logging
+    assert_privileges('ems_container_launch_external_logging')
     record = self.class.model.find(params[:id])
     ems = record.ext_management_system
     route_name = ems.external_logging_route_name
