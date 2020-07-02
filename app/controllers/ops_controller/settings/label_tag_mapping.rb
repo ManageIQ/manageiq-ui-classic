@@ -196,7 +196,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def classification_lookup_with_cash_by(cat_description)
-    @classification = {}
+    @classification ||= {}
     @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
   end
 
@@ -223,7 +223,8 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def validate_mapping(cat_description, entity, label_name)
-    return :unique_mapping if ContainerLabelTagMapping.where(:label_name => label_name).exists?
+    tag = classification_lookup_with_cash_by(cat_description)&.tag
+    return :unique_mapping if tag && ContainerLabelTagMapping.where(:label_name => label_name, :tag => tag).exists?
 
     if entity == ALL_ENTITIES
       :tag_not_found unless classification_lookup_with_cash_by(cat_description)
