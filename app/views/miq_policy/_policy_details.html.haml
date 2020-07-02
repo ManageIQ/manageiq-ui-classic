@@ -94,25 +94,32 @@
                 :size     => 15,
                 :class    => "form-control",
                 :style    => "overflow-x: scroll;",
-                :id       => "choices_chosen")
+                :id       => "choices_chosen",
+                :onchange => 'rightArrowSwitch()')
             %small
               = _("* If all Conditions are removed from a Policy, it will be unconditional and always evaluate to true.")
+            :javascript
+              function rightArrowSwitch() {
+                document.querySelector('#btn-mv-right').disabled = (document.querySelector('#choices_chosen').selectedIndex == -1);
+              }
 
           .col-md-1{:style => "padding: 10px"}
             .spacer
             .spacer
-            - [[_("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right'],
-               [_("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left'],
-               [_("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
-              %button.btn.btn-default.btn-block{:title => title,
-                                      :remote => true,
-                                      "data-submit" => chosen_div,
-                                      "data-method" => :post,
+            - [['btn-mv-right', _("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right',       true],
+               ['btn-rm-all',   _("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left', @edit[:new][:conditions].empty?],
+               ['btn-mv-left',  _("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left',        true]].each do |id, title, chosen_div, action, arrow_style, disabled|
+              %button.btn.btn-default.btn-block{:title       => title,
+                                      :id                    => id,
+                                      :disabled              => disabled,
+                                      :remote                => true,
+                                      "data-submit"          => chosen_div,
+                                      "data-method"          => :post,
                                       "data-miq_sparkle_on"  => true,
                                       "data-miq_sparkle_off" => true,
-                                      "data-click_url" => {:url => url_for_only_path(:action => 'policy_edit',
-                                                                           :button => action,
-                                                                           :id => @policy)}.to_json}
+                                      "data-click_url"       => {:url => url_for_only_path(:action => 'policy_edit',
+                                                                                           :button => action,
+                                                                                           :id => @policy)}.to_json}
                 %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
                 %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
             .spacer
@@ -127,7 +134,13 @@
                 :size     => 15,
                 :class    => "form-control",
                 :style    => "overflow-x: scroll;",
-                :id       => "members_chosen")
+                :id       => "members_chosen",
+                :onchange => "leftArrowSwitch()")
+            :javascript
+              function leftArrowSwitch() {
+                document.querySelector('#btn-mv-left').disabled = (document.querySelector('#members_chosen').selectedIndex == -1);
+              }
+
 
       - else
         %h3= _("Conditions")
