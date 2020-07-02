@@ -43,6 +43,16 @@ class EmsObjectStorageController < ApplicationController
     ems_form_fields
   end
 
+  def download_data
+    assert_privileges('ems_block_storage_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_block_storage_show')
+    super
+  end
+
   def breadcrumbs_options
     {
       :breadcrumbs => [
