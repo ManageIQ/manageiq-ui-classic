@@ -148,7 +148,7 @@ describe OpsController do
       post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'XXX'}
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
 
-      error_message = controller.instance_variable_get(:@flash_array).select {|x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\": Tag Category \"XXX\" must exist")
     end
 
