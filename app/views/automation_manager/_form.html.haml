@@ -1,2 +1,5 @@
-= render :partial => 'configuration_manager/shared_form', :locals => {:url => "/automation_manager", :model => "automationManagerModel"}
-
+- if @ems
+  -# FIXME: the redirect URL cannot be determined due to the explorer screen, but after a de-explorerization it should be possible to fix
+  = react('ProviderForm', :providerId => @ems.id.to_s, :redirect => automation_manager_path, :kind => 'automation', :title => ui_lookup(:model => 'ManageIQ::Providers::AutomationManager'))
+- else
+  = react('ProviderForm', :redirect => automation_manager_path, :kind => 'automation', :title => ui_lookup(:model => 'ManageIQ::Providers::AutomationManager'))
