@@ -57,20 +57,20 @@ describe OpsController do
 
     it "doesn't create mapping for all entities when label is already mapped" do
       use_form_to_create_all_entities_mapping(label_name, classification_department.name)
-      errors = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }
+      errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       controller.instance_variable_set(:@flash_array, nil)
 
       use_form_to_create_all_entities_mapping(label_name, classification_department.name)
-      error_message = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.name}\" already exists")
     end
 
     it "doesn't create mapping for all entities when category name doesn't exist" do
       use_form_to_create_all_entities_mapping(label_name, "XXX")
 
-      error_message = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\": Tag Category \"XXX\" must exist")
     end
 
@@ -78,13 +78,13 @@ describe OpsController do
 
     it "doesn't create mapping for all entities when tag from label is already created" do
       use_form_to_create_all_entities_mapping(label_name, classification_department.name)
-      errors = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }
+      errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       controller.instance_variable_set(:@flash_array, nil)
 
       use_form_to_create_all_entities_mapping(label_name, classification_department.name)
-      error_message = controller.instance_variable_get(:@flash_array).select{|x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.name}\" already exists")
     end
 
@@ -92,7 +92,7 @@ describe OpsController do
       use_form_to_create_all_entities_mapping(label_name, classification_department.name)
 
       mapping = ContainerLabelTagMapping.last
-      errors = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }
+      errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
       expect(mapping.labeled_resource_type).to eq(all_entities)
       expect(mapping.label_name).to eq(label_name)
@@ -113,7 +113,7 @@ describe OpsController do
       post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => classification_cost_center.name}
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
 
-      errors = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }
+      errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       mapping.reload
@@ -131,7 +131,7 @@ describe OpsController do
 
       post :label_tag_mapping_delete, :params => {:id => mapping.id.to_s}
 
-      errors = controller.instance_variable_get(:@flash_array).select{ |x| x[:level] == :error }
+      errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       expect(ContainerLabelTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_falsey
@@ -148,7 +148,7 @@ describe OpsController do
       post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'XXX'}
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
 
-      error_message = controller.instance_variable_get(:@flash_array).select{|x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).select {|x| x[:level] == :error }.first[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\": Tag Category \"XXX\" must exist")
     end
 
