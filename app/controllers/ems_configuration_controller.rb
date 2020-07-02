@@ -66,6 +66,16 @@ class EmsConfigurationController < ApplicationController
     end
   end
 
+  def download_data
+    assert_privileges('ems_configuration_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_configuration_show')
+    super
+  end
+
   private
 
   def self.model_to_name(_provmodel)
