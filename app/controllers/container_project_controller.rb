@@ -13,6 +13,16 @@ class ContainerProjectController < ApplicationController
     process_show_list(:named_scope => :active)
   end
 
+  def download_data
+    assert_privileges('container_project_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('container_project_show')
+    super
+  end
+
   private
 
   def textual_group_list
