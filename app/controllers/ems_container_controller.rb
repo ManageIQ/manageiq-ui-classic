@@ -129,6 +129,16 @@ class EmsContainerController < ApplicationController
     @ems.connection_configurations.try(:kubevirt).nil? ? "disabled" : "kubevirt"
   end
 
+  def download_data
+    assert_privileges('ems_container_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_container_show')
+    super
+  end
+
   private
 
   def textual_group_list
