@@ -68,7 +68,7 @@ module AutomateTreeHelper
       case params[:button]
       when 'submit'
         @edit[:new][@edit[:ae_field_typ]] = @edit[:active_id]
-        page << set_element_visible("#{edit_key}_div", true)
+        page << "$('##{edit_key}_remove').attr('disabled', false);"
 
         if @edit[:include_domain_prefix] != true && MiqAeDatastore.path_includes_domain?(@edit[:automate_tree_selected_path])
           selected_path = @edit[:automate_tree_selected_path]

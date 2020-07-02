@@ -1972,6 +1972,7 @@ Rails.application.routes.draw do
       :post => %w(
         add_update_method
         ae_tree_select
+        ae_tree_select_discard
         ae_tree_select_toggle
         change_tab
         copy_objects

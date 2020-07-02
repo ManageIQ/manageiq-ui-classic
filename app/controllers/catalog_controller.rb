@@ -250,6 +250,11 @@ class CatalogController < ApplicationController
         if params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
         end
+        %w[fqname reconfigure_fqname retire_fqname].each do |name|
+          if params[name.to_sym] && @edit[:new][name.to_sym].present?
+            page << "$('##{name}_remove').attr('disabled', false);"
+          end
+        end
         if changed != session[:changed]
           page << javascript_for_miq_button_visibility(changed)
           session[:changed] = changed
@@ -575,7 +580,7 @@ class CatalogController < ApplicationController
       x_node_set(@edit[:active_id], :automate_catalog_tree)
       page << javascript_hide("ae_tree_select_div")
       page << javascript_hide("blocker_div")
-      page << javascript_hide("#{ae_tree_key}_div")
+      page << "$('##{ae_tree_key}_remove').attr('disabled', true);"
       page << "$('##{ae_tree_key}').val('#{@edit[:new][ae_tree_key]}');"
       page << "$('##{ae_tree_key}').prop('title', '#{@edit[:new][ae_tree_key]}');"
       @edit[:ae_tree_select] = false
