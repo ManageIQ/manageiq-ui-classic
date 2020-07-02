@@ -39,11 +39,10 @@
 %hr
 #form_div
   = text_area_tag("template_content", @record.content, :style => "display:none;")
-  - if params[:action] != "explorer"
-    = render :partial => "/layouts/my_code_mirror",
-      :locals => {:text_area_id => "template_content",
-                  :mode         => "yaml",
-                  :line_numbers => true,
-                  :read_only    => true}
-    :javascript
-      ManageIQ.editor.refresh();
+  = render :partial => "/layouts/my_code_mirror",
+    :locals => {:text_area_id => "template_content",
+                :mode         => "yaml",
+                :line_numbers => true,
+                :read_only    => true}
+  :javascript
+    ManageIQ.editor.refresh();
