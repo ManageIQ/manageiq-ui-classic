@@ -208,6 +208,7 @@ class EmsInfraController < ApplicationController
   end
 
   def open_admin_ui_done
+    assert_privileges("ems_infra_admin_ui")
     task = MiqTask.find(params[:task_id])
 
     if task.results_ready? && task.task_results.kind_of?(String)
@@ -225,6 +226,16 @@ class EmsInfraController < ApplicationController
 
   def restful?
     true
+  end
+
+  def download_data
+    assert_privileges('ems_infra_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_infra_show')
+    super
   end
 
   private
