@@ -294,12 +294,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
 
     // disabled for specific types
-    var blacklist = [
+    var disabled_types_list = [
       'azure_stack',
       'gce',
       'kubevirt',
     ];
-    return ! blacklist.includes($scope.emsCommonModel.emstype);
+    return ! disabled_types_list.includes($scope.emsCommonModel.emstype);
   }
 
   $scope.hideDisabledTabs = function() {
