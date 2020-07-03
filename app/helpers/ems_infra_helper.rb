@@ -21,4 +21,8 @@ module EmsInfraHelper
       _("Number of %{host_type} Hosts") % {:host_type => field_name.underscore.humanize.titleize}
     end
   end
+
+  def edit_redirect_path(lastaction, ems)
+    lastaction == 'show_list' ? ems_infras_path : ems_infra_path(ems)
+  end
 end
