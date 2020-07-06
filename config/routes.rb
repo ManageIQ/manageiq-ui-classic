@@ -1306,7 +1306,6 @@ Rails.application.routes.draw do
       :get  =>  %w(
         download_data
         download_summary_pdf
-        perf_top_chart
         protect
         show_list
         show
@@ -1347,7 +1346,6 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        perf_top_chart
         protect
         show_list
         show
