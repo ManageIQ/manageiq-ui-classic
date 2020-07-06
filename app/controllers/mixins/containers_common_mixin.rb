@@ -60,6 +60,7 @@ module ContainersCommonMixin
   end
 
   def ct_form_field_changed
+    assert_privileges("service_dialog_from_ct")
     dialog_creation_form_field_changed("ct_edit__#{params[:id]}")
   end
 
