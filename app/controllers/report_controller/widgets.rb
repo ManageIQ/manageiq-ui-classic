@@ -52,6 +52,8 @@ module ReportController::Widgets
   end
 
   def widget_edit
+    assert_privileges("widget_edit")
+
     case params[:button]
     when "cancel"
       @widget = MiqWidget.find(session[:edit][:widget_id]) if session[:edit] && session[:edit][:widget_id]
@@ -124,8 +126,13 @@ module ReportController::Widgets
     widget_refresh
   end
 
+  def feature_for_widget_action
+    @edit && @edit[:widget_id] ? "widget_edit" : "widget_new"
+  end
   # AJAX driven routine to check for changes in ANY field on the form
   def widget_form_field_changed
+    assert_privileges(feature_for_widget_action)
+
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
     widget_get_form_vars
     render :update do |page|
@@ -168,6 +175,8 @@ module ReportController::Widgets
 
   # Shortcut was dropped, reorder the :shortcuts hash
   def widget_shortcut_dd_done
+    assert_privileges(feature_for_widget_action)
+
     new_hash = {}
     params[:col1].each { |sc| new_hash[sc.to_i] = @edit[:new][:shortcuts][sc.to_i] }
     @edit[:new][:shortcuts] = new_hash
@@ -181,6 +190,8 @@ module ReportController::Widgets
 
   # Shortcut was removed
   def widget_shortcut_remove
+    assert_privileges(feature_for_widget_action)
+
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
     @edit[:new][:shortcuts].delete(params[:shortcut].to_i)
@@ -198,6 +209,8 @@ module ReportController::Widgets
 
   # Shortcut text reset
   def widget_shortcut_reset
+    assert_privileges(feature_for_widget_action)
+
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
     @edit[:new][:shortcuts][params[:shortcut].to_i] = MiqShortcut.find(params[:shortcut].to_i).description

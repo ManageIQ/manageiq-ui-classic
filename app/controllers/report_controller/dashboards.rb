@@ -52,6 +52,8 @@ module ReportController::Dashboards
   end
 
   def db_copy
+    assert_privileges("db_copy")
+
     case params[:button]
     when "cancel"
       db_copy_cancel
@@ -85,6 +87,8 @@ module ReportController::Dashboards
   end
 
   def dashboard_get
+    assert_privileges("db_copy")
+
     if params[:name]
       dashboard = MiqWidgetSet.where(:name => params[:name]).to_a
       render :json => {:length => dashboard.length}
@@ -99,6 +103,8 @@ module ReportController::Dashboards
   end
 
   def dashboard_render
+    assert_privileges("db_copy")
+
     get_node_info
     @edit = session[:edit] = @sb[:action] = nil # clean out the saved info
     @dashboard = nil
@@ -107,6 +113,8 @@ module ReportController::Dashboards
   end
 
   def db_edit
+    assert_privileges("db_edit")
+
     case params[:button]
     when "cancel"
       @dashboard = MiqWidgetSet.find_by(:id => session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
@@ -175,6 +183,8 @@ module ReportController::Dashboards
   end
 
   def db_form_field_changed
+    assert_privileges(session.fetch_path(:edit, :db_id) ? "db_edit" : "db_new")
+
     return unless load_edit("db_edit__#{params[:id]}", "replace_cell__explorer")
     db_get_form_vars
     render :update do |page|
@@ -197,6 +207,8 @@ module ReportController::Dashboards
 
   # A widget has been dropped
   def db_widget_dd_done
+    assert_privileges("db_delete")
+
     set_edit_new_cols
     db_available_widgets_options
     render :update do |page|
@@ -214,6 +226,8 @@ module ReportController::Dashboards
   end
 
   def db_widget_remove
+    assert_privileges("db_delete")
+
     return unless load_edit("db_edit__#{params[:id]}", "replace_cell__explorer")
     @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
     w = params[:widget].to_i
@@ -414,6 +428,8 @@ module ReportController::Dashboards
   end
 
   def db_seq_edit_screen
+    assert_privileges("db_seq_edit")
+
     @in_a_form = true
     @edit = {}
     @edit[:new] = {}

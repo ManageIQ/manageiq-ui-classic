@@ -20,6 +20,8 @@ module ReportController::Menus
   end
 
   def menu_editor
+    assert_privileges("miq_report_menu_editor")
+
     menu_set_form_vars if %w[explorer tree_select x_history].include?(params[:action])
     @in_a_form = true
     @menu_roles_tree = if @menu_lastaction != "menu_editor"
@@ -48,6 +50,8 @@ module ReportController::Menus
   end
 
   def menu_folder_message_display
+    assert_privileges("miq_report_menu_editor")
+
     text = if params[:typ] == "delete"
              _("Can not delete folder, one or more reports in the selected folder are not owned by your group")
            else
@@ -58,6 +62,8 @@ module ReportController::Menus
 
   # AJAX driven routine to check for changes in ANY field on the user form
   def menu_field_changed
+    assert_privileges("miq_report_menu_editor")
+
     return unless load_edit("menu_edit__#{session[:role_choice] ? session[:role_choice] : "new"}", "replace_cell__explorer")
     menu_get_form_vars
     @in_a_form = true
@@ -172,6 +178,8 @@ module ReportController::Menus
   end
 
   def discard_changes
+    assert_privileges("miq_report_menu_editor")
+
     @menu_lastaction = "discard_changes"
     id               = session[:node_selected].split('__')
     @selected        = id[1].split(':')
@@ -186,6 +194,8 @@ module ReportController::Menus
   end
 
   def menu_update
+    assert_privileges("miq_report_menu_editor")
+
     menu_get_form_vars
     # @changed = (@edit[:new] != @edit[:current])
     if params[:button] == "cancel"

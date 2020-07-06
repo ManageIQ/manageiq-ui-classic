@@ -1,7 +1,19 @@
 module Mixins
   module SavedReportPaging
+    def feature_identifier_for_paging
+      if self.class == ChargebackReportController
+        "chargeback_reports_show"
+      elsif session.fetch_path(:sandboxes, :report, :active_tree) == "savedreports_tree"
+        "miq_report_saved_reports_view"
+      else
+        "miq_report_view"
+      end
+    end
+
     # Handle paging bar controls
     def saved_report_paging
+      assert_privileges(feature_identifier_for_paging)
+
       # Check new paging parms coming in
       if params[:ppsetting]
         @settings.store_path(:perpage, :reports, params[:ppsetting].to_i)
