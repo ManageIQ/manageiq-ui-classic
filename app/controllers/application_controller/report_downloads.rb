@@ -96,6 +96,8 @@ module ApplicationController::ReportDownloads
   # Render report in csv/txt format asynchronously
   def render_report_data
     render_type = RENDER_TYPES[params[:render_type]]
+    raise "Render type #{params[:render_type]} is not supported" unless render_type
+
     assert_privileges("render_report_#{render_type}")
 
     if params[:task_id]
@@ -114,7 +116,9 @@ module ApplicationController::ReportDownloads
   end
 
   def print_report
-    result = MiqReportResult.find(params[:id])
+    assert_privileges("render_report_pdf")
+
+    result = MiqReportResult.for_user(current_user).find(params[:id])
 
     @options = report_print_options(result.report, result) # used by the layouts/print
     render(
@@ -129,6 +133,11 @@ module ApplicationController::ReportDownloads
 
   # Send rendered report data
   def send_report_data
+    render_type = RENDER_TYPES[@sb[:render_type].to_s]
+    raise "Render type #{@sb[:render_type]} is not supported" unless render_type
+
+    assert_privileges("render_report_#{render_type}")
+
     return unless @sb[:render_rr_id]
 
     disable_client_cache
