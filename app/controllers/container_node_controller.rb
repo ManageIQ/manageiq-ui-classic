@@ -21,6 +21,7 @@ class ContainerNodeController < ApplicationController
   helper_method :textual_group_list
 
   def launch_cockpit
+    assert_privileges('cockpit_console')
     node = identify_record(params[:id], ContainerNode)
 
     disable_client_cache
@@ -42,6 +43,16 @@ class ContainerNodeController < ApplicationController
 
   def self.custom_display_modes
     %w[ad_hoc_metrics]
+  end
+
+  def download_data
+    assert_privileges('container_node_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('container_node_show')
+    super
   end
 
   def breadcrumbs_options
