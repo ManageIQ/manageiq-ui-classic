@@ -24,6 +24,7 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def launch_console
+    assert_privileges('ems_physical_infra_console')
     @ems = find_record_with_rbac(model, params[:id])
     $log.info('Console URL - ' + @ems.console_url.to_s)
     javascript_open_window(@ems.console_url.to_s)
@@ -36,6 +37,7 @@ class EmsPhysicalInfraController < ApplicationController
   # This method handle view objects of page
   # +/ems_physical_infra/change_password/<id>+
   def change_password
+    assert_privileges('ems_physical_infra_edit')
     @record = find_record_with_rbac(model, params[:id])
     @title = _("Change Password for Physical Infrasctructure Provider '%{provider_name}'") % {:provider_name => @record.name}
     @in_a_form = true # to show the page on all content frame
@@ -43,6 +45,16 @@ class EmsPhysicalInfraController < ApplicationController
 
   def restful?
     true
+  end
+
+  def download_data
+    assert_privileges('ems_physical_infra_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_physical_infra_show')
+    super
   end
 
   private
