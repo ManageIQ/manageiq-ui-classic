@@ -9,14 +9,17 @@ class EmsPhysicalInfraDashboardController < ApplicationController
   after_action :set_session_data
 
   def aggregate_status_data
+    assert_privileges('ems_physical_infra_show')
     render :json => {:data => aggregate_status(params[:id])}
   end
 
   def recent_servers_data
+    assert_privileges('ems_physical_infra_show')
     render :json => {:data => recent_servers(params[:id])}
   end
 
   def servers_group_data
+    assert_privileges('ems_physical_infra_show')
     render :json => {:data => servers_group(params[:id])}
   end
 
