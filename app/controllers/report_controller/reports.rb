@@ -21,6 +21,8 @@ module ReportController::Reports
   end
 
   def show_preview
+    assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
+
     unless params[:task_id]                       # First time thru, kick off the report generate task
       @rpt = create_report_object                 # Build a report object from the latest edit fields
       initiate_wait_for_task(:task_id => @rpt.async_generate_table(:userid     => session[:userid],
@@ -93,11 +95,15 @@ module ReportController::Reports
 
   # Generating sample chart
   def sample_chart
+    assert_privileges("view_graph")
+
     render ManageIQ::Reporting::Charting.render_format => ManageIQ::Reporting::Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
   end
 
   # generate preview chart when editing report
   def preview_chart
+    assert_privileges("view_graph")
+
     render ManageIQ::Reporting::Charting.render_format => session[:edit][:chart_data]
     session[:edit][:chart_data] = nil
   end
@@ -143,6 +149,8 @@ module ReportController::Reports
   end
 
   def rep_change_tab
+    assert_privileges("miq_report_view")
+
     @sb[:active_tab] = params[:tab_id]
     replace_right_cell
   end

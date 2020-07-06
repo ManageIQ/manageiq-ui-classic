@@ -26,6 +26,8 @@ class ReportController < ApplicationController
   end
 
   def export_field_changed
+    assert_privileges("miq_report_export")
+
     @sb[:choices_chosen] = params[:choices_chosen] ? params[:choices_chosen].split(',') : []
     head :ok
   end
@@ -65,6 +67,8 @@ class ReportController < ApplicationController
   end
 
   def upload
+    assert_privileges("miq_report_export")
+
     @sb[:flash_msg] = []
     if params.fetch_path(:upload, :file) && File.size(params[:upload][:file].tempfile).zero?
       redirect_to(:action      => 'explorer',
@@ -102,17 +106,27 @@ class ReportController < ApplicationController
     when "edit"
       redirect_to(:action => "miq_report_edit", :tab => params[:tab])
     when "schedules"
+      assert_privileges("miq_report_schedules")
+
       redirect_to(:action => params[:tab])
     when "saved_reports"
+      assert_privileges("miq_report_saved_reports")
+
       redirect_to(:action => params[:tab])
     when "menueditor"
+      assert_privileges("miq_report_menu_editor")
+
       redirect_to(:action => "menu_edit")
     else
+      assert_privileges("miq_report")
+
       redirect_to(:action => params[:tab], :id => params[:id])
     end
   end
 
   def explorer
+    assert_privileges("miq_report")
+
     @explorer = true
     @lastaction      = "explorer"
     @ght_type        = nil
@@ -209,11 +223,15 @@ class ReportController < ApplicationController
 
   # called to refresh report and from all saved report list view
   def get_report
+    assert_privileges("miq_report_view")
+
     self.x_node = params[:id]
     replace_right_cell
   end
 
   def export_widgets
+    assert_privileges("miq_report_export")
+
     if params[:widgets].present?
       widgets = MiqWidget.where(:id => params[:widgets])
       widget_yaml = MiqWidget.export_to_yaml(widgets, MiqWidget)
@@ -227,6 +245,8 @@ class ReportController < ApplicationController
   end
 
   def upload_widget_import_file
+    assert_privileges("miq_report_export")
+
     upload_file = params.fetch_path(:upload, :file)
 
     if upload_file.blank?
@@ -251,6 +271,8 @@ class ReportController < ApplicationController
   end
 
   def import_widgets
+    assert_privileges("miq_report_export")
+
     if params[:commit] == _('Commit')
       import_file_upload = ImportFileUpload.where(:id => params[:import_file_upload_id]).first
       if import_file_upload

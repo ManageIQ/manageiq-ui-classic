@@ -145,6 +145,8 @@ module ReportController::Reports::Editor
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
+
     return unless load_edit("report_edit__#{params[:id]}", "replace_cell__explorer")
     get_form_vars
     build_edit_screen
@@ -165,6 +167,8 @@ module ReportController::Reports::Editor
   end
 
   def filter_change
+    assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
+
     return unless load_edit("report_edit__#{params[:id]}", "replace_cell__explorer")
     @expkey = $&.to_sym if params[:button].to_s =~ /^(record|display)_filter$/
     render :update do |page|
