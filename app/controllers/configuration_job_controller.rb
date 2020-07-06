@@ -18,6 +18,8 @@ class ConfigurationJobController < ApplicationController
   end
 
   def parameters
+    assert_privileges("configuration_job_view")
+
     show_association('parameters', _('Parameters'), :parameters, OrchestrationStackParameter)
   end
 
@@ -29,12 +31,16 @@ class ConfigurationJobController < ApplicationController
 
     params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
     @refresh_div = "main_div" # Default div for button.rjs to refresh
+
     case params[:pressed]
     when "configuration_job_delete"
       configuration_job_delete
     when "configuration_job_tag"
       tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
     when "configuration_job_reload"
+      # TODO: this line is not needed when feature name "configuration_job_reload" will exist
+      assert_privileges("configuration_job_control")
+
       replace_gtl_main_div
       return
     end
