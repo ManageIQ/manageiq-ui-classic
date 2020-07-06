@@ -11,6 +11,16 @@ class ContainerReplicatorController < ApplicationController
 
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
+  def download_data
+    assert_privileges('container_replicator_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('container_replicator_show')
+    super
+  end
+
   private
 
   def textual_group_list
