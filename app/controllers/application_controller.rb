@@ -1216,7 +1216,7 @@ class ApplicationController < ActionController::Base
     if !fetch_data && @report_data_additional_options.nil?
       process_show_list_options(options, db)
     end
-    unless @edit.nil?
+    if @in_a_form && @edit.present?
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
