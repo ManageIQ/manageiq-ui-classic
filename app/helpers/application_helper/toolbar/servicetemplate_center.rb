@@ -36,8 +36,8 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
         button(
           :catalogitem_copy,
           'pficon pficon-edit fa-lg',
-          N_('This Item cannot be copied'),
-          N_('Copy Selected Item'),
+          t = N_('Copy Selected Item'),
+          t,
           :send_checked => true,
           :klass        => ApplicationHelper::Button::CatalogItemCopyButton
         ),
