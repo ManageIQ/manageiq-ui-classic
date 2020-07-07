@@ -133,5 +133,6 @@ class EmsClusterController < ApplicationController
   end
 
   menu_section :inf
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end

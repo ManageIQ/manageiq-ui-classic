@@ -1987,9 +1987,6 @@ Rails.application.routes.draw do
         custom_button_new
         custom_button_edit
         edit
-        exp_button
-        exp_changed
-        exp_token_pressed
         listnav_search_selected
         new
         update_del
@@ -2001,6 +1998,7 @@ Rails.application.routes.draw do
         x_show
       ) +
         adv_search_post +
+        exp_post +
         save_post
     },
 

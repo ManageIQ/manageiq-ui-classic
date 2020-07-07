@@ -256,5 +256,6 @@ class VmCloudController < ApplicationController
   end
 
   menu_section :clo
+  feature_for_actions %w[instances_filter_accord images_filter_accord], *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end

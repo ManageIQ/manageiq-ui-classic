@@ -26,4 +26,6 @@ class ContainerRouteController < ApplicationController
   end
 
   menu_section :cnt
+
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end
