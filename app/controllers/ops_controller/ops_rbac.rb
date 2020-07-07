@@ -1115,6 +1115,7 @@ module OpsController::OpsRbac
     if params[:use_filter_expression]
       @edit[:new][:use_filter_expression] = params[:use_filter_expression]
       @group = MiqGroup.find_by(:id => @edit[:group_id])
+      @sb[:active_rbac_group_tab] = 'rbac_customer_tags' # may not be set correctly because of lazy loading
       rbac_group_right_tree(@edit[:new][:belongsto].keys)
       if params[:use_filter_expression] == 'false'
         @edit[:new][:use_filter_expression] = false

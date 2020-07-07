@@ -541,7 +541,7 @@ describe OpsController do
              :description           => "Test",
              :role                  => @role.id,
              :belongsto             => {},
-             :filters               => {'managed/env' => '/managed/env'}}
+             :filters               => {'managed/department' => '/managed/department/tag1'}}
       allow(controller).to receive(:replace_right_cell)
       controller.params = {:use_filter_expression => "true", :id => "new"}
 
