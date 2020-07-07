@@ -9,6 +9,8 @@ class ContainerReplicatorController < ApplicationController
 
   menu_section :cnt
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+
   def download_data
     assert_privileges('container_replicator_show_list')
     super

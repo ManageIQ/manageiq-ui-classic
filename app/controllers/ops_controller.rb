@@ -930,6 +930,6 @@ class OpsController < ApplicationController
   end
 
   menu_section :set
-
+  feature_for_actions %w[rbac_group_add rbac_group_edit], *EXP_EDITOR_ACTIONS
   has_custom_buttons
 end

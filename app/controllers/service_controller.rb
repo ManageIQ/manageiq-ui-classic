@@ -560,5 +560,6 @@ class ServiceController < ApplicationController
   end
 
   menu_section :svc
+  feature_for_actions "service_view", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end
