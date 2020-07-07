@@ -50,6 +50,7 @@ module ContainerServiceMixin
   def create_delete_data(create_trend, delete_trend)
     if create_trend.any?
       {
+        :dataAvailable => true,
         :xData    => create_trend.keys,
         :yCreated => create_trend.values.map(&:round),
         :yDeleted => delete_trend.values.map(&:round)
@@ -71,6 +72,7 @@ module ContainerServiceMixin
   def trend_data(trend)
     if trend.any?
       {
+        :dataAvailable => true,
         :xData => trend.keys,
         :yData => trend.values.map { |value| (value || 0).round }
       }
@@ -154,6 +156,7 @@ module ContainerServiceMixin
 
     if used_cpu.any?
       {
+        :dataAvailable => true,
         :interval_name => "realtime",
         :xy_data       => utilization_data(used_cpu, total_cpu, used_mem, total_mem)
       }
@@ -173,6 +176,7 @@ module ContainerServiceMixin
 
     if used_cpu.any?
       {
+        :dataAvailable => true,
         :interval_name => "hourly",
         :xy_data       => utilization_data(used_cpu, total_cpu, used_mem, total_mem)
       }
@@ -192,6 +196,7 @@ module ContainerServiceMixin
 
     if used_cpu.any?
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => utilization_data(used_cpu, total_cpu, used_mem, total_mem)
       }
