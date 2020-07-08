@@ -77,12 +77,14 @@ describe ContainerDashboardService do
 
       expect(node_utilization_single_provider).to eq(
         :cpu    => {
+          :dataAvailable => true,
           :used  => 2,
           :total => 2,
           :xData => [current_date],
           :yData => [2]
         },
         :memory => {
+          :dataAvailable => true,
           :used  => 1,
           :total => 2,
           :xData => [current_date],
@@ -92,12 +94,14 @@ describe ContainerDashboardService do
 
       expect(node_utilization_all_providers).to eq(
         :cpu    => {
+          :dataAvailable => true,
           :used  => 3,
           :total => 3,
           :xData => [current_date],
           :yData => [3.0]
         },
         :memory => {
+          :dataAvailable => true,
           :used  => 2,
           :total => 3,
           :xData => [current_date],
@@ -382,11 +386,13 @@ describe ContainerDashboardService do
       daily_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
 
       expect(daily_network_trends_single_provider).to eq(
+        :dataAvailable => true,
         :xData => [previous_date, current_date],
         :yData => [2000, 1000]
       )
 
       expect(daily_network_trends).to eq(
+        :dataAvailable => true,
         :xData => [previous_date, current_date],
         :yData => [2000, 2500]
       )
@@ -443,15 +449,16 @@ describe ContainerDashboardService do
       ems_kubernetes.metric_rollups << nil_fields_metric.dup
 
       hourly_network_trends = described_class.new(nil, controller).network_metrics[:xy_data]
-      hourly_network_trends_single_provider =
-        described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
+      hourly_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
 
       expect(hourly_network_trends_single_provider).to eq(
+        :dataAvailable => true,
         :xData => [previous_date.beginning_of_hour.utc, current_date.beginning_of_hour.utc],
         :yData => [2000, 1000]
       )
 
       expect(hourly_network_trends).to eq(
+        :dataAvailable => true,
         :xData => [previous_date.beginning_of_hour.utc, current_date.beginning_of_hour.utc],
         :yData => [2000, 2500]
       )
