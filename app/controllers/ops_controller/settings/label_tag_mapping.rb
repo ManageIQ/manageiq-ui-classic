@@ -195,14 +195,14 @@ module OpsController::Settings::LabelTagMapping
     javascript_flash
   end
 
-  def classification_lookup_with_cash_by(cat_description)
+  def classification_lookup_with_cache_by(cat_description)
     @classification ||= {}
     @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
   end
 
   def category_for_mapping(cat_description, entity, label_name)
     if entity == ALL_ENTITIES
-      classification_lookup_with_cash_by(cat_description)
+      classification_lookup_with_cache_by(cat_description)
     else
       Classification.create_category!(:name         => category_name_from_label(entity, label_name),
                                       :description  => cat_description,
@@ -223,11 +223,11 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def validate_mapping(cat_description, entity, label_name)
-    tag = classification_lookup_with_cash_by(cat_description)&.tag
+    tag = classification_lookup_with_cache_by(cat_description)&.tag
     return :unique_mapping if tag && ContainerLabelTagMapping.where(:label_name => label_name, :tag => tag).exists?
 
     if entity == ALL_ENTITIES
-      :tag_not_found unless classification_lookup_with_cash_by(cat_description)
+      :tag_not_found unless classification_lookup_with_cache_by(cat_description)
     elsif find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
       :unique_mapping
     end
