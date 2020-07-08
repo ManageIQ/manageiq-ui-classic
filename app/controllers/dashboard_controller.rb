@@ -155,7 +155,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_chart_data
-    assert_privileges("widget_generate_content")
+    assert_privileges("dashboard_view")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     widget_content = widget.contents_for_user(current_user)
     blank = widget_content.blank?
@@ -176,7 +176,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_menu_data
-    assert_privileges("widget_generate_content")
+    assert_privileges("dashboard_view")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
                   role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
@@ -194,7 +194,7 @@ class DashboardController < ApplicationController
   private :widget_minimized?
 
   def widget_report_data
-    assert_privileges("widget_generate_content")
+    assert_privileges("dashboard_view")
     widget = find_record_with_rbac(MiqWidget, params[:id])
     widget_content = widget.contents_for_user(current_user)
     blank = widget_content.blank?
@@ -386,7 +386,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_refresh
-    assert_privileges("widget_generate_content")
+    assert_privileges("dashboard_view")
     w = MiqWidget.find(params[:widget])
     task_id = w.queue_generate_content
     if task_id
