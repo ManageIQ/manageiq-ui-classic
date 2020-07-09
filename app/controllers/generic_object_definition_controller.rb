@@ -324,8 +324,8 @@ class GenericObjectDefinitionController < ApplicationController
   def features
     [
       {
-        :role  => "god_accord",
-        :name  => :god,
+        :role  => "generic_object_definition",
+        :name  => :generic_object_definitions,
         :title => _("Generic Object Classes"),
       },
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
