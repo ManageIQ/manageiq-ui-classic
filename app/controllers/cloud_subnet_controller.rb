@@ -313,7 +313,7 @@ class CloudSubnetController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Subnets"), :url => controller_url},
       ],
     }

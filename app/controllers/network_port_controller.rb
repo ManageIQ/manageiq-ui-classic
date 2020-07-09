@@ -22,7 +22,7 @@ class NetworkPortController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Network Ports"), :url => controller_url},
       ],
       :record_info => @router,

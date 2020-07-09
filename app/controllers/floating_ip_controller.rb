@@ -215,7 +215,7 @@ class FloatingIpController < ApplicationController
     record_name = :address
     {
       :breadcrumbs  => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Floating IPs"), :url => controller_url},
       ],
       :record_info  => record_info,

@@ -8,7 +8,7 @@ class NetworkTopologyController < TopologyController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Topology")},
       ],
     }

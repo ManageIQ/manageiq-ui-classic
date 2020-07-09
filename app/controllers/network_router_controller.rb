@@ -392,7 +392,7 @@ class NetworkRouterController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Network Routers"), :url => controller_url},
       ],
       :record_info => @router,

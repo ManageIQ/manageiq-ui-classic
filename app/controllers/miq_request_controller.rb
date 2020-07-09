@@ -306,7 +306,7 @@ class MiqRequestController < ApplicationController
   #   Example: '/miq_request?typ=service' --> "'service'".
   # The returned value needs to be equal to the first argument to Menu::Section.new(...)
   #   Example:  Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [ ... --> ":clo"
-  def menu_section_id(parms)
+  def menu_section_id(parms = {})
     parms[:typ] == 'ae' ? :automate : :svc
   end
 
