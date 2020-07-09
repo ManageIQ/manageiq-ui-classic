@@ -8,6 +8,7 @@ class UtilizationController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def index
+    assert_privileges('utilization')
     @explorer = true
     @right_cell_text = _("Utilization Summary")
     @sb[:active_tab] = "summary"
@@ -31,6 +32,7 @@ class UtilizationController < ApplicationController
 
   # Process changes to capacity charts
   def chart_chooser
+    assert_privileges('utilization')
     unless params[:task_id] # Only do this first time thru
       @sb[:options][:chart_date] = params[:miq_date_1] if params[:miq_date_1]
       @sb[:options][:chart_date] = params[:miq_date_2] if params[:miq_date_2]
@@ -63,6 +65,7 @@ class UtilizationController < ApplicationController
 
   # Send the current utilization report data in text, CSV, or PDF
   def report_download
+    assert_privileges('utilization')
     report = MiqReport.new(:title     => @sb[:title],
                            :cols      => cols = %w[section item value],
                            :col_order => cols,
@@ -92,6 +95,7 @@ class UtilizationController < ApplicationController
   end
 
   def change_tab
+    assert_privileges('utilization')
     @sb[:active_tab] = params[:tab_id]
 
     # build timeline data when coming back to Summary tab
