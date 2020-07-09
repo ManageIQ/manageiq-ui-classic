@@ -7,32 +7,39 @@ class EmsInfraDashboardController < ApplicationController
   after_action :set_session_data
 
   def show
+    assert_privileges('ems_infra_show')
     if params[:id].nil?
       @breadcrumbs.clear
     end
   end
 
   def data
+    assert_privileges('ems_infra_show')
     render :json => {:data => collect_data(params[:id])}
   end
 
   def cluster_metrics_data
+    assert_privileges('ems_infra_show')
     render :json => {:data => cluster_heatmap_data(params[:id])}
   end
 
   def recent_hosts_data
+    assert_privileges('ems_infra_show')
     render :json => {:data => recent_hosts(params[:id])}
   end
 
   def recent_vms_data
+    assert_privileges('ems_infra_show')
     render :json => {:data => recent_vms(params[:id])}
   end
 
   def ems_utilization_data
+    assert_privileges('ems_infra_show')
     render :json => {:data => ems_data(params[:id])}
   end
 
   def aggregate_status_data
+    assert_privileges('ems_infra_show')
     render :json => {:data => aggregate_status(params[:id])}
   end
 
