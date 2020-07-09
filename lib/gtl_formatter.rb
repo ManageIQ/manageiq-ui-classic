@@ -1,6 +1,11 @@
 class GtlFormatter
   extend ActionView::Helpers::DateHelper
 
+  VIEW_WITH_CUSTOM_ICON = %w[
+    Service
+    ServiceTemplate
+  ]
+
   COLUMN_WITH_ICON = {
     'policies_applied'          => 'policies_applied_image',
     'authentication_status'     => 'authentication_status_image',
@@ -40,7 +45,7 @@ class GtlFormatter
     last_scan_on
   ].freeze
 
-  def self.format_cols(view, row, controller)
+  def self.format_cols(view, row, controller, options)
     cols = []
 
     state = {"state" => :state_format}
@@ -72,7 +77,8 @@ class GtlFormatter
         "prov_type" => :service_template_format,
       },
     }
-
+    cols.push(format_icon_column(view, row, options[:clickable])) if VIEW_WITH_CUSTOM_ICON.include?(view.db)
+    record = listicon_item(view, row['id'])
     view.col_order.each_with_index do |col, col_idx|
       next if view.column_is_hidden?(col, controller)
 
@@ -84,7 +90,6 @@ class GtlFormatter
         celltext, span = send(special_cases[view.extras[:filename]][view.col_order[col_idx]], row[col])
       elsif COLUMN_WITH_IMAGE.keys.include?(col)
         # Generate html for the list icon
-        record = listicon_item(view, row['id'])
         icon, icon2, image = send(COLUMN_WITH_IMAGE[col], record)
         text = format_col_for_display(view, row, col)
         item = {:title => text,
@@ -94,7 +99,6 @@ class GtlFormatter
                 :text  => text}.compact
       elsif COLUMN_WITH_ICON.keys.include?(col)
         # Generate html for the list icon
-        record = listicon_item(view, row['id'])
         icon = send(COLUMN_WITH_ICON[col], record)
         text = format_col_for_display(view, row, col)
         item = {:title => text,
@@ -110,20 +114,20 @@ class GtlFormatter
       item[:span] = span if span.present?
       cols.push(item)
     end
+
+    # Append a button if @row_button is set and the button is defined in the related decorator
+    button = record.decorate.try(:gtl_button_cell) if options[:row_button]
+    cols.push(button) if button
+
     cols
   end
 
-  def self.format_icon_column
+  def self.format_icon_column(view, row, clickable)
     item = listicon_item(view, row['id'])
     icon, icon2, image = fonticon_or_fileicon(item)
 
     # Clickable should be false only when it's explicitly set to false
-    not_clickable = if params
-                      (params.fetch_path(:additional_options, :clickable) == false)
-                    else
-                      false
-                    end
-    {:title => not_clickable ? nil : _('View this item'),
+    {:title => clickable == false ? nil : _('View this item'),
      :image => ActionController::Base.helpers.image_path(image.to_s),
      :icon  => icon,
      :icon2 => icon2}.compact

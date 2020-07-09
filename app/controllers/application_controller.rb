@@ -797,14 +797,11 @@ class ApplicationController < ActionController::Base
         new_row[:cells] << {:is_checkbox => true}
       end
 
-      # # Generate html for the list icon
-      new_row[:cells].concat(::GtlFormatter.format_icon_column(view, row, self)) if %w(Service ServiceTemplate).include?(view.db) || @row_button
-
-      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
-
-      # Append a button if @row_button is set and the button is defined in the related decorator
-      button = item.decorate.try(:gtl_button_cell) if @row_button
-      new_row[:cells] << button if button
+      options = {
+        :clickable  => params.fetch_path(:additional_options, :clickable),
+        :row_button => @row_button
+      }
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self, options))
     end
 
     root
