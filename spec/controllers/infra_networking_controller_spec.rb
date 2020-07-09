@@ -36,7 +36,6 @@ describe InfraNetworkingController do
 
         expect(response.body).to include("modelName: 'Switch'")
         expect(response.body).to include("activeTree: 'infra_networking_tree'")
-        expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(response.body).to include("showUrl: '/infra_networking/x_show/'")
       end

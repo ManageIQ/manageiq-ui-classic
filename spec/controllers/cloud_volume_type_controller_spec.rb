@@ -89,8 +89,7 @@ describe CloudVolumeTypeController do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name      => 'CloudVolumeType',
           :parent_id       => nil,
-          :explorer        => nil,
-          :gtl_type_string => "list"
+          :explorer        => nil
         )
 
         get :show_list
@@ -99,32 +98,6 @@ describe CloudVolumeTypeController do
       it 'renders the correct toolbar' do
         expect(ApplicationHelper::Toolbar::CloudVolumeTypesCenter).to receive(:definition).and_call_original
         post :show_list
-      end
-    end
-  end
-
-  describe '#report_data' do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
-
-    let(:volume_type) { FactoryBot.create(:cloud_volume_type) }
-
-    context 'when tile mode is selected' do
-      it 'returns volume types with quadicons' do
-        volume_type
-        session[:settings] = {:views => {:cloud_volume_type => 'tile'}}
-        report_data_request(
-          :model      => 'CloudVolumeType',
-          :parent_id  => nil,
-          :explorer   => false,
-          :gtl_dbname => :cloud_volume_type,
-        )
-        results = assert_report_data_response
-        expect(results['data']['rows'].length).to eq(1)
-        expect(results['data']['rows'][0]['long_id']).to eq(volume_type.id.to_s)
-        expect(results['data']['rows'][0]['quad']).to have_key('fonticon')
       end
     end
   end

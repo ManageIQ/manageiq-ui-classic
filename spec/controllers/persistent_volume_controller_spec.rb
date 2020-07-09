@@ -37,15 +37,6 @@ describe PersistentVolumeController do
     expect(response.status).to eq(200)
   end
 
-  it "Controller method is called with correct parameters" do
-    controller.params[:type] = "tile"
-    controller.instance_variable_set(:@settings, :views => {:persistentvolume => "list"})
-    expect(controller).to receive(:get_view_calculate_gtl_type).with(:persistentvolume) do
-      expect(controller.instance_variable_get(:@settings)).to include(:views => {:persistentvolume => "tile"})
-    end
-    controller.send(:get_view, "PersistentVolume", :gtl_dbname => :persistentvolume)
-  end
-
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone

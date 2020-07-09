@@ -25,11 +25,10 @@ describe ApplicationController do
       expect(report_data["settings"]).to eql(basic_settings)
       headder = report_data["data"]["head"]
       expect(headder[0]).to eql("is_narrow" => true)
-      expect(headder[1]).to eql("is_narrow"=>true)
-      expect(headder[2]).to eql("text" => "Name", "sort" => "str", "col_idx" => 0, "align" => "left")
-      expect(headder[3]).to eql("text" => "Power State", "sort" => "str", "col_idx" => 1, "align" => "left")
-      expect(headder[4]).to eql("text" => "Provider", "sort" => "str", "col_idx" => 2, "align" => "left")
-      expect(headder[5]).to eql("text" => "Cluster", "sort" => "str", "col_idx" => 3, "align" => "left")
+      expect(headder[1]).to eql("text" => "Name", "sort" => "str", "col_idx" => 0, "align" => "left")
+      expect(headder[2]).to eql("text" => "Power State", "sort" => "str", "col_idx" => 1, "align" => "left")
+      expect(headder[3]).to eql("text" => "Provider", "sort" => "str", "col_idx" => 2, "align" => "left")
+      expect(headder[4]).to eql("text" => "Cluster", "sort" => "str", "col_idx" => 3, "align" => "left")
     end
 
     it "should call specific functions" do

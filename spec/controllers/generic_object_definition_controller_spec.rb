@@ -37,7 +37,6 @@ describe GenericObjectDefinitionController do
         params = {:id => generic_obj_defn.id, :type => 'grid'}
         allow(controller).to receive(:params).and_return(params)
         controller.send(:show)
-        expect(controller.instance_variable_get(:@gtl_type)).to eq('grid')
         expect(response.status).to eq(200)
       end
     end
@@ -83,17 +82,7 @@ describe GenericObjectDefinitionController do
     it "renders the toolbar for 'show_list'" do
       presenter = ExplorerPresenter.new(:active_tree => 'generic_object_definition_tree')
       toolbar_array = controller.send(:process_root_node, presenter)
-      expect(toolbar_array[0][0][:id]).to eq('view_grid')
-      expect(toolbar_array[0][0][:url]).to eq('/show_list')
-
-      expect(toolbar_array[0][1][:id]).to eq('view_tile')
-      expect(toolbar_array[0][1][:url]).to eq('/show_list')
-
-      expect(toolbar_array[0][2][:id]).to eq('view_list')
-      expect(toolbar_array[0][2][:url]).to eq('/show_list')
-
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq('list')
+      expect(toolbar_array[0][0][:id]).to eq('download_choice')
     end
   end
 
@@ -107,31 +96,23 @@ describe GenericObjectDefinitionController do
     it "renders the toolbar for root node with gtl icons" do
       allow(controller).to receive(:x_node).and_return("root")
       controller.send(:show_list)
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq('list')
     end
 
     it "renders the toolbar for god node with no gtl icons" do
       allow(controller).to receive(:x_node).and_return("god-#{@generic_obj_defn.id}")
       controller.send(:show_list)
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq(nil)
     end
 
     it "renders the toolbar for custom_button_group node with no gtl icons" do
       custom_button_set = FactoryBot.create(:custom_button_set)
       allow(controller).to receive(:x_node).and_return("cbg-#{custom_button_set.id}")
       controller.send(:show_list)
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq(nil)
     end
 
     it "renders the toolbar for custom_button node with no gtl icons" do
       custom_button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition")
       allow(controller).to receive(:x_node).and_return("cb-#{custom_button.id}")
       controller.send(:show_list)
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq(nil)
     end
   end
 

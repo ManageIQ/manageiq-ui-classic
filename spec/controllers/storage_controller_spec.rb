@@ -175,7 +175,6 @@ describe StorageController do
         session_storage = session[:sandboxes]["storage"]
         expect(response.body).to include("modelName: 'Storage'")
         expect(response.body).to include("activeTree: '#{session_storage[:active_tree]}'")
-        expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("parentId: ''")
         expect(response.body).to include("sortColIdx: '0'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")

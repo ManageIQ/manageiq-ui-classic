@@ -55,7 +55,6 @@ describe HostController do
 
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name       => 'Host',
-        :gtl_type_string  => 'grid',
         :parent_id        => nil,
         :selected_records => [h1.id, h2.id]
       )
@@ -264,8 +263,7 @@ describe HostController do
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name      => 'Account',
         :parent_id       => @host.id.to_s,
-        :parent          => @host,
-        :gtl_type_string => 'list'
+        :parent          => @host
       )
       get :users, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
@@ -278,7 +276,6 @@ describe HostController do
         :model_name      => 'GuestApplication',
         :parent_id       => @host.id.to_s,
         :parent          => @host,
-        :gtl_type_string => 'list'
       )
       get :guest_applications, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
@@ -291,7 +288,6 @@ describe HostController do
         :model_name                     => 'Filesystem',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
-        :gtl_type_string                => 'list',
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_filesystems, @host_service_group.id]]
         }
@@ -307,7 +303,6 @@ describe HostController do
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
-        :gtl_type_string                => 'list',
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_systemd, @host_service_group.id]]
         }
@@ -323,7 +318,6 @@ describe HostController do
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
-        :gtl_type_string                => 'list',
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_running_systemd, @host_service_group.id]]
         }
@@ -339,7 +333,6 @@ describe HostController do
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
-        :gtl_type_string                => 'list',
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_failed_systemd, @host_service_group.id]]
         }

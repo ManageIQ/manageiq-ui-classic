@@ -189,7 +189,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
   describe "#twostate_button_selected" do
     before do
-      @gtl_type = 'list'
       @settings = {
         :views => {
           :compare      => 'compressed',
@@ -200,13 +199,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       }
     end
     subject { toolbar_builder.twostate_button_selected(id) }
-
-    ['list', 'tile', 'grid'].each do |g|
-      it "when with view_#{g}" do
-        @gtl_type = g
-        expect(toolbar_builder.twostate_button_selected("view_#{g}")).to be_truthy
-      end
-    end
 
     context "when with 'compare_compressed'" do
       let(:id) { "compare_compressed" }

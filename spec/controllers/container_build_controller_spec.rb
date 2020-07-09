@@ -49,13 +49,4 @@ describe ContainerBuildController do
     expect(response).to render_template('layouts/angular/_gtl')
     expect(response.status).to eq(200)
   end
-
-  it "Controller method is called with correct parameters" do
-    controller.params[:type] = "tile"
-    controller.instance_variable_set(:@settings, :views => {:containerbuild => "list"})
-    expect(controller).to receive(:get_view_calculate_gtl_type).with(:containerbuild) do
-      expect(controller.instance_variable_get(:@settings)).to include(:views => {:containerbuild => "tile"})
-    end
-    controller.send(:get_view, "ContainerBuild", :gtl_dbname => :containerbuild)
-  end
 end

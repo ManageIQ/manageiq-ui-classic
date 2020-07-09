@@ -7,7 +7,6 @@ describe EmsObjectStorageController do
     it 'renders the view and the Object Storage Managers toolbar' do
       setup_zone
       stub_user :features => :all
-      expect(ApplicationHelper::Toolbar::GtlView).to receive(:definition).and_call_original
       expect(ApplicationHelper::Toolbar::EmsObjectStoragesCenter).to receive(:definition).and_call_original
       post :show_list
     end

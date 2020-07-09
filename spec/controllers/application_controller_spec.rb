@@ -133,28 +133,6 @@ describe ApplicationController do
     end
   end
 
-  describe "#render_gtl_view_tb?" do
-    before do
-      controller.instance_variable_set(:@layout, "host")
-      controller.instance_variable_set(:@gtl_type, "list")
-    end
-
-    it "returns true for list views" do
-      controller.params = {:action => "show_list"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_truthy
-    end
-
-    it "returns true for list views when navigating thru relationships" do
-      controller.params = {:action => "show"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_truthy
-    end
-
-    it "returns false for sub list views" do
-      controller.params = {:action => "host_services"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_falsey
-    end
-  end
-
   describe "#prov_redirect" do
     let(:user) { FactoryBot.create(:user, :features => "vm_migrate") }
     before do
@@ -420,9 +398,7 @@ describe ApplicationController do
     end
 
     {
-      'grid'   => :grid,
       'list'   => :list,
-      'tile'   => :tile,
       'foobar' => nil
     }.each do |gtl_type, response|
       context "gtl_type is #{gtl_type}" do
