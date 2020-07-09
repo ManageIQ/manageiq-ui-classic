@@ -51,6 +51,11 @@ class EmsStorageController < ApplicationController
     end
   end
 
+  def download_summary_pdf
+    assert_privileges('ems_storage_show')
+    super
+  end
+
   def breadcrumbs_options
     {
       :breadcrumbs => [
