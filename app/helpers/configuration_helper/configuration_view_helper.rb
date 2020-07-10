@@ -20,6 +20,7 @@ module ConfigurationHelper
     end
 
     def inactive_icon(image, text, resource, view)
+
       content_tag(:li) do
         link_to(content_tag(:i, nil, :class => image,
                                      :alt   => text),
