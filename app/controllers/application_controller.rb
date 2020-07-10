@@ -751,7 +751,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Icon column, only for list with special icons
-    root[:head] << {:is_narrow => true} if %w(Service ServiceTemplate).include?(view.db)
+    root[:head] << {:is_narrow => true} if ::GtlFormatter::VIEW_WITH_CUSTOM_ICON.include?(view.db)
 
     view.headers.each_with_index do |h, i|
       col = view.col_order[i]
