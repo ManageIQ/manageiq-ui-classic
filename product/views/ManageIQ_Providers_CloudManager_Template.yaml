@@ -21,6 +21,7 @@ db: TemplateCloud
 cols:
 - name
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - last_scan_on
 - region_description
@@ -49,6 +50,7 @@ col_order:
 - ext_management_system.name
 - image?
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - hardware.bitness
 - hardware.virtualization_type
@@ -62,6 +64,7 @@ headers:
 - Provider
 - Type
 - Compliant
+- Protected
 - Allocated Size
 - Architecture
 - Virtualization Type

@@ -22,6 +22,7 @@ cols:
 - name
 - ipaddresses
 - last_compliance_status
+- policies_applied
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -44,6 +45,7 @@ col_order:
 - normalized_state
 - ipaddresses
 - last_compliance_status
+- policies_applied
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -55,6 +57,7 @@ headers:
 - Power State
 - IP Addresses
 - Compliant
+- Protected
 - Total Snapshots
 - Allocated Size
 - Last Analysis Time

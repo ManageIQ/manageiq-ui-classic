@@ -21,6 +21,7 @@ db: TemplateCloud
 cols:
 - name
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - last_scan_on
 
@@ -40,6 +41,7 @@ include_for_find:
 col_order:
 - name
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - hardware.bitness
 - last_scan_on
@@ -48,6 +50,7 @@ col_order:
 headers:
 - Name
 - Compliant
+- Protected
 - Allocated Size
 - Architecture
 - Last Analysis Time

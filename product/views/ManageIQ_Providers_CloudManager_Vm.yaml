@@ -22,6 +22,7 @@ cols:
 - name
 - ipaddresses
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - last_scan_on
 - load_balancer_health_check_state
@@ -57,6 +58,7 @@ col_order:
 - flavor.name
 - ipaddresses
 - last_compliance_status
+- policies_applied
 - allocated_disk_storage
 - hardware.bitness
 - last_scan_on
@@ -72,6 +74,7 @@ headers:
 - Flavor
 - IP Addresses
 - Compliant
+- Protected
 - Allocated Size
 - Architecture
 - Last Analysis Time
