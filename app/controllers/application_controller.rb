@@ -2101,6 +2101,8 @@ class ApplicationController < ActionController::Base
 
   def build_accordions_and_trees(x_node_to_set = nil)
     allowed_features = build_accordions_and_trees_only
+    raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.") if allowed_features.empty?
+
     set_active_elements(allowed_features.first, x_node_to_set)
   end
 

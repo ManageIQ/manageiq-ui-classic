@@ -99,7 +99,6 @@ class InfraNetworkingController < ApplicationController
   end
 
   def explorer
-    assert_privileges("infra_networking_view")
     @explorer = true
     @lastaction = "explorer"
 

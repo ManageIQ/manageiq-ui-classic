@@ -93,7 +93,6 @@ class ServiceController < ApplicationController
   end
 
   def explorer
-    assert_privileges('service')
     @explorer   = true
     @lastaction = "explorer"
 

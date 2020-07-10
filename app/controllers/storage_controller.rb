@@ -267,7 +267,6 @@ class StorageController < ApplicationController
   end
 
   def explorer
-    assert_privileges('storage')
     @breadcrumbs = []
     @explorer = true
     @lastaction = "explorer"
