@@ -8,7 +8,6 @@ describe('reportDataController', function() {
   var initObject = {
     modelName: 'manageiq/providers/infra_manager/vms',
     activeTree: 'vandt_tree',
-    gtlType: 'grid',
     parentId: '',
     sortColIdx: '0',
     sortDir: 'DESC',
@@ -35,7 +34,6 @@ describe('reportDataController', function() {
 
     it('Should set default values by init Object', function() {
       $controller.initObjects(initObject);
-      expect($controller.gtlType).toBe(initObject.gtlType);
       expect($controller.settings.isLoading).toBeTruthy();
       expect(angular.equals($controller.initObject, initObject)).toBeTruthy();
     });

@@ -5,7 +5,6 @@
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
   var USE_TREE_ID = ['automation_manager'];
-  var DEFAULT_VIEW = 'grid';
   var TOOLBAR_CLICK_FINISH = 'TOOLBAR_CLICK_FINISH';
 
   function isAllowedParent(initObject) {
@@ -421,9 +420,7 @@
     angular.element(mainContent).removeClass('miq-list-content');
     angular.element(pagination).css('display', 'none');
 
-    if (viewType === 'grid' || viewType === 'tile') {
-      angular.element(pagination).css('display', 'block');
-    } else if (viewType === 'list') {
+    if (viewType === 'list') {
       angular.element(mainContent).addClass('miq-list-content');
       angular.element(pagination).css('display', 'block');
     }
