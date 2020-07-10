@@ -239,7 +239,7 @@ class OpsController < ApplicationController
   end
 
   def change_tab(new_tab_id = nil)
-    assert_privileges("ops_explorer")
+    assert_privileges(x_active_tree == :settings_tree ? "ops_settings" : "ops_diagnostics")
 
     @explorer = true
     session[:changed] = false
