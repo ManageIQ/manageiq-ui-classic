@@ -250,5 +250,9 @@ module Mixins
       @x_node_text ||= {}
       @x_node_text[x_active_tree] = CGI.unescape(text) if text.present?
     end
+
+    def breadcrumbs_menu_section(id = menu_section_id)
+      {:title => _(Menu::Manager.section(id)&.name)}
+    end
   end
 end

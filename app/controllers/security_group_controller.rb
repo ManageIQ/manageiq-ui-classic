@@ -283,7 +283,7 @@ class SecurityGroupController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Security Groups"), :url => controller_url},
       ],
     }
