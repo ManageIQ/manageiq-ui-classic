@@ -21,7 +21,7 @@ db: TemplateCloud
 cols:
 - name
 - last_compliance_status
-- policies_applied
+- has_policies
 - allocated_disk_storage
 - last_scan_on
 
@@ -41,7 +41,7 @@ include_for_find:
 col_order:
 - name
 - last_compliance_status
-- policies_applied
+- has_policies
 - allocated_disk_storage
 - hardware.bitness
 - last_scan_on

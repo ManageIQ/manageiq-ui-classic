@@ -21,7 +21,7 @@ db: TemplateCloud
 cols:
 - name
 - last_compliance_status
-- policies_applied
+- has_policies
 - allocated_disk_storage
 - last_scan_on
 - region_description
@@ -50,7 +50,7 @@ col_order:
 - ext_management_system.name
 - image?
 - last_compliance_status
-- policies_applied
+- has_policies
 - allocated_disk_storage
 - hardware.bitness
 - hardware.virtualization_type

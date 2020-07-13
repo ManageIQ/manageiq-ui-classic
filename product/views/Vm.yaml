@@ -22,7 +22,7 @@ cols:
 - name
 - ipaddresses
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -45,7 +45,7 @@ col_order:
 - normalized_state
 - ipaddresses
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on

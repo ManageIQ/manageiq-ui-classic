@@ -22,7 +22,7 @@ cols:
 - name
 - ems_cluster_name
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - last_scan_on
 - region_description
@@ -50,7 +50,7 @@ col_order:
 - host.name
 - storage.name
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - last_scan_on
 - region_description

@@ -22,7 +22,7 @@ cols:
 - name
 - ems_cluster_name
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -50,7 +50,7 @@ col_order:
 - host.name
 - storage.name
 - last_compliance_status
-- policies_applied
+- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
