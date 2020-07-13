@@ -1,7 +1,7 @@
 module Mixins::MenuSection
   extend ActiveSupport::Concern
 
-  def menu_section_id(_parms)
+  def menu_section_id(_parms = {})
     self.class.instance_eval { @section_id }
   end
 

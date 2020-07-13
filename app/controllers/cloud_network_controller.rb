@@ -240,7 +240,7 @@ class CloudNetworkController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Networks"), :url => controller_url},
       ],
       :record_info => @network,

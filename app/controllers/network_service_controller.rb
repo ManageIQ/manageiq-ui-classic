@@ -31,7 +31,7 @@ class NetworkServiceController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Network Services"), :url => controller_url},
       ]
     }

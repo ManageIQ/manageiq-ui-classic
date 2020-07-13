@@ -32,7 +32,7 @@ class SecurityPolicyController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Networks")},
+        breadcrumbs_menu_section,
         {:title => _("Security Policies"), :url => controller_url},
       ],
       :record_info => @router,
