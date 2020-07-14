@@ -124,8 +124,6 @@ class OpsController < ApplicationController
   end
 
   def explorer
-    assert_privileges("ops_explorer")
-
     @explorer = true
     @trees = []
     return if perfmenu_click?

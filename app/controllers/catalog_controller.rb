@@ -305,8 +305,6 @@ class CatalogController < ApplicationController
   end
 
   def explorer
-    assert_privileges("catalog")
-
     @explorer = true
     @lastaction = "explorer"
     @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
