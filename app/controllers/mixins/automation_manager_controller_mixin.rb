@@ -18,7 +18,6 @@ module Mixins
     end
 
     def explorer
-      assert_privileges('automation_manager_providers_view')
       @explorer = true
       @lastaction = "explorer"
 

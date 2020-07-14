@@ -95,7 +95,6 @@ class ServiceController < ApplicationController
   alias_method :index, :show_list
 
   def explorer
-    assert_privileges('service')
     @explorer   = true
     @lastaction = "explorer"
 

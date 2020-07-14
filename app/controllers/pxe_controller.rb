@@ -70,7 +70,6 @@ class PxeController < ApplicationController
   end
 
   def explorer
-    assert_privileges("pxe")
     @breadcrumbs = []
     @explorer = true
 
