@@ -292,7 +292,7 @@ module MiqPolicyController::Alerts
     # Build hash of arrays of all events by event type
     @edit[:events] = {}
     MiqEventDefinition.all_control_events.each do |e|
-      @edit[:events][e.id] = (e.etype.description + ": " + e.description)
+      @edit[:events][e.id] = (_(e.etype.description) + ": " + _(e.description))
     end
 
     # Build hash of all mgmt systems by id
