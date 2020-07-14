@@ -125,8 +125,6 @@ class ReportController < ApplicationController
   end
 
   def explorer
-    assert_privileges("miq_report")
-
     @explorer = true
     @lastaction      = "explorer"
     @ght_type        = nil
