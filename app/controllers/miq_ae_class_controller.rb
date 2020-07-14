@@ -203,6 +203,7 @@ class MiqAeClassController < ApplicationController
     @lastaction = "explorer"
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node = params[:id]
+    assert_accordion_and_tree_privileges(x_active_tree)
     @sb[:action] = nil
     replace_right_cell
   end

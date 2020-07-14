@@ -156,6 +156,9 @@ class OpsController < ApplicationController
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     session[:changed] = false
     set_active_tab(x_node)
     get_node_info(x_node)
@@ -163,6 +166,8 @@ class OpsController < ApplicationController
   end
 
   def tree_select
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
     @sb[:active_node] ||= {}
     @sb[:action] = nil

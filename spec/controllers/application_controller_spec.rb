@@ -437,6 +437,26 @@ describe ApplicationController do
     end
   end
 
+  describe '#assert_accordion_and_tree_privileges' do
+    let(:features) do
+      [
+        ApplicationController::Feature.new_with_hash(
+          :role     => 'infra_networking',
+          :role_any => true,
+          :name     => 'infra_networking',
+          :title    => _('Switches')
+        )
+      ]
+    end
+
+    it 'fails if the feature is not found' do
+      allow(controller).to receive(:features).and_return(features)
+      allow(controller).to receive(:assert_privileges).and_return(false)
+
+      expect { controller.send(:assert_accordion_and_tree_privileges, 'infra_networking_tree') }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+  end
+
   context "private methods" do
     describe "#process_params_model_view" do
       it "with options[:model_name]" do

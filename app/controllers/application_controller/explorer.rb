@@ -177,6 +177,9 @@ module ApplicationController::Explorer
     @lastaction = "explorer"
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node = params[:id]
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     if node_info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
@@ -190,6 +193,9 @@ module ApplicationController::Explorer
     @lastaction = "explorer"
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     if node_info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
