@@ -54,6 +54,9 @@ namespace :spec do
   desc "Run all javascript specs"
   task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
 
+  desc "Run all cypress specs"
+  task :cypress => ["app:cypress:ui:run"]
+
   desc "Try to compile assets"
   task :compile => ["app:assets:precompile"]
 
