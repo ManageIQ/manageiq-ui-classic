@@ -75,6 +75,12 @@
                           - if field.values.length > 1
                             - val = copy_array(field.values.map {|x, y| x.nil? ? [x,_(y)] : [x, y]})
 
+                            - if field.options.key?(:sort_by)
+                              - if field.data_type == 'integer'
+                                - val = val.map { |item| item[0].nil? ? item : [item[0].to_i, item[1]] }
+                              - val = val.sort { |a, b| a[0].nil? ? -1 : field.options[:sort_by] == 'value' ? a[0] <=> b[0] : a[1] <=> b[1] }
+                              - if field.options.key?(:sort_order) && field.options[:sort_order] == 'descending'
+                                - val.reverse!
                             - if field.type == "DialogFieldDropDownList"
                               - select_attrs = {:class => 'selectpicker'}
                               - select_attrs[:multiple] = '' if field.multiselect?
