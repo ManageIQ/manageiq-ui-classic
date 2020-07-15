@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::MiqPoliciesCenter < ApplicationHelper::Toolbar
           t = proc do
               _('Add a New %{model} %{mode} Policy') % {
                 :model => ui_lookup(:model => @sb[:nodeid].camelize),
-                :mode  => @sb[:mode].capitalize
+                :mode  => _(@sb[:mode]).capitalize
               }
           end,
           t,
