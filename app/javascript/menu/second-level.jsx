@@ -20,7 +20,7 @@ const MenuItem = ({ active, href, id, title, type, hideSecondary }) => (
     isActive={active}
     {...linkProps({ type, href, id, hideSecondary })}
   >
-    {title}
+    {__(title)}
   </SideNavMenuItem>
 );
 
@@ -39,7 +39,7 @@ const MenuSection = ({ active, id, items, title, hideSecondary }) => (
     id={itemId(id, true)}
     isActive={active}
     defaultExpanded={active} // autoexpand active section
-    title={title}
+    title={__(title)}
   >
     {mapItems(items, hideSecondary)}
   </SideNavMenu>

@@ -28,7 +28,7 @@ const MenuItem = ({ active, href, icon, id, title, type }) => (
     renderIcon={carbonizeIcon(icon)}
     {...linkProps({ type, href, id })}
   >
-    {title}
+    {__(title)}
   </SideNavLink>
 );
 
@@ -52,7 +52,7 @@ const MenuSection = ({ active, hover, icon, id, items, title, setSection }) => (
       e.stopPropagation();
     }}
     renderIcon={carbonizeIcon(icon)}
-    title={title}
+    title={__(title)}
   />
 );
 
