@@ -184,7 +184,7 @@
             .form-horizontal
               .form-group
                 %label.col-md-3.control-label
-                  = h(k)
+                  = h(_(k))
                 .col-md-8
                   - @edit[:allevents][k].sort_by(&:first).each do |e|
                     - checked = @edit[:new][:events].include?(e.last) ? true : false

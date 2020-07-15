@@ -242,7 +242,7 @@ module MiqPolicyController::Policies
         next if excluded_event?(e)
 
         @edit[:allevents][e.etype.description] ||= []
-        @edit[:allevents][e.etype.description].push([e.description, e.id.to_s])
+        @edit[:allevents][e.etype.description].push([_(e.description), e.id.to_s])
       end
     else # Editing basic information and policy scope
       build_expression(@policy, @edit[:new][:towhat])
