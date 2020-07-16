@@ -38,13 +38,13 @@ const TopLevel = ({
           {...linkProps({ type, href, id })}
         >
           <span className={icon} />
-          <span className="list-group-item-value">{title}</span>
+          <span className="list-group-item-value">{__(title)}</span>
         </a>
         <React.Fragment>
           <div className="nav-pf-secondary-nav" id={`menu-${id}`}>
             <div className="nav-item-pf-header">
               <a className="top-level-item">
-                <span>{title}</span>
+                <span>{__(title)}</span>
               </a>
             </div>
             <ul className="list-group">
@@ -74,7 +74,7 @@ const TopLevel = ({
         {...linkProps({ type, href, id })}
       >
         <span className={icon} />
-        <span className="list-group-item-value">{title}</span>
+        <span className="list-group-item-value">{__(title)}</span>
       </a>
     </li>
   );
