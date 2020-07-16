@@ -64,19 +64,22 @@ class RemoveGenericItemModal extends React.Component {
   }
 
   componentDidMount() {
-    let apiPromises = [];
     const itemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
+    const { api_url, display_field = 'name' } = this.props.modalData;
 
     // Load modal data from API
-    itemsIds.forEach(item => apiPromises.push(API.get(`/api/${this.props.modalData.api_url}/${item}`)));
-    Promise.all(apiPromises)
-      .then(apiData => apiData.map(item => (
-        {id:   item.id,
-         name: item.name})))
-      .then(data => this.setState({data: data, loaded: true}))
+    Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}`)))
+      .then((apiData) => apiData.map((item) => ({
+        id: item.id,
+        name: item[display_field],
+      })))
+      .then((data) => this.setState({
+        data,
+        loaded: true,
+      }))
       .then(() => this.props.dispatch({
         type: 'FormButtons.saveable',
-        payload: true
+        payload: true,
       }));
 
     // Buttons setup

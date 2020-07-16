@@ -29,6 +29,7 @@ class ApplicationHelper::Toolbar::MiqAlertProfileCenter < ApplicationHelper::Too
                      'function-data' => {:api_url        => 'alert_profiles',  # TODO missing collection
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
+                                         :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert Profile?"),
                                          :modal_title    => N_("Delete Alert Profile"),
                                          :tree_select    => 'root'}}),

@@ -23,6 +23,7 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
                      'function-data' => {:api_url        => 'actions',
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
+                                         :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Action?"),
                                          :modal_title    => N_("Delete Action"),
                                          :tree_select    => 'root'}}),

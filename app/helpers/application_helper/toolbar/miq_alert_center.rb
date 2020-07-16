@@ -30,6 +30,7 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
                      'function-data' => {:api_url        => 'alerts', # TODO missing delete action
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
+                                         :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert?"),
                                          :modal_title    => N_("Delete Alert"),
                                          :tree_select    => 'root'}}),

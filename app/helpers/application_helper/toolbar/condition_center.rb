@@ -42,6 +42,7 @@ class ApplicationHelper::Toolbar::ConditionCenter < ApplicationHelper::Toolbar::
                      'function-data' => {:api_url        => 'conditions',
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
+                                         :display_field  => 'description',
                                          :tree_select    => 'root'}}),
         button(
           :condition_remove,
