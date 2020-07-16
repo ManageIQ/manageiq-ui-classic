@@ -19,19 +19,19 @@ ManageIQ.angular.app.component('retirementForm', {
     vm.select_options = [
       {
         'value': '',
-        'label': _('None'),
+        'label': __('None'),
       },
       {
         'value': 7,
-        'label': _('1 Week before retirement'),
+        'label': __('1 Week before retirement'),
       },
       {
         'value': 14,
-        'label': _('2 Weeks before retirement'),
+        'label': __('2 Weeks before retirement'),
       },
       {
         'value': 30,
-        'label': _('30 Days before retirement'),
+        'label': __('30 Days before retirement'),
       },
     ];
 
