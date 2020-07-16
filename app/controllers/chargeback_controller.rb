@@ -33,6 +33,9 @@ class ChargebackController < ApplicationController
   def accordion_select
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     get_node_info(x_node)
     replace_right_cell
   end
@@ -40,6 +43,8 @@ class ChargebackController < ApplicationController
   def tree_select
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node = params[:id]
+
+    assert_accordion_and_tree_privileges(x_active_tree)
     get_node_info(x_node)
     replace_right_cell
   end
