@@ -52,6 +52,7 @@ describe TreeBuilderSections do
                                                :controller_name => @controller_name,
                                                :current_tenant  => @current_tenant)
     end
+
     it 'set init options correctly' do
       tree_options = @sections_tree.send(:tree_init_options)
       expect(tree_options).to eq(
@@ -63,12 +64,14 @@ describe TreeBuilderSections do
         :check_url    => "/controller_name/sections_field_changed/"
       )
     end
+
     it 'set locals for render correctly' do
       locals = @sections_tree.send(:set_locals_for_render)
       expect(locals[:check_url]).to eq("/#{@controller_name}/sections_field_changed/")
       expect(locals[:oncheck]).to eq("miqOnCheckSections")
       expect(locals[:hierarchical_check]).to eq(true)
     end
+
     it 'sets roots correctly' do
       roots = @sections_tree.send(:x_get_tree_roots)
       expect(roots).to eq([{:id         => "group_Properties",
