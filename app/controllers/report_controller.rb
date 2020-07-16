@@ -336,7 +336,7 @@ class ReportController < ApplicationController
       @sub_folders ||= []
       next unless r[0] == @edit[:new][:filter]
       r[1].each do |subfolder, reps|
-        subfolder.to_miq_a.each do |s|
+        Array.wrap(subfolder).each do |s|
           @sub_folders.push(s)
         end
         @reps ||= [] if @edit[:new][:subfilter]

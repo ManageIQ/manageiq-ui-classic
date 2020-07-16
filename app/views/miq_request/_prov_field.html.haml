@@ -363,7 +363,7 @@
               = render :partial => "miq_request/prov_configured_system_grid", :locals => {:field_id => field_id}
             - elsif field == :attached_ds
               -# Description is in the second, last, array element
-              = options[:attached_ds_names].to_miq_a.join(",")
+              = Array.wrap(options[:attached_ds_names]).join(",")
             - elsif options[field]
               -# Description is in the second, last, array element
               = options[field].last
