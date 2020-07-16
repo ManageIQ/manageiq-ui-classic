@@ -9,7 +9,7 @@ class ApplicationHelper::Button::ConditionDelete < ApplicationHelper::Button::Co
   end
 
   def disabled?
-    @error_message = _('Conditions assigned to Policies can not be deleted') if !@record.miq_policies.empty?
+    @error_message = _('Conditions assigned to Policies can not be deleted') if @record.miq_policies.present?
     @error_message.present?
   end
 end
