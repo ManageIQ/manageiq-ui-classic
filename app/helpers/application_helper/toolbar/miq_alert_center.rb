@@ -27,7 +27,7 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           t,
           :klass => ApplicationHelper::Button::MiqAlertDelete,
           :data  => {'function'      => 'sendDataWithRx',
-                     'function-data' => {:api_url        => 'alerts', # TODO missing delete action
+                     'function-data' => {:api_url        => 'alert_definitions',
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description',
