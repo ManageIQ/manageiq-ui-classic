@@ -112,7 +112,7 @@ module Menu
           Menu::Item.new('physical_server',         N_('Servers'),   'physical_server',         {:feature => 'physical_server_show_list'},             '/physical_server/show_list'),
           Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage/show_list'),
           Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch/show_list'),
-          Menu::Item.new('firmware_registry',       N_('Firmware Registry'), 'firmware_registry', {:feature => 'firmware_registry', :any => true},     '/firmware_registry/show_list'),
+          Menu::Item.new('firmware_registry',       N_('Firmware Registry'), 'firmware',        {:feature => 'firmware', :any => true},                '/firmware_registry/show_list'),
           Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology/show'),
         ])
       end
