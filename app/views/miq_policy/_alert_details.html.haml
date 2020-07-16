@@ -93,7 +93,7 @@
                   -# Expression is an MiqExpression
                   = _('Expression')
                 - else
-                  = h(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]])
+                  = h(_(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]]))
 
         -# Expression driving event
         - if @edit
@@ -181,7 +181,7 @@
         - else
           - if @alert.expression[:eval_method] != "nothing"
             %h3
-              = h(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]])
+              = h(_(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]]))
               = _('Parameters')
             .form-horizontal
               - MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
