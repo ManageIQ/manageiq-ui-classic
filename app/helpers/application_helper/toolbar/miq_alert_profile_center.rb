@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::MiqAlertProfileCenter < ApplicationHelper::Too
           t = N_('Delete this Alert Profile'),
           t,
           :data  => {'function'      => 'sendDataWithRx',
-                     'function-data' => {:api_url        => 'alert_profiles',  # TODO missing collection
+                     'function-data' => {:api_url        => 'alert_definition_profiles',
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description',
