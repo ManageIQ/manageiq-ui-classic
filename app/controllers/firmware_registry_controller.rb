@@ -10,7 +10,7 @@ class FirmwareRegistryController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  menu_section :firmware_registry
+  menu_section :phy
   toolbar :firmware_registry
 
   def self.display_methods
@@ -42,7 +42,7 @@ class FirmwareRegistryController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _('Compute')},
-        {:title => _('Infrastructure')},
+        {:title => _('Physical Infrastructure')},
         {:title => _('Firmware Registries'), :url => controller_url},
       ],
     }
