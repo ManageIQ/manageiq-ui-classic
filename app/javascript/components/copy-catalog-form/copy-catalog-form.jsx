@@ -14,6 +14,7 @@ class CopyCatalogForm extends Component {
   }
 
   componentDidMount() {
+    add_flash(__("The copied item will not be displayed in the catalog by default"), 'info');
     this.setState(() => ({
       schema: createSchema(),
       initialValues: {
