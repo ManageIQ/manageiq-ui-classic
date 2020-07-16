@@ -18,6 +18,9 @@ ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
+// mock miq_application helpers
+window.add_flash = (x) => true;
+
 // configure enzyme adapter
 import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
