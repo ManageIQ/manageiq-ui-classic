@@ -73,22 +73,6 @@ module MiqPolicyController::PolicyProfiles
     end
   end
 
-  def profile_delete
-    assert_privileges("profile_delete")
-    profiles = []
-    # showing 1 policy set, delete it
-    if params[:id].nil? || MiqPolicySet.find(params[:id]).nil?
-      add_flash(_("Policy Profile no longer exists"), :error)
-    else
-      profiles.push(params[:id])
-    end
-    process_profiles(profiles, "destroy") unless profiles.empty?
-    add_flash(_("The selected Policy Profile was deleted")) if @flash_array.nil?
-    self.x_node = @new_profile_node = 'root'
-    get_node_info('root')
-    replace_right_cell(:nodetype => 'root', :replace_trees => %i[policy_profile])
-  end
-
   def profile_field_changed
     return unless load_edit("profile_edit__#{params[:id]}", "replace_cell__explorer")
 
@@ -101,10 +85,6 @@ module MiqPolicyController::PolicyProfiles
   end
 
   private
-
-  def process_profiles(profiles, task)
-    process_elements(profiles, MiqPolicySet, task)
-  end
 
   def profile_build_edit_screen
     @edit = {}

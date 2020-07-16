@@ -90,29 +90,23 @@ class MiqPolicyController < ApplicationController
   end
 
   POLICY_X_BUTTON_ALLOWED_ACTIONS = {
-    'action_delete'          => :action_delete,
     'action_edit'            => :action_edit,
     'action_new'             => :action_edit,
-    'alert_delete'           => :alert_delete,
     'alert_edit'             => :alert_edit,
     'alert_copy'             => :alert_edit,
     'alert_new'              => :alert_edit,
     'alert_profile_assign'   => :alert_profile_assign,
-    'alert_profile_delete'   => :alert_profile_delete,
     'alert_profile_edit'     => :alert_profile_edit,
     'alert_profile_new'      => :alert_profile_edit,
-    'condition_delete'       => :condition_delete,
     'condition_edit'         => :condition_edit,
     'condition_copy'         => :condition_edit,
     'condition_policy_copy'  => :condition_edit,
     'condition_new'          => :condition_edit,
     'condition_remove'       => :condition_remove,
     'event_edit'             => :event_edit,
-    'profile_delete'         => :profile_delete,
     'profile_edit'           => :profile_edit,
     'profile_new'            => :profile_edit,
     'policy_copy'            => :policy_copy,
-    'policy_delete'          => :policy_delete,
     'policy_edit'            => :policy_edit,
     'policy_new'             => :policy_edit,
     'policy_edit_conditions' => :policy_edit,
@@ -481,13 +475,6 @@ class MiqPolicyController < ApplicationController
     end
     reload_trees_by_presenter(presenter, trees)
 
-    if params[:action].ends_with?('_delete') &&
-       !x_node.starts_with?('p') &&
-       !x_node.starts_with?('co')
-      nodes = x_node.split('_')
-      nodes.pop
-      self.x_node = nodes.join("_")
-    end
     presenter[:osf_node] = x_node
 
     @changed = session[:changed] if @edit # to get save/reset buttons to highlight when fields are moved left/right

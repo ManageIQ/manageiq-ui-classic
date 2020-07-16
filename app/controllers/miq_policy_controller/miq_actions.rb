@@ -67,21 +67,6 @@ module MiqPolicyController::MiqActions
     end
   end
 
-  def action_delete
-    assert_privileges("action_delete")
-    actions = []
-    # showing 1 action, delete it
-    if params[:id].nil? || !MiqAction.exists?(params[:id])
-      add_flash(_("Action no longer exists"), :error)
-    else
-      actions.push(params[:id])
-    end
-    process_actions(actions, "destroy") unless actions.empty?
-    @new_action_node = self.x_node = "root"
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => %i[action])
-  end
-
   def action_field_changed
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
 
@@ -172,10 +157,6 @@ module MiqPolicyController::MiqActions
   end
 
   private
-
-  def process_actions(actions, task)
-    process_elements(actions, MiqAction, task)
-  end
 
   def action_build_snmp_variables
     @edit[:new][:options][:snmp_version] = "v1" if @edit[:new][:action_type] == "snmp_trap" && @edit[:new][:options][:snmp_version].blank?

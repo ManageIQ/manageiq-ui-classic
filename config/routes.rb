@@ -2105,12 +2105,10 @@ Rails.application.routes.draw do
         accordion_select
         action_edit
         action_field_changed
-        alert_delete
         alert_edit
         alert_field_changed
         alert_profile_assign
         alert_profile_assign_changed
-        alert_profile_delete
         alert_profile_edit
         alert_profile_field_changed
         button
