@@ -25,9 +25,13 @@ class ApplicationHelper::Toolbar::MiqAlertProfileCenter < ApplicationHelper::Too
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Alert Profile'),
           t,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Are you sure you want to delete this Alert Profile?")),
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:api_url        => 'alert_profiles',  # TODO missing collection
+                                         :component_name => 'RemoveGenericItemModal',
+                                         :controller     => 'provider_dialogs',
+                                         :modal_text     => N_("Are you sure you want to delete this Alert Profile?"),
+                                         :modal_title    => N_("Delete Alert Profile"),
+                                         :tree_select    => 'root'}}),
       ]
     ),
   ])

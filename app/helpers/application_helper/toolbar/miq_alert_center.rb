@@ -25,10 +25,14 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Alert'),
           t,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Are you sure you want to delete this Alert?"),
-          :klass        => ApplicationHelper::Button::MiqAlertDelete),
+          :klass => ApplicationHelper::Button::MiqAlertDelete,
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:api_url        => 'alerts', # TODO missing delete action
+                                         :component_name => 'RemoveGenericItemModal',
+                                         :controller     => 'provider_dialogs',
+                                         :modal_text     => N_("Are you sure you want to delete this Alert?"),
+                                         :modal_title    => N_("Delete Alert"),
+                                         :tree_select    => 'root'}}),
       ]
     ),
   ])

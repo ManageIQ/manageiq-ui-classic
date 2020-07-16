@@ -40,11 +40,13 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
             _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
           end,
           t,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :klass        => ApplicationHelper::Button::PolicyDelete,
-          :confirm      => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.towhat)} },
-          :options      => {:feature => 'policy_delete'}),
+          :klass   => ApplicationHelper::Button::PolicyDelete,
+          :options => {:feature => 'policy_delete'},
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => {:api_url        => 'policies',
+                                           :component_name => 'RemoveGenericItemModal',
+                                           :controller     => 'provider_dialogs',
+                                           :tree_select    => 'root'}}),
         button(
           :condition_edit,
           'pficon pficon-add-circle-o fa-lg',
