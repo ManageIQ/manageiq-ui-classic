@@ -21,7 +21,7 @@ const ThirdLevel = ({
     )}
   >
     <a {...linkProps({ type, href, id })}>
-      <span className="list-group-item-value">{title}</span>
+      <span className="list-group-item-value">{__(title)}</span>
     </a>
   </li>
 ));
