@@ -20,7 +20,6 @@ class ApplicationHelper::Toolbar::XVmSnapshotCenter < ApplicationHelper::Toolbar
           :confirm      => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
           :url_parms    => "main_div",
           :send_checked => true,
-          :onwhen       => "1",
           :klass        => ApplicationHelper::Button::VmSnapshotRemoveOne
         ),
         button(
@@ -39,7 +38,6 @@ class ApplicationHelper::Toolbar::XVmSnapshotCenter < ApplicationHelper::Toolbar
       N_('Revert to selected snapshot'),
       nil,
       :confirm => N_("This VM will revert to selected snapshot. Are you sure you want to revert to the selected snapshot?"),
-      :onwhen  => "1",
       :klass   => ApplicationHelper::Button::VmSnapshotRevert),
   ])
 end
