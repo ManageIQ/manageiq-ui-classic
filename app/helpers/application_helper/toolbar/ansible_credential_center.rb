@@ -22,7 +22,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
           :data  => {'function'      => 'sendDataWithRx',
                      'function-data' => {:controller     => 'provider_dialogs',
                                          :modal_title    => N_('Delete Credential'),
-                                         :modal_text     => N_('Are you sure you want to delete the following credential?'),
+                                         :modal_text     => _('Are you sure you want to delete the following credential?'),
                                          :api_url        => 'authentications',
                                          :async_delete   => true,
                                          :redirect_url   => '/ansible_credential/show_list',
