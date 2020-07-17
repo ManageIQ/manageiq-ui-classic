@@ -2815,6 +2815,17 @@ class MiqAeClassController < ApplicationController
   end
 
   menu_section :automate
+  feature_for_actions %w[
+    miq_ae_domain_view
+    miq_ae_namespace_view
+    miq_ae_class
+    miq_ae_instance
+    miq_ae_method_admin
+    miq_ae_method_new
+    miq_ae_method_copy
+    miq_ae_method_edit
+    miq_ae_field_admin
+  ], *EXP_EDITOR_ACTIONS
 
   def process_element_destroy_via_queue(element, klass, name)
     return unless element.respond_to?(:destroy)

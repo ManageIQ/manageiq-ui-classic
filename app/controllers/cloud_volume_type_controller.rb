@@ -34,5 +34,7 @@ class CloudVolumeTypeController < ApplicationController
 
   helper_method :textual_group_list
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+
   menu_section :bst
 end

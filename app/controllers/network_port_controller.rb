@@ -40,4 +40,5 @@ class NetworkPortController < ApplicationController
   end
 
   menu_section :net
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end

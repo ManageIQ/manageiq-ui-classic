@@ -10,6 +10,13 @@ class GenericObjectDefinitionController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   menu_section :automate
+  feature_for_actions %w[
+    generic_object_definition_show_list
+    generic_object_definition_ab_group_new
+    generic_object_definition_ab_group_edit
+    generic_object_definition_ab_button_new
+    generic_object_definition_ab_button_edit
+  ], *EXP_EDITOR_ACTIONS
 
   def self.model
     GenericObjectDefinition

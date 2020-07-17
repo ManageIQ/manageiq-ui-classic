@@ -96,4 +96,5 @@ class CloudVolumeSnapshotController < ApplicationController
   end
 
   menu_section :bst
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end

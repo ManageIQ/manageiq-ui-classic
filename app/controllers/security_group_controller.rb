@@ -16,6 +16,7 @@ class SecurityGroupController < ApplicationController
   end
 
   menu_section :net
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box

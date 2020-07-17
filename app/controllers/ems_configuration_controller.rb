@@ -120,4 +120,5 @@ class EmsConfigurationController < ApplicationController
   end
 
   menu_section :conf
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end

@@ -272,5 +272,6 @@ class CloudTenantController < ApplicationController
   end
 
   menu_section :clo
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end

@@ -67,4 +67,5 @@ class ResourcePoolController < ApplicationController
   end
 
   menu_section :inf
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end
