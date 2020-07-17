@@ -76,15 +76,15 @@ describe TreeBuilderSections do
                             :tip        => "Properties",
                             :image      => false,
                             :selectable => false,
-                            :nodes      => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
+                            :nodes      => [{:name => :_model_, :header => "File", :group => "Properties"}]}])
     end
 
     it 'sets children correctly' do
       root = @sections_tree.send(:x_get_tree_roots).first
       kids = @sections_tree.send(:x_get_tree_hash_kids, root, false)
       expect(kids).to eq([{:id         => "group_Properties:_model_",
-                           :text       => "Filesystem",
-                           :tip        => "Filesystem",
+                           :text       => "File",
+                           :tip        => "File",
                            :image      => false,
                            :selectable => false,
                            :checked    => true,
