@@ -160,5 +160,7 @@ class CloudObjectStoreContainerController < ApplicationController
 
   menu_section :ost
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+
   has_custom_buttons
 end

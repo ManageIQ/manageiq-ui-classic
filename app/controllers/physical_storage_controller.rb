@@ -11,6 +11,8 @@ class PhysicalStorageController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTION
+
   toolbar :physical_storage, :physical_storages
 
   def new

@@ -58,6 +58,8 @@ class ContainerImageController < ApplicationController
 
   menu_section :cnt
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+
   def breadcrumbs_options
     {
       :breadcrumbs => [
