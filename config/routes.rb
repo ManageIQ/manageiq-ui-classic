@@ -1878,9 +1878,6 @@ Rails.application.routes.draw do
         custom_button_new
         custom_button_edit
         edit
-        exp_button
-        exp_changed
-        exp_token_pressed
         listnav_search_selected
         new
         quick_search
@@ -1889,6 +1886,7 @@ Rails.application.routes.draw do
         tree_select
       ) +
         adv_search_post +
+        exp_post +
         save_post
     },
 

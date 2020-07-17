@@ -16,6 +16,7 @@ class SecurityGroupController < ApplicationController
   end
 
   menu_section :net
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   def display_security_policy_rules_as_source
     nested_list(SecurityPolicyRule, :association => :security_policy_rules_as_source, :breadcrumb_title => _("Source of Security Policy Rules"))
