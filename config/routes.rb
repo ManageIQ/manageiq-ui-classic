@@ -1423,6 +1423,7 @@ Rails.application.routes.draw do
     :physical_network_port    => {
       :get  => %w(
         download_data
+        download_summary_pdf
         show_list
         show
       ),
