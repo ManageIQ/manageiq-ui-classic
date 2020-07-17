@@ -56,15 +56,15 @@ describe OpsController do
     let(:all_entities) { '_all_entities_' }
 
     it "doesn't create mapping for all entities when label is already mapped" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       controller.instance_variable_set(:@flash_array, nil)
 
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
-      expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.name}\" already exists")
+      expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.description}\" already exists")
     end
 
     it "doesn't create mapping for all entities when category name doesn't exist" do
@@ -77,19 +77,19 @@ describe OpsController do
     let!(:classification_department) { FactoryBot.create(:classification_department_with_tags) }
 
     it "doesn't create mapping for all entities when tag from label is already created" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
       controller.instance_variable_set(:@flash_array, nil)
 
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
-      expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.name}\" already exists")
+      expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.description}\" already exists")
     end
 
     it "creates new mapping for all entities on save" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
 
       mapping = ContainerLabelTagMapping.last
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
@@ -104,13 +104,13 @@ describe OpsController do
     let(:classification_cost_center) { FactoryBot.create(:classification_cost_center) }
 
     it "can edit an existing mapping for all entities" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       mapping = ContainerLabelTagMapping.last
 
       controller.instance_variable_set(:@flash_array, nil)
 
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s}
-      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => classification_cost_center.name}
+      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => classification_cost_center.description}
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
 
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
@@ -122,7 +122,7 @@ describe OpsController do
     end
 
     it "deletes mapping but it doesn't delete classifications and taggins for all entities" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       controller.instance_variable_set(:@flash_array, nil)
 
       mapping = ContainerLabelTagMapping.last
@@ -139,7 +139,7 @@ describe OpsController do
     end
 
     it "cannot set category name of tag which does not exist on an existing mapping for all entities" do
-      use_form_to_create_all_entities_mapping(label_name, classification_department.name)
+      use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       mapping = ContainerLabelTagMapping.last
 
       controller.instance_variable_set(:@flash_array, nil)

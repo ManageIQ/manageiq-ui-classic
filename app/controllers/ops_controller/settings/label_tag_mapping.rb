@@ -197,7 +197,7 @@ module OpsController::Settings::LabelTagMapping
 
   def classification_lookup_with_cache_by(cat_description)
     @classification ||= {}
-    @classification[cat_description] ||= Classification.lookup_by_name(cat_description)
+    @classification[cat_description] ||= Classification.lookup_category_by_description(cat_description)
   end
 
   def category_for_mapping(cat_description, entity, label_name)
@@ -263,7 +263,7 @@ module OpsController::Settings::LabelTagMapping
     update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
     begin
       if mapping.labeled_resource_type == ALL_ENTITIES
-        update_category = Classification.lookup_by_name(cat_description)
+        update_category = classification_lookup_with_cache_by(cat_description)
         # Should not create a new category if "All entities". The chosen category should exist
         if update_category.nil?
           flash_message_on_validation_error_for(:tag_not_found, mapping.labeled_resource_type, mapping.label_name, cat_description)
