@@ -91,7 +91,7 @@ module ReportController::Menus
         @edit[:tree_arr].each do |el|
           old_folder = @edit[:tree_hash].key(el)
           @edit[:temp_arr].each do |arr|
-            arr = arr.to_miq_a
+            arr = Array.wrap(arr)
             temp = []
             if session[:node_selected].split('__')[1] == "Report Menus for #{session[:role_choice]}"
               if arr[0] == old_folder

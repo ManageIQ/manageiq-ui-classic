@@ -878,7 +878,7 @@ module OpsController::Settings::Common
     @sb[:form_vars] = {}
     @sb[:form_vars][:session_timeout_hours] = @edit[:current][:session][:timeout] / 3600
     @sb[:form_vars][:session_timeout_mins] = (@edit[:current][:session][:timeout] % 3600) / 60
-    @edit[:current][:authentication][:ldaphost] = @edit[:current][:authentication][:ldaphost].to_miq_a
+    @edit[:current][:authentication][:ldaphost] = Array.wrap(@edit[:current][:authentication][:ldaphost])
     @edit[:current][:authentication][:user_proxies] ||= [{}]
     @edit[:current][:authentication][:follow_referrals] ||= false
     @edit[:current][:authentication][:sso_enabled] ||= false

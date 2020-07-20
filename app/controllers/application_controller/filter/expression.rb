@@ -445,14 +445,14 @@ module ApplicationController::Filter
       end
 
       if val1 && [:datetime, :date].include?(val1[:type])     # Change datetime and date field values into arrays while editing
-        self.exp_value = exp_value.to_miq_a                   # Turn date/time values into an array
+        self.exp_value = Array.wrap(exp_value)                # Turn date/time values into an array
         val1[:date_format] = exp_value.to_s.first.include?('/') ? 's' : 'r'
         if key == EXP_FROM && val1[:date_format] == 'r'
           val1[:through_choices] = Expression.through_choices(exp_value[0])
         end
       end
       if val2 && [:datetime, :date].include?(val2[:type])
-        self.exp_cvalue = exp_cvalue.to_miq_a                 # Turn date/time cvalues into an array
+        self.exp_cvalue = Array.wrap(exp_cvalue)              # Turn date/time cvalues into an array
         val2[:date_format] = exp_cvalue.first.include?('/') ? 's' : 'r'
         if ckey == EXP_FROM && val2[:date_format] == 'r'
           val2[:through_choices] = Expression.through_choices(exp_cvalue[0])
