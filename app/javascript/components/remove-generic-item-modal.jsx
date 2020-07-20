@@ -15,7 +15,7 @@ const parseApiError = (error) => {
 export const removeItems = (items, apiUrl, asyncDelete, redirectUrl, treeSelect) => {
   let apiPromises = [];
   let flashArray = [];
-  const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfuly initiated') : __('The item "%s" has been successfully deleted');
+  const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfully initiated') : __('The item "%s" has been successfully deleted');
 
   miqSparkleOn();
   items.forEach(item => {
