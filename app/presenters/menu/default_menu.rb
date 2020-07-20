@@ -98,7 +98,6 @@ module Menu
           Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
-          Menu::Item.new('firmware_registry', N_('Firmware Registry'), 'firmware_registry',          {:feature => 'firmware_registry', :any => true}, '/firmware_registry/show_list'),
           Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
           Menu::Item.new('infra_topology',    N_('Topology'),          'infra_topology',             {:feature => 'infra_topology', :any => true},    '/infra_topology/show')
         ])
@@ -113,6 +112,7 @@ module Menu
           Menu::Item.new('physical_server',         N_('Servers'),   'physical_server',         {:feature => 'physical_server_show_list'},             '/physical_server/show_list'),
           Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage/show_list'),
           Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch/show_list'),
+          Menu::Item.new('firmware_registry',       N_('Firmware Registry'), 'firmware_registry', {:feature => 'firmware_registry', :any => true},     '/firmware_registry/show_list'),
           Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology/show'),
         ])
       end
