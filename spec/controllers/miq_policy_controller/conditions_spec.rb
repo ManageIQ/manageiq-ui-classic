@@ -19,11 +19,11 @@ describe MiqPolicyController::Conditions do
         allow(subject).to receive(:load_edit).and_return(true)
         allow(subject).to receive(:replace_right_cell)
         allow(subject).to receive(:x_active_tree).and_return(:condition_tree)
-        subject.instance_variable_set(:@edit, :new => {:towhat         => 'ContainerReplicator',
-                                                       :description    => 'New_condition',
-                                                       :notes          => nil,
-                                                       :expression     => {},
-                                                       :applies_to_exp => {"???"=>"???"}})
+        subject.instance_variable_set(:@edit, :new => {:target_class_name => 'ContainerReplicator',
+                                                       :description       => 'New_condition',
+                                                       :notes             => nil,
+                                                       :expression        => {},
+                                                       :applies_to_exp    => {"???"=>"???"}})
         subject.instance_variable_set(:@sb, {})
       end
 

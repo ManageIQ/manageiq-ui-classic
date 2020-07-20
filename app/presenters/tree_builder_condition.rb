@@ -46,10 +46,10 @@ class TreeBuilderCondition < TreeBuilder
 
   # level 2 - conditions
   def x_get_tree_custom_kids(parent, count_only)
-    towhat = parent[:id].camelize
-    return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(towhat)
+    target_class_name = parent[:id].camelize
+    return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(target_class_name)
 
-    objects = Condition.where(:towhat => towhat)
+    objects = Condition.where(:target_class_name => target_class_name)
     count_only_or_objects(count_only, objects, :description)
   end
 end

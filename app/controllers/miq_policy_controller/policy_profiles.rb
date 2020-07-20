@@ -121,11 +121,11 @@ module MiqPolicyController::PolicyProfiles
 
     @edit[:new][:policies] = {}
     policies = @profile.members # Get the member sets
-    policies.each { |p| @edit[:new][:policies][ui_lookup(:model => p.towhat) + " #{p.mode.capitalize}: " + p.description] = p.id } # Build a hash for the members list box
+    policies.each { |p| @edit[:new][:policies][ui_lookup(:model => p.target_class_name) + " #{p.mode.capitalize}: " + p.description] = p.id } # Build a hash for the members list box
 
     @edit[:choices] = {}
     MiqPolicy.all.each do |p|
-      @edit[:choices][ui_lookup(:model => p.towhat) + " #{p.mode.capitalize}: " + p.description] = p.id # Build a hash for the policies to choose from
+      @edit[:choices][ui_lookup(:model => p.target_class_name) + " #{p.mode.capitalize}: " + p.description] = p.id # Build a hash for the policies to choose from
     end
 
     @edit[:new][:policies].each_key do |key|
@@ -151,7 +151,7 @@ module MiqPolicyController::PolicyProfiles
   # Get information for a profile
   def profile_get_info(profile)
     @record = @profile = profile
-    @profile_policies = @profile.miq_policies.sort_by { |p| [p.towhat, p.mode, p.description.downcase] }
+    @profile_policies = @profile.miq_policies.sort_by { |p| [p.target_class_name, p.mode, p.description.downcase] }
     @right_cell_text = _("Policy Profile \"%{name}\"") % {:name => @profile.description}
     @right_cell_div = "profile_details"
   end
