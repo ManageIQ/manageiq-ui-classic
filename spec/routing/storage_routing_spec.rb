@@ -85,18 +85,6 @@ describe "routes for StorageController" do
     end
   end
 
-  describe "#show_details" do
-    it "routes with POST" do
-      expect(post("/#{controller_name}/show_details")).to route_to("#{controller_name}#show_details")
-    end
-  end
-
-  describe "#show_association" do
-    it "routes with POST" do
-      expect(post("/#{controller_name}/show_association")).to route_to("#{controller_name}#show_association")
-    end
-  end
-
   describe "#snapshot_files" do
     it "routes with GET" do
       expect(get("/#{controller_name}/snapshot_files")).to route_to("#{controller_name}#snapshot_files")

@@ -1776,7 +1776,6 @@ Rails.application.routes.draw do
         perf_top_chart
         protect
         show
-        show_association
         show_list
         start
         tagging_edit
@@ -2764,8 +2763,6 @@ Rails.application.routes.draw do
         reload
         sections_field_changed
         show
-        show_association
-        show_details
         show_list
         storage_list
         storage_pod_list

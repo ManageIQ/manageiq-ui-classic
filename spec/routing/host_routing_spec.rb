@@ -207,12 +207,6 @@ describe "routes for HostController" do
     end
   end
 
-  describe "#show_association" do
-    it "routes with GET" do
-      expect(get("/host/show_association")).to route_to("host#show_association")
-    end
-  end
-
   describe "#start" do
     it "routes with GET" do
       expect(get("/host/start")).to route_to("host#start")
