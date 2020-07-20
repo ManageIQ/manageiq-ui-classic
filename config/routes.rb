@@ -187,7 +187,6 @@ Rails.application.routes.draw do
         tree_autoload
         tree_select
         cs_form_field_changed
-        users
         wait_for_task
       ) +
         adv_search_post +
