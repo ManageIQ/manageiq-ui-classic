@@ -76,14 +76,14 @@
       .form-group
         =_('Add a Condition:')
         %span#exp_buttons2_off
-          - %w(and or not).each do |image|
+          - [_("and"), _("or"), _("not")].each do |image|
             .btn.btn-default.disabled
               #{image}
 
         %span#exp_buttons2_not{:style => "display: none"}
-          - [[_("AND with a new expression element"), 'and', 'and'],
-             [_("OR with a new expression element"),  'or',  'or'],
-             ["",                                     'not', '']].each do |title, image, pressed|
+          - [[_("AND with a new expression element"), _('and'), 'and'],
+             [_("OR with a new expression element"),  _('or'),  'or'],
+             ["",                                     _('not'), '']].each do |title, image, pressed|
             - if title.empty?
               %button.btn.btn-default.disabled
                 #{image}
@@ -94,9 +94,9 @@
                 #{image}
 
         %span#exp_buttons2_on{:style => "display: none"}
-          - [[_("AND with a new expression element"),       'and',     'and'],
-             [_("OR with a new expression element"),        'or',      'or'],
-             [_("Wrap this expression element with a NOT"), 'not',     'not']].each do |title, image_text, pressed|
+          - [[_("AND with a new expression element"),       _('and'),     'and'],
+             [_("OR with a new expression element"),        _('or'),      'or'],
+             [_("Wrap this expression element with a NOT"), _('not'),     'not']].each do |title, image_text, pressed|
             %button.btn.btn-default{:onclick => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => pressed)}');",
                                     :title   => title}
               #{image_text}
