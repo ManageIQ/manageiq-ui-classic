@@ -258,5 +258,6 @@ class VmCloudController < ApplicationController
   menu_section :clo
   feature_for_actions %w[instances_filter_accord images_filter_accord], *ADV_SEARCH_ACTIONS
   feature_for_actions 'vm_show', :groups, :users, :patches
+  feature_for_actions ['instance_edit', 'image_edit'], :edit_vm
   has_custom_buttons
 end

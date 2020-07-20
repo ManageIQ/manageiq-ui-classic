@@ -88,5 +88,6 @@ class VmInfraController < ApplicationController
   menu_section :inf
   feature_for_actions %w[vms_filter_accord templates_filter_accord], *ADV_SEARCH_ACTIONS
   feature_for_actions 'vm_show', :groups, :users, :patches
+  feature_for_actions ['vm_edit', 'miq_template_edit'], :edit_vm
   has_custom_buttons
 end
