@@ -70,6 +70,7 @@ Cypress.Commands.add("menu", (...items) => {
 
 // cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children)}
 Cypress.Commands.add("menuItems", () => {
+  cy.get('#main-menu nav.primary'); // Wait for menu to appear
   return cy.window().then((window) => window.ManageIQ.menu);
 });
 

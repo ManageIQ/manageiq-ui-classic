@@ -14,24 +14,20 @@ describe('Menu', () => {
         expect(menu[2].items[1].items[3].title).to.equal('Virtual Machines');
       });
 
-    cy.menu('Overview')
+    cy.menu('Overview', 'Dashboard')
       .get('widget-wrapper');
-
-    cy.menu('Services')
-      .expect_explorer_title('Active Services');
-
-    cy.menu('Compute')
-      .expect_show_list_title('Cloud Providers');
 
     cy.menu('Overview', 'Reports')
       .expect_explorer_title('All Saved Reports');
 
+    cy.menu('Services', 'My Services')
+      .expect_explorer_title('Active Services');
+
+    cy.menu('Compute', 'Clouds', 'Providers')
+      .expect_show_list_title('Cloud Providers');
+
     cy.menu('Compute', 'Infrastructure', 'Virtual Machines')
       .expect_explorer_title('All VMs & Templates');
-
-    // test it remembers the last Overview > * screen used
-    cy.menu('Overview')
-      .expect_explorer_title('All Saved Reports');
   });
 
   it.skip("all menu items lead to non-error screens", () => {
