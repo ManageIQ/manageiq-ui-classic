@@ -24,6 +24,26 @@ class PhysicalNetworkPortController < ApplicationController
     @table_name ||= "physical_network_ports"
   end
 
+  def show
+    assert_privileges('physical_switch_show')
+    super
+  end
+
+  def show_list
+    assert_privileges('physical_switch_show')
+    super
+  end
+
+  def download_data
+    assert_privileges('physical_switch_show')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('physical_switch_show')
+    super
+  end
+
   def textual_group_list
     [
       %i[properties],
