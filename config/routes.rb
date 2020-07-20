@@ -2474,6 +2474,7 @@ Rails.application.routes.draw do
         rbac_user_field_changed
         rbac_users_list
         region_edit
+        region_form_field_changed
         repo_default_name
         restart_server
         rhn_buttons
@@ -2498,6 +2499,7 @@ Rails.application.routes.draw do
         upload_favicon
         wait_for_task
         x_button
+        x_show
         zone_edit
         zone_field_changed
       ) + exp_post + dialog_runner_post
