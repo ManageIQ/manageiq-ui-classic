@@ -524,7 +524,7 @@ class MiqPolicyController < ApplicationController
         if @profiles
           r[:partial => 'profile_list']
         elsif @policies || (@view && @sb[:tree_typ] == 'policies')
-          right_cell_text = _("All %{typ} Policies") % {:typ => "#{ui_lookup(:model => @sb[:nodeid].try(:camelize))} #{@sb[:mode] ? @sb[:mode].capitalize : ""}"}
+          right_cell_text = _("All %{typ} Policies") % {:typ => "#{ui_lookup(:model => @sb[:nodeid].try(:camelize))} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}"}
           r[:partial => 'policy_list']
         elsif @conditions
           right_cell_text = _("All %{typ} Conditions") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}
@@ -551,12 +551,12 @@ class MiqPolicyController < ApplicationController
       if @policy.id.blank?
         right_cell_text = if @sb[:mode]
                             _("Adding a new %{model_name} %{mode} Policy") %
-                              {:model_name => model_name, :mode => @sb[:mode].capitalize}
+                              {:model_name => model_name, :mode => _(@sb[:mode].capitalize)}
                           else
                             _("Adding a new %{model_name} Policy") % {:model_name => model_name}
                           end
       else
-        options = {:model => "#{model_name} #{@sb[:mode] ? @sb[:mode].capitalize : ""}",
+        options = {:model => "#{model_name} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}",
                    :name  => @policy.description}
         right_cell_text = @edit ? _("Editing %{model} Policy \"%{name}\"") % options : _("%{model} Policy \"%{name}\"") % options
         if @edit && @edit[:typ] == 'conditions'
