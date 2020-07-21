@@ -480,5 +480,6 @@ class HostController < ApplicationController
 
   menu_section :inf
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+  feature_for_actions "#{controller_name}_show", :groups, :users, :patches
   has_custom_buttons
 end
