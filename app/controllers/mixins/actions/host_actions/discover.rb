@@ -110,6 +110,8 @@ module Mixins
 
         # AJAX driven routine to check for changes in ANY field on the discover form
         def discover_field_changed
+          assert_privileges("#{controller_name}_discover")
+
           render :update do |page|
             page << javascript_prologue
             if params[:from_first]
