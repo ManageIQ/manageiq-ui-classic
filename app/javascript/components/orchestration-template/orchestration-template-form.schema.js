@@ -88,7 +88,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     }],
   }, {
     name: 'draft',
-    label: 'Draft',
+    label: __('Draft'),
     component: componentTypes.CHECKBOX,
   }, {
     component: 'hr',
