@@ -148,5 +148,7 @@ class EmsClusterController < ApplicationController
 
   menu_section :inf
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+  feature_for_actions "#{controller_name}_timeline", :tl_chooser
+  feature_for_actions "#{controller_name}_perf", :perf_top_chart
   has_custom_buttons
 end

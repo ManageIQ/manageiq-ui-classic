@@ -90,5 +90,7 @@ class VmInfraController < ApplicationController
   feature_for_actions 'vm_show', :groups, :users, :patches
   feature_for_actions ['vm_edit', 'miq_template_edit'], :edit_vm
   feature_for_actions ['vm_protect', 'miq_template_protect'], :protect
+  feature_for_actions ['vm_timeline', 'miq_template_timeline'], :tl_chooser
+  feature_for_actions ['vm_perf', 'miq_template_perf'], :perf_top_chart
   has_custom_buttons
 end
