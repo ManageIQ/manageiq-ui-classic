@@ -7,6 +7,8 @@ class VmController < ApplicationController
   include VmRemote # methods for VM remote access
   include Mixins::BreadcrumbsMixin
 
+  feature_for_actions 'vm_edit', :edit_vm
+
   def index
     session[:vm_type] = nil # Reset VM type if coming in from All tab
     redirect_to(:action => 'show_list')
