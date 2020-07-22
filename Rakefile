@@ -57,6 +57,24 @@ namespace :spec do
   desc "Run all cypress specs"
   task :cypress => ["app:cypress:ui:run"]
 
+  namespace :cypress do
+    task :ci => ["ci:set_node_path", "app:cypress:ui:seed", "spec:cypress"]
+
+    task "ci:install_yarn" do
+      sh "/bin/bash", "-c", "source ~/.nvm/nvm.sh && nvm install 12 && npm install -g yarn"
+    end
+
+    task "ci:set_node_path" do
+      ENV["PATH"] = "#{Dir.glob("/home/travis/.nvm/versions/node/v12*").sort.last}/bin:#{ENV["PATH"]}"
+      # puts;puts;puts
+      # puts ">>>>>> PATH: #{ENV["PATH"]}"
+      # puts;puts;puts
+    end
+
+    desc "Setup for CI"
+    task "ci:setup" => ["ci:install_yarn", "ci:set_node_path", "update:ui"]
+  end
+
   desc "Try to compile assets"
   task :compile => ["app:assets:precompile"]
 
