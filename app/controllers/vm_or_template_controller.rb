@@ -73,4 +73,6 @@ class VmOrTemplateController < ApplicationController
   feature_for_actions ['vm_show', 'miq_template_show'], :groups, :users, :patches
   feature_for_actions ['vm_edit', 'miq_template_edit', 'instance_edit', 'image_edit'], :edit_vm
   feature_for_actions ['vm_protect', 'miq_template_protect'], :protect
+  feature_for_actions ['vm_perf', 'miq_template_perf', 'instance_perf', 'image_perf'], :perf_top_chart
+  feature_for_actions ['vm_timeline', 'miq_template_timeline', 'instance_timeline', 'image_timeline'], :tl_chooser
 end
