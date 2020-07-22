@@ -33,7 +33,7 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert?"),
                                          :modal_title    => N_("Delete Alert"),
-                                         :tree_select    => 'root'}}),
+                                         :ajax_reload    => true}}),
       ]
     ),
   ])

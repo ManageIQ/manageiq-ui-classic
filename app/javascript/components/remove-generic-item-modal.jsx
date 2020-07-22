@@ -12,7 +12,7 @@ const parseApiError = (error) => {
   }
 };
 
-export const removeItems = (items, apiUrl, asyncDelete, redirectUrl, treeSelect) => {
+export const removeItems = (items, { ajaxReload, apiUrl, asyncDelete, redirectUrl, treeSelect }) => {
   let apiPromises = [];
   let flashArray = [];
   const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfully initiated') : __('The item "%s" has been successfully deleted');
@@ -43,12 +43,13 @@ export const removeItems = (items, apiUrl, asyncDelete, redirectUrl, treeSelect)
     })
     .then((apiData) => {
       if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
-        if (!treeSelect) {
+        if (!treeSelect && !ajaxReload) {
           window.location.href = redirectUrl;
           miqSparkleOff();
         } else {
           sendDataWithRx({ controller: 'reportDataController', type: 'gtlUnselectAll' });
-          miqAjax(`tree_select?id=${treeSelect}`).then(() => miqFlashSaved());
+          miqAjax(treeSelect ? `tree_select?id=${treeSelect}` : `reload?deleted=true`)
+            .then(() => miqFlashSaved());
         }
       }
     });
@@ -65,7 +66,14 @@ class RemoveGenericItemModal extends React.Component {
 
   componentDidMount() {
     const itemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
-    const { api_url, display_field = 'name' } = this.props.modalData;
+    const {
+      ajax_reload,
+      api_url,
+      async_delete,
+      display_field = 'name',
+      redirect_url,
+      tree_select,
+    } = this.props.modalData;
 
     // Load modal data from API
     Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}`)))
@@ -88,11 +96,13 @@ class RemoveGenericItemModal extends React.Component {
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeItems(this.state.data,
-                                      this.props.modalData.api_url,
-                                      this.props.modalData.async_delete,
-                                      this.props.modalData.redirect_url,
-                                      this.props.modalData.tree_select)
+        addClicked: () => removeItems(this.state.data, {
+          ajaxReload: ajax_reload,
+          apiUrl: api_url,
+          asyncDelete: async_delete,
+          redirectUrl: redirect_url,
+          treeSelect: tree_select,
+        }),
       }
     });
     this.props.dispatch({

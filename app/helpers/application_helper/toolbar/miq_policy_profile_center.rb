@@ -27,7 +27,7 @@ class ApplicationHelper::Toolbar::MiqPolicyProfileCenter < ApplicationHelper::To
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Policy Profile?"),
                                          :modal_title    => N_("Delete Policy Profile"),
-                                         :tree_select    => 'root'}}),
+                                         :ajax_reload    => true}}),
       ]
     ),
   ])

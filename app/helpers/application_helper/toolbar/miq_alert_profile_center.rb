@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::MiqAlertProfileCenter < ApplicationHelper::Too
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert Profile?"),
                                          :modal_title    => N_("Delete Alert Profile"),
-                                         :tree_select    => 'root'}}),
+                                         :ajax_reload    => true}}),
       ]
     ),
   ])

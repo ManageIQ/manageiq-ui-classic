@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Action?"),
                                          :modal_title    => N_("Delete Action"),
-                                         :tree_select    => 'root'}}),
+                                         :ajax_reload    => true}}),
       ]
     ),
   ])

@@ -47,7 +47,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                                            :component_name => 'RemoveGenericItemModal',
                                            :controller     => 'provider_dialogs',
                                            :display_field  => 'description',
-                                           :tree_select    => 'root'}}),
+                                           :ajax_reload    => true}}),
         button(
           :condition_edit,
           'pficon pficon-add-circle-o fa-lg',
