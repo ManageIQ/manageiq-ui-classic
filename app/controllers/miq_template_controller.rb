@@ -47,4 +47,5 @@ class MiqTemplateController < ApplicationController
   end
 
   has_custom_buttons
+  feature_for_actions 'miq_template_edit', :edit_vm
 end

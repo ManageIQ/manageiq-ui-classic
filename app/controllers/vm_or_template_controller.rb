@@ -71,4 +71,5 @@ class VmOrTemplateController < ApplicationController
   menu_section :svc
   has_custom_buttons
   feature_for_actions ['vm_show', 'miq_template_show'], :groups, :users, :patches
+  feature_for_actions ['vm_edit', 'miq_template_edit', 'instance_edit', 'image_edit'], :edit_vm
 end
