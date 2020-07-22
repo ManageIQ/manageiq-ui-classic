@@ -1,4 +1,8 @@
 = render :partial => "layouts/flash_msg"
+- if respond_to?(:textual_summary_flash_list)
+  - process_flash_messages(textual_summary_flash_list).each do |flash|
+    :javascript
+      add_flash("#{j_str(flash[:message])}", "#{j_str(flash[:level])}")
 #textual_summary
 :javascript
   ManageIQ.component.componentFactory('TextualSummaryWrapper', '#textual_summary', {summary: #{process_textual_info(textual_group_list, @record).to_json}});
