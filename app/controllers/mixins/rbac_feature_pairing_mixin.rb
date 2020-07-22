@@ -27,7 +27,9 @@ module Mixins
       adv_search_clear
       adv_search_text_clear
       adv_search_toggle
+      listnav_search_selected
       save_default_search
+      quick_search
     ] + EXP_EDITOR_ACTIONS
 
     class_methods do
