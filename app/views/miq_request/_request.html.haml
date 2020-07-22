@@ -14,12 +14,12 @@
       %label.control-label.col-md-2
         = _("Status")
       .col-md-8
-        = h(@miq_request.status)
+        = h(_(@miq_request.status))
     .form-group
       %label.control-label.col-md-2
         = _("Request State")
       .col-md-8
-        = h(@miq_request.state.titleize)
+        = h(_(@miq_request.state.titleize))
     - if @miq_request.requester
       .form-group
         %label.control-label.col-md-2
@@ -30,7 +30,7 @@
       %label.control-label.col-md-2
         = _("Request Type")
       .col-md-8
-        = h(@miq_request.request_type_display)
+        = h(_(@miq_request.request_type_display))
     .form-group
       %label.control-label.col-md-2
         = _("Description")
@@ -61,7 +61,7 @@
       %label.control-label.col-md-2
         = _("Approval State")
       .col-md-8
-        = h(@miq_request.approval_state.titleize)
+        = h(_(@miq_request.approval_state.titleize))
     - if @miq_request.stamped_by
       .form-group
         %label.control-label.col-md-2
@@ -78,14 +78,14 @@
         = _("Reason")
       - if @edit && @edit[:stamp_typ]
         .col-md-8
-          = text_field_tag("reason", @edit[:reason],
+          = text_field_tag("reason", _(@edit[:reason]),
             :class             => "form-control",
             :maxlength         => ViewHelper::MAX_NAME_LEN,
             "data-miq_focus"   => true,
             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       - else
         .col-md-8
-          = h(@miq_request.reason)
+          = h(_(@miq_request.reason))
     - if !@edit && @miq_request.approval_state.downcase == "approved"
       - if @miq_request.resource_type == "MiqProvisionRequest" && @miq_request.resource.miq_provisions.length > 0
         .form-group
