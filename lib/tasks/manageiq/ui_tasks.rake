@@ -8,6 +8,7 @@ namespace :update do
           warn "Skipping yarn install for #{engine.name} on travis #{ENV['TEST_SUITE']}"
           next
         end
+        system("which yarn >/dev/null") || abort("\n== You have to install yarn ==")
         system("yarn") || abort("\n== yarn failed in #{engine.path} ==")
       end
     end
