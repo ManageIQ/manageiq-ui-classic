@@ -1,4 +1,4 @@
-describe ApplicationHelper::Button::Condition do
+describe ApplicationHelper::Button::ConditionDelete do
   describe "#role_allows_feature?" do
     let(:session) { {} }
     before do
@@ -23,7 +23,7 @@ describe ApplicationHelper::Button::Condition do
       @condition = FactoryBot.create(:condition)
       sandbox = {:active_tree => :condition_tree}
       @view_context = setup_view_context_with_sandbox(sandbox)
-      @button = described_class.new(@view_context, {}, {'condition' => @condition}, {:child_id => "condition_delete"})
+      @button = described_class.new(@view_context, {}, {'record' => @condition}, {:child_id => "condition_delete"})
     end
 
     it "will be disabled" do

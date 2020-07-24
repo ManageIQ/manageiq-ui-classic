@@ -550,6 +550,7 @@ class ApplicationController < ActionController::Base
   # to reload currently displayed summary screen in explorer
   def reload
     @_params[:id] = x_node
+    @report_deleted = true if params[:deleted].present?
     tree_select
   end
 

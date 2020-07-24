@@ -1,25 +1,5 @@
 describe MiqPolicyController do
   context "::Alerts" do
-    describe '#alert_delete' do
-      let(:alert) { FactoryBot.create(:miq_alert, :read_only => readonly) }
-
-      before { login_as FactoryBot.create(:user, :features => "alert_delete") }
-
-      context 'read only alert' do
-        let(:readonly) { true }
-
-        it 'renders a flash message' do
-          controller.params[:id] = alert.id
-          controller.instance_variable_set(:@sb, {})
-          expect(controller).to receive(:x_node)
-          expect(controller).to receive(:get_node_info)
-          expect(controller).to receive(:replace_right_cell)
-          expect(controller).not_to receive(:process_alerts)
-          controller.send(:alert_delete)
-        end
-      end
-    end
-
     context "alert edit" do
       before do
         login_as FactoryBot.create(:user, :features => "alert_admin")

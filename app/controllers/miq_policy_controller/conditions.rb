@@ -118,22 +118,6 @@ module MiqPolicyController::Conditions
     replace_right_cell(:nodetype => "p", :replace_trees => %i[policy_profile policy])
   end
 
-  def condition_delete
-    assert_privileges("condition_delete")
-    conditions = []
-    # showing 1 condition, delete it
-    con = Condition.find(params[:id])
-    if params[:id].nil? || con.nil?
-      add_flash(_("Condition no longer exists"), :error)
-    else
-      conditions.push(params[:id])
-      @new_condition_node = "xx-#{con.towhat.camelize(:lower)}"
-    end
-    process_conditions(conditions, "destroy") unless conditions.empty?
-    get_node_info(@new_condition_node)
-    replace_right_cell(:nodetype => "xx", :replace_trees => %i[condition])
-  end
-
   def condition_field_changed
     return unless load_edit("condition_edit__#{params[:id]}", "replace_cell__explorer")
 
@@ -146,10 +130,6 @@ module MiqPolicyController::Conditions
   end
 
   private
-
-  def process_conditions(conditions, task)
-    process_elements(conditions, Condition, task)
-  end
 
   def condition_build_edit_screen
     @edit = {}

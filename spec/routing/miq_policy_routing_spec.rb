@@ -44,12 +44,6 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#alert_profile_delete' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_profile_delete")).to route_to("#{controller_name}#alert_profile_delete")
-    end
-  end
-
   describe '#alert_profile_edit' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/alert_profile_edit")).to route_to("#{controller_name}#alert_profile_edit")

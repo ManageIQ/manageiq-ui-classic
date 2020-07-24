@@ -65,26 +65,6 @@ module MiqPolicyController::Alerts
     end
   end
 
-  def alert_delete
-    assert_privileges("alert_delete")
-    alerts = []
-    # showing 1 alert, delete it
-
-    if params[:id].nil? || !MiqAlert.exists?(params[:id])
-      add_flash(_("Alert no longer exists"), :error)
-    elsif MiqAlert.find(params[:id]).read_only
-      add_flash(_("Alert can not be deleted"), :error)
-    else
-      alerts.push(params[:id])
-    end
-    @alert = MiqAlert.find(params[:id])
-
-    process_alerts(alerts, "destroy") unless alerts.empty?
-    @new_alert_node = self.x_node = "root"
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => %i[alert_profile alert])
-  end
-
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
 
@@ -233,10 +213,6 @@ module MiqPolicyController::Alerts
   def display_driving_event?
     (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing") ||
       %w[ContainerNode ContainerProject].include?(@edit[:new][:db])
-  end
-
-  def process_alerts(alerts, task)
-    process_elements(alerts, MiqAlert, task)
   end
 
   def alert_build_edit_screen

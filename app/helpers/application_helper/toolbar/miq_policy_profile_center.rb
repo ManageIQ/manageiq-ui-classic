@@ -19,10 +19,15 @@ class ApplicationHelper::Toolbar::MiqPolicyProfileCenter < ApplicationHelper::To
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Policy Profile'),
           t,
-          :url_parms    => "main_div",
-          :send_checked => true,
           :klass        => ApplicationHelper::Button::ReadOnly,
-          :confirm      => N_("Are you sure you want to remove this Policy Profile?")),
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:api_url        => 'policy_profiles',
+                                         :component_name => 'RemoveGenericItemModal',
+                                         :controller     => 'provider_dialogs',
+                                         :display_field  => 'description',
+                                         :modal_text     => N_("Are you sure you want to delete this Policy Profile?"),
+                                         :modal_title    => N_("Delete Policy Profile"),
+                                         :ajax_reload    => true}}),
       ]
     ),
   ])

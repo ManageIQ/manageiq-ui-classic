@@ -102,7 +102,11 @@ describe('RemoveGenericItemModal', () => {
     const component = mount(<RemoveGenericItemModal store={store} recordId={item1} modalData={modalData} />);
 
     setImmediate(() => {
-      removeItems(component.childAt(0).state().data, modalData.api_url, modalData.async_delete, modalData.redirect_url);
+      removeItems(component.childAt(0).state().data, {
+        apiUrl: modalData.api_url,
+        asyncDelete: modalData.async_delete,
+        redirectUrl: modalData.redirect_url,
+      });
       expect(fetchMock.called(url1)).toBe(true);
       expect(fetchMock.called(postUrl)).toBe(true);
       done();

@@ -129,23 +129,6 @@ module MiqPolicyController::AlertProfiles
     end
   end
 
-  def alert_profile_delete
-    alert_profiles = []
-    # showing 1 alert set, delete it
-    if params[:id].nil? || !MiqAlertSet.exists?(params[:id])
-      add_flash(_("Alert Profile no longer exists"), :error)
-    else
-      alert_profiles.push(params[:id])
-      alert_profile_get_info(MiqAlertSet.find(params[:id]))
-    end
-    process_alert_profiles(alert_profiles, "destroy") unless alert_profiles.empty?
-    nodes = x_node.split("_")
-    nodes.pop
-    self.x_node = nodes.join("_")
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => "xx", :replace_trees => %i[alert_profile])
-  end
-
   def alert_profile_field_changed
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
 
@@ -184,10 +167,6 @@ module MiqPolicyController::AlertProfiles
   end
 
   private
-
-  def process_alert_profiles(alert_profiles, task)
-    process_elements(alert_profiles, MiqAlertSet, task)
-  end
 
   def alert_profile_get_assign_to_objects_empty?
     return true if @assign[:new][:assign_to].blank?
