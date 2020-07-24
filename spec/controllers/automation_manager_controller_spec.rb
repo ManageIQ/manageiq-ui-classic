@@ -149,6 +149,7 @@ describe AutomationManagerController do
       post :edit, :params => { :button     => 'save',
                                :id         => @automation_manager1.id,
                                :zone       => new_zone.name,
+                               :name       => 'foobar',
                                :url        => automation_provider1.url,
                                :verify_ssl => automation_provider1.verify_ssl }
       expect(response.status).to eq(200)
