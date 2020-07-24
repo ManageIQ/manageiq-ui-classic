@@ -117,7 +117,7 @@ module OpsController::Settings::LabelTagMapping
       lt_map[:id] = m.id
       lt_map[:entity] = entity_ui_name_or_all(m.labeled_resource_type)
       lt_map[:label_name] = m.label_name
-      lt_map[:category] = m.tag.classification.description
+      lt_map[:category] = cat_description_without_prefix(m.tag.classification.description)
       @lt_mapping.push(lt_map)
     end
   end
@@ -130,7 +130,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:key] = "label_tag_mapping_edit__#{@lt_map.id || "new"}"
     @edit[:new][:entity] = @lt_map.labeled_resource_type
     @edit[:new][:label_name] = @lt_map.label_name
-    @edit[:new][:category] = @lt_map.tag.classification.description
+    @edit[:new][:category] = cat_description_without_prefix(@lt_map.tag.classification.description)
     @edit[:current] = copy_hash(@edit[:new])
     @edit[:new][:options] = entity_options
     session[:edit] = @edit
@@ -189,7 +189,7 @@ module OpsController::Settings::LabelTagMapping
     begin
       ActiveRecord::Base.transaction do
         category = Classification.create_category!(:name         => cat_name,
-                                                   :description  => cat_description,
+                                                   :description  => cat_description_with_prefix(entity, cat_description),
                                                    :single_value => true,
                                                    :read_only    => true)
         ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
@@ -210,7 +210,7 @@ module OpsController::Settings::LabelTagMapping
   def label_tag_mapping_update(id, cat_description)
     mapping = ContainerLabelTagMapping.find(id)
     update_category = mapping.tag.classification
-    update_category.description = cat_description
+    update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
     begin
       update_category.save!
     rescue StandardError => bang
@@ -248,5 +248,14 @@ module OpsController::Settings::LabelTagMapping
       category.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
       javascript_flash
     end
+  end
+
+  def cat_description_with_prefix(entity, cat_description)
+    prefix = MAPPABLE_ENTITIES[entity].prefix.chomp(":")
+    "#{prefix}|#{cat_description}"
+  end
+
+  def cat_description_without_prefix(cat_description)
+    cat_description.sub(/^[^\|]+\|/, "")
   end
 end

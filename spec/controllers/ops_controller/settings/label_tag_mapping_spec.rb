@@ -30,7 +30,7 @@ describe OpsController do
       expect(mapping.label_name).to eq('my-label')
       expect(mapping.label_value).to be nil
       expect(mapping.tag.classification.category?).to be true
-      expect(mapping.tag.classification.description).to eq('My Cat')
+      expect(mapping.tag.classification.description).to eq('kubernetes:container_project|My Cat')
     end
 
     it "creates new scoped mapping on save" do
@@ -40,7 +40,7 @@ describe OpsController do
       expect(mapping.label_name).to eq('some-amazon-label')
       expect(mapping.label_value).to be nil
       expect(mapping.tag.classification.category?).to be true
-      expect(mapping.tag.classification.description).to eq('Amazon Vms')
+      expect(mapping.tag.classification.description).to eq('amazon:vm|Amazon Vms')
     end
 
     it "can edit an existing mapping" do
@@ -71,7 +71,7 @@ describe OpsController do
       # we're reusing one controller in the test.
       controller.instance_variable_set :@flash_array, nil
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'save' }
-      expect(mapping.tag.classification.description).to eq('Edited Again Cat')
+      expect(mapping.tag.classification.description).to eq('kubernetes:container_project|Edited Again Cat')
     end
 
     it "can edit an existing scoped mapping" do
@@ -100,7 +100,7 @@ describe OpsController do
 
       controller.instance_variable_set :@flash_array, nil
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'save' }
-      expect(mapping.tag.classification.description).to eq('Edited Again Amazon')
+      expect(mapping.tag.classification.description).to eq('amazon:vm|Edited Again Amazon')
     end
   end
 end
