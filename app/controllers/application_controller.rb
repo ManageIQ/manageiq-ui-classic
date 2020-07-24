@@ -2071,7 +2071,7 @@ class ApplicationController < ActionController::Base
 
   def assert_accordion_and_tree_privileges(tree_name)
     feature = features.find { |feat| feat.tree_name.to_sym == tree_name.to_sym }
-    unless ApplicationHelper.role_allows?(:feature => feature.role, :any => feature.role_any)
+    if feature.present? && !ApplicationHelper.role_allows?(:feature => feature.role, :any => feature.role_any)
       raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
     end
   end
