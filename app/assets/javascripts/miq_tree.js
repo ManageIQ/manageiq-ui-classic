@@ -548,11 +548,13 @@ function miqInitTree(options, tree) {
     // Process nodes bottom-to-top
     while (parents.length > 0) {
       var node = parents.pop();
-      node.state.checked = node.nodes.map(function(node) {
-        return node.state ? node.state.checked : false;
-      }).reduce(function(acc, curr) {
-        return (acc === curr) ? acc : 'undefined';
-      });
+      if (node.nodes.length > 0) {
+        node.state.checked = node.nodes.map(function(node) {
+          return node.state ? node.state.checked : false;
+        }).reduce(function(acc, curr) {
+          return (acc === curr) ? acc : 'undefined';
+        });
+      }
     }
   }
 
