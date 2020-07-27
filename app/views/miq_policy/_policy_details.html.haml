@@ -162,18 +162,17 @@
                   %td
                     = c.description
                   %td
+                    - if c.applies_to_exp.present?
+                      %strong
+                        = _("Scope")
+                      %div
+                        = h(MiqExpression.to_human(c.applies_to_exp))
+                      %br
+
+                    %strong
+                      = _("Expression")
                     %div
-                      %table
-                        - unless c.applies_to_exp.blank?
-                          %tr
-                            %td= _("Scope")
-                            %td
-                              = h(MiqExpression.to_human(c.applies_to_exp))
-                        %tr
-                          %td
-                            = _("Expression")
-                          %td
-                            = h(MiqExpression.to_human(c.expression))
+                      = h(MiqExpression.to_human(c.expression))
         %hr
 
       -# Events for this policy
