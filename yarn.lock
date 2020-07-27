@@ -313,10 +313,10 @@
     redux-mock-store "^1.5.1"
     ttembed-js "^0.1.1"
 
-"@manageiq/ui-components@1.2.20":
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.2.20.tgz#ebbf4c6400e167c0fc570aacc1aa08f61af7d4d9"
-  integrity sha512-3YIfdB0pqNvExEtY0TQuYBOey7eDUBLjDseRBjJ0cyD9QRc2MsU9ccSPR2ywT7cvBOlstjBLfDrWFPHoMwcPYA==
+"@manageiq/ui-components@1.2.21":
+  version "1.2.21"
+  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.2.21.tgz#4b5cff7a81e2417e4bfff16b2a8f843f2c940f22"
+  integrity sha512-PELiqpqfBciBa/UFKOtBmeJEmxSx/lMHZ20LfVJFBKlEsosmtqFHqtnZd6pIYIy7ZUt5E7k+SzmZ8vRQkTiQaw==
   dependencies:
     angular-bootstrap-switch "^0.5.1"
     angular-dragdrop "^1.0.13"
