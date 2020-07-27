@@ -1,7 +1,7 @@
 describe OpsHelper do
   describe '#auth_mode_name' do
-    modes = %w(ldap ldaps amazon httpd database)
-    modes_pretty = %w(LDAP LDAPS Amazon External\ Authentication Database)
+    modes = %w(amazon httpd database)
+    modes_pretty = %w(Amazon External\ Authentication Database)
 
     modes.zip modes_pretty.each do |mode, mode_pretty|
       it "Returns #{mode_pretty} when mode is #{mode}" do
