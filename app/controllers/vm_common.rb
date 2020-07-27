@@ -12,9 +12,15 @@ module VmCommon
     ]
   end
 
+  def textual_summary_flash_list
+    %i[reboot_needed]
+  end
+
   included do
     private :textual_group_list
+    private :textual_summary_flash_list
     helper_method :textual_group_list
+    helper_method :textual_summary_flash_list
     helper_method :parent_choices_with_no_parent_choice
     helper_method :select_check?
     helper_method :disable_check?

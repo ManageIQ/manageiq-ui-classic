@@ -32,6 +32,10 @@ module VmHelper::TextualSummary
     )
   end
 
+  def flash_reboot_needed
+    {:message => _('This virtual machine requires restart.'), :level => 'info'} if @record&.restart_needed
+  end
+
   def textual_id
     { :label => _("ID"), :value => @record.id }
   end

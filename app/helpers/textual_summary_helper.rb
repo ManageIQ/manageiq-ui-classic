@@ -226,4 +226,10 @@ module TextualSummaryHelper
        :title => auth[:status_details]}
     end
   end
+
+  def process_flash_messages(methods)
+    methods.collect do |method|
+      send("flash_#{method}")
+    end.compact
+  end
 end
