@@ -34,20 +34,6 @@ describe 'ops/_rbac_group_details.html.haml' do
                                               :selected_nodes => {})
     end
 
-    it 'should show "Look up groups" checkbox and label for auth mode ldap' do
-      stub_settings(:authentication => { :mode => 'ldap' }, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).to have_selector('input#lookup')
-      expect(rendered).to include('Look up LDAP Groups')
-    end
-
-    it 'should show "Look up groups" checkbox and label for auth mode ldaps' do
-      stub_settings(:authentication => { :mode => 'ldaps' }, :server => {})
-      render :partial => 'ops/rbac_group_details'
-      expect(rendered).to have_selector('input#lookup')
-      expect(rendered).to include('Look up LDAPS Groups')
-    end
-
     it 'should not show "Look up groups" checkbox and label for auth mode amazon' do
       stub_settings(:authentication => { :mode => 'amazon' }, :server => {})
       render :partial => 'ops/rbac_group_details'

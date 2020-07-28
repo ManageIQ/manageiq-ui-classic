@@ -50,10 +50,6 @@ module OpsHelper
 
   def auth_mode_name
     case ::Settings.authentication.mode.downcase
-    when 'ldap'
-      _('LDAP')
-    when 'ldaps'
-      _('LDAPS')
     when 'amazon'
       _('Amazon')
     when 'httpd'
