@@ -5,33 +5,39 @@ const sharedConfig = require('./shared.js')
 const { settings, output } = require('./configuration.js')
 const { env } = require('process')
 
+const {
+  https = false,
+  host = '0.0.0.0',
+  port = '8080',
+} = settings.dev_server || {};
+
 module.exports = merge(sharedConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
 
   devServer: {
     clientLogLevel: 'none',
-    https: settings.dev_server && settings.dev_server.https,
-    host: settings.dev_server && settings.dev_server.host,
-    port: settings.dev_server && settings.dev_server.port,
+    https,
+    host,
+    port,
     contentBase: output.path,
     publicPath: output.publicPath,
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: true,
     watchOptions: {
-      ignored: /node_modules/
+      ignored: /node_modules/,
     },
     proxy: {
       '/': {
-        target: `http://${settings.dev_server.host}:${env.PORT || '3000'}`,
+        target: `http://${host}:${env.PORT || '3000'}`,
         secure: false,
       },
       '/ws': {
-        target: `ws://${settings.dev_server.host}:${env.WS_PORT || env.PORT || '3000'}`,
+        target: `ws://${host}:${env.WS_PORT || env.PORT || '3000'}`,
         secure: false,
         ws: true,
       },
-    }
-  }
-})
+    },
+  },
+});
