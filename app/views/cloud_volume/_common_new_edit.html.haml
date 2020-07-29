@@ -40,14 +40,11 @@
     %select{"name"        => "availability_zone_id",
             "ng-model"    => "vm.cloudVolumeModel.availability_zone_id",
             "ng-options"  => "az.ems_ref as az.name for az in vm.availabilityZoneChoices",
-            "required"    => "",
             "ng-disabled" => "!vm.newRecord",
             :checkchange  => true,
             "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
-        = "<#{_('Choose')}>"
-    %span.help-block{"ng-show" => "angularForm.availability_zone_id.$error.required"}
-      = _("Required")
+        = "<#{_('None')}>"
 
 .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
   %label.col-md-2.control-label
