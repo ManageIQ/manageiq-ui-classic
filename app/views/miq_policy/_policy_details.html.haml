@@ -165,15 +165,12 @@
                     %div
                       %table
                         - unless c.applies_to_exp.blank?
-                          %tr
-                            %td= _("Scope")
+                          %tr{:colspan => "2"}
                             %td
-                              = h(MiqExpression.to_human(c.applies_to_exp))
-                        %tr
+                              = "#{_("Scope")} #{MiqExpression.to_human(c.applies_to_exp)}"
+                        %tr{:colspan => "2"}
                           %td
-                            = _("Expression")
-                          %td
-                            = h(MiqExpression.to_human(c.expression))
+                            = "#{_("Expression")} #{MiqExpression.to_human(c.expression)}"
         %hr
 
       -# Events for this policy
