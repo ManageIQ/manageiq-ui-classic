@@ -134,14 +134,6 @@ describe AutomationManagerController do
       expect(right_cell_text).to eq("Edit Provider")
     end
 
-    it "should display the zone field" do
-      new_zone = FactoryBot.create(:zone)
-      controller.instance_variable_set(:@provider, automation_provider1)
-      post :edit, :params => { :id => @automation_manager1.id }
-      expect(response.status).to eq(200)
-      expect(response.body).to include("option value=\\\"#{new_zone.name}\\\"")
-    end
-
     it "should save the zone field" do
       new_zone = FactoryBot.create(:zone)
       controller.instance_variable_set(:@provider, automation_provider1)
