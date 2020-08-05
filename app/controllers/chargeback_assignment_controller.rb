@@ -46,7 +46,6 @@ class ChargebackAssignmentController < ApplicationController
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     case params[:button]
     when "reset"
-      set_form_vars
       flash_to_session(_("All changes have been reset"), :warning)
     when "save"
       set_record_vars
@@ -59,6 +58,7 @@ class ChargebackAssignmentController < ApplicationController
         flash_to_session(_("Rate Assignments saved"))
       end
     end
+    set_form_vars
     render :update do |page|
       page << javascript_prologue
       prefix = @edit[:new][:type].downcase
