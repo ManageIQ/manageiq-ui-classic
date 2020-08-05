@@ -6,6 +6,7 @@ export const providersNetworkTypes = [
   { label: __('Local'), value: 'local' },
   { label: __('Flat'), value: 'flat' },
   { label: __('GRE'), value: 'gre' },
+  { label: __('GENEVE'), value: 'geneve' },
   { label: __('VLAN'), value: 'vlan' },
   { label: __('VXLAN'), value: 'vxlan' },
 ];
