@@ -136,6 +136,10 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "value": "gre",
                   },
                   Object {
+                    "label": "GENEVE",
+                    "value": "geneve",
+                  },
+                  Object {
                     "label": "VLAN",
                     "value": "vlan",
                   },
@@ -565,6 +569,10 @@ exports[`Cloud Network form component should render form 1`] = `
                   Object {
                     "label": "GRE",
                     "value": "gre",
+                  },
+                  Object {
+                    "label": "GENEVE",
+                    "value": "geneve",
                   },
                   Object {
                     "label": "VLAN",
