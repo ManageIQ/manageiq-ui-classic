@@ -355,6 +355,7 @@
     this.setLoading(true);
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
+    this.setExtraClasses('list');
     return this.getData(initObject.modelName,
       initObject.activeTree,
       initObject.parentId,

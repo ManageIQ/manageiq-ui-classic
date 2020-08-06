@@ -388,24 +388,12 @@ describe ApplicationController do
     {
       'miqreportresult' => :reports,
       'job'             => :job_task,
-      'miqtask'         => :job_task
+      'miqtask'         => :job_task,
+      'host'            => :list,
     }.each do |dbname, response|
       context "key is #{dbname}" do
         it "returns with #{response}" do
           expect(controller.send(:perpage_key, dbname)).to eq(response)
-        end
-      end
-    end
-
-    {
-      'list'   => :list,
-      'foobar' => nil
-    }.each do |gtl_type, response|
-      context "gtl_type is #{gtl_type}" do
-        before { controller.instance_variable_set(:@gtl_type, gtl_type) }
-
-        it "returns with #{response}" do
-          expect(controller.send(:perpage_key, 'foobar')).to eq(response)
         end
       end
     end
