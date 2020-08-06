@@ -15,7 +15,7 @@
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
                 - options = tab_index == 0 ? {:class => "active"} : {}
                 = miq_tab_header(tab.id, nil, options) do
-                  = tab.label
+                  = _(tab.label)
             .tab-content
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
                 - options = tab_index == 0 ? {:class => "active"} : {}
@@ -23,7 +23,7 @@
                   - tab.dialog_groups.each do |group|
                     %div{:id => "group_#{group.id}_div"}
                       %h3{:title => "#{group.description}"}
-                        = group.label
+                        = _(group.label)
                       - unless group.dialog_fields.empty?
                         .form-horizontal
                           - group.dialog_fields.each do |field|

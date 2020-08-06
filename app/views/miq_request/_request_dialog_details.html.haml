@@ -1,6 +1,6 @@
 .form-group{:id => "field_#{field.id}_tr", :style => field.visible ? 'display:block' : 'display:none'}
   %label.control-label.col-md-2{:title => field.description}
-    = field.label
+    = _(field.label)
   .col-md-8{:title => field.description}
     - case field.type
     - when 'DialogFieldTextBox', 'DialogFieldTextAreaBox'
@@ -28,7 +28,7 @@
       = h(field.values.detect { |k, _v| k == wf.value(field.name) }.try(:last) || wf.value(field.name))
 
     - when "DialogFieldDropDownList"
-      = h(field.value || "<None>")
+      = h(field.value || _("<None>"))
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || '' # it returns in format Clasification::id
