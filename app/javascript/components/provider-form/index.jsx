@@ -105,7 +105,13 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
   }, [providerId]);
 
   const onCancel = () => {
-    const message = sprintf(providerId ? __('Edit of %s was cancelled by the user') : __('Add of %s was cancelled by the user'), title);
+    const message = sprintf(
+      providerId
+        ? __('Edit of %s "%s" was cancelled by the user')
+        : __('Add of %s was cancelled by the user'),
+      title,
+      initialValues && initialValues.name,
+    );
     miqRedirectBack(message, 'success', redirect);
   };
 
