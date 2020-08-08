@@ -285,6 +285,7 @@ describe OpsController do
   end
 
   describe "#replace_explorer_trees" do
+    before { EvmSpecHelper.local_miq_server }
     it "build trees that are passed in and met other conditions" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_build_dyna_tree)
@@ -457,7 +458,8 @@ describe OpsController do
 
   describe '#tree_select' do
     it 'calls #tree_select_model' do
-      controller.instance_variable_set(:@sb, {})
+      login_as user_with_feature(%w(ops_settings))
+      controller.instance_variable_set(:@sb, :active_tree => :settings_tree)
       controller.params[:id] = 'root'
       allow(controller).to receive(:set_active_tab)
       allow(controller).to receive(:get_node_info)

@@ -2,7 +2,7 @@ describe MiqPolicyController do
   context "::Alerts" do
     context "alert edit" do
       before do
-        login_as FactoryBot.create(:user, :features => "alert_admin")
+        login_as user_with_feature(%w(alert alert_edit alert_profile_new))
         @miq_alert = FactoryBot.create(:miq_alert)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
@@ -75,7 +75,7 @@ describe MiqPolicyController do
     context 'test click on toolbar button' do
       before do
         EvmSpecHelper.local_miq_server
-        login_as FactoryBot.create(:user, :features => %w(alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
+        login_as FactoryBot.create(:user, :features => %w(alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
         # login_as FactoryBot.create(:user, :features => "alert_admin")
         @miq_alert = FactoryBot.create(:miq_alert)
         allow(controller).to receive(:x_active_tree).and_return(:alert_tree)
