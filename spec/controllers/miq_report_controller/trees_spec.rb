@@ -1,6 +1,6 @@
 describe ReportController do
   render_views
-  let(:user) { FactoryBot.create(:user, :features => "none") }
+  let(:user) { FactoryBot.create(:user_admin) }
   before do
     login_as user
     EvmSpecHelper.create_guid_miq_server_zone

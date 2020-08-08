@@ -1,4 +1,4 @@
-describe ApplicationController do
+describe ServiceController do
   context "#tree_autoload" do
     describe "verify @edit object" do
       before do

@@ -1,5 +1,9 @@
 describe MiqPolicyController do
   context "::MiqActions" do
+    before do
+      login_as user_with_feature(%w(action_edit action_new))
+    end
+
     context "#action_edit" do
       before do
         @action = FactoryBot.create(:miq_action, :name => "Test_Action")
