@@ -655,11 +655,12 @@ describe OpsController do
   describe "::MiqRegion" do
     before do
       EvmSpecHelper.local_miq_server
+      EvmSpecHelper.seed_specific_product_features(%w(ops_rbac))
       root_tenant = Tenant.seed
       MiqUserRole.seed
       MiqGroup.seed
       MiqRegion.seed
-      role = MiqUserRole.find_by(:name => "EvmRole-SuperAdministrator")
+      role = MiqUserRole.find_by(:name => "EvmRole-super_administrator")
       @t1 = FactoryBot.create(:tenant, :name => "ten1", :parent => root_tenant)
       @g1 = FactoryBot.create(:miq_group, :description => 'group1', :tenant => @t1, :miq_user_role => role)
       @u1 = FactoryBot.create(:user, :miq_groups => [@g1])
@@ -690,9 +691,9 @@ describe OpsController do
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
       post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(controller.instance_variable_get(:@groups_count)).to eq(1)
+      expect(controller.instance_variable_get(:@groups_count)).to eq(2)
       expect(controller.instance_variable_get(:@tenants_count)).to eq(1)
-      expect(controller.instance_variable_get(:@users_count)).to eq(2)
+      expect(controller.instance_variable_get(:@users_count)).to eq(5)
     end
   end
 

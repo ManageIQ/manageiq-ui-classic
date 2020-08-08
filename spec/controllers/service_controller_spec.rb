@@ -1,5 +1,8 @@
 describe ServiceController do
-  before { stub_user(:features => :all) }
+  before do
+    stub_user(:features => :all)
+    EvmSpecHelper.local_miq_server
+  end
 
   let(:go_definition) do
     FactoryBot.create(:generic_object_definition, :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
@@ -283,7 +286,7 @@ describe ServiceController do
             :parent_method     => :all_vms,
           }
         )
-        post :tree_select, :params => {:id => "s-#{service.id}"}
+        post :tree_select, :params => {:id => "s-#{service.id}", :tree => 'svcs_tree'}
         expect(response.status).to eq(200)
       end
     end
@@ -301,7 +304,7 @@ describe ServiceController do
             :named_scope => [[:retired, false], :displayed]
           }
         )
-        post :tree_select, :params => {:id => 'xx-asrv'}
+        post :tree_select, :params => {:id => 'xx-asrv', :tree => 'svcs_tree'}
         expect(response.status).to eq(200)
       end
     end
@@ -318,7 +321,7 @@ describe ServiceController do
             :named_scope => %i(retired displayed)
           }
         )
-        post :tree_select, :params => {:id => 'xx-rsrv'}
+        post :tree_select, :params => {:id => 'xx-rsrv', :tree => 'svcs_tree'}
         expect(response.status).to eq(200)
       end
     end
@@ -355,13 +358,13 @@ describe ServiceController do
           }
         )
         expect(controller).to receive(:process_show_list).once.and_call_original
-        post :tree_select, :params => {:id => "ms-#{service_search.id}"}
+        post :tree_select, :params => {:id => "ms-#{service_search.id}", :tree => 'svcs_tree'}
         expect(response.status).to eq(200)
       end
 
       it 'calls load_adv_search method to load filter from filters in accordion' do
         expect(controller).to receive(:load_adv_search).once
-        post :tree_select, :params => {:id => "ms-#{service_search.id}"}
+        post :tree_select, :params => {:id => "ms-#{service_search.id}", :tree => 'svcs_tree'}
         expect(response.status).to eq(200)
       end
     end

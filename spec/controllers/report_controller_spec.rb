@@ -793,7 +793,7 @@ describe ReportController do
     render_views
 
     before do
-      login_as(FactoryBot.create(:user))
+      login_as user_with_feature(%w(miq_report_export))
       allow(controller).to receive(:x_active_tree) { :export_tree }
     end
 
