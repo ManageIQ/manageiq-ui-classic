@@ -1,7 +1,7 @@
 describe MiqPolicyController do
   context "::AlertProfiles" do
     before do
-      login_as user_with_feature(%w(alert_profile_assign alert_profile_edit))
+      login_as user_with_feature(%w(alert_profile_assign alert_profile_delete alert_profile_edit))
     end
 
     context "#alert_profile_assign" do
