@@ -2,7 +2,6 @@ class EmsNetworkController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::EmsCommon
-  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
@@ -17,18 +16,6 @@ class EmsNetworkController < ApplicationController
 
   def self.table_name
     @table_name ||= "ems_network"
-  end
-
-  def ems_path(*args)
-    ems_network_path(*args)
-  end
-
-  def new_ems_path
-    {:action => 'new'}
-  end
-
-  def ems_network_form_fields
-    ems_form_fields
   end
 
   def restful?

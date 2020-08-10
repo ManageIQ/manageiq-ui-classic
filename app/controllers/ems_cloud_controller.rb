@@ -2,7 +2,6 @@ class EmsCloudController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::EmsCommon # common methods for EmsInfra/Cloud controllers
-  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
   include Mixins::BreadcrumbsMixin
@@ -34,21 +33,9 @@ class EmsCloudController < ApplicationController
     super
   end
 
-  def ems_path(*args)
-    ems_cloud_path(*args)
-  end
-
-  def new_ems_path
-    new_ems_cloud_path
-  end
-
-  def ems_cloud_form_fields
-    ems_form_fields
-  end
-
   # Special EmsCloud link builder for restful routes
   def show_link(ems, options = {})
-    ems_path(ems.id, options)
+    ems_cloud_path(ems.id, options)
   end
 
   def restful?

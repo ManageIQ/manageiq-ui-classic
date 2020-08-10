@@ -24,7 +24,6 @@ describe EmsPhysicalInfraController do
 
   %w(
     button
-    create
     listnav_search_selected
     protect
     quick_search
@@ -34,7 +33,6 @@ describe EmsPhysicalInfraController do
     tagging_edit
     tl_chooser
     tree_autoload
-    update
     wait_for_task
     protect
     scaling

@@ -2,7 +2,6 @@ class EmsInfraController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::EmsCommon # common methods for EmsInfra/Cloud controllers
-  include Mixins::EmsCommon::Angular
   include Mixins::DashboardViewMixin
   include Mixins::BreadcrumbsMixin
 
@@ -33,14 +32,6 @@ class EmsInfraController < ApplicationController
     super
   end
 
-  def ems_path(*args)
-    ems_infra_path(*args)
-  end
-
-  def new_ems_path
-    new_ems_infra_path
-  end
-
   def show_list
     @showtype = nil
     super
@@ -48,11 +39,6 @@ class EmsInfraController < ApplicationController
 
   def index
     redirect_to(:action => 'show_list')
-  end
-
-  def new
-    @disabled_ems_infra_types = [%w[KubeVirt kubevirt]]
-    super
   end
 
   def scaling
@@ -219,10 +205,6 @@ class EmsInfraController < ApplicationController
     end
   end
 
-  def ems_infra_form_fields
-    ems_form_fields
-  end
-
   def restful?
     true
   end
@@ -243,9 +225,9 @@ class EmsInfraController < ApplicationController
   end
 
   ############################
-  # Special EmsCloud link builder for restful routes
+  # Special EmsInfra link builder for restful routes
   def show_link(ems, options = {})
-    ems_path(ems.id, options)
+    ems_infra_path(ems.id, options)
   end
 
   def update_stack_up(stack, stack_parameters, provider_id, return_message)
