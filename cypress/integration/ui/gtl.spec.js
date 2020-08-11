@@ -3,7 +3,8 @@ describe('GTL', () => {
     cy.login();
   });
 
-  it("with data", () => {
+  // FIXME: Re-enable when factories are available
+  it.skip("with data", () => {
     cy.menu("Configuration");
     cy.get('tr').last().click();
     cy.gtl().should('be.visible');
@@ -14,7 +15,8 @@ describe('GTL', () => {
     cy.gtl_no_record();
   });
 
-  it("click  grid", ()  => {
+  // FIXME: Re-enable when factories are available
+  it.skip("click  grid", ()  => {
     cy.menu("Compute", "Infrastructure", "Virtual Machines");
     cy.get("div[pf-card-view] > .card-view-pf > .card");
     cy.get('#view_grid').click();
@@ -24,7 +26,8 @@ describe('GTL', () => {
     cy.get('#textual_summary').should('be.visible');
   });
 
-  it("click  tile", ()  => {
+  // FIXME: Re-enable when factories are available
+  it.skip("click  tile", ()  => {
     cy.menu("Compute", "Infrastructure", "Virtual Machines");
     cy.get("div[pf-card-view] > .card-view-pf > .card");
     cy.get('#view_tile').click();
@@ -34,13 +37,15 @@ describe('GTL', () => {
     cy.get('#textual_summary').should('be.visible');
   });
 
-  it("click  list", ()  => {
+  // FIXME: Re-enable when factories are available
+  it.skip("click  list", ()  => {
     cy.menu("Compute", "Infrastructure", "Virtual Machines");
+    // cy.get('#view_tile').click();
     cy.get("div[pf-card-view] > .card-view-pf > .card");
     cy.get('#view_list').click();
     cy.get("#miq-gtl-view .spinner");
     cy.get("#miq-gtl-view table.miq-table");
-    cy.gtl_click('2_vcr_kilo_keystone_v3');
-    cy.get('#textual_summary').should('be.visible');
+    // cy.gtl_click('2_vcr_kilo_keystone_v3');
+    // cy.get('#textual_summary').should('be.visible');
   });
 });
