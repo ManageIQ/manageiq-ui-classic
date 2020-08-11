@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "cypress:open": "cypress open",
+    "cypress:run:ci": "cypress run --headless --browser chrome --config video=false ",
     "cypress:run:chrome": "cypress run --headless --browser chrome",
     "cypress:run:firefox": "cypress run --headless --browser firefox",
     "test": "jest",

@@ -88,27 +88,33 @@ namespace :webpack do
   end
 end
 
+miq_app_prefix = defined?(ENGINE_ROOT) ? "app:" : ""
+
 # compile and clobber when running assets:* tasks
-if Rake::Task.task_defined?("assets:precompile")
-  Rake::Task["assets:precompile"].enhance do
-    Rake::Task["webpack:compile"].invoke unless ENV["TRAVIS"]
+if Rake::Task.task_defined?("#{miq_app_prefix}assets:precompile")
+  unless ENV["TRAVIS"]
+    Rake::Task["#{miq_app_prefix}assets:precompile"].enhance do
+      Rake::Task["webpack:compile"].invoke
+    end
   end
 
-  Rake::Task["assets:precompile"].actions.each do |action|
+  Rake::Task["#{miq_app_prefix}assets:precompile"].actions.each do |action|
     if action.source_location[0].include?(File.join("lib", "tasks", "webpacker"))
-      Rake::Task["assets:precompile"].actions.delete(action)
+      Rake::Task["#{miq_app_prefix}assets:precompile"].actions.delete(action)
     end
   end
 end
 
-if Rake::Task.task_defined?("assets:clobber")
-  Rake::Task["assets:clobber"].enhance do
-    Rake::Task["webpack:clobber"].invoke unless ENV["TRAVIS"]
+if Rake::Task.task_defined?("#{miq_app_prefix}assets:clobber")
+  unless ENV["TRAVIS"]
+    Rake::Task["#{miq_app_prefix}assets:clobber"].enhance do
+      Rake::Task["webpack:clobber"].invoke
+    end
   end
 
-  Rake::Task["assets:clobber"].actions.each do |action|
+  Rake::Task["#{miq_app_prefix}assets:clobber"].actions.each do |action|
     if action.source_location[0].include?(File.join("lib", "tasks", "webpacker"))
-      Rake::Task["assets:clobber"].actions.delete(action)
+      Rake::Task["#{miq_app_prefix}assets:clobber"].actions.delete(action)
     end
   end
 end
