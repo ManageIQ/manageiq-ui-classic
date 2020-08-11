@@ -25,10 +25,16 @@ class ApplicationHelper::Toolbar::CustomButtonsCenter < ApplicationHelper::Toolb
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Button Group'),
           t,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Warning: The selected Button Group will be permanently removed!"),
-          :klass        => ApplicationHelper::Button::AbGroupDelete),
+          :klass => ApplicationHelper::Button::AbGroupDelete,
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Button Group'),
+                                         :modal_text     => N_('Are you sure you want to delete the following Button Group?'),
+                                         :api_url        => 'custom_button_sets',
+                                         :async_delete   => false,
+                                         :ajax_reload    => true,
+                                         :transform_fn   => 'buttonGroup',
+                                         :component_name => 'RemoveGenericItemModal'}})
       ]
     ),
   ])

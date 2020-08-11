@@ -224,6 +224,7 @@ class MiqAeCustomizationController < ApplicationController
 
   def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
+    replace_trees = @replace_trees if @replace_trees
     # fixme, don't call all the time
     trees = build_replaced_trees(replace_trees, %i[ab old_dialogs dialogs])
 
@@ -246,20 +247,14 @@ class MiqAeCustomizationController < ApplicationController
     render :json => presenter.for_render
   end
 
-  def first_sub_node_is_a_folder?(node)
-    sub_node = node.split("-").first
-
-    sub_node == "xx" || !(sub_node == "" && node.split('_').length <= 2)
-  end
-
   def get_node_info
     @show_list = true
-    node = x_node
-    node = valid_active_node(x_node) unless first_sub_node_is_a_folder?(node)
-
-    node_info = get_specific_node_info(node)
-
-    node_info
+    node = if x_node.split('-').first == 'xx' && x_node.split('_').length <= 2
+             x_node
+           else
+             valid_active_node(x_node)
+           end
+    get_specific_node_info(node)
   end
 
   def get_specific_node_info(node)
