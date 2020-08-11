@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
                                          :modal_text     => N_('Are you sure you want to delete the following Button Group?'),
                                          :api_url        => 'custom_button_sets',
                                          :async_delete   => false,
-                                         :redirect_url   => '/catalog/explorer?report_deleted=true',
+                                         :ajax_reload    => true,
                                          :transform_fn   => 'buttonGroup',
                                          :component_name => 'RemoveGenericItemModal'}})
       ]

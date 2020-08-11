@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::CatalogitemButtonCenter < ApplicationHelper::T
                                          :modal_text     => N_('Are you sure you want to delete the following Button?'),
                                          :api_url        => 'custom_buttons',
                                          :async_delete   => false,
-                                         :redirect_url   => '/catalog/explorer?report_deleted=true',
+                                         :ajax_reload    => true,
                                          :component_name => 'RemoveGenericItemModal'}}),
         separator,
         button(
