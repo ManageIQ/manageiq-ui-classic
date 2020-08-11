@@ -61,9 +61,20 @@
         %label.col-md-2.control-label
           = _('Namespace')
         .col-md-8
-          = text_field_tag("namespace",
-                           @edit[:new][:namespace],
-                           :onFocus => 'miqShowAE_Tree("namespace");miqButtons("hide");')
+          .input-group
+            = text_field_tag("namespace",
+                             @edit[:new][:namespace],
+                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                             :class             => 'form-control')
+            %span.input-group-btn
+              %button.btn.btn-default{"onclick" => "miqShowAE_Tree('namespace'); miqButtons('hide', 'automate');",
+                                      "title"   => _('Click to select Provisioning Entry Point')}
+                %i.ff.ff-load-balancer
+              %button.btn.btn-default{'id'       => 'namespace_remove',
+                                      'onclick'  => "miqAjax('#{url_for_only_path(:action => 'ae_tree_select_discard', :typ => 'provision')}');",
+                                      'title'    => _('Remove this Namespace'),
+                                      'disabled' => @edit[:new][:namespace].nil?}
+                %i.pficon.pficon-close
   %p
     %table.table.table-striped.table-bordered
       %thead

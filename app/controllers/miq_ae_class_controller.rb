@@ -1691,6 +1691,7 @@ class MiqAeClassController < ApplicationController
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page.replace("form_div", :partial => "copy_objects_form") if params[:domain] || params[:override_source]
+      page << "$('#namespace_remove').attr('disabled', #{@edit[:new][:namespace].blank?});"
       page << javascript_for_miq_button_visibility(@changed)
     end
   end
@@ -1705,6 +1706,21 @@ class MiqAeClassController < ApplicationController
       @edit[:namespace] = @edit[:new][:namespace]
     end
 
+    session[:edit] = @edit
+  end
+
+  def ae_tree_select_discard
+    @edit = session[:edit]
+    @edit[:new][:namespace] = @edit[:namespace] = nil
+    @changed = (@edit[:new] != @edit[:current])
+    render :update do |page|
+      page << javascript_prologue
+      page << javascript_hide("ae_tree_select_div")
+      page << javascript_hide("blocker_div")
+      page << "$('#namespace').val('#{@edit[:new][:namespace]}');"
+      page << "$('#namespace_remove').attr('disabled', true);"
+      page << javascript_for_miq_button_visibility(@changed)
+    end
     session[:edit] = @edit
   end
 
