@@ -4,7 +4,7 @@ describe('GTL', () => {
   });
 
   it("with data", () => {
-    cy.menu("Compute", "Infrastructure", "Virtual Machines");
-    cy.toolbar('Configuration', 'Edit this VM');
+    cy.menu("Configuration", "Providers");
+    cy.toolbar('Configuration', 'Add a new Provider');
   });
 });
