@@ -148,32 +148,6 @@ module ApplicationController::Buttons
     end
   end
 
-  def ab_button_delete
-    assert_privileges("ab_button_delete")
-    custom_button = CustomButton.find(params[:id])
-    description = custom_button.description
-    audit = {:event => "custom_button_record_delete", :message => "[#{custom_button.description}] Record deleted", :target_id => custom_button.id, :target_class => "CustomButton", :userid => session[:userid]}
-    if custom_button.parent
-      automation_set = CustomButtonSet.find_by(:id => custom_button.parent.id)
-      if automation_set
-        automation_set.set_data[:button_order].delete(custom_button.id)
-        automation_set.save!
-      end
-    end
-    if custom_button.destroy
-      AuditEvent.success(audit)
-      add_flash(_("Button \"%{name}\": Delete successful") % {:name => description})
-      id = x_node.split('_')
-      id.pop
-      self.x_node = id.join("_")
-      ab_get_node_info(x_node) if x_active_tree == :ab_tree
-      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-    else
-      custom_button.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
-      javascript_flash
-    end
-  end
-
   def ab_button_new
     assert_privileges("ab_button_new")
     button_new_edit("new")
@@ -217,38 +191,6 @@ module ApplicationController::Buttons
       else
         page << javascript_for_miq_button_visibility(@changed && valid)
       end
-    end
-  end
-
-  # AJAX driven routine to delete a button group
-  def ab_group_delete
-    assert_privileges("ab_group_delete")
-    if x_node.split('_').last == "ub"
-      add_flash(_("'Unassigned Button Group' can not be deleted"), :error)
-      get_node_info
-      replace_right_cell(:nodetype => x_node)
-      return
-    end
-    custom_button_set = CustomButtonSet.find(params[:id])
-    service_template = ServiceTemplate.find { |template| template.custom_button_sets.include?(custom_button_set) }
-    description = custom_button_set.description
-    audit = {:event => "custom_button_set_record_delete", :message => "[#{custom_button_set.description}] Record deleted", :target_id => custom_button_set.id, :target_class => "CustomButtonSet", :userid => session[:userid]}
-
-    custom_button_set.set_data[:button_order] = []
-    custom_button_set.save!
-
-    if custom_button_set.destroy
-      AuditEvent.success(audit)
-      add_flash(_("Button Group \"%{name}\": Delete successful") % {:name => description})
-      id = x_node.split('_')
-      id.pop
-      id.pop if x_active_tree == :sandt_tree && service_template.custom_button_sets.empty? && service_template.direct_custom_buttons.empty? # if CustomButtonSet/CustomButton was last one skip Action button that no longer exists
-      self.x_node = id.join("_")
-      ab_get_node_info(x_node) if x_active_tree == :ab_tree
-      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-    else
-      custom_button_set.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
-      javascript_flash
     end
   end
 
