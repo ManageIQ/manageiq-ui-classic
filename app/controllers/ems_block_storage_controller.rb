@@ -2,7 +2,6 @@ class EmsBlockStorageController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::EmsCommon
-  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
@@ -21,19 +20,6 @@ class EmsBlockStorageController < ApplicationController
 
   def breadcrumb_name(_model)
     _('Block Storage Managers')
-  end
-
-  def ems_path(*args)
-    path_hash = {:action => 'show', :id => args[0].id.to_s }
-    path_hash.merge(args[1])
-  end
-
-  def new_ems_path
-    {:action => 'new'}
-  end
-
-  def ems_storage_form_fields
-    ems_form_fields
   end
 
   # Show the main MS list view

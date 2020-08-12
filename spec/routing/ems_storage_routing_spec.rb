@@ -11,7 +11,6 @@ describe EmsStorageController do
 
   %w(
     dialog_load
-    ems_storage_form_fields
     new
     show_list
   ).each do |task|
@@ -28,7 +27,6 @@ describe EmsStorageController do
     save_default_search
     show
     show_list
-    update
   ).each do |task|
     describe "##{task}" do
       it 'routes with POST' do
@@ -40,12 +38,6 @@ describe EmsStorageController do
   describe "#index" do
     it "routes with GET" do
       expect(get("/#{controller_name}")).to route_to("#{controller_name}#index")
-    end
-  end
-
-  describe "#update" do
-    it "routes with POST" do
-      expect(post("/#{controller_name}/update/123")).to route_to("#{controller_name}#update", :id => "123")
     end
   end
 end

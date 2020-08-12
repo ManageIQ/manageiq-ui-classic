@@ -2,22 +2,6 @@ describe EmsPhysicalInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryBot.build(:zone) }
 
-  describe "#create" do
-    before do
-      user = FactoryBot.create(:user, :features => "ems_physical_infra_new")
-
-      allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
-      login_as user
-    end
-
-    it "adds a new provider" do
-      controller.instance_variable_set(:@breadcrumbs, [])
-      get :new
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe "#show" do
     render_views
     before do
@@ -101,114 +85,6 @@ describe EmsPhysicalInfraController do
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
       end
-    end
-  end
-
-  describe "#build_credentials" do
-    before do
-      @ems = FactoryBot.create(:ems_physical_infra)
-    end
-    context "#build_credentials only contains credentials that it supports and has a username for in params" do
-      let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
-
-      it "uses the passwords from params for validation if they exist" do
-        controller.params = {:default_userid   => default_creds[:userid],
-                             :default_password => default_creds[:password]}
-        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
-      end
-
-      it "uses the stored passwords for validation if passwords dont exist in params" do
-        controller.params = {:default_userid => default_creds[:userid]}
-        expect(@ems).to receive(:authentication_password).and_return(default_creds[:password])
-        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
-      end
-    end
-  end
-
-  describe "Lenovo XClarity (lenovo_ph_infra) - create, update, validate, cancel" do
-    before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryBot.create(:user, :features => "ems_physical_infra_new")
-    end
-
-    render_views
-
-    it 'creates on post' do
-      expect do
-        post :create, :params => {
-          "button"           => "add",
-          "name"             => "foo",
-          "emstype"          => "lenovo_ph_infra",
-          "zone"             => zone.name,
-          "cred_type"        => "default",
-          "default_hostname" => "foo.com",
-          "default_userid"   => "foo",
-          "default_password" => "[FILTERED]",
-        }
-      end.to change { ManageIQ::Providers::PhysicalInfraManager.count }.by(1)
-    end
-
-    it 'creates and updates an authentication record on post' do
-      expect do
-        post :create, :params => {
-          "button"           => "add",
-          "name"             => "foo_lenovo_ph_infra",
-          "emstype"          => "lenovo_ph_infra",
-          "zone"             => zone.name,
-          "cred_type"        => "default",
-          "default_hostname" => "foo.com",
-          "default_userid"   => "foo",
-          "default_password" => "[FILTERED]",
-        }
-      end.to change { Authentication.count }.by(1)
-
-      expect(response.status).to eq(200)
-      lenovo_ph_infra = ManageIQ::Providers::PhysicalInfraManager.where(:name => "foo_lenovo_ph_infra").first
-      expect(lenovo_ph_infra.authentications.size).to eq(1)
-
-      expect do
-        post :update, :params => {
-          "id"               => lenovo_ph_infra.id,
-          "button"           => "save",
-          "default_hostname" => "host_lenovo_ph_infra_updated",
-          "name"             => "foo_lenovo_ph_infra",
-          "emstype"          => "lenovo_ph_infra",
-          "default_userid"   => "bar",
-          "default_password" => "[FILTERED]",
-        }
-      end.not_to change { Authentication.count }
-
-      expect(response.status).to eq(200)
-      expect(lenovo_ph_infra.authentications.first).to have_attributes(:userid => "bar", :password => "[FILTERED]")
-    end
-
-    it "validates credentials for a new record" do
-      post :create, :params => {
-        "button"           => "validate",
-        "cred_type"        => "default",
-        "name"             => "foo_lenovo_ph_infra",
-        "emstype"          => "lenovo_ph_infra",
-        "zone"             => zone.name,
-        "default_userid"   => "foo",
-        "default_password" => "[FILTERED]",
-      }
-
-      expect(response.status).to eq(200)
-    end
-
-    it "cancels a new record" do
-      post :create, :params => {
-        "button"           => "cancel",
-        "cred_type"        => "default",
-        "name"             => "foo_lenovo_ph_infra",
-        "emstype"          => "lenovo_ph_infra",
-        "zone"             => zone.name,
-        "default_userid"   => "foo",
-        "default_password" => "[FILTERED]",
-      }
-
-      expect(response.status).to eq(200)
     end
   end
 

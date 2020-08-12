@@ -136,7 +136,6 @@ module Mixins
     def new
       assert_privileges("#{permission_prefix}_new")
       @ems = model.new
-      set_form_vars
       @in_a_form = true
       session[:changed] = nil
       drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},
@@ -159,7 +158,6 @@ module Mixins
         }, :error)
         return redirect_to(:action => @lastaction || "show_list")
       end
-      set_form_vars
       @in_a_form = true
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @ems.name},
@@ -520,91 +518,6 @@ module Mixins
         add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
       end
       javascript_flash
-    end
-
-    # Set form variables for edit
-    def set_form_vars
-      form_instance_vars
-    end
-
-    def form_instance_vars
-      @server_zones = []
-      zones = Zone.visible.order(Zone.arel_table[:name].lower)
-      zones.each do |zone|
-        @server_zones.push([zone.description, zone.name])
-      end
-      @ems_types = Array(model.supported_types_and_descriptions_hash.invert).sort_by(&:first)
-
-      @provider_regions = retrieve_provider_regions
-      @openstack_infra_providers = retrieve_openstack_infra_providers
-      @openstack_security_protocols = retrieve_openstack_security_protocols
-      @amqp_security_protocols = retrieve_amqp_security_protocols
-      @nuage_security_protocols = retrieve_nuage_security_protocols
-      @container_security_protocols = retrieve_container_security_protocols
-      @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
-      @openstack_api_versions = retrieve_openstack_api_versions
-      @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
-      @azure_stack_api_versions = retrieve_azure_stack_api_versions
-      @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
-      if @ems.respond_to?(:description)
-        @ems_region_display = @ems.description
-      end
-      @nuage_api_versions = retrieve_nuage_api_versions
-      @redfish_security_protocols = retrieve_security_protocols
-    end
-
-    def retrieve_provider_regions
-      managers = model.supported_subclasses.select(&:supports_regions?)
-      managers.each_with_object({}) do |manager, provider_regions|
-        regions = manager.parent::Regions.all.sort_by { |r| r[:description] }
-        provider_regions[manager.ems_type] = regions.map do |region|
-          [region[:description], region[:name]]
-        end
-      end
-    end
-    private :retrieve_provider_regions
-
-    def retrieve_openstack_infra_providers
-      ManageIQ::Providers::Openstack::Provider.pluck(:name, :id)
-    end
-
-    def retrieve_openstack_api_versions
-      [['Keystone v2', 'v2'], ['Keystone v3', 'v3']]
-    end
-
-    def retrieve_vmware_cloud_api_versions
-      [['vCloud API 5.1', '5.1'], ['vCloud API 5.5', '5.5'], ['vCloud API 5.6', '5.6'], ['vCloud API 9.0', '9.0']]
-    end
-
-    def retrieve_nuage_api_versions
-      [['Version 3.2', 'v3_2'], ['Version 4.0', 'v4_0'], ['Version 5.0', 'v5.0']]
-    end
-
-    def retrieve_azure_stack_api_versions
-      [['2017-03-09 Profile', 'V2017_03_09'], ['2018-03-01 Profile', 'V2018_03_01']]
-    end
-
-    def retrieve_security_protocols
-      [[_('SSL without validation'), 'ssl'], [_('SSL'), 'ssl-with-validation'], [_('Non-SSL'), 'non-ssl']]
-    end
-
-    def retrieve_openstack_security_protocols
-      retrieve_security_protocols
-    end
-
-    def retrieve_nuage_security_protocols
-      retrieve_security_protocols
-    end
-
-    def retrieve_amqp_security_protocols
-      # OSP8 doesn't support SSL for AMQP
-      [[_('Non-SSL'), 'non-ssl']]
-    end
-
-    def retrieve_container_security_protocols
-      [[_('SSL'), 'ssl-with-validation'],
-       [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
-       [_('SSL without validation'), 'ssl-without-validation']]
     end
 
     # Delete all selected or single displayed ems(s)

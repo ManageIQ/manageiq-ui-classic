@@ -1086,7 +1086,6 @@ Rails.application.routes.draw do
         discover
         download_data
         download_summary_pdf
-        ems_cloud_form_fields
         protect
         show
         show_list
@@ -1097,7 +1096,6 @@ Rails.application.routes.draw do
       :post => %w(
         new
         button
-        create
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
@@ -1110,7 +1108,6 @@ Rails.application.routes.draw do
         sync_users
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
                adv_search_post +
@@ -1172,7 +1169,6 @@ Rails.application.routes.draw do
         discover
         download_data
         download_summary_pdf
-        ems_infra_form_fields
         register_nodes
         protect
         scaledown
@@ -1185,7 +1181,6 @@ Rails.application.routes.draw do
       :post => %w(
         new
         button
-        create
         register_nodes
         listnav_search_selected
         protect
@@ -1196,7 +1191,6 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         tree_autoload
-        update
         wait_for_task
         scaling
         scaledown
@@ -1227,7 +1221,6 @@ Rails.application.routes.draw do
         discover
         download_data
         download_summary_pdf
-        ems_physical_infra_form_fields
         protect
         show
         show_list
@@ -1237,7 +1230,6 @@ Rails.application.routes.draw do
       :post => %w(
         new
         button
-        create
         listnav_search_selected
         protect
         quick_search
@@ -1246,7 +1238,6 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         tree_autoload
-        update
         wait_for_task
         launch_console
       ) +
@@ -1390,12 +1381,10 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        ems_container_form_fields
       ),
       :post => %w(
         new
         button
-        create
         dynamic_checkbox_refresh
         listnav_search_selected
         protect
@@ -1404,7 +1393,6 @@ Rails.application.routes.draw do
         show
         show_list
         tl_chooser
-        update
         wait_for_task
         tagging_edit
         launch_external_logging
@@ -1421,7 +1409,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        ems_network_form_fields
         index
         protect
         show_list
@@ -1430,7 +1417,6 @@ Rails.application.routes.draw do
       :post => %w(
         new
         button
-        create
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
@@ -1441,7 +1427,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -2216,7 +2201,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        ems_storage_form_fields
         index
         new
         protect
@@ -2226,7 +2210,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
@@ -2239,7 +2222,6 @@ Rails.application.routes.draw do
         quick_search
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -2254,7 +2236,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        ems_storage_form_fields
         index
         new
         protect
@@ -2264,7 +2245,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
@@ -2276,7 +2256,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -2291,7 +2270,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        ems_storage_form_fields
         index
         new
         protect
@@ -2301,7 +2279,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
         dynamic_text_box_refresh
@@ -2313,7 +2290,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -3230,9 +3206,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  resources :ems_cloud,          :as => :ems_clouds, :except => :destroy
-  resources :ems_infra,          :as => :ems_infras, :except => :destroy
-  resources :ems_physical_infra, :as => :ems_physical_infras, :except => :destroy
-  resources :ems_container,      :as => :ems_containers, :except => :destroy
-  resources :ems_network,        :as => :ems_networks, :except => :destroy
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network].each do |resource|
+    resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
+  end
 end

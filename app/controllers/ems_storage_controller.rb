@@ -2,7 +2,6 @@ class EmsStorageController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::EmsCommon
-  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
@@ -17,19 +16,6 @@ class EmsStorageController < ApplicationController
 
   def self.table_name
     @table_name ||= "ems_storage"
-  end
-
-  def ems_path(*args)
-    path_hash = {:action => 'show', :id => args[0].id.to_s }
-    path_hash.merge(args[1])
-  end
-
-  def new_ems_path
-    {:action => 'new'}
-  end
-
-  def ems_storage_form_fields
-    ems_form_fields
   end
 
   TYPE_CHECK_SHOW_IDENTIFIERS = %w[ems_storage_show].freeze
