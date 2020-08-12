@@ -148,7 +148,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       options: cloudTenants.map(item => ({ label: item.name, value: item.ems_ref })),
       label: __('Cloud Tenant'),
       placeholder: __('Nothing selected'),
-      multi: true,
+      isMulti: true,
       condition: {
         when: 'is_public',
         is: false,
