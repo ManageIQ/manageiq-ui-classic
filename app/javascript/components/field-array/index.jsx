@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, FormGroup } from 'patternfly-react';
 
-import { useFormApi } from '@@ddf';
+import { useFormApi, FieldArray } from '@@ddf';
 import FieldArrayItem from './field-array-item';
 
-const FieldArray = ({
+const FieldArrayComponent = ({
   FieldProvider,
-  FieldArrayProvider,
   arrayValidator,
   label,
   fields,
@@ -31,7 +30,7 @@ const FieldArray = ({
   );
 
   return (
-    <FieldArrayProvider name={name} validate={arrayValidator}>
+    <FieldArray name={name} validate={arrayValidator}>
       { ({ fields: { length, map, value, push, remove } }) => (
         <div className="field-array">
           <h3>{ label }</h3>
@@ -60,11 +59,11 @@ const FieldArray = ({
           </FormGroup>
         </div>
       )}
-    </FieldArrayProvider>
+    </FieldArray>
   );
 };
 
-FieldArray.propTypes = {
+FieldArrayComponent.propTypes = {
   FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   FieldArrayProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   arrayValidator: PropTypes.func,
@@ -74,11 +73,11 @@ FieldArray.propTypes = {
   addText: PropTypes.string,
 };
 
-FieldArray.defaultProps = {
+FieldArrayComponent.defaultProps = {
   arrayValidator: undefined,
   label: undefined,
   addText: __('New option'),
   itemDefault: {},
 };
 
-export default FieldArray;
+export default FieldArrayComponent;
