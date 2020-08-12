@@ -1160,7 +1160,6 @@ class ApplicationController < ActionController::Base
     sort_prefix = association || (dbname == "miqreportresult" && x_active_tree ? x_active_tree.to_s : dbname)
     sortcol_sym = "#{sort_prefix}_sortcol".to_sym
     sortdir_sym = "#{sort_prefix}_sortdir".to_sym
-    @gtl_type = 'list'
 
     # Get the view for this db or use the existing one in the session
     view =
@@ -1244,7 +1243,7 @@ class ApplicationController < ActionController::Base
   def grid_hash_conditions(view)
     !%w[Job MiqProvision MiqReportResult MiqTask].include?(view.db) &&
       !(view.db.ends_with?("Build") && view.db != "ContainerBuild") &&
-      !@force_no_grid_xml && (@gtl_type == "list" || @force_grid_xml)
+      !@force_no_grid_xml
   end
 
   def get_chart_where_clause(sb_controller = nil)

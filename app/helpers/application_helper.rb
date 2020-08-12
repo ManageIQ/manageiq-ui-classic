@@ -942,7 +942,6 @@ module ApplicationHelper
     end
   end
 
-  # FIXME: params[:type] is used in multiple contexts, we should rename it to
   def pagination_or_gtl_request?
     %i[ppsetting searchtag entry sortby sort_choice page].find { |k| params[k] }
   end
@@ -1131,7 +1130,7 @@ module ApplicationHelper
                         templates].freeze
 
   def render_download_view_tb?
-    DOWNLOAD_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
+    DOWNLOAD_VIEW_LAYOUTS.include?(@layout) && !@record && !@tagitems &&
       !@ownershipitems && !@retireitems && !@politems && !@in_a_form &&
       %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end
@@ -1208,8 +1207,6 @@ module ApplicationHelper
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.with_no_checkboxes(@no_checkboxes || options[:no_checkboxes])
-    # FIXME: we would like to freeze here, but the @gtl_type is calculated no sooner than in view templates.
-    # So until that if fixed we cannot freeze.
     @report_data_additional_options.freeze
   end
 

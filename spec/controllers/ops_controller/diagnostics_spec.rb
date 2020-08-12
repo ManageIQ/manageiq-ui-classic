@@ -71,8 +71,7 @@ describe OpsController do
         :parent_id   => nil,
         :named_scope => [['with_miq_server_id', server.id]],
         :explorer    => true,
-        :gtl_dbname  => nil,
-        :gtl_type    => 'list'
+        :gtl_dbname  => nil
       )
       results = assert_report_data_response
       expect(results['data']['rows'].length).to eq(1)

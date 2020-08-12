@@ -12,7 +12,7 @@ module MiqAeCustomizationController::Dialogs
 
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
     end
 
     @sortcol = session[:dialog_sortcol].nil? ? 0 : session[:dialog_sortcol].to_i

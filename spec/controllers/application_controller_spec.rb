@@ -289,8 +289,6 @@ describe ApplicationController do
     describe "#get_view" do
       it 'calculates grid hash condition' do
         controller.instance_variable_set(:@force_no_grid_xml, false)
-        controller.instance_variable_set(:@force_grid_xml, true)
-        controller.instance_variable_set(:@gtl_type, "list")
 
         view = OpenStruct.new
         view.db = "MiqProvision"
