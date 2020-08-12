@@ -103,7 +103,7 @@ class MiqPolicyController < ApplicationController
     'condition_policy_copy'  => :condition_edit,
     'condition_new'          => :condition_edit,
     'condition_remove'       => :condition_remove,
-    'event_edit'             => :event_edit,
+    'miq_event_edit'         => :miq_event_edit,
     'policy_copy'            => :policy_copy,
     'policy_edit'            => :policy_edit,
     'policy_new'             => :policy_edit,
@@ -269,7 +269,7 @@ class MiqPolicyController < ApplicationController
   def search
     get_node_info(x_node)
     case x_active_tree
-    when "profile", "event", "action", "alert"
+    when "profile", "action", "alert"
       replace_right_cell(:nodetype => x_node)
     when "policy", "condition", "alert_profile"
       replace_right_cell(:nodetype => "xx")
@@ -410,8 +410,6 @@ class MiqPolicyController < ApplicationController
       policy_get_info(MiqPolicy.find(nodeid))
     when "co" # Condition
       condition_get_info(Condition.find(nodeid))
-    when "ev" # Event
-      event_get_info(MiqEventDefinition.find(nodeid))
     when "a", "ta", "fa" # Action or True/False Action
       action_get_info(MiqAction.find(nodeid))
     when "ap" # Alert Profile
@@ -429,8 +427,6 @@ class MiqPolicyController < ApplicationController
     case x_active_tree
     when :policy_tree
       policy_get_all_folders
-    when :event_tree
-      event_get_all
     when :condition_tree
       condition_get_all_folders
     when :action_tree
@@ -449,7 +445,7 @@ class MiqPolicyController < ApplicationController
     replace_trees = Array(replace_trees)
     @explorer = true
 
-    trees = build_replaced_trees(replace_trees, %i[policy_profile policy event condition action alert_profile alert])
+    trees = build_replaced_trees(replace_trees, %i[policy_profile policy condition action alert_profile alert])
 
     c_tb = build_toolbar(center_toolbar_filename)
 
@@ -464,8 +460,6 @@ class MiqPolicyController < ApplicationController
       case name
       when :policy
         self.x_node = @new_policy_node if @new_policy_node
-      when :event
-        nil
       when :condition
         self.x_node = @new_condition_node if @new_condition_node
       when :action
@@ -490,7 +484,6 @@ class MiqPolicyController < ApplicationController
       partial_name, model =
         case x_active_tree
         when :policy_tree         then ['policy_folders',        _('Policies')]
-        when :event_tree          then ['event_list',            _('Events')]
         when :condition_tree      then ['condition_folders',     _('Conditions')]
         when :action_tree         then ['action_list',           _('Actions')]
         when :alert_profile_tree  then ['alert_profile_folders', _('Alert Profiles')]
@@ -1066,12 +1059,6 @@ class MiqPolicyController < ApplicationController
         :name     => :policy,
         :title    => _("Policies"),
         :role     => "policy",
-        :role_any => true
-      },
-      {
-        :name     => :event,
-        :title    => _("Events"),
-        :role     => "event",
         :role_any => true
       },
       {

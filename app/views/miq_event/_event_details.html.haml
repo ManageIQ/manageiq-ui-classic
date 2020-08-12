@@ -110,11 +110,7 @@
                   %th= _("Type")
               %tbody
                 - @event_true_actions.each do |a|
-                  - id = "a-#{a.id}"
-                  - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
-                  - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
-                  %tr{:title => _("View this Event Action"),
-                    :onclick => (x_active_tree == :action_tree) ? t : f}
+                  %tr
                     %td.table-view-pf-select
                       %i.pficon.pficon-ok
                     %td
@@ -205,11 +201,7 @@
                   %th= _('Type')
               %tbody
                 - @event_false_actions.each do |a|
-                  - id = "a-#{a.id}"
-                  - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
-                  - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
-                  %tr{:title => _("View this Event Action"),
-                     :onclick => (x_active_tree == :action_tree) ? t : f}
+                  %tr
                     %td.table-view-pf-select
                       %i.pficon.pficon-error-circle-o
                     %td

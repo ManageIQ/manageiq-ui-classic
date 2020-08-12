@@ -1,6 +1,5 @@
 class TreeBuilderPolicy < TreeBuilder
   has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-  has_kids_for MiqEventDefinition, %i[x_get_tree_ev_kids parents]
 
   private
 
@@ -85,28 +84,6 @@ class TreeBuilderPolicy < TreeBuilder
 
   # level 4 - conditions & events for policy
   def x_get_tree_po_kids(parent, count_only)
-    conditions = count_only_or_objects(count_only, parent.conditions, :description)
-    miq_events = count_only_or_objects(count_only, parent.miq_event_definitions, :description)
-    conditions + miq_events
-  end
-
-  # level 5 - actions under events
-  def x_get_tree_ev_kids(parent, count_only, parents)
-    # the policy from level 3
-    pol_rec = node_by_tree_id(parents.last)
-
-    success = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :success) : [])
-    failure = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :failure) : [])
-    unless count_only
-      add_flag_to(success, :success) unless success.empty?
-      add_flag_to(failure, :failure) unless failure.empty?
-    end
-    success + failure
-  end
-
-  def add_flag_to(array, flag)
-    array.each do |i|
-      i.instance_variable_set(:@flag, flag)
-    end
+    count_only_or_objects(count_only, parent.conditions, :description)
   end
 end

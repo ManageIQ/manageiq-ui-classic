@@ -1,7 +1,7 @@
 class ApplicationHelper::Button::MiqActionModify < ApplicationHelper::Button::Basic
   needs :@view_context
   def role_allows_feature?
-    super && role_allows?(:feature => 'event_edit')
+    super && role_allows?(:feature => 'miq_event_edit')
   end
 
   def visible?

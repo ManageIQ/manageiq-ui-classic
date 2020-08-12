@@ -1,7 +1,7 @@
 module MiqPolicyController::Events
   extend ActiveSupport::Concern
 
-  def event_edit
+  def miq_event_edit
     assert_privileges("event_edit")
     case params[:button]
     when "cancel"
@@ -106,28 +106,5 @@ module MiqPolicyController::Events
     @in_a_form = true
     @edit[:current][:add] = true if @edit[:event_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
-  end
-
-  def event_get_all
-    @events = MiqPolicy.all_policy_events.sort_by { |e| e.description.downcase }
-    set_search_text
-    @events = apply_search_filter(@search_text, @events) if @search_text.present?
-    @right_cell_text = _("All Events")
-    @right_cell_div = "event_list"
-  end
-
-  # Get information for an event
-  def event_get_info(event)
-    @record = @event = event
-    @policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :event_tree
-    @right_cell_text = _("Event \"%{name}\"") % {:name => event.description}
-    @right_cell_div = "event_details"
-
-    if x_active_tree == :event_tree
-      @event_policies = @event.miq_policies.sort_by { |p| p.description.downcase }
-    else
-      @event_true_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :success)
-      @event_false_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :failure)
-    end
   end
 end

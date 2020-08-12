@@ -2107,10 +2107,10 @@ Rails.application.routes.draw do
         button
         condition_edit
         condition_field_changed
-        event_edit
         export
         export_field_changed
         import
+        miq_event_edit
         policy_edit
         policy_field_changed
         quick_search
@@ -2138,6 +2138,17 @@ Rails.application.routes.draw do
         miq_policy_set_edit
         profile_field_changed
         reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_event => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
         tree_autoload
         tree_select
       ) +
