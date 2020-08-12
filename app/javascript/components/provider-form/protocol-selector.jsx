@@ -79,7 +79,7 @@ const ProtocolSelector = ({ FieldProvider, initialValue, ...props }) => {
           return onChange(value);
         };
 
-        return <components.SelectField input={{ name, ...input, onChange: enhancedChange(onChange) }} options={options} {...rest} />;
+        return <components.Select input={{ name, ...input, onChange: enhancedChange(onChange) }} options={options} {...rest} />;
       }}
       {...props}
     />

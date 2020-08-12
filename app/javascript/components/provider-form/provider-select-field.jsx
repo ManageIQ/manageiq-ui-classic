@@ -36,7 +36,7 @@ const ProviderSelectField = ({ kind, FieldProvider, ...props }) => {
       {...props}
       formOptions={formOptions}
       render={({ input: { onChange, ...input }, ...props }) => (
-        <components.SelectField input={{ ...input, onChange: enhancedChange(onChange) }} formOptions={formOptions} {...props} />
+        <components.Select input={{ ...input, onChange: enhancedChange(onChange) }} formOptions={formOptions} {...props} />
       )}
     />
   );
