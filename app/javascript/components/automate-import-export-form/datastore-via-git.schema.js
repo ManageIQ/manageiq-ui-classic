@@ -9,7 +9,7 @@ const createSchema = () => ({
     validate: [{
       type: validatorTypes.REQUIRED,
     }, {
-      type: validatorTypes.PATTERN_VALIDATOR,
+      type: validatorTypes.PATTERN,
       pattern: '^(http|https)://.*',
       message: __('Please provide a valid git URL'),
     }],

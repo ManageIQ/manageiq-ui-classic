@@ -3,7 +3,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 function addSchema(emsList = [], cloudTenants = []) {
   const fields = [
     {
-      component: componentTypes.SELECT_COMPONENT,
+      component: componentTypes.SELECT,
       name: 'ems_id',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -31,7 +31,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       },
       {
-        type: validatorTypes.PATTERN_VALIDATOR,
+        type: validatorTypes.PATTERN,
         pattern: '^[-+]?[0-9]\\d*$',
         message: __('Ram must be integer'),
       },
@@ -54,7 +54,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       },
       {
-        type: validatorTypes.PATTERN_VALIDATOR,
+        type: validatorTypes.PATTERN,
         pattern: '^[-+]?[0-9]\\d*$',
         message: __('VCPUs must be integer'),
       },
@@ -76,7 +76,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       },
       {
-        type: validatorTypes.PATTERN_VALIDATOR,
+        type: validatorTypes.PATTERN,
         pattern: '^[-+]?[0-9]\\d*$',
         message: __('Disk size must be integer'),
       },
@@ -98,7 +98,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       },
       {
-        type: validatorTypes.PATTERN_VALIDATOR,
+        type: validatorTypes.PATTERN,
         pattern: '^[-+]?[0-9]\\d*$',
         message: __('Swap size must be integer'),
       },
@@ -120,7 +120,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       },
       {
-        type: validatorTypes.PATTERN_VALIDATOR,
+        type: validatorTypes.PATTERN,
         pattern: '^[-+]?[0-9]\\d*\\.?\\d*$',
         message: __('RXTX factor must be number'),
       },
@@ -143,7 +143,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       offText: __('False'),
     },
     {
-      component: componentTypes.SELECT_COMPONENT,
+      component: componentTypes.SELECT,
       name: 'cloud_tenant_refs',
       options: cloudTenants.map(item => ({ label: item.name, value: item.ems_ref })),
       label: __('Cloud Tenant'),

@@ -70,7 +70,7 @@ const createSchema = isEditing => ({
             type: validatorTypes.REQUIRED,
           },
           {
-            type: validatorTypes.PATTERN_VALIDATOR,
+            type: validatorTypes.PATTERN,
             pattern: /^((s3)|(nfs)|(swift)|(smb)):\/\//,
             message: __('URI should begin with s3://, nfs://, swift:// or smb://'),
           },

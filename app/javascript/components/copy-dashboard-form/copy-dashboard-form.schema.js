@@ -48,7 +48,7 @@ export default (miqGroups, name, dashboardId) => {
           validateOnMount: true,
         },
         {
-          component: componentTypes.SELECT_COMPONENT,
+          component: componentTypes.SELECT,
           name: 'group_id',
           options: miqGroups,
           label: __('Select Group'),

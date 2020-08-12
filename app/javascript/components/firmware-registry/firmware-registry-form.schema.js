@@ -8,7 +8,7 @@ export default (TYPES) => {
       name: 'basic-info',
       fields: [
         {
-          component: componentTypes.SELECT_COMPONENT,
+          component: componentTypes.SELECT,
           name: 'type',
           options: Object.values(TYPES),
           label: __('Registry Type'),
