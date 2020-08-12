@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual, get, set } from 'lodash';
-import { useFormApi } from '@@ddf';
+import { useFormApi, useFieldApi } from '@@ddf';
 import {
   Button,
   FormGroup,
@@ -12,7 +12,6 @@ import CheckErrors from './check-errors';
 import { checkValidState } from './helper';
 
 const AsyncCredentials = ({
-  FieldProvider,
   validateLabel,
   validationProgressLabel,
   validationSuccessLabel,
@@ -69,6 +68,12 @@ const AsyncCredentials = ({
     change(validateName, valid);
   };
 
+  const { input, meta } = useFieldApi({
+    initialValue: !!edit,
+    name,
+    validate: value => (value === false ? asyncError : undefined),
+  });
+
   return (
     <Fragment>
       {formOptions.renderForm(fields.map(field => ({
@@ -77,40 +82,34 @@ const AsyncCredentials = ({
         isDisabled: field.isDisabled || validating,
         onChange: value => enhancedChange(value, field.name, name, formOptions.change),
       })), formOptions)}
-      <FieldProvider initialValue={!!edit} name={name} validate={value => (value === false ? asyncError : undefined)}>
-        {({ input, meta }) => (
-          <FormGroup validationState={meta.error ? 'error' : null}>
-            <input type="hidden" {...input} />
-            <CheckErrors
-              subscription={{ valid: true, invalid: true, active: true }}
-              names={[...asyncFields, ...validationDependencies]}
-              FieldProvider={FieldProvider}
-            >
-              {valid => (
-                <Fragment>
-                  <Button
-                    bsSize="small"
-                    bsStyle="primary"
-                    onClick={() => handleAsyncValidation(formOptions, name, [...asyncFields, ...validationDependencies])}
-                    disabled={valid.includes(false) || validating}
-                  >
-                    {validating ? validationProgressLabel : validateLabel}
-                    {validating && <ButtonSpinner /> }
-                  </Button>
-                  {!meta.error && !valid.includes(false) && !isEqual(lastValid, {}) && <HelpBlock>{ validationSuccessLabel }</HelpBlock>}
-                  {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
-                </Fragment>
-              )}
-            </CheckErrors>
-          </FormGroup>
-        )}
-      </FieldProvider>
+      <FormGroup validationState={meta.error ? 'error' : null}>
+        <input type="hidden" {...input} />
+        <CheckErrors
+          subscription={{ valid: true, invalid: true, active: true }}
+          names={[...asyncFields, ...validationDependencies]}
+        >
+          {valid => (
+            <Fragment>
+              <Button
+                bsSize="small"
+                bsStyle="primary"
+                onClick={() => handleAsyncValidation(formOptions, name, [...asyncFields, ...validationDependencies])}
+                disabled={valid.includes(false) || validating}
+              >
+                {validating ? validationProgressLabel : validateLabel}
+                {validating && <ButtonSpinner /> }
+              </Button>
+              {!meta.error && !valid.includes(false) && !isEqual(lastValid, {}) && <HelpBlock>{ validationSuccessLabel }</HelpBlock>}
+              {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
+            </Fragment>
+          )}
+        </CheckErrors>
+      </FormGroup>
     </Fragment>
   );
 };
 
 AsyncCredentials.propTypes = {
-  FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   validateLabel: PropTypes.string,
   validationProgressLabel: PropTypes.string,
   validationSuccessLabel: PropTypes.string,

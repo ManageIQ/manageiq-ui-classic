@@ -5,7 +5,6 @@ import { Col, Button } from 'patternfly-react';
 import { useFormApi } from '@@ddf';
 
 const FieldArrayItem = ({
-  FieldProvider,
   fields,
   fieldIndex,
   name,
@@ -30,7 +29,6 @@ const FieldArrayItem = ({
 };
 
 FieldArrayItem.propTypes = {
-  FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   fields: PropTypes.any.isRequired,
   fieldIndex: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,

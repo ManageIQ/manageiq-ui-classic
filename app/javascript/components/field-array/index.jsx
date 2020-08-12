@@ -6,7 +6,6 @@ import { useFormApi, FieldArray } from '@@ddf';
 import FieldArrayItem from './field-array-item';
 
 const FieldArrayComponent = ({
-  FieldProvider,
   arrayValidator,
   label,
   fields,
@@ -44,7 +43,6 @@ const FieldArrayComponent = ({
                   value={value[index].value}
                   fieldIndex={index}
                   formOptions={formOptions}
-                  FieldProvider={FieldProvider}
                   remove={remove}
                   colsize={colsize}
                 />
@@ -64,7 +62,6 @@ const FieldArrayComponent = ({
 };
 
 FieldArrayComponent.propTypes = {
-  FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   FieldArrayProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   arrayValidator: PropTypes.func,
   label: PropTypes.string,

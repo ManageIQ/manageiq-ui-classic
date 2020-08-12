@@ -2,7 +2,6 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 
 describe('Async credentials component', () => {
@@ -16,7 +15,6 @@ describe('Async credentials component', () => {
       }, {
         name: 'bar',
       }],
-      FieldProvider,
       asyncValidate: jest.fn(),
       formOptions: {
         renderForm: fields => fields.map(field => <DummyComponent key={field.name} {...field} />),

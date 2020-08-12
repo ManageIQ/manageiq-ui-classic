@@ -137,7 +137,6 @@ function addSchema(emsList = [], cloudTenants = []) {
       component: componentTypes.SWITCH,
       name: 'is_public',
       label: __('Public?'),
-      assignFieldProvider: true,
       bsSize: 'mini',
       onText: __('True'),
       offText: __('False'),

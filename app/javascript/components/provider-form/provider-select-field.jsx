@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { set } from 'lodash';
 
-import { useFormApi } from '@@ddf';
+import { useFormApi, useFieldApi } from '@@ddf';
 import { components } from '@data-driven-forms/pf3-component-mapper';
 import { EditingContext, loadProviderFields } from './index';
 
@@ -11,7 +11,7 @@ const extractInitialValues = ({ name, initialValue, fields }) => {
   return { ...item, ...children };
 };
 
-const ProviderSelectField = ({ kind, FieldProvider, ...props }) => {
+const ProviderSelectField = ({ kind, ...props }) => {
   const formOptions = useFormApi();
 
   const { isDisabled: edit } = props;
@@ -31,15 +31,8 @@ const ProviderSelectField = ({ kind, FieldProvider, ...props }) => {
     return onChange(type);
   };
 
-  return (
-    <FieldProvider
-      {...props}
-      formOptions={formOptions}
-      render={({ input: { onChange, ...input }, ...props }) => (
-        <components.Select input={{ ...input, onChange: enhancedChange(onChange) }} formOptions={formOptions} {...props} />
-      )}
-    />
-  );
+  const { input: { onChange, ...input }, ...rest } = useFieldApi(props);
+  return <components.Select input={{ ...input, onChange: enhancedChange(onChange) }} {...rest} />;
 };
 
 export default ProviderSelectField;

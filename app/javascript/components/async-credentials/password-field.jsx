@@ -14,7 +14,6 @@ import RequiredLabel from '../../forms/required-label';
 
 const PasswordField = ({
   isDisabled,
-  FieldProvider, // eslint-disable-line no-unused-vars
   validate,
   cancelEditLabel,
   changeEditLabel,
@@ -76,7 +75,6 @@ const PasswordField = ({
 };
 
 PasswordField.propTypes = {
-  FieldProvider: PropTypes.func.isRequired,
   cancelEditLabel: PropTypes.string,
   changeEditLabel: PropTypes.string,
   isDisabled: PropTypes.bool,

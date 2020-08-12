@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import DualList from '../../components/dual-list-select';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
 describe('Dual list component', () => {
   const onChangeSpy = jest.fn();
@@ -25,17 +24,17 @@ describe('Dual list component', () => {
   });
 
   it('is rendered correctly', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    const wrapper = mount(<DualList {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('is rendered correctly with move all buttons', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToLeft allToRight />);
+    const wrapper = mount(<DualList {...props} allToLeft allToRight />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('correctly moves items to right', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    const wrapper = mount(<DualList {...props} />);
     const button = wrapper.find('button').first(); // find toRight button
     wrapper
       .find('select')
@@ -50,7 +49,7 @@ describe('Dual list component', () => {
   });
 
   it('correctly moves items to left', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    const wrapper = mount(<DualList {...props} />);
     wrapper
       .find('select')
       .last()
@@ -64,7 +63,7 @@ describe('Dual list component', () => {
   });
 
   it('correctly move all items to right', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToRight />);
+    const wrapper = mount(<DualList {...props} allToRight />);
     const button = wrapper.find('button').at(1); // find allRoLeft button
     button.simulate('click');
 
@@ -72,7 +71,7 @@ describe('Dual list component', () => {
   });
 
   it('correctly move all items to left', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToLeft />);
+    const wrapper = mount(<DualList {...props} allToLeft />);
     const button = wrapper.find('button').at(1); // find allToLeft button
     button.simulate('click');
 
@@ -80,7 +79,7 @@ describe('Dual list component', () => {
   });
 
   it('correctly moves items to right when holding shift key', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    const wrapper = mount(<DualList {...props} />);
     const button = wrapper.find('button').first(); // find toRight button
     wrapper
       .find('select')
@@ -102,7 +101,7 @@ describe('Dual list component', () => {
   });
 
   it('correctly moves items to left when holding shift key', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} input={{ ...props.input, value: ['key3', 'key2'] }} />);
+    const wrapper = mount(<DualList {...props} input={{ ...props.input, value: ['key3', 'key2'] }} />);
     const button = wrapper.find('button').last(); // find toRight button
     wrapper
       .find('select')

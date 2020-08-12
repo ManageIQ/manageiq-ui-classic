@@ -55,7 +55,6 @@ function createSchema(options, catalogId) {
         moveLeftTitle: __('Move Selected buttons left'),
         moveRightTitle: __('Move Selected buttons right'),
         size: 8,
-        assignFieldProvider: true,
         options,
         name: 'service_templates',
       },

@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import PasswordField from '../../components/async-credentials/password-field';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
 let changeSpy;
 let getStateSpy;
@@ -36,7 +35,6 @@ describe('Secret switch field component', () => {
       initialValues: { foo: 'value-foo', bar: 'value-bar', nonAsync: 'non-async' },
     });
     initialProps = {
-      FieldProvider,
       edit: false,
       name: 'foo',
     };

@@ -5,6 +5,7 @@ import FormRender, {
   componentTypes,
   validatorTypes,
   useFormApi,
+  useFieldApi,
   FieldArray,
   FormSpy,
 } from '@data-driven-forms/react-form-renderer';
@@ -76,5 +77,7 @@ MiqFormRenderer.defaultProps = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
 
-export { componentTypes, validatorTypes, useFormApi, FieldArray, FormSpy };
+export {
+  componentTypes, validatorTypes, useFormApi, useFieldApi, FieldArray, FormSpy,
+};
 export default connect(null, mapDispatchToProps)(MiqFormRenderer);

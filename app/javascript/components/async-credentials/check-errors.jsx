@@ -1,32 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useFieldApi } from '@@ddf';
+
 const CheckErrors = ({
   names,
   subscription,
   fieldsState,
   children,
   originalRender,
-  FieldProvider,
   valid,
 }) => {
   if (!names.length) {
     return (originalRender || children)(valid);
   }
   const [name, ...rest] = names;
+  const fieldState = useFieldApi({ name, subscription });
+
   return (
-    <FieldProvider name={name} subscription={subscription}>
-      {fieldState => (
-        <CheckErrors
-          names={rest}
-          subscription={subscription}
-          originalRender={originalRender || children}
-          fieldsState={{ ...fieldsState, [name]: fieldState }}
-          FieldProvider={FieldProvider}
-          valid={[...valid, fieldState.meta.valid]}
-        />
-      )}
-    </FieldProvider>
+    <CheckErrors
+      names={rest}
+      subscription={subscription}
+      originalRender={originalRender || children}
+      fieldsState={{ ...fieldsState, [name]: fieldState }}
+      valid={[...valid, fieldState.meta.valid]}
+    />
   );
 };
 
