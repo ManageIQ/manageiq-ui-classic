@@ -222,10 +222,11 @@ module Menu
 
       def control_menu_section
         Menu::Section.new(:con, N_("Control"), 'carbon--IbmSecurity', [
-          Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),
-          Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},     '/miq_policy/rsop'),
-          Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},  '/miq_policy/export'),
-          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},            "/miq_policy/log")
+          Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set', :any => true}, '/miq_policy_set/explorer'),
+          Menu::Item.new('miq_policy',        N_('Explorer'),        'policy',               {:feature => 'policy', :any => true},         '/miq_policy/explorer'),
+          Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},            '/miq_policy/rsop'),
+          Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},         '/miq_policy/export'),
+          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},                   '/miq_policy/log')
         ])
       end
 

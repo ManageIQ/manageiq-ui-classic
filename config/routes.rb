@@ -2113,8 +2113,6 @@ Rails.application.routes.draw do
         import
         policy_edit
         policy_field_changed
-        profile_edit
-        profile_field_changed
         quick_search
         reload
         rsop
@@ -2129,6 +2127,21 @@ Rails.application.routes.draw do
                adv_search_post +
                exp_post +
                x_post
+    },
+
+    :miq_policy_set => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        button
+        miq_policy_set_edit
+        profile_field_changed
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
     },
 
     :miq_request              => {

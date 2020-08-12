@@ -5,7 +5,6 @@ class MiqPolicyController < ApplicationController
   include_concern 'Conditions'
   include_concern 'Events'
   include_concern 'Policies'
-  include_concern 'PolicyProfiles'
   include_concern 'Rsop'
 
   before_action :check_privileges
@@ -105,8 +104,6 @@ class MiqPolicyController < ApplicationController
     'condition_new'          => :condition_edit,
     'condition_remove'       => :condition_remove,
     'event_edit'             => :event_edit,
-    'profile_edit'           => :profile_edit,
-    'profile_new'            => :profile_edit,
     'policy_copy'            => :policy_copy,
     'policy_edit'            => :policy_edit,
     'policy_new'             => :policy_edit,
@@ -219,18 +216,18 @@ class MiqPolicyController < ApplicationController
     @explorer = true
     session[:export_data] = nil
 
-    self.x_active_tree ||= 'policy_profile_tree'
-    self.x_active_accord ||= 'policy_profile'
+    self.x_active_tree ||= 'policy_tree'
+    self.x_active_accord ||= 'policy'
 
     build_accordions_and_trees
 
     if params[:profile].present? # If profile record id passed in, position on that node
-      self.x_active_tree = 'policy_profile_tree'
-      profile_id = params[:profile].to_i
-      if MiqPolicySet.exists?(:id => profile_id)
-        self.x_node = "pp-#{profile_id}"
+      self.x_active_tree = 'policy_tree'
+      policy_id = params[:policy].to_i
+      if MiqPolicy.exists?(:id => policy_id)
+        self.x_node = "p-#{policy_id}"
       else
-        add_flash(_("Policy Profile no longer exists"), :error)
+        add_flash(_("Policy no longer exists"), :error)
         self.x_node = "root"
       end
     end
@@ -409,8 +406,6 @@ class MiqPolicyController < ApplicationController
     get_root_node_info if x_node == "root" # Get node info of tree roots
     folder_get_info(treenodeid) if treenodeid != "root" # Get folder info for all node types
     case @nodetype
-    when "pp" # Policy Profile
-      profile_get_info(MiqPolicySet.find(nodeid))
     when "p"  # Policy
       policy_get_info(MiqPolicy.find(nodeid))
     when "co" # Condition
@@ -432,8 +427,6 @@ class MiqPolicyController < ApplicationController
   # Fetches right side info if a tree root is selected
   def get_root_node_info
     case x_active_tree
-    when :policy_profile_tree
-      profile_get_all
     when :policy_tree
       policy_get_all_folders
     when :event_tree
@@ -469,8 +462,6 @@ class MiqPolicyController < ApplicationController
     # Simply replace the tree partials to reload the trees
     replace_trees.each do |name|
       case name
-      when :policy_profile
-        self.x_node = @new_profile_node if @new_profile_node
       when :policy
         self.x_node = @new_policy_node if @new_policy_node
       when :event
@@ -498,7 +489,6 @@ class MiqPolicyController < ApplicationController
     when 'root'
       partial_name, model =
         case x_active_tree
-        when :policy_profile_tree then ['profile_list',          _('Policy Profiles')]
         when :policy_tree         then ['policy_folders',        _('Policies')]
         when :event_tree          then ['event_list',            _('Events')]
         when :condition_tree      then ['condition_folders',     _('Conditions')]
@@ -510,15 +500,6 @@ class MiqPolicyController < ApplicationController
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
       right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[alert_profile_tree condition_tree policy_tree].exclude?(x_active_tree.to_s)
-    when 'pp'
-      presenter.update(:main_div, r[:partial => 'profile_details'])
-      right_cell_text =
-        if @profile && @profile.id.blank?
-          _("Adding a new Policy Profile")
-        else
-          msg = @edit ? _("Editing Policy Profile \"%{name}\"") : _("Policy Profile \"%{name}\"")
-          msg % {:name  => @profile.description}
-        end
     when 'xx'
       presenter.update(
         :main_div,
@@ -1081,12 +1062,6 @@ class MiqPolicyController < ApplicationController
 
   def features
     [
-      {
-        :name     => :policy_profile,
-        :title    => _("Policy Profiles"),
-        :role     => "policy_profile",
-        :role_any => true
-      },
       {
         :name     => :policy,
         :title    => _("Policies"),
