@@ -23,7 +23,6 @@ cols:
 - ipaddresses
 - ems_cluster_name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -59,7 +58,6 @@ col_order:
 - ipaddresses
 - storage.name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -75,7 +73,6 @@ headers:
 - IP Addresses
 - Datastore
 - Compliant
-- Protected
 - Total Snapshots
 - Allocated Size
 - Last Analysis Time

@@ -7,7 +7,6 @@ class GtlFormatter
   ]
 
   COLUMN_WITH_ICON = {
-    'has_policies'           => 'has_policies_image',
     'authentication_status'  => 'authentication_status_image',
     'last_compliance_status' => 'last_compliance_status_image',
     'normalized_state'       => 'normalized_state_image'
@@ -178,10 +177,6 @@ class GtlFormatter
 
   def self.normalized_state_image(item)
     NORMALIZED_STATE_ICON[item.normalized_state]
-  end
-
-  def self.has_policies_image(item)
-    item.has_policies ? "fa fa-shield" : "pficon pficon-pending-2"
   end
 
   def self.cloud_manager_template_format(value)

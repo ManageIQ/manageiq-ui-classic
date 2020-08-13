@@ -22,7 +22,6 @@ cols:
 - name
 - ems_cluster_name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - last_scan_on
 - region_description
@@ -50,7 +49,6 @@ col_order:
 - host.name
 - storage.name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - last_scan_on
 - region_description
@@ -62,7 +60,6 @@ headers:
 - Host
 - Datastore
 - Compliant
-- Protected
 - Total Snapshots
 - Last Analysis Time
 - Region
