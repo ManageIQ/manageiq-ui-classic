@@ -64,6 +64,13 @@ describe TreeController do
     let(:cl3) { FactoryBot.create(:miq_ae_class, :ae_namespace => ns3) }
     let(:in3) { FactoryBot.create(:miq_ae_instance, :ae_class => cl3) }
 
+    # second domain with the same node names
+    let(:d2)  { FactoryBot.create(:miq_ae_domain) }
+    let(:d2ns1) { FactoryBot.create(:miq_ae_namespace) }
+    let(:d2ns2) { FactoryBot.create(:miq_ae_namespace, :parent => d2ns1) }
+    let(:d2cl2) { FactoryBot.create(:miq_ae_class, :ae_namespace => d2ns2) }
+    let(:d2in2) { FactoryBot.create(:miq_ae_instance, :ae_class => d2cl2) }
+
     it "opens the node by fqn with 1 level tree" do
       # these come in as params
       id = TreeNode.new(in1).key
@@ -87,17 +94,37 @@ describe TreeController do
     it "opens the node by fqn with 2 level tree" do
       # these come in as params
       id = TreeNode.new(in2).key
-      fqname = in2.fqname
+      fqname = in2.fqname.upcase
 
       fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, id) do |tree|
         expect(open_nodes_hierarchy(tree, fqname)).not_to be_nil
       end
     end
 
-    it "opens the node by relative_path with 1 level tree" do
+    it "opens the node by relative_path with 2 level tree" do
       # these come in as params
       id = TreeNode.new(in2).key
-      relative_path = in2.relative_path
+      relative_path = in2.relative_path.upcase
+
+      fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, id) do |tree|
+        expect(open_nodes_hierarchy(tree, relative_path)).not_to be_nil
+      end
+    end
+
+    it "opens the node by fqn with multiple 2 level trees" do
+      # these come in as params
+      id = TreeNode.new(d2in2).key
+      fqname = d2in2.fqname.upcase
+
+      fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, id) do |tree|
+        expect(open_nodes_hierarchy(tree, fqname)).not_to be_nil
+      end
+    end
+
+    it "opens the node by relative_path with multiple 2 level trees" do
+      # these come in as params
+      id = TreeNode.new(d2in2).key
+      relative_path = d2in2.relative_path.upcase
 
       fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, id) do |tree|
         expect(open_nodes_hierarchy(tree, relative_path)).not_to be_nil
