@@ -9,6 +9,7 @@ module VmCloudHelper::TextualSummary
   include TextualMixins::TextualOsInfo
   include TextualMixins::TextualPatches
   include TextualMixins::TextualPowerState
+  include TextualMixins::TextualProtected
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
   include TextualMixins::VmCommon
@@ -26,7 +27,7 @@ module VmCloudHelper::TextualSummary
         load_balancer_health_check_state osinfo architecture
       ] + (@record.type == 'ManageIQ::Providers::Amazon::CloudManager::Vm' ? %i[] : %i[snapshots]) +
       %i[
-        advanced_settings resources guid virtualization_type root_device_type ems_ref
+        advanced_settings resources guid virtualization_type root_device_type protected ems_ref
       ]
     )
   end

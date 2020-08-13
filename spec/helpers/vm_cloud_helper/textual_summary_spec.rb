@@ -23,6 +23,7 @@ describe VmCloudHelper::TextualSummary do
     guid
     virtualization_type
     root_device_type
+    protected
     ems_ref
   )
 

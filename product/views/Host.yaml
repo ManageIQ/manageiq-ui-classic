@@ -26,7 +26,6 @@ cols:
 - v_total_vms
 - v_total_miq_templates
 - vmm_product
-- has_policies
 - normalized_state
 - last_compliance_status
 - last_scan_on
@@ -53,7 +52,6 @@ col_order:
 - v_total_vms
 - v_total_miq_templates
 - vmm_product
-- has_policies
 - normalized_state
 - last_compliance_status
 - last_scan_on
@@ -69,7 +67,6 @@ headers:
 - Total VMs
 - Total Templates
 - Platform
-- Protected
 - Power
 - Compliant
 - Last Analysis Time

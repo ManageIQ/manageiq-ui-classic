@@ -21,7 +21,6 @@ db: MiqTemplate
 cols:
 - name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -42,7 +41,6 @@ include_for_find:
 col_order:
 - name
 - last_compliance_status
-- has_policies
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
@@ -52,7 +50,6 @@ col_order:
 headers:
 - Name
 - Compliant
-- Protected
 - Total Snapshots
 - Allocated Size
 - Last Analysis Time

@@ -34,6 +34,7 @@ describe HostHelper::TextualSummary do
     num_cpu_cores
     cpu_cores_per_socket
     memory
+    protected
     guid
   )
 
