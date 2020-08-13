@@ -5,19 +5,9 @@ class TreeController < ApplicationController
   before_action :check_privileges
 
   def automate_entrypoint
+    fqname = params[:fqname]
     json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, params[:id]) do |tree|
-      if params[:fqname].present?
-        # Assume that the domain prefix is included in the fqname
-        open_nodes = automate_find_hierarchy(params[:fqname])
-        open_node_hierarchy(tree, open_nodes)
-        next if open_nodes.present?
-
-        # If the fqname is not included, find the homonymic ones under each domain
-        MiqAeInstance.get_homonymic_across_domains(current_user, params[:fqname], true, :prefix => false).each do |instance|
-          open_nodes = automate_find_hierarchy(instance.fqname)
-          open_node_hierarchy(tree, open_nodes)
-        end
-      end
+      open_nodes_hierarchy(tree, fqname) if fqname.present?
     end
     render :body => json, :content_type => 'application/json'
   end
@@ -46,6 +36,19 @@ class TreeController < ApplicationController
       tree.x_get_child_nodes(node_id).to_json
     else
       tree.instance_variable_get(:@bs_tree)
+    end
+  end
+
+  def open_nodes_hierarchy(tree, fqname)
+    # Assume that the domain prefix is included in the fqname
+    open_nodes = automate_find_hierarchy(fqname)
+    open_node_hierarchy(tree, open_nodes)
+    return if open_nodes.present?
+
+    # If the fqname is not included, find the homonymic ones under each domain
+    MiqAeInstance.get_homonymic_across_domains(current_user, fqname, true, :prefix => false).each do |instance|
+      open_nodes = automate_find_hierarchy(instance.fqname)
+      open_node_hierarchy(tree, open_nodes)
     end
   end
 
