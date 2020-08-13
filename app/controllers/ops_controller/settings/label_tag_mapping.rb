@@ -200,26 +200,26 @@ module OpsController::Settings::LabelTagMapping
     @classification[cat_description] ||= Classification.lookup_category_by_description(cat_description)
   end
 
-  def category_for_mapping(cat_description, entity, label_name)
+  def category_for_mapping(cat_description, entity)
     if entity == ALL_ENTITIES
       classification_lookup_with_cache_by(cat_description)
     else
-      Classification.create_category!(:name         => category_name_from_label(entity, label_name),
+      Classification.create_category!(:name         => category_name_from_description(entity, cat_description),
                                       :description  => cat_description_with_prefix(entity, cat_description),
                                       :single_value => true,
                                       :read_only    => true)
     end
   end
 
-  def category_name_from_label(entity, label_name)
+  def category_name_from_description(entity, cat_description)
     cat_prefix = MAPPABLE_ENTITIES[entity].prefix
-    cat_prefix.to_s + Classification.sanitize_name(label_name.tr("/", ":"))
+    cat_prefix.to_s + Classification.sanitize_name(cat_description.tr("/", ":"))
   end
 
-  def find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
+  def find_prefixed_category_for_mapping_by(cat_description, entity)
     # UI currently can't allow 2 mappings for same (entity, label).
     category = Classification.is_category.read_only.find_by(:single_value => true, :description => cat_description)
-    category || Classification.lookup_by_name(category_name_from_label(entity, label_name))
+    category || Classification.lookup_by_name(category_name_from_description(entity, cat_description))
   end
 
   def validate_mapping(cat_description, entity, label_name)
@@ -228,7 +228,7 @@ module OpsController::Settings::LabelTagMapping
 
     if entity == ALL_ENTITIES
       :tag_not_found unless classification_lookup_with_cache_by(cat_description)
-    elsif find_prefixed_category_for_mapping_by(cat_description, entity, label_name)
+    elsif find_prefixed_category_for_mapping_by(cat_description, entity)
       :unique_mapping
     end
   end
@@ -241,7 +241,7 @@ module OpsController::Settings::LabelTagMapping
 
     begin
       ActiveRecord::Base.transaction do
-        category = category_for_mapping(cat_description, entity, label_name)
+        category = category_for_mapping(cat_description, entity)
         ProviderTagMapping.create!(:labeled_resource_type => entity,
                                    :label_name            => label_name,
                                    :tag                   => category.tag)
