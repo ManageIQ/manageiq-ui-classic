@@ -667,7 +667,7 @@ module OpsController::Settings::Common
           @edit[:new][:server_url] = MiqDatabase.registration_default_values[:registration_server]
         end
       end
-      @changed = (new != @edit[:current])
+      @changed = (new.except(:customer_userid, :customer_password, :customer_verify) != @edit[:current].except(:customer_userid, :customer_password, :customer_verify))
     when "settings_server"                                                # Server Settings tab
       if !params[:smtp_test_to].nil? && params[:smtp_test_to] != ""
         @sb[:new_to] = params[:smtp_test_to]

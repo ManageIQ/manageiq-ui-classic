@@ -28,7 +28,6 @@ module OpsController::Settings::RHN
     private(:rhn_save_subscription)
     private(:rhn_credentials_from_edit)
     private(:rhn_fire_available_organizations)
-    private(:rhn_load_session)
     private(:rhn_gather_checks)
 
     helper_method(:rhn_subscription_types)
@@ -186,12 +185,6 @@ module OpsController::Settings::RHN
     end
   end
 
-  def rhn_load_session
-    @edit = session[:edit] || {}
-    @edit[:new] ||= {}
-    @edit[:new][:servers] ||= {}
-  end
-
   # collect checkboxes coming in with a button
   def rhn_gather_checks
     @edit[:new][:servers] = {}
@@ -259,7 +252,7 @@ module OpsController::Settings::RHN
   end
 
   def rhn_validate
-    rhn_load_session
+    @edit = session[:edit] || {}
     rhn_fire_available_organizations do |organizations|
       if @edit[:new][:register_to] == 'rhn_satellite6'
         # Hash of display names to key names
@@ -277,9 +270,9 @@ module OpsController::Settings::RHN
       render :update do |page|
         @changed = (@edit[:new] != @edit[:current])
         page << javascript_prologue
+        page << javascript_for_miq_button_visibility(@changed) unless flash_errors?
         if @edit[:new][:register_to] == 'rhn_satellite6'
           page.replace_html('settings_rhn', :partial => 'settings_rhn_edit_tab')
-          page << javascript_for_miq_button_visibility(@changed) unless flash_errors?
         else
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         end
