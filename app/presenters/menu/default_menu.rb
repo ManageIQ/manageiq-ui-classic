@@ -225,6 +225,7 @@ module Menu
           Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set', :any => true}, '/miq_policy_set/explorer'),
           Menu::Item.new('miq_policy',        N_('Explorer'),        'policy',               {:feature => 'policy', :any => true},         '/miq_policy/explorer'),
           Menu::Item.new('miq_event',         N_('Events'),          'miq_event',            {:feature => 'miq_event', :any => true},      '/miq_event/explorer'),
+          Menu::Item.new('condition',         N_('Conditions'),      'condition',            {:feature => 'condition', :any => true},      '/condition/explorer'),
           Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},            '/miq_policy/rsop'),
           Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},         '/miq_policy/export'),
           Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},                   '/miq_policy/log')

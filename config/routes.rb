@@ -2105,8 +2105,6 @@ Rails.application.routes.draw do
         alert_profile_edit
         alert_profile_field_changed
         button
-        condition_edit
-        condition_field_changed
         export
         export_field_changed
         import
@@ -2153,6 +2151,23 @@ Rails.application.routes.draw do
         tree_select
       ) +
         x_post
+    },
+
+    :condition => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        condition_edit
+        condition_field_changed
+        condition_new
+        reload
+        tree_autoload
+        tree_select
+      ) +
+          adv_search_post +
+          exp_post +
+          x_post
     },
 
     :miq_request              => {

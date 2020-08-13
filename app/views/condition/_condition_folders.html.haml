@@ -1,0 +1,12 @@
+#condition_folders_div
+  - if @folders
+    = render :partial => "layouts/flash_msg"
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        - @folders.each do |f|
+          %tr{:title => _("View Condition"),
+            :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{f.camelize(:lower)}');"}
+            %td.table-view-pf-select
+              %i{:class => TreeBuilderCondition.folder_icon(f)}
+            %td
+              = _("%{object} Conditions") % {:object => ui_lookup(:model => f)}

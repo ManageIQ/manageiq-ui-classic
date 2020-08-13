@@ -73,17 +73,11 @@ module MiqPolicyController::Policies
     @sb[:action] = @edit = nil
     @nodetype = "p"
 
-    case x_active_tree
-    when :policy_profile_tree
-      replace_right_cell(:nodetype => "p", :replace_trees => %i[policy_profile policy], :remove_form_buttons => true)
-    when :policy_tree
-      @nodetype = "p"
-      if params[:button] == "add"
-        self.x_node = @new_policy_node = policy_node(policy)
-        get_node_info(@new_policy_node)
-      end
-      replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? %i[policy_profile policy] : %i[policy], :remove_form_buttons => true)
+    if params[:button] == "add"
+      self.x_node = @new_policy_node = policy_node(policy)
+      get_node_info(@new_policy_node)
     end
+    replace_right_cell(:nodetype => "p", :replace_trees => %i[policy], :remove_form_buttons => true)
   end
 
   def policy_edit_move

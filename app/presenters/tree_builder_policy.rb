@@ -1,6 +1,4 @@
 class TreeBuilderPolicy < TreeBuilder
-  has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-
   private
 
   def tree_init_options
@@ -80,10 +78,5 @@ class TreeBuilderPolicy < TreeBuilder
 
     # error checking
     super
-  end
-
-  # level 4 - conditions & events for policy
-  def x_get_tree_po_kids(parent, count_only)
-    count_only_or_objects(count_only, parent.conditions, :description)
   end
 end

@@ -1,0 +1,28 @@
+#form_expression_div
+  - if @expkey == :expression
+    = render :partial => 'layouts/exp_editor'
+    %hr
+  - else
+    = link_to({:action                => 'condition_edit',
+               :button                => "expression",
+               :id                    => @condition.id || 'new'},
+               "data-miq_sparkle_on"  => true,
+               "data-miq_sparkle_off" => true,
+               :remote                => true,
+               "data-method"          => :post) do
+
+      %button.btn.btn-default
+        - if @edit[:expression_table].nil?
+          = _("Define Expression")
+        - else
+          = _("Edit Expression")
+
+    - unless @edit[:expression_table].nil?
+      .spacer
+        - @edit[:expression_table].each do |token|
+          - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
+            = h([token].flatten.first)
+          - else
+            %font{:color => "black"}
+              %b
+                = h([token].flatten.first)

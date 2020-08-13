@@ -2,7 +2,6 @@ class MiqPolicyController < ApplicationController
   include_concern 'MiqActions'
   include_concern 'AlertProfiles'
   include_concern 'Alerts'
-  include_concern 'Conditions'
   include_concern 'Events'
   include_concern 'Policies'
   include_concern 'Rsop'
@@ -14,6 +13,7 @@ class MiqPolicyController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::PolicyMixin
 
   UI_FOLDERS = [Host, Vm, ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ContainerProject, ExtManagementSystem, PhysicalServer].freeze
 
@@ -98,11 +98,6 @@ class MiqPolicyController < ApplicationController
     'alert_profile_assign'   => :alert_profile_assign,
     'alert_profile_edit'     => :alert_profile_edit,
     'alert_profile_new'      => :alert_profile_edit,
-    'condition_edit'         => :condition_edit,
-    'condition_copy'         => :condition_edit,
-    'condition_policy_copy'  => :condition_edit,
-    'condition_new'          => :condition_edit,
-    'condition_remove'       => :condition_remove,
     'miq_event_edit'         => :miq_event_edit,
     'policy_copy'            => :policy_copy,
     'policy_edit'            => :policy_edit,
@@ -271,7 +266,7 @@ class MiqPolicyController < ApplicationController
     case x_active_tree
     when "profile", "action", "alert"
       replace_right_cell(:nodetype => x_node)
-    when "policy", "condition", "alert_profile"
+    when "policy", "alert_profile"
       replace_right_cell(:nodetype => "xx")
     end
   end
@@ -408,8 +403,6 @@ class MiqPolicyController < ApplicationController
     case @nodetype
     when "p"  # Policy
       policy_get_info(MiqPolicy.find(nodeid))
-    when "co" # Condition
-      condition_get_info(Condition.find(nodeid))
     when "a", "ta", "fa" # Action or True/False Action
       action_get_info(MiqAction.find(nodeid))
     when "ap" # Alert Profile
@@ -418,7 +411,7 @@ class MiqPolicyController < ApplicationController
       alert_get_info(MiqAlert.find(nodeid))
     end
     @show_adv_search = (@nodetype == "xx"   && !@folders) ||
-                       (@nodetype == "root" && !%i[alert_profile_tree condition_tree policy_tree].include?(x_active_tree))
+                       (@nodetype == "root" && !%i[alert_profile_tree policy_tree].include?(x_active_tree))
     {:view => @view, :pages => @pages}
   end
 
@@ -427,8 +420,6 @@ class MiqPolicyController < ApplicationController
     case x_active_tree
     when :policy_tree
       policy_get_all_folders
-    when :condition_tree
-      condition_get_all_folders
     when :action_tree
       action_get_all
     when :alert_profile_tree
@@ -445,7 +436,7 @@ class MiqPolicyController < ApplicationController
     replace_trees = Array(replace_trees)
     @explorer = true
 
-    trees = build_replaced_trees(replace_trees, %i[policy_profile policy condition action alert_profile alert])
+    trees = build_replaced_trees(replace_trees, %i[policy action alert_profile alert])
 
     c_tb = build_toolbar(center_toolbar_filename)
 
@@ -460,8 +451,6 @@ class MiqPolicyController < ApplicationController
       case name
       when :policy
         self.x_node = @new_policy_node if @new_policy_node
-      when :condition
-        self.x_node = @new_condition_node if @new_condition_node
       when :action
         self.x_node = @new_action_node if @new_action_node
       when :alert_profile
@@ -484,7 +473,6 @@ class MiqPolicyController < ApplicationController
       partial_name, model =
         case x_active_tree
         when :policy_tree         then ['policy_folders',        _('Policies')]
-        when :condition_tree      then ['condition_folders',     _('Conditions')]
         when :action_tree         then ['action_list',           _('Actions')]
         when :alert_profile_tree  then ['alert_profile_folders', _('Alert Profiles')]
         when :alert_tree          then ['alert_list',            _('Alerts')]
@@ -492,7 +480,7 @@ class MiqPolicyController < ApplicationController
 
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
-      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[alert_profile_tree condition_tree policy_tree].exclude?(x_active_tree.to_s)
+      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[alert_profile_tree policy_tree].exclude?(x_active_tree.to_s)
     when 'xx'
       presenter.update(
         :main_div,
@@ -501,9 +489,6 @@ class MiqPolicyController < ApplicationController
         elsif @policies || (@view && @sb[:tree_typ] == 'policies')
           right_cell_text = _("All %{typ} Policies") % {:typ => "#{ui_lookup(:model => @sb[:nodeid].try(:camelize))} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}"}
           r[:partial => 'policy_list']
-        elsif @conditions
-          right_cell_text = _("All %{typ} Conditions") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}
-          r[:partial => 'condition_list']
         elsif @folders
           mode = @sb[:folder]
           right_cell_text = if mode == 'compliance'
@@ -541,29 +526,6 @@ class MiqPolicyController < ApplicationController
           right_cell_text += _(" Event Assignments")
         end
       end
-    when 'co'
-      # Set the JS types and titles vars if value fields are showing (needed because 2 expression editors are present)
-      if @edit && @edit[@expkey]
-        %i[val1 val2].each do |val|
-          next unless @edit[@expkey][val] # unless an expression with value 1 is showing
-
-          presenter[:exp] = {}
-          presenter[:exp]["#{val}_type".to_sym]  = @edit[@expkey][val][:type].to_s if @edit[@expkey][val][:type]
-          presenter[:exp]["#{val}_title".to_sym] = @edit[@expkey][val][:title]     if @edit[@expkey][val][:title]
-        end
-      end
-      presenter.update(:main_div, r[:partial => 'condition_details', :locals => {:read_only => true}])
-      right_cell_text = if @condition.id.blank?
-                          _("Adding a new Condition")
-                        elsif @edit
-                          _("Editing %{model} Condition \"%{name}\"") %
-                            {:name  => @condition.description,
-                             :model => ui_lookup(:model => @edit[:new][:towhat])}
-                        else
-                          _("%{model} Condition \"%{name}\"") %
-                            {:name  => @condition.description,
-                             :model => ui_lookup(:model => @condition.towhat)}
-                        end
     when 'ev'
       presenter.update(:main_div, r[:partial => 'event_details', :locals => {:read_only => true}])
       options = {:name => @event.description}
@@ -633,41 +595,6 @@ class MiqPolicyController < ApplicationController
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
-  end
-
-  def send_button_changes
-    if @edit
-      @changed = (@edit[:new] != @edit[:current])
-    elsif @assign
-      @changed = (@assign[:new] != @assign[:current])
-    end
-    render :update do |page|
-      page << javascript_prologue
-      if @edit
-        if @refresh_inventory
-          page.replace("action_options_div", :partial => "action_options")
-        end
-        if @action_type_changed || @snmp_trap_refresh
-          page.replace("action_options_div", :partial => "action_options")
-        elsif @alert_refresh
-          page.replace("alert_details_div",  :partial => "alert_details")
-        elsif @to_email_refresh
-          page.replace("edit_to_email_div",
-                       :partial => "layouts/edit_to_email",
-                       :locals  => {:action_url => "alert_field_changed", :record => @alert})
-        elsif @alert_snmp_refresh
-          page.replace("alert_snmp_div", :partial => "alert_snmp")
-        elsif @alert_mgmt_event_refresh
-          page.replace("alert_mgmt_event_div", :partial => "alert_mgmt_event")
-        end
-      elsif @assign
-        if params.key?(:chosen_assign_to) || params.key?(:chosen_cat)
-          page.replace("alert_profile_assign_div", :partial => "alert_profile_assign")
-        end
-      end
-      page << javascript_for_miq_button_visibility_changed(@changed)
-      page << "miqSparkle(false);"
-    end
   end
 
   def handle_selection_buttons_left(members, members_chosen, choices, _choices_chosen)
@@ -874,12 +801,6 @@ class MiqPolicyController < ApplicationController
         @right_cell_text = _("All %{typ} Policies") % {:typ => ui_lookup(:model => @sb[:nodeid].try(:camelize))}
         @right_cell_div = "policy_list"
       end
-    elsif x_active_tree == :condition_tree
-      @conditions = Condition.where(:towhat => @sb[:folder].camelize).sort_by { |c| c.description.downcase }
-      set_search_text
-      @conditions = apply_search_filter(@search_text, @conditions) if @search_text.present?
-      @right_cell_text = _("All %{typ} Conditions") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}
-      @right_cell_div = "condition_list"
     elsif x_active_tree == :alert_profile_tree
       @alert_profiles = MiqAlertSet.where(:mode => @sb[:folder]).sort_by { |as| as.description.downcase }
       set_search_text
@@ -1059,12 +980,6 @@ class MiqPolicyController < ApplicationController
         :name     => :policy,
         :title    => _("Policies"),
         :role     => "policy",
-        :role_any => true
-      },
-      {
-        :name     => :condition,
-        :title    => _("Conditions"),
-        :role     => "condition",
         :role_any => true
       },
       {
