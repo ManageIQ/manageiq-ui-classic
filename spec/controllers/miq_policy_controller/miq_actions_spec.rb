@@ -1,5 +1,9 @@
 describe MiqPolicyController do
   context "::MiqActions" do
+    before do
+      login_as FactoryGirl.create(:user, :features => %w(action_edit action_new))
+    end
+
     context "#action_edit" do
       before :each do
         @action = FactoryGirl.create(:miq_action, :name => "Test_Action")
