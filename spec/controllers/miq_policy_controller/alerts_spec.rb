@@ -22,7 +22,7 @@ describe MiqPolicyController do
 
     context "alert edit" do
       before do
-        login_as FactoryGirl.create(:user, :features => "alert_admin")
+        login_as FactoryGirl.create(:user, :features => %w(alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
         @miq_alert = FactoryGirl.create(:miq_alert)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
