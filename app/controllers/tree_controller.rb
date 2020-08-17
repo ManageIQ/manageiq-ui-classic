@@ -5,19 +5,9 @@ class TreeController < ApplicationController
   before_action :check_privileges
 
   def automate_entrypoint
+    fqname = params[:fqname]
     json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, params[:id]) do |tree|
-      if params[:fqname].present?
-        # Assume that the domain prefix is included in the fqname
-        open_nodes = automate_find_hierarchy(params[:fqname])
-        open_node_hierarchy(tree, open_nodes)
-        next if open_nodes.present?
-
-        # If the fqname is not included, find the homonymic ones under each domain
-        MiqAeInstance.get_homonymic_across_domains(current_user, params[:fqname], true, :prefix => false).each do |instance|
-          open_nodes = automate_find_hierarchy(instance.fqname)
-          open_node_hierarchy(tree, open_nodes)
-        end
-      end
+      open_nodes_hierarchy(tree, fqname) if fqname.present?
     end
     render :body => json, :content_type => 'application/json'
   end
@@ -49,23 +39,43 @@ class TreeController < ApplicationController
     end
   end
 
-  def automate_find_hierarchy(fqname)
-    # Parse the namespace, class and instance from the fqname
-    namespace, klass, instance, _ = MiqAeEngine::MiqAePath.split(fqname)
+  def open_nodes_hierarchy(tree, fqname)
+    open_nodes = automate_find_hierarchy(fqname)
+    open_nodes = open_nodes.flat_map do |node|
+      ns = node.ae_class.ae_namespace
+      ns.ancestors + [ns, node.ae_class, node]
+    end
+    open_node_hierarchy(tree, open_nodes)
+  end
 
-    begin
-      # Collect all the db records based on the parsed fqname
-      open_nodes = namespace.split('/').each_with_object([]) do |ns, items|
-        items << MiqAeNamespace.find_by!(:name => ns, :ancestry => items.last)
-      end
-      open_nodes << MiqAeClass.find_by!(:name => klass, :namespace_id => open_nodes.last.id)
-      open_nodes << MiqAeInstance.find_by!(:name => instance, :class_id => open_nodes.last.id)
-    rescue ActiveRecord::RecordNotFound
-      # Skip the iteration steop if one of the records is not found
-      # FIXME: we probably need foreign keys instead of this magic
-      nil
+  # @param fqname [String] the fqname or the relative_path
+  # @returns [Array[MiqAeInstance], MiqAeInstance]
+  #   single node if an fqname was specified (domain name at beginning)
+  #   multiple nodes if a relative path was specified
+  def automate_find_hierarchy(fqname)
+    fqname = fqname[1..-1] if fqname[0] == '/'
+    domain_name, *paths = fqname.downcase.split("/")
+    relative_path = paths.join("/")
+
+    nodes = MiqAeInstance.includes(:ae_class => :ae_namespace)
+                         .where(:lower_relative_path => [relative_path, fqname.downcase]).load
+    domain = MiqAeDomain.find_by(:lower_name => domain_name)
+
+    # not a valid domain means relative path was passed in
+    return nodes unless domain
+
+    if (node = find_exact_match(nodes, domain, relative_path))
+      # fqname was a fqname - return a single node
+      [node]
     else
-      open_nodes
+      # passed a relative path even though namespace looked like a domain
+      nodes
+    end
+  end
+
+  def find_exact_match(nodes, domain, relative_path)
+    nodes.detect do |node|
+      node.domain_id == domain.id && node.lower_relative_path == relative_path
     end
   end
 
