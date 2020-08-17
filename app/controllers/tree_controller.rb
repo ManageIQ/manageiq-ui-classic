@@ -56,7 +56,7 @@ class TreeController < ApplicationController
     begin
       # Collect all the db records based on the parsed fqname
       open_nodes = namespace.split('/').each_with_object([]) do |ns, items|
-        items << MiqAeNamespace.find_by!(:name => ns, :parent => items.last)
+        items << MiqAeNamespace.find_by!(:name => ns, :ancestry => items.last)
       end
       open_nodes << MiqAeClass.find_by!(:name => klass, :namespace_id => open_nodes.last.id)
       open_nodes << MiqAeInstance.find_by!(:name => instance, :class_id => open_nodes.last.id)
