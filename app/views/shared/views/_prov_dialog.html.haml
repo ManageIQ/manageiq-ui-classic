@@ -142,7 +142,7 @@
             :prefix                     => "/miq_request/",
             :keys                       => keys})
   - when :hardware
-    - keys = [:instance_type, :number_of_cpus, :entitled_processors, :number_of_sockets, :cores_per_socket,
+    - keys = [:instance_type, :sys_type, :number_of_cpus, :entitled_processors, :number_of_sockets, :cores_per_socket,
               :vm_memory, :network_adapters, :disk_format, :disk_sparsity, :guest_access_key_pair, :monitoring,
               :vm_dynamic_memory, :vm_minimum_memory, :vm_maximum_memory, :boot_disk_size, :is_preemptible]
     - label = wf.kind_of?(ManageIQ::Providers::CloudManager::ProvisionWorkflow) ? _("Properties") : _("Hardware")
@@ -183,6 +183,7 @@
         :prefix                     => "/miq_request/",
         :keys                       => keys})
   - when :customize
+
     - if select_check?(wf)
       - edit_or_options = (@edit && @edit[:new] && @edit[:new][:sysprep_enabled]) || (@options && @options[:sysprep_enabled]) || []
       - keys = [:sysprep_enabled]
@@ -401,6 +402,13 @@
               :prefix                     => "/miq_request/",
               :keys                       => keys})
     - else
+      - keys = [:migratable, :pin_policy]
+      = render(:partial => "/miq_request/prov_dialog_fieldset",
+        :locals         => {:workflow => wf,
+           :dialog                    => dialog,
+           :label                     => _("Other"),
+           :prefix                    => "/miq_request/",
+           :keys                      => keys})
       - keys = [:root_username, :root_password]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
