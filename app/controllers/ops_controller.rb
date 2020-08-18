@@ -161,7 +161,6 @@ class OpsController < ApplicationController
       return
     end
 
-    @sb[:active_tab] = 'settings_rhn' if @sb[:active_tab] == 'settings_rhn_edit' # cannot return to the edit state
     @timeline = @timeline_filter = true # Load timeline JS modules
     return if params[:edit_key] && !load_edit(params[:edit_key], "explorer")
     @breadcrumbs = []
@@ -499,11 +498,6 @@ class OpsController < ApplicationController
       elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping" && @in_a_form
         action_url = "label_tag_mapping_edit"
         record_id = @lt_map.try(:id)
-      elsif @sb[:active_tab] == 'settings_rhn_edit'
-        locals[:no_cancel] = false
-        locals[:observe_queue] = true
-        action_url = "settings_update"
-        record_id  = @sb[:active_tab].split("settings_").last
       else
         action_url = "settings_update"
         record_id = @sb[:active_tab].split("settings_").last
@@ -669,8 +663,6 @@ class OpsController < ApplicationController
                          else
                            @edit ? _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} : _("Schedule \"%{name}\"") % {:name => @schedule.name}
                          end
-    when 'rhn' # rhn subscription edit
-      presenter[:update_partials][:settings_rhn] = r[:partial => "#{@sb[:active_tab]}_tab"]
     else
       if %w[accordion_select change_tab tree_select].include?(params[:action]) &&
          params[:tab_id] != "settings_advanced"

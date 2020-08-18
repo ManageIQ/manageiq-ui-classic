@@ -23,14 +23,6 @@ module OpsController::Settings::Common
         @refresh_div     = 'settings_server' # Replace main area
         @refresh_partial = 'settings_server_tab'
       end
-    when 'settings_rhn_edit'
-      if params[:use_proxy] || params[:register_to] || %w[rhn_default_server repo_default_name].include?(params[:action])
-        @refresh_div     = 'settings_rhn'
-        @refresh_partial = 'settings_rhn_edit_tab'
-      else
-        @refresh_div = nil
-      end
-      @changed = false unless rhn_save_enabled?
     when 'settings_advanced' # Advanced yaml edit
       @changed = (@edit[:new] != @edit[:current])
     end
@@ -154,7 +146,6 @@ module OpsController::Settings::Common
     when 'email_verify'  then settings_update_email_verify
     when 'save'          then settings_update_save
     when 'reset'         then settings_update_reset
-    when 'cancel'        then settings_update_cancel
     end
   end
 
@@ -373,13 +364,6 @@ module OpsController::Settings::Common
     return unless @edit
 
     case @sb[:active_tab]
-    when 'settings_rhn_edit'
-      if rhn_allow_save?
-        rhn_save_subscription
-      else
-        render_flash
-      end
-      return
     when "settings_smartproxy_affinity"
       smartproxy_affinity_update
     when "settings_server", "settings_authentication"
@@ -413,7 +397,7 @@ module OpsController::Settings::Common
       save_advanced_settings(resource)
       return
     end
-    if !%w[settings_advanced settings_rhn_edit settings_workers].include?(@sb[:active_tab]) &&
+    if !%w[settings_advanced settings_workers].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
@@ -529,21 +513,8 @@ module OpsController::Settings::Common
   def settings_update_reset
     session[:changed] = @changed = false
     add_flash(_("All changes have been reset"), :warning)
-    if @sb[:active_tab] == 'settings_rhn_edit'
-      edit_rhn
-    else
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
-    end
-  end
-
-  def settings_update_cancel
-    @sb[:active_tab] = 'settings_rhn'
-    @changed = false
-    @edit = nil
-    settings_get_info('root')
-    add_flash(_("Edit of Customer Information was cancelled"))
-    replace_right_cell(:nodetype => 'root')
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
   end
 
   def settings_server_validate
@@ -650,24 +621,6 @@ module OpsController::Settings::Common
     @selected_server = (cls.find(nodes.last) rescue nil)
 
     case @sb[:active_tab] # No @edit[:current] for Filters since there is no config file
-    when 'settings_rhn_edit'
-      %i[proxy_address use_proxy proxy_userid proxy_password proxy_verify register_to server_url repo_name
-         customer_org customer_org_display customer_userid customer_password customer_verify].each do |key|
-        new[key] = params[key] if params[key]
-      end
-      if params[:register_to] || params[:action] == "repo_default_name"
-        new[:repo_name] = reset_repo_name_from_default
-      end
-      if params[:register_to]
-        if params[:register_to] == 'rhn_satellite6' &&
-           @edit[:new][:server_url] == MiqDatabase.registration_default_values[:registration_server]
-          @edit[:new][:server_url] = nil
-        end
-        if params[:register_to] == 'sm_hosted' && @edit[:new][:server_url].blank?
-          @edit[:new][:server_url] = MiqDatabase.registration_default_values[:registration_server]
-        end
-      end
-      @changed = (new.except(:customer_userid, :customer_password, :customer_verify) != @edit[:current].except(:customer_userid, :customer_password, :customer_verify))
     when "settings_server"                                                # Server Settings tab
       if !params[:smtp_test_to].nil? && params[:smtp_test_to] != ""
         @sb[:new_to] = params[:smtp_test_to]
@@ -804,7 +757,7 @@ module OpsController::Settings::Common
     end
 
     # This section scoops up the config second level keys changed in the UI
-    unless %w[settings_advanced settings_rhn_edit settings_smartproxy_affinity].include?(@sb[:active_tab])
+    unless %w[settings_advanced settings_smartproxy_affinity].include?(@sb[:active_tab])
       @edit[:current].each_key do |category|
         @edit[:current][category].symbolize_keys.each_key do |key|
           if category == :smtp && key == :enable_starttls_auto # Checkbox is handled differently
@@ -836,8 +789,6 @@ module OpsController::Settings::Common
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
 
       @prev_selected_svr = session[:edit][:new][:selected_server]
-    elsif @sb[:active_tab] == 'settings_rhn_edit'
-      return unless load_edit("#{@sb[:active_tab]}__#{params[:id]}", "replace_cell__explorer")
     elsif %w[settings_server settings_authentication settings_workers
              settings_custom_logos settings_advanced].include?(@sb[:active_tab])
       return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
@@ -1018,13 +969,6 @@ module OpsController::Settings::Common
         when "settings_label_tag_mapping"
           label_tag_mapping_get_all
         end
-      when "settings_rhn"
-        @edit = session[:edit] || {}
-        @edit[:new] ||= {}
-        @edit[:new][:servers] ||= {}
-        @customer = rhn_subscription
-        @buttons_on = @edit[:new][:servers].detect { |_, value| !!value }
-        @updates = rhn_update_information
       when "settings_help_menu"
         @in_a_form = true
         @edit = {:new => {}, :key => 'customize_help_menu'}

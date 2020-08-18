@@ -59,8 +59,6 @@
             = _("C & U Collection")
           = miq_tab_header("settings_tags", @sb[:active_tab]) do
             = _("Tags")
-          = miq_tab_header("settings_rhn", @sb[:active_tab]) do
-            = _("Red Hat Updates")
           = miq_tab_header("settings_replication", @sb[:active_tab]) do
             = _("Replication")
           = miq_tab_header("settings_help_menu", @sb[:active_tab]) do
@@ -100,8 +98,6 @@
                   = render :partial => "settings_label_tag_mapping_tab"
             :javascript
               miq_tabs_init("#ops_tags_subtabs", "/ops/change_tab", {parent_tab_id: 'settings_tags'});
-          = miq_tab_content("settings_rhn", @sb[:active_tab]) do
-            = render :partial => "settings_rhn_tab"
           = miq_tab_content("settings_replication", @sb[:active_tab]) do
             = render :partial => "settings_replication_tab"
           = miq_tab_content("settings_help_menu", @sb[:active_tab]) do

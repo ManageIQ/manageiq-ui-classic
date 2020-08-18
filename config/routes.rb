@@ -2339,7 +2339,6 @@ Rails.application.routes.draw do
         db_gc_collection
         diagnostics_server_list
         diagnostics_tree_select
-        edit_rhn
         explorer
         fetch_target_ids
         forest_accept
@@ -2375,11 +2374,7 @@ Rails.application.routes.draw do
         rbac_user_field_changed
         rbac_users_list
         region_edit
-        repo_default_name
         restart_server
-        rhn_buttons
-        rhn_default_server
-        rhn_validate
         schedule_edit
         schedule_form_filter_type_field_changed
         schedules_list
