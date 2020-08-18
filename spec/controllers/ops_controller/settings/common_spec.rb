@@ -150,7 +150,8 @@ describe OpsController do
             :server_url        => "example.com",
             :repo_name         => "example_repo_name",
             :use_proxy         => 0
-          }
+          },
+          :current       => {}
         }
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@sb, :trees       =>
