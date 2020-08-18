@@ -23,7 +23,7 @@ describe VmOrTemplateController do
 
         it "calls the appropriate method: '#{actual_method}' for action '#{actual_action}'" do
           unless controller.respond_to?(actual_method.to_sym)
-            skip "method #{actual_action} not defined for #{controller.controller_name}"
+            next
           end
 
           expect(controller).to receive(actual_method)
