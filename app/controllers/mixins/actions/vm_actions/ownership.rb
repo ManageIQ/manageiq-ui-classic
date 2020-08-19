@@ -7,7 +7,7 @@ module Mixins
         def ownership_items_hash
           return [] unless @ownershipitems
 
-          @ownershipitems.map {|item| {:id => item.id.to_s, :kind => item.class.to_s.demodulize.underscore.pluralize} }
+          @ownershipitems.map { |item| {:id => item.id.to_s, :kind => Api::CollectionConfig.new.name_for_subclass(item.class)} }
         end
 
         included do
