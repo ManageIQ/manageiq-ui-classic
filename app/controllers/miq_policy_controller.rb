@@ -1,8 +1,5 @@
 class MiqPolicyController < ApplicationController
-  include_concern 'MiqActions'
-  include_concern 'AlertProfiles'
   include_concern 'Alerts'
-  include_concern 'Events'
   include_concern 'Policies'
   include_concern 'Rsop'
 

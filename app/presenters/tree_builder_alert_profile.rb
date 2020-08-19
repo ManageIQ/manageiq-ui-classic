@@ -1,5 +1,4 @@
 class TreeBuilderAlertProfile < TreeBuilder
-  has_kids_for MiqAlertSet, [:x_get_tree_ap_kids]
 
   private
 
@@ -36,12 +35,5 @@ class TreeBuilderAlertProfile < TreeBuilder
     objects = MiqAlertSet.where(:mode => parent[:id].split('-'))
 
     count_only_or_objects(count_only, objects, :description)
-  end
-
-  # level 3 - alerts
-  def x_get_tree_ap_kids(parent, count_only)
-    count_only_or_objects(count_only,
-                          parent.miq_alerts,
-                          :description)
   end
 end

@@ -33,8 +33,7 @@
           %table.table.table-striped.table-bordered.table-hover
             %tbody
               - @alert_profile_alerts.each do |a|
-                %tr{:title => _("View this Alert"),
-                  :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_al-#{a.id}');"}
+                %tr
                   %td.table-view-pf-select
                     %i.pficon.pficon-warning-triangle-o
                   %td
