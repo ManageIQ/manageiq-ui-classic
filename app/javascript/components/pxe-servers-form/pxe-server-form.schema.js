@@ -57,25 +57,24 @@ const createSchema = isEditing => ({
         label: __('Name'),
         isRequired: true,
         validate: [asyncValidatorDebounced],
-      }, {
-        component: 'input-with-dynamic-prefix',
-        label: __('Uri'),
+      },
+      {
+        component: componentTypes.TEXT_FIELD,
+        label: __('URI'),
         name: 'uri',
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
-        prefixOptions: [{
-          value: 's3://',
-          label: 'Amazon Web Services',
-        }, {
-          value: 'nfs://',
-          label: 'Network File System',
-        }, {
-          value: 'swift://',
-          label: 'OpenStack Swift',
-        }, {
-          value: 'smb://',
-          label: 'Samba',
-        }],
+        placeholder: 'schema://host:port/path',
+        helperText: __('URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba'),
+        validate: [
+          {
+            type: validatorTypes.REQUIRED,
+          },
+          {
+            type: validatorTypes.PATTERN_VALIDATOR,
+            pattern: /^((s3)|(nfs)|(swift)|(smb)):\/\//,
+            message: __('URI should begin with s3://, nfs://, swift:// or smb://'),
+          },
+        ],
       },
       {
         component: componentTypes.SUB_FORM,
