@@ -2156,6 +2156,23 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :miq_alert_set  => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        alert_profile_assign_changed
+        alert_profile_field_changed
+        button
+        miq_alert_set_assign
+        miq_alert_set_edit
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
     :miq_event => {
       :get  => %w(
         explorer
