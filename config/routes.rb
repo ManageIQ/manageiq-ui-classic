@@ -2142,6 +2142,20 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :miq_action       => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        action_edit
+        action_field_changed
+        button
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
     :miq_event => {
       :get  => %w(
         explorer
