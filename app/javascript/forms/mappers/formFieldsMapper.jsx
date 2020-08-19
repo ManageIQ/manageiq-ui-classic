@@ -6,7 +6,6 @@ import AsyncCredentials from '../../components/async-credentials/async-credentia
 import DualGroup from '../../components/dual-group';
 import DualListSelect from '../../components/dual-list-select';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
-import InputWithDynamicPrefix from '../input-with-dynamic-prefix';
 import PasswordField from '../../components/async-credentials/password-field';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
@@ -18,7 +17,6 @@ const fieldsMapper = {
   'field-array': FieldArray,
   'dual-group': DualGroup,
   'dual-list-select': DualListSelect,
-  'input-with-dynamic-prefix': InputWithDynamicPrefix,
   hr: () => <hr />,
   note: props => <div className={props.className} role="alert">{props.label}</div>,
   'password-field': PasswordField,

@@ -27,31 +27,20 @@ exports[`PxeServersForm should render correctly 1`] = `
                 ],
               },
               Object {
-                "component": "input-with-dynamic-prefix",
+                "component": "text-field",
+                "helperText": "URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba",
                 "isRequired": true,
-                "label": "Uri",
+                "label": "URI",
                 "name": "uri",
-                "prefixOptions": Array [
-                  Object {
-                    "label": "Amazon Web Services",
-                    "value": "s3://",
-                  },
-                  Object {
-                    "label": "Network File System",
-                    "value": "nfs://",
-                  },
-                  Object {
-                    "label": "OpenStack Swift",
-                    "value": "swift://",
-                  },
-                  Object {
-                    "label": "Samba",
-                    "value": "smb://",
-                  },
-                ],
+                "placeholder": "schema://host:port/path",
                 "validate": Array [
                   Object {
                     "type": "required-validator",
+                  },
+                  Object {
+                    "message": "URI should begin with s3://, nfs://, swift:// or smb://",
+                    "pattern": /\\^\\(\\(s3\\)\\|\\(nfs\\)\\|\\(swift\\)\\|\\(smb\\)\\):\\\\/\\\\//,
+                    "type": "pattern-validator",
                   },
                 ],
               },
