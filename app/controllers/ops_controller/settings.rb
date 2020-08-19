@@ -11,7 +11,6 @@ module OpsController::Settings
   include_concern 'LabelTagMapping'
   include_concern 'Upload'
   include_concern 'Zones'
-  include_concern 'RHN'
   include_concern 'HelpMenu'
 
   # Apply the good records from an uploaded import file
