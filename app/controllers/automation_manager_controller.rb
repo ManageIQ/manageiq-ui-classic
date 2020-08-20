@@ -403,6 +403,10 @@ class AutomationManagerController < ApplicationController
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_script",
                                     :locals  => {:controller => controller_name}])
+    elsif concrete_model.none? && x_active_tree == :automation_manager_providers_tree
+      presenter.update(:main_div, r[:partial => "layouts/empty",
+                                    :locals  => {:add_message   => _("Add a new Ansible Tower Provider"),
+                                                 :documentation => ::Settings.docs.ansible_provider}])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
