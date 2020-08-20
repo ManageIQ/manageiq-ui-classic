@@ -209,6 +209,7 @@ describe OpsController do
 
       controller.instance_variable_set :@flash_array, nil
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'save' }
+      expect(mapping.tag.name).to eq('/managed/amazon:vm:edited_again_amazon')
       expect(mapping.tag.classification.description).to eq('amazon:vm|Edited Again Amazon')
     end
   end

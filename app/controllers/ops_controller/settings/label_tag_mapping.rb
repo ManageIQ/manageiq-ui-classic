@@ -273,9 +273,9 @@ module OpsController::Settings::LabelTagMapping
 
         mapping.save!
       else
-        update_category = mapping.tag.classification
+        update_category             = mapping.tag.classification
+        update_category.name        = category_name_from_description(mapping.labeled_resource_type, cat_description)
         update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
-
         update_category.save!
       end
     rescue StandardError => bang
