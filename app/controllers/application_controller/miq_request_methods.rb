@@ -716,7 +716,8 @@ module ApplicationController::MiqRequestMethods
           end
         else
           field[:values].each do |v|
-            if v.class.name == "MiqHashStruct" && v.evm_object_class == :Storage
+            evm_object_class = v.try(:evm_object_class)
+            if evm_object_class == :Storage
               if %w[miq_template service_template vm].include?(@edit[:org_controller])
                 if params[key] == "__DS__NONE__" # Added this to deselect datastore in grid
                   @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
@@ -732,37 +733,37 @@ module ApplicationController::MiqRequestMethods
                   @edit[:new][f.to_sym].push(val) # Save [value, description]
                 end
               end
-            elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :Host
+            elsif evm_object_class == :Host
               if params[key] == "__HOST__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :Vm
+            elsif evm_object_class == :Vm
               if params[key] == "__VM__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif v.class.name == "MiqHashStruct" && (v.evm_object_class == :PxeImage || v.evm_object_class == :WindowsImage)
+            elsif evm_object_class == :PxeImage || evm_object_class == :WindowsImage
               if params[key] == "__PXE_IMG__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id == val
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :IsoImage
+            elsif evm_object_class == :IsoImage
               if params[key] == "__ISO_IMG__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id == val
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :CustomizationTemplate
+            elsif evm_object_class == :CustomizationTemplate
               if params[key] == "__TEMPLATE__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif v.kind_of?(VimHash) || (v.class.name == "MiqHashStruct" && v.evm_object_class == :CustomizationSpec)
+            elsif evm_object_class == :CustomizationSpec
               if params[key] == "__VC__NONE__" # Added this to deselect custom_spec in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
