@@ -349,5 +349,24 @@ module Mixins
         @right_cell_div = "alert_profile_list"
       end
     end
+
+    def build_expression(parent, model)
+      @edit[:new][:expression] = parent.expression.kind_of?(MiqExpression) ? parent.expression.exp : nil
+      # Populate exp editor fields for the expression column
+      @edit[:expression] ||= ApplicationController::Filter::Expression.new
+      @edit[:expression][:expression] = [] # Store exps in an array
+      if @edit[:new][:expression].blank?
+        @edit[:expression][:expression] = {"???" => "???"}                    # Set as new exp element
+        @edit[:new][:expression] = copy_hash(@edit[:expression][:expression]) # Copy to new exp
+      else
+        @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
+      end
+      @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
+
+      @expkey = :expression # Set expression key to expression
+      @edit[@expkey].history.reset(@edit[:expression][:expression])
+      @edit[:expression][:exp_table] = exp_build_table(@edit[:expression][:expression])
+      @edit[:expression][:exp_model] = model
+    end
   end
 end

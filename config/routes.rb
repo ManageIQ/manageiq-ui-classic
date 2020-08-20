@@ -2095,21 +2095,12 @@ Rails.application.routes.draw do
         rsop
       ),
       :post => %w(
-        accordion_select
-        action_edit
-        action_field_changed
-        alert_edit
-        alert_field_changed
-        alert_profile_assign
-        alert_profile_assign_changed
-        alert_profile_edit
-        alert_profile_field_changed
         button
         export
         export_field_changed
         import
         miq_event_edit
-        policy_edit
+        miq_policy_edit
         policy_field_changed
         quick_search
         reload
@@ -2122,9 +2113,9 @@ Rails.application.routes.draw do
         upload
         wait_for_task
       ) +
-               adv_search_post +
-               exp_post +
-               x_post
+         adv_search_post +
+         exp_post +
+         x_post
     },
 
     :miq_policy_set => {

@@ -1,13 +1,13 @@
 class ApplicationHelper::Toolbar::MiqPoliciesCenter < ApplicationHelper::Toolbar::Basic
-  button_group('policy_vmdb', [
+  button_group('miq_policy_vmdb', [
     select(
-      :policy_vmdb_choice,
+      :miq_policy_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :items => [
         button(
-          :policy_new,
+          :miq_policy_new,
           'pficon pficon-add-circle-o fa-lg',
           t = proc do
               _('Add a New %{model} %{mode} Policy') % {

@@ -86,17 +86,11 @@ class MiqPolicyController < ApplicationController
   end
 
   POLICY_X_BUTTON_ALLOWED_ACTIONS = {
-    'action_edit'            => :action_edit,
-    'action_new'             => :action_edit,
-    'alert_edit'             => :alert_edit,
-    'alert_copy'             => :alert_edit,
-    'alert_new'              => :alert_edit,
-    'miq_event_edit'         => :miq_event_edit,
-    'policy_copy'            => :policy_copy,
-    'policy_edit'            => :policy_edit,
-    'policy_new'             => :policy_edit,
-    'policy_edit_conditions' => :policy_edit,
-    'policy_edit_events'     => :policy_edit,
+    'miq_policy_copy'            => :miq_policy_copy,
+    'miq_policy_edit'            => :miq_policy_edit,
+    'miq_policy_new'             => :miq_policy_edit,
+    'miq_policy_edit_conditions' => :miq_policy_edit,
+    'miq_policy_edit_events'     => :miq_policy_edit,
   }.freeze
 
   def x_button
@@ -208,17 +202,6 @@ class MiqPolicyController < ApplicationController
     self.x_active_accord ||= 'policy'
 
     build_accordions_and_trees
-
-    if params[:profile].present? # If profile record id passed in, position on that node
-      self.x_active_tree = 'policy_tree'
-      policy_id = params[:policy].to_i
-      if MiqPolicy.exists?(:id => policy_id)
-        self.x_node = "p-#{policy_id}"
-      else
-        add_flash(_("Policy no longer exists"), :error)
-        self.x_node = "root"
-      end
-    end
     get_node_info(x_node)
 
     render :layout => "application"
@@ -360,29 +343,14 @@ class MiqPolicyController < ApplicationController
     @sb[:node_ids][x_active_tree] = node_ids
     get_root_node_info if x_node == "root" # Get node info of tree roots
     folder_get_info(treenodeid) if treenodeid != "root" # Get folder info for all node types
-    case @nodetype
-    when "p"  # Policy
-      policy_get_info(MiqPolicy.find(nodeid))
-    when "a", "ta", "fa" # Action or True/False Action
-      action_get_info(MiqAction.find(nodeid))
-    when "al" # Alert
-      alert_get_info(MiqAlert.find(nodeid))
-    end
-    @show_adv_search = (@nodetype == "xx"   && !@folders) ||
-                       (@nodetype == "root" && !%i[policy_tree].include?(x_active_tree))
+    policy_get_info(MiqPolicy.find(nodeid)) if @nodetype == 'p'
+    @show_adv_search = (@nodetype == "xx" && !@folders)
     {:view => @view, :pages => @pages}
   end
 
   # Fetches right side info if a tree root is selected
   def get_root_node_info
-    case x_active_tree
-    when :policy_tree
-      policy_get_all_folders
-    when :action_tree
-      action_get_all
-    when :alert_tree
-      alert_get_all
-    end
+    policy_get_all_folders
   end
 
   # replace_trees can be an array of tree symbols to be replaced
@@ -402,19 +370,7 @@ class MiqPolicyController < ApplicationController
       :open_accord => params[:accord]
     )
 
-    # Simply replace the tree partials to reload the trees
-    replace_trees.each do |name|
-      case name
-      when :policy
-        self.x_node = @new_policy_node if @new_policy_node
-      when :action
-        self.x_node = @new_action_node if @new_action_node
-      when :alert
-        self.x_node = @new_alert_node if @new_alert_node
-      else
-        raise _("unknown tree in replace_trees: %{name}") % {name => name}
-      end
-    end
+    self.x_node = @new_policy_node if @new_policy_node
     reload_trees_by_presenter(presenter, trees)
 
     presenter[:osf_node] = x_node
@@ -424,22 +380,14 @@ class MiqPolicyController < ApplicationController
     # Replace right side with based on selected tree node type
     case nodetype
     when 'root'
-      partial_name, model =
-        case x_active_tree
-        when :policy_tree         then ['policy_folders',        _('Policies')]
-        when :action_tree         then ['action_list',           _('Actions')]
-        when :alert_tree          then ['alert_list',            _('Alerts')]
-        end
-
+      partial_name, model = ['policy_folders', _('Policies')]
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
       right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[policy_tree].exclude?(x_active_tree.to_s)
     when 'xx'
       presenter.update(
         :main_div,
-        if @profiles
-          r[:partial => 'profile_list']
-        elsif @policies || (@view && @sb[:tree_typ] == 'policies')
+        if @policies || (@view && @sb[:tree_typ] == 'policies')
           right_cell_text = _("All %{typ} Policies") % {:typ => "#{ui_lookup(:model => @sb[:nodeid].try(:camelize))} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}"}
           r[:partial => 'policy_list']
         elsif @folders
@@ -476,31 +424,6 @@ class MiqPolicyController < ApplicationController
           right_cell_text += _(" Event Assignments")
         end
       end
-    when 'ev'
-      presenter.update(:main_div, r[:partial => 'event_details', :locals => {:read_only => true}])
-      options = {:name => @event.description}
-      right_cell_text = @edit ? _("Editing Event \"%{name}\"") % options : _("Event \"%{name}\"") % options
-    when 'a', 'ta', 'fa'
-      presenter.update(:main_div, r[:partial => 'action_details', :locals => {:read_only => true}])
-      right_cell_text = if @action.id.blank?
-                          _("Adding a new Action")
-                        else
-                          msg = @edit ? _("Editing Action \"%{name}\"") : _("Action \"%{name}\"")
-                          msg % {:name => @action.description}
-                        end
-    when 'al'
-      presenter.update(:main_div, r[:partial => 'alert_details', :locals => {:read_only => true}])
-      right_cell_text = if @alert.id.blank?
-                          _("Adding a new Alert")
-                        elsif @assign && @edit
-                          _("Editing assignments for Alert \"%{name}\"") % {:name => @alert.description}
-                        elsif @assign
-                          _("Assignments for Alert \"%{name}\"") % {:name => @alert.description}
-                        elsif @edit
-                          _("Editing Alert \"%{name}\"") % {:name => @alert.description}
-                        else
-                          _("Alert \"%{name}\"") % {:name => @alert.description}
-                        end
     end
     presenter[:right_cell_text] = @right_cell_text = right_cell_text
 
@@ -566,44 +489,6 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  # Build the audit object when a profile is saved
-  def build_saved_audit(record, add = false)
-    name = if record.kind_of?(MiqPolicy)
-             record.description
-           else
-             record.respond_to?(:name) ? record.name : record.description
-           end
-
-    msg = if add
-            _("[%{name}] Record added (") % {:name => name}
-          else
-            _("[%{name}] Record updated (") % {:name => name}
-          end
-    event = "#{record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
-    i = 0
-    @edit[:new].each_key do |k|
-      next if @edit[:new][k] == @edit[:current][k]
-
-      msg += ", " if i.positive?
-      i += 1
-      format_args = if k == :members
-                      {
-                        :key     => @edit[:current][k].keys.join(","),
-                        :new_key => @edit[:new][k].keys.join(",")
-                      }
-                    else
-                      {
-                        :key     => @edit[:current][k].to_s,
-                        :new_key => @edit[:new][k].to_s
-                      }
-                    end
-      format_args[:name] = k.to_s
-      msg += _("%{name}:[%{key}] to [%{new_key}]") % format_args
-    end
-    msg += ")"
-    {:event => event, :target_id => record.id, :target_class => record.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
   def export_chooser(dbtype = "pp", type = "export")
     @sb[:new] = {}
     @sb[:dbtype] = dbtype
@@ -621,25 +506,6 @@ class MiqPolicyController < ApplicationController
     else
       @sb[:import_file] = ""
     end
-  end
-
-  def build_expression(parent, model)
-    @edit[:new][:expression] = parent.expression.kind_of?(MiqExpression) ? parent.expression.exp : nil
-    # Populate exp editor fields for the expression column
-    @edit[:expression] ||= ApplicationController::Filter::Expression.new
-    @edit[:expression][:expression] = [] # Store exps in an array
-    if @edit[:new][:expression].blank?
-      @edit[:expression][:expression] = {"???" => "???"}                    # Set as new exp element
-      @edit[:new][:expression] = copy_hash(@edit[:expression][:expression]) # Copy to new exp
-    else
-      @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
-    end
-    @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
-
-    @expkey = :expression # Set expression key to expression
-    @edit[@expkey].history.reset(@edit[:expression][:expression])
-    @edit[:expression][:exp_table] = exp_build_table(@edit[:expression][:expression])
-    @edit[:expression][:exp_model] = model
   end
 
   def get_session_data
