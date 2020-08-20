@@ -297,8 +297,7 @@
                   %tbody
                     - @alert_profiles.each do |ap|
                       - id = "xx-#{@alert.db}_ap-#{ap.id}"
-                      %tr{:title => _("View this Alert Profile"),
-                          :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=alert_profile")}
+                      %tr
                         %td
                           %i.pficon.pficon-warning-triangle-o
                         %td
@@ -316,8 +315,7 @@
                   %tbody
                     - @alert.owning_miq_actions.each do |oa|
                       - id = "a-#{oa.id}"
-                      %tr{:title => _("View this Action"),
-                        :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")}
+                      %tr
                         %td.table-view-pf-select
                           %i{:class => oa.decorate.fonticon}
                         %td.table-view-pf-select

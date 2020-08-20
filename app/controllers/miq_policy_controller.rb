@@ -1,5 +1,4 @@
 class MiqPolicyController < ApplicationController
-  include_concern 'Alerts'
   include_concern 'Policies'
   include_concern 'Rsop'
 
@@ -653,7 +652,6 @@ class MiqPolicyController < ApplicationController
     @lastaction = session[:miq_policy_lastaction]
     @display = session[:miq_policy_display]
     @current_page = session[:miq_policy_current_page]
-    alert_build_pulldowns
     @server_options = session[:server_options] if session[:server_options]
   end
 
@@ -670,12 +668,6 @@ class MiqPolicyController < ApplicationController
         :name     => :policy,
         :title    => _("Policies"),
         :role     => "policy",
-        :role_any => true
-      },
-      {
-        :name     => :alert,
-        :title    => _("Alerts"),
-        :role     => "alert",
         :role_any => true
       },
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }

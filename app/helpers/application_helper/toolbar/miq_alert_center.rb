@@ -7,21 +7,21 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
       t,
       :items => [
         button(
-          :alert_edit,
+          :miq_alert_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Alert'),
           t,
           :url_parms    => "main_div",
           :send_checked => true),
         button(
-          :alert_copy,
+          :miq_alert_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this Alert'),
           t,
           :confirm   => N_("Are you sure you want to copy this Alert?"),
           :url_parms => "?copy=true"),
         button(
-          :alert_delete,
+          :miq_alert_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Alert'),
           t,
