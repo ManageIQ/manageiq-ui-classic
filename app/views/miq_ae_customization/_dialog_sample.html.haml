@@ -91,8 +91,6 @@
                           - else
                             = h(field.values[0].last) unless field.values.empty?
 
-                      - when "DialogFieldButton"
-                        = button_tag(_('Save'), :disabled => true)
                       - when "DialogFieldTagControl"
                         - select_attrs = {:class => 'selectpicker'}
                         - select_attrs[:multiple] = '' if field.multiselect?
