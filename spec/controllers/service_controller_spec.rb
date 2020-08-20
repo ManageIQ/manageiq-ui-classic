@@ -112,10 +112,8 @@ describe ServiceController do
     end
   end
 
-  describe 'x_button' do
-    before do
-      ApplicationController.handle_exceptions = true
-    end
+  describe '#x_button' do
+    before { ApplicationController.handle_exceptions = true }
 
     describe 'corresponding methods are called for allowed actions' do
       ServiceController::SERVICE_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
@@ -237,6 +235,10 @@ describe ServiceController do
         expect(response.status).to eq(200)
         expect(response.body).to include('service/tagging_edit')
       end
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(Service)
+      end
     end
   end
 
@@ -341,9 +343,8 @@ describe ServiceController do
 
   context 'displaying a list of All Services' do
     describe '#tree_select' do
-      before do
-        allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
-      end
+      before { allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}]) }
+
       render_views
 
       let(:service_search) { FactoryBot.create(:miq_search, :description => 'a', :db => 'Service') }
@@ -397,9 +398,7 @@ describe ServiceController do
         context 'searching text' do
           let(:search) { "Service" }
 
-          before do
-            controller.instance_variable_set(:@search_text, search)
-          end
+          before { controller.instance_variable_set(:@search_text, search) }
 
           it 'updates right cell text properly' do
             controller.send(:get_node_info, "root")
@@ -447,7 +446,7 @@ describe ServiceController do
       end
     end
 
-    describe "helpers" do
+    context "helpers" do
       describe "generic_objects_list?" do
         it "returns true when user is in generic_objects section" do
           get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'}

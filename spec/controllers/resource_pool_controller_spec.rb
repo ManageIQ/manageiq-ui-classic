@@ -1,8 +1,6 @@
 describe ResourcePoolController do
-  context "#button" do
-    before do
-      controller.instance_variable_set(:@display, "vms")
-    end
+  describe "#button" do
+    before { controller.instance_variable_set(:@display, "vms") }
 
     it "when VM Right Size Recommendations is pressed" do
       controller.params = {:pressed => "vm_right_size"}
@@ -53,6 +51,20 @@ describe ResourcePoolController do
       expect(controller).to receive(:tag).with(VmOrTemplate)
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    it 'returns proper record class' do
+      expect(controller.send(:record_class)).to eq(ResourcePool)
+    end
+
+    context 'VMs displayed through Relationships of a Resource Pool' do
+      %w[all_vms vms].each do |display|
+        before { controller.params = {:display => display} }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(VmOrTemplate)
+        end
+      end
     end
 
     context 'reconfigure VMs' do
@@ -121,6 +133,7 @@ describe ResourcePoolController do
 
     context "Direct VMs" do
       let(:url_params) { { :display => "vms" } }
+
       it "renders" do
         bypass_rescue
         expect(subject).to have_http_status(200)
@@ -129,6 +142,7 @@ describe ResourcePoolController do
 
     context "All VMs" do
       let(:url_params) { { :display => "all_vms" } }
+
       it "renders" do
         bypass_rescue
         expect(subject).to have_http_status(200)
@@ -137,6 +151,7 @@ describe ResourcePoolController do
 
     context "Nested Resource Pools" do
       let(:url_params) { { :display => "resource_pools"} }
+
       it "renders" do
         bypass_rescue
         expect(subject).to have_http_status(200)

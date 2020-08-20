@@ -87,7 +87,7 @@ module VmCommon
   end
 
   def show_timeline
-    db = get_rec_cls
+    db = record_class
     @display = "timeline"
     session[:tl_record_id] = params[:id] if params[:id]
     @record = find_record_with_rbac(db, session[:tl_record_id])
@@ -460,6 +460,7 @@ module VmCommon
                                                               :options   => @policy_options)
     @edit = session[:edit] if session[:edit]
     if @edit && @edit[:explorer]
+      @sb[:explorer] = true
       if session[:policies].empty?
         render_flash(_("No policies were selected for Policy Simulation."), :error)
         return
@@ -467,11 +468,13 @@ module VmCommon
       @in_a_form = true
       replace_right_cell(:action => 'policy_sim', :refresh_breadcrumbs => false)
     else
+      @sb[:explorer] = nil
       render :template => 'vm/show'
     end
   end
 
   def policy_show_options
+    @explorer = @sb[:explorer]
     if params[:passed] == "null" || params[:passed] == ""
       @policy_options[:passed] = false
       @policy_options[:failed] = true
@@ -495,6 +498,7 @@ module VmCommon
 
   # Show/Unshow out of scope items
   def policy_options
+    @explorer = @sb[:explorer]
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @policy_options ||= {}
     @policy_options[:out_of_scope] = (params[:out_of_scope] == "1")

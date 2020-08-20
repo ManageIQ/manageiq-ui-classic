@@ -222,7 +222,7 @@ module ApplicationController::CiProcessing
   def process_cloud_object_storage_buttons(pressed)
     assert_privileges(pressed)
 
-    klass = get_rec_cls
+    klass = record_class
     task = pressed.sub("#{klass.name.underscore.to_sym}_", "")
 
     return tag(klass) if task == "tag"
@@ -247,33 +247,12 @@ module ApplicationController::CiProcessing
     process_objects(items.ids.sort, method, display_name)
   end
 
-  def get_rec_cls
-    # FIXME: the specs for ci_processing rely on setting (and testing) request.parameters['controller'].
-    # That is wrong and needs to be fixed.
-    case request.parameters["controller"] || controller_name
-    when "miq_template"
-      MiqTemplate
-    when "orchestration_stack"
-      params[:display] == "instances" ? VmOrTemplate : OrchestrationStack
-    when "service"
-      Service
-    when "cloud_object_store_container"
-      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
-    when "cloud_object_store_object"
-      CloudObjectStoreObject
-    when "ems_storage"
-      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
-    when "ems_cluster"
-      %w[all_vms vms].include?(params[:display]) || params[:pressed].starts_with?('miq_template') ? VmOrTemplate : EmsCluster
-    when "storage"
-      %w[all_vms vms].include?(params[:display]) ? VmOrTemplate : Storage
-    else
-      VmOrTemplate
-    end
+  def record_class
+    VmOrTemplate
   end
 
   def process_objects(objs, task, display_name = nil)
-    klass = get_rec_cls
+    klass = record_class
     klass_str = klass.to_s
 
     assert_rbac(klass, objs)
@@ -410,7 +389,7 @@ module ApplicationController::CiProcessing
   def check_compliance_vms
     assert_privileges(params[:pressed])
 
-    records = find_records_with_rbac(get_rec_cls, checked_or_params)
+    records = find_records_with_rbac(record_class, checked_or_params)
     # Check each record if there is any compliance policy assigned to it
     if records.any? { |record| !record.has_compliance_policies? }
       javascript_flash(
@@ -620,7 +599,7 @@ module ApplicationController::CiProcessing
   #                 on a record
   #   options     - other optional parameters
   def generic_button_operation(action, action_name, operation, options = {})
-    records = find_records_with_rbac(get_rec_cls, checked_or_params)
+    records = find_records_with_rbac(record_class, checked_or_params)
     if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},

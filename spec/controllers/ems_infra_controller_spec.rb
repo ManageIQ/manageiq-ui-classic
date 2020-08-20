@@ -1,7 +1,8 @@
 describe EmsInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryBot.build(:zone) }
-  context "#button" do
+
+  describe "#button" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -89,6 +90,40 @@ describe EmsInfraController do
       expect(controller).to receive(:vm_transform_mass)
       post :button, :params => {:pressed => "vm_transform_mass", :id => ems_infra.id, :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    context 'operations on Clusters, Orchestration Stacks, Datastores of selected Provider' do
+      before do
+        controller.params = {:pressed => pressed}
+        controller.instance_variable_set(:@display, display)
+      end
+
+      context 'SSA on selected Clusters from a nested list' do
+        let(:pressed) { 'ems_cluster_scan' }
+        let(:display) { 'ems_clusters' }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(EmsCluster)
+        end
+      end
+
+      context 'retirement for Orchestration Stacks displayed in a nested list' do
+        let(:pressed) { 'orchestration_stack_retire_now' }
+        let(:display) { 'orchestration_stacks' }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(OrchestrationStack)
+        end
+      end
+
+      context 'SSA on selected Datastores from a nested list' do
+        let(:pressed) { 'storage_scan' }
+        let(:display) { 'storages' }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(Storage)
+        end
+      end
     end
   end
 
@@ -434,11 +469,12 @@ describe EmsInfraController do
     it { expect(response.status).to eq(200) }
   end
 
-  describe "breadcrumbs path on a 'show' page of an Infrastructure Provider accessed from Dashboard maintab" do
+  context "breadcrumbs path on a 'show' page of an Infrastructure Provider accessed from Dashboard maintab" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
     end
+
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Infrastructure Providers -> (Summary)' breadcrumb path" do
         ems = FactoryBot.create(:ems_vmware)
@@ -451,9 +487,8 @@ describe EmsInfraController do
   end
 
   describe "#build_credentials" do
-    before do
-      @ems = FactoryBot.create(:ems_openstack_infra)
-    end
+    before { @ems = FactoryBot.create(:ems_openstack_infra) }
+
     context "#build_credentials only contains credentials that it supports and has a username for in params" do
       let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
       let(:amqp_creds)    { {:userid => "amqp_userid",    :password => "amqp_password"} }
@@ -493,10 +528,8 @@ describe EmsInfraController do
     end
   end
 
-  describe "SCVMM - create, update, validate, cancel" do
-    before do
-      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
-    end
+  context "SCVMM - create, update, validate, cancel" do
+    before { login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit]) }
 
     render_views
 
@@ -583,10 +616,8 @@ describe EmsInfraController do
     end
   end
 
-  describe "Openstack - create, update" do
-    before do
-      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
-    end
+  context "Openstack - create, update" do
+    before { login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit]) }
 
     render_views
 
@@ -664,7 +695,7 @@ describe EmsInfraController do
     end
   end
 
-  describe "Redhat - create, update" do
+  context "Redhat - create, update" do
     before do
       login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
       allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager)
@@ -767,10 +798,8 @@ describe EmsInfraController do
     end
   end
 
-  describe "Kubevirt - update" do
-    before do
-      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
-    end
+  context "Kubevirt - update" do
+    before { login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit]) }
 
     render_views
 
@@ -842,10 +871,8 @@ describe EmsInfraController do
     end
   end
 
-  describe "VMWare - create, update" do
-    before do
-      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
-    end
+  context "VMWare - create, update" do
+    before { login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit]) }
 
     render_views
 

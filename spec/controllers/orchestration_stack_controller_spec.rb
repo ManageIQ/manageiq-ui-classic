@@ -1,9 +1,7 @@
 describe OrchestrationStackController do
   let!(:user) { stub_user(:features => :all) }
 
-  before do
-    EvmSpecHelper.create_guid_miq_server_zone
-  end
+  before { EvmSpecHelper.create_guid_miq_server_zone }
 
   render_views
 
@@ -227,6 +225,18 @@ describe OrchestrationStackController do
         expect(controller).to receive(:render).at_least(:once)
         post :button, :params => {:id => record.id, :pressed => "orchestration_stack_retire_now"}
         expect(controller.send(:flash_errors?)).not_to be_truthy
+      end
+    end
+
+    it 'returns proper record class' do
+      expect(controller.send(:record_class)).to eq(OrchestrationStack)
+    end
+
+    context 'Instances displayed through Relationships of Orchestration Stack' do
+      before { controller.params = {:display => 'instances'} }
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(VmOrTemplate)
       end
     end
   end

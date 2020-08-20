@@ -127,6 +127,10 @@ describe HostController do
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
+    it 'returns proper record class' do
+      expect(controller.send(:record_class)).to eq(Host)
+    end
+
     context 'provisioning VMS displayed through details page of a Host' do
       before do
         allow(controller).to receive(:process_vm_buttons)
@@ -141,6 +145,32 @@ describe HostController do
         controller.send(:prov_redirect)
         expect(controller).to receive(:render_or_redirect_partial).with('vm')
         controller.send(:button)
+      end
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(VmOrTemplate)
+      end
+    end
+
+    context 'SSA on Templates displayed through details page of a Host' do
+      before do
+        controller.params = {:pressed => 'miq_template_scan'}
+        controller.instance_variable_set(:@display, 'miq_templates')
+      end
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(VmOrTemplate)
+      end
+    end
+
+    context 'SSA on Datastores displayed through details page of a Host' do
+      before do
+        controller.params = {:pressed => 'storage_scan'}
+        controller.instance_variable_set(:@display, 'storages')
+      end
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(Storage)
       end
     end
   end

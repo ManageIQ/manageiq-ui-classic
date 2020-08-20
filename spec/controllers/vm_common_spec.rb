@@ -46,7 +46,7 @@ describe VmOrTemplateController do
     end
   end
 
-  describe '#reload ' do
+  describe '#reload' do
     before do
       login_as FactoryBot.create(:user_with_group, :role => "operator")
       allow(controller).to receive(:tree_select).and_return(nil)
@@ -332,6 +332,90 @@ describe VmOrTemplateController do
       controller.params = {:server_id => '42'}
       controller.send(:evm_relationship_get_form_vars)
       expect(assigns(:edit)[:new][:server]).to eq(controller.params[:server_id])
+    end
+  end
+
+  describe '#policy_show_options' do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before do
+      allow(controller).to receive(:render)
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:id => vm.id}
+    end
+
+    it 'sets @explorer to nil' do
+      controller.send(:policy_show_options)
+      expect(controller.instance_variable_get(:@explorer)).to be_nil
+    end
+
+    context 'explorer screen' do
+      before { controller.instance_variable_set(:@sb, :explorer => true) }
+
+      it 'sets @explorer to true' do
+        controller.send(:policy_show_options)
+        expect(controller.instance_variable_get(:@explorer)).to be(true)
+      end
+    end
+  end
+
+  describe '#policies' do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before do
+      allow(controller).to receive(:render)
+      allow(controller).to receive(:session).and_return(:policies => {})
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:id => vm.id}
+    end
+
+    it 'sets @sb[:explorer] to false' do
+      controller.send(:policies)
+      expect(controller.instance_variable_get(:@sb)[:explorer]).to be_nil
+    end
+
+    context 'explorer screen' do
+      before { allow(controller).to receive(:session).and_return(:policies => {}, :edit => {:explorer => true}) }
+
+      it 'sets @sb[:explorer] to true' do
+        controller.send(:policies)
+        expect(controller.instance_variable_get(:@sb)[:explorer]).to be(true)
+      end
+    end
+  end
+
+  describe '#policy_options' do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before do
+      allow(controller).to receive(:render)
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:id => vm.id}
+    end
+
+    it 'sets @explorer to false' do
+      controller.send(:policy_options)
+      expect(controller.instance_variable_get(:@explorer)).to be_nil
+    end
+
+    context 'explorer screen' do
+      before { controller.instance_variable_set(:@sb, :explorer => true) }
+
+      it 'sets @explorer to false' do
+        controller.send(:policy_options)
+        expect(controller.instance_variable_get(:@explorer)).to be(true)
+      end
+    end
+  end
+
+  describe '#show_timeline' do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before { controller.params = {:id => vm.id} }
+
+    it 'gets proper record class and sets @record' do
+      controller.send(:show_timeline)
+      expect(controller.instance_variable_get(:@record)).to eq(vm)
     end
   end
 
