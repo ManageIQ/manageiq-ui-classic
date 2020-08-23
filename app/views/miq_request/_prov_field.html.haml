@@ -233,7 +233,7 @@
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
-      - elsif [:instance_type, :sys_type, :pin_policy, :guest_access_key_pair, :security_groups, :monitoring, :vm_tag_1,
+      - elsif [:instance_type, :sys_type, :storage_type, :cloud_volumes, :pin_policy, :guest_access_key_pair, :security_groups, :monitoring, :vm_tag_1,
                :vm_tag_2, :vm_tag_3, :vm_tag_4, :vm_tag_5, :vm_tag_6, :vm_tag_7, :vm_tag_8,
                :vm_tag_9, :vm_tag_10, :provision_type, :network_adapters, :retirement,
                :retirement_warn, :cloud_network, :network_port, :cloud_subnet,
