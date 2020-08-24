@@ -807,6 +807,18 @@ class ApplicationController < ActionController::Base
     root
   end
 
+  def listicon_item(view, id = nil)
+    id = @id if id.nil?
+
+    if @targets_hash
+      @targets_hash[id] # Get the record from the view
+    else
+      klass = view.db.constantize
+      klass.find(id)    # Read the record from the db
+    end
+  end
+  public :listicon_item
+
   def get_host_for_vm(vm)
     @hosts = [vm.host] if vm.host
   end

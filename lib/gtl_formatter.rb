@@ -76,8 +76,8 @@ class GtlFormatter
         "prov_type" => :service_template_format,
       },
     }
-    cols.push(format_icon_column(view, row, options[:clickable])) if VIEW_WITH_CUSTOM_ICON.include?(view.db)
-    record = listicon_item(view, row['id'])
+    cols.push(format_icon_column(view, row, controller, options[:clickable])) if VIEW_WITH_CUSTOM_ICON.include?(view.db)
+    record = controller.listicon_item(view, row['id'])
     view.col_order.each_with_index do |col, col_idx|
       next if view.column_is_hidden?(col, controller)
 
@@ -121,8 +121,8 @@ class GtlFormatter
     cols
   end
 
-  def self.format_icon_column(view, row, clickable)
-    item = listicon_item(view, row['id'])
+  def self.format_icon_column(view, row, controller, clickable)
+    item = controller.listicon_item(view, row['id'])
     icon, icon2, image = fonticon_or_fileicon(item)
 
     # Clickable should be false only when it's explicitly set to false
@@ -130,17 +130,6 @@ class GtlFormatter
      :image => ActionController::Base.helpers.image_path(image.to_s),
      :icon  => icon,
      :icon2 => icon2}.compact
-  end
-
-  def self.listicon_item(view, id = nil)
-    id = @id if id.nil?
-
-    if @targets_hash
-      @targets_hash[id] # Get the record from the view
-    else
-      klass = view.db.constantize
-      klass.find(id)    # Read the record from the db
-    end
   end
 
   def self.fonticon_or_fileicon(item)
