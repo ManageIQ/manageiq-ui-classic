@@ -2160,6 +2160,7 @@ Rails.application.routes.draw do
         tree_autoload
         tree_select
       ) +
+        exp_post +
         x_post
     },
 
