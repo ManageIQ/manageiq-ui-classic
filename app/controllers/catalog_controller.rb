@@ -27,8 +27,6 @@ class CatalogController < ApplicationController
   CATALOG_X_BUTTON_ALLOWED_ACTIONS = {
     'ab_button_new'                 => :ab_button_new,
     'ab_button_edit'                => :ab_button_edit,
-    'ab_button_delete'              => :ab_button_delete,
-    'ab_group_delete'               => :ab_group_delete,
     'ab_group_edit'                 => :ab_group_edit,
     'ab_group_new'                  => :ab_group_new,
     'ab_group_reorder'              => :ab_group_reorder,
