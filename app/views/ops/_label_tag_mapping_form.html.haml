@@ -22,7 +22,7 @@
       miqSelectPickerEvent('entity', "#{url}")
   .form-group
     %label.col-md-2.control-label
-      = _("Label")
+      = _("Resource Label")
     .col-md-8
       = text_field_tag("label_name", @edit[:new][:label_name],
                        :maxlength         => 25,
@@ -33,7 +33,7 @@
   %h3= _("Enter tag category to map to")
   .form-group
     %label.col-md-2.control-label
-      = _("Category")
+      = _("Tag Category")
     .col-md-8
       = text_field_tag("category", @edit[:new][:category],
                        :maxlength         => 50,
