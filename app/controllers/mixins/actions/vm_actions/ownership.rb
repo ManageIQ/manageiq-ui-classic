@@ -102,6 +102,27 @@ module Mixins
           session[:edit] = @edit
         end
 
+        def header_for_ownership
+          raise _("Items are required for Set Ownership screen") if @ownershipitems.nil? || @ownershipitems.count == 0
+
+          if @ownershipitems.count == 1
+            case @ownershipitems.first
+            when ManageIQ::Providers::InfraManager::Vm
+              _('Set Ownership for Virtual Machine')
+            when ManageIQ::Providers::CloudManager::Vm
+              _('Set Ownership for Instance')
+            when ManageIQ::Providers::InfraManager::Template
+              _('Set Ownership for Template')
+            when ManageIQ::Providers::CloudManager::Template
+              _('Set Ownership for Image')
+            else
+              _('Set Ownership')
+            end
+          else
+            _('Set Ownership for selected items')
+          end
+        end
+
         def valid_items_for(klass, param_ids)
           scope = klass.respond_to?(:with_ownership) ? klass.with_ownership : klass
           checked_ids = Rbac.filtered(scope.where(:id => param_ids)).pluck(:id)

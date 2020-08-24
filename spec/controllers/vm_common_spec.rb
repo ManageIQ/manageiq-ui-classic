@@ -204,6 +204,38 @@ describe VmOrTemplateController do
       expect(presenter[:update_partials]).to have_key(:form_buttons_div)
     end
 
+    context 'set ownership screen' do
+      let(:vm_openstack) { FactoryBot.create(:vm_openstack, :ext_management_system => FactoryBot.create(:ems_openstack)) }
+
+      before do
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@sb, :action => 'ownership')
+        request.parameters[:controller] = 'vm_or_template'
+      end
+
+      it 'displays header for instance' do
+        controller.instance_variable_set(:@ownershipitems, [vm_openstack])
+        controller.send(:replace_right_cell)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Set Ownership for Instance')
+      end
+
+      let(:vm_vmware) { FactoryBot.create(:vm_vmware) }
+
+      it 'displays header for virtual machine' do
+        controller.instance_variable_set(:@ownershipitems, [vm_vmware])
+        controller.send(:replace_right_cell)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Set Ownership for Virtual Machine')
+      end
+
+      let(:template) { FactoryBot.create(:template_infra) }
+
+      it 'displays header for virtual machine and template' do
+        controller.instance_variable_set(:@ownershipitems, [vm_vmware, template])
+        controller.send(:replace_right_cell)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Set Ownership for selected items')
+      end
+    end
+
     context 'Instance policy simulation' do
       let(:vm_openstack) { FactoryBot.create(:vm_openstack, :ext_management_system => FactoryBot.create(:ems_openstack)) }
 
