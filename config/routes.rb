@@ -2100,6 +2100,7 @@ Rails.application.routes.draw do
         export_field_changed
         import
         miq_event_edit
+        miq_event_field_changed
         miq_policy_edit
         policy_field_changed
         quick_search

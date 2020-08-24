@@ -64,6 +64,14 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           :url_parms => "?typ=events",
           :klass     => ApplicationHelper::Button::PolicyEditEvents,
           :options   => {:feature => 'miq_policy_edit'}),
+        button(
+          :miq_event_edit,
+          'pficon pficon-edit fa-lg',
+          t = N_('Edit Actions for this Policy\'s Event'),
+          t,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :klass        => ApplicationHelper::Button::MiqActionModify),
       ]
     ),
   ])

@@ -1,4 +1,5 @@
 class MiqPolicyController < ApplicationController
+  include_concern 'Events'
   include_concern 'Policies'
   include_concern 'Rsop'
 
@@ -91,6 +92,7 @@ class MiqPolicyController < ApplicationController
     'miq_policy_new'             => :miq_policy_edit,
     'miq_policy_edit_conditions' => :miq_policy_edit,
     'miq_policy_edit_events'     => :miq_policy_edit,
+    'miq_event_edit'             => :miq_event_edit,
   }.freeze
 
   def x_button
@@ -424,6 +426,9 @@ class MiqPolicyController < ApplicationController
           right_cell_text += _(" Event Assignments")
         end
       end
+    when 'ev'
+      presenter.update(:main_div, r[:partial => 'event_edit', :locals => {:read_only => true}])
+      right_cell_text = _("Edit Actions for \"%{name}\" Event") % {:name => @policy.description}
     end
     presenter[:right_cell_text] = @right_cell_text = right_cell_text
 

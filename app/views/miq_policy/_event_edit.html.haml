@@ -1,0 +1,166 @@
+#event_edit_div
+  - url = url_for_only_path(:action => 'miq_event_field_changed', :id => @policy.id)
+  - if @policy
+    #event_info_div
+      = render :partial => "layouts/flash_msg"
+      %h3= _("Basic Information")
+      .form-horizontal
+        - if @event
+          .form-group
+            %label.control-label.col-md-2= _("Event Group")
+            .col-md-10
+              %p.form-control-static= h(@event.memberof.first.description)
+        - if @policy
+          .form-group
+            %label.control-label.col-md-2= _("Attached to Policy")
+            .col-md-10
+              %p.form-control-static= h(@policy.description)
+
+        .form-group
+          %label.control-label.col-md-2= _("Edit Actions for Event")
+          .col-md-10
+            - if @edit[:events].count == 1
+              %p.form-control-static= h(@event.description)
+            - else
+              = select_tag('event_id',
+                            options_for_select([_("<Choose>"), ''] + @edit[:events], @edit[:new][:event_id]),
+                            :class    => "selectpicker")
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent('event_id', "#{url}")
+      - if @event
+        %hr
+          %h3= _("Order of Actions if ALL Conditions are True")
+          - if @event
+            .col-md-5
+              = _('Available Actions:')
+              %span#choices_chosen_true_div
+                = select_tag('choices_chosen_true[]',
+                  options_for_select(@edit[:choices_true].sort),
+                  :multiple => true,
+                  :class    => "form-control",
+                  :style    => "overflow-x: scroll;",
+                  :size     => 8,
+                  :id       => "choices_chosen_true")
+
+            .col-md-1{:style => "padding: 10px"}
+              .spacer
+              .spacer
+              - [[_("Move selected Actions into this Event"),   'choices_chosen_true_div', 'true_right',   'fa-angle-right'],
+                 [_("Remove all Actions from this Event"),      nil,                       'true_allleft', 'fa-angle-double-left'],
+                 [_("Remove selected Actions from this Event"), 'members_chosen_true_div', 'true_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
+                %button.btn.btn-default.btn-block{:title => title,
+                                        :remote => true,
+                                        "data-submit" => chosen_div,
+                                        "data-method" => :post,
+                                        "data-miq_sparkle_on"  => true,
+                                        "data-miq_sparkle_off" => true,
+                                        "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
+                                                                             :button => action,
+                                                                             :id => @policy)}.to_json}
+                  %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+                  %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+
+              .spacer
+            .col-md-5.col-sm-11.col-xs-11
+              = _(' Selected Actions:')
+              %span#members_chosen_true_div
+                = select_tag('members_chosen_true[]',
+                  options_for_select(@edit[:new][:actions_true], @true_selected),
+                  :multiple => true,
+                  :class    => "form-control",
+                  :style    => "overflow-x: scroll;",
+                  :size     => 8,
+                  :id       => "members_chosen_true")
+
+            .col-md-1.col-sm-1.col-xs-1{:style => "padding: 10px"}
+              .spacer
+              .spacer
+              - [[_("Move selected Action up"),              'members_chosen_true_div', 'true_up',    'fa-angle-up'],
+                 [_("Move selected Action down"),            'members_chosen_true_div', 'true_down',  'fa-angle-down'],
+                 [_("Set selected Actions to Synchronous"),  'members_chosen_true_div', 'true_sync',  'S'],
+                 [_("Set selected Actions to Asynchronous"), 'members_chosen_true_div', 'true_async', 'A']].each do |title, chosen_div, action, arrow_style|
+                %button.btn.btn-default.btn-block{:title => title,
+                                        :remote => true,
+                                        "data-submit" => chosen_div,
+                                        "data-method" => :post,
+                                        "data-miq_sparkle_on"  => true,
+                                        "data-miq_sparkle_off" => true,
+                                        "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
+                                                                             :button => action,
+                                                                             :id => @policy.id)}.to_json}
+                  - if %w(A S).include?(arrow_style)
+                    =_(arrow_style)
+                  - else
+                    %i.fa.fa-lg{:class => arrow_style}
+
+              .spacer
+            %hr
+
+          %br{:style => "clear: both"}
+          %h3= _("Order of Actions if ANY Conditions are False")
+          - if @event
+
+            .col-md-5
+              = _("Available Actions:")
+              %span#choices_chosen_false_div
+                = select_tag('choices_chosen_false[]',
+                  options_for_select(@edit[:choices_false].sort),
+                  :multiple => true,
+                  :class    => "form-control",
+                  :style    => "overflow-x: scroll;",
+                  :size     => 8,
+                  :id       => "choices_chosen_false")
+
+            .col-md-1{:style => "padding: 10px"}
+              .spacer
+              .spacer
+              - [[_("Move selected Actions into this Event"),   'choices_chosen_false_div', 'false_right',   'fa-angle-right'],
+                 [_("Remove all Actions from this Event"),      nil,                       'false_allleft', 'fa-angle-double-left'],
+                 [_("Remove selected Actions from this Event"), 'members_chosen_false_div', 'false_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
+                %button.btn.btn-default.btn-block{:title => title,
+                                        :remote => true,
+                                        "data-submit" => chosen_div,
+                                        "data-method" => :post,
+                                        "data-miq_sparkle_on"  => true,
+                                        "data-miq_sparkle_off" => true,
+                                        "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
+                                                                             :button => action,
+                                                                             :id => @policy.id)}.to_json}
+                  %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+                  %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+
+              .spacer
+
+            .col-md-5.col-sm-11.col-xs-11
+              = _(" Selected Actions:")
+              %span#members_chosen_false_div
+                = select_tag('members_chosen_false[]',
+                  options_for_select(@edit[:new][:actions_false], @false_selected),
+                  :multiple => true,
+                  :class    => "form-control",
+                  :style    => "overflow-x: scroll;",
+                  :size     => 8,
+                  :id       => "members_chosen_false")
+
+            .col-md-1.col-sm-1.col-xs-1{:style => "padding: 10px"}
+              .spacer
+              .spacer
+              - [[_("Move selected Action up"),              'members_chosen_false_div', 'false_up',    'fa-angle-up'],
+                 [_("Move selected Action down"),            'members_chosen_false_div', 'false_down',  'fa-angle-down'],
+                 [_("Set selected Actions to Synchronous"),  'members_chosen_false_div', 'false_sync',  'S'],
+                 [_("Set selected Actions to Asynchronous"), 'members_chosen_false_div', 'false_async', 'A']].each do |title, chosen_div, action, arrow_style|
+                %button.btn.btn-default.btn-block{:title => title,
+                                        :remote => true,
+                                        "data-submit" => chosen_div,
+                                        "data-method" => :post,
+                                        "data-miq_sparkle_on"  => true,
+                                        "data-miq_sparkle_off" => true,
+                                        "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
+                                                                             :button => action,
+                                                                             :id => @policy.id)}.to_json}
+                  - if %w(A S).include?(arrow_style)
+                    =_(arrow_style)
+                  - else
+                    %i.fa.fa-lg{:class => arrow_style}
+              .spacer
