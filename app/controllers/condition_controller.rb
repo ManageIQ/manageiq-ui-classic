@@ -23,10 +23,6 @@ class ConditionController < ApplicationController
   def button
     @edit = session[:edit] # Restore @edit for adv search box
     @refresh_div = "main_div" # Default div for button.rjs to refresh
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
 
     unless @refresh_partial # if no button handler ran, show not implemented msg
       add_flash(_("Button not yet implemented"), :error)
@@ -333,27 +329,6 @@ class ConditionController < ApplicationController
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
-  end
-
-  def apply_search_filter(search_str, results)
-    if search_str.first == "*"
-      results.delete_if { |r| !r.description.downcase.ends_with?(search_str[1..-1].downcase) }
-    elsif search_str.last == "*"
-      results.delete_if { |r| !r.description.downcase.starts_with?(search_str[0..-2].downcase) }
-    else
-      results.delete_if { |r| !r.description.downcase.include?(search_str.downcase) }
-    end
-  end
-
-  def set_search_text
-    @sb[:pol_search_text] ||= {}
-    if params[:search_text]
-      @search_text = params[:search_text].strip
-      @sb[:pol_search_text][x_active_tree] = @search_text unless @search_text.nil?
-    else
-      @sb[:pol_search_text].delete(x_active_tree) if params[:action] == 'search_clear'
-      @search_text = @sb[:pol_search_text][x_active_tree]
-    end
   end
 
   # Get list of folder contents

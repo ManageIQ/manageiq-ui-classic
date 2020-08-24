@@ -21,10 +21,6 @@ class MiqActionController < ApplicationController
   def button
     @edit = session[:edit] # Restore @edit for adv search box
     @refresh_div = "main_div" # Default div for button.rjs to refresh
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
 
     unless @refresh_partial # if no button handler ran, show not implemented msg
       add_flash(_("Button not yet implemented"), :error)

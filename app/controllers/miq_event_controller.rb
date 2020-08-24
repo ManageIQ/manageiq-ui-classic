@@ -6,6 +6,7 @@ class MiqEventController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::PolicyMixin
 
   def title
     @title = _("Events")
@@ -60,40 +61,6 @@ class MiqEventController < ApplicationController
   end
 
   private
-
-  def peca_get_all(what, get_view)
-    @no_checkboxes       = true
-    @showlinks           = true
-    @lastaction          = "#{what}_get_all"
-    @force_no_grid_xml   = true
-    @gtl_type            = "list"
-    if params[:ppsetting]                                               # User selected new per page value
-      @items_per_page = params[:ppsetting].to_i                         # Set the new per page value
-      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
-    end
-    sortcol_key = "#{what}_sortcol".to_sym
-    sortdir_key = "#{what}_sortdir".to_sym
-    @sortcol    = (session[sortcol_key] || 0).to_i
-    @sortdir    =  session[sortdir_key] || 'ASC'
-    set_search_text
-    @_params[:search_text] = @search_text if @search_text && @_params[:search_text] # Added to pass search text to get_view method
-    @view, @pages = get_view.call # Get the records (into a view) and the paginator
-    @current_page = @pages[:current] unless @pages.nil? # save the current page number
-    session[sortcol_key]     = @sortcol
-    session[sortdir_key]     = @sortdir
-
-    if pagination_or_gtl_request? && @show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl", :locals => {:action_url => "#{what}_get_all", :button_div => 'policy_bar'})
-        page << "miqSparkleOff();"
-      end
-    end
-
-    @sb[:tree_typ]   = what.pluralize
-    @right_cell_text = _("All %{items}") % {:items => what.pluralize.titleize}
-    @right_cell_div  = "#{what}_list"
-  end
 
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid, show_list = true)
@@ -213,16 +180,6 @@ class MiqEventController < ApplicationController
     end
   end
 
-  def apply_search_filter(search_str, results)
-    if search_str.first == "*"
-      results.delete_if { |r| !r.description.downcase.ends_with?(search_str[1..-1].downcase) }
-    elsif search_str.last == "*"
-      results.delete_if { |r| !r.description.downcase.starts_with?(search_str[0..-2].downcase) }
-    else
-      results.delete_if { |r| !r.description.downcase.include?(search_str.downcase) }
-    end
-  end
-
   def event_get_all
     @events = MiqPolicy.all_policy_events.sort_by { |e| e.description.downcase }
     set_search_text
@@ -243,17 +200,6 @@ class MiqEventController < ApplicationController
     else
       @event_true_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :success)
       @event_false_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :failure)
-    end
-  end
-
-  def set_search_text
-    @sb[:pol_search_text] ||= {}
-    if params[:search_text]
-      @search_text = params[:search_text].strip
-      @sb[:pol_search_text][x_active_tree] = @search_text unless @search_text.nil?
-    else
-      @sb[:pol_search_text].delete(x_active_tree) if params[:action] == 'search_clear'
-      @search_text = @sb[:pol_search_text][x_active_tree]
     end
   end
 
