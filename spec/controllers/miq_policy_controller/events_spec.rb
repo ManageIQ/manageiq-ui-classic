@@ -56,5 +56,37 @@ describe MiqPolicyController do
         expect(assigns(:flash_array).first[:message]).to include("At least one action must be selected to save this Policy Event")
       end
     end
+
+    context "#event_build_edit_screen" do
+      before do
+        stub_user(:features => :all)
+        FactoryBot.create(:miq_action, :name => 'check_compliance', :description => 'Check Host or Vm Compliance')
+        FactoryBot.create(:miq_action, :name => "compliance_failed")
+        @event = FactoryBot.create(:miq_event_definition, :name => "vm_compliance_check")
+        @policy = FactoryBot.create(:miq_policy, :name => "Foo", :mode => 'compliance')
+        controller.instance_variable_set(:@sb,
+                                         :node_ids    => {
+                                           :policy_tree => {"p" => @policy.id}
+                                         },
+                                         :active_tree => :policy_tree)
+      end
+
+      it 'will execute for compliance policy' do
+        controller.params = {:id => @event.id.to_s}
+        controller.send(:event_build_edit_screen)
+        edit = assigns(:edit)
+        expect(edit[:choices_true].count).to eq(1)
+        expect(edit[:choices_false].count).to eq(1)
+      end
+
+      it 'will execute for control policy' do
+        @policy.update(:mode => 'control')
+        controller.params = {:id => @event.id.to_s}
+        controller.send(:event_build_edit_screen)
+        edit = assigns(:edit)
+        expect(edit[:choices_true].count).to eq(2)
+        expect(edit[:choices_false].count).to eq(2)
+      end
+    end
   end
 end

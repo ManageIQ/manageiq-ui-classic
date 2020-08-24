@@ -85,7 +85,7 @@ module MiqPolicyController::Events
     end
 
     @edit[:choices_true] = {}                      # Build a new choices list for true actions
-    MiqAction.all.each do |a|                      # Build a hash for the true choices
+    MiqAction.allowed_for_policies(policy.mode).each do |a|                      # Build a hash for the true choices
       @edit[:choices_true][a.description] = a.id
     end
     @edit[:new][:actions_true].each do |as|
@@ -93,7 +93,7 @@ module MiqPolicyController::Events
     end
 
     @edit[:choices_false] = {}                      # Build a new choices list for false actions
-    MiqAction.all.each do |a|                       # Build a hash for the false choices
+    MiqAction.allowed_for_policies(policy.mode).each do |a|                       # Build a hash for the false choices
       @edit[:choices_false][a.description] = a.id
     end
     @edit[:new][:actions_false].each do |as|
