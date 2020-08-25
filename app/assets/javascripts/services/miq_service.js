@@ -86,6 +86,10 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       url += '&attributes=' + options.attributes.map(encodeURIComponent).join(',');
     }
 
+    if (options.filter_security_group_creation) {
+      url += '&filter[]=supports_create_security_group=true';
+    }
+
     return API.get(url)
       .then(function(response) {
         return response.resources || [];
