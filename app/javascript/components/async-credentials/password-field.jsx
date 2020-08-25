@@ -13,8 +13,6 @@ import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 
 const PasswordField = ({
-  isDisabled,
-  validate,
   cancelEditLabel,
   changeEditLabel,
   helperText,
@@ -25,15 +23,14 @@ const PasswordField = ({
   const formOptions = useFormApi();
   const [editMode, setEditMode] = useState(!edit);
   const secretField = {
-    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
     type: 'password',
     autoComplete: 'new-password',
-    isDisabled,
     validateOnMount: rest.validateOnMount,
-    validate: [validate],
     helperText,
     ...rest,
+    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
   };
+
   return (
     <Fragment>
       {edit && editMode && formOptions.renderForm([{
@@ -77,8 +74,6 @@ const PasswordField = ({
 PasswordField.propTypes = {
   cancelEditLabel: PropTypes.string,
   changeEditLabel: PropTypes.string,
-  isDisabled: PropTypes.bool,
-  validate: PropTypes.func,
   helperText: PropTypes.string,
   edit: PropTypes.bool,
   parent: PropTypes.string,
@@ -87,8 +82,6 @@ PasswordField.propTypes = {
 PasswordField.defaultProps = {
   cancelEditLabel: __('Cancel'),
   changeEditLabel: __('Change'),
-  isDisabled: false,
-  validate: undefined,
   helperText: undefined,
   edit: false,
   parent: undefined,
