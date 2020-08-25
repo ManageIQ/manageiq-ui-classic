@@ -1,15 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual, get, set } from 'lodash';
-import { useFormApi, useFieldApi } from '@@ddf';
-import {
-  Button,
-  FormGroup,
-  HelpBlock,
-} from 'patternfly-react';
+import { isEqual, flatMap, get, set } from 'lodash';
+import { useFormApi, useFieldApi, validatorTypes, FormSpy } from '@@ddf';
+import { Button, FormGroup, HelpBlock } from 'patternfly-react';
 import ButtonSpinner from '../../forms/button-spinner';
-import CheckErrors from './check-errors';
-import { checkValidState } from './helper';
+
+const extractNames = (schema) => {
+  const childFields = schema.fields ? flatMap(schema.fields, field => extractNames(field)) : [];
+  return schema.name ? [...childFields, schema.name] : childFields;
+};
 
 const AsyncCredentials = ({
   validateLabel,
@@ -23,89 +22,80 @@ const AsyncCredentials = ({
   edit,
 }) => {
   const formOptions = useFormApi();
-  const [asyncError, setAsyncError] = useState(validateDefaultError);
-  const [validating, setValidating] = useState(false);
-  const [lastValid, setLastValid] = useState({});
-  const [initialValues] = useState(fields.reduce((acc, { name }) => ({
-    ...acc,
-    [name]: formOptions.getState().values[name],
-  }), {}));
-  const asyncFields = fields.map(({ name }) => name);
 
-  const handleAsyncValidation = (formOptions, hiddenName, fieldNames) => {
-    setValidating(true);
-    const { values } = formOptions.getState();
-    asyncValidate(values, fieldNames)
-      .then(() => {
-        formOptions.change(hiddenName, true);
-        setLastValid(asyncFields.reduce((acc, curr) => ({ ...acc, [curr]: values[curr] }), {}));
-        if (checkValidState(formOptions, name)) {
-          formOptions.change(name, formOptions.getFieldState(name).initial);
-        }
-        setValidating(false);
-      })
-      .catch((error) => {
-        formOptions.change(hiddenName, false);
-        setAsyncError(error || validateDefaultError);
-        setValidating(false);
-      });
-  };
+  const dependencies = useMemo(() => [...extractNames({ fields }), ...validationDependencies], [fields, validationDependencies]);
+  const snapshot = (values = formOptions.getState().values) => dependencies.reduce((obj, key) => set(obj, key, get(values, key)), {});
 
-  const enhancedChange = (value, name, validateName, change) => {
-    let fieldValue = value;
-    // check if value is event and replace the value if it is
-    if (typeof fieldValue === 'object' && fieldValue.target && fieldValue.target.hasOwnProperty('value')) {
-      fieldValue = fieldValue.target.value;
-    }
-    change(name, fieldValue);
-    const { values } = formOptions.getState();
-    const currentValues = asyncFields.reduce((acc, curr) => {
-      set(acc, curr, get(values, curr));
-      return { ...acc };
-    }, {});
-    const valid = (isEqual(lastValid, currentValues) || isEqual(initialValues, currentValues)) ? undefined : false;
-    setAsyncError(validateDefaultError);
-    change(validateName, valid);
-  };
+  const [{
+    validating,
+    lastValid,
+    initialValues,
+    errorMessage,
+  }, setState] = useState(() => ({ lastValid: {}, initialValues: snapshot() }));
 
   const { input, meta } = useFieldApi({
     initialValue: !!edit,
     name,
-    validate: value => (value === false ? asyncError : undefined),
+    validate: [{ type: validatorTypes.REQUIRED }],
   });
 
+  const validateDependentFields = () => dependencies.every((dependency) => {
+    const state = formOptions.getFieldState(dependency);
+    return state && state.valid;
+  });
+
+  const onClick = () => {
+    const { values } = formOptions.getState();
+    setState(state => ({ ...state, validating: true, errorMessage: undefined }));
+
+    asyncValidate(values, dependencies).then(() => {
+      formOptions.change(name, true);
+      setState(state => ({
+        ...state,
+        validating:
+        false,
+        lastValid: snapshot(values),
+        errorMessage: undefined,
+      }));
+    }).catch((error) => {
+      formOptions.change(name, undefined);
+      setState(state => ({ ...state, validating: false, errorMessage: error }));
+    });
+  };
+
   return (
-    <Fragment>
+    <>
       {formOptions.renderForm(fields.map(field => ({
         ...field,
         ...(field.component === 'password-field' ? { parent: name, edit } : undefined),
-        isDisabled: field.isDisabled || validating,
-        onChange: value => enhancedChange(value, field.name, name, formOptions.change),
+        isDisabled: field.isDisabled,
       })), formOptions)}
       <FormGroup validationState={meta.error ? 'error' : null}>
         <input type="hidden" {...input} />
-        <CheckErrors
-          subscription={{ valid: true, invalid: true, active: true }}
-          names={[...asyncFields, ...validationDependencies]}
-        >
-          {valid => (
-            <Fragment>
-              <Button
-                bsSize="small"
-                bsStyle="primary"
-                onClick={() => handleAsyncValidation(formOptions, name, [...asyncFields, ...validationDependencies])}
-                disabled={valid.includes(false) || validating}
-              >
-                {validating ? validationProgressLabel : validateLabel}
-                {validating && <ButtonSpinner /> }
-              </Button>
-              {!meta.error && !valid.includes(false) && !isEqual(lastValid, {}) && <HelpBlock>{ validationSuccessLabel }</HelpBlock>}
-              {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
-            </Fragment>
-          )}
-        </CheckErrors>
+
+        <FormSpy subscription={{ values: true }}>
+          {() => {
+            const depsValid = validateDependentFields();
+            const currentValues = snapshot();
+
+            const isDirty = !(isEqual(currentValues, lastValid) || isEqual(currentValues, initialValues));
+
+            formOptions.change(name, !isDirty);
+
+            return (
+              <>
+                <Button bsSize="small" bsStyle="primary" onClick={onClick} disabled={!(isDirty && depsValid) || validating}>
+                  {validating ? validationProgressLabel : validateLabel}
+                  {validating && <ButtonSpinner /> }
+                </Button>
+                { !meta.error && isEqual(currentValues, lastValid) && <HelpBlock>{ validationSuccessLabel }</HelpBlock> }
+                { meta.error && !validating && <HelpBlock>{ errorMessage || validateDefaultError }</HelpBlock> }
+              </>
+            );
+          }}
+        </FormSpy>
       </FormGroup>
-    </Fragment>
+    </>
   );
 };
 
