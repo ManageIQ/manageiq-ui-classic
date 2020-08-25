@@ -150,7 +150,6 @@ describe MiqRequestController do
     it 'renders GTL with MiqRequest model' do
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name      => 'MiqRequest',
-        :gtl_type_string => 'list',
       )
       get :show_list
     end
@@ -260,7 +259,6 @@ describe MiqRequestController do
       expect(controller).to receive(:prov_set_show_vars).once.and_call_original
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name       => 'Vm',
-        :gtl_type_string  => 'list',
         :selected_records => [vm.id] # vm.id is here, other_vm.id is not
       )
       get :show, :params => {:id => reconfigure_request.id}
@@ -293,8 +291,7 @@ describe MiqRequestController do
         :parent_id         => service.id.to_s,
         :parent_class_name => 'ServiceOrchestration',
         :view_suffix       => 'OrchestrationStackRetireRequest',
-        :display           => 'main',
-        :gtl_type          => 'list'
+        :display           => 'main'
       }
     end
 
@@ -345,8 +342,7 @@ describe MiqRequestController do
       {
         :model       => 'PhysicalServer',
         :view_suffix => 'PhysicalServerProvisionRequest',
-        :display     => 'main',
-        :gtl_type    => 'list'
+        :display     => 'main'
       }
     end
 
@@ -387,7 +383,6 @@ describe MiqRequestController do
     end
 
     it "when the edit button is pressed the request is displayed" do
-      session[:settings] = {:display => {:quad_truncate => 'f'}}
       get :show, :params => { :id => @miq_request.id }
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
@@ -398,8 +393,7 @@ describe MiqRequestController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      session[:settings] = {:display => {:quad_truncate => 'f'},
-                            :views   => {:miq_request => 'grid'}}
+      session[:settings] = {:views   => {:miq_request => 'grid'}}
     end
 
     it "miq_request/show_list sets @layout='miq_request_vm' when redirected via foreman provisioning" do

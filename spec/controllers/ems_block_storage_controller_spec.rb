@@ -32,7 +32,6 @@ describe EmsBlockStorageController do
     it 'renders the view and the Block Storage Managers toolbar' do
       setup_zone
       login_as FactoryBot.create(:user, :features => "everything")
-      expect(ApplicationHelper::Toolbar::GtlView).to receive(:definition).and_call_original
       expect(ApplicationHelper::Toolbar::EmsBlockStoragesCenter).to receive(:definition).and_call_original
       post :show_list
     end

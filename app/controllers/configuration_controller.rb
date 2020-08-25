@@ -23,8 +23,6 @@ class ConfigurationController < ApplicationController
     active_tab = nil
     if role_allows?(:feature => "my_settings_visuals")
       active_tab = 1 if active_tab.nil?
-    elsif role_allows?(:feature => "my_settings_default_views")
-      active_tab = 2 if active_tab.nil?
     elsif role_allows?(:feature => "my_settings_default_filters")
       active_tab = 3 if active_tab.nil?
     elsif role_allows?(:feature => "my_settings_time_profiles")
@@ -109,8 +107,8 @@ class ConfigurationController < ApplicationController
 
   # AJAX driven routine for gtl view selection
   def view_selected
-    # ui2 form
-    return unless load_edit("config_edit__ui2", "configuration")
+    # ui1 form
+    return unless load_edit("config_edit__ui1", "configuration")
 
     @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] # Capture the new view setting
     session[:changed] = (@edit[:new] != @edit[:current])
@@ -118,7 +116,7 @@ class ConfigurationController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)
-      page.replace('tab_div', :partial => "ui_2")
+      page.replace('tab_div', :partial => "ui_1")
     end
   end
 
@@ -150,19 +148,6 @@ class ConfigurationController < ApplicationController
           current_user.update(:settings => user_settings)
 
           set_user_time_zone
-          add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
-        else
-          add_flash(_("User Interface settings saved for this session"))
-        end
-        edit
-        render :action => "show"
-        return # No config file for Visuals yet, just return
-      when "ui_2" # Visual tab
-        @settings.merge!(@edit[:new]) # Apply the new saved settings
-        prune_old_settings(@settings)
-        if current_user
-          settings = merge_settings(current_user.settings, @settings)
-          current_user.update(:settings => settings)
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
         else
           add_flash(_("User Interface settings saved for this session"))
@@ -465,7 +450,6 @@ class ConfigurationController < ApplicationController
 
     @tabs = []
     @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
-    @tabs.push(["2", _("Default Views")])   if role_allows?(:feature => "my_settings_default_views")
     @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")
     @tabs.push(["4", _("Time Profiles")])   if role_allows?(:feature => "my_settings_time_profiles")
   end
@@ -498,11 +482,6 @@ class ConfigurationController < ApplicationController
       if current_tz.blank?
         @edit.store_path(:current, :display, :timezone, ::Settings.server.timezone)
       end
-    when 'ui_2'
-      @edit = {
-        :current => init_settings,
-        :key     => 'config_edit__ui2',
-      }
     when 'ui_3'
       filters = MiqSearch.where(:search_type => "default")
       current = filters.map do |filter|
@@ -557,9 +536,7 @@ class ConfigurationController < ApplicationController
       @edit[:new][:display][:dashboards] = params[:display_dashboards] unless params[:display_dashboards].nil?
       @edit[:new][:display][:timezone] = params[:display_timezone] unless params[:display_timezone].nil?
       @edit[:new][:display][:startpage] = params[:start_page] unless params[:start_page].nil?
-      @edit[:new][:display][:quad_truncate] = params[:quad_truncate] unless params[:quad_truncate].nil?
       @edit[:new][:display][:locale] = params[:display_locale] if params[:display_locale]
-    when "ui_2" # Visual Settings tab
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
     when "ui_3" # Visual Settings tab
@@ -597,8 +574,6 @@ class ConfigurationController < ApplicationController
     s[:display].delete(:pres_mode)          # :pres_mode replaced by :theme
     s.delete(:css)                          # Moved this to @css
     s.delete(:adv_search)                   # These got in around sprint 40 by accident
-
-    # ui_2
     s[:display].delete(:vmcompare)          # :vmcompare moved to :views hash
     s[:display].delete(:vm_summary_cool)    # :vm_summary_cool moved to :views hash
     s[:views].delete(:vm_summary_cool)      # :views/:vm_summary_cool changed to :dashboards

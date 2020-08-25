@@ -4,6 +4,7 @@ module HostHelper::TextualSummary
   include TextualMixins::TextualOsInfo
   include TextualMixins::TextualVmmInfo
   include TextualMixins::TextualPowerState
+  include TextualMixins::TextualProtected
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -14,9 +15,9 @@ module HostHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i[
-        hostname ipaddress ipmi_ipaddress hypervisor_hostname custom_1 vmm_info model asset_tag service_tag osinfo
+        hostname region ipaddress ipmi_ipaddress ipmi_enabled hypervisor_hostname custom_1 vmm_info vmm_version vmm_buildnumber model asset_tag service_tag osinfo
         power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
-        cpu_cores_per_socket memory guid
+        cpu_cores_per_socket memory protected guid
       ]
     )
   end
@@ -144,6 +145,22 @@ module HostHelper::TextualSummary
 
   def textual_ipmi_ipaddress
     {:label => _("IPMI IP Address"), :value => @record.ipmi_address.to_s}
+  end
+
+  def textual_ipmi_enabled
+    {:label => _("IPMI Enabled"), :value => @record.ipmi_enabled.to_s}
+  end
+
+  def textual_vmm_version
+    {:label => _("VMM Version"), :value => @record.vmm_version}
+  end
+
+  def textual_vmm_buildnumber
+    {:label => _("VMM Build"), :value => @record.vmm_buildnumber}
+  end
+
+  def textual_region
+    {:label => _("Region"), :value => @record.region_description}
   end
 
   def textual_hypervisor_hostname

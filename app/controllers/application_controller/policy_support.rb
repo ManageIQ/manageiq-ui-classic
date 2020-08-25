@@ -3,7 +3,6 @@ module ApplicationController::PolicySupport
 
   # Assign/unassign policies to/from a set of objects
   def protect
-    @gtl_type = "grid"
     @display  = nil
     @edit     = session[:edit]
 
@@ -241,7 +240,6 @@ module ApplicationController::PolicySupport
                              else
                                _('No Policy Profiles are available')
                              end
-    @gtl_type = "grid"
     build_targets_hash(@tagitems)
   end
 end

@@ -1049,7 +1049,6 @@ module ApplicationController::MiqRequestMethods
   def options_for_provisioning(db, report_scopes)
     {
       :model         => db,
-      :gtl_type      => "table",
       :named_scope   => report_scopes,
       :report_name   => provisioning_report,
       :custom_action => {

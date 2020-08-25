@@ -30,10 +30,9 @@ module ReportController::Schedules
   def schedule_get_all
     @schedules = true
     @force_no_grid_xml = true
-    @gtl_type = "list"
     if params[:ppsetting]                                               # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                         # Set the new per page value
-      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:schedule_sortcol].nil? ? 0 : session[:schedule_sortcol].to_i
     @sortdir = session[:schedule_sortdir].nil? ? "ASC" : session[:schedule_sortdir]

@@ -493,15 +493,6 @@ describe CatalogController do
         expect(response.status).to eq(200)
       end
 
-      it "Controller method is called with correct parameters" do
-        controller.params[:type] = "tile"
-        controller.instance_variable_set(:@settings, :views => {:orchestrationtemplate => "list"})
-        expect(controller).to receive(:get_view_calculate_gtl_type).with(:orchestrationtemplate) do
-          expect(controller.instance_variable_get(:@settings)).to include(:views => {:orchestrationtemplate => "tile"})
-        end
-        controller.send(:get_view, "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate", :gtl_dbname => :orchestrationtemplate)
-      end
-
       it "Renders list of orchestration templates using correct GTL type" do
         %w[root xx-otcfn xx-othot xx-otazu xx-otazs].each do |id|
           post :tree_select, :params => { :id => id, :format => :js }

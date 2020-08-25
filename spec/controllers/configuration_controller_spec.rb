@@ -29,7 +29,6 @@ describe ConfigurationController do
 
       expect(assigns(:tabs)).to eq([
                                      ["1", "Visual"],
-                                     ["2", "Default Views"],
                                      ["3", "Default Filters"],
                                      ["4", "Time Profiles"]
                                    ])

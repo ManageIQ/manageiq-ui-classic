@@ -58,7 +58,6 @@ class PxeController < ApplicationController
   end
 
   def tagging_edit_tags_reset
-    @gtl_type = 'list'
     super
   end
 
@@ -267,8 +266,6 @@ class PxeController < ApplicationController
     end
 
     presenter[:record_id] = determine_record_id_for_presenter
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
     # Save open nodes, if any were added
     presenter[:osf_node] = x_node

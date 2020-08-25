@@ -65,7 +65,6 @@ describe AutomationManagerController do
     expect(response.status).to eq(200)
     expect(response.body).to include("modelName: 'ManageIQ::Providers::AnsibleTower::AutomationManager'")
     expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
-    expect(response.body).to include("gtlType: 'list'")
     expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
     expect(response.body).to include("showUrl: '/automation_manager/x_show/'")
   end
@@ -191,7 +190,6 @@ describe AutomationManagerController do
       right_cell_text = nil
       login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
-      allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
       allow(controller).to receive(:build_listnav_search_list)
       allow(controller).to receive(:load_or_clear_adv_search)
@@ -200,7 +198,6 @@ describe AutomationManagerController do
       allow(controller).to receive(:render)
 
       allow(controller).to receive(:items_per_page).and_return(20)
-      allow(controller).to receive(:gtl_type).and_return("list")
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
     end
@@ -267,7 +264,6 @@ describe AutomationManagerController do
       right_cell_text = nil
       login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
-      allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
       allow(controller).to receive(:build_listnav_search_list)
       allow(controller).to receive(:load_or_clear_adv_search)
@@ -276,7 +272,6 @@ describe AutomationManagerController do
       allow(controller).to receive(:render)
 
       allow(controller).to receive(:items_per_page).and_return(20)
-      allow(controller).to receive(:gtl_type).and_return("list")
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
     end
@@ -444,7 +439,7 @@ describe AutomationManagerController do
     end
   end
 
-  context "fetches the list setting:Grid/Tile/List from settings" do
+  context "fetches the list for selected accordion" do
     before do
       login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
       allow(controller).to receive(:items_per_page).and_return(20)
@@ -455,27 +450,19 @@ describe AutomationManagerController do
       allow(controller).to receive(:replace_search_box)
       allow(controller).to receive(:update_partials)
       allow(controller).to receive(:render)
-
-      controller.instance_variable_set(:@settings,
-                                       :views => {:automation_manager_providers          => "grid",
-                                                  :automation_manager_configured_systems => "tile"})
       controller.send(:build_accordions_and_trees)
     end
 
-    it "fetches list type = 'grid' from settings for Providers accordion" do
+    it "fetches list for Providers accordion" do
       key = ems_key_for_provider(automation_provider1)
       allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
       controller.send(:get_node_info, key)
-      list_type = controller.instance_variable_get(:@gtl_type)
-      expect(list_type).to eq("grid")
     end
 
-    it "fetches list type = 'tile' from settings for Configured Systems accordion" do
+    it "fetches list for Configured Systems accordion" do
       key = ems_key_for_provider(automation_provider1)
       allow(controller).to receive(:x_active_tree).and_return(:automation_manager_cs_filter_tree)
       controller.send(:get_node_info, key)
-      list_type = controller.instance_variable_get(:@gtl_type)
-      expect(list_type).to eq("tile")
     end
   end
 

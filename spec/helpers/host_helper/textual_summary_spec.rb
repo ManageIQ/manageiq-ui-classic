@@ -11,11 +11,15 @@ describe HostHelper::TextualSummary do
 
   include_examples "textual_group", "Properties", %i(
     hostname
+    region
     ipaddress
     ipmi_ipaddress
+    ipmi_enabled
     hypervisor_hostname
     custom_1
     vmm_info
+    vmm_version
+    vmm_buildnumber
     model
     asset_tag
     service_tag
@@ -30,6 +34,7 @@ describe HostHelper::TextualSummary do
     num_cpu_cores
     cpu_cores_per_socket
     memory
+    protected
     guid
   )
 

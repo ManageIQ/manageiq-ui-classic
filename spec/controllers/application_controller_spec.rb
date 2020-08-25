@@ -133,28 +133,6 @@ describe ApplicationController do
     end
   end
 
-  describe "#render_gtl_view_tb?" do
-    before do
-      controller.instance_variable_set(:@layout, "host")
-      controller.instance_variable_set(:@gtl_type, "list")
-    end
-
-    it "returns true for list views" do
-      controller.params = {:action => "show_list"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_truthy
-    end
-
-    it "returns true for list views when navigating thru relationships" do
-      controller.params = {:action => "show"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_truthy
-    end
-
-    it "returns false for sub list views" do
-      controller.params = {:action => "host_services"}
-      expect(controller.send(:render_gtl_view_tb?)).to be_falsey
-    end
-  end
-
   describe "#prov_redirect" do
     let(:user) { FactoryBot.create(:user, :features => "vm_migrate") }
     before do
@@ -311,8 +289,6 @@ describe ApplicationController do
     describe "#get_view" do
       it 'calculates grid hash condition' do
         controller.instance_variable_set(:@force_no_grid_xml, false)
-        controller.instance_variable_set(:@force_grid_xml, true)
-        controller.instance_variable_set(:@gtl_type, "list")
 
         view = OpenStruct.new
         view.db = "MiqProvision"
@@ -410,26 +386,12 @@ describe ApplicationController do
     {
       'miqreportresult' => :reports,
       'job'             => :job_task,
-      'miqtask'         => :job_task
+      'miqtask'         => :job_task,
+      'host'            => :list,
     }.each do |dbname, response|
       context "key is #{dbname}" do
         it "returns with #{response}" do
           expect(controller.send(:perpage_key, dbname)).to eq(response)
-        end
-      end
-    end
-
-    {
-      'grid'   => :grid,
-      'list'   => :list,
-      'tile'   => :tile,
-      'foobar' => nil
-    }.each do |gtl_type, response|
-      context "gtl_type is #{gtl_type}" do
-        before { controller.instance_variable_set(:@gtl_type, gtl_type) }
-
-        it "returns with #{response}" do
-          expect(controller.send(:perpage_key, 'foobar')).to eq(response)
         end
       end
     end

@@ -347,8 +347,6 @@ class MiqAeClassController < ApplicationController
       presenter.set_visibility(@record.inputs.present?, :params_div)
     end
 
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
-
     # Rebuild the toolbars
     if c_tb.present?
       presenter.show(:toolbar)

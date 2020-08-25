@@ -34,6 +34,7 @@ describe VmHelper::TextualSummary do
     resources
     guid
     storage_profile
+    protected
   )
 
   include_examples "textual_group", "Lifecycle", %i(

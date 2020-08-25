@@ -506,7 +506,6 @@ module OpsController::Diagnostics
     @lastaction = "pm_workers_list"
     @force_no_grid_xml = true
     @no_checkboxes = false
-    @gtl_type = "list"
     @embedded = @pages = false
     @showlinks = true
     status = %w[started ready working]

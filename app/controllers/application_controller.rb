@@ -92,97 +92,21 @@ class ApplicationController < ActionController::Base
 
   ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
-  PERPAGE_TYPES = %w[grid tile list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+  PERPAGE_TYPES = %w[list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
   TREND_MODEL = "VimPerformanceTrend".freeze # Performance trend model name requiring special processing
 
   # Default UI settings
   DEFAULT_SETTINGS = {
     :views    => { # List view setting, by resource type
-      :authkeypaircloud                                                       => "list",
-      :availabilityzone                                                       => "list",
-      :hostaggregate                                                          => "list",
-      :catalog                                                                => "list",
-      :cm_providers                                                           => "list",
-      :cm_configured_systems                                                  => "list",
-      :cm_configuration_profiles                                              => "list",
-      :compare                                                                => "expanded",
-      :compare_mode                                                           => "details",
-      :condition                                                              => "list",
-      :container                                                              => "list",
-      :containergroup                                                         => "list",
-      :containernode                                                          => "list",
-      :containerservice                                                       => "list",
-      :containerroute                                                         => "list",
-      :containerproject                                                       => "list",
-      :containerreplicator                                                    => "list",
-      :containerimage                                                         => "list",
-      :containerimageregistry                                                 => "list",
-      :persistentvolume                                                       => "list",
-      :containerbuild                                                         => "list",
-      :containertemplate                                                      => "list",
-      :cloudobjectstorecontainer                                              => "list",
-      :cloudobjectstoreobject                                                 => "list",
-      :cloudtenant                                                            => "list",
-      :cloudvolume                                                            => "list",
-      :cloudvolumebackup                                                      => "list",
-      :cloudvolumesnapshot                                                    => "list",
-      :cloudvolumetype                                                        => "list",
-      :drift                                                                  => "expanded",
-      :drift_mode                                                             => "details",
-      :emscluster                                                             => "grid",
-      :emscontainer                                                           => "grid",
-      :filesystem                                                             => "list",
-      :guestdevice                                                            => "list",
-      :flavor                                                                 => "list",
-      :host                                                                   => "grid",
-      :job                                                                    => "list",
-      :manageiq_providers_cloudmanager                                        => "grid",
-      :manageiq_providers_cloudmanager_template                               => "list",
-      :manageiq_providers_cloudmanager_vm                                     => "grid",
-      :manageiq_providers_containermanager                                    => "grid",
-      :manageiq_providers_embeddedansible_automationmanager_playbook          => "list",
-      :manageiq_providers_embeddedautomationmanager_authentication            => "list",
-      :manageiq_providers_embeddedautomationmanager_configurationscriptsource => "list",
-      :manageiq_providers_inframanager                                        => "grid",
-      :manageiq_providers_inframanager_vm                                     => "grid",
-      :manageiq_providers_inframanager_template                               => "list",
-      :manageiq_providers_physicalinframanager                                => "list",
-      :manageiq_providers_storagemanager                                      => "list",
-      :miqaction                                                              => "list",
-      :miqaeclass                                                             => "list",
-      :miqaeinstance                                                          => "list",
-      :miqevent                                                               => "list",
-      :miqpolicy                                                              => "list",
-      :miqpolicyset                                                           => "list",
-      :miqreportresult                                                        => "list",
-      :miqrequest                                                             => "list",
-      :miqtemplate                                                            => "list",
-      :orchestrationstack                                                     => "list",
-      :orchestrationtemplate                                                  => "list",
-      :servicetemplate                                                        => "list",
-      :storagemanager                                                         => "list",
-      :miqtask                                                                => "list",
-      :ms                                                                     => "grid",
-      :physicalserver                                                         => "list",
-      :policy                                                                 => "list",
-      :policyset                                                              => "grid",
-      :resourcepool                                                           => "grid",
-      :service                                                                => "grid",
-      :scanhistory                                                            => "list",
-      :storage_files                                                          => "list",
-      :summary_mode                                                           => "dashboard",
-      :registryitems                                                          => "list",
-      :serverbuild                                                            => "list",
-      :storage                                                                => "grid",
-      :tagging                                                                => "grid",
-      :vm                                                                     => "grid",
-      :vmortemplate                                                           => "grid",
-      :vmcompare                                                              => "compressed"
+      :compare      => "expanded",
+      :compare_mode => "details",
+      :drift        => "expanded",
+      :drift_mode   => "details",
+      :summary_mode => "dashboard",
+      :vmcompare    => "compressed"
     },
     :perpage  => { # Items per page, by view setting
-      :grid    => 20,
-      :tile    => 20,
       :list    => 20,
       :reports => 20
     },
@@ -192,7 +116,6 @@ class ApplicationController < ActionController::Base
     :display  => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",
-      :quad_truncate => "m",
       :theme         => "red",            # Luminescent Blue
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
@@ -827,8 +750,8 @@ class ApplicationController < ActionController::Base
       root[:head] << {:is_narrow => true}
     end
 
-    # Icon column
-    root[:head] << {:is_narrow => true}
+    # Icon column, only for list with special icons
+    root[:head] << {:is_narrow => true} if ::GtlFormatter::VIEW_WITH_CUSTOM_ICON.include?(view.db)
 
     view.headers.each_with_index do |h, i|
       col = view.col_order[i]
@@ -851,15 +774,11 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if fetch_data && defined?(@gtl_type) && @gtl_type != "list" && !target.nil? && type_has_quadicon(target.class.name)
-        quadicon = view_context.quadicon_hash(target)
-      end
 
       new_row = {
         :id      => list_row_id(row),
         :long_id => row['id'].to_s,
-        :cells   => [],
-        :quad    => quadicon
+        :cells   => []
       }
 
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
@@ -878,25 +797,11 @@ class ApplicationController < ActionController::Base
         new_row[:cells] << {:is_checkbox => true}
       end
 
-      # Generate html for the list icon
-      item = listicon_item(view, row['id'])
-      icon, icon2, image = fonticon_or_fileicon(item)
-
-      # Clickable should be false only when it's explicitly set to false
-      not_clickable = if params
-                        (params.fetch_path(:additional_options, :clickable) == false)
-                      else
-                        false
-                      end
-      new_row[:cells] << {:title => not_clickable ? nil : _('View this item'),
-                          :image => ActionController::Base.helpers.image_path(image.to_s),
-                          :icon  => icon,
-                          :icon2 => icon2}.compact
-      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
-
-      # Append a button if @row_button is set and the button is defined in the related decorator
-      button = item.decorate.try(:gtl_button_cell) if @row_button
-      new_row[:cells] << button if button
+      options = {
+        :clickable  => params.fetch_path(:additional_options, :clickable),
+        :row_button => @row_button
+      }
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self, options))
     end
 
     root
@@ -912,6 +817,7 @@ class ApplicationController < ActionController::Base
       klass.find(id)    # Read the record from the db
     end
   end
+  public :listicon_item
 
   def get_host_for_vm(vm)
     @hosts = [vm.host] if vm.host
@@ -1143,14 +1049,6 @@ class ApplicationController < ActionController::Base
     {:class => object.class.name, :id => object.id}
   end
 
-  def get_view_calculate_gtl_type(db_sym)
-    gtl_type = settings(:views, db_sym) unless %w[scanitemset miqschedule pxeserver customizationtemplate].include?(db_sym.to_s)
-    gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
-    gtl_type ||= 'grid' if params[:records]&.kind_of?(Array)
-    gtl_type ||= 'list' # return a sane default
-    gtl_type
-  end
-
   def dashboard_view
     false
   end
@@ -1221,7 +1119,7 @@ class ApplicationController < ActionController::Base
     when "job", "miqtask"
       :job_task
     else
-      PERPAGE_TYPES[@gtl_type]
+      :list
     end
   end
 
@@ -1274,11 +1172,6 @@ class ApplicationController < ActionController::Base
     sort_prefix = association || (dbname == "miqreportresult" && x_active_tree ? x_active_tree.to_s : dbname)
     sortcol_sym = "#{sort_prefix}_sortcol".to_sym
     sortdir_sym = "#{sort_prefix}_sortdir".to_sym
-
-    # Set up the list view type (grid/tile/list)
-    @settings.store_path(:views, db_sym, params[:type]) if params[:type] # Change the list view type, if it's sent in
-
-    @gtl_type = get_view_calculate_gtl_type(db_sym) unless fetch_data
 
     # Get the view for this db or use the existing one in the session
     view =
@@ -1362,7 +1255,7 @@ class ApplicationController < ActionController::Base
   def grid_hash_conditions(view)
     !%w[Job MiqProvision MiqReportResult MiqTask].include?(view.db) &&
       !(view.db.ends_with?("Build") && view.db != "ContainerBuild") &&
-      !@force_no_grid_xml && (@gtl_type == "list" || @force_grid_xml)
+      !@force_no_grid_xml
   end
 
   def get_chart_where_clause(sb_controller = nil)

@@ -373,7 +373,6 @@ class StorageController < ApplicationController
       presenter.update(:main_div, r[:partial => "storage_pod_list"])
     end
     presenter[:right_cell_text] = @right_cell_text
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     presenter[:osf_node] = x_node # Open, select, and focus on this node
 
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
@@ -402,8 +401,6 @@ class StorageController < ApplicationController
 
   def replace_search_box(presenter, locals = {})
     super(presenter, locals)
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
 
   def handle_bottom_cell(presenter)
@@ -436,7 +433,7 @@ class StorageController < ApplicationController
 
   def rebuild_toolbars(record_showing, presenter)
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
-    v_tb = build_toolbar('x_gtl_view_tb') unless record_showing || (x_active_tree == :storage_pod_tree && x_node == 'root') || @in_a_form
+    v_tb = build_toolbar('download_view_tb') unless record_showing || (x_active_tree == :storage_pod_tree && x_node == 'root') || @in_a_form
     cb_tb = build_toolbar(custom_toolbar_explorer)
 
     presenter.reload_toolbars(:center => c_tb, :view => v_tb, :custom => cb_tb)

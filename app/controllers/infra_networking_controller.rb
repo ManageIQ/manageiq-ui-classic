@@ -464,8 +464,6 @@ class InfraNetworkingController < ApplicationController
 
   def replace_search_box(presenter, locals = {})
     super(presenter, locals)
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
 
   def handle_bottom_cell(presenter)
@@ -490,7 +488,7 @@ class InfraNetworkingController < ApplicationController
       v_tb = if record_showing
                build_toolbar("x_summary_view_tb")
              else
-               build_toolbar("x_gtl_view_tb")
+               build_toolbar("download_view_tb")
              end
     end
 

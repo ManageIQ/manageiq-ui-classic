@@ -8,12 +8,6 @@ module ConfigurationHelper
          view == "details" ? compare_or_drift_mode_details(resource) : compare_or_drift_mode_exists(resource)
        when :summary_mode
          view == "dashboard" ? summary_mode_dashboard(resource) : summary_mode_textual(resource)
-       else
-         case view
-         when "grid" then grid_view(resource)
-         when "tile" then tile_view(resource)
-         else             list_view(resource)
-         end
        end).html_safe
     end
 
@@ -26,6 +20,7 @@ module ConfigurationHelper
     end
 
     def inactive_icon(image, text, resource, view)
+
       content_tag(:li) do
         link_to(content_tag(:i, nil, :class => image,
                                      :alt   => text),
@@ -66,24 +61,6 @@ module ConfigurationHelper
     def summary_mode_dashboard(resource)
       active_icon("fa fa-tachometer fa-1xplus", _('Dashboard View')) +
         inactive_icon("fa fa-th-list", _('Textual View'), resource, "textual")
-    end
-
-    def grid_view(resource)
-      [(active_icon("fa fa-th", _('Grid View')) if resource != :catalog),
-       inactive_icon("fa fa-th-large", _('Tile View'), resource, "tile"),
-       inactive_icon("fa fa-th-list", _('List View'), resource, "list")].compact.join('')
-    end
-
-    def tile_view(resource)
-      [(inactive_icon("fa fa-th", _('Grid View'), resource, "grid") if resource != :catalog),
-       active_icon("fa fa-th-large", _('Tile View')),
-       inactive_icon("fa fa-th-list", _('List View'), resource, "list")].compact.join('')
-    end
-
-    def list_view(resource)
-      [(inactive_icon("fa fa-th", _('Grid View'), resource, "grid") if resource != :catalog),
-       inactive_icon("fa fa-th-large", _('Tile View'), resource, "tile"),
-       active_icon("fa fa-th-list", _('List View'))].compact.join('')
     end
 
     def has_any_role?(arr)

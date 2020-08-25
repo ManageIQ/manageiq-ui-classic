@@ -961,7 +961,6 @@ class CatalogController < ApplicationController
   def service_template_list(scope, options = {})
     @no_checkboxes = x_active_tree == :svccat_tree
     if x_active_tree == :svccat_tree
-      @gtl_buttons = %w[view_list view_tile]
       @gtl_small_tiles = true
       @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
       options[:gtl_dbname] = :catalog
@@ -1838,10 +1837,10 @@ class CatalogController < ApplicationController
             build_toolbar("summary_view_tb")
           end
         elsif !%w[xx csb cbg cb].include?(@nodetype) && !@in_a_form
-          build_toolbar("x_gtl_view_tb")
+          build_toolbar("download_view_tb")
         end
       when :svccat_tree, :stcat_tree, :ot_tree
-        build_toolbar("x_gtl_view_tb") unless record_showing || @in_a_form
+        build_toolbar("download_view_tb") unless record_showing || @in_a_form
       end
 
     c_tb = build_toolbar(center_toolbar_filename) unless x_active_tree == :svccat_tree && @in_a_form
@@ -1890,8 +1889,6 @@ class CatalogController < ApplicationController
                 r[:partial => "layouts/x_gtl"]
               end
     presenter.update(:main_div, content)
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
     # have to make Catalog Items accordion active incase link on Catalog show screen was pressed
 
@@ -2026,7 +2023,6 @@ class CatalogController < ApplicationController
       session[:tag_db] = @tagging = params[:tagging] if params[:tagging]
     end
 
-    @gtl_type = 'list' # No quad icons for user/group list views
     session[:assigned_filters] = assigned_filters
     x_tags_set_form_vars
     @in_a_form = true

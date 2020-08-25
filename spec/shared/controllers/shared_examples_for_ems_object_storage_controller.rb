@@ -44,7 +44,6 @@ shared_examples :shared_examples_for_ems_object_storage_controller do |providers
         it 'renders only object storage' do
           expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(:model_name                     => "ManageIQ::Providers::StorageManager",
                                                                                            :no_flash_div                   => false,
-                                                                                           :gtl_type_string                => "list",
                                                                                            :report_data_additional_options => {:lastaction                => "show_list",
                                                                                                                                :supported_features_filter => "supports_object_storage?"})
           post :show_list

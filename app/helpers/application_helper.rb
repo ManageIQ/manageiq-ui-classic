@@ -453,8 +453,6 @@ module ApplicationHelper
       :edit             => @edit,
       :explorer         => @explorer,
       :ght_type         => @ght_type,
-      :gtl_buttons      => @gtl_buttons,
-      :gtl_type         => @gtl_type,
       :html             => @html,
       :lastaction       => @lastaction,
       :layout           => @layout,
@@ -944,10 +942,8 @@ module ApplicationHelper
     end
   end
 
-  # FIXME: params[:type] is used in multiple contexts, we should rename it to
-  # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    %i[ppsetting searchtag entry sortby sort_choice type page].find { |k| params[k] }
+    %i[ppsetting searchtag entry sortby sort_choice page].find { |k| params[k] }
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
@@ -1043,7 +1039,7 @@ module ApplicationHelper
     "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
   end
 
-  GTL_VIEW_LAYOUTS = %w[action
+  DOWNLOAD_VIEW_LAYOUTS = %w[action
                         auth_key_pair_cloud
                         availability_zone
                         alerts_overview
@@ -1133,8 +1129,8 @@ module ApplicationHelper
                         storage
                         templates].freeze
 
-  def render_gtl_view_tb?
-    GTL_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
+  def render_download_view_tb?
+    DOWNLOAD_VIEW_LAYOUTS.include?(@layout) && !@record && !@tagitems &&
       !@ownershipitems && !@retireitems && !@politems && !@in_a_form &&
       %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end
@@ -1190,17 +1186,6 @@ module ApplicationHelper
     ].include?(x_tree[:tree])
   end
 
-  def fonticon_or_fileicon(item)
-    return nil unless item
-    decorated = item.decorate
-    [
-      decorated.try(:fonticon),
-      decorated.try(:secondary_icon),
-      decorated.try(:fileicon)
-    ]
-  end
-  private :fonticon_or_fileicon
-
   CONTENT_TYPE_ID = {
     "report" => "r",
     "menu"   => "m",
@@ -1222,9 +1207,7 @@ module ApplicationHelper
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.with_no_checkboxes(@no_checkboxes || options[:no_checkboxes])
-    # FIXME: we would like to freeze here, but the @gtl_type is calculated no sooner than in view templates.
-    # So until that if fixed we cannot freeze.
-    # @report_data_additional_options.freeze
+    @report_data_additional_options.freeze
   end
 
   def from_additional_options(additional_options)
@@ -1262,9 +1245,6 @@ module ApplicationHelper
     # need to pass @in_a_form so get_view does not set advanced search options
     # in the forms that render gtl that mess up @edit
     @in_a_form = quadicon_options[:in_a_form]
-
-    # take GTL type from the component
-    @gtl_type = quadicon_options[:gtl_type]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()

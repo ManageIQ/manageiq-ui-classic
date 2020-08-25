@@ -102,7 +102,6 @@ describe VmOrTemplateController do
         get :explorer
         expect(response.body).to include("modelName: 'MiqTemplate'")
         expect(response.body).to include("activeTree: 'templates_images_filter_tree'")
-        expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(response.body).to include("showUrl: '/vm_or_template/x_show/'")
       end
@@ -112,7 +111,6 @@ describe VmOrTemplateController do
         get :explorer
         expect(response.body).to include("modelName: 'Vm'")
         expect(response.body).to include("activeTree: 'vms_instances_filter_tree'")
-        expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(response.body).to include("showUrl: '/vm_or_template/x_show/'")
       end

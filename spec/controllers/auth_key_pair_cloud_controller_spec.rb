@@ -80,26 +80,6 @@ describe AuthKeyPairCloudController do
     end
   end
 
-  describe '#report_data' do
-    context 'when tile mode is selected' do
-      it 'returns key pairs with quadicons' do
-        kp
-        session[:settings] = {:views => {:authkeypaircloud => 'tile'}}
-        report_data_request(
-          :model      => 'ManageIQ::Providers::CloudManager::AuthKeyPair',
-          :parent_id  => nil,
-          :explorer   => false,
-          :gtl_dbname => :authkeypaircloud,
-        )
-        results = assert_report_data_response
-
-        expect(results['data']['rows'].length).to eq(1)
-        expect(results['data']['rows'][0]['long_id']).to eq(kp.id.to_s)
-        expect(results['data']['rows'][0]['quad']).to have_key('fonticon')
-      end
-    end
-  end
-
   describe '#button' do
     context 'Check Compliance of Last Known Configuration on Instances' do
       let(:vm_instance) { FactoryBot.create(:vm_or_template) }

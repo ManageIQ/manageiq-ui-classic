@@ -5,7 +5,6 @@
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
   var USE_TREE_ID = ['automation_manager'];
-  var DEFAULT_VIEW = 'grid';
   var TOOLBAR_CLICK_FINISH = 'TOOLBAR_CLICK_FINISH';
 
   function isAllowedParent(initObject) {
@@ -83,8 +82,6 @@
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         this.setExtraClasses();
-      } else if (event.type === TOOLBAR_CLICK_FINISH && (tileViewSelector() || tableViewSelector())) {
-        this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData(event.data);
       } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
@@ -328,7 +325,6 @@
     } else if (this.initObject.showUrl === 'false') {
       this.initObject.showUrl = false;
     }
-    this.gtlType = initObject.gtlType || DEFAULT_VIEW;
     this.setLoading(true);
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});
@@ -348,7 +344,6 @@
   * ```
   *   initObject: {
   *     modelName: string,
-  *     gtlType: string,
   *     activeTree: string,
   *     parentId: string,
   *     isExplorer: Boolean
@@ -360,7 +355,7 @@
     this.setLoading(true);
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
-    this.setExtraClasses(initObject.gtlType);
+    this.setExtraClasses('list');
     return this.getData(initObject.modelName,
       initObject.activeTree,
       initObject.parentId,
@@ -426,9 +421,7 @@
     angular.element(mainContent).removeClass('miq-list-content');
     angular.element(pagination).css('display', 'none');
 
-    if (viewType === 'grid' || viewType === 'tile') {
-      angular.element(pagination).css('display', 'block');
-    } else if (viewType === 'list') {
+    if (viewType === 'list') {
       angular.element(mainContent).addClass('miq-list-content');
       angular.element(pagination).css('display', 'block');
     }

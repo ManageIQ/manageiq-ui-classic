@@ -556,7 +556,6 @@ module OpsController::OpsRbac
       session[:tag_db] = @tagging = tagging
     end
 
-    @gtl_type = "list" # No quad icons for user/group list views
     x_tags_set_form_vars
     @in_a_form = true
     session[:changed] = false
@@ -725,10 +724,9 @@ module OpsController::OpsRbac
   def rbac_build_list(rec_type)
     @lastaction = "rbac_#{rec_type}s_list"
     @force_no_grid_xml = true
-    @gtl_type = "list"
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session["rbac_#{rec_type}_sortcol"].nil? ? 0 : @sb["rbac_#{rec_type}_sortcol"].to_i
     @sortdir = session["rbac_#{rec_type}_sortdir"].nil? ? "ASC" : @sb["rbac_#{rec_type}_sortdir"]

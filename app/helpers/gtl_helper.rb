@@ -11,27 +11,9 @@ module GtlHelper
     records
   end
 
-  def miq_tile_view
-    content_tag(
-      'miq-tile-view', '',
-      "ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
-      "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === false}",
-      "settings"         => "dataCtrl.settings",
-      "per-page"         => "dataCtrl.perPage",
-      "rows"             => "dataCtrl.gtlData.rows",
-      "on-row-click"     => "dataCtrl.onItemClicked(item, event)",
-      "on-sort"          => "dataCtrl.onSort(headerId, isAscending)",
-      "on-item-selected" => "dataCtrl.onItemSelect(item, isSelected)",
-      "load-more-items"  => "dataCtrl.onLoadNext(start, perPage)",
-      "columns"          => "dataCtrl.gtlData.cols",
-      "type"             => "dataCtrl.gtlType === 'grid' ? 'small' : 'big'"
-    )
-  end
-
   def miq_data_table
     content_tag(
       'miq-data-table', '',
-      "ng-if"            => "dataCtrl.gtlType === 'list'",
       "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === false}",
       "settings"         => "dataCtrl.settings",
       "per-page"         => "dataCtrl.perPage",
@@ -49,13 +31,10 @@ module GtlHelper
   #
   def render_gtl_outer(no_flash_div)
     parent_id = @report_data_additional_options.try(:[], :parent_id)
-    gtl_type_string = @gtl_type || 'list'
-    @report_data_additional_options&.with_gtl_type(gtl_type_string)
 
     options = {
       :model_name                     => model_to_report_data,
       :no_flash_div                   => no_flash_div || false,
-      :gtl_type_string                => gtl_type_string,
       :active_tree                    => (x_active_tree unless params[:display]),
       :parent_id                      => parent_id,
       :selected_records               => gtl_selected_records,
@@ -89,7 +68,6 @@ module GtlHelper
     content_tag('div', :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl") do
       capture do
         concat(render(:partial => 'layouts/flash_msg')) unless no_flash_div
-        concat(miq_tile_view)
         concat(miq_data_table)
         concat(
           content_tag(
@@ -116,7 +94,6 @@ module GtlHelper
           additionalOptions: #{options[:report_data_additional_options].to_json},
           modelName: '#{h(j_str(options[:model_name]))}',
           activeTree: '#{options[:active_tree]}',
-          gtlType: '#{h(j_str(options[:gtl_type_string]))}',
           parentId: '#{parent_id_escaped}',
           sortColIdx: '#{options[:sort_col]}',
           sortDir: '#{options[:sort_dir]}',
