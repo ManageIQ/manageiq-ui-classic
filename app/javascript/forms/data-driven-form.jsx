@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import FormRender, {
   Validators,
@@ -29,28 +29,32 @@ const defaultLabels = {
 
 const MiqFormRenderer = ({
   className, setPristine, onStateUpdate, componentMapper, buttonsLabels, disableSubmit, canReset, showFormControls, ...props
-}) => (
-  <FormRender
-    componentMapper={componentMapper}
-    FormTemplate={props => (
-      <FormTemplate
-        {...props}
-        className={className}
-        buttonsLabels={{ ...defaultLabels, ...buttonsLabels }}
-        disableSubmit={disableSubmit}
-        canReset={canReset}
-        showFormControls={showFormControls}
-      />
-    )}
-    onStateUpdate={(formOptions) => {
-      setPristine(formOptions.pristine);
-      if (onStateUpdate) {
-        onStateUpdate(formOptions);
-      }
-    }}
-    {...props}
-  />
-);
+}) => {
+  const { current: MiqFormTemplate } = useRef(props => (
+    <FormTemplate
+      {...props}
+      className={className}
+      buttonsLabels={{ ...defaultLabels, ...buttonsLabels }}
+      disableSubmit={disableSubmit}
+      canReset={canReset}
+      showFormControls={showFormControls}
+    />
+  ));
+
+  return (
+    <FormRender
+      componentMapper={componentMapper}
+      FormTemplate={MiqFormTemplate}
+      onStateUpdate={(formOptions) => {
+        setPristine(formOptions.pristine);
+        if (onStateUpdate) {
+          onStateUpdate(formOptions);
+        }
+      }}
+      {...props}
+    />
+  );
+};
 
 MiqFormRenderer.propTypes = {
   className: PropTypes.string,
