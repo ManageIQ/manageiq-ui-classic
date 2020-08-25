@@ -171,6 +171,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
             buttonsLabels={{ submitLabel }}
             canReset={edit}
             clearOnUnmount
+            keepDirtyOnReinitilize
           />
         </EditingContext.Provider>
       ) }
