@@ -110,7 +110,7 @@ module Mixins
           @groups = {} # Create new entries hash (2nd pulldown)
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
           @edit[:object_ids] = @ownershipitems
-          @view = get_db_view(klass == VmOrTemplate ? Vm : klass, :clickable => false) # Instantiate the MIQ Report view object
+          @view = get_db_view(klass, :clickable => false) # Instantiate the MIQ Report view object
           session[:edit] = @edit
         end
 
