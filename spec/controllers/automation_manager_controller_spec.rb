@@ -63,10 +63,10 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to include("modelName: 'ManageIQ::Providers::AnsibleTower::AutomationManager'")
-    expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
-    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
-    expect(response.body).to include("showUrl: '/automation_manager/x_show/'")
+    expect(response.body).to include('"modelName":"ManageIQ::Providers::AnsibleTower::AutomationManager"')
+    expect(response.body).to include('"activeTree":"automation_manager_providers_tree"')
+    expect(response.body).to include('"isExplorer":true')
+    expect(response.body).to include('"showUrl":"/automation_manager/x_show/"')
   end
 
   context "renders the explorer based on RBAC" do

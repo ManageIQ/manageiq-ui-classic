@@ -173,12 +173,12 @@ describe StorageController do
 
         get :explorer
         session_storage = session[:sandboxes]["storage"]
-        expect(response.body).to include("modelName: 'Storage'")
-        expect(response.body).to include("activeTree: '#{session_storage[:active_tree]}'")
-        expect(response.body).to include("parentId: ''")
-        expect(response.body).to include("sortColIdx: '0'")
-        expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
-        expect(response.body).to include("showUrl: '/#{session_storage[:active_accord]}/x_show/'")
+        expect(response.body).to include('"modelName":"Storage"')
+        expect(response.body).to include("\"activeTree\":\"#{session_storage[:active_tree]}\"")
+        expect(response.body).to include('"isExplorer":true')
+        expect(response.body).to include('"parentId":')
+        expect(response.body).to include('"sortColIdx":0')
+        expect(response.body).to include("\"showUrl\":\"/#{session_storage[:active_accord]}/x_show/\"")
       end
 
       it 'show a datastore cluster in the datastore clusters list' do
@@ -208,8 +208,8 @@ describe StorageController do
 
         main_content = JSON.parse(response.body)['updatePartials']['main_div']
         expect(main_content).to include("<h3>\n1 Datastore Being Tagged\n<\/h3>")
-        expect(main_content).to include("modelName: 'Storage'")
-        expect(main_content).to include("isExplorer: 'true' === 'true' ? true : false")
+        expect(main_content).to include('"modelName":"Storage"')
+        expect(main_content).to include('"isExplorer":true')
       end
 
       it "tagging has no clickable quadicons" do
