@@ -711,6 +711,13 @@ module ApplicationController::MiqRequestMethods
               @edit[:new][f.to_sym] = []
               params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v.to_i) }
             end
+          elsif f == "cloud_volumes"
+            if params[key] == ""
+              @edit[:new][f.to_sym] = [nil]
+            else
+              @edit[:new][f.to_sym] = []
+              params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v) }
+            end
           else
             @edit[:new][f.to_sym] = [val, field[:values][val]] # Save [value, description]
           end

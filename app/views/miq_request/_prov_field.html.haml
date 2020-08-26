@@ -243,7 +243,7 @@
                :vm_maximum_memory, :boot_disk_size, :subnet].include?(field)
         -# Pull Down fields
         -# Multiple select Pull Down fields
-        - multiple = field == :security_groups
+        - multiple = field == :security_groups || field == :cloud_volumes
         - td_class = field == :security_groups ? "wider" : "wide"
         .col-md-8{:class => td_class}
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
