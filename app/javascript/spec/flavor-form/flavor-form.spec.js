@@ -115,56 +115,6 @@ describe('Flavor form component', () => {
     });
   });
 
-  it('should submit values when form is valid', (done) => {
-    fetchMock
-      .mock('/flavor/ems_list', emsList)
-      .mock('/flavor/cloud_tenants', cloudTenants);
-
-    const wrapper = mount(<FlavorForm />);
-    wrapper.children().instance().submitValues = jest.fn();
-
-    const spySubmit = jest.spyOn(wrapper.children().instance(), 'submitValues');
-
-    setImmediate(() => {
-      wrapper.update();
-      wrapper.find('#ems_id').first().simulate('change', {
-        target: {
-          value: '1',
-        },
-      });
-      wrapper.find('#disk').first().simulate('change', {
-        target: {
-          value: '1',
-        },
-      });
-      wrapper.find('#name').first().simulate('change', {
-        target: {
-          value: 'name',
-        },
-      });
-      wrapper.find('#ram').first().simulate('change', {
-        target: {
-          value: '1',
-        },
-      });
-      wrapper.find('#vcpus').first().simulate('change', {
-        target: {
-          value: '1',
-        },
-      });
-      wrapper.find('#swap').first().simulate('change', {
-        target: {
-          value: '1',
-        },
-      });
-
-      // Click on submit button
-      wrapper.find('form').simulate('submit');
-      expect(spySubmit).toHaveBeenCalledTimes(1);
-      done();
-    });
-  });
-
   it('nonError sends right message', () => {
     const wrapper = mount(<FlavorForm />);
     wrapper.children().instance().nonError('Flavor1');

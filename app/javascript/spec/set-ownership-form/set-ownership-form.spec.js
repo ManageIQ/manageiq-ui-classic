@@ -90,8 +90,8 @@ describe('Set ownership form component', () => {
     await act(async() => {
       wrapper = mount(<SetOwnershipForm {...initialProps} />);
     });
-    const Form = wrapper.find(FormRenderer).childAt(0);
-    Form.instance().form.change('user', 'z');
+    const form = wrapper.find('form');
+    form.find('input[name="user"]').simulate('change', 'z');
     wrapper.update();
     await act(async() => {
       wrapper.find('form').simulate('submit');
@@ -104,15 +104,5 @@ describe('Set ownership form component', () => {
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
     wrapper.find('button').last().simulate('click');
     expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel');
-  });
-
-  it('should reset formValues and add flash messages on reset click', () => {
-    const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    const Form = wrapper.find(FormRenderer).childAt(0);
-    Form.instance().form.change('user', 'foo');
-    expect(Form.instance().form.getState().values).toEqual({ user: 'foo' });
-    wrapper.find('button').at(1).simulate('click');
-    expect(Form.instance().form.getState().values).toEqual({});
-    expect(flashSpy).toHaveBeenCalledWith(expect.any(String), 'warn');
   });
 });

@@ -8,9 +8,10 @@ import '../helpers/miqSparkle';
 import '../helpers/sprintf';
 import { mount } from '../helpers/mountForm';
 
-import CodeEditor from '../../components/code-editor';
 import OrcherstrationTemplateForm from '../../components/orchestration-template/orcherstration-template-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+
+const { default: CodeEditor } = jest.requireActual('../../components/code-editor');
 
 describe('OrcherstrationTemplate form', () => {
   let initialProps;
@@ -38,7 +39,7 @@ describe('OrcherstrationTemplate form', () => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
     });
     wrapper.update();
-    wrapper.find('input#name').simulate('change', { target: { value: 'foo' } });
+    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'foo' } });
     /**
        * manually change content value
        * Code component is not standard input element
@@ -79,7 +80,7 @@ describe('OrcherstrationTemplate form', () => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} />);
     });
     wrapper.update();
-    wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
+    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'bar' } });
     wrapper.update();
     await act(async() => {
       wrapper.find('form').simulate('submit');
@@ -106,7 +107,7 @@ describe('OrcherstrationTemplate form', () => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
     });
     wrapper.update();
-    wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
+    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'bar' } });
     /**
          * manually change content value
          * Code component is not standard input element

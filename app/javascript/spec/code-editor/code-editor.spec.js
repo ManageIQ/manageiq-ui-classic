@@ -4,6 +4,10 @@ import { shallowToJson } from 'enzyme-to-json';
 
 import CodeEditor, { DataDrivenFormCodeEditor } from '../../components/code-editor';
 
+jest.mock('@@ddf', () => ({
+  useFieldApi: props => ({ meta: {}, input: {}, ...props }),
+}));
+
 describe('CodeEditor component', () => {
   let initialProps;
   beforeEach(() => {

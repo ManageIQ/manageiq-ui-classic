@@ -25,7 +25,8 @@ exports[`Flavor form component should render form 1`] = `
       Object {
         "fields": Array [
           Object {
-            "component": "select-field",
+            "component": "select",
+            "id": "ems_id",
             "isSearchable": true,
             "label": "Provider",
             "name": "ems_id",
@@ -41,19 +42,20 @@ exports[`Flavor form component should render form 1`] = `
             ],
             "validate": Array [
               Object {
-                "type": "required-validator",
+                "type": "required",
               },
             ],
             "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "id": "name",
             "label": "Name",
             "name": "name",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
             ],
             "validateOnMount": true,
@@ -61,18 +63,19 @@ exports[`Flavor form component should render form 1`] = `
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "ram",
             "label": "Ram size in MB",
             "name": "ram",
             "type": "number",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "Ram must be integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
                 "message": "Ram must be greater than 0",
@@ -85,18 +88,19 @@ exports[`Flavor form component should render form 1`] = `
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "vcpus",
             "label": "VCPUs",
             "name": "vcpus",
             "type": "number",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "VCPUs must be integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
                 "message": "VCPUs must be greater than 0",
@@ -109,18 +113,19 @@ exports[`Flavor form component should render form 1`] = `
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "disk",
             "label": "Disk size in GB",
             "name": "disk",
             "type": "number",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "Disk size must be integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
                 "message": "Disk size must be greater than 0",
@@ -133,18 +138,19 @@ exports[`Flavor form component should render form 1`] = `
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "swap",
             "label": "Swap size in MB",
             "name": "swap",
             "type": "number",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "Swap size must be integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
                 "message": "Swap size must be greater or equal to 0",
@@ -156,18 +162,19 @@ exports[`Flavor form component should render form 1`] = `
           },
           Object {
             "component": "text-field",
+            "id": "rxtx_factor",
             "label": "RXTX factor",
             "name": "rxtx_factor",
             "type": "number",
             "validate": Array [
               Object {
                 "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "RXTX factor must be number",
                 "pattern": "^[-+]?[0-9]\\\\d*\\\\.?\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
                 "message": "RXTX factor must be greater than or equal to 0",
@@ -178,24 +185,25 @@ exports[`Flavor form component should render form 1`] = `
             "validateOnMount": true,
           },
           Object {
-            "assignFieldProvider": true,
             "bsSize": "mini",
-            "component": "switch-field",
+            "component": "switch",
+            "id": "is_public",
             "label": "Public?",
             "name": "is_public",
             "offText": "False",
             "onText": "True",
           },
           Object {
-            "component": "select-field",
+            "component": "select",
             "condition": Object {
               "is": false,
               "when": "is_public",
             },
+            "id": "cloud_tenant_refs",
             "isClearable": true,
+            "isMulti": true,
             "isSearchable": true,
             "label": "Cloud Tenant",
-            "multi": true,
             "name": "cloud_tenant_refs",
             "options": Array [
               Object {

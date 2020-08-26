@@ -53,7 +53,8 @@ exports[`Cloud Network form component should render edit variant 1`] = `
             "component": "sub-form",
             "fields": Array [
               Object {
-                "component": "select-field",
+                "component": "select",
+                "id": "ems_id",
                 "isDisabled": true,
                 "label": "Network Manager",
                 "name": "ems_id",
@@ -67,12 +68,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
             ],
+            "id": "network-provider",
             "name": "network-provider",
             "title": "Network Provider",
           },
@@ -85,11 +87,12 @@ exports[`Cloud Network form component should render edit variant 1`] = `
             "fields": Array [
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "8",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": true,
                 "key": "id-8",
                 "label": "Cloud Tenant",
@@ -99,12 +102,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
             ],
+            "id": "placement",
             "name": "placement",
             "title": "Placement",
           },
@@ -116,7 +120,8 @@ exports[`Cloud Network form component should render edit variant 1`] = `
             },
             "fields": Array [
               Object {
-                "component": "select-field",
+                "component": "select",
+                "id": "provider_network_type",
                 "isDisabled": true,
                 "label": "Provider Network Type",
                 "name": "provider_network_type",
@@ -160,6 +165,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_physical_network",
                     "isDisabled": true,
                     "label": "Physical Network",
                     "maxLength": 128,
@@ -167,12 +173,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-1",
                 "name": "subform-1",
               },
               Object {
@@ -184,6 +191,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": true,
                     "label": "Segmentation ID",
                     "maxLength": 128,
@@ -191,12 +199,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-2",
                 "name": "subform-2",
               },
               Object {
@@ -208,6 +217,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_physical_network",
                     "isDisabled": true,
                     "label": "Physical Network",
                     "maxLength": 128,
@@ -215,13 +225,14 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": true,
                     "label": "Segmentation ID",
                     "maxLength": 128,
@@ -229,12 +240,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-3",
                 "name": "subform-3",
               },
               Object {
@@ -246,15 +258,18 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": true,
                     "label": "Segmentation ID",
                     "maxLength": 128,
                     "name": "provider_segmentation_id",
                   },
                 ],
+                "id": "subform-4",
                 "name": "subform-4",
               },
             ],
+            "id": "provider-information",
             "name": "provider-information",
             "title": "Network Provider Information",
           },
@@ -263,19 +278,20 @@ exports[`Cloud Network form component should render edit variant 1`] = `
             "fields": Array [
               Object {
                 "component": "text-field",
+                "id": "name",
                 "label": "Network Name",
                 "name": "name",
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_external_facing",
                 "label": "External Router",
                 "name": "external_facing",
@@ -284,7 +300,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_enabled",
                 "label": "Administrative State",
                 "name": "enabled",
@@ -293,7 +309,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_shared",
                 "label": "Shared",
                 "name": "shared",
@@ -301,6 +317,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "onText": "Yes",
               },
             ],
+            "id": "network-information",
             "name": "network-information",
             "title": "Network Information",
           },
@@ -341,7 +358,8 @@ exports[`Cloud Network form component should render form 1`] = `
             "component": "sub-form",
             "fields": Array [
               Object {
-                "component": "select-field",
+                "component": "select",
+                "id": "ems_id",
                 "isDisabled": false,
                 "label": "Network Manager",
                 "name": "ems_id",
@@ -379,12 +397,13 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
             ],
+            "id": "network-provider",
             "name": "network-provider",
             "title": "Network Provider",
           },
@@ -397,11 +416,12 @@ exports[`Cloud Network form component should render form 1`] = `
             "fields": Array [
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": undefined,
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-undefined",
                 "label": "Cloud Tenant",
@@ -411,18 +431,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "4",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-4",
                 "label": "Cloud Tenant",
@@ -432,18 +453,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "31",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-31",
                 "label": "Cloud Tenant",
@@ -453,18 +475,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "8",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-8",
                 "label": "Cloud Tenant",
@@ -474,18 +497,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "50",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-50",
                 "label": "Cloud Tenant",
@@ -495,18 +519,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "18",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-18",
                 "label": "Cloud Tenant",
@@ -516,18 +541,19 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "clearOnUnmount": true,
-                "component": "select-field",
+                "component": "select",
                 "condition": Object {
                   "is": "39",
                   "when": "ems_id",
                 },
+                "id": "cloud_tenant",
                 "isDisabled": false,
                 "key": "id-39",
                 "label": "Cloud Tenant",
@@ -537,12 +563,13 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
             ],
+            "id": "placement",
             "name": "placement",
             "title": "Placement",
           },
@@ -554,7 +581,8 @@ exports[`Cloud Network form component should render form 1`] = `
             },
             "fields": Array [
               Object {
-                "component": "select-field",
+                "component": "select",
+                "id": "provider_network_type",
                 "isDisabled": false,
                 "label": "Provider Network Type",
                 "name": "provider_network_type",
@@ -598,6 +626,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_physical_network",
                     "isDisabled": false,
                     "label": "Physical Network",
                     "maxLength": 128,
@@ -605,12 +634,13 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-1",
                 "name": "subform-1",
               },
               Object {
@@ -622,6 +652,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": false,
                     "label": "Segmentation ID",
                     "maxLength": 128,
@@ -629,12 +660,13 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-2",
                 "name": "subform-2",
               },
               Object {
@@ -646,6 +678,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_physical_network",
                     "isDisabled": false,
                     "label": "Physical Network",
                     "maxLength": 128,
@@ -653,13 +686,14 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": false,
                     "label": "Segmentation ID",
                     "maxLength": 128,
@@ -667,12 +701,13 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validate": Array [
                       Object {
                         "message": "Required",
-                        "type": "required-validator",
+                        "type": "required",
                       },
                     ],
                     "validateOnMount": true,
                   },
                 ],
+                "id": "subform-3",
                 "name": "subform-3",
               },
               Object {
@@ -684,15 +719,18 @@ exports[`Cloud Network form component should render form 1`] = `
                 "fields": Array [
                   Object {
                     "component": "text-field",
+                    "id": "provider_segmentation_id",
                     "isDisabled": false,
                     "label": "Segmentation ID",
                     "maxLength": 128,
                     "name": "provider_segmentation_id",
                   },
                 ],
+                "id": "subform-4",
                 "name": "subform-4",
               },
             ],
+            "id": "provider-information",
             "name": "provider-information",
             "title": "Network Provider Information",
           },
@@ -701,19 +739,20 @@ exports[`Cloud Network form component should render form 1`] = `
             "fields": Array [
               Object {
                 "component": "text-field",
+                "id": "name",
                 "label": "Network Name",
                 "name": "name",
                 "validate": Array [
                   Object {
                     "message": "Required",
-                    "type": "required-validator",
+                    "type": "required",
                   },
                 ],
                 "validateOnMount": true,
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_external_facing",
                 "label": "External Router",
                 "name": "external_facing",
@@ -722,7 +761,7 @@ exports[`Cloud Network form component should render form 1`] = `
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_enabled",
                 "label": "Administrative State",
                 "name": "enabled",
@@ -731,7 +770,7 @@ exports[`Cloud Network form component should render form 1`] = `
               },
               Object {
                 "bsSize": "mini",
-                "component": "switch-field",
+                "component": "switch",
                 "id": "cloud_network_shared",
                 "label": "Shared",
                 "name": "shared",
@@ -739,6 +778,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "onText": "Yes",
               },
             ],
+            "id": "network-information",
             "name": "network-information",
             "title": "Network Information",
           },

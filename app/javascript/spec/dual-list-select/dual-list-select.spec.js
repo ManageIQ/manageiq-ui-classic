@@ -3,8 +3,13 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import DualList from '../../components/dual-list-select';
 
+jest.mock('@@ddf', () => ({
+  useFieldApi: props => ({ meta: {}, input: {}, ...props }),
+}));
+
 describe('Dual list component', () => {
   const onChangeSpy = jest.fn();
+
 
   const props = {
     options: [

@@ -3,12 +3,16 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import DualGroup from '../../components/dual-group';
 
+jest.mock('@@ddf', () => ({
+  useFormApi: () => ({
+    renderForm: ([{ name }]) => `hello ${name}`,
+  }),
+}));
+
+
 describe('Dual group component', () => {
   const initialProps = {
     name: 'dualgroup',
-    formOptions: {
-      renderForm: ([{ name }]) => `hello ${name}`,
-    },
     fields: [
       { name: 'John' },
       { name: 'Arthur' },

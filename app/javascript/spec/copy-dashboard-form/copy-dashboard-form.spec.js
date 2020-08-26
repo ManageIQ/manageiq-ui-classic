@@ -124,15 +124,11 @@ describe('Copy Dashboard form', () => {
       wrapper.update();
     });
 
-    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-      .instance();
     expect(fetchMock.calls()).toHaveLength(2);
 
     act(() => {
-      form.batch(() => {
-        form.change('group_id', '888');
-        form.change('name', 'new_name');
-      });
+      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
+      wrapper.find('Select[name="group_id"]').at(1).prop('onChange')('888');
     });
     setTimeout(async() => {
       wrapper.update();

@@ -19,6 +19,7 @@ exports[`PxeServersForm should render correctly 1`] = `
             "fields": Array [
               Object {
                 "component": "text-field",
+                "id": "name",
                 "isRequired": true,
                 "label": "Name",
                 "name": "name",
@@ -29,18 +30,19 @@ exports[`PxeServersForm should render correctly 1`] = `
               Object {
                 "component": "text-field",
                 "helperText": "URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba",
+                "id": "uri",
                 "isRequired": true,
                 "label": "URI",
                 "name": "uri",
                 "placeholder": "schema://host:port/path",
                 "validate": Array [
                   Object {
-                    "type": "required-validator",
+                    "type": "required",
                   },
                   Object {
                     "message": "URI should begin with s3://, nfs://, swift:// or smb://",
                     "pattern": /\\^\\(\\(s3\\)\\|\\(nfs\\)\\|\\(swift\\)\\|\\(smb\\)\\):\\\\/\\\\//,
-                    "type": "pattern-validator",
+                    "type": "pattern",
                   },
                 ],
               },
@@ -58,56 +60,65 @@ exports[`PxeServersForm should render correctly 1`] = `
                     "fields": Array [
                       Object {
                         "component": "text-field",
+                        "id": "authentication.userid",
                         "isRequired": true,
                         "label": "Username",
                         "name": "authentication.userid",
                         "validate": Array [
                           Object {
-                            "type": "required-validator",
+                            "type": "required",
                           },
                         ],
                       },
                       Object {
                         "component": "password-field",
+                        "id": "authentication.password",
                         "isRequired": true,
                         "label": "Password",
                         "name": "authentication.password",
                         "validate": Array [
                           Object {
-                            "type": "required-validator",
+                            "type": "required",
                           },
                         ],
                       },
                     ],
+                    "id": "authentication.valid",
                     "name": "authentication.valid",
                     "validationDependencies": Array [
                       "uri",
                     ],
                   },
                 ],
+                "id": "authentication-subform",
                 "name": "authentication-subform",
               },
               Object {
                 "component": "text-field",
+                "id": "access_url",
                 "label": "Access URL",
                 "name": "access_url",
               },
               Object {
                 "component": "text-field",
+                "id": "pxe_directory",
                 "label": "PXE Directory",
                 "name": "pxe_directory",
               },
               Object {
                 "component": "text-field",
+                "id": "windows_images_directory",
                 "label": "Windows Images Directory",
                 "name": "windows_images_directory",
               },
               Object {
                 "component": "text-field",
+                "id": "customization_directory",
                 "label": "Customization Directory",
                 "name": "customization_directory",
               },
             ],
+            "id": "basic-information",
             "name": "basic-information",
             "title": "Basic Information",
           },
@@ -120,10 +131,12 @@ exports[`PxeServersForm should render correctly 1`] = `
             "fields": Array [
               Object {
                 "component": "text-field",
+                "id": "pxe_menus[0].file_name",
                 "label": "Filename",
                 "name": "pxe_menus[0].file_name",
               },
             ],
+            "id": "pxe-image-menus-subform",
             "name": "pxe-image-menus-subform",
             "title": "PXE Image Menus",
           },
