@@ -491,12 +491,7 @@ class ReportController < ApplicationController
 
     elsif nodes.length == 5
       @sb[:selected_rep_id] = nodes[4]
-      if role_allows?(:feature => "miq_report_widget_editor")
-        # all widgets for this report
-        get_all_widgets("report", nodes[4])
-      end
       get_all_reps(nodes[4])
-
     elsif nodes.length == 6 # Report result selected.
       @sb[:miq_report_id] = nil
       report = show_saved_report(determine_report_result_id('report'))
