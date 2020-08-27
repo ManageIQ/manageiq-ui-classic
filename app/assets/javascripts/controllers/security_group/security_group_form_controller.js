@@ -24,7 +24,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.securityGroupModel );
 
-      miqService.networkProviders()
+      miqService.networkProviders({filter_security_group_creation: true})
         .then(function(providers) {
           vm.ems = providers;
         });
