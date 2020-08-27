@@ -1482,7 +1482,7 @@ module VmCommon
       action = "prov_edit"
     when "ownership"
       partial = "shared/views/ownership"
-      header = _("Set Ownership for %{vms_or_templates}") % {:vms_or_templates => ui_lookup(:table => table)}
+      header = header_for_ownership
       action = "ownership_update"
     when "performance"
       partial = "layouts/performance"
