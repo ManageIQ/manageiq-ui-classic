@@ -2,6 +2,18 @@ module Mixins
   module Actions
     module VmActions
       module Ownership
+        extend ActiveSupport::Concern
+
+        def ownership_items_hash
+          return [] unless @ownershipitems
+
+          @ownershipitems.map { |item| {:id => item.id.to_s, :kind => Api::CollectionConfig.new.name_for_subclass(item.class)} }
+        end
+
+        included do
+          helper_method :ownership_items_hash
+        end
+
         # Set Ownership selected db records
         def set_ownership
           assert_privileges(params[:pressed])
