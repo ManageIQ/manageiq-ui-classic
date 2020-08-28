@@ -73,6 +73,7 @@ class ApplicationController < ActionController::Base
   include_concern 'ReportDownloads'
   include_concern 'SessionSize'
   include_concern 'SysprepAnswerFile'
+  include_concern 'UserScriptFile'
   include_concern 'Tags'
   include_concern 'Tenancy'
   include_concern 'Timelines'

@@ -402,6 +402,24 @@
               :prefix                     => "/miq_request/",
               :keys                       => keys})
     - else
+      - if (@edit && @edit[:new] && @edit[:new][:user_script_text]) || (@options && @options[:user_script_text])
+        - file_name = (@edit && @edit[:new]) ? @edit[:new][:user_script] : @options[:user_script]
+        - label = _("Uploaded File '%{filename}'") % {:filename => file_name}
+        - keys = [:user_script_text]
+        = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => label,
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
+      - if @edit && @edit[:new]
+        - keys = [:user_script]
+        = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => _("Upload File"),
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
       - keys = [:migratable, :pin_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
