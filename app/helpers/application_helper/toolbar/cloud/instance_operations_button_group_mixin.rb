@@ -99,7 +99,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
         N_('Access'),
         :items => [
           included_class.button(
-            :vm_vnc_console,
+            :vm_html5_console,
             'pficon pficon-screen fa-lg',
             N_('Open a web-based HTML5 console for this VM'),
             N_('VM Console'),
