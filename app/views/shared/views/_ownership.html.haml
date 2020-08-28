@@ -2,9 +2,9 @@
 
 %h3
   = _('Changes')
--# Possible values for item kind are: vms, templates, services
-= react('SetOwnershipForm', { :ownershipItems => @ownershipitems.map {|item| {:id => item.id.to_s, :kind => item.class.to_s.demodulize.underscore.pluralize} }})
+-# Possible values for item kind are: vms, templates, services, service_templates
 
+= react('SetOwnershipForm', { :ownershipItems => ownership_items_hash })
 
 %hr
 %h3
