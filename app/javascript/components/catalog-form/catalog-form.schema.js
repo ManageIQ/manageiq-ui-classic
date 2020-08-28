@@ -6,10 +6,10 @@ export const asyncValidator = (value, catalogId) =>
   API.get(`/api/service_catalogs?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)
     .then((json) => {
       if (json.resources.find(({ id, name }) => name === value && id !== catalogId)) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __("Name can't be blank");
+        throw __("Name can't be blank");
       }
       return undefined;
     });

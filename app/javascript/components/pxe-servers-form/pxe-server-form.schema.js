@@ -6,10 +6,10 @@ export const asyncValidator = (value, serverId) =>
   API.get(`/api/pxe_servers?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)
     .then((json) => {
       if (json.resources.find(({ id, name }) => name === value && id !== serverId)) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __('Required');
+        throw __('Required');
       }
       return undefined;
     });

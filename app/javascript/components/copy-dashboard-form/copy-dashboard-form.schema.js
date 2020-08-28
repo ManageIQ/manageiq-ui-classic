@@ -6,13 +6,13 @@ export const asyncValidator = (value, dashboardId, name) =>
   http.get(`/report/dashboard_get/${dashboardId}?name=${value}`)
     .then((json) => {
       if (value === name) {
-        return __('Use different name');
+        throw __('Use different name');
       }
       if (json.length > 0) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __("Name can't be blank");
+        throw __("Name can't be blank");
       }
       return undefined;
     });
