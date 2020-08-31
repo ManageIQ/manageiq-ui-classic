@@ -13,6 +13,7 @@ class AutomationManagerController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   menu_section :at
+  feature_for_actions "#{controller_name}_providers", *ADV_SEARCH_ACTIONS
 
   def self.model
     ManageIQ::Providers::AutomationManager

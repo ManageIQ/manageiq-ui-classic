@@ -50,4 +50,5 @@ class CloudObjectStoreObjectController < ApplicationController
   end
 
   menu_section :ost
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end

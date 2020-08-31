@@ -273,6 +273,6 @@ class CloudNetworkController < ApplicationController
   end
 
   menu_section :net
-
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end

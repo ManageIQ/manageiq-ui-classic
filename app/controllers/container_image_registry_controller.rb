@@ -9,6 +9,8 @@ class ContainerImageRegistryController < ApplicationController
 
   menu_section :cnt
 
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+
   private
 
   def textual_group_list

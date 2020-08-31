@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
   include Mixins::TimeHelper
   include Mixins::MenuSection
   include Mixins::GenericToolbarMixin
+  include Mixins::RbacFeaturePairingMixin
   include Mixins::ControllerConstants
   include Mixins::CustomButtons
   include Mixins::CheckedIdMixin
@@ -1009,8 +1010,12 @@ class ApplicationController < ActionController::Base
 
   def check_generic_rbac
     ident = rbac_feature_id("#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}")
+    features = Array(self.class.rbac_feature_pairing[action_name.to_sym])
+
     if MiqProductFeature.feature_exists?(ident)
       role_allows?(:feature => ident, :any => true)
+    elsif features.present?
+      features.any? { |feature| role_allows?(:feature => feature, :any => true) }
     else
       true
     end
