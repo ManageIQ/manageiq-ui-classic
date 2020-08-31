@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import FormButtons from './form-buttons';
-import formButtonsReducer from './form-buttons-reducer';
-
-ManageIQ.redux.addReducer({ FormButtons: formButtonsReducer });
 
 function FormButtonsRedux(props) {
   return <FormButtons {...props} />;

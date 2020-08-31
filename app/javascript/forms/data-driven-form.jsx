@@ -13,8 +13,8 @@ import { FormTemplate } from '@data-driven-forms/pf3-component-mapper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setPristine } from '../miq-redux/form-reducer';
 import defaultComponentMapper from './mappers/componentMapper';
+import SpyField from './spy-field';
 
 Validators.messages = {
   ...Validators.messages,
@@ -28,7 +28,15 @@ const defaultLabels = {
 };
 
 const MiqFormRenderer = ({
-  className, setPristine, onStateUpdate, componentMapper, buttonsLabels, disableSubmit, canReset, showFormControls, ...props
+  className,
+  componentMapper,
+  buttonsLabels,
+  disableSubmit,
+  canReset,
+  showFormControls,
+  schema: { fields, ...schema },
+  initialize,
+  ...props
 }) => {
   const { current: MiqFormTemplate } = useRef(props => (
     <FormTemplate
@@ -43,14 +51,9 @@ const MiqFormRenderer = ({
 
   return (
     <FormRender
-      componentMapper={componentMapper}
+      componentMapper={{ ...componentMapper, 'spy-field': SpyField }}
       FormTemplate={MiqFormTemplate}
-      onStateUpdate={(formOptions) => {
-        setPristine(formOptions.pristine);
-        if (onStateUpdate) {
-          onStateUpdate(formOptions);
-        }
-      }}
+      schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
       {...props}
     />
   );
@@ -58,30 +61,33 @@ const MiqFormRenderer = ({
 
 MiqFormRenderer.propTypes = {
   className: PropTypes.string,
-  onStateUpdate: PropTypes.func,
-  setPristine: PropTypes.func.isRequired,
   buttonsLabels: PropTypes.any,
   componentMapper: PropTypes.any,
   buttonsLabels: PropTypes.any,
+  schema: PropTypes.shape({
+    fields: PropTypes.arrayOf(PropTypes.any),
+  }),
   disableSubmit: PropTypes.arrayOf(PropTypes.string),
   canReset: PropTypes.bool,
   showFormControls: PropTypes.bool,
+  initialize: PropTypes.func,
 };
 
 MiqFormRenderer.defaultProps = {
   className: 'form-react',
-  onStateUpdate: undefined,
   buttonsLabels: {},
   componentMapper: defaultComponentMapper,
   buttonsLabels: {},
+  schema: {
+    fields: [],
+  },
   disableSubmit: ['pristine', 'invalid'],
   canReset: false,
   showFormControls: true,
+  initialize: undefined,
 };
-
-const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
 
 export {
   componentTypes, validatorTypes, useFormApi, useFieldApi, FieldArray, FormSpy,
 };
-export default connect(null, mapDispatchToProps)(MiqFormRenderer);
+export default connect()(MiqFormRenderer);

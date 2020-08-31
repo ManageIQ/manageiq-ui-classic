@@ -41,10 +41,10 @@ describe('DataDrivenForm', () => {
     const wrapper = mount(<DataDrivenForm {...initialProps} store={ManageIQ.redux.store} />);
     wrapper.find('input').first().simulate('change', { target: { value: 'changed-value' } });
 
-    expect(ManageIQ.redux.store.getState().formReducer.pristine).toEqual(false);
+    expect(ManageIQ.redux.store.getState().FormButtons.pristine).toEqual(false);
 
     wrapper.find('input').first().simulate('change', { target: { value: '' } });
 
-    expect(ManageIQ.redux.store.getState().formReducer.pristine).toEqual(true);
+    expect(ManageIQ.redux.store.getState().FormButtons.pristine).toEqual(true);
   });
 });
