@@ -57,6 +57,7 @@ class EmsCloudController < ApplicationController
   public :restful?
 
   menu_section :clo
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 
   def sync_users

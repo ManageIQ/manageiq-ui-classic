@@ -924,4 +924,5 @@ class ReportController < ApplicationController
   end
 
   menu_section :vi
+  feature_for_actions %w[miq_report_new miq_report_copy miq_report_edit], *EXP_EDITOR_ACTIONS
 end

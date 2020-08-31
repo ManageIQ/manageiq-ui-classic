@@ -1193,4 +1193,16 @@ class MiqPolicyController < ApplicationController
   end
 
   menu_section :con
+  feature_for_actions %w[
+    alert_new
+    alert_copy
+    alert_edit
+    condition_new
+    condition_copy
+    condition_policy_copy
+    condition_edit
+    policy_new
+    policy_copy
+    policy_edit
+  ], *EXP_EDITOR_ACTIONS
 end

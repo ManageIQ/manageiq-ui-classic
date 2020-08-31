@@ -443,6 +443,7 @@ class NetworkRouterController < ApplicationController
   end
 
   menu_section :net
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   def switch_to_bool(option)
     option && option =~ /on|true/i

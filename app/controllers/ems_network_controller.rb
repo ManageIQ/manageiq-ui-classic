@@ -65,5 +65,6 @@ class EmsNetworkController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :net
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
 end
