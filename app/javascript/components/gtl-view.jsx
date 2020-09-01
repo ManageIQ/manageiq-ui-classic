@@ -122,7 +122,7 @@ const setRowActive = (rows, item) => {
     selected: (row.id === item.id),
   }));
 
-  window.sendDataWithRx({ rowSelect: selectedItem });
+  window.sendDataWithRx({ rowSelect: item });
   ManageIQ.gridChecks = [item.id];
 
   return newRows;
@@ -175,7 +175,7 @@ const gtlReducer = (state, action) => {
       // action.item ... the row to become active
       return {
         ...state,
-        rows: setRowActive(state.rows, actions.item),
+        rows: setRowActive(state.rows, action.item),
       };
     case 'setScope':
       // action.namedScope ... new named scrop name
@@ -211,9 +211,6 @@ const subscribeToSubject = dispatch =>
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         // TODO
          this.setExtraClasses();
-      } else if (event.type === 'TOOLBAR_CLICK_FINISH' && (tileViewSelector() || tableViewSelector())) {
-        // uz se nepouziva
-         this.setExtraClasses(this.initObject.gtlType);
       }
 
       if (event.setScope && event.setScope.name === RX_IDENTITY) {
@@ -381,8 +378,8 @@ const GtlView = ({
   const inEditMode = () => additionalOptions.in_a_form;
 
   const onItemClick = (item, event) => {
-    let targetUrl = showUrl;
-
+    // no need to set targetUrl if custom_action is set i.e. for pre prov screen
+    let targetUrl = (additionalOptions && additionalOptions.custom_action) ? undefined : showUrl;
     // Empty showUrl disables onRowClick action. Nothing to do.
     if (!showUrl) {
       return false;
@@ -410,7 +407,7 @@ const GtlView = ({
     }
 
     // explorer case + current controller (non nested) + policies
-    if (isExplorer && isCurrentControllerOrPolicies(targetUrl)) {
+    if (isExplorer && targetUrl && isCurrentControllerOrPolicies(targetUrl)) {
       miqSparkleOn();
       if (_.isString(targetUrl) && targetUrl.indexOf('?id=') !== -1) {
         var itemId = constructSuffixForTreeUrl(showUrl, activeTree, item);
@@ -423,15 +420,13 @@ const GtlView = ({
         targetUrl = `/${ManageIQ.controller}/tree_select/?id=`;
       }
 
-      // the setExtraClasses is probably dead now
-      // post(targetUrl + itemId).always(() => this.setExtraClasses());
-      miqAjax(targetUrl + itemId);
+      miqAjax(targetUrl + item.id);
       return true;
     }
 
     // non-explorer case + nested case
     // targetUrl === 'true' disables clicks for tasks w/o parent_path and parent_id
-    if (targetUrl !== 'true') {
+    if (typeof targetUrl !== 'undefined' && targetUrl !== 'true') {
       miqSparkleOn();
       const lastChar = targetUrl[targetUrl.length - 1];
       if (lastChar !== '/' && lastChar !== '=') {
