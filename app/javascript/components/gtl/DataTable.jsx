@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { renderDataTableToolbar } from './utils';
 import { renderPagination } from './utils';
-import {useReducer} from "react";
 
 const classNames = require('classnames');
 

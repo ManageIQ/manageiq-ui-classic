@@ -497,7 +497,7 @@ describe CatalogController do
         %w[root xx-otcfn xx-othot xx-otazu xx-otazs].each do |id|
           post :tree_select, :params => { :id => id, :format => :js }
           expect(response).to have_http_status 200
-          expect(response).to render_template('layouts/angular/_gtl')
+          expect(response).to render_template('layouts/react/_gtl')
         end
       end
 

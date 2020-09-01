@@ -130,8 +130,6 @@ const setRowActive = (rows, item) => {
 
 
 const broadcastSelectedItem = (item) => {
-  console.log('broadcastSelectedItem:', item);
-
   sendDataWithRx({ rowSelect: item });
 
   if (!window.ManageIQ) {
@@ -196,33 +194,27 @@ const gtlReducer = (state, action) => {
 
 const RX_IDENTITY = 'reportDataController';
 
-//   ReportDataController.prototype.setScope = function(scope) {
-//     this.initObject.additionalOptions.named_scope = [];
-//     this.refreshData({additionalOptions: {named_scope: scope}});
-//   };
-//
-
 /* eslint no-unused-vars: 'off' */
 /* eslint no-undef: 'off' */
 const subscribeToSubject = dispatch =>
   listenToRx(
     (event) => {
-      // if (event.initController && event.initController.name === RX_IDENTITY) {
-      //   // uz se nevola
-      //   // this.initController(event.initController.data);
-      // } else if (event.unsubscribe && event.unsubscribe === RX_IDENTITY) {
-      //   // nemelo by byt potreba, unsubscribe udelame my
-      //   // this.onUnsubscribe();
-      // } else if (event.refreshData && event.refreshData.name === RX_IDENTITY) {
-      //   // nemelo by byt potreba, nikde se nevola
-      //   // this.refreshData(event.data);
-      // } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
-      //   // TODO
-      //   // this.setExtraClasses();
-      // } else if (event.type === 'TOOLBAR_CLICK_FINISH' && (tileViewSelector() || tableViewSelector())) {
-      //   // uz se nepouziva
-      //   // this.setExtraClasses(this.initObject.gtlType);
-      // }
+      if (event.initController && event.initController.name === RX_IDENTITY) {
+        // uz se nevola
+         this.initController(event.initController.data);
+      } else if (event.unsubscribe && event.unsubscribe === RX_IDENTITY) {
+        // nemelo by byt potreba, unsubscribe udelame my
+         this.onUnsubscribe();
+      } else if (event.refreshData && event.refreshData.name === RX_IDENTITY) {
+        // nemelo by byt potreba, nikde se nevola
+         this.refreshData(event.data);
+      } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
+        // TODO
+         this.setExtraClasses();
+      } else if (event.type === 'TOOLBAR_CLICK_FINISH' && (tileViewSelector() || tableViewSelector())) {
+        // uz se nepouziva
+         this.setExtraClasses(this.initObject.gtlType);
+      }
 
       if (event.setScope && event.setScope.name === RX_IDENTITY) {
         dispatch({ type: 'setScope', namedScope: event.data });
@@ -254,21 +246,6 @@ const initialState = {
     sort_col: 0,
     sort_dir: "ASC",
   },
-//     this.initObject = initObject;
-//     if (this.initObject.showUrl === '') {
-//       this.initObject.showUrl = '/' + ManageIQ.controller;
-//       if (this.initObject.isExplorer) {
-//         this.initObject.showUrl += '/x_show/';
-//       } else {
-//         this.initObject.showUrl += '/show/';
-//       }
-//     } else if (this.initObject.showUrl === 'false') {
-//       this.initObject.showUrl = false;
-//     }
-//     this.gtlType = initObject.gtlType || DEFAULT_VIEW;
-//     this.setLoading(true);
-//     ManageIQ.gridChecks = [];
-//     this.$window.sendDataWithRx({setCount: 0});
 };
 
 const setPaging = (settings, start, perPage) => {
@@ -352,53 +329,6 @@ const GtlView = ({
     return false;
   };
 
-  // const sortBy = {
-  //   sortObject: this.gtlData.cols[headerId],
-  //   isAscending: isAscending,
-  // };
-
-  //     return this.MiQDataTableService
-  //       .retrieveRowsAndColumnsFromUrl(modelName, activeTree, parentId, isExplorer, settings, records, additionalOptions)
-  //       .then(function(gtlData) {
-  //         this.settings = gtlData.settings || basicSettings;
-  //         if (this.settings.sort_col === -1) {
-  //           this.settings.sort_col = 0;
-  //         }
-  //
-  //         // Camelize the quadicon data received from the server
-  //         _.each(gtlData.rows, function(row) {
-  //           row.quad = camelizeQuadicon(row.quad);
-  //         });
-  //
-  //         this.gtlData = gtlData;
-  //         this.perPage.text = this.settings.perpage;
-  //         this.perPage.value = this.settings.perpage;
-  //         this.initObject = this.initObject || {};
-  //
-  //         this.initObject.showUrl = this.settings.url || this.initObject.showUrl;
-  //
-  //
-  //         // do we need this?
-  //         // if under vm/policies go to vm_infra/policies
-  //         // if under vm/<something> go to vm_cloud/<something>
-  //         if (this.initObject.showUrl) {
-  //           var splitUrl = this.initObject.showUrl.split('/');
-  //           if (splitUrl && splitUrl[1] === 'vm') {
-  //             splitUrl[1] = splitUrl[2] === 'policies' ? 'vm_infra' : 'vm_cloud';
-  //             this.initObject.showUrl = splitUrl.join('/');
-  //           }
-  //         }
-  //         // Apply gettext __() on column headers
-  //         for (var i = 0;  i < gtlData.cols.length; i++) {
-  //           var column = gtlData.cols[i];
-  //           if (column.hasOwnProperty('text')) {
-  //             column.header_text = __(column.text);
-  //           }
-  //         }
-  //         return gtlData;
-  //       }.bind(this));
-  //   };
-
   if (isLoading) {
     return <div className="spinner spinner-lg" />;
   }
@@ -453,19 +383,10 @@ const GtlView = ({
   const onItemClick = (item, event) => {
     let targetUrl = showUrl;
 
-    console.log('onRowClick:', item, event);
-    // event.stopPropagation();
-    // event.preventDefault();
-
     // Empty showUrl disables onRowClick action. Nothing to do.
     if (!showUrl) {
       return false;
     }
-
-    // // Clicks table cell outside the checkbox.  // FIXME: test/verify
-    // if ($(event.target).is('.is-checkbox-cell')) {
-    //   return false;
-    // }
 
     // If custom_action is specified, send and RxJS message with actionType set
     // to custom_action value.

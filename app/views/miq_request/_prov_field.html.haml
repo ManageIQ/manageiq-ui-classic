@@ -481,6 +481,7 @@
       - elsif [:sysprep_upload_file].include?(field)
         .col-md-8
           - path = Rails.application.routes.recognize_path request.referer
+          - p "XXXXXXXXX #{path[:controller].inspect}"
           - if path[:controller] == "miq_request"
             = form_tag({:action    => "prov_edit",
                         :req_id    => @edit[:req_id].to_s},
