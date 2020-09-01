@@ -47,7 +47,7 @@ module GtlHelper
       :db                             => @db,
       :parent                         => @parent,
       :pages                          => @pages,
-
+      :flash_messages                 => @flash_array,
       :report_data_additional_options => @report_data_additional_options,
     }
 
@@ -71,6 +71,7 @@ module GtlHelper
     # => handle empty data
     #
     react 'GtlView', {
+      flashMessages:      options[:flash_messages],
       additionalOptions: options[:report_data_additional_options],
       modelName:         options[:model_name],
       activeTree:        options[:active_tree],

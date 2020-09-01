@@ -5,6 +5,7 @@ import assign from 'lodash/assign';
 
 import { StaticGTLView } from '../components/gtl';
 import { NoRecordsFound } from './gtl/utils';
+import { FlashMessage } from '../components/flash-message/flash-message';
 
 const generateParamsFromSettings = (settings) => {
   const params = {};
@@ -164,7 +165,6 @@ const reduceSelectedItem = (state, item, isSelected) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
-      console.log('gtlReducer', action);
       return {
         ...state,
         isLoading: false,
@@ -287,6 +287,7 @@ const computePagination = settings => ({
 });
 
 const GtlView = ({
+  flashMessages,
   additionalOptions,
   modelName,
   activeTree,
@@ -524,6 +525,14 @@ const GtlView = ({
 
   return (
     <div id="miq-gtl-view">
+      { (flashMessages) && flashMessages.map((message, index) =>
+          <div id={`flash-msg-div-${index}`} key={index}>
+            <FlashMessage
+              flashMessage={message}
+            />
+          </div>
+        )
+      }
       { (rows.length === 0) ? (
         <NoRecordsFound/>
       ) : (
@@ -547,6 +556,7 @@ const GtlView = ({
 };
 
 GtlView.propTypes = {
+  flashMessages: PropTypes.array,
   additionalOptions: PropTypes.shape({}),
   modelName: PropTypes.string,
   activeTree: PropTypes.string,
@@ -561,6 +571,7 @@ GtlView.propTypes = {
 };
 
 GtlView.defaultProps = {
+  flashMessages: null,
   additionalOptions: {},
   modelName: null,
   activeTree: null,
