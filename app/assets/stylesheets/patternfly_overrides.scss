@@ -714,3 +714,13 @@ fieldset {
 table.c3-tooltip td {
   background-color: #393f44;
 }
+
+
+  #action_info_div{
+  .bootstrap-select
+  {
+    .dropdown-toggle{
+        width:max-content;
+    }
+  }
+  }
