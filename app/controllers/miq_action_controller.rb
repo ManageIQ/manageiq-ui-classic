@@ -122,7 +122,7 @@ class MiqActionController < ApplicationController
 
       action_set_record_vars(action)
       if action_valid_record?(action) && !@flash_array && action.save
-        AuditEvent.success(build_saved_audit(action, params[:button] == "add"))
+        AuditEvent.success(build_saved_audit(action, @edit))
         if params[:button] == "save"
           add_flash(_("Action \"%{name}\" was saved") % {:name => @edit[:new][:description]})
         else
