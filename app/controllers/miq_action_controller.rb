@@ -98,7 +98,7 @@ class MiqActionController < ApplicationController
       return
     when "reset", nil # Reset or first time in
       action_build_edit_screen
-      @sb[:action] = "action_edit"
+      @sb[:action] = "miq_action_edit"
       if params[:button] == "reset"
         add_flash(_("All changes have been reset"), :warning)
       end

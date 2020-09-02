@@ -158,13 +158,13 @@
                                             "data-method"          => :post,
                                             "data-miq_sparkle_on"  => true,
                                             "data-miq_sparkle_off" => true,
-                                            "data-click_url"       => {:url => url_for_only_path(:action => 'action_edit',
+                                            "data-click_url"       => {:url => url_for_only_path(:action => 'miq_action_edit',
                                                                                                  :button => action,
                                                                                                  :id     => @action.id || 'new')}.to_json}
             %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
             %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
         .spacer
-          
+
       .col-md-5
         = _(' Selected Alerts:')
         %span#members_chosen_div

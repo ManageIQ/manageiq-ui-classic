@@ -4,83 +4,10 @@ describe 'routes for MiqPolicyController' do
   let(:controller_name) { 'miq_policy' }
 
   it_behaves_like 'A controller that has advanced search routes'
-  it_behaves_like 'A controller that has explorer routes'
-
-  describe '#action_edit' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/action_edit")).to route_to("#{controller_name}#action_edit")
-    end
-  end
-
-  describe '#action_field_changed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/action_field_changed")).to route_to("#{controller_name}#action_field_changed")
-    end
-  end
-
-  describe '#alert_edit' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_edit")).to route_to("#{controller_name}#alert_edit")
-    end
-  end
-
-  describe '#alert_field_changed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_field_changed")).to route_to("#{controller_name}#alert_field_changed")
-    end
-  end
-
-  describe '#alert_profile_assign' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_profile_assign")).to route_to("#{controller_name}#alert_profile_assign")
-    end
-  end
-
-  describe '#alert_profile_assign_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/alert_profile_assign_changed")
-      ).to route_to("#{controller_name}#alert_profile_assign_changed")
-    end
-  end
-
-  describe '#alert_profile_edit' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_profile_edit")).to route_to("#{controller_name}#alert_profile_edit")
-    end
-  end
-
-  describe '#alert_profile_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/alert_profile_field_changed")
-      ).to route_to("#{controller_name}#alert_profile_field_changed")
-    end
-  end
 
   describe '#button' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/button")).to route_to("#{controller_name}#button")
-    end
-  end
-
-  describe '#condition_edit' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/condition_edit")).to route_to("#{controller_name}#condition_edit")
-    end
-  end
-
-  describe '#condition_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/condition_field_changed")
-      ).to route_to("#{controller_name}#condition_field_changed")
-    end
-  end
-
-  describe '#event_edit' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/event_edit")).to route_to("#{controller_name}#event_edit")
     end
   end
 
@@ -136,9 +63,9 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#policy_edit' do
+  describe '#miq_policy_edit' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/policy_edit")).to route_to("#{controller_name}#policy_edit")
+      expect(post("/#{controller_name}/miq_policy_edit")).to route_to("#{controller_name}#miq_policy_edit")
     end
   end
 
@@ -148,15 +75,9 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#profile_edit' do
+  describe '#miq_policy_edit' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/profile_edit")).to route_to("#{controller_name}#profile_edit")
-    end
-  end
-
-  describe '#profile_field_changed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/profile_edit")).to route_to("#{controller_name}#profile_edit")
+      expect(post("/#{controller_name}/miq_policy_edit")).to route_to("#{controller_name}#miq_policy_edit")
     end
   end
 
@@ -203,6 +124,12 @@ describe 'routes for MiqPolicyController' do
   describe '#wait_for_task' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/wait_for_task")).to route_to("#{controller_name}#wait_for_task")
+    end
+  end
+
+  describe '#miq_event_edit' do
+    it 'routes with POST' do
+      expect(post("/#{controller_name}/miq_event_edit")).to route_to("#{controller_name}#miq_event_edit")
     end
   end
 

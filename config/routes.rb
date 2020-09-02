@@ -2139,7 +2139,7 @@ Rails.application.routes.draw do
         explorer
       ),
       :post => %w(
-        action_edit
+        miq_action_edit
         action_field_changed
         button
         tree_autoload

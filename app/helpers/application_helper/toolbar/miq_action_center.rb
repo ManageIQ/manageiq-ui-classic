@@ -7,14 +7,14 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
       t,
       :items => [
         button(
-          :action_edit,
+          :miq_action_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Action'),
           t,
           :klass     => ApplicationHelper::Button::MiqActionEdit,
           :url_parms => "?type=basic"),
         button(
-          :action_delete,
+          :miq_action_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Action'),
           t,
