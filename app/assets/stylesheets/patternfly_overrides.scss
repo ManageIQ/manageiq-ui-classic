@@ -714,3 +714,8 @@ fieldset {
 table.c3-tooltip td {
   background-color: #393f44;
 }
+
+/* popovers should go over menu, but under .miq-main-menu-overlay */
+#popover {
+  z-index: 9999;
+}
