@@ -2615,19 +2615,14 @@ class MiqAeClassController < ApplicationController
   end
 
   def ns_right_cell_text
-	model = ui_lookup(:model => @edit[:typ])
-	name_for_msg = if @edit[:rec_id].nil?
-		if model=="Automate Domain"
-			_("Adding a new automate domain")
-		else 
-			_("Adding a new automate namespace")
-		end         
-	else
-		_("Editing %{model} \"%{name}\"") % {:model => model, :name => @ae_ns.name}
-	end
-	name_for_msg
+    model = ui_lookup(:model => @edit[:typ])
+    name_for_msg = if @edit[:rec_id].nil?
+                     _("Adding a new %{model}") % {:model => model}
+                   else
+                     _("Editing %{model} \"%{name}\"") % {:model => model, :name => @ae_ns.name}
+                   end
+    name_for_msg
   end
-
 
   def ordered_domains_for_priority_edit_screen
     User.current_tenant.sequenceable_domains.collect(&:name)
