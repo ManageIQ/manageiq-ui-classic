@@ -21,6 +21,7 @@ const findSkipSubmits = (schema, items) => {
 
 const typeSelectField = (edit, filter) => ({
   component: 'provider-select-field',
+  id: 'type',
   name: 'type',
   label: __('Type'),
   kind: filter,
@@ -34,6 +35,7 @@ const typeSelectField = (edit, filter) => ({
 const commonFields = [
   {
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
@@ -43,6 +45,7 @@ const commonFields = [
   },
   {
     component: componentTypes.SELECT,
+    id: 'zone_id',
     name: 'zone_id',
     label: __('Zone'),
     loadOptions: () =>
@@ -60,6 +63,7 @@ export const loadProviderFields = (kind, type) => API.options(`/api/providers?ty
     ...commonFields,
     {
       component: componentTypes.SUB_FORM,
+      id: type,
       name: type,
       ...provider_form_schema, // eslint-disable-line camelcase
     },

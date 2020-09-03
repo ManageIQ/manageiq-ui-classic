@@ -4,6 +4,7 @@ function createSchema(maxNameLen, maxDescLen) {
   return {
     fields: [{
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       maxLength: maxNameLen,
       label: __('Name'),
@@ -14,6 +15,7 @@ function createSchema(maxNameLen, maxDescLen) {
       }],
     }, {
       component: componentTypes.TEXT_FIELD,
+      id: 'description',
       name: 'description',
       maxLength: maxDescLen,
       label: __('Description'),

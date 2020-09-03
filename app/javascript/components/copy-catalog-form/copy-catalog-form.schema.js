@@ -19,6 +19,7 @@ function createSchema() {
   const fields = [
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validate: [
         value => asyncValidatorDebounced(value),
@@ -30,6 +31,7 @@ function createSchema() {
     },
     {
       component: componentTypes.CHECKBOX,
+      id: 'copy_tags',
       name: 'copy_tags',
       label: __('Copy Tags'),
     }];

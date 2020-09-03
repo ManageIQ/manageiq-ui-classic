@@ -24,10 +24,12 @@ export default (miqGroups, name, dashboardId) => {
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
+      id: 'basic-info',
       name: 'basic-info',
       fields: [
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'name',
           name: 'name',
           validate: [
             value => asyncValidatorDebounced(value, dashboardId, name),
@@ -38,6 +40,7 @@ export default (miqGroups, name, dashboardId) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'description',
           name: 'description',
           validate: [{
             type: validatorTypes.REQUIRED,
@@ -49,6 +52,7 @@ export default (miqGroups, name, dashboardId) => {
         },
         {
           component: componentTypes.SELECT,
+          id: 'group_id',
           name: 'group_id',
           options: miqGroups,
           label: __('Select Group'),

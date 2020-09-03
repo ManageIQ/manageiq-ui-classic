@@ -5,10 +5,12 @@ export default (TYPES) => {
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
+      id: 'basic-info',
       name: 'basic-info',
       fields: [
         {
           component: componentTypes.SELECT,
+          id: 'type',
           name: 'type',
           options: Object.values(TYPES),
           label: __('Registry Type'),
@@ -20,6 +22,7 @@ export default (TYPES) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'name',
           name: 'name',
           label: __('Name'),
           maxLength: 128,
@@ -27,6 +30,7 @@ export default (TYPES) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'url',
           name: 'url',
           label: __('URL'),
           placeholder: 'https://example.com:1234/images',
@@ -35,6 +39,7 @@ export default (TYPES) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'userid',
           name: 'userid',
           label: __('Username'),
           maxLength: 128,
@@ -42,6 +47,7 @@ export default (TYPES) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'password',
           name: 'password',
           label: __('Password'),
           maxLength: 128,

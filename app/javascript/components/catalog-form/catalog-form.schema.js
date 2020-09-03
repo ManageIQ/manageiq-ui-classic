@@ -20,9 +20,11 @@ function createSchema(options, catalogId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Info'),
+    id: 'basic-info',
     name: 'basic-info',
     fields: [{
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validate: [
         value => asyncValidatorDebounced(value, catalogId),
@@ -33,6 +35,7 @@ function createSchema(options, catalogId) {
       validateOnMount: true,
     }, {
       component: componentTypes.TEXT_FIELD,
+      id: 'description',
       name: 'description',
       label: __('Description'),
       maxLength: 60,
@@ -43,6 +46,7 @@ function createSchema(options, catalogId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Assign Catalog Items'),
+    id: 'assign-catalog-items',
     name: 'assign-catalog-items',
     fields: [
       {
@@ -56,6 +60,7 @@ function createSchema(options, catalogId) {
         moveRightTitle: __('Move Selected buttons right'),
         size: 8,
         options,
+        id: 'service_templates',
         name: 'service_templates',
       },
     ],

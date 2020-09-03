@@ -18,6 +18,7 @@ const asyncValidatorDebounced = debouncePromise(asyncValidator);
 const serviceDialogFromOtSchema = ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
+    id: 'label',
     name: 'label',
     label: __('Service Dialog Name'),
     isRequired: true,

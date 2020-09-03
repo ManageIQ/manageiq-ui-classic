@@ -4,6 +4,7 @@ function addSchema(emsList = [], cloudTenants = []) {
   const fields = [
     {
       component: componentTypes.SELECT,
+      id: 'ems_id',
       name: 'ems_id',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -15,6 +16,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -25,6 +27,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'ram',
       name: 'ram',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -48,6 +51,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'vcpus',
       name: 'vcpus',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -70,6 +74,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'disk',
       name: 'disk',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -92,6 +97,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'swap',
       name: 'swap',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -114,6 +120,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'rxtx_factor',
       name: 'rxtx_factor',
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -135,6 +142,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.SWITCH,
+      id: 'is_public',
       name: 'is_public',
       label: __('Public?'),
       bsSize: 'mini',
@@ -143,6 +151,7 @@ function addSchema(emsList = [], cloudTenants = []) {
     },
     {
       component: componentTypes.SELECT,
+      id: 'cloud_tenant_refs',
       name: 'cloud_tenant_refs',
       options: cloudTenants.map(item => ({ label: item.name, value: item.ems_ref })),
       label: __('Cloud Tenant'),

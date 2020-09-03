@@ -19,6 +19,7 @@ const asyncValidatorDebounced = debouncePromise(asyncValidator);
 const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
   let fields = [{
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: 'Name',
     isRequired: true,
@@ -27,6 +28,7 @@ const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
     autoFocus: true,
   }, {
     component: componentTypes.TEXT_FIELD,
+    id: 'description',
     name: 'description',
     label: 'Description',
     isRequired: true,
@@ -37,6 +39,7 @@ const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
   if (!newRecord && showUseConfig) {
     fields.push({
       component: componentTypes.SWITCH,
+      id: 'use_config_for_attributes',
       name: 'use_config_for_attributes',
       label: 'Use Configuration Settings',
       onText: __('Yes'),
@@ -54,6 +57,7 @@ const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
 
     const disabledName = {
       component: componentTypes.SUB_FORM,
+      id: 'disabled-placeholder',
       name: 'disabled-placeholder',
       fields: [{
         ...fields[0],
