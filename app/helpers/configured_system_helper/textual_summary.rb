@@ -62,6 +62,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_counterpart
     counterpart_ems = @record.counterpart.try(:ext_management_system)
     return nil if counterpart_ems.nil?
+
     counterpart_entity_name = counterpart_ems.kind_of?(EmsCloud) ? _("Instance") : _("Virtual Machine")
     {
       :label => counterpart_entity_name,
