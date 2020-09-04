@@ -35,7 +35,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[configuration_manager configuration_profile]
+      %i[configuration_manager configuration_profile counterpart]
     )
   end
 
@@ -57,6 +57,23 @@ module ConfiguredSystemHelper::TextualSummary
       h[:link]  = url_for_only_path(:controller => 'configuration_profile', :action => 'show', :id => configuration_profile)
     end
     h
+  end
+
+  def textual_counterpart
+    counterpart_ems = @record.counterpart.try(:ext_management_system)
+    return nil if counterpart_ems.nil?
+
+    counterpart_entity_name = counterpart_ems.kind_of?(EmsCloud) ? _("Instance") : _("Virtual Machine")
+    {
+      :label => counterpart_entity_name,
+      :image => counterpart_ems.decorate.fileicon,
+      :value => @record.counterpart.name.to_s,
+      :link  => url_for_only_path(
+        :action     => 'show',
+        :controller => 'vm_or_template',
+        :id         => @record.counterpart.id
+      )
+    }
   end
 
   def textual_group_environment
