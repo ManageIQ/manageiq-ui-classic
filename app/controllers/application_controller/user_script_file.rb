@@ -22,7 +22,7 @@ class ApplicationController
 
     def clear_user_script
       @_params.delete(:commit)
-      @upload_user_script = false
+      @upload_user_script = true
       @edit = session[:edit]
       build_grid
 

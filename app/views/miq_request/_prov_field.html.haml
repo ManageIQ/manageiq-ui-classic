@@ -505,9 +505,21 @@
         .col-md-8
           - path = Rails.application.routes.recognize_path request.referer
           - if path[:controller] == "miq_request"
-            = form_tag({:action    => "prov_edit"},
-                        :multipart => true,
-                        :method    => :post) do
+            = form_tag({:action    => "prov_edit",
+                         :req_id    => @edit[:req_id]&.to_s}.compact,
+                         :multipart => true,
+                         :method    => :post) do
+              .form-group
+                .col-md-4
+                  = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
+                .col-md-6
+                  = submit_tag(_("Upload Script"), :class => "upload btn btn-default")
+                  = submit_tag(_("Clear Script"),  :class => "upload btn btn-default")
+          - else
+            = form_tag({:controller => path[:controller],
+                        :action     => "explorer"},
+                        :multipart  => true,
+                        :method     => :post) do
               .form-group
                 .col-md-4
                   = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
