@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
+import { http } from '../http_api';
 
 import assign from 'lodash/assign';
 
@@ -63,7 +64,7 @@ const getData = (
   records, // ?: any,
   additionalOptions, // ?: any): ng.IPromise<IRowsColsResponse> {
 ) =>
-  window.http.post( // FIXME: window
+  http.post( // FIXME: window
     './report_data',
     generateConfig(
       modelName,
@@ -160,6 +161,19 @@ const reduceSelectedItem = (state, item, isSelected) => {
   };
 };
 
+const unSelectAll = (items) => {
+  ManageIQ.gridChecks = [];
+  const isSelected = false;
+  console("hi");
+  if (typeof items === 'undefined') {
+    return;
+  }
+  items.map(item => (
+    dispatch({ type: 'itemSelected', item, isSelected })
+  ));
+  return false;
+};
+
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
@@ -187,46 +201,33 @@ const gtlReducer = (state, action) => {
       // action.item       ... selected item object
       // action.isSelected ... selection status
       return reduceSelectedItem(state, action.item, action.isSelected);
+    case 'unSelectAll':
+      return {
+        ...state,
+        rows: unSelectAll(state.rows),
+      };
     default:
       return state;
   }
 };
-
-const RX_IDENTITY = 'reportDataController';
 
 /* eslint no-unused-vars: 'off' */
 /* eslint no-undef: 'off' */
 const subscribeToSubject = dispatch =>
   listenToRx(
     (event) => {
-      if (event.initController && event.initController.name === RX_IDENTITY) {
-        // uz se nevola
-         this.initController(event.initController.data);
-      } else if (event.unsubscribe && event.unsubscribe === RX_IDENTITY) {
-        // nemelo by byt potreba, unsubscribe udelame my
-         this.onUnsubscribe();
-      } else if (event.refreshData && event.refreshData.name === RX_IDENTITY) {
-        // nemelo by byt potreba, nikde se nevola
-         this.refreshData(event.data);
-      } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
+      if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         // TODO
          this.setExtraClasses();
       }
 
-      if (event.setScope && event.setScope.name === RX_IDENTITY) {
-        dispatch({ type: 'setScope', namedScope: event.data });
-      } else if (event.type === 'gtlSetOneRowActive') {
+      if (event.type === 'gtlSetOneRowActive') {
         dispatch({ type: 'setActiveRow', item: event.item });
       }
 
-      // TODO: QE support: reimplement
-      // if (event.controller === RX_IDENTITY && this.apiFunctions && this.apiFunctions[event.action]) {
-      //   const actionCallback = this.apiFunctions[event.action];
-      //   const resultData = actionCallback.apply(this, event.data);
-      //   if (event.eventCallback) {
-      //     event.eventCallback(resultData);
-      //   }
-      // }
+      if (event.type === 'gtlUnselectAll') {
+        dispatch({ type: 'unSelectAll' });
+      }
     },
     err => console.error('GTL RxJs Error: ', err),
     () => console.debug('GTL RxJs subject completed, no more events to catch.'),
@@ -268,7 +269,6 @@ const GtlView = ({
   parentId,
   isAscending,
   sortColIdx,
-  sortDir,
   isExplorer,
   records,
   hideSelect,
@@ -478,7 +478,6 @@ GtlView.propTypes = {
   activeTree: PropTypes.string,
   parentId: PropTypes.string,
   sortColIdx: PropTypes.number,
-  sortDir: PropTypes.string,
   isExplorer: PropTypes.bool,
   records: PropTypes.arrayOf(PropTypes.any), // fixme
   hideSelect: PropTypes.bool,
@@ -493,7 +492,6 @@ GtlView.defaultProps = {
   activeTree: null,
   parentId: null,
   sortColIdx: null,
-  sortDir: null,
   isExplorer: false,
   records: null,
   hideSelect: false,
