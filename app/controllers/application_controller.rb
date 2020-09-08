@@ -187,6 +187,7 @@ class ApplicationController < ActionController::Base
             e.message
           end
 
+    msg = "#{msg}\n#{e.backtrace.join("\n")}" unless MiqEnvironment::Command.is_production?
     render_exception(msg)
   end
   private :error_handler
