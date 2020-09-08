@@ -145,7 +145,7 @@
                 - col = field_to_col(f.last)
                 - selected = @edit[:new][:col_options][col] && @edit[:new][:col_options][col][:grouping] ? @edit[:new][:col_options][col][:grouping] : []
                 = select_tag(field_name,
-                    options_for_select(MiqReport::GROUPINGS.map(&:reverse), selected),
+                    options_for_select(MiqReport::GROUPINGS.map(&:reverse).map { |key, value| [_(key), value] }, selected),
                     :class    => "selectpicker show-tick",
                     :multiple => true,
                     "title"   => "Check Option")
