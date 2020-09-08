@@ -126,10 +126,10 @@ class GtlFormatter
     icon, icon2, image = fonticon_or_fileicon(item)
 
     # Clickable should be false only when it's explicitly set to false
-    {:title => clickable == false ? nil : _('View this item'),
-     :image => ActionController::Base.helpers.image_path(image.to_s),
-     :icon  => icon,
-     :icon2 => icon2}.compact
+    {title: clickable == false ? nil : _('View this item'),
+     image: ActionController::Base.helpers.image_path(image.to_s),
+     icon:  icon,
+     icon2: icon2}.compact
   end
 
   def self.fonticon_or_fileicon(item)
