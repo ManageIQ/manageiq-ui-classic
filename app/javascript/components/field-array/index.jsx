@@ -2,21 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, FormGroup } from 'patternfly-react';
 
+import { useFormApi, FieldArray } from '@@ddf';
 import FieldArrayItem from './field-array-item';
 
-const FieldArray = ({
-  FieldProvider,
-  FieldArrayProvider,
+const FieldArrayComponent = ({
   arrayValidator,
   label,
   fields,
   itemDefault,
-  formOptions,
   addText,
   ...rest
 }) => {
   const { name } = rest.input;
   const colsize = Math.floor(10 / fields.length);
+  const formOptions = useFormApi();
 
   const header = (
     <Row>
@@ -30,7 +29,7 @@ const FieldArray = ({
   );
 
   return (
-    <FieldArrayProvider name={name} validate={arrayValidator}>
+    <FieldArray name={name} validate={arrayValidator}>
       { ({ fields: { length, map, value, push, remove } }) => (
         <div className="field-array">
           <h3>{ label }</h3>
@@ -44,7 +43,6 @@ const FieldArray = ({
                   value={value[index].value}
                   fieldIndex={index}
                   formOptions={formOptions}
-                  FieldProvider={FieldProvider}
                   remove={remove}
                   colsize={colsize}
                 />
@@ -59,30 +57,24 @@ const FieldArray = ({
           </FormGroup>
         </div>
       )}
-    </FieldArrayProvider>
+    </FieldArray>
   );
 };
 
-FieldArray.propTypes = {
-  FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
+FieldArrayComponent.propTypes = {
   FieldArrayProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
   arrayValidator: PropTypes.func,
   label: PropTypes.string,
   fields: PropTypes.any.isRequired,
   itemDefault: PropTypes.any,
-  formOptions: PropTypes.shape({
-    getState: PropTypes.func.isRequired,
-    change: PropTypes.func.isRequired,
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   addText: PropTypes.string,
 };
 
-FieldArray.defaultProps = {
+FieldArrayComponent.defaultProps = {
   arrayValidator: undefined,
   label: undefined,
   addText: __('New option'),
   itemDefault: {},
 };
 
-export default FieldArray;
+export default FieldArrayComponent;

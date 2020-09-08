@@ -5,6 +5,7 @@ function createSchema(maxDescLen) {
     fields: [{
       component: 'text-field',
       name: 'description',
+      id: 'description',
       maxLength: maxDescLen,
       label: __('Description'),
       validateOnMount: true,

@@ -3,6 +3,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 const createSchema = (hideName, showMemory, descriptionRequired) => {
   const nameField = {
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
@@ -14,6 +15,7 @@ const createSchema = (hideName, showMemory, descriptionRequired) => {
 
   const memoryField = {
     component: componentTypes.SWITCH,
+    id: 'snap_memory',
     name: 'snap_memory',
     label: __('Snapshot VM memory'),
     onText: __('Yes'),
@@ -24,6 +26,7 @@ const createSchema = (hideName, showMemory, descriptionRequired) => {
     ...(hideName ? [] : [nameField]),
     {
       component: componentTypes.TEXTAREA_FIELD,
+      id: 'description',
       name: 'description',
       label: __('Description'),
       isRequired: descriptionRequired,

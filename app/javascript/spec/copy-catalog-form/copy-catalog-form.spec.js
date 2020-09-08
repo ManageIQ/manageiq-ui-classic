@@ -30,19 +30,6 @@ describe('Copy catalog form', () => {
     fetchMock.restore();
   });
 
-  it('should render correctly and set initialValue', (done) => {
-    const wrapper = mount(<CopyCatalogForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-      expect(wrapper.find('input[name="name"]').instance().value).toEqual('Copy of Template1');
-      expect(wrapper.find('input[name="copy_tags"]').instance().value).toEqual('false');
-
-      done();
-    });
-  });
-
   it('should handle cancel', (done) => {
     const wrapper = mount(<CopyCatalogForm {...initialProps} />);
 
@@ -66,36 +53,6 @@ describe('Copy catalog form', () => {
       wrapper.update();
       setTimeout(() => {
         wrapper.find('form').simulate('submit');
-        setImmediate(() => {
-          expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
-          expect(fetchMock.lastOptions().body).toEqual(postData);
-          done();
-        });
-      }, 1000);
-    }, 1000);
-  });
-
-  it('should handle submit with copy_tags checked', (done) => {
-    const postData = '{"id":"10000000000000","name":"Copy of Template1","copy_tags":true}';
-    const wrapper = mount(<CopyCatalogForm {...initialProps} />);
-    fetchMock
-      .postOnce('/catalog/save_copy_catalog', {})
-
-    setImmediate(() => {
-      wrapper.update();
-      const check_box = wrapper.find('input[name="copy_tags"]');
-      expect(check_box.instance().value).toEqual('false');
-      check_box.instance().checked = true;
-      check_box.simulate('change');
-
-      expect(check_box.instance().value).toEqual('true');
-
-      done();
-    });
-
-    setTimeout(() => {
-      setTimeout(() => {
-        wrapper.find('button').first().simulate('click');
         setImmediate(() => {
           expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
           expect(fetchMock.lastOptions().body).toEqual(postData);

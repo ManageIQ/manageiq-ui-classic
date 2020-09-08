@@ -6,10 +6,10 @@ export const asyncValidator = (value, catalogId) =>
   API.get(`/api/service_catalogs?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)
     .then((json) => {
       if (json.resources.find(({ id, name }) => name === value && id !== catalogId)) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __("Name can't be blank");
+        throw __("Name can't be blank");
       }
       return undefined;
     });
@@ -20,9 +20,11 @@ function createSchema(options, catalogId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Info'),
+    id: 'basic-info',
     name: 'basic-info',
     fields: [{
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validate: [
         value => asyncValidatorDebounced(value, catalogId),
@@ -33,6 +35,7 @@ function createSchema(options, catalogId) {
       validateOnMount: true,
     }, {
       component: componentTypes.TEXT_FIELD,
+      id: 'description',
       name: 'description',
       label: __('Description'),
       maxLength: 60,
@@ -43,6 +46,7 @@ function createSchema(options, catalogId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Assign Catalog Items'),
+    id: 'assign-catalog-items',
     name: 'assign-catalog-items',
     fields: [
       {
@@ -55,8 +59,8 @@ function createSchema(options, catalogId) {
         moveLeftTitle: __('Move Selected buttons left'),
         moveRightTitle: __('Move Selected buttons right'),
         size: 8,
-        assignFieldProvider: true,
         options,
+        id: 'service_templates',
         name: 'service_templates',
       },
     ],

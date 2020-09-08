@@ -2,182 +2,117 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
+import FormRenderer from '@data-driven-forms/react-form-renderer';
+import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 
-describe('Async credentials component', () => {
-  let initialProps;
-  const DummyComponent = ({ isDisabled, ...props }) => <input {...props} />;
-  beforeEach(() => {
-    initialProps = {
-      name: 'async-wrapper',
+const RendererWrapper = ({ asyncValidate, onSubmit = () => {}, ...props }) => (
+  <FormRenderer
+    onSubmit={onSubmit}
+    FormTemplate={FormTemplate}
+    componentMapper={{
+      ...componentMapper,
+      'async-credentials': AsyncCredentials,
+    }}
+    schema={{
       fields: [{
-        name: 'foo',
-      }, {
-        name: 'bar',
+        component: 'async-credentials',
+        name: 'validate_credentials',
+        asyncValidate,
+        fields: [{
+          component: 'text-field',
+          name: 'foo',
+          initialValue: 'bar',
+        }],
       }],
-      FieldProvider,
-      asyncValidate: jest.fn(),
-      formOptions: {
-        renderForm: fields => fields.map(field => <DummyComponent key={field.name} {...field} />),
-        getState: () => ({
-          values: {
-            foo: 'value-foo',
-            bar: 'value-bar',
-            nonAsync: 'non-async',
-          },
-        }),
-        change: jest.fn(),
-      },
-    };
-  });
+    }}
+    {...props}
+  />
+);
 
+describe('Async credentials component', () => {
   it('should render correctly', () => {
-    const wrapper = shallow(<AsyncCredentials {...initialProps} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const wrapper = mount(<RendererWrapper asyncValidate={() => {}} />);
+    expect(toJson(wrapper.find(AsyncCredentials))).toMatchSnapshot();
   });
 
-  it('should not render validation if validate=false', () => {
-    const wrapper = shallow(<AsyncCredentials {...initialProps} validate={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
 
   it('should call async validation function on button click and set valid state to true', async(done) => {
     const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
-    const change = jest.fn();
-    const wrapper = mount(<AsyncCredentials {...initialProps} formOptions={{ ...initialProps.formOptions, change }} asyncValidate={asyncValidate} />);
+    const onSubmit = jest.fn();
+
+    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
 
     await act(async() => {
-      wrapper.find('button').simulate('click');
+      wrapper.find('button[type="button"]').simulate('click');
     });
     expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'value-foo',
-      bar: 'value-bar',
-      nonAsync: 'non-async',
-    }, ['foo', 'bar']);
-    expect(change).toHaveBeenCalledWith('async-wrapper', true);
+      foo: 'bar',
+      validate_credentials: false,
+    }, ['foo']);
+
+    wrapper.find('form').simulate('submit');
+    expect(onSubmit).toHaveBeenCalledWith({ foo: 'bar', validate_credentials: true }, expect.anything(), expect.anything());
+
     done();
   });
 
   it('should call async validation function on button click and set valid state to false', async(done) => {
     const asyncValidate = jest.fn().mockReturnValue(new Promise((_resolve, reject) => reject('Validation failed'))); // eslint-disable-line prefer-promise-reject-errors
-    const change = jest.fn();
-    const wrapper = mount(<AsyncCredentials {...initialProps} formOptions={{ ...initialProps.formOptions, change }} asyncValidate={asyncValidate} />);
+
+    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
     await act(async() => {
-      wrapper.find('button').simulate('click');
+      wrapper.find('button[type="button"]').simulate('click');
     });
+
     expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'value-foo',
-      bar: 'value-bar',
-      nonAsync: 'non-async',
-    }, ['foo', 'bar']);
-    expect(change).toHaveBeenCalledWith('async-wrapper', false);
+      foo: 'bar',
+      validate_credentials: false,
+    }, ['foo']);
+
+    wrapper.update();
+
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation failed');
     done();
   });
 
-  it('should correctly set invalid state after input change', () => {
-    const change = jest.fn();
-    const getStateMock = jest.fn()
-      .mockReturnValueOnce({
-        values: {
-          foo: 'value-foo',
-          bar: 'value-bar',
-          nonAsync: 'non-async',
-        },
-      })
-      .mockReturnValue({
-        values: {
-          foo: 'changed-value',
-          bar: 'value-bar',
-          nonAsync: 'non-async',
-        },
-      });
+  it('should correctly set invalid state after input change', async(done) => {
+    const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
+    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
-    const expectedChangeCalls = [
-      ['foo', 'changed-value'],
-      ['async-wrapper', false],
-    ];
-    const wrapper = mount(<AsyncCredentials
-      {...initialProps}
-      formOptions={{
-        ...initialProps.formOptions,
-        change,
-        getState: getStateMock,
-      }}
-    />);
-    wrapper.find('input').first().simulate('change', { target: { value: 'changed-value' } });
+    await act(async() => {
+      wrapper.find('button[type="button"]').simulate('click');
+    });
 
-    expect(change).toHaveBeenCalledTimes(2);
-    expect(change.mock.calls).toEqual(expectedChangeCalls);
+    wrapper.update();
+
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+    wrapper.update();
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
+
+    done();
   });
 
-  it('should correctly set valid state after input change if passed initial values', () => {
-    const change = jest.fn();
-    const getStateMock = jest.fn()
-      .mockReturnValue({
-        values: {
-          foo: 'changed-value',
-          bar: 'value-bar',
-          nonAsync: 'non-async',
-        },
-      });
+  it('should correctly set valid state after input change if passed initial values', async(done) => {
+    const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
+    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
-    const expectedChangeCalls = [
-      ['foo', 'changed-value'],
-      ['async-wrapper', undefined],
-    ];
-    const wrapper = mount(<AsyncCredentials
-      {...initialProps}
-      formOptions={{
-        ...initialProps.formOptions,
-        change,
-        getState: getStateMock,
-      }}
-    />);
-    wrapper.find('input').first().simulate('change', { target: { value: 'changed-value' } });
+    await act(async() => {
+      wrapper.find('button[type="button"]').simulate('click');
+    });
 
-    expect(change).toHaveBeenCalledTimes(2);
-    expect(change.mock.calls).toEqual(expectedChangeCalls);
-  });
+    wrapper.update();
 
-  it('should correctly set valid state after input change to initial empty values', () => {
-    const change = jest.fn();
-    const getStateMock = jest.fn()
-      .mockReturnValueOnce({
-        values: {},
-      })
-      .mockReturnValueOnce({
-        values: {
-          foo: 'changed-value',
-        },
-      })
-      .mockReturnValueOnce({
-        values: {
-          foo: 'changed-value',
-        },
-      })
-      .mockReturnValue({
-        values: {},
-      });
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+    wrapper.update();
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'bar' } });
+    wrapper.update();
+    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
 
-    const expectedChangeCalls = [
-      ['foo', 'changed-value'],
-      ['async-wrapper', false],
-      ['foo', ''],
-      ['async-wrapper', undefined],
-    ];
-    const wrapper = mount(<AsyncCredentials
-      {...initialProps}
-      formOptions={{
-        ...initialProps.formOptions,
-        change,
-        getState: getStateMock,
-      }}
-    />);
-    wrapper.find('input').first().simulate('change', { target: { value: 'changed-value' } });
-    wrapper.find('input').first().simulate('change', { target: { value: '' } });
-    expect(change).toHaveBeenCalledTimes(4);
-    expect(change.mock.calls).toEqual(expectedChangeCalls);
+    done();
   });
 });

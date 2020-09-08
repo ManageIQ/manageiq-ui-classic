@@ -81,17 +81,24 @@ describe('Workers form', () => {
     };
 
     expectedValues = {
-      ems_metrics_collector_worker: { defaults: { count: 8, memory_threshold: 419430400 } },
-      ems_metrics_processor_worker: { count: 2, memory_threshold: 629145600 },
-      ems_refresh_worker: { defaults: { memory_threshold: 2147483648 } },
-      event_catcher: { memory_threshold: 2147483648 },
-      generic_worker: { count: 2, memory_threshold: 524288000 },
-      priority_worker: { count: 2, memory_threshold: 419430400 },
-      remote_console_worker: { count: 1 },
-      reporting_worker: { count: 2, memory_threshold: 524288000 },
-      smart_proxy_worker: { count: 2, memory_threshold: 576716800 },
-      ui_worker: { count: 1 },
-      web_service_worker: { count: 1, memory_threshold: 1073741824 },
+      'ems_metrics_collector_worker.defaults.count': 8,
+      'ems_metrics_collector_worker.defaults.memory_threshold': 419430400,
+      'ems_metrics_processor_worker.count': 2,
+      'ems_metrics_processor_worker.memory_threshold': 629145600,
+      'ems_refresh_worker.defaults.memory_threshold': 2147483648,
+      'event_catcher.memory_threshold': 2147483648,
+      'generic_worker.count': 2,
+      'generic_worker.memory_threshold': 524288000,
+      'priority_worker.count': 2,
+      'priority_worker.memory_threshold': 419430400,
+      'remote_console_worker.count': 1,
+      'reporting_worker.count': 2,
+      'reporting_worker.memory_threshold': 524288000,
+      'smart_proxy_worker.count': 2,
+      'smart_proxy_worker.memory_threshold': 576716800,
+      'ui_worker.count': 1,
+      'web_service_worker.count': 1,
+      'web_service_worker.memory_threshold': 1073741824,
     };
 
     baseUrl = `/api/servers/${initialProps.server.id}/settings`;
@@ -153,9 +160,11 @@ describe('Workers form', () => {
     expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
     expect(fetchMock.called(baseUrl)).toBe(true);
     expect(fetchMock.calls()).toHaveLength(1);
-    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-      .instance();
-    expect(form.getState().values).toEqual(expectedValues);
+
+    Object.keys(expectedValues).forEach((key) => {
+      expect(wrapper.find(`input[name="${key}"]`).props().value).toEqual(expectedValues[key]);
+    });
+
     done();
   });
 
@@ -170,13 +179,14 @@ describe('Workers form', () => {
       wrapper = mount(<WorkersForm {...initialProps} />);
     });
     wrapper.update();
-    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-      .instance();
     expect(fetchMock.calls()).toHaveLength(1);
 
-    form.change('smart_proxy_worker.count', 1);
+    await act(async() => {
+      wrapper.find('Select[name="smart_proxy_worker.count"]').at(1).prop('onChange')(1);
+    });
 
     wrapper.update();
+
     await act(async() => {
       wrapper.find('form').simulate('submit');
     });
@@ -192,9 +202,9 @@ describe('Workers form', () => {
         },
       },
     }));
-    expect(form.getState().initialValues).toEqual(
-      { ...expectedValues, smart_proxy_worker: { ...expectedValues.smart_proxy_worker, count: 1 } },
-    );
+
+    expect(wrapper.find('input[name="smart_proxy_worker.count"]').props().value).toEqual(1);
+
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
     expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(2);
     expect(spyAddFlash).toHaveBeenCalledWith(`Configuration settings saved for ${initialProps.product} Server "${initialProps.server.name} [${initialProps.server.id}]" in Zone "${initialProps.zone}"`, 'success');

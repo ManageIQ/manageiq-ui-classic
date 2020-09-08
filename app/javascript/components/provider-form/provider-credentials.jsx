@@ -1,10 +1,12 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { useFormApi } from '@@ddf';
 import { EditingContext } from './index';
 
-const ProviderCredentials = ({ formOptions, fields }) => {
+const ProviderCredentials = ({ fields }) => {
   const { providerId } = useContext(EditingContext);
+  const formOptions = useFormApi();
 
   // Pass down the required `edit` to the password component (if it exists)
   return (
@@ -20,7 +22,6 @@ const ProviderCredentials = ({ formOptions, fields }) => {
 };
 
 ProviderCredentials.propTypes = {
-  formOptions: PropTypes.any.isRequired,
   fields: PropTypes.array.isRequired,
 };
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
-import { componentTypes } from '@@ddf';
+import componentMapper from '../../forms/mappers/componentMapper';
+import { componentTypes, useFormApi, FormSpy } from '@@ddf';
 
-const Component = fieldsMapper[componentTypes.BUTTON];
+const Component = componentMapper[componentTypes.BUTTON];
 
-const DetectButton = ({ formOptions, dependencies, target, FormSpyProvider, ...props }) => {
+const DetectButton = ({ dependencies, target, ...props }) => {
+  const formOptions = useFormApi();
   return <span/>;
 
   // const onClick = () => {

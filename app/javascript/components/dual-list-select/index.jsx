@@ -10,6 +10,8 @@ import {
 import { isEqual } from 'lodash';
 import List from './list';
 
+import { useFieldApi } from '@@ddf';
+
 const getOptionsGroup = (value, lastClicked, options) => {
   const lastIndex = options.map(({ key }) => key.toString()).indexOf(lastClicked.toString());
   const currentIndex = options.map(({ key }) => key.toString()).indexOf(value);
@@ -174,14 +176,18 @@ DualList.defaultProps = {
   allToRight: false,
 };
 
-const WrappedDualList = ({ FieldProvider, name, ...rest }) => (
-  <FieldProvider
-    name={name}
-    {...rest}
-    subscription={{ error: true, pristine: true, value: true }}
-    isEqual={(current, initial) => isEqual([...current || []].sort(), [...initial || []].sort())}
-    component={DualList}
-  />
-);
+const WrappedDualList = (props) => {
+  const { input, ...rest } = useFieldApi({
+    ...props,
+    subscription: {
+      error: true,
+      pristine: true,
+      value: true,
+    },
+    isEqual: (current, initial) => isEqual([...current || []].sort(), [...initial || []].sort()),
+  });
+
+  return <DualList input={input} {...rest} />;
+};
 
 export default WrappedDualList;
