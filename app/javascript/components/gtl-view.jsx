@@ -229,6 +229,10 @@ const subscribeToSubject = dispatch =>
       if (event.type === 'gtlUnselectAll') {
         dispatch({ type: 'unSelectAll' });
       }
+
+      if (event.type === 'setScope') {
+        dispatch({ type: 'setScope', namedScope: event.namedScope });
+      }
     },
     err => console.error('GTL RxJs Error: ', err),
     () => console.debug('GTL RxJs subject completed, no more events to catch.'),
