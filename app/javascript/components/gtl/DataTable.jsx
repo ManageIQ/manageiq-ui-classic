@@ -17,6 +17,7 @@ export const DataTable = ({
   rows,
   columns,
   inEditMode,
+  noCheckboxes,
   settings,
   isLoading,
   pagination,
@@ -57,11 +58,13 @@ export const DataTable = ({
   const renderTableHeader = () => (
     <thead>
       <tr>
+        {!inEditMode() && !noCheckboxes() &&
         <th className="narrow table-view-pf-select">
-          {!inEditMode() && selectAll() }
+          {selectAll()}
         </th>
+        }
         {columns.map((column, index) =>
-          index !== 0 &&
+          (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes())) &&
             <th
               onClick={() => onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
               className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
@@ -192,6 +195,7 @@ DataTable.propTypes = {
   pagination: PropTypes.any.isRequired,
   total: PropTypes.number.isRequired,
   inEditMode: PropTypes.func.isRequired,
+  noCheckboxes: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   onSelectAll: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,

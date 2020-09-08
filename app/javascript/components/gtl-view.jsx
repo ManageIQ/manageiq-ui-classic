@@ -90,15 +90,15 @@ const TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree']
 const USE_TREE_ID = ['automation_manager'];
 
 const isAllowedParent = activeTree =>
-  TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1
-    && TREE_TABS_WITHOUT_PARENT.indexOf(activeTree) === -1;
+  !TREES_WITHOUT_PARENT.includes(ManageIQ.controller)
+    && !TREE_TABS_WITHOUT_PARENT.includes(activeTree);
 
 const constructSuffixForTreeUrl = (showUrl, activeTree, item) => {
   let itemId = _.isString(showUrl) && showUrl.indexOf('xx-') !== -1 ? `_-${item.id}` : `-${item.id}`;
   if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
     itemId = `${item.parent_id}_${item.tree_id}`;
   } else if (isAllowedParent(activeTree)) {
-    itemId = (USE_TREE_ID.indexOf(ManageIQ.controller) === -1) ? '_' : '';
+    itemId = (USE_TREE_ID.includes(ManageIQ.controller)) ? '' : '_';
     itemId += item.tree_id;
   }
   return itemId;
@@ -109,10 +109,10 @@ const isCurrentControllerOrPolicies = (url) => {
   return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
 };
 
-const EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
+const EXPAND_TREES = ['treeview-savedreports_tree', 'treeview-widgets_tree'];
 const activateNodeSilently = (itemId) => {
   const treeId = angular.element('.collapse.in .treeview').attr('id');
-  if (EXPAND_TREES.indexOf(treeId) !== -1) {
+  if (!EXPAND_TREES.includes(treeId)) {
     miqTreeExpandRecursive(treeId, itemId);
   }
 };
@@ -164,7 +164,7 @@ const reduceSelectedItem = (state, item, isSelected) => {
 const unSelectAll = (items) => {
   ManageIQ.gridChecks = [];
   const isSelected = false;
-  console("hi");
+
   if (typeof items === 'undefined') {
     return;
   }
@@ -177,6 +177,7 @@ const unSelectAll = (items) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
+      ManageIQ.gridChecks = [];
       return {
         ...state,
         isLoading: false,
@@ -376,6 +377,7 @@ const GtlView = ({
   };
 
   const inEditMode = () => additionalOptions.in_a_form;
+  const noCheckboxes = () => additionalOptions.no_checkboxes;
 
   const onItemClick = (item, event) => {
     // no need to set targetUrl if custom_action is set i.e. for pre prov screen
@@ -409,8 +411,9 @@ const GtlView = ({
     // explorer case + current controller (non nested) + policies
     if (isExplorer && targetUrl && isCurrentControllerOrPolicies(targetUrl)) {
       miqSparkleOn();
+      let itemId = item.id;
       if (_.isString(targetUrl) && targetUrl.indexOf('?id=') !== -1) {
-        var itemId = constructSuffixForTreeUrl(showUrl, activeTree, item);
+        itemId = constructSuffixForTreeUrl(showUrl, activeTree, item);
         activateNodeSilently(itemId);
       }
 
@@ -419,8 +422,7 @@ const GtlView = ({
       if (item.id.indexOf('unassigned') !== -1) {
         targetUrl = `/${ManageIQ.controller}/tree_select/?id=`;
       }
-
-      miqAjax(targetUrl + item.id);
+      miqAjax(targetUrl + itemId);
       return true;
     }
 
@@ -457,6 +459,7 @@ const GtlView = ({
           rows={rows}
           head={head}
           inEditMode={inEditMode}
+          noCheckboxes={noCheckboxes}
           settings={settings}
           total={settings.items}
           onPageSet={onPageSet}

@@ -9,6 +9,7 @@ export const StaticGTLView = ({
   rows,
   head,
   inEditMode,
+  noCheckboxes,
   total,
   settings,
   pagination,
@@ -28,6 +29,7 @@ export const StaticGTLView = ({
       settings={settings}
       loadMoreItems={() => console.log('loadMoreItems')}
       inEditMode={inEditMode}
+      noCheckboxes={noCheckboxes}
       onSort={onSort}
       onSelectAll={onSelectAll}
       onItemClick={onItemClick}
@@ -56,6 +58,7 @@ StaticGTLView.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
   head: PropTypes.arrayOf(PropTypes.any).isRequired,
   inEditMode: PropTypes.func.isRequired,
+  noCheckboxes: PropTypes.func.isRequired,
   total: PropTypes.number,
   pagination: PropTypes.shape({
     page: PropTypes.number,
