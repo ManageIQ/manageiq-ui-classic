@@ -1,0 +1,20 @@
+export const ModalShared = {
+  bindings: {
+    addEntry: '=?',
+    categories: '=?',
+    currentCategoryEntries: '=?',
+    elementInfo: '<',
+    modalData: '=',
+    modalTab: '=',
+    modalTabIsSet: '<',
+    modalTabSet: '<',
+    removeEntry: '=?',
+    resolveCategories: '=?',
+    saveModal: '<',
+    setupCategoryOptions: '=?',
+    treeOptions: '<',
+    uibModalInstance: '<',
+    updateDialogFieldResponders: '=?',
+  },
+  controllerAs: 'vm',
+};

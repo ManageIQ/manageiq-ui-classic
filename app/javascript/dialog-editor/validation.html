@@ -1,0 +1,19 @@
+<div pf-form-group pf-label="{{'Validation'|translate}}">
+  <input bs-switch
+         ng-model="$ctrl.modalData.validator_type"
+         type="checkbox"
+         ng-true-value="'regex'"
+         ng-false-value="false"
+         switch-on-text="{{'Yes'|translate}}"
+         switch-off-text="{{'No'|translate}}">
+</div>
+<div ng-if="$ctrl.modalData.validator_type === 'regex'"
+     pf-form-group pf-label="{{'Validator'|translate}}">
+  <i class="fa fa-info-circle primary help-icon"
+     tooltip-append-to-body="true"
+     uib-tooltip="{{ 'Regular Expression' }}"
+     tooltip-placement="auto">
+  </i>
+  <input id="validator_rule" name="validator_rule"
+         ng-model="$ctrl.modalData.validator_rule" />
+</div>

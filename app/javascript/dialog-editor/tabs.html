@@ -1,0 +1,18 @@
+<ul ui-sortable='vm.sortableOptions'
+    ng-model='vm.tabList'
+    class='nav nav-tabs'
+    data-tabs='tabs'>
+  <li ng-class='{active: tab.active}' ng-repeat='tab in vm.tabList'>
+    <a class="select-tab" ng-click='vm.selectTab(tab.position)' data-toggle='tab'>
+      {{ tab.label }}
+      <i class="pficon-edit tab-icon hide" ng-click="vm.setupModalOptions({type: 'tab', tab: tab.position})"></i>
+      <i class='glyphicon glyphicon-remove tab-icon hide' ng-click='vm.removeTab(tab.position)'></i>
+    </a>
+  </li>
+  <li class='nosort'>
+    <a class="create-tab" ng-click='vm.addTab()'>
+      <i class='pficon-add-circle-o'></i>
+      &nbsp; {{ 'Create Tab' | translate }}
+    </a>
+  </li>
+</ul>

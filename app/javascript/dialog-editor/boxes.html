@@ -1,0 +1,60 @@
+<div class='dialog'>
+  <div class="dialog-editor-container"
+       ng-model='vm.dialogTabs[vm.service.activeTab].dialog_groups'
+       ui-sortable='vm.sortableOptionsBox'
+       ng-repeat='tab in vm.dialogTabs'
+       ng-if='tab.position === vm.service.activeTab'>
+    <!-- tab content -->
+    <div ng-repeat='box in tab.dialog_groups track by $index'>
+      <div class="panel panel-default" ng-class="{'draggable-box': vm[highlightBox_+$index] === true}"
+           data-drop='true'
+           jqyoui-droppable='{multiple: true, onDrop: "vm.droppableOptions"}'
+           ng-model='box.dialog_fields'>
+           <div class="panel-heading"
+                ng-mouseenter="vm[highlightBox_+$index] = true" ng-mouseleave="vm[highlightBox_+$index] = false">
+                <strong style="padding-left: 8px;">{{ box.label }}</strong>
+                <button type="button" class="close hide show-on-hover"
+                  ng-click="vm.removeBox(box.position)">
+            <span aria-hidden="true">
+              <i class="fa header-fa fa-times"></i>
+            </span>
+          </button>
+          <i class="pf header-pf pficon-edit close hide show-on-hover"
+             ng-click="vm.setupModalOptions({type: 'box', tab: vm.service.activeTab, box: box.position})"></i>
+        </div>
+        <div class="panel-body">
+          <div ui-sortable='vm.sortableOptionsFields'
+               ng-model='box.dialog_fields'>
+            <div class="well well-lg nosort"
+                 ng-if='box.dialog_fields.length === 0'>
+              <i class="fa fa-object-group"></i>
+              {{ 'Drag items here to add to the dialog. At least one item is required before saving' | translate }}
+            </div>
+            <div ng-repeat='field in box.dialog_fields' class="draggable-field draggable-field-dropdown">
+              <form class="form-horizontal">
+                <dialog-editor-field box-position="box.position"
+                                     field-data='field'
+                                     update-dialog-field-responders="vm.updateDialogFieldResponders"
+                                     setup-modal-options="vm.onFieldEdit(type, tab, box, field)"></dialog-editor-field>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blank-slate-pf nosort"
+         ng-if='tab.dialog_groups.length === 0'
+         ng-click='vm.addBox()'>
+      <div class="blank-slate-pf-icon" style="cursor: pointer;">
+        <i class="fa fa-plus-circle"></i>
+      </div>
+      <h1 translate style="cursor: pointer;">Start with adding a section</h1>
+    </div>
+    <div class="add-section-box nosort">
+      <a ng-click='vm.addBox()'>
+        <i class="pficon-add-circle-o"></i>&nbsp;&nbsp;{{ 'Add Section' | translate }}
+      </a>
+    </div>
+    <div>&nbsp;</div>
+  </div>
+</div>

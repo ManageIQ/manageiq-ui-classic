@@ -1,0 +1,139 @@
+.dialog-editor-container {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.draggable-box {
+  background-color: $color-white-94;
+  border-radius: 1px;
+  cursor: pointer;
+  margin-right: 16px;
+  margin-top: 10px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &.selected {
+    border: 3px solid $color-blue-300;
+  }
+
+  &:hover {
+    border: 1px solid $color-gray-1;
+    box-shadow: 0 2px 6px $color-black-20;
+
+    .header-fa {
+      float: right;
+      font-size: 22px;
+    }
+
+    &.selected {
+      border: 3px solid $color-blue-300;
+    }
+
+    .header-pf {
+      float: right;
+      font-size: 16px;
+      padding-top: 3px;
+      padding-right: 8px;
+    }
+
+    .show-on-hover {
+      display: initial !important;
+    }
+
+    &::before {
+      background-image: linear-gradient(to bottom, $color-lochmara-approx 60%, $color-white 0%);
+      background-position: left;
+      background-repeat: repeat-y;
+      background-size: 2px 5px;
+      border: 4px solid $color-lochmara-approx;
+      bottom: 4px;
+      content: "";
+      left: 4px;
+      position: absolute;
+      top: 3px;
+      width: 10px;
+    }
+  }
+
+  &:first-child {
+    margin-top: 0px;
+  }
+}
+
+.draggable-field {
+  background-color: $color-white-94;
+  border-radius: 1px;
+  cursor: pointer;
+  margin-right: 16px;
+  margin-top: 10px;
+  width: 100%;
+  padding-top: 9px;
+  padding-left: 20px;
+  padding-right: 8px;
+  padding-bottom: 2px;
+  position: relative;
+  z-index: 600;
+
+  &.selected {
+    border: 3px solid $color-blue-300;
+  }
+
+  &:hover {
+    border: 1px solid $color-gray-1;
+    box-shadow: 0 2px 6px $color-black-20;
+
+    &.selected {
+      border: 3px solid $color-blue-300;
+    }
+
+    button {
+      display: inherit !important;
+      position: relative;
+      top: 4px;
+    }
+
+    &::before {
+      background-image: linear-gradient(to bottom, $color-lochmara-approx 60%, $color-white 0%);
+      background-position: left;
+      background-repeat: repeat-y;
+      background-size: 2px 5px;
+      border: 4px solid $color-lochmara-approx;
+      bottom: 4px;
+      content: "";
+      left: 4px;
+      position: absolute;
+      top: 3px;
+      width: 10px;
+    }
+  }
+
+  &:first-child {
+    margin-top: 0px;
+  }
+
+  img {
+    height: 100%;
+    margin-right: 8px;
+    object-fit: contain;
+  }
+}
+
+.add-section-box {
+  cursor: pointer;
+  height: 45px;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  border: 2px dashed $color-gray-1;
+  margin-bottom: 26px;
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.draggable-field-dropdown {
+  z-index: initial;
+}

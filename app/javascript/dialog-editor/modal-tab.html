@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="vm.closeModal()" aria-hidden="true">
+    <span class="pficon pficon-close"></span>
+  </button>
+  <h4 class="modal-title" id="myModalLabel" translate>Edit Tab Details</h4>
+</div>
+
+<div class="modal-body">
+  <ul class="nav nav-tabs dialog-editor-tab-list">
+    <li ng-class="{active:vm.modalTabIsSet('element_information')}">
+      <a ng-click="vm.modalTabSet('element_information')" translate>Tab Information</a>
+    </li>
+  </ul>
+  <!-- general details same for each component - element information -->
+  <div ng-show="vm.modalTabIsSet('element_information')">
+    <form class="form-horizontal">
+      <div pf-form-group pf-label="{{'Label'|translate}}" required>
+        <input id="label" name="label"
+               ng-model="vm.modalData.label" type="text" required/>
+      </div>
+      <div pf-form-group pf-input-class="col-sm-9" pf-label="{{'Description'|translate}}">
+        <textarea id="description" name="description" ng-model="vm.modalData.description">
+          {{ vm.modalData.description }}
+        </textarea>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="vm.closeModal()" translate>Cancel</button>
+  <button type="button"
+          class="btn btn-primary"
+          ng-click="vm.closeModal(true)"
+          ng-disabled="vm.modalUnchanged()" translate>Save
+  </button>
+</div>
