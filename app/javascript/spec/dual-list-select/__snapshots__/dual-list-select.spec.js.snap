@@ -2,7 +2,6 @@
 
 exports[`Dual list component is rendered correctly 1`] = `
 <WrappedDualList
-  FieldProvider={[Function]}
   input={
     Object {
       "onChange": [MockFunction],
@@ -32,8 +31,9 @@ exports[`Dual list component is rendered correctly 1`] = `
     ]
   }
 >
-  <FieldProviderComponent
-    component={[Function]}
+  <DualList
+    allToLeft={false}
+    allToRight={false}
     input={
       Object {
         "onChange": [MockFunction],
@@ -43,6 +43,12 @@ exports[`Dual list component is rendered correctly 1`] = `
       }
     }
     isEqual={[Function]}
+    leftTitle="Options"
+    meta={Object {}}
+    moveAllLeftTitle="Move all to left"
+    moveAllRightTitle="Move all to right"
+    moveLeftTitle="Move selected to left"
+    moveRightTitle="Move selected to right"
     options={
       Array [
         Object {
@@ -63,6 +69,8 @@ exports[`Dual list component is rendered correctly 1`] = `
         },
       ]
     }
+    rightTitle="Selected"
+    size={15}
     subscription={
       Object {
         "error": true,
@@ -71,268 +79,218 @@ exports[`Dual list component is rendered correctly 1`] = `
       }
     }
   >
-    <DualList
-      allToLeft={false}
-      allToRight={false}
-      input={
-        Object {
-          "onChange": [Function],
-          "value": Array [
-            "key3",
-          ],
-        }
-      }
-      isEqual={[Function]}
-      leftTitle="Options"
-      meta={Object {}}
-      moveAllLeftTitle="Move all to left"
-      moveAllRightTitle="Move all to right"
-      moveLeftTitle="Move selected to left"
-      moveRightTitle="Move selected to right"
-      options={
-        Array [
-          Object {
-            "key": "key1",
-            "label": "text1",
-          },
-          Object {
-            "key": "key2",
-            "label": "text2",
-          },
-          Object {
-            "key": "key3",
-            "label": "text3",
-          },
-          Object {
-            "key": "key4",
-            "label": "text4",
-          },
-        ]
-      }
-      rightTitle="Selected"
-      size={15}
-      subscription={
-        Object {
-          "error": true,
-          "pristine": true,
-          "value": true,
-        }
-      }
+    <div
+      className="dual-list"
     >
-      <div
-        className="dual-list"
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={true}
       >
-        <Grid
-          bsClass="container"
-          componentClass="div"
-          fluid={true}
+        <div
+          className="container-fluid"
         >
-          <div
-            className="container-fluid"
+          <Row
+            bsClass="row"
+            componentClass="div"
           >
-            <Row
-              bsClass="row"
-              componentClass="div"
+            <div
+              className="row"
             >
-              <div
-                className="row"
+              <Col
+                bsClass="col"
+                componentClass="div"
+                md={5}
               >
-                <Col
-                  bsClass="col"
-                  componentClass="div"
-                  md={5}
+                <div
+                  className="col-md-5"
                 >
-                  <div
-                    className="col-md-5"
+                  Options
+                  <List
+                    optionClick={[Function]}
+                    size={15}
+                    value={
+                      Array [
+                        Object {
+                          "key": "key1",
+                          "label": "text1",
+                        },
+                        Object {
+                          "key": "key2",
+                          "label": "text2",
+                        },
+                        Object {
+                          "key": "key4",
+                          "label": "text4",
+                        },
+                      ]
+                    }
                   >
-                    Options
-                    <List
-                      optionClick={[Function]}
+                    <select
+                      className="form-control list"
+                      multiple={true}
                       size={15}
-                      value={
-                        Array [
-                          Object {
-                            "key": "key1",
-                            "label": "text1",
-                          },
-                          Object {
-                            "key": "key2",
-                            "label": "text2",
-                          },
-                          Object {
-                            "key": "key4",
-                            "label": "text4",
-                          },
-                        ]
-                      }
                     >
-                      <select
-                        className="form-control list"
-                        multiple={true}
-                        size={15}
+                      <option
+                        key="key1"
+                        onClick={[Function]}
+                        value="key1"
                       >
-                        <option
-                          key="key1"
-                          onClick={[Function]}
-                          value="key1"
-                        >
-                          text1
-                        </option>
-                        <option
-                          key="key2"
-                          onClick={[Function]}
-                          value="key2"
-                        >
-                          text2
-                        </option>
-                        <option
-                          key="key4"
-                          onClick={[Function]}
-                          value="key4"
-                        >
-                          text4
-                        </option>
-                      </select>
-                    </List>
-                  </div>
-                </Col>
-                <Col
-                  bsClass="col"
-                  className="buttons-block"
-                  componentClass="div"
-                  md={2}
+                        text1
+                      </option>
+                      <option
+                        key="key2"
+                        onClick={[Function]}
+                        value="key2"
+                      >
+                        text2
+                      </option>
+                      <option
+                        key="key4"
+                        onClick={[Function]}
+                        value="key4"
+                      >
+                        text4
+                      </option>
+                    </select>
+                  </List>
+                </div>
+              </Col>
+              <Col
+                bsClass="col"
+                className="buttons-block"
+                componentClass="div"
+                md={2}
+              >
+                <div
+                  className="buttons-block col-md-2"
                 >
                   <div
-                    className="buttons-block col-md-2"
+                    className="spacer"
+                  />
+                  <div
+                    className="spacer"
+                  />
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move selected to right"
+                    type="button"
                   >
-                    <div
-                      className="spacer"
-                    />
-                    <div
-                      className="spacer"
-                    />
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move selected to right"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move selected to right"
-                        type="button"
+                      <Icon
+                        name="angle-right"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-right"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-right"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-right fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-right fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move selected to left"
+                    type="button"
+                  >
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move selected to left"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move selected to left"
-                        type="button"
+                      <Icon
+                        name="angle-left"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-left"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-left"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-left fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                  </div>
-                </Col>
-                <Col
-                  bsClass="col"
-                  componentClass="div"
-                  md={5}
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-left fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                </div>
+              </Col>
+              <Col
+                bsClass="col"
+                componentClass="div"
+                md={5}
+              >
+                <div
+                  className="col-md-5"
                 >
-                  <div
-                    className="col-md-5"
+                  Selected
+                  <List
+                    optionClick={[Function]}
+                    size={15}
+                    value={
+                      Array [
+                        Object {
+                          "key": "key3",
+                          "label": "text3",
+                        },
+                      ]
+                    }
                   >
-                    Selected
-                    <List
-                      optionClick={[Function]}
+                    <select
+                      className="form-control list"
+                      multiple={true}
                       size={15}
-                      value={
-                        Array [
-                          Object {
-                            "key": "key3",
-                            "label": "text3",
-                          },
-                        ]
-                      }
                     >
-                      <select
-                        className="form-control list"
-                        multiple={true}
-                        size={15}
+                      <option
+                        key="key3"
+                        onClick={[Function]}
+                        value="key3"
                       >
-                        <option
-                          key="key3"
-                          onClick={[Function]}
-                          value="key3"
-                        >
-                          text3
-                        </option>
-                      </select>
-                    </List>
-                  </div>
-                </Col>
-              </div>
-            </Row>
-          </div>
-        </Grid>
-      </div>
-    </DualList>
-  </FieldProviderComponent>
+                        text3
+                      </option>
+                    </select>
+                  </List>
+                </div>
+              </Col>
+            </div>
+          </Row>
+        </div>
+      </Grid>
+    </div>
+  </DualList>
 </WrappedDualList>
 `;
 
 exports[`Dual list component is rendered correctly with move all buttons 1`] = `
 <WrappedDualList
-  FieldProvider={[Function]}
   allToLeft={true}
   allToRight={true}
   input={
@@ -364,10 +322,9 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
     ]
   }
 >
-  <FieldProviderComponent
+  <DualList
     allToLeft={true}
     allToRight={true}
-    component={[Function]}
     input={
       Object {
         "onChange": [MockFunction],
@@ -377,6 +334,12 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
       }
     }
     isEqual={[Function]}
+    leftTitle="Options"
+    meta={Object {}}
+    moveAllLeftTitle="Move all to left"
+    moveAllRightTitle="Move all to right"
+    moveLeftTitle="Move selected to left"
+    moveRightTitle="Move selected to right"
     options={
       Array [
         Object {
@@ -397,6 +360,8 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
         },
       ]
     }
+    rightTitle="Selected"
+    size={15}
     subscription={
       Object {
         "error": true,
@@ -405,331 +370,282 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
       }
     }
   >
-    <DualList
-      allToLeft={true}
-      allToRight={true}
-      input={
-        Object {
-          "onChange": [Function],
-          "value": Array [
-            "key3",
-          ],
-        }
-      }
-      isEqual={[Function]}
-      leftTitle="Options"
-      meta={Object {}}
-      moveAllLeftTitle="Move all to left"
-      moveAllRightTitle="Move all to right"
-      moveLeftTitle="Move selected to left"
-      moveRightTitle="Move selected to right"
-      options={
-        Array [
-          Object {
-            "key": "key1",
-            "label": "text1",
-          },
-          Object {
-            "key": "key2",
-            "label": "text2",
-          },
-          Object {
-            "key": "key3",
-            "label": "text3",
-          },
-          Object {
-            "key": "key4",
-            "label": "text4",
-          },
-        ]
-      }
-      rightTitle="Selected"
-      size={15}
-      subscription={
-        Object {
-          "error": true,
-          "pristine": true,
-          "value": true,
-        }
-      }
+    <div
+      className="dual-list"
     >
-      <div
-        className="dual-list"
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={true}
       >
-        <Grid
-          bsClass="container"
-          componentClass="div"
-          fluid={true}
+        <div
+          className="container-fluid"
         >
-          <div
-            className="container-fluid"
+          <Row
+            bsClass="row"
+            componentClass="div"
           >
-            <Row
-              bsClass="row"
-              componentClass="div"
+            <div
+              className="row"
             >
-              <div
-                className="row"
+              <Col
+                bsClass="col"
+                componentClass="div"
+                md={5}
               >
-                <Col
-                  bsClass="col"
-                  componentClass="div"
-                  md={5}
+                <div
+                  className="col-md-5"
                 >
-                  <div
-                    className="col-md-5"
+                  Options
+                  <List
+                    optionClick={[Function]}
+                    size={15}
+                    value={
+                      Array [
+                        Object {
+                          "key": "key1",
+                          "label": "text1",
+                        },
+                        Object {
+                          "key": "key2",
+                          "label": "text2",
+                        },
+                        Object {
+                          "key": "key4",
+                          "label": "text4",
+                        },
+                      ]
+                    }
                   >
-                    Options
-                    <List
-                      optionClick={[Function]}
+                    <select
+                      className="form-control list"
+                      multiple={true}
                       size={15}
-                      value={
-                        Array [
-                          Object {
-                            "key": "key1",
-                            "label": "text1",
-                          },
-                          Object {
-                            "key": "key2",
-                            "label": "text2",
-                          },
-                          Object {
-                            "key": "key4",
-                            "label": "text4",
-                          },
-                        ]
-                      }
                     >
-                      <select
-                        className="form-control list"
-                        multiple={true}
-                        size={15}
+                      <option
+                        key="key1"
+                        onClick={[Function]}
+                        value="key1"
                       >
-                        <option
-                          key="key1"
-                          onClick={[Function]}
-                          value="key1"
-                        >
-                          text1
-                        </option>
-                        <option
-                          key="key2"
-                          onClick={[Function]}
-                          value="key2"
-                        >
-                          text2
-                        </option>
-                        <option
-                          key="key4"
-                          onClick={[Function]}
-                          value="key4"
-                        >
-                          text4
-                        </option>
-                      </select>
-                    </List>
-                  </div>
-                </Col>
-                <Col
-                  bsClass="col"
-                  className="buttons-block"
-                  componentClass="div"
-                  md={2}
+                        text1
+                      </option>
+                      <option
+                        key="key2"
+                        onClick={[Function]}
+                        value="key2"
+                      >
+                        text2
+                      </option>
+                      <option
+                        key="key4"
+                        onClick={[Function]}
+                        value="key4"
+                      >
+                        text4
+                      </option>
+                    </select>
+                  </List>
+                </div>
+              </Col>
+              <Col
+                bsClass="col"
+                className="buttons-block"
+                componentClass="div"
+                md={2}
+              >
+                <div
+                  className="buttons-block col-md-2"
                 >
                   <div
-                    className="buttons-block col-md-2"
+                    className="spacer"
+                  />
+                  <div
+                    className="spacer"
+                  />
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move selected to right"
+                    type="button"
                   >
-                    <div
-                      className="spacer"
-                    />
-                    <div
-                      className="spacer"
-                    />
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move selected to right"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move selected to right"
-                        type="button"
+                      <Icon
+                        name="angle-right"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-right"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-right"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-right fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-right fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move all to right"
+                    type="button"
+                  >
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move all to right"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move all to right"
-                        type="button"
+                      <Icon
+                        name="angle-double-right"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-double-right"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-double-right"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-double-right fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-double-right fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move all to left"
+                    type="button"
+                  >
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move all to left"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move all to left"
-                        type="button"
+                      <Icon
+                        name="angle-double-left"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-double-left"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-double-left"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-double-left fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      className="btn-block dual-list-button"
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-double-left fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                  <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="btn-block dual-list-button"
+                    disabled={false}
+                    onClick={[Function]}
+                    title="Move selected to left"
+                    type="button"
+                  >
+                    <button
+                      className="btn-block dual-list-button btn btn-default"
                       disabled={false}
                       onClick={[Function]}
                       title="Move selected to left"
                       type="button"
                     >
-                      <button
-                        className="btn-block dual-list-button btn btn-default"
-                        disabled={false}
-                        onClick={[Function]}
-                        title="Move selected to left"
-                        type="button"
+                      <Icon
+                        name="angle-left"
+                        size="lg"
+                        type="fa"
                       >
-                        <Icon
+                        <FontAwesome
                           name="angle-left"
                           size="lg"
-                          type="fa"
                         >
-                          <FontAwesome
-                            name="angle-left"
-                            size="lg"
-                          >
-                            <span
-                              aria-hidden={true}
-                              className="fa fa-angle-left fa-lg"
-                            />
-                          </FontAwesome>
-                        </Icon>
-                      </button>
-                    </Button>
-                  </div>
-                </Col>
-                <Col
-                  bsClass="col"
-                  componentClass="div"
-                  md={5}
+                          <span
+                            aria-hidden={true}
+                            className="fa fa-angle-left fa-lg"
+                          />
+                        </FontAwesome>
+                      </Icon>
+                    </button>
+                  </Button>
+                </div>
+              </Col>
+              <Col
+                bsClass="col"
+                componentClass="div"
+                md={5}
+              >
+                <div
+                  className="col-md-5"
                 >
-                  <div
-                    className="col-md-5"
+                  Selected
+                  <List
+                    optionClick={[Function]}
+                    size={15}
+                    value={
+                      Array [
+                        Object {
+                          "key": "key3",
+                          "label": "text3",
+                        },
+                      ]
+                    }
                   >
-                    Selected
-                    <List
-                      optionClick={[Function]}
+                    <select
+                      className="form-control list"
+                      multiple={true}
                       size={15}
-                      value={
-                        Array [
-                          Object {
-                            "key": "key3",
-                            "label": "text3",
-                          },
-                        ]
-                      }
                     >
-                      <select
-                        className="form-control list"
-                        multiple={true}
-                        size={15}
+                      <option
+                        key="key3"
+                        onClick={[Function]}
+                        value="key3"
                       >
-                        <option
-                          key="key3"
-                          onClick={[Function]}
-                          value="key3"
-                        >
-                          text3
-                        </option>
-                      </select>
-                    </List>
-                  </div>
-                </Col>
-              </div>
-            </Row>
-          </div>
-        </Grid>
-      </div>
-    </DualList>
-  </FieldProviderComponent>
+                        text3
+                      </option>
+                    </select>
+                  </List>
+                </div>
+              </Col>
+            </div>
+          </Row>
+        </div>
+      </Grid>
+    </div>
+  </DualList>
 </WrappedDualList>
 `;

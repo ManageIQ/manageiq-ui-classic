@@ -130,7 +130,7 @@ describe('OpstTenantForm', () => {
     expect(pfSwitch).toHaveLength(1);
     pfSwitch.find('input').simulate('change', { target: { checked: false } });
     wrapper.update();
-    expect(wrapper.find('input').first().props().disabled).toEqual(false);
+    expect(!!wrapper.find('input').first().props().disabled).toEqual(false);
     done();
   });
 

@@ -7,6 +7,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 function createSchema(renderEmsChoices, emsChoices) {
   let fields = [{
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     validate: [{
       type: validatorTypes.REQUIRED,
@@ -18,6 +19,7 @@ function createSchema(renderEmsChoices, emsChoices) {
   if (!renderEmsChoices) {
     fields = [{
       component: componentTypes.SELECT,
+      id: 'ems_id',
       name: 'ems_id',
       menuPlacement: 'bottom',
       label: __('Cloud Provider/Parent Cloud Tenant'),

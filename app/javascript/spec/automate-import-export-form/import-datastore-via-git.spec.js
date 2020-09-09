@@ -21,7 +21,7 @@ describe('Import datastore via git component', () => {
 
   it('should have submit button always disabled', () => {
     const wrapper = mount(<ImportDatastoreViaGit disableSubmit />);
-    wrapper.find('input#git_url').simulate('change', { target: { value: 'http://' } });
+    wrapper.find('input[name="git_url"]').simulate('change', { target: { value: 'http://' } });
     const button = wrapper.find('button');
     expect(button.props().disabled).toBe(true);
   });
@@ -31,7 +31,7 @@ describe('Import datastore via git component', () => {
     fetchMock.postOnce('/miq_ae_tools/retrieve_git_datastore', [{ message: 'Foo', level: 'Bar' }]);
 
     const wrapper = mount(<ImportDatastoreViaGit />);
-    wrapper.find('input#git_url').simulate('change', { target: { value: 'http://' } });
+    wrapper.find('input[name="git_url"]').simulate('change', { target: { value: 'http://' } });
     wrapper.find('form').simulate('submit');
 
     const expectedCall = expect.arrayContaining([

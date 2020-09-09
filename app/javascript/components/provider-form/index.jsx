@@ -6,7 +6,7 @@ import { pick, keyBy } from 'lodash';
 import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
+import mapper from '../../forms/mappers/componentMapper';
 import ProtocolSelector from './protocol-selector';
 import ProviderSelectField from './provider-select-field';
 import ProviderCredentials from './provider-credentials';
@@ -21,6 +21,7 @@ const findSkipSubmits = (schema, items) => {
 
 const typeSelectField = (edit, filter) => ({
   component: 'provider-select-field',
+  id: 'type',
   name: 'type',
   label: __('Type'),
   kind: filter,
@@ -34,6 +35,7 @@ const typeSelectField = (edit, filter) => ({
 const commonFields = [
   {
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
@@ -43,6 +45,7 @@ const commonFields = [
   },
   {
     component: componentTypes.SELECT,
+    id: 'zone_id',
     name: 'zone_id',
     label: __('Zone'),
     loadOptions: () =>
@@ -60,6 +63,7 @@ export const loadProviderFields = (kind, type) => API.options(`/api/providers?ty
     ...commonFields,
     {
       component: componentTypes.SUB_FORM,
+      id: type,
       name: type,
       ...provider_form_schema, // eslint-disable-line camelcase
     },
@@ -147,8 +151,8 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
     request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
   };
 
-  const formFieldsMapper = {
-    ...fieldsMapper,
+  const componentMapper = {
+    ...mapper,
     'protocol-selector': ProtocolSelector,
     'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
@@ -161,7 +165,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
       { fields && (
         <EditingContext.Provider value={{ providerId, setState }}>
           <MiqFormRenderer
-            formFieldsMapper={formFieldsMapper}
+            componentMapper={componentMapper}
             schema={{ fields }}
             onSubmit={onSubmit}
             onCancel={onCancel}
@@ -171,6 +175,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
             buttonsLabels={{ submitLabel }}
             canReset={edit}
             clearOnUnmount
+            keepDirtyOnReinitilize
           />
         </EditingContext.Provider>
       ) }

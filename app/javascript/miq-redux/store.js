@@ -3,8 +3,8 @@ import createReducer from './reducer';
 import createMiddlewares from './middleware';
 import { history } from '../miq-component/react-history.js';
 
-import { reducer as formReducer } from './form-reducer';
 import { notificationReducer } from './notification-reducer';
+import formButtonsReducer from '../forms/form-buttons-reducer';
 
 const initialState = {};
 
@@ -21,7 +21,7 @@ const initializeStore = () => {
    * storage for all future reducers
    */
   store.asyncReducers = {
-    formReducer,
+    FormButtons: formButtonsReducer,
     notificationReducer,
   };
 

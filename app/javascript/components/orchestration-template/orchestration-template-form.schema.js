@@ -43,6 +43,7 @@ const setFormat = (values) => {
 const orchestrationFormSchema = (isEditing = false, isCopying = false, initialValues = {}) => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
@@ -52,15 +53,18 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     }],
   }, {
     component: componentTypes.TEXTAREA,
+    id: 'description',
     name: 'description',
     label: __('Description'),
   }, {
     component: componentTypes.SUB_FORM,
+    id: 'template-type',
     name: 'template-type',
     fields: isEditing ? [] : [
       {
         component: componentTypes.SELECT,
         isDisabled: isEditing,
+        id: 'type',
         name: 'type',
         label: __('Template Type'),
         options: templateTypeOptions,
@@ -68,12 +72,14 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       }],
   }, {
     component: componentTypes.SUB_FORM,
+    id: 'provider-type',
     name: 'provider-type',
     fields: isCopying || isEditing ? [] : [{
       condition: {
         when: 'type',
         is: 'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate',
       },
+      id: 'ems_id',
       name: 'ems_id',
       label: __('Provider'),
       component: componentTypes.SELECT,
@@ -87,19 +93,23 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       }],
     }],
   }, {
+    id: 'draft',
     name: 'draft',
     label: __('Draft'),
     component: componentTypes.CHECKBOX,
   }, {
     component: 'hr',
+    id: 'form-separator',
     name: 'form-separator',
   }, {
     component: 'note',
+    id: 'form-note',
     name: 'form-note',
     label: __('Note: Select format type below to apply syntax highlighting for better readability'),
     className: '',
   },{
     component: 'code-editor',
+    id: 'content',
     name: 'content',
     label: __('Content'),
     mode: setFormat(initialValues),

@@ -15,6 +15,8 @@ import 'codemirror/mode/yaml/yaml';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 
+import { useFieldApi } from '@@ddf';
+
 import RequiredLabel from '../../forms/required-label';
 
 const getMode = mode => ({
@@ -86,7 +88,6 @@ CodeEditor.defaultProps = {
 const CodeGroup = ({
   input: { value, onChange, name },
   meta: { error },
-  formOptions: _formOptions,
   label,
   isRequired,
   ...props
@@ -105,11 +106,9 @@ const CodeGroup = ({
   </FormGroup>
 );
 
-export const DataDrivenFormCodeEditor = ({
-  FieldProvider,
-  ...props
-}) => (
-  <FieldProvider {...props} component={CodeGroup} />
-);
+export const DataDrivenFormCodeEditor = (props) => {
+  const { input, meta, ...rest } = useFieldApi(props);
+  return <CodeGroup input={input} meta={meta} {...rest} />;
+};
 
 export default CodeEditor;

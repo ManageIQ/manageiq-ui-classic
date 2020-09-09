@@ -6,13 +6,13 @@ export const asyncValidator = (value, dashboardId, name) =>
   http.get(`/report/dashboard_get/${dashboardId}?name=${value}`)
     .then((json) => {
       if (value === name) {
-        return __('Use different name');
+        throw __('Use different name');
       }
       if (json.length > 0) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __("Name can't be blank");
+        throw __("Name can't be blank");
       }
       return undefined;
     });
@@ -24,10 +24,12 @@ export default (miqGroups, name, dashboardId) => {
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
+      id: 'basic-info',
       name: 'basic-info',
       fields: [
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'name',
           name: 'name',
           validate: [
             value => asyncValidatorDebounced(value, dashboardId, name),
@@ -38,6 +40,7 @@ export default (miqGroups, name, dashboardId) => {
         },
         {
           component: componentTypes.TEXT_FIELD,
+          id: 'description',
           name: 'description',
           validate: [{
             type: validatorTypes.REQUIRED,
@@ -48,7 +51,8 @@ export default (miqGroups, name, dashboardId) => {
           validateOnMount: true,
         },
         {
-          component: componentTypes.SELECT_COMPONENT,
+          component: componentTypes.SELECT,
+          id: 'group_id',
           name: 'group_id',
           options: miqGroups,
           label: __('Select Group'),

@@ -57,18 +57,11 @@ describe('PxeServersForm', () => {
       .postOnce('/api/pxe_servers', {});
 
     const wrapper = mount(<PxeServersForm {...initialProps} />);
-    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-      .instance();
-    /**
-     * pause validation so we dont need async mocks
-     */
-    form.pauseValidation();
-    wrapper.find('input#name').simulate('change', { target: { value: 'my name' } });
-    form.change('uri', 'nfs://foo/bar');
-    /**
-     * unpause validation before final submit
-     */
-    form.resumeValidation();
+
+    await act(async() => {
+      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'my name' } });
+      wrapper.find('input[name="uri"]').simulate('change', { target: { value: 'nfs://foo/bar' } });
+    });
 
     /**
      * wait for name async validation

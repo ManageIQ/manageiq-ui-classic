@@ -12,11 +12,6 @@ exports[`Dual group component should render 1`] = `
       },
     ]
   }
-  formOptions={
-    Object {
-      "renderForm": [Function],
-    }
-  }
   name="dualgroup"
 >
   <Row

@@ -285,7 +285,7 @@ function miqCheckForChanges() {
     type = 'angular';
   }
 
-  if (ManageIQ.redux.store.getState().formReducer && ManageIQ.redux.store.getState().formReducer.in_a_form) {
+  if (ManageIQ.redux.store.getState().FormButtons && ManageIQ.redux.store.getState().FormButtons.in_a_form) {
     type = 'react';
   }
 
@@ -304,7 +304,7 @@ function miqCheckForChanges() {
       break;
 
     case 'react':
-      dirty = ! ManageIQ.redux.store.getState().formReducer.pristine;
+      dirty = ! ManageIQ.redux.store.getState().FormButtons.pristine;
       break;
 
     case 'tagging':

@@ -3,7 +3,10 @@ import { shallow, mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { HelpBlock } from 'patternfly-react';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
+
+jest.mock('@@ddf', () => ({
+  useFieldApi: props => ({ meta: {}, input: {}, ...props }),
+}));
 
 describe('Edit secret field form component', () => {
   let initialProps;
@@ -11,7 +14,6 @@ describe('Edit secret field form component', () => {
     initialProps = {
       label: 'foo',
       setEditMode: jest.fn(),
-      FieldProvider,
     };
   });
 
@@ -21,12 +23,8 @@ describe('Edit secret field form component', () => {
   });
 
   it('should render correctly in error state', () => {
-    const wrapper = mount(
-      <EditPasswordField
-        {...initialProps}
-        FieldProvider={props => <FieldProvider {...props} meta={{ error: 'Error message' }} />}
-      />,
-    );
+    initialProps.meta = { error: 'error message' };
+    const wrapper = mount(<EditPasswordField {...initialProps} />);
     expect(wrapper.find(HelpBlock)).toBeTruthy();
   });
 

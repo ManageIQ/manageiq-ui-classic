@@ -124,7 +124,7 @@ ManageIQ.explorer.reloadTrees = function(data) {
 
 ManageIQ.explorer.resetReduxForms = function() {
   if (ManageIQ.redux.store) {
-    ManageIQ.redux.store.dispatch({type: '@@data-driven-forms/reset'});
+    ManageIQ.redux.store.dispatch({type: 'FormButtons.reset'});
   }
 };
 
