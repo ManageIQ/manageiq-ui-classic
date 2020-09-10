@@ -108,7 +108,7 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
         var quota =  vm.tenantQuotaModel.quotas[key];
         if (quota.value) {
           if (quota.unit === 'bytes') {
-            quota.value = quota.value / GIGABYTE;
+            quota.value = Math.round(quota.value / GIGABYTE);
           }
           quota.enforced = true;
         } else {
