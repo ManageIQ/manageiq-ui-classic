@@ -40,20 +40,20 @@ module GtlHelper
   end
 
   def render_gtl(options)
-    react 'GtlView', {
-      flashMessages:      options[:flash_messages],
-      additionalOptions: options[:report_data_additional_options],
-      modelName:         options[:model_name],
-      activeTree:        options[:active_tree],
-      parentId:          options[:display].nil? ? nil : options[:parent_id],
-      isAscending:       options[:is_ascending],
-      sortColIdx:        options[:sort_col],
-      isExplorer:        options[:explorer],
-      records:           !options[:selected_records].nil? ? options[:selected_records] : [],
-      hideSelect:        options[:selected_records].kind_of?(Array),
-      showUrl:           gtl_show_url(options),
-      pages:             options[:pages],
-    }
+    react('GtlView',
+      :flashMessages     => options[:flash_messages],
+      :additionalOptions => options[:report_data_additional_options],
+      :modelName         => options[:model_name],
+      :activeTree        => options[:active_tree],
+      :parentId          => options[:display].nil? ? nil : options[:parent_id],
+      :isAscending       => options[:is_ascending],
+      :sortColIdx        => options[:sort_col],
+      :isExplorer        => options[:explorer],
+      :records           => !options[:selected_records].nil? ? options[:selected_records] : [],
+      :hideSelect        => options[:selected_records].kind_of?(Array),
+      :showUrl           => gtl_show_url(options),
+      :pages             => options[:pages],
+    )
   end
 
   def gtl_show_url(options)

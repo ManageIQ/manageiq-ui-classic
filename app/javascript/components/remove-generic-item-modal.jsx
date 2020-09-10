@@ -52,7 +52,7 @@ export const removeItems = (items, { ajaxReload, apiUrl, asyncDelete, redirectUr
           window.location.href = redirectUrl;
           miqSparkleOff();
         } else {
-          sendDataWithRx({ controller: 'reportDataController', type: 'gtlUnselectAll' });
+          sendDataWithRx({ type: 'gtlUnselectAll' });
           miqAjax(treeSelect ? `tree_select?id=${treeSelect}` : `reload?deleted=true`)
             .then(() => miqFlashSaved());
         }
