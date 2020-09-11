@@ -29,3 +29,6 @@
             :title   => _("Click to delete this mapping")}
             %button.btn.btn-default.btn-block.btn-sm
               = _("Delete")
+- if @single_value_category_is_present
+  .note
+    %b= _("Warning: Mappings with Resource Entity 'All-Entities' could cause overwriting existing tags on resources with mapped provider labels.")
