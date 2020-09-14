@@ -1,7 +1,7 @@
 describe MiqAlertController do
   context "alert edit" do
     before do
-      login_as user_with_feature(%w(miq_alert miq_alert_edit miq_alert_profile_new))
+      login_as user_with_feature(%w[miq_alert miq_alert_edit miq_alert_profile_new])
       @miq_alert = FactoryBot.create(:miq_alert)
       controller.instance_variable_set(:@sb,
                                        :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
@@ -74,34 +74,34 @@ describe MiqAlertController do
   context 'test click on toolbar button' do
     before do
       EvmSpecHelper.local_miq_server
-      login_as FactoryBot.create(:user, :features => %w(alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
+      login_as FactoryBot.create(:user, :features => %w[alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
       # login_as FactoryBot.create(:user, :features => "alert_admin")
       @miq_alert = FactoryBot.create(:miq_alert)
       allow(controller).to receive(:x_active_tree).and_return(:alert_tree)
       controller.instance_variable_set(:@sb,
                                        :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
-                                       :active_tree => :alert_tree,)
+                                       :active_tree => :alert_tree)
     end
 
     let(:alert) { FactoryBot.create(:miq_alert, :read_only => false) }
 
     it "alert edit" do
-      post :x_button, :params => { :pressed => 'miq_alert_edit', :id => alert.id }
+      post :x_button, :params => {:pressed => 'miq_alert_edit', :id => alert.id}
       expect(response.status).to eq(200)
     end
 
     it "alert copy" do
-      post :x_button, :params => { :pressed => 'miq_alert_copy', :id => alert.id }
+      post :x_button, :params => {:pressed => 'miq_alert_copy', :id => alert.id}
       expect(response.status).to eq(200)
     end
 
     it "alert new" do
-      post :x_button, :params => { :pressed => 'miq_alert_profile_new' }
+      post :x_button, :params => {:pressed => 'miq_alert_profile_new'}
       expect(response.status).to eq(200)
     end
 
     it "tree select" do
-      post :tree_select, :params => { :id => "al-#{@miq_alert.id}" }
+      post :tree_select, :params => {:id => "al-#{@miq_alert.id}"}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'miq_alert/_alert_details')
     end
@@ -150,10 +150,10 @@ describe MiqAlertController do
     context 'not choosing Send an E-mail option while adding new Alert' do
       let(:alert) do
         FactoryBot.create(:miq_alert,
-                           :expression         => {:eval_method => 'nothing'},
-                           :options            => {:notifications => {:delay_next_evaluation => 3600, :evm_event => {}}},
-                           :responds_to_events => '_hourly_timer_',
-                           :severity           => 'info')
+                          :expression         => {:eval_method => 'nothing'},
+                          :options            => {:notifications => {:delay_next_evaluation => 3600, :evm_event => {}}},
+                          :responds_to_events => '_hourly_timer_',
+                          :severity           => 'info')
       end
       let(:edit) { {:new => {:db => 'ContainerNode', :expression => {:eval_method => 'nothing'}}} }
 

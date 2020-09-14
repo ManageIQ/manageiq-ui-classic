@@ -1,6 +1,6 @@
 describe MiqActionController do
   before do
-    login_as user_with_feature(%w(miq_action_edit miq_action_new))
+    login_as user_with_feature(%w[miq_action_edit miq_action_new])
   end
 
   context "#action_edit" do
@@ -114,7 +114,7 @@ describe MiqActionController do
 
   context "#action_field_changed" do
     before do
-      options = {:ae_hash => {"a1" => "v1", "a2" => "v2", "a3" => "v3", "a4" => "v4", "a5" => "v5"} }
+      options = {:ae_hash => {"a1" => "v1", "a2" => "v2", "a3" => "v3", "a4" => "v4", "a5" => "v5"}}
       @action = FactoryBot.create(:miq_action, :name => "Test_Action", :options => options)
       attrs   = [["a1", "v1"], ["a2", "v2"], ["a3", "v3"], ["a4", "v4"], ["a5", "v5"]]
       edit = {
@@ -159,15 +159,14 @@ describe MiqActionController do
     let(:cat2) { FactoryBot.create(:classification, :description => res.second) }
 
     before do
-      cat1; cat2
       controller.instance_variable_set(:@sb, :active_tree => :action_tree)
     end
 
     let(:res) { %w(test1 test2) }
     let(:action) do
       FactoryBot.create(:miq_action,
-                         :action_type => 'inherit_parent_tags',
-                         :options     => {:cats => [cat1.name, cat2.name]})
+                        :action_type => 'inherit_parent_tags',
+                        :options     => {:cats => [cat1.name, cat2.name]})
     end
 
     it "joins classification tags" do

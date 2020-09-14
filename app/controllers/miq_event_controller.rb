@@ -85,8 +85,6 @@ class MiqEventController < ApplicationController
     replace_trees = Array(replace_trees)
     @explorer = true
 
-    trees = build_replaced_trees(replace_trees, %i[policy_profile policy event condition action alert_profile alert])
-
     c_tb = build_toolbar(center_toolbar_filename)
 
     # Build a presenter to render the JS
@@ -100,8 +98,7 @@ class MiqEventController < ApplicationController
     # Replace right side with based on selected tree node type
     case nodetype
     when 'root'
-      partial_name, model = ['event_list',            _('Events')]
-
+      partial_name, model = ['event_list', _('Events')]
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
       right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[alert_profile_tree condition_tree policy_tree].exclude?(x_active_tree.to_s)
@@ -213,7 +210,7 @@ class MiqEventController < ApplicationController
 
   def set_session_data
     super
-    session[:layout]                  = @layout
+    session[:layout]                 = @layout
     session[:miq_event_current_page] = @current_page
   end
 

@@ -21,7 +21,7 @@ describe ConditionController do
                                                        :notes          => nil,
                                                        :expression     => {},
                                                        :applies_to_exp => {"???"=>"???"}})
-        subject.instance_variable_set(:@sb, {:folder => 'containerReplicator'})
+        subject.instance_variable_set(:@sb, :folder => 'containerReplicator')
       end
 
       it 'sets new node correctly' do

@@ -147,7 +147,6 @@ module Mixins
       refresh
     end
 
-
     def handle_selection_buttons_left(members, members_chosen, choices, _choices_chosen)
       if params[members_chosen].nil?
         add_flash(_("No %{members} were selected to move left") % {:members => members.to_s.split("_").first.titleize},

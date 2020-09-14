@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           t,
           :url_parms => "?typ=basic",
           :klass     => ApplicationHelper::Button::PolicyEdit,
-          :options   => {:feature => 'miq_policy_edit'}),
+          :options   => {:feature => 'miq_policy_edit'}
+        ),
         button(
           :miq_policy_copy,
           'fa fa-files-o fa-lg',
@@ -55,7 +56,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           t,
           :url_parms => "?typ=conditions",
           :klass     => ApplicationHelper::Button::PolicyEditConditions,
-          :options   => {:feature => 'miq_policy_edit_conditions'}),
+          :options   => {:feature => 'miq_policy_edit_conditions'}
+        ),
         button(
           :miq_policy_edit_events,
           'pficon pficon-edit fa-lg',
@@ -63,7 +65,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           t,
           :url_parms => "?typ=events",
           :klass     => ApplicationHelper::Button::PolicyEditEvents,
-          :options   => {:feature => 'miq_policy_edit'}),
+          :options   => {:feature => 'miq_policy_edit'}
+        ),
         button(
           :miq_event_edit,
           'pficon pficon-edit fa-lg',
@@ -71,7 +74,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           t,
           :url_parms    => "main_div",
           :send_checked => true,
-          :klass        => ApplicationHelper::Button::MiqActionModify),
+          :klass        => ApplicationHelper::Button::MiqActionModify
+        ),
       ]
     ),
   ])

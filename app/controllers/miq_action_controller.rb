@@ -30,8 +30,8 @@ class MiqActionController < ApplicationController
   end
 
   ACTION_X_BUTTON_ALLOWED_ACTIONS = {
-    'miq_action_edit'            => :miq_action_edit,
-    'miq_action_new'             => :miq_action_edit,
+    'miq_action_edit' => :miq_action_edit,
+    'miq_action_new'  => :miq_action_edit,
   }.freeze
 
   def x_button

@@ -42,7 +42,7 @@ describe MiqPolicyController do
                                                 :folder      => "compliance-containerGroup",
                                                 :nodeid      => "containerGroup"}}
         session[:edit] = {:new => {:mode => "compliance", :towhat => "ContainerGroup"}}
-        post :x_button, :params => { :pressed => "miq_policy_new", :typ => "basic" }
+        post :x_button, :params => {:pressed => "miq_policy_new", :typ => "basic"}
         expect(response).to render_template("layouts/exp_atom/_editor")
         expect(response).to render_template("layouts/_exp_editor")
         expect(response).to render_template("miq_policy/_policy_details")

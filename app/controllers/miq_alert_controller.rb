@@ -30,9 +30,9 @@ class MiqAlertController < ApplicationController
   end
 
   ALERT_X_BUTTON_ALLOWED_ACTIONS = {
-    'miq_alert_edit'             => :miq_alert_edit,
-    'miq_alert_copy'             => :miq_alert_edit,
-    'miq_alert_new'              => :miq_alert_edit,
+    'miq_alert_edit' => :miq_alert_edit,
+    'miq_alert_copy' => :miq_alert_edit,
+    'miq_alert_new'  => :miq_alert_edit,
   }.freeze
 
   def x_button
@@ -414,7 +414,7 @@ class MiqAlertController < ApplicationController
 
   def alert_default_repeat_time
     if (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "hourly_performance") ||
-      @edit[:new][:exp_event] == "_hourly_timer_"
+       @edit[:new][:exp_event] == "_hourly_timer_"
       1.hour.to_i
     elsif @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "dwh_generic"
       0.minutes.to_i
@@ -472,7 +472,7 @@ class MiqAlertController < ApplicationController
       when :ems_id
         # Handle missing or blank ems id
         unless !@alert.expression ||
-          ExtManagementSystem.exists?(@edit[:new][:expression][:options][:ems_id].to_i)
+               ExtManagementSystem.exists?(@edit[:new][:expression][:options][:ems_id].to_i)
           @edit[:new][:expression][:options][:ems_id] = nil
           @edit[:new][:expression][:options][:ems_alarm_mor] = nil
         end
@@ -690,9 +690,9 @@ class MiqAlertController < ApplicationController
       end
     end
     unless alert.options[:notifications][:email] ||
-      alert.options[:notifications][:snmp] ||
-      alert.options[:notifications][:evm_event] ||
-      alert.options[:notifications][:automate]
+           alert.options[:notifications][:snmp] ||
+           alert.options[:notifications][:evm_event] ||
+           alert.options[:notifications][:automate]
       add_flash(_("At least one of E-mail, SNMP Trap, Timeline Event, or Management Event must be configured"),
                 :error)
     end
@@ -702,7 +702,7 @@ class MiqAlertController < ApplicationController
       elsif alert.options[:notifications][:email][:to].find { |i| !i.to_s.email? }
         add_flash(_("One of e-mail addresses 'To' is not valid"), :error)
       elsif alert.options[:notifications][:email][:from].present? &&
-        !alert.options[:notifications][:email][:from].email?
+            !alert.options[:notifications][:email][:from].email?
         add_flash(_("E-mail address 'From' is not valid"), :error)
       end
     end

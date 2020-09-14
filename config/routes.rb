@@ -2199,7 +2199,6 @@ Rails.application.routes.draw do
       :post => %w(
         condition_edit
         condition_field_changed
-        condition_new
         reload
         tree_autoload
         tree_select

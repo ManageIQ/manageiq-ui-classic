@@ -32,9 +32,9 @@ class MiqAlertSetController < ApplicationController
   end
 
   ALERT_SET_X_BUTTON_ALLOWED_ACTIONS = {
-    'miq_alert_set_assign'   => :miq_alert_set_assign,
-    'miq_alert_set_edit'     => :miq_alert_set_edit,
-    'miq_alert_set_new'      => :miq_alert_set_edit,
+    'miq_alert_set_assign' => :miq_alert_set_assign,
+    'miq_alert_set_edit'   => :miq_alert_set_edit,
+    'miq_alert_set_new'    => :miq_alert_set_edit,
   }.freeze
 
   def x_button
@@ -331,7 +331,7 @@ class MiqAlertSetController < ApplicationController
 
     @assign[:cats] = {}
     Classification.categories.find_all { |c| !c.read_only? && c.show && !c.entries.empty? }
-      .each { |c| @assign[:cats][c.id] = c.description }
+                  .each { |c| @assign[:cats][c.id] = c.description }
 
     @assign[:new][:assign_to] = nil
     @assign[:new][:cat] = nil

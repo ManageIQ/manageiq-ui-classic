@@ -32,11 +32,11 @@ class ConditionController < ApplicationController
   end
 
   CONDITION_X_BUTTON_ALLOWED_ACTIONS = {
-    'condition_edit'         => :condition_edit,
-    'condition_copy'         => :condition_edit,
-    'condition_policy_copy'  => :condition_edit,
-    'condition_new'          => :condition_edit,
-    'condition_remove'       => :condition_remove
+    'condition_edit'        => :condition_edit,
+    'condition_copy'        => :condition_edit,
+    'condition_policy_copy' => :condition_edit,
+    'condition_new'         => :condition_edit,
+    'condition_remove'      => :condition_remove
   }.freeze
 
   def x_button
@@ -133,8 +133,7 @@ class ConditionController < ApplicationController
       condition.expression = MiqExpression.new(@edit[:new][:expression])
       exp_remove_tokens(@edit[:new][:applies_to_exp])
       condition.applies_to_exp = @edit[:new][:applies_to_exp]["???"] ? nil : MiqExpression.new(@edit[:new][:applies_to_exp])
-      if condition.expression.kind_of?(MiqExpression) &&
-        condition.expression.exp["???"]
+      if condition.expression.kind_of?(MiqExpression) && condition.expression.exp["???"]
         add_flash(_("A valid expression must be present"), :error)
       end
       if condition.valid? && !@flash_array && condition.save
@@ -210,7 +209,7 @@ class ConditionController < ApplicationController
     condition_get_all_folders if x_node == "root" # Get node info of tree roots
     folder_get_info(treenodeid) if treenodeid != "root" # Get folder info for all node types
     condition_get_info(Condition.find(nodeid)) if @nodetype == "co"
-    @show_adv_search = (@nodetype == "xx"   && !@folders) || (@nodetype == "root")
+    @show_adv_search = (@nodetype == "xx" && !@folders) || (@nodetype == "root")
     {:view => @view, :pages => @pages}
   end
 

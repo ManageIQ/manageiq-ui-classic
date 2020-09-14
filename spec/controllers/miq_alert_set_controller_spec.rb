@@ -1,6 +1,6 @@
 describe MiqAlertSetController do
   before do
-    login_as user_with_feature(%w(miq_alert_set_assign miq_alert_set_edit))
+    login_as user_with_feature(%w[miq_alert_set_assign miq_alert_set_edit])
   end
 
   context "#miq_alert_set_assign" do
@@ -87,8 +87,8 @@ describe MiqAlertSetController do
       controller.params = {:id => @ap.id, :notes => 'foo note'}
       controller.alert_profile_field_changed
       edit_new = assigns(:edit)[:new]
-      expect((edit_new)[:description]).to eq("foo description")
-      expect((edit_new)[:notes]).to eq("foo note")
+      expect(edit_new[:description]).to eq("foo description")
+      expect(edit_new[:notes]).to eq("foo note")
     end
   end
 

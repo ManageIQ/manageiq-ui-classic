@@ -78,7 +78,7 @@ module MiqPolicyController::Events
     @edit[:new] = {}
     @edit[:current] = {}
 
-    @policy ||= MiqPolicy.find_by(:id => @sb[:node_ids][x_active_tree]["p"])   # Get the policy above this event
+    @policy ||= MiqPolicy.find_by(:id => @sb[:node_ids][x_active_tree]["p"]) # Get the policy above this event
     @edit[:new][:policy_id] = @policy.id
     @edit[:events] = []
     event_definitions = @policy.miq_event_definitions
@@ -102,7 +102,7 @@ module MiqPolicyController::Events
     @edit[:event_id] = params[:event_id] if params[:event_id]
     @event ||= MiqEventDefinition.find_by(:id => @edit[:event_id])
     @edit[:new][:actions_true] = []
-    @policy ||= MiqPolicy.find_by(:id => @edit[:new][:policy_id])   # Get the policy above this event
+    @policy ||= MiqPolicy.find_by(:id => @edit[:new][:policy_id]) # Get the policy above this event
 
     @policy.actions_for_event(@event, :success).each do |as| # Build true actions array
       sync = as.synchronous.nil? || as.synchronous
@@ -115,16 +115,16 @@ module MiqPolicyController::Events
       @edit[:new][:actions_false].push([(sync ? "(S) " : "(A) ") + af.description, sync, af.id])
     end
 
-    @edit[:choices_true] = {}                      # Build a new choices list for true actions
-    MiqAction.allowed_for_policies(@policy.mode).each do |a|                      # Build a hash for the true choices
+    @edit[:choices_true] = {} # Build a new choices list for true actions
+    MiqAction.allowed_for_policies(@policy.mode).each do |a| # Build a hash for the true choices
       @edit[:choices_true][a.description] = a.id
     end
     @edit[:new][:actions_true].each do |as|
       @edit[:choices_true].delete(as[0].slice(4..-1)) # Remove any choices already in the list (desc is first element, but has "(x) " in front)
     end
 
-    @edit[:choices_false] = {}                      # Build a new choices list for false actions
-    MiqAction.allowed_for_policies(@policy.mode).each do |a|                       # Build a hash for the false choices
+    @edit[:choices_false] = {} # Build a new choices list for false actions
+    MiqAction.allowed_for_policies(@policy.mode).each do |a| # Build a hash for the false choices
       @edit[:choices_false][a.description] = a.id
     end
     @edit[:new][:actions_false].each do |as|
