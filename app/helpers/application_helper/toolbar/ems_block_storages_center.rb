@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                    t,
                    :items => [
                      button(
-                       :ems_storage_refresh,
+                       :ems_block_storage_refresh,
                        'fa fa-refresh fa-lg',
                        N_('Refresh relationships and power states for all items related to the selected Block Storage Managers'),
                        N_('Refresh Relationships and Power States'),
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                        :url => "/new"
                      ),
                      button(
-                       :ems_storage_edit,
+                       :ems_block_storage_edit,
                        'pficon pficon-edit fa-lg',
                        N_('Select a single Storage Manager to edit'),
                        N_('Edit Selected Storage Manager'),
@@ -36,7 +36,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                        :onwhen       => "1"
                      ),
                      button(
-                       :ems_storage_delete,
+                       :ems_block_storage_delete,
                        'pficon pficon-delete fa-lg',
                        N_('Remove selected Block Storage Managers from Inventory'),
                        N_('Remove Block Storage Managers from Inventory'),

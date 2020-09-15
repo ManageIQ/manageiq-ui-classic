@@ -16,7 +16,7 @@ class EmsBlockStorageController < ApplicationController
   end
 
   def self.table_name
-    @table_name ||= "ems_storage"
+    @table_name ||= "ems_block_storage"
   end
 
   def breadcrumb_name(_model)
