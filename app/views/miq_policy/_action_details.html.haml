@@ -29,7 +29,7 @@
             - if @edit
               = select_tag('miq_action_type',
                 options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.map { |k, v| [_(v), k] }.sort, @edit[:new][:action_type]),
-                :class => "selectpicker")
+                :class => "selectpicker form-control")
               :javascript
                 miqInitSelectPicker();
                 miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
