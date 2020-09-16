@@ -28,7 +28,7 @@ module StorageResourceHelper::TextualSummary
   end
 
   def textual_logical_free
-    {:label => _("Usage (%)"), :value => @record.logical_free}
+    {:label => _("Used"), :value => @record.logical_free}
   end
 
   def textual_logical_total
