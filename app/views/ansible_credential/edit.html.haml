@@ -1,2 +1,2 @@
 #main_div
-  = render :partial => 'credential_form', :locals => {:newRecord => false}
+  = react 'AnsibleCredentialsForm', :recordId => @id.to_s
