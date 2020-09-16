@@ -92,21 +92,4 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                    :url_parms => "?display=main"
                  ),
                ])
-  # button_group('ems_storage_authentication', [
-  #     select(
-  #         :ems_storage_authentication_choice,
-  #         nil,
-  #         t = N_('Authentication'),
-  #         t,
-  #         :items => [
-  #             button(
-  #                 :ems_storage_recheck_auth_status,
-  #                 'fa fa-search fa-lg',
-  #                 N_('Re-check Authentication Status for this Storage Manager'),
-  #                 N_('Re-check Authentication Status'),
-  #                 :klass => ApplicationHelper::Button::GenericFeatureButton,
-  #                 :options => {:feature => :authentication_status}),
-  #         ]
-  #     ),
-  # ])
 end

@@ -90,15 +90,6 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                    :enabled => false,
                    :onwhen  => "1+",
                    :items   => [
-                     # button(
-                     #     :ems_storage_change_password,
-                     #     'pficon pficon-edit fa-lg',
-                     #     N_('Select a single block storage manager to Change password'),
-                     #     N_('Change Password'),
-                     #     :send_checked => true,
-                     #     :enabled      => false,
-                     #     :onwhen       => "1"
-                     # ),
                      button(
                        :ems_storage_recheck_auth_status,
                        'fa fa-search fa-lg',
