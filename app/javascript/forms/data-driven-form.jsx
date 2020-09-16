@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import defaultComponentMapper from './mappers/componentMapper';
+import validatorMapper from './mappers/validatorMapper';
 import SpyField from './spy-field';
 
 Validators.messages = {
@@ -60,6 +61,7 @@ const MiqFormRenderer = ({
   return (
     <FormRender
       componentMapper={{ ...componentMapper, 'spy-field': SpyField }}
+      validatorMapper={validatorMapper}
       FormTemplate={MiqFormTemplate}
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
       {...props}
