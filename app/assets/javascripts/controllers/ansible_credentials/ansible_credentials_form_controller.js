@@ -98,7 +98,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     Object.assign(vm.credential_options, response.data.credential_types.embedded_ansible_credential_types);
 
     for (var opt in vm.credential_options) {
-      vm.select_options.push({'value': opt, 'label': vm.credential_options[opt].label});
+      vm.select_options.push({'value': opt, 'label': __(vm.credential_options[opt].label)});
     }
   }
 
