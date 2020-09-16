@@ -37,7 +37,7 @@ include_for_find:
 
 # Order of columns (from all tables)
 col_order:
-- pool_name
+- name
 - ext_management_system.name
 - storage_system.name
 - logical_free
