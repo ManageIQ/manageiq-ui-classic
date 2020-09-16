@@ -8,7 +8,6 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import ProtocolSelector from './protocol-selector';
-import ProviderSelectField from './provider-select-field';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
@@ -58,7 +57,7 @@ const loadProviderFields = type => API.options(`/api/providers?type=${type}`).th
 );
 
 const typeSelectField = (edit, filter, setState) => ({
-  component: 'provider-select-field',
+  component: 'select',
   id: 'type',
   name: 'type',
   label: __('Type'),
@@ -68,7 +67,7 @@ const typeSelectField = (edit, filter, setState) => ({
     API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
       .filter(({ kind }) => kind === filter)
       .map(({ title, type }) => ({ value: type, label: title }))),
-  loadSchema: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
+  onChange: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
     fields: [firstField, ...fields],
   }))),
 });
@@ -161,7 +160,6 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const componentMapper = {
     ...mapper,
     'protocol-selector': ProtocolSelector,
-    'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
     'validate-provider-credentials': ValidateProviderCredentials,
     'detect-button': DetectButton,
