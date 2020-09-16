@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { useFieldApi, componentTypes } from '@@ddf';
-import componentMapper from '../../forms/mappers/componentMapper';
-
-const Select = componentMapper[componentTypes.SELECT];
+import { useFieldApi } from '@@ddf';
+import Select from '../select';
 
 const ProviderSelectField = ({ loadSchema, ...props }) => {
   const { input: { value } } = useFieldApi(props);
