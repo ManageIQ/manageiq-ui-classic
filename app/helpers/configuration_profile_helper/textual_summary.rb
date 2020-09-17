@@ -1,12 +1,26 @@
 module ConfigurationProfileHelper::TextualSummary
   def textual_configuration_profile_group_properties
     %i[configuration_profile_name
+       configuration_profile_description
+       configuration_profile_target_platform
        configuration_profile_region
        configuration_profile_zone]
   end
 
   def textual_configuration_profile_name
     {:label => _("Name"), :value => @record.name}
+  end
+
+  def textual_configuration_profile_description
+    return nil if @record.description.blank?
+
+    {:label => _("Description"), :value => @record.description}
+  end
+
+  def textual_configuration_profile_target_platform
+    return nil if @record.target_platform.blank?
+
+    {:label => _("Target Platform"), :value => @record.target_platform}
   end
 
   def textual_configuration_profile_region
