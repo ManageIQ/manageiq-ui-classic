@@ -102,5 +102,25 @@ module Mixins
       send_action = allowed_actions[action]
       send(send_action)
     end
+
+    def validate_item_supports_action_button(action, item_type)
+      unless checked_item_id
+        error_msg = (_("\"%{action}\" requires a single item to be selected.") % {
+          :action => SupportsFeatureMixin::QUERYABLE_FEATURES[action]
+        })
+        return {:action_supported => false, :message => error_msg}
+      end
+
+      item = find_record_with_rbac(item_type, checked_item_id)
+      if item.supports?(action)
+        return {:action_supported => true, :message => nil}
+      else
+        error_msg = (_("\"%{item_name}\" does not supports %{action}") % {
+          :item_name => item.name,
+          :action    => SupportsFeatureMixin::QUERYABLE_FEATURES[action]
+        })
+        return {:action_supported => false, :message => error_msg}
+      end
+    end
   end
 end

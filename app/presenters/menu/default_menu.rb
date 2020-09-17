@@ -187,6 +187,16 @@ module Menu
                                            'cloud_volume_type',
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
+                            Menu::Item.new('storage_system',
+                                           N_('Storage Systems'),
+                                           'storage_system',
+                                           {:feature => 'storage_system_show_list'},
+                                           '/storage_system/show_list'),
+                            Menu::Item.new('storage_resource',
+                                           N_('Storage Resources'),
+                                           'storage_resource',
+                                           {:feature => 'storage_resource_show_list'},
+                                           '/storage_resource/show_list'),
                           ])
       end
 

@@ -9,7 +9,7 @@ describe('datetimepicker test', function() {
       'start-date="testModel.start_date" datetime-format="MM/DD/YYYY HH:mm" ' +
       '/></form>');
     scope.testModel = {
-      test_date : new Date(Date.UTC(2015, 7, 30, 13, 45)),
+      test_date : new Date(2015, 7, 30, 13, 45),
       start_date: new Date(Date.UTC(1970, 0, 1)),
     };
     compile(element)(scope);
@@ -24,7 +24,7 @@ describe('datetimepicker test', function() {
 
     it('should parse a value from input into model value', function() {
       form.test_date.$setViewValue('12/31/1980 15:22');
-      expect(scope.testModel.test_date).toEqual(new Date(Date.UTC(1980, 11, 31, 15, 22)));
+      expect(scope.testModel.test_date).toEqual(new Date(1980, 11, 31, 15, 22));
     });
   });
 });

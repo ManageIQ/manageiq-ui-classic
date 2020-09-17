@@ -4,6 +4,8 @@ class EmsStorageController < ApplicationController
   include Mixins::EmsCommon
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::DashboardViewMixin
+  include Mixins::GenericFeatureActionMixin
 
   before_action :check_privileges
   before_action :get_session_data

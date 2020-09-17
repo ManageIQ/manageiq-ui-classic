@@ -82,7 +82,7 @@ describe('scheduleFormController', function() {
     });
 
     it('sets the scheduleDate', function() {
-      expect($scope.scheduleModel.start_date).toEqual(moment.utc('01/01/2015').toDate());
+      expect($scope.scheduleModel.start_date).toEqual(moment('01/01/2015').toDate());
     });
 
     it('sets the scheduleStartHour', function() {

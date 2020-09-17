@@ -35,6 +35,7 @@ describe EmsStorageController do
       ems_storage = FactoryBot.create(:ems_storage)
       allow(controller).to receive(:type_feature_role_check).and_return(true)
       controller.params = {:id => ems_storage.id}
+      controller.sandbox
       controller.send(:init_show)
       expect(assigns(:record).id).to eq(ems_storage.id)
       expect(assigns(:ems).id).to eq(ems_storage.id)

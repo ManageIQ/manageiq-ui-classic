@@ -52,7 +52,7 @@ headers:
 - Name
 - Size
 - Status
-- Type
+- Connection
 - Bootable?
 - Availability Zone
 - Storage Manager

@@ -28,7 +28,7 @@ describe('miq-datepicker test', function() {
 
     it('should parse a value from input into model value', function() {
       form.test_date.$setViewValue('12/31/1980');
-      expect(scope.testModel.test_date).toEqual(new Date(Date.UTC(1980, 11, 31)));
+      expect(scope.testModel.test_date).toEqual(new Date(1980, 11, 31));
     });
 
     it('should update datepicker when the model changes', function() {

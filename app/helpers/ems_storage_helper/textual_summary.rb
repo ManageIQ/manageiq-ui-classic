@@ -82,4 +82,12 @@ module EmsStorageHelper::TextualSummary
   def textual_cloud_volume_types
     textual_link(@record.try(:cloud_volume_types), :label => _('Cloud Volume Types'))
   end
+
+  def textual_storage_resources
+    textual_link(@record.try(:storage_resources), :label => _('Storage Resources (Pools)'))
+  end
+
+  def textual_storage_systems
+    textual_link(@record.try(:storage_systems), :label => _('Storage Systems'))
+  end
 end

@@ -1,0 +1,146 @@
+- @angular_form = true
+-# based on plugins\manageiq-ui-classic\app\views\host\_form.html.haml
+
+.form-horizontal
+
+  -# this section binds the form to our JS controller
+  %form#form_div{"name"            => "angularForm",
+                 "ng-controller"   => "storageSystemFormController as controller",
+                 'ng-cloak'        => '',
+                 "miq-form"      => true,
+                 "model"         => "cloudVolumeModel",
+                 "novalidate"      => true}
+
+    = render :partial => "layouts/flash_msg"
+
+    %div{"ng-if" => "afterGet"}
+      - if session[:storage_system_items].nil?
+        %div
+          %div
+
+            -# ============================== EMS Chooser ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
+              %label.col-md-2.control-label
+                = _('Storage Manager')
+              .col-md-2
+                = select_tag('ems_id',
+                              options_for_select(ExtManagementSystem.select{|ems| ems.supports_block_storage}.map {|ems| [ems.name.to_s, ems.id.to_s]}),
+                              "ng-model"                    => "storageSystemModel.ems_id",
+                              "ng-change"                   => "emsIdChanged(storageSystemModel.ems_id)",
+                              "required"                    => "",
+                              "disabled"                    => @storage_manager.present?,
+                              "miqrequired"                 => "",
+                              "checkchange"                 => "",
+                              "selectpicker-for-select-tag" => "")
+
+                %span.help-block{"ng-show" => "angularForm.ems_id.$error.miqrequired"}
+                  = _("Required")
+
+            -# ============================== System name ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+              %label.col-md-2.control-label{"for" => "name"}
+                = _("Name")
+              .col-md-8
+                %input.form-control{"type"        => "text",
+                                    "id"          => "name",
+                                    "name"        => "name",
+                                    "ng-model"    => "storageSystemModel.name",
+                                    "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
+                                    "miqrequired" => "",
+                                    "checkchange" => "",
+                                    "auto-focus"  => ""}
+                %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
+                  = _("Required")
+
+            -#  ============================== System Type ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.storage_system_type_id.$invalid}"}
+              %label.col-md-2.control-label
+                = _('System Type')
+              .col-md-8
+                %select{"name" => "storage_system_type_id",
+                  "ng-model" => "storageSystemModel.storage_system_type_id",
+                  "ng-options" => "service.id as service.name for service in storageSystemTypes",
+                  "required" => "",
+                  "miqrequired" => "",
+                  :checkchange  => true,
+                  "checkchange"  => true,
+                  "miq-select"  => true}
+
+                  %option{"value" => "", "disabled" => ""}
+                    = "<#{_('Choose')}>"
+
+                %span.help-block{"ng-show" => "angularForm.storage_system_type_id.$error.miqrequired"}
+                  = _("Required")
+
+
+
+            -# ============================== Management IP ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.management_ip.$invalid}"}
+              %label.col-md-2.control-label{"for" => "management_ip"}
+                = _("Management IP")
+              .col-md-8
+                -# ng-model binds this input to a field on the Angular controller bound to the form
+                %input.form-control{"type"        => "text",
+                                    "id"          => "management_ip",
+                                    "name"        => "management_ip",
+                                    "ng-model"    => "storageSystemModel.management_ip",
+                                    "required" => "",
+                                    "miqrequired" => "",
+                                    "checkchange" => "",
+                                    "auto-focus"  => ""}
+                %span.help-block{"ng-show" => "angularForm.management_ip.$error.miqrequired"}
+                  = _("Required")
+
+
+            -# ============================== User  ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.user.$invalid}"}
+              %label.col-md-2.control-label{"for" => "user"}
+                = _("User")
+              .col-md-8
+                %input.form-control{"type"        => "text",
+                                    "id"          => "user",
+                                    "name"        => "user",
+                                    "ng-model"    => "storageSystemModel.user",
+                                    "miqrequired" => "",
+                                    "checkchange" => "",
+                                    "auto-focus"  => ""}
+                %span.help-block{"ng-show" => "angularForm.user.$error.miqrequired"}
+                  = _("Required")
+
+            -# ============================== Password  ==============================
+            .form-group{"ng-class" => "{'has-error': angularForm.password.$invalid}"}
+              %label.col-md-2.control-label{"for" => "password"}
+                = _("Password")
+              .col-md-8
+                %input.form-control{"type"        => "password",
+                                    "id"          => "password",
+                                    "name"        => "password",
+                                    "ng-model"    => "storageSystemModel.password",
+                                    "miqrequired" => "",
+                                    "checkchange" => "",
+                                    "auto-focus"  => ""}
+                %span.help-block{"ng-show" => "angularForm.password.$error.miqrequired"}
+                  = _("Required")
+
+
+      %hr
+      -#this is what adds the standard buttons to the form. Read the partial to see how to add buttons of your own.
+      = render :partial => "layouts/angular/x_edit_buttons_angular"
+
+  - unless session[:storage_system_items].nil?
+    %h3
+      = n_("Storage Systems", "Storage Systems", session[:storage_system_items].length)
+      = _('Selected')
+    = _('Click on a StorageSystem to fetch its settings')
+    %table.admittable{:height => '75'}
+      %tbody
+        %tr
+          %td
+            - if session[:storage_system_items]
+              - @embedded = true
+              - @gtl_type = settings(:views, :storage_system)
+              = render :partial => 'layouts/gtl'
+
+:javascript
+  ManageIQ.angular.app.value('storageSystemFormId', '#{(@storage_system.id || (session[:storage_system_items] && session[:storage_system_items].join(",")))}');
+  miq_bootstrap('#form_div');

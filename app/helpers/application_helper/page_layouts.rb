@@ -82,6 +82,7 @@ module ApplicationHelper::PageLayouts
       ems_infra
       ems_network
       ems_physical_infra
+      ems_block_storage
     ].include?(controller_name) &&
       action_name == 'show_list' &&
       controller.class.model.none?
@@ -179,6 +180,8 @@ module ApplicationHelper::PageLayouts
 
   def show_adv_search?
     show_search = %w[
+      storage_system
+      storage_resource
       auth_key_pair_cloud
       availability_zone
       automation_manager

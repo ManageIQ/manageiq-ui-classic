@@ -136,10 +136,14 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,volume_availability_zones,cloud_tenants,cloud_volume_snapshots,cloud_volume_types')
+    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,parent_manager.volume_availability_zones,parent_manager.cloud_tenants,cloud_volume_snapshots,cloud_volume_types,storage_resources,storage_services,supports_storage_services')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
+
+  vm.StorageServiceChanged = function(id){
+    vm.cloudVolumeModel.storage_service_id = id
+  }
 
   vm.sizeChanged = function(size) {
     if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
@@ -273,12 +277,24 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   var getStorageManagerFormData = function(data) {
     vm.cloudVolumeModel.emstype = data.type;
-    vm.cloudTenantChoices = data.cloud_tenants;
-    vm.availabilityZoneChoices = data.volume_availability_zones;
-    vm.baseSnapshotChoices = data.cloud_volume_snapshots;
+    vm.storageResources = data.storage_resources;
+    vm.storageServices = data.storage_services;
+    if (data.parent_manager){
+      vm.cloudTenantChoices = data.parent_manager.cloud_tenants;
+      vm.availabilityZoneChoices = data.parent_manager.volume_availability_zones;
+      vm.baseSnapshotChoices = data.parent_manager.cloud_volume_snapshots;
+    }
+    else{
+      vm.cloudTenantChoices = data.cloud_tenants;
+      vm.availabilityZoneChoices = data.volume_availability_zones;
+      vm.baseSnapshotChoices = data.cloud_volume_snapshots;
+    }
+
     vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
     vm.supportsVolumeResizing = data.supports_volume_resizing;
     vm.supportsVolumeAvailabilityZones = data.supports_volume_availability_zones;
+    vm.supportsStorageServices = data.supports_storage_services;
+
     if (vm.supportsCinderVolumeTypes) {
       vm.volumeTypes = data.cloud_volume_types;
     } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {

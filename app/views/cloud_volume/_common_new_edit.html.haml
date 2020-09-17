@@ -105,6 +105,27 @@
     %span.help-block{"ng-show" => "angularForm.size.$error.required"}
       = _("Required")
 
+
+.form-group{"ng-class" => "{'has-error': angularForm.storage_service_id.$invalid}",
+     "ng-if"    => "vm.supportsStorageServices"  }
+  %label.col-md-2.control-label
+    = _('Storage Service')
+  .col-md-8
+    %select{"name"        => "storage_service_id",
+            "ng-model"    => "vm.cloudVolumeModel.storage_service_id",
+            "ng-options"  => "service.id as service.name for service in vm.storageServices",
+
+            "required"    => "",
+            :checkchange  => true,
+            "miq-select"  => true}
+      %option{"value" => "", "disabled" => ""}
+        = "<#{_('Choose')}>"
+    %span.help-block{"ng-show" => "angularForm.storage_service_id.$error.required"}
+      = _("Required")
+
+
+
+
 .form-group{"ng-class" => "{'has-error': angularForm.aws_iops.$invalid}",
             "ng-if"    => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
   %label.col-md-2.control-label

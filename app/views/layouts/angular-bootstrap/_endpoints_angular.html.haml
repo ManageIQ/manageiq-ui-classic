@@ -1,4 +1,4 @@
-- return unless %w(ems_cloud ems_infra ems_container ems_network ems_physical_infra).include?(controller_name)
+- return unless %w(ems_cloud ems_infra ems_container ems_network ems_physical_infra ems_block_storage ems_storage).include?(controller_name)
 - prefix ||= "default"
 - ng_reqd_hostname ||= true
 - ng_reqd_api_port ||= true
@@ -228,6 +228,7 @@
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
                          "emsCommonModel.emstype == 'redfish_ph_infra'       || " + |
                          "emsCommonModel.emstype === 'azure_stack'           || " + |
+                         "emsCommonModel.emstype === 'autosde'               || " + |
                          "emsCommonModel.ems_controller == 'ems_container'"}        |
     %label.col-md-2.control-label{"for" => "#{prefix}_api_port"}
       = _('API Port')
