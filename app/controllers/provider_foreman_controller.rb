@@ -20,6 +20,18 @@ class ProviderForemanController < ApplicationController
     @table_name ||= "provider_foreman"
   end
 
+  def download_data
+    assert_privileges('provider_foreman_explorer')
+
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('provider_foreman_explorer')
+
+    super
+  end
+
   def self.model_to_name(provmodel)
     if provmodel.include?("ManageIQ::Providers::Foreman")
       Dictionary.gettext('foreman', :type => :ui_title, :translate => false)
