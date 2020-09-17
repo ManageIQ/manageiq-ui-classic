@@ -21,6 +21,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def show_list
+    self.x_node = params[:id] if params[:id].present?
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
     build_tree
