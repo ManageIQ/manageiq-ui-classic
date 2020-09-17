@@ -23,7 +23,7 @@ module StorageSystemHelper::TextualSummary
   #
 
   def textual_system_type
-    {:label => _("System Type"), :value => @record.storage_system_type.name}
+    {:label => _("System Type"), :value => @record.storage_system_family.name}
   end
 
   def textual_name

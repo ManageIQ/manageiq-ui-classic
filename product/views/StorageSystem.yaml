@@ -20,7 +20,7 @@ include:
   ext_management_system:
     columns:
     - name
-  storage_system_type:
+  storage_system_family:
     columns:
     - name
 
@@ -37,7 +37,7 @@ include_for_find:
 col_order:
 - name
 - ext_management_system.name
-- storage_system_type.name
+- storage_system_family.name
 - management_ip
 
 

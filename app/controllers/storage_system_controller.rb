@@ -80,7 +80,7 @@ class StorageSystemController < ApplicationController
     when "ManageIQ::Providers::Autosde::StorageManager"
       options[:password] = params[:password]
       options[:user] = params[:user]
-      options[:system_type] = StorageSystemType.find(params[:storage_system_type_id]).name
+      options[:system_type] = StorageSystemFamily.find(params[:storage_system_family_id]).name
       options[:auto_add_pools] = true
       options[:auto_setup] = true
       options[:management_ip] = params[:management_ip]

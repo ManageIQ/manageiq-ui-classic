@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller(
           validate_id: null,
 
         };
-        $scope.storageSystemTypes = [];
+        $scope.storageSystemFamilies = [];
         $scope.modelCopy = angular.copy($scope.storageSystemModel);
         $scope.afterGet = false;
         $scope.formId = storageSystemFormId;
@@ -94,14 +94,14 @@ ManageIQ.angular.app.controller(
       $scope.emsIdChanged = function (emsId) {
         miqService.sparkleOn();
 
-        API.get('/api/providers/' + emsId + '?attributes=type,storage_system_types', null)
+        API.get('/api/providers/' + emsId + '?attributes=type,storage_system_families', null)
           .then(getStorageManagerFormData)
           .catch(miqService.handleFailure);
 
       };
 
       var getStorageManagerFormData = function (data) {
-        $scope.storageSystemTypes = data.storage_system_types;
+        $scope.storageSystemFamilies = data.storage_system_families;
         $scope.storageSystemModel.emstype = data.type
         miqService.sparkleOff();
       }
@@ -151,7 +151,7 @@ ManageIQ.angular.app.controller(
         $scope.storageSystemModel.storage_resource_id = data.storage_resource_id;
         $scope.storageSystemModel.management_ip = data.management_ip
         $scope.storageSystemModel.ems_id = data.ems_id
-        $scope.storageSystemModel.storage_system_type_id = data.storage_system_type_id
+        $scope.storageSystemModel.storage_system_family_id = data.storage_system_family_id
         $scope.storageSystemModel.password = data.password
         $scope.storageSystemModel.user = data.user
 

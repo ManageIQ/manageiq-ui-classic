@@ -53,13 +53,13 @@
                   = _("Required")
 
             -#  ============================== System Type ==============================
-            .form-group{"ng-class" => "{'has-error': angularForm.storage_system_type_id.$invalid}"}
+            .form-group{"ng-class" => "{'has-error': angularForm.storage_system_family_id.$invalid}"}
               %label.col-md-2.control-label
                 = _('System Type')
               .col-md-8
-                %select{"name" => "storage_system_type_id",
-                  "ng-model" => "storageSystemModel.storage_system_type_id",
-                  "ng-options" => "service.id as service.name for service in storageSystemTypes",
+                %select{"name" => "storage_system_family_id",
+                  "ng-model" => "storageSystemModel.storage_system_family_id",
+                  "ng-options" => "service.id as service.name for service in storageSystemFamilies",
                   "required" => "",
                   "miqrequired" => "",
                   :checkchange  => true,
@@ -69,7 +69,7 @@
                   %option{"value" => "", "disabled" => ""}
                     = "<#{_('Choose')}>"
 
-                %span.help-block{"ng-show" => "angularForm.storage_system_type_id.$error.miqrequired"}
+                %span.help-block{"ng-show" => "angularForm.storage_system_family_id.$error.miqrequired"}
                   = _("Required")
 
 
