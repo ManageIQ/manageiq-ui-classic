@@ -110,7 +110,7 @@ module MiqPolicyController::Policies
   end
 
   # Copy a policy
-  def policy_copy
+  def miq_policy_copy
     assert_privileges("policy_copy")
     policy = MiqPolicy.find(params[:id])
     new_desc = truncate("Copy of #{policy.description}", :length => 255, :omission => "")
