@@ -79,6 +79,8 @@ class ChargebackController < ApplicationController
 
   # Show the main Schedules list view
   def cb_rates_list
+    assert_privileges("chargeback_rates")
+
     @gtl_type = "list"
     @explorer = true
     if params[:ppsetting]                                              # User selected new per page value
@@ -97,8 +99,30 @@ class ChargebackController < ApplicationController
     update_gtl_div('cb_rates_list') if pagination_or_gtl_request? && @show_list
   end
 
+  # TODO: this will be unnecessary after
+  #       `chargeback_rates_new` gets renamed to `chargeback_rate_new`,
+  #       `chargeback_rates_copy` gets renamed to `chargeback_rate_copy` and
+  #       `chargeback_rates_edit`  gets renamed to `chargeback_rates_copy`
+  #
+  EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST = %w[
+    chargeback_rates_new
+    chargeback_rates_copy
+    chargeback_rates_edit
+  ]
+
+  def assert_privileges_for_edit
+    feature = if params[:pressed] && EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST.include?(params[:pressed])
+                params[:pressed]
+              elsif params[:button] == "add"
+                "chargeback_rates_new"
+              end
+
+    assert_privileges(feature)
+  end
+
   def cb_rate_edit
-    assert_privileges(params[:pressed]) if params[:pressed]
+    assert_privileges_for_edit
+
     case params[:button]
     when "cancel"
       if params[:id]
@@ -183,6 +207,9 @@ class ChargebackController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_rate_form_field_changed
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     return unless load_edit("cbrate_edit__#{params[:id]}", "replace_cell__chargeback")
     cb_rate_get_form_vars
     render :update do |page|
@@ -195,6 +222,8 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rate_show
+    assert_privileges("chargeback_rates")
+
     @display = "main"
     if @record.nil?
       flash_to_session(_('Error: Record no longer exists in the database'), :error)
@@ -205,6 +234,8 @@ class ChargebackController < ApplicationController
 
   # Delete all selected or single displayed action(s)
   def cb_rates_delete
+    # TODO: this will be unnecessary after `chargeback_rates_delete` gets renamed to `chargeback_rate_delete`
+
     assert_privileges("chargeback_rates_delete")
     rates = []
     if !params[:id] # showing a list
@@ -243,6 +274,9 @@ class ChargebackController < ApplicationController
 
   # Add a new tier at the end
   def cb_tier_add
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     detail_index = params[:detail_index]
     ii = detail_index.to_i
 
@@ -269,6 +303,9 @@ class ChargebackController < ApplicationController
 
   # Remove the selected tier
   def cb_tier_remove
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     @edit = session[:edit]
     index = params[:index]
     detail_index, tier_to_remove_index = index.split("-")
