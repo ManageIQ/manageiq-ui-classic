@@ -20,14 +20,14 @@ describe Mixins::Actions::VmActions::Ownership do
       allow(controller).to receive(:drop_breadcrumb)
       allow(controller).to receive(:get_db_view)
 
-      request.session =  {:checked_items => [service.id] }
+      request.session = {:checked_items => [service.id]}
       controller.instance_variable_set(:@_request, request)
     end
 
     it "cleans :object_ids in session when action method is called" do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@explorer, true)
-      controller.instance_variable_set(:@_params, {:pressed => ''})
+      controller.instance_variable_set(:@_params, :pressed => '')
 
       controller.send(:set_ownership)
       expect(controller.instance_variable_get(:@edit)[:object_ids]).to be_nil
