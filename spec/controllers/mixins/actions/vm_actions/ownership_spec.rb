@@ -1,13 +1,16 @@
 describe Mixins::Actions::VmActions::Ownership do
-  describe '#build_ownership_info' do
-    let(:user_role) { FactoryBot.create(:miq_user_role) }
-    let(:group) { FactoryBot.create(:miq_group, :miq_user_role => user_role) }
-    let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
+  let(:user_role) { FactoryBot.create(:miq_user_role) }
+  let(:group) { FactoryBot.create(:miq_group, :miq_user_role => user_role) }
+  let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
 
+  before do
+    EvmSpecHelper.local_miq_server
+    login_as user
+    allow(MiqGroup).to receive(:non_tenant_groups).and_return([group])
+  end
+
+  describe '#build_ownership_info' do
     before do
-      EvmSpecHelper.local_miq_server
-      login_as user
-      allow(MiqGroup).to receive(:non_tenant_groups).and_return([group])
       allow(controller).to receive(:session).and_return(:userid => user.userid)
     end
 
@@ -16,11 +19,7 @@ describe Mixins::Actions::VmActions::Ownership do
       let(:cat_item) { FactoryBot.create(:service_template) }
 
       before do
-        EvmSpecHelper.local_miq_server
-        login_as user
         allow(controller).to receive(:find_records_with_rbac).and_return([cat_item])
-        allow(MiqGroup).to receive(:non_tenant_groups).and_return([group])
-        allow(controller).to receive(:session).and_return(:userid => user.userid)
         controller.params = {:controller => 'catalog'}
       end
 
