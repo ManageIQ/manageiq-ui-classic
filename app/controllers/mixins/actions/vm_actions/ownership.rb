@@ -30,7 +30,6 @@ module Mixins
 
           recs = session[:checked_items] || checked_or_params
 
-          @edit[:object_ids] = recs
           if recs.empty?
             add_flash(_("One or more %{model} must be selected to Set Ownership") % {
               :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)
@@ -109,7 +108,7 @@ module Mixins
 
           @groups = {} # Create new entries hash (2nd pulldown)
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
-          @edit[:object_ids] = @ownershipitems
+
           @view = get_db_view(klass, :clickable => false) # Instantiate the MIQ Report view object
           session[:edit] = @edit
         end
