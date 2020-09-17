@@ -1,8 +1,8 @@
 module Mixins
   module SavedReportPaging
     def feature_identifier_for_paging
-      if self.class == ChargebackReportController
-        "chargeback_reports_show"
+      if self.class == ChargebackController
+        "chargeback_reports"
       elsif session.fetch_path(:sandboxes, :report, :active_tree) == "savedreports_tree"
         "miq_report_saved_reports_view"
       else
