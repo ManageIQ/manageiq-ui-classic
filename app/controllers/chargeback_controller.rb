@@ -43,7 +43,6 @@ class ChargebackController < ApplicationController
   def tree_select
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node = params[:id]
-
     assert_accordion_and_tree_privileges(x_active_tree)
     get_node_info(x_node)
     replace_right_cell
@@ -264,6 +263,8 @@ class ChargebackController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_assign_field_changed
+    assert_privileges("chargeback_assignments")
+
     return unless load_edit("cbassign_edit__#{x_node}", "replace_cell__chargeback")
     cb_assign_get_form_vars
     render :update do |page|
@@ -328,6 +329,8 @@ class ChargebackController < ApplicationController
   end
 
   def cb_assign_update
+    assert_privileges("chargeback_assignments")
+
     if params[:button] == "reset"
       get_node_info(x_node)
       add_flash(_("All changes have been reset"), :warning)
