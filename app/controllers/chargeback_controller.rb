@@ -111,10 +111,13 @@ class ChargebackController < ApplicationController
   ]
 
   def assert_privileges_for_edit
-    feature = if params[:pressed] && EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST.include?(params[:pressed])
-                params[:pressed]
-              elsif params[:button] == "add"
-                "chargeback_rates_new"
+    feature = case params[:button]
+              when "cancel"
+                params[:id] ? 'chargeback_rates_new' : 'chargeback_rates_edit'
+              when "save", "add"
+                params[:button] == "add" ? "chargeback_rates_new" : "chargeback_rates_edit"
+              when "reset", nil
+                EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST.include?(params[:pressed]) ? params[:pressed] : "chargeback_rates_edit"
               end
 
     assert_privileges(feature)
