@@ -6,7 +6,6 @@ import assign from 'lodash/assign';
 
 import { StaticGTLView } from '../components/gtl';
 import { NoRecordsFound } from './gtl/utils';
-import { FlashMessage } from '../components/flash-message/flash-message';
 
 const generateParamsFromSettings = (settings) => {
   const params = {};
@@ -63,7 +62,8 @@ const getData = (
   settings, // ?: any,
   records, // ?: any,
   additionalOptions, // ?: any): ng.IPromise<IRowsColsResponse> {
-) =>
+) => {
+  dispatch({type: 'isLoading', isLoading: true});
   http.post( // FIXME: window
     './report_data',
     generateConfig(
@@ -84,6 +84,7 @@ const getData = (
       messages: responseData.messages,
     });
   });
+};
 
 const TREES_WITHOUT_PARENT = ['pxe', 'ops'];
 const TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
@@ -202,6 +203,11 @@ const gtlReducer = (state, action) => {
       // action.item       ... selected item object
       // action.isSelected ... selection status
       return reduceSelectedItem(state, action.item, action.isSelected);
+    case 'isLoading':
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
     case 'unSelectAll':
       return {
         ...state,
@@ -288,6 +294,10 @@ const GtlView = ({
   };
 
   const [state, dispatch] = useReducer(gtlReducer, initState);
+
+  useEffect(() => {
+    flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
+  }, []);
 
   useEffect(() => {
     getData(
@@ -447,17 +457,10 @@ const GtlView = ({
 
   return (
     <div id="miq-gtl-view">
-      { (flashMessages) && flashMessages.map((message, index) =>
-          <div id={`flash-msg-div-${index}`} key={index}>
-            <FlashMessage
-              flashMessage={message}
-            />
-          </div>
-        )
-      }
       { (rows.length === 0) ? (
         <NoRecordsFound/>
       ) : (
+        (isLoading) ? <div className="spinner spinner-lg" /> :
         <StaticGTLView
           pagination={computePagination(settings)}
           rows={rows}
