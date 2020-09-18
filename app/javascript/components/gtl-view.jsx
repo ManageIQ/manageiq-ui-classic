@@ -65,7 +65,7 @@ const getData = (
 ) => {
   dispatch({type: 'isLoading', isLoading: true});
   http.post( // FIXME: window
-    './report_data',
+    `/${ManageIQ.controller}/report_data`,
     generateConfig(
       modelName,
       activeTree,
