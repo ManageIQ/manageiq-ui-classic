@@ -24,10 +24,7 @@ export const SideNavMenuLink = ({
 
   return (
     <SideNavItem id={id}>
-      <Link
-        className={className}
-        onClick={onClick}
-      >
+      <Link className={className} onClick={onClick} onKeyPress={onClick} tabIndex="0">
         {IconElement && (
           <SideNavIcon small>
             <IconElement />
