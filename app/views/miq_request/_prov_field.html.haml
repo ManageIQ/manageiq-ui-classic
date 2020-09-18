@@ -243,7 +243,7 @@
                :vm_maximum_memory, :boot_disk_size, :subnet].include?(field)
         -# Pull Down fields
         -# Multiple select Pull Down fields
-        - multiple = field == :security_groups || field == :cloud_volumes
+        - multiple = %i[security_groups cloud_volumes].include?(field)
         - td_class = field == :security_groups ? "wider" : "wide"
         .col-md-8{:class => td_class}
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
@@ -501,7 +501,7 @@
                   = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
                 .col-md-6
                   = submit_tag(_("Upload"), :class => "upload btn btn-default")
-      - elsif [:user_script].include?(field)
+      - elsif field == :user_script
         .col-md-8
           - path = Rails.application.routes.recognize_path request.referer
           - if path[:controller] == "miq_request"
