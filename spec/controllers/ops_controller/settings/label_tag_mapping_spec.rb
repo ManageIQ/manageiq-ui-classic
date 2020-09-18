@@ -25,7 +25,7 @@ describe OpsController do
 
     it "creates new mapping on save" do
       use_form_to_create_mapping
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
       expect(mapping.labeled_resource_type).to eq('ContainerProject')
       expect(mapping.label_name).to eq('my-label')
       expect(mapping.label_value).to be nil
@@ -35,7 +35,7 @@ describe OpsController do
 
     it "creates new scoped mapping on save" do
       use_form_to_create_amazon_mapping
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
       expect(mapping.labeled_resource_type).to eq('Vm')
       expect(mapping.label_name).to eq('some-amazon-label')
       expect(mapping.label_value).to be nil
@@ -45,7 +45,7 @@ describe OpsController do
 
     it "can edit an existing mapping" do
       use_form_to_create_mapping
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
 
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s }
       expect(assigns(:edit)[:new]).to include(:entity     => 'ContainerProject',
@@ -76,7 +76,7 @@ describe OpsController do
 
     it "can edit an existing scoped mapping" do
       use_form_to_create_amazon_mapping
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
 
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s }
       expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
