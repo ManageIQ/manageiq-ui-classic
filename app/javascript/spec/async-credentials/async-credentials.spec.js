@@ -31,9 +31,12 @@ const RendererWrapper = ({ asyncValidate, onSubmit = () => {}, ...props }) => (
 );
 
 describe('Async credentials component', () => {
-  it('should render correctly', () => {
+  it('should render correctly', async(done) => {
     const wrapper = mount(<RendererWrapper asyncValidate={() => {}} />);
-    expect(toJson(wrapper.find(AsyncCredentials))).toMatchSnapshot();
+    setImmediate(() => {
+      expect(toJson(wrapper.find(AsyncCredentials))).toMatchSnapshot();
+      done();
+    });
   });
 
 
@@ -44,36 +47,39 @@ describe('Async credentials component', () => {
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
 
     await act(async() => {
-      wrapper.find('button[type="button"]').simulate('click');
+      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
     });
     expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'bar',
+      foo: 'baz',
       validate_credentials: false,
     }, ['foo']);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit).toHaveBeenCalledWith({ foo: 'bar', validate_credentials: true }, expect.anything(), expect.anything());
+    expect(onSubmit).toHaveBeenCalledWith({ foo: 'baz', validate_credentials: true }, expect.anything(), expect.anything());
 
     done();
   });
 
   it('should call async validation function on button click and set valid state to false', async(done) => {
-    const asyncValidate = jest.fn().mockReturnValue(new Promise((_resolve, reject) => reject('Validation failed'))); // eslint-disable-line prefer-promise-reject-errors
+    const asyncValidate = jest.fn(() => Promise.reject('Validation failed'));
+    const onSubmit = jest.fn();
 
-    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
+    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
 
     await act(async() => {
-      wrapper.find('button[type="button"]').simulate('click');
+      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
     });
-
     expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'bar',
+      foo: 'baz',
       validate_credentials: false,
     }, ['foo']);
 
     wrapper.update();
 
     expect(wrapper.find('span.help-block').text()).toEqual('Validation failed');
+
     done();
   });
 
@@ -82,13 +88,14 @@ describe('Async credentials component', () => {
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
     await act(async() => {
-      wrapper.find('button[type="button"]').simulate('click');
+      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
     });
 
     wrapper.update();
 
     expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
     expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
 
@@ -100,16 +107,17 @@ describe('Async credentials component', () => {
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
     await act(async() => {
-      wrapper.find('button[type="button"]').simulate('click');
+      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
     });
 
     wrapper.update();
 
     expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
     expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'bar' } });
+    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
     wrapper.update();
     expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
 

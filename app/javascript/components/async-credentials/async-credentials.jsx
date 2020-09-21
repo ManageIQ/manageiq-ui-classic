@@ -24,6 +24,7 @@ const AsyncCredentials = ({
   const formOptions = useFormApi();
 
   const dependencies = useMemo(() => [...extractNames({ fields }), ...validationDependencies], [fields, validationDependencies]);
+
   const snapshot = (values = formOptions.getState().values) => dependencies.reduce((obj, key) => set(obj, key, get(values, key)), {});
 
   const [{
@@ -31,6 +32,7 @@ const AsyncCredentials = ({
     lastValid,
     initialValues,
     errorMessage,
+    depsValid,
   }, setState] = useState(() => ({ lastValid: {}, initialValues: snapshot() }));
 
   const { input, meta } = useFieldApi({
@@ -39,10 +41,15 @@ const AsyncCredentials = ({
     validate: [{ type: validatorTypes.REQUIRED }],
   });
 
-  const validateDependentFields = () => dependencies.every((dependency) => {
-    const state = formOptions.getFieldState(dependency);
-    return state && state.valid;
-  });
+  const validateDependentFields = () => {
+    const registeredFields = formOptions.getRegisteredFields();
+
+    return dependencies.filter(value => registeredFields.includes(value)).every((dependency) => {
+      const state = formOptions.getFieldState(dependency);
+      // The field is valid if its state is not available or its state is set to valid
+      return !state || state.valid;
+    });
+  };
 
   const onClick = () => {
     const { values } = formOptions.getState();
@@ -75,7 +82,9 @@ const AsyncCredentials = ({
 
         <FormSpy subscription={{ values: true }}>
           {() => {
-            const depsValid = validateDependentFields();
+            // The list of registered fields shows up after this render, so the validation has to happen
+            // with a delay and has to be pulled back via the state.
+            setTimeout(() => setState(state => ({ ...state, depsValid: validateDependentFields() })));
             const currentValues = snapshot();
 
             const isDirty = !(isEqual(currentValues, lastValid) || isEqual(currentValues, initialValues));
