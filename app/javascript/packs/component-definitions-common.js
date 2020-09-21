@@ -42,6 +42,7 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
+import ZoneForm from '../components/zone-form';
 
 /**
 * Add component definitions to this file.
@@ -93,3 +94,4 @@ ManageIQ.component.addReact('Toolbar', Toolbar);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
 ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
+ManageIQ.component.addReact('ZoneForm', ZoneForm);
