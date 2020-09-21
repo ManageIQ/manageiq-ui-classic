@@ -64,6 +64,11 @@ class EmsStorageController < ApplicationController
   end
 
   def textual_group_list
+    # Try to get the groups names from the manager
+    group_list = @record.try(:textual_group_list)
+    return group_list if group_list
+
+    # If manager doesn't have its own group names use defaults.
     [
       %i[properties status],
       %i[relationships topology smart_management]
