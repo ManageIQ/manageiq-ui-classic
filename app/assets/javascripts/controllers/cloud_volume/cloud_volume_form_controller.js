@@ -283,6 +283,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       vm.volumeTypes = data.cloud_volume_types;
     } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
       loadEBSVolumeTypes();
+    } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager') {
+      vm.volumeTypes = data.cloud_volume_types;
     }
     miqService.sparkleOff();
   };
