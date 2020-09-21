@@ -15,7 +15,7 @@ const uniqueWebpackModules = (data) => {
   const transformModule  = m  => m.modules ? transformModules(m.modules) : m.name.split("!").pop();
   const transformModules = ms => ms.flatMap(m => transformModule(m));
 
-  var modules = transformModules(data.modules);
+  var modules = transformModules(data.modules).sort();
   modules = [...new Set(modules)]; // uniq
 
   return modules;
