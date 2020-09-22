@@ -153,6 +153,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
 
   const componentMapper = {
     ...mapper,
+    'nested-provider': NestedProvider,
     'protocol-selector': ProtocolSelector,
     'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
