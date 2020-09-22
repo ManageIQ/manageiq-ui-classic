@@ -34,35 +34,30 @@ const createSchema = () => ({
             component: componentTypes.SUB_FORM,
             name: 'ntp-servers-subform',
             title: __('NTP Servers'),
+            description: __("* Specified NTP settings apply to this zone only and are not global."),    
             fields: [
                 { 
                     component: componentTypes.TEXT_FIELD,
                     id: 'ntp_server_1',
                     name: 'ntp_server_1',
-                    label: __('Servers'),
-                    placeholder: "0.pool.ntp.org",
+                    initialValue: "0.pool.ntp.org",
                     maxLength: 50,  
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
                     id: 'ntp_server_2',
                     name: 'ntp_server_2',
-                    placeholder: "1.pool.ntp.org",
+                    initialValue: "1.pool.ntp.org",
                     maxLength: 50,  
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
                     id: 'ntp_server_3',
                     name: 'ntp_server_3',
-                    placeholder: "2.pool.ntp.org",
+                    initialValue: "2.pool.ntp.org",
                     maxLength: 50,  
                 },
-                {
-                    "component": "plain-text",
-                    "name": "settings-plaintext-component",
-                    "label": __("* Specified NTP settings apply to this zone only and are not global.")
-                }
-            ]    
+            ]
         },
         {
             component: componentTypes.SUB_FORM,
@@ -77,19 +72,17 @@ const createSchema = () => ({
                     maxLength: 50,  
                 },
                 {
-                    component: componentTypes.TEXT_FIELD,
+                    component: 'password-field',
                     id: 'password',
                     name: 'password',
                     label: __('Password'),
-                    type: 'password',
                     maxLength: 50,  
                 },
                 {
-                    component: componentTypes.TEXT_FIELD,
+                    component: 'password-field',
                     id: 'verify',
                     name: 'verify',
                     label: __('Verify Password'),
-                    type: 'password',
                     maxLength: 50,  
                 },
             ]
@@ -105,10 +98,10 @@ const createSchema = () => ({
                     name: 'select',
                     label: __('Max Active VM Scans'),
                     options: [
-                        { label: __('Unlimited'), value: 0 }
+                        { label: __('Unlimited'), value: 0 },
+                        ...Array(4).fill().map((_, i) => ({ label: i+1, value: i+1 })),
+                        ...Array(10).fill().map((_, i) => ({ label: 5*(i+1), value: 5*(i+1) }))
                     ]
-                    .concat(Array(4).fill().map((_, i) => ({ label: i+1, value: i+1 })))
-                    .concat(Array(10).fill().map((_, i) => ({ label: 5*(i+1), value: 5*(i+1) })))
                 },
             ]
             
