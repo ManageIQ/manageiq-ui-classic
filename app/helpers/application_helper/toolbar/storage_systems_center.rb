@@ -1,13 +1,13 @@
-class ApplicationHelper::Toolbar::StorageSystemsCenter < ApplicationHelper::Toolbar::Basic
-  button_group('storage_system_configuration', [
+class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::Toolbar::Basic
+  button_group('physical_storage_configuration', [
                  select(
-                   :storage_system_configuration_choice,
+                   :physical_storage_configuration_choice,
                    nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
                      button(
-                       :storage_system_new,
+                       :physical_storage_new,
                        'pficon pficon-add-circle-o fa-lg',
                        t = N_('Attach a new storage system'),
                        t

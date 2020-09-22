@@ -87,7 +87,7 @@ module EmsStorageHelper::TextualSummary
     textual_link(@record.try(:storage_resources), :label => _('Storage Resources (Pools)'))
   end
 
-  def textual_storage_systems
-    textual_link(@record.try(:storage_systems), :label => _('Storage Systems'))
+  def textual_physical_storages
+    textual_link(@record.try(:physical_storages), :label => _('Storage Systems'))
   end
 end

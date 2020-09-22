@@ -1,4 +1,4 @@
-module StorageSystemHelper::TextualSummary
+module PhysicalStorageHelper::TextualSummary
   include TextualMixins::TextualGroupTags
 
   #
@@ -23,7 +23,7 @@ module StorageSystemHelper::TextualSummary
   #
 
   def textual_system_type
-    {:label => _("System Type"), :value => @record.storage_system_family.name}
+    {:label => _("System Type"), :value => @record.physical_storage_family.name}
   end
 
   def textual_name

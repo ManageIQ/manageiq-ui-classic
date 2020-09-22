@@ -1,5 +1,5 @@
 #main_div
-  - if %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems registered_vms unregistered_vms custom_button_events).include?(@display) && @showtype != "compare"
+  - if %w(all_vms hosts miq_proxies all_miq_templates storage_extents physical_storages registered_vms unregistered_vms custom_button_events).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/x_gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype

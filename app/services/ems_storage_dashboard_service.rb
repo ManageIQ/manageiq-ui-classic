@@ -21,13 +21,13 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def attributes_data
     attributes = if @ems.supports?(:block_storage)
-                   %i[storage_systems storage_resources cloud_volumes]
+                   %i[physical_storages storage_resources cloud_volumes]
                  else
                    %i[cloud_object_store_containers cloud_object_store_objects]
                  end
 
     attr_icon = {
-      :storage_systems               => 'pficon pficon-container-node',
+      :physical_storages               => 'pficon pficon-container-node',
       :storage_resources             => 'pficon pficon-resource-pool',
       :cloud_volumes                 => 'pficon pficon-volume',
       :cloud_object_store_containers => 'ff ff-cloud-object-store',
@@ -37,7 +37,7 @@ class EmsStorageDashboardService < EmsDashboardService
     attr_url = {
       :storage_resources             => 'storage_resources',
       :cloud_volumes                 => 'cloud_volumes',
-      :storage_systems               => 'storage_systems',
+      :physical_storages               => 'physical_storages',
       :cloud_object_store_containers => 'cloud_object_store_containers',
       :cloud_object_store_objects    => 'cloud_object_store_objects',
     }
@@ -45,7 +45,7 @@ class EmsStorageDashboardService < EmsDashboardService
     attr_hsh = {
       :storage_resources             => _('Storage Resources (Pools)'),
       :cloud_volumes                 => _('Volumes'),
-      :storage_systems               => _('Storage Systems'),
+      :physical_storages               => _('Storage Systems'),
       :cloud_object_store_containers => _('Containers'),
       :cloud_object_store_objects    => _('Objects'),
     }
@@ -55,17 +55,17 @@ class EmsStorageDashboardService < EmsDashboardService
 
   private
 
-  def get_storage_systems_ids
-    storage_systems_ids = []
-    @ems.storage_systems.each do |system|
-      storage_systems_ids << system.id
+  def get_physical_storages_ids
+    physical_storages_ids = []
+    @ems.physical_storages.each do |system|
+      physical_storages_ids << system.id
     end
   end
 
   def heatmaps
     resource_usage = []
 
-    @ems.storage_systems.each do |system|
+    @ems.physical_storages.each do |system|
       system.storage_resources.each do |resource|
         resource_usage << {
           :id       => resource.id,

@@ -1,4 +1,4 @@
-class StorageSystemController < ApplicationController
+class PhysicalStorageController < ApplicationController
   include Mixins::GenericListMixin
   # include Mixins::MenuUpdateMixin
   include Mixins::GenericShowMixin
@@ -14,7 +14,7 @@ class StorageSystemController < ApplicationController
 
   def specific_buttons(pressed)
     case pressed
-    when 'storage_system_new'
+    when 'physical_storage_new'
       javascript_redirect(:action => 'new')
     else
       return false
@@ -23,8 +23,8 @@ class StorageSystemController < ApplicationController
   end
 
   def new
-    assert_privileges("storage_system_new")
-    @storage_system = self.class.model.new
+    assert_privileges("physical_storage_new")
+    @physical_storage = self.class.model.new
     session[:changed] = nil
     @in_a_form = true
     if params[:storage_manager_id]
@@ -34,23 +34,23 @@ class StorageSystemController < ApplicationController
                     :url  => "/#{controller_name}/new")
   end
 
-  def new_storage_system_form_fields
-    @storage_system = self.class.model.new if params[:id] == 'new'
-    @storage_system = find_record_with_rbac(self.class.model, params[:id]) if params[:id] != 'new'
+  def new_physical_storage_form_fields
+    @physical_storage = self.class.model.new if params[:id] == 'new'
+    @physical_storage = find_record_with_rbac(self.class.model, params[:id]) if params[:id] != 'new'
 
     render :json => {
-      :name => @storage_system.name,
+      :name => @physical_storage.name,
     }
   end
 
   def create
-    assert_privileges("storage_system_new")
+    assert_privileges("physical_storage_new")
     case params[:button]
     when "add" then
       options = form_params_create
       ext_management_system = options.delete(:ems)
 
-      task_id = StorageSystem.create_storage_system_queue(
+      task_id = PhysicalStorage.create_physical_storage_queue(
         session[:userid], ext_management_system, options
       )
 
@@ -80,7 +80,7 @@ class StorageSystemController < ApplicationController
     when "ManageIQ::Providers::Autosde::StorageManager"
       options[:password] = params[:password]
       options[:user] = params[:user]
-      options[:system_type] = StorageSystemFamily.find(params[:storage_system_family_id]).name
+      options[:system_type] = PhysicalStorageFamily.find(params[:physical_storage_family_id]).name
       options[:auto_add_pools] = true
       options[:auto_setup] = true
       options[:management_ip] = params[:management_ip]
@@ -96,12 +96,12 @@ class StorageSystemController < ApplicationController
   helper_method :textual_group_list
 
   def get_session_data
-    @layout = "storage_system"
+    @layout = "physical_storage"
   end
 
   def set_session_data
     session[:layout] = @layout
   end
 
-  menu_section "storage_system"
+  menu_section "physical_storage"
 end

@@ -121,7 +121,7 @@ module Mixins
           security_policy_rules
           storage_managers
           storage_resources
-          storage_systems
+          physical_storages
           storages
           vms
         ]
@@ -275,7 +275,7 @@ module Mixins
         when "storage_delete"                   then deletestorages
         when "storage_scan"                     then scanstorage
         when "storage_tag"                      then tag(Storage)
-        when "storage_system_new"               then javascript_redirect(:controller         => 'storage_system',
+        when "physical_storage_new"               then javascript_redirect(:controller         => 'physical_storage',
                                                                          :action             => 'new',
                                                                          :storage_manager_id => block_storage_manager_id(params[:id]))
         # Edit Tags for Network Manager Relationship pages

@@ -11,6 +11,8 @@ db: PhysicalStorage
 # Columns to fetch from main table
 cols:
 - name
+- ext_management_system.name
+- physical_storage_family.name
 - type
 - health_state
 - power_state

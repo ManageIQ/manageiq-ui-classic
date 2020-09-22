@@ -5,7 +5,7 @@
 
   -# this section binds the form to our JS controller
   %form#form_div{"name"            => "angularForm",
-                 "ng-controller"   => "storageSystemFormController as controller",
+                 "ng-controller"   => "physicalStorageFormController as controller",
                  'ng-cloak'        => '',
                  "miq-form"      => true,
                  "model"         => "cloudVolumeModel",
@@ -14,7 +14,7 @@
     = render :partial => "layouts/flash_msg"
 
     %div{"ng-if" => "afterGet"}
-      - if session[:storage_system_items].nil?
+      - if session[:physical_storage_items].nil?
         %div
           %div
 
@@ -25,8 +25,8 @@
               .col-md-2
                 = select_tag('ems_id',
                               options_for_select(ExtManagementSystem.select{|ems| ems.supports_block_storage}.map {|ems| [ems.name.to_s, ems.id.to_s]}),
-                              "ng-model"                    => "storageSystemModel.ems_id",
-                              "ng-change"                   => "emsIdChanged(storageSystemModel.ems_id)",
+                              "ng-model"                    => "physicalStorageModel.ems_id",
+                              "ng-change"                   => "emsIdChanged(physicalStorageModel.ems_id)",
                               "required"                    => "",
                               "disabled"                    => @storage_manager.present?,
                               "miqrequired"                 => "",
@@ -44,7 +44,7 @@
                 %input.form-control{"type"        => "text",
                                     "id"          => "name",
                                     "name"        => "name",
-                                    "ng-model"    => "storageSystemModel.name",
+                                    "ng-model"    => "physicalStorageModel.name",
                                     "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
                                     "miqrequired" => "",
                                     "checkchange" => "",
@@ -53,13 +53,13 @@
                   = _("Required")
 
             -#  ============================== System Type ==============================
-            .form-group{"ng-class" => "{'has-error': angularForm.storage_system_family_id.$invalid}"}
+            .form-group{"ng-class" => "{'has-error': angularForm.physical_storage_family_id.$invalid}"}
               %label.col-md-2.control-label
                 = _('System Type')
               .col-md-8
-                %select{"name" => "storage_system_family_id",
-                  "ng-model" => "storageSystemModel.storage_system_family_id",
-                  "ng-options" => "service.id as service.name for service in storageSystemFamilies",
+                %select{"name" => "physical_storage_family_id",
+                  "ng-model" => "physicalStorageModel.physical_storage_family_id",
+                  "ng-options" => "service.id as service.name for service in physicalStorageFamilies",
                   "required" => "",
                   "miqrequired" => "",
                   :checkchange  => true,
@@ -69,7 +69,7 @@
                   %option{"value" => "", "disabled" => ""}
                     = "<#{_('Choose')}>"
 
-                %span.help-block{"ng-show" => "angularForm.storage_system_family_id.$error.miqrequired"}
+                %span.help-block{"ng-show" => "angularForm.physical_storage_family_id.$error.miqrequired"}
                   = _("Required")
 
 
@@ -83,7 +83,7 @@
                 %input.form-control{"type"        => "text",
                                     "id"          => "management_ip",
                                     "name"        => "management_ip",
-                                    "ng-model"    => "storageSystemModel.management_ip",
+                                    "ng-model"    => "physicalStorageModel.management_ip",
                                     "required" => "",
                                     "miqrequired" => "",
                                     "checkchange" => "",
@@ -100,7 +100,7 @@
                 %input.form-control{"type"        => "text",
                                     "id"          => "user",
                                     "name"        => "user",
-                                    "ng-model"    => "storageSystemModel.user",
+                                    "ng-model"    => "physicalStorageModel.user",
                                     "miqrequired" => "",
                                     "checkchange" => "",
                                     "auto-focus"  => ""}
@@ -115,7 +115,7 @@
                 %input.form-control{"type"        => "password",
                                     "id"          => "password",
                                     "name"        => "password",
-                                    "ng-model"    => "storageSystemModel.password",
+                                    "ng-model"    => "physicalStorageModel.password",
                                     "miqrequired" => "",
                                     "checkchange" => "",
                                     "auto-focus"  => ""}
@@ -127,20 +127,20 @@
       -#this is what adds the standard buttons to the form. Read the partial to see how to add buttons of your own.
       = render :partial => "layouts/angular/x_edit_buttons_angular"
 
-  - unless session[:storage_system_items].nil?
+  - unless session[:physical_storage_items].nil?
     %h3
-      = n_("Storage Systems", "Storage Systems", session[:storage_system_items].length)
+      = n_("Storage Systems", "Storage Systems", session[:physical_storage_items].length)
       = _('Selected')
-    = _('Click on a StorageSystem to fetch its settings')
+    = _('Click on a PhysicalStorage to fetch its settings')
     %table.admittable{:height => '75'}
       %tbody
         %tr
           %td
-            - if session[:storage_system_items]
+            - if session[:physical_storage_items]
               - @embedded = true
-              - @gtl_type = settings(:views, :storage_system)
+              - @gtl_type = settings(:views, :physical_storage)
               = render :partial => 'layouts/gtl'
 
 :javascript
-  ManageIQ.angular.app.value('storageSystemFormId', '#{(@storage_system.id || (session[:storage_system_items] && session[:storage_system_items].join(",")))}');
+  ManageIQ.angular.app.value('physicalStorageFormId', '#{(@physical_storage.id || (session[:physical_storage_items] && session[:physical_storage_items].join(",")))}');
   miq_bootstrap('#form_div');

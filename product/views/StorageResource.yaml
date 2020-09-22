@@ -20,7 +20,7 @@ include:
   ext_management_system:
     columns:
     - name
-  storage_system:
+  physical_storage:
     columns:
     - name
 
@@ -39,7 +39,7 @@ include_for_find:
 col_order:
 - name
 - ext_management_system.name
-- storage_system.name
+- physical_storage.name
 - logical_free
 - logical_total
 

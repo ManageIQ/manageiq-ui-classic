@@ -2336,7 +2336,7 @@ Rails.application.routes.draw do
             save_post
     },
 
-    :storage_system     => {
+    :physical_storage     => {
       :get  => %w[
         discover
         download_data

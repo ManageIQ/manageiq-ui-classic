@@ -1,12 +1,12 @@
-- url = url_for_only_path(:controller => 'storage_system', :action => 'create', :id => (@storage_system.id || 'new'))
-= form_for(@storage_system,
+- url = url_for_only_path(:controller => 'physical_storage', :action => 'create', :id => (@physical_storage.id || 'new'))
+= form_for(@physical_storage,
            :url    => url,
            :method => :post,
-           :html   => {"ng-controller"   => "storageSystemFormController as controller",
+           :html   => {"ng-controller"   => "physicalStorageFormController as controller",
                        "name"            => "angularForm",
                        "ng-show"         => "afterGet",
                        "create-url"      => url,
-                       "form-fields-url" => "/#{controller_name}/new_storage_system_form_fields/",
+                       "form-fields-url" => "/#{controller_name}/new_physical_storage_form_fields/",
                        "update-url"      => "/#{controller_name}/create/",
                        "novalidate"      => true,
                        "miq-form"      => true,
@@ -16,9 +16,9 @@
   %input{:type => 'hidden', :id => "button_name", :name => "button", :value => "add"}
   %input{:type => 'hidden', :id => "cred_type", :name => "cred_type", :value => "default"}
 
-  = render :partial => "storage_system/form"
+  = render :partial => "physical_storage/form"
 
 :javascript
-  ManageIQ.angular.app.value('storageSystemFormId', '#{@storage_system.id || "new"}');
+  ManageIQ.angular.app.value('physicalStorageFormId', '#{@physical_storage.id || "new"}');
   ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id).to_s || "undefined"}');
   miq_bootstrap($('#form_id').val());

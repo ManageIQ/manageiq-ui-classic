@@ -1,8 +1,8 @@
 // copied from plugins\manageiq-ui-classic\app\assets\javascripts\controllers\host\host_form_controller.js
 ManageIQ.angular.app.controller(
   'physicalStorageFormController',
-    ['$http', '$scope', '$attrs', 'physicalStorageFormId', 'miqService', 'API', 'storageManagerId',
-    function ($http, $scope, $attrs, physicalStorageFormId, miqService, API, storageManagerId) {
+    ['$http', '$scope', '$attrs', 'physicalStorageFormId', 'miqService', 'API',
+    function ($http, $scope, $attrs, physicalStorageFormId, miqService, API) {
       var self = this;
 
       var init = function () {
@@ -13,7 +13,8 @@ ManageIQ.angular.app.controller(
           validate_id: null,
 
         };
-        $scope.physicalStorageFamilies = [];
+        $scope.physicalStorageTypes = [];
+
         $scope.modelCopy = angular.copy($scope.physicalStorageModel);
         $scope.afterGet = false;
         $scope.formId = physicalStorageFormId;
@@ -25,10 +26,6 @@ ManageIQ.angular.app.controller(
 
         if (physicalStorageFormId === 'new') {
           $scope.newRecord = true;
-          if (storageManagerId) {
-            $scope.physicalStorageModel.ems_id = storageManagerId;
-            $scope.emsIdChanged(storageManagerId);
-          }
           $scope.physicalStorageModel.name = '';
           $scope.physicalStorageModel.storage_resource_id = null;
           $scope.physicalStorageModel.validate_id = null;
@@ -94,14 +91,14 @@ ManageIQ.angular.app.controller(
       $scope.emsIdChanged = function (emsId) {
         miqService.sparkleOn();
 
-        API.get('/api/providers/' + emsId + '?attributes=type,physical_storage_families', null)
+        API.get('/api/providers/' + emsId + '?attributes=type,physical_storage_types', null)
           .then(getStorageManagerFormData)
           .catch(miqService.handleFailure);
 
       };
 
       var getStorageManagerFormData = function (data) {
-        $scope.physicalStorageFamilies = data.physical_storage_families;
+        $scope.physicalStorageTypes = data.physical_storage_types;
         $scope.physicalStorageModel.emstype = data.type
         miqService.sparkleOff();
       }
@@ -151,7 +148,7 @@ ManageIQ.angular.app.controller(
         $scope.physicalStorageModel.storage_resource_id = data.storage_resource_id;
         $scope.physicalStorageModel.management_ip = data.management_ip
         $scope.physicalStorageModel.ems_id = data.ems_id
-        $scope.physicalStorageModel.physical_storage_family_id = data.physical_storage_family_id
+        $scope.physicalStorageModel.physical_storage_type_id = data.physical_storage_type_id
         $scope.physicalStorageModel.password = data.password
         $scope.physicalStorageModel.user = data.user
 

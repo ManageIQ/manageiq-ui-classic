@@ -1,5 +1,5 @@
 #main_div
-  - list = %w(vms all_vms hosts miq_templates resource_pools storage storage_extents storage_systems custom_button_events)
+  - list = %w(vms all_vms hosts miq_templates resource_pools storage storage_extents physical_storages custom_button_events)
   - if list.include?(@display) && !%w(compare drift_history).include?(@showtype)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else

@@ -1,2 +1,2 @@
-class ApplicationHelper::Toolbar::StorageSystemCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::PhysicalStorageCenter < ApplicationHelper::Toolbar::Basic
 end

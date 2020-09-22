@@ -1,4 +1,4 @@
-module StorageSystemHelper
+module PhysicalStorageHelper
   include_concern 'TextualSummary'
   include_concern 'ComplianceSummaryHelper'
 end

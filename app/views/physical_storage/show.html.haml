@@ -1,13 +1,17 @@
 #main_div
   - if %w(physical_rack physical_chassis).include?(@display)
     = render :partial => 'layouts/gtl', :locals => {:action_url => "show/#{@record.id}"}
+  - else if %w(physical_storage).include?(@display)
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
-    - when "main"
-      = render :partial => 'layouts/textual_groups_generic'
-    - when "timeline"
-      = render :partial => 'layouts/tl_show_async'
-
+      - when "item"
+        = render :partial => "layouts/item"
+      - when "timeline"
+        = render :partial => 'layouts/tl_show_async'
+      - else
+        = render :partial => "layouts/textual_groups_generic"
+    
   %physical-storage-toolbar#physical_storage_show_form{'physical-storage-id' => @record.id}
 
 :javascript
