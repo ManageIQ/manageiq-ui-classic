@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = () => ({
+const createSchema = (props) => ({
     fields: [
         {
             component: componentTypes.SUB_FORM,
@@ -24,7 +24,7 @@ const createSchema = () => ({
                 {
                     component: componentTypes.TEXT_FIELD,
                     id: 'proxy_server_ip',
-                    name: 'proxy_server_ip',
+                    name: 'settings.proxy_server_ip',
                     label: __('SmartProxy Server IP'),
                     maxLength: 50,
                 }         
@@ -95,7 +95,7 @@ const createSchema = () => ({
                 {
                     component: 'select',
                     id: 'select',
-                    name: 'select',
+                    name: 'settings.concurrent_vm_scans',
                     label: __('Max Active VM Scans'),
                     options: [
                         { label: __('Unlimited'), value: 0 },
