@@ -161,14 +161,32 @@ module OpsController::Settings::LabelTagMapping
     session[:edit] = @edit
   end
 
+  def categories_for_select
+    categories = Classification.categories.sort_by(&:description)
+    categories.each_with_object([]) do |category, result|
+      next if category.read_only?
+
+      result << category.description
+    end
+  end
+
   # AJAX driven routine to check for changes in ANY field on the user form
   def label_tag_mapping_field_changed
     return unless load_edit("label_tag_mapping_edit__#{params[:id]}", "replace_cell__explorer")
 
     lt_map_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
+
+    controller_object = self
+
     render :update do |page|
       page << javascript_prologue
+
+      if params[:entity]
+        page.replace("tag_category_div", :partial => "ops/label_tag_mapping/tag_category",
+                                         :locals  => controller_object.tag_category_parameters_for_haml)
+      end
+
       if @refresh_div
         page.replace(@refresh_div,
                      :partial => @refresh_partial,
@@ -331,5 +349,16 @@ module OpsController::Settings::LabelTagMapping
 
   def cat_description_without_prefix(cat_description)
     cat_description.sub(/^[^\|]+\|/, "")
+  end
+
+  included do
+    helper_method :tag_category_parameters_for_haml
+
+    def tag_category_parameters_for_haml
+      {:lt_map       => @lt_map,
+       :categories   => categories_for_select,
+       :category     => @edit[:new][:category],
+       :all_entities => @edit[:new][:entity] == ALL_ENTITIES}
+    end
   end
 end
