@@ -393,6 +393,13 @@ const GtlView = ({
   const inEditMode = () => additionalOptions.in_a_form;
   const noCheckboxes = () => additionalOptions.no_checkboxes;
 
+  const onItemButtonClick = (item, ev) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+    miqOrderService(item.id);
+    return false;
+  };
+
   const onItemClick = (item, event) => {
     // no need to set targetUrl if custom_action is set i.e. for pre prov screen
     let targetUrl = (additionalOptions && additionalOptions.custom_action) ? undefined : showUrl;
@@ -472,6 +479,7 @@ const GtlView = ({
           onPageSet={onPageSet}
           onPerPageSelect={onPerPageSelect}
           onItemSelect={onItemSelect}
+          onItemButtonClick={onItemButtonClick}
           onItemClick={onItemClick}
           onSort={onSort}
           onSelectAll={onSelectAll}
