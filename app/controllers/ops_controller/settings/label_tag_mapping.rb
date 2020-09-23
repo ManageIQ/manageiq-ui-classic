@@ -76,7 +76,7 @@ module OpsController::Settings::LabelTagMapping
       end
     when "reset", nil # Reset or first time in
       if params[:id]
-        @lt_map = ContainerLabelTagMapping.find(params[:id])
+        @lt_map = ProviderTagMapping.find(params[:id])
         lt_map_set_form_vars
       else
         lt_map_set_new_form_vars
@@ -107,7 +107,7 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_get_all
     # Current UI only supports any-value -> category mappings
-    mappings = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+    mappings = ProviderTagMapping.in_my_region.where(:label_value => nil)
 
     # This renders into label_tag_mapping_form view, fields are different from other
     # functions here, notably `:entity` is the translated ui name.
@@ -161,7 +161,7 @@ module OpsController::Settings::LabelTagMapping
       if @refresh_div
         page.replace(@refresh_div,
                      :partial => @refresh_partial,
-                     :locals  => {:type       => "container_label_tag_mapping",
+                     :locals  => {:type       => "provider_tag_mapping",
                                   :action_url => 'label_tag_mapping_field_changed'})
       end
       page << javascript_for_miq_button_visibility_changed(@changed)
@@ -192,9 +192,9 @@ module OpsController::Settings::LabelTagMapping
                                                    :description  => cat_description_with_prefix(entity, cat_description),
                                                    :single_value => true,
                                                    :read_only    => true)
-        ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
-                                         :label_name            => label_name,
-                                         :tag                   => category.tag)
+        ProviderTagMapping.create!(:labeled_resource_type => entity,
+                                   :label_name            => label_name,
+                                   :tag                   => category.tag)
       end
     rescue StandardError => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
@@ -208,7 +208,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_update(id, cat_description)
-    mapping = ContainerLabelTagMapping.find(id)
+    mapping = ProviderTagMapping.find(id)
     update_category = mapping.tag.classification
     update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
     begin
@@ -225,7 +225,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_delete
-    mapping = ContainerLabelTagMapping.find(params[:id])
+    mapping = ProviderTagMapping.find(params[:id])
     category = mapping.tag.classification
     label_name = mapping.label_name
 
