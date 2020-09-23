@@ -4,19 +4,22 @@ import MiqFormRenderer from '@@ddf';
 import createSchema from './zone-form.schema';
 
 const ZoneForm = ({recordId}) => {
-    const [initialValues, setInitialValues] = useState([]);
-    console.log(recordId);
+
+    const [{initialValues, isLoading}, setState] = useState({ isLoading: !!recordId });
 
     useEffect(() => {
         if (recordId) {
             API.get(`/api/zones/${recordId}`).then((res)=> {
                 console.log(res);
-                setInitialValues(res);
+                setState({
+                    initialValues: res,
+                    isLoading: false
+                });
             });
         }
     }, []);
 
-    return (
+    return !isLoading && (
         <MiqFormRenderer
             initialValues={initialValues}
             schema={createSchema()}

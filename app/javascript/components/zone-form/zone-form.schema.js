@@ -1,6 +1,6 @@
-import { componentTypes } from '@@ddf';
+import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = (props) => ({
+const createSchema = () => ({
     fields: [
         {
             component: componentTypes.SUB_FORM,
@@ -13,6 +13,8 @@ const createSchema = (props) => ({
                     name: 'name',
                     label: __('Name'),
                     maxLength: 50,
+                    isRequired: true,
+                    validate: [{ type: validatorTypes.REQUIRED }]
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
@@ -20,10 +22,12 @@ const createSchema = (props) => ({
                     name: 'description',
                     label: __('Description'),
                     maxLength: 50,
+                    isRequired: true,
+                    validate: [{ type: validatorTypes.REQUIRED }]
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
-                    id: 'proxy_server_ip',
+                    id: 'settings.proxy_server_ip',
                     name: 'settings.proxy_server_ip',
                     label: __('SmartProxy Server IP'),
                     maxLength: 50,
@@ -41,21 +45,21 @@ const createSchema = (props) => ({
                     id: 'ntp_server_1',
                     name: 'ntp_server_1',
                     initialValue: "0.pool.ntp.org",
-                    maxLength: 50,  
+                    maxLength: 255,  
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
                     id: 'ntp_server_2',
                     name: 'ntp_server_2',
                     initialValue: "1.pool.ntp.org",
-                    maxLength: 50,  
+                    maxLength: 255,  
                 },
                 {
                     component: componentTypes.TEXT_FIELD,
                     id: 'ntp_server_3',
                     name: 'ntp_server_3',
                     initialValue: "2.pool.ntp.org",
-                    maxLength: 50,  
+                    maxLength: 255,  
                 },
             ]
         },
@@ -94,7 +98,7 @@ const createSchema = (props) => ({
             fields: [
                 {
                     component: 'select',
-                    id: 'select',
+                    id: 'settings.concurrent_vm_scans',
                     name: 'settings.concurrent_vm_scans',
                     label: __('Max Active VM Scans'),
                     options: [
