@@ -13,7 +13,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.dialogUser',
   'miqStaticAssets.fonticonPicker',
   'miqStaticAssets.miqSelect',
-  'miqStaticAssets.quadicon',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
   'ngSanitize', // FIXME: require('angular-sanitize'),

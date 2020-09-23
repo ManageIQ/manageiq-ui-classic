@@ -1,0 +1,161 @@
+/* Begin Patternfly Angular */
+
+.card-view-pf {
+  overflow: auto;
+  padding-left: 2px;
+  padding-top: 20px;
+}
+
+.card-view-pf .card {
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .175);
+  background: #fff;
+  border-top: 2px solid transparent;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.175);
+  display: block;
+  float: left;
+  height: 290px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  width: 260px;
+}
+
+.card-view-pf .card-content {
+  height: 100%;
+  margin: 2px 0 10px;
+  overflow: auto;
+  width: 100%;
+}
+
+.card-view-pf .card-title {
+  color: #1186C1;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-top: 0;
+}
+
+.card-view-pf .card.active,
+.card-view-pf .card.active:hover,
+.card-view-pf .card.active:focus {
+  border: solid 3px #00a8e1;
+}
+
+.card-view-pf .card:hover,
+.card-view-pf .card:focus {
+  border: 1px solid #d1d1d1;
+  -moz-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.24);
+  -webkit-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.24);
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, .24);
+}
+
+.card-view-pf .card.active .pficon,
+.card-view-pf .card.active:hover .pficon,
+.card-view-pf .card.active:focus .pficon {
+  color: #ffffff;
+}
+
+.card-view-pf .card.disabled, .card.disabled:hover, .card.disabled:focus {
+  border: 1px solid #eee;
+  color: #999999;
+  cursor: not-allowed;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* End Patternfly Angular */
+
+/* Begin Grid View (Quad Icon) & Tile View Styling */
+
+.card-view-pf {
+  padding-left: 20px;
+}
+
+.miq-tile-section {
+  .card .card-content {
+    overflow: hidden;
+    padding-right: 5px;
+  }
+}
+
+.miq-tile-view .card-view-pf { /* Styling for Cards in Tile & Grid Views  */
+  .card {
+    padding: 0 !important;
+    cursor: pointer;
+
+    .card-content > div {
+      padding-top: 10px;
+    }
+  }
+}
+
+.miq-tile-with-body .card-view-pf { /* Styling for Cards in Tile View */
+  .card {
+    width: 375px;
+    height: 175px;
+
+    .card-content {
+      overflow: hidden;
+    }
+    .miq-icon-section {
+      padding-right: 0;
+    }
+
+    .miq-info-section {
+      padding-left: 0;
+      dl.dl-horizontal.tile {
+        dt {
+          margin-left: 10px;
+          width: 100px;
+        }
+        dd {
+          margin-left: 120px;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+.miq-row-margin-only-top { /* Adds a row after the title in Tile View Card */
+  margin-top: 15px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
+.miq-small-tile .card-view-pf { /* Styling for Cards in Grid View */
+  .card {
+    width: 130px;
+    height: 131px;
+
+    .card-content {
+      .miq-quadicon {
+        display: inline-block;
+      }
+      a {
+        word-wrap: break-word;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+/* new checkbox style */
+.card-view-pf .card .card-checkbox {
+  left: 4px;
+  position: absolute;
+  top: 12px;
+  width: 20px;
+  z-index: 3;
+}
+
+.miq-tile-head {
+  color: #0099d3;
+}
+
+/* End Grid View (Quad Icon) & Tile View Styling */

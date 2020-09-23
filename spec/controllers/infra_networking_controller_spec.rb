@@ -34,10 +34,10 @@ describe InfraNetworkingController do
       it 'shows a switch in the list' do
         get :explorer
 
-        expect(response.body).to include("modelName: 'Switch'")
-        expect(response.body).to include("activeTree: 'infra_networking_tree'")
-        expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
-        expect(response.body).to include("showUrl: '/infra_networking/x_show/'")
+        expect(response.body).to include('"modelName":"Switch"')
+        expect(response.body).to include('"activeTree":"infra_networking_tree"')
+        expect(response.body).to include('"isExplorer":true')
+        expect(response.body).to include('"showUrl":"/infra_networking/x_show/"')
       end
     end
 

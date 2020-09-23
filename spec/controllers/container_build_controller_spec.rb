@@ -46,7 +46,7 @@ describe ContainerBuildController do
     }
 
     post :show_list, :params => {:controller => 'container_build', :id => container_build.id}
-    expect(response).to render_template('layouts/angular/_gtl')
+    expect(response).to render_template('layouts/react/_gtl')
     expect(response.status).to eq(200)
   end
 end

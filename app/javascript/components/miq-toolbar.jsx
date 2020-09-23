@@ -208,7 +208,7 @@ const toolbarReducer = (state, action) => {
     case 'DECREMENT':
       return {
         ...state,
-        count: state.count - 1,
+        count: state.count > 0 ? state.count - 1 : 0,
       };
     case 'SET':
       return {
@@ -218,6 +218,7 @@ const toolbarReducer = (state, action) => {
     case 'TOOLBARS':
       return {
         ...state,
+        count: 0,
         toolbars: sanitizeToolbars(action.toolbars),
       };
     case 'CHANGES':
