@@ -8,7 +8,6 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import ProtocolSelector from './protocol-selector';
-import ProviderSelectField from './provider-select-field';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
@@ -18,19 +17,6 @@ const findSkipSubmits = (schema, items) => {
   const children = Array.isArray(schema.fields) ? schema.fields.flatMap(field => findSkipSubmits(field, items)) : [];
   return [...found, ...children];
 };
-
-const typeSelectField = (edit, filter) => ({
-  component: 'provider-select-field',
-  id: 'type',
-  name: 'type',
-  label: __('Type'),
-  kind: filter,
-  isDisabled: edit,
-  loadOptions: () =>
-    API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
-      .filter(({ kind }) => kind === filter)
-      .map(({ title, type }) => ({ value: type, label: title }))),
-});
 
 const commonFields = [
   {
@@ -58,7 +44,7 @@ const commonFields = [
   },
 ];
 
-export const loadProviderFields = (kind, type) => API.options(`/api/providers?type=${type}`).then(
+const loadProviderFields = type => API.options(`/api/providers?type=${type}`).then(
   ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
     ...commonFields,
     {
@@ -70,11 +56,27 @@ export const loadProviderFields = (kind, type) => API.options(`/api/providers?ty
   ]),
 );
 
+const typeSelectField = (edit, filter, setState) => ({
+  component: 'select',
+  id: 'type',
+  name: 'type',
+  label: __('Type'),
+  kind: filter,
+  isDisabled: edit,
+  loadOptions: () =>
+    API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
+      .filter(({ kind }) => kind === filter)
+      .map(({ title, type }) => ({ value: type, label: title }))),
+  onChange: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
+    fields: [firstField, ...fields],
+  }))),
+});
+
 export const EditingContext = React.createContext({});
 
 const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const edit = !!providerId;
-  const [{ fields, initialValues }, setState] = useState({ fields: edit ? undefined : [typeSelectField(false, kind)] });
+  const [{ fields, initialValues }, setState] = useState({});
 
   const submitLabel = edit ? __('Save') : __('Add');
 
@@ -94,7 +96,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
         const endpoints = keyBy(_endpoints, 'role');
         const authentications = keyBy(_authentications, 'authtype');
 
-        loadProviderFields(kind, type).then((fields) => {
+        loadProviderFields(type).then((fields) => {
           setState({
             fields: [typeSelectField(true, kind), ...fields],
             initialValues: {
@@ -106,6 +108,10 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
           });
         }).then(miqSparkleOff);
       });
+    } else {
+      // As the typeSelectField relies on the setState() function, it's necessary to set the initial state
+      // here and not above in the useState() function.
+      setState({ fields: [typeSelectField(false, kind, setState)] });
     }
   }, [providerId]);
 
@@ -154,7 +160,6 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const componentMapper = {
     ...mapper,
     'protocol-selector': ProtocolSelector,
-    'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
     'validate-provider-credentials': ValidateProviderCredentials,
     'detect-button': DetectButton,
