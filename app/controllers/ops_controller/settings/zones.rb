@@ -15,48 +15,15 @@ module OpsController::Settings::Zones
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
-      id = params[:id] || "new"
-      return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
-
-      @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
-
-      unless @edit[:new][:name]
-        add_flash(_("Name can't be blank"), :error)
-      end
-      unless @edit[:new][:description]
-        add_flash(_("Description can't be blank"), :error)
-      end
-      unless @edit[:new][:password] == @edit[:new][:verify]
-        add_flash(_('Password and Verify Password fields do not match'), :error)
-      end
-
-      # This is needed for cases when more than one required field is missing or is not correct, to prevent rendering same flash messages
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-        return
-      end
-
-      zone_set_record_vars(@zone)
-      if valid_record?(@zone) && @zone.save
-        zone_save_ntp_server_settings(@zone)
-        AuditEvent.success(build_created_audit(@zone, @edit))
-        if params[:button] == "save"
-          add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-        else
-          add_flash(_("Zone \"%{name}\" was added") % {:name => @edit[:new][:name]})
-        end
-        @edit = nil
-        self.x_node = params[:button] == "save" ? "z-#{@zone.id}" : "xx-z"
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => "root", :replace_trees => %i[settings diagnostics])
+      self.x_node = params[:button] == "save" ? "z-#{params[:id]}" : "xx-z"
+      @edit = nil
+      get_node_info(x_node)
+      if params[:button] == "save"
+        add_flash(_("Zone \"%{name}\" was saved") % {:name => params[:name]})
       else
-        @in_a_form = true
-        @edit[:errors].each { |msg| add_flash(msg, :error) }
-        @zone.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "ze")
+        add_flash(_("Zone \"%{name}\" was added") % {:name => params[:name]})
       end
+      replace_right_cell(:nodetype => "root", :replace_trees => %i[settings diagnostics])
     when "reset", nil # Reset or first time in
       zone_build_edit_screen
       if params[:button] == "reset"

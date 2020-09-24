@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = () => ({
+const createSchema = (edit) => ({
     fields: [
         {
             component: componentTypes.SUB_FORM,
@@ -12,6 +12,7 @@ const createSchema = () => ({
                     id: 'name',
                     name: 'name',
                     label: __('Name'),
+                    isDisabled: edit,
                     maxLength: 50,
                     isRequired: true,
                     validate: [{ type: validatorTypes.REQUIRED }]
@@ -36,59 +37,33 @@ const createSchema = () => ({
         },
         {
             component: componentTypes.SUB_FORM,
-            name: 'ntp-servers-subform',
-            title: __('NTP Servers'),
-            description: __("* Specified NTP settings apply to this zone only and are not global."),    
-            fields: [
-                { 
-                    component: componentTypes.TEXT_FIELD,
-                    id: 'ntp_server_1',
-                    name: 'ntp_server_1',
-                    initialValue: "0.pool.ntp.org",
-                    maxLength: 255,  
-                },
-                {
-                    component: componentTypes.TEXT_FIELD,
-                    id: 'ntp_server_2',
-                    name: 'ntp_server_2',
-                    initialValue: "1.pool.ntp.org",
-                    maxLength: 255,  
-                },
-                {
-                    component: componentTypes.TEXT_FIELD,
-                    id: 'ntp_server_3',
-                    name: 'ntp_server_3',
-                    initialValue: "2.pool.ntp.org",
-                    maxLength: 255,  
-                },
-            ]
-        },
-        {
-            component: componentTypes.SUB_FORM,
             name: 'credentials-subform',
             title: __('Credentials - Windows Domain'),
             fields: [
                 {
                     component: componentTypes.TEXT_FIELD,
-                    id: 'userid',
-                    name: 'userid',
+                    id: 'authentications.userid',
+                    name: 'authentications.userid',
                     label: __('Username'),
                     maxLength: 50,  
                 },
                 {
                     component: 'password-field',
-                    id: 'password',
-                    name: 'password',
+                    edit,
+                    type: 'password',
+                    id: 'authentications.password',
+                    name: 'authentications.password',
                     label: __('Password'),
                     maxLength: 50,  
                 },
-                {
-                    component: 'password-field',
-                    id: 'verify',
-                    name: 'verify',
-                    label: __('Verify Password'),
-                    maxLength: 50,  
-                },
+                // {
+                //     component: componentTypes.TEXT_FIELD,
+                //     type: 'password',
+                //     id: 'verify',
+                //     name: 'verify',
+                //     label: __('Verify Password'),
+                //     maxLength: 50,
+                // },
             ]
         },
         {
@@ -101,6 +76,9 @@ const createSchema = () => ({
                     id: 'settings.concurrent_vm_scans',
                     name: 'settings.concurrent_vm_scans',
                     label: __('Max Active VM Scans'),
+                    initialValue: 0,
+                    isRequired: true,
+                    validate: [{ type: validatorTypes.REQUIRED }],
                     options: [
                         { label: __('Unlimited'), value: 0 },
                         ...Array(4).fill().map((_, i) => ({ label: i+1, value: i+1 })),
