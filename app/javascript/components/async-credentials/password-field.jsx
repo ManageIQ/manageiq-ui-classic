@@ -2,11 +2,12 @@ import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  FormGroup,
   ControlLabel,
-  InputGroup,
+  FieldLevelHelp,
   FormControl,
+  FormGroup,
   HelpBlock,
+  InputGroup,
 } from 'patternfly-react';
 import { componentTypes, useFormApi } from '@@ddf';
 import { checkValidState } from './helper';
@@ -49,6 +50,7 @@ const PasswordField = ({
         <FormGroup>
           <ControlLabel>
             {rest.isRequired ? <RequiredLabel label={rest.label} /> : rest.label }
+            {helperText && <FieldLevelHelp content={helperText} />}
           </ControlLabel>
           <InputGroup>
             <FormControl
@@ -63,7 +65,6 @@ const PasswordField = ({
               <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
             </InputGroup.Button>
           </InputGroup>
-          { helperText && <HelpBlock>{ helperText }</HelpBlock> }
         </FormGroup>
       )}
       {!edit && formOptions.renderForm([secretField], formOptions)}

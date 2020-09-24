@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormGroup,
-  ControlLabel,
-  InputGroup,
-  FormControl,
   Button,
+  ControlLabel,
+  FieldLevelHelp,
+  FormControl,
+  FormGroup,
   HelpBlock,
+  InputGroup,
 } from 'patternfly-react';
 
 import { useFieldApi } from '@@ddf';
@@ -32,6 +33,7 @@ const EditPasswordField = ({ ...props }) => {
     <FormGroup validationState={meta.error ? 'error' : null}>
       <ControlLabel>
         {isRequired ? <RequiredLabel label={label} /> : label }
+        {helperText && <FieldLevelHelp content={helperText} />}
       </ControlLabel>
       <InputGroup>
         <FormControl
@@ -48,7 +50,7 @@ const EditPasswordField = ({ ...props }) => {
           <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
         </InputGroup.Button>
       </InputGroup>
-      {(meta.error || helperText) && <HelpBlock>{ meta.error || helperText }</HelpBlock>}
+      {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
     </FormGroup>
   );
 };
