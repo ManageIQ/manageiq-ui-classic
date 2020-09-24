@@ -188,7 +188,7 @@ module Menu
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
                             Menu::Item.new('physical_storage',
-                                           N_('Storage Systems'),
+                                           N_('Physical Storages'),
                                            'physical_storage',
                                            {:feature => 'physical_storage_show_list'},
                                            '/physical_storage/show_list'),

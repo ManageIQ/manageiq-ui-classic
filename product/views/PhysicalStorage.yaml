@@ -11,8 +11,6 @@ db: PhysicalStorage
 # Columns to fetch from main table
 cols:
 - name
-- ext_management_system.name
-- physical_storage_family.name
 - type
 - health_state
 - power_state
@@ -28,7 +26,6 @@ include_for_find:
 
 col_order:
 - name
-- type
 - health_state
 - power_state
 - asset_detail.product_name

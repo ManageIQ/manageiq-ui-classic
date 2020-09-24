@@ -121,7 +121,6 @@ module Mixins
           security_policy_rules
           storage_managers
           storage_resources
-          physical_storages
           storages
           vms
         ]
