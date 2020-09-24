@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataDrivenForm should render correctly 1`] = `"<form class=\\"ddorg__pf3-layout-components__form-wrapper form-react\\"><div class=\\"form-group\\"><input name=\\"name\\" class=\\"form-control\\" value=\\"\\"></div><div class=\\"ddorg__pf3-layout-components__button-group \\"><button type=\\"submit\\" disabled=\\"\\" class=\\"btn btn-primary\\">Submit</button></div></form>"`;
+exports[`DataDrivenForm should render correctly 1`] = `"<form class=\\"ddorg__pf3-layout-components__form-wrapper form-react\\"><div class=\\"form-group\\"><input name=\\"name\\" class=\\"form-control\\" value=\\"\\"></div><div class=\\"ddorg__pf3-layout-components__button-group \\"><button type=\\"submit\\" disabled=\\"\\" class=\\"btn btn-primary\\">Save</button></div></form>"`;
