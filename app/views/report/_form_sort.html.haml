@@ -12,7 +12,7 @@
         - else
           - sortby1 = @sortby1
         = select_tag('chosen_sort1',
-          options_for_select([ReportHelper::NOTHING_STRING] + @sort1, sortby1),
+          options_for_select([_(ReportHelper::NOTHING_STRING)] + @sort1, sortby1),
           :multiple              => false,
           :class                 => "selectpicker")
         :javascript
@@ -87,7 +87,7 @@
           - else
             - sortby2 = @sortby2
           = select_tag('chosen_sort2',
-            options_for_select([ReportHelper::NOTHING_STRING] + @sort2, sortby2),
+            options_for_select([_(ReportHelper::NOTHING_STRING)] + @sort2, sortby2),
             :multiple              => false,
             :class                 => "selectpicker")
           :javascript
