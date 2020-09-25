@@ -245,7 +245,7 @@ module OpsController::Settings::LabelTagMapping
 
   def validate_mapping(cat_description, entity, label_name)
     tag = classification_lookup_with_cache_by(cat_description)&.tag
-    return :unique_mapping if tag && ContainerLabelTagMapping.where(:label_name => label_name, :tag => tag).exists?
+    return :unique_mapping if tag && ProviderTagMapping.where(:label_name => label_name, :tag => tag).exists?
 
     if entity == ALL_ENTITIES
       :tag_not_found unless classification_lookup_with_cache_by(cat_description)

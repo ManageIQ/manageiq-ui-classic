@@ -91,7 +91,7 @@ describe OpsController do
     it "creates new mapping for all entities on save" do
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
 
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
       expect(mapping.labeled_resource_type).to eq(all_entities)
@@ -105,7 +105,7 @@ describe OpsController do
 
     it "can edit an existing mapping for all entities" do
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
 
       controller.instance_variable_set(:@flash_array, nil)
 
@@ -125,22 +125,22 @@ describe OpsController do
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
       controller.instance_variable_set(:@flash_array, nil)
 
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
 
-      expect(ContainerLabelTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_truthy
+      expect(ProviderTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_truthy
 
       post :label_tag_mapping_delete, :params => {:id => mapping.id.to_s}
 
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
-      expect(ContainerLabelTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_falsey
+      expect(ProviderTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_falsey
       expect(Classification.lookup_by_name(classification_department.name).name).to eq(classification_department.name)
     end
 
     it "cannot set category name of tag which does not exist on an existing mapping for all entities" do
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
-      mapping = ContainerLabelTagMapping.last
+      mapping = ProviderTagMapping.last
 
       controller.instance_variable_set(:@flash_array, nil)
 
