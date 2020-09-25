@@ -26,6 +26,7 @@ include_for_find:
 
 col_order:
 - name
+- type
 - health_state
 - power_state
 - asset_detail.product_name

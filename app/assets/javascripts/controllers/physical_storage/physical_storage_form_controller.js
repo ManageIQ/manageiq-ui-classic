@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller(
           validate_id: null,
 
         };
-        $scope.physicalStorageTypes = [];
+        $scope.physicalStorageFamilies = [];
 
         $scope.modelCopy = angular.copy($scope.physicalStorageModel);
         $scope.afterGet = false;
@@ -91,14 +91,14 @@ ManageIQ.angular.app.controller(
       $scope.emsIdChanged = function (emsId) {
         miqService.sparkleOn();
 
-        API.get('/api/providers/' + emsId + '?attributes=type,physical_storage_types', null)
+        API.get('/api/providers/' + emsId + '?attributes=type,physical_storage_families', null)
           .then(getStorageManagerFormData)
           .catch(miqService.handleFailure);
 
       };
 
       var getStorageManagerFormData = function (data) {
-        $scope.physicalStorageTypes = data.physical_storage_types;
+        $scope.physicalStorageFamilies = data.physical_storage_families;
         $scope.physicalStorageModel.emstype = data.type
         miqService.sparkleOff();
       }
