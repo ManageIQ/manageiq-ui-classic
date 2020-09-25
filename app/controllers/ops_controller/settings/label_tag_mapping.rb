@@ -53,7 +53,7 @@ module OpsController::Settings::LabelTagMapping
       if !@lt_map || @lt_map.id.blank?
         add_flash(_("Add of new Container Label Tag Mapping was cancelled by the user"))
       else
-        add_flash(_("Edit of Container Label Tag Mapping \"%{name}\" was cancelled by the user"))
+        add_flash(_("Edit of Container Label Tag Mapping \"%{name}\" was cancelled by the user") % {:name => @lt_map.label_name})
       end
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
