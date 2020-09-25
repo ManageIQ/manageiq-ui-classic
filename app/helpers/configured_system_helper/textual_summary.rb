@@ -4,7 +4,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipmi_present ipaddress mac_address zone]
+      %i[hostname ipmi_present ipaddress mac_address vendor zone]
     )
   end
 
@@ -26,6 +26,12 @@ module ConfiguredSystemHelper::TextualSummary
 
   def textual_mac_address
     {:label => _("Mac address"), :value => @record.mac_address}
+  end
+
+  def textual_vendor
+    return nil if @record.vendor.blank?
+
+    {:label => _("Vendor"), :value => @record.vendor}
   end
 
   def textual_zone
