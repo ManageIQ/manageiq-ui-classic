@@ -280,8 +280,6 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_update(id, cat_description)
     mapping = ProviderTagMapping.find(id)
-    update_category = mapping.tag.classification
-    update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
     begin
       if mapping.labeled_resource_type == ALL_ENTITIES
         update_category = classification_lookup_with_cache_by(cat_description)
@@ -291,7 +289,6 @@ module OpsController::Settings::LabelTagMapping
           return
         end
         mapping.tag = update_category.tag
-
         mapping.save!
       else
         update_category             = mapping.tag.classification
@@ -357,7 +354,7 @@ module OpsController::Settings::LabelTagMapping
     def tag_category_parameters_for_haml
       {:lt_map       => @lt_map,
        :categories   => categories_for_select,
-       :category     => @edit[:new][:category],
+       :category     => @edit[:new][:category] || categories_for_select.first,
        :all_entities => @edit[:new][:entity] == ALL_ENTITIES}
     end
   end
