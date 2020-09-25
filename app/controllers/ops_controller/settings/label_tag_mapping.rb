@@ -120,7 +120,7 @@ module OpsController::Settings::LabelTagMapping
     # This renders into label_tag_mapping_form view, fields are different from other
     # functions here, notably `:entity` is the translated ui name.
     @lt_mapping = []
-    @single_value_category_is_present = false
+    @any_mapping_is_all_entities = false
     mappings.each do |m|
       lt_map = {}
       lt_map[:id] = m.id
@@ -128,7 +128,7 @@ module OpsController::Settings::LabelTagMapping
       lt_map[:label_name] = m.label_name
       tag_classification = m.tag.classification
       lt_map[:category] = cat_description_without_prefix(tag_classification.description)
-      @single_value_category_is_present = true if tag_classification.single_value && m.labeled_resource_type == ALL_ENTITIES
+      @any_mapping_is_all_entities = true if m.labeled_resource_type == ALL_ENTITIES
       @lt_mapping.push(lt_map)
     end
   end
