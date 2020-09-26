@@ -384,6 +384,7 @@ module Mixins
           ems_container_recheck_auth_status
           ems_infra_recheck_auth_status
           ems_physical_infra_recheck_auth_status
+          ems_storage_recheck_auth_status
         ].include?(params[:pressed])
           if params[:id]
             table_key = :table
