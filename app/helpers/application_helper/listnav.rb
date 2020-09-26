@@ -2,6 +2,7 @@ module ApplicationHelper
   module Listnav
     def render_listnav_filename
       common_layouts = %w[
+        storage_resource
         auth_key_pair_cloud
         availability_zone
         cloud_network
