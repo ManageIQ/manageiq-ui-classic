@@ -583,8 +583,17 @@ class CloudVolumeController < ApplicationController
       options.merge!(aws_ebs_options)
     when "ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager"
       options.merge!(ibmcloud_powervs_options)
+    when "ManageIQ::Providers::Autosde::StorageManager"
+      options.merge!(autosde_options)
     end
     options
+  end
+
+  def autosde_options
+    {
+      :ems             => ExtManagementSystem.find(params[:storage_manager_id]),
+      :storage_service => StorageService.find(params[:storage_service_id])
+    }
   end
 
   def cinder_manager_options
