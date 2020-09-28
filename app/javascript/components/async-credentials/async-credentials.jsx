@@ -19,6 +19,7 @@ const AsyncCredentials = ({
   name,
   asyncValidate,
   validationDependencies,
+  isRequired,
   edit,
 }) => {
   const formOptions = useFormApi();
@@ -35,7 +36,7 @@ const AsyncCredentials = ({
   }, setState] = useState(() => ({}));
 
   const { input, meta } = useFieldApi({
-    initialValue: !!edit,
+    initialValue: !!edit || !isRequired, // The field is initially valid in edit mode or if the field is optional
     name,
     validate: [{ type: validatorTypes.REQUIRED }],
   });

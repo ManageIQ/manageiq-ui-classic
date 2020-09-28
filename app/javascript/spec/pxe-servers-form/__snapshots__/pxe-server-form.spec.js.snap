@@ -84,6 +84,7 @@ exports[`PxeServersForm should render correctly 1`] = `
                       },
                     ],
                     "id": "authentication.valid",
+                    "isRequired": true,
                     "name": "authentication.valid",
                     "validationDependencies": Array [
                       "uri",
