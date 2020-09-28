@@ -2127,10 +2127,9 @@ Rails.application.routes.draw do
         edit
         form_field_changed
         reload
-        tree_autoload
-        tree_select
-      ) +
-        x_post
+        show
+        show_list
+      )
     },
 
     :miq_action       => {

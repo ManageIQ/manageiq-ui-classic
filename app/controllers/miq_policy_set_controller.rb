@@ -38,8 +38,6 @@ class MiqPolicySetController < ApplicationController
   def form_field_changed
     return unless load_edit("profile_edit__#{params[:id]}")
     @profile = @edit[:profile_id] ? MiqPolicySet.find(@edit[:profile_id]) : MiqPolicySet.new
-    @edit[:new][:description] = params[:description].presence if params[:description]
-    @edit[:new][:notes] = params[:notes].presence if params[:notes]
     if %w[move_right move_left move_allleft].include?(params[:button])
       handle_selection_buttons(:policies)
       @changed = (@edit[:new] != @edit[:current])
@@ -49,6 +47,8 @@ class MiqPolicySetController < ApplicationController
         page.replace_html("profile_info_div", :partial => "profile_details") unless @flash_errors
       end
     else
+      @edit[:new][:description] = params[:description].presence if params[:description]
+      @edit[:new][:notes] = params[:notes].presence if params[:notes]
       send_button_changes
     end
   end
@@ -84,6 +84,7 @@ class MiqPolicySetController < ApplicationController
     add_flash(_("Policy Profile must contain at least one Policy"), :error) if @edit[:new][:policies].length.zero? # At least one member is required
 
     profile = params[:id].blank? ? MiqPolicySet.new : MiqPolicySet.find_by(:id => params[:id]) # Get new or existing record
+    p "XXXX #{@edit.inspect}"
     profile.description = @edit[:new][:description]
     profile.notes = @edit[:new][:notes]
     if profile.valid? && !@flash_array && profile.save
@@ -106,7 +107,7 @@ class MiqPolicySetController < ApplicationController
       end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = @changed = false
-      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      javascript_redirect(:controller => 'miq_policy_set', :action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
     else
       profile.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)

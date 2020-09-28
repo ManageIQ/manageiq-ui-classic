@@ -17,8 +17,8 @@
             = text_field_tag("description", @edit[:new][:description],
               :maxlength         => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
+              "data-miq_focus"   => true,
               "data-miq_observe" => observe_with_interval)
-          = javascript_tag(javascript_focus('description'))
         - else
           .col-md-8
             = h(@record.description)
@@ -51,7 +51,7 @@
                                           "data-miq_sparkle_off" => true,
                                           "data-click_url"       => {:url => url_for_only_path(:action => 'form_field_changed',
                                                                                                :button => action,
-                                                                                               :id => @profile)}.to_json}
+                                                                                               :id => @profile.id || 'new')}.to_json}
           %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
           %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
       .spacer

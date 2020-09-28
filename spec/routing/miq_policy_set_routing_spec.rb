@@ -27,21 +27,9 @@ describe 'routes for MiqPolicySetController' do
     end
   end
 
-  describe '#x_button' do
+  describe '#show' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/x_button")).to route_to("#{controller_name}#x_button")
-    end
-  end
-
-  describe '#x_history' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/x_history")).to route_to("#{controller_name}#x_history")
-    end
-  end
-
-  describe '#x_show' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/x_show")).to route_to("#{controller_name}#x_show")
+      expect(post("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
   end
 end

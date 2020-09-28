@@ -2,6 +2,15 @@ describe MiqPolicySetController do
   before do
     stub_user(:features => :all)
   end
+
+  context "show_list" do
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
+  end
+
   context "#edit" do
     render_views
 
@@ -25,8 +34,11 @@ describe MiqPolicySetController do
       controller.instance_variable_set(:@lastaction, "show")
       controller.params = {:button => "save", :id => @policy_profile.id}
       expect(@policy_profile.members.count).to eq(2)
+      page = double('page')
+      allow(page).to receive(:<<).with(any_args)
+      expect(page).to receive(:redirect_to).with({:action=>"show", :controller=>"miq_policy_set", :flash_msg=>"Policy Profile \"foo\" was saved", :id=>@policy_profile.id})
+      expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.edit
-      expect(assigns(:flash_array).first[:message]).to include("Policy Profile \"#{@policy_profile.description}\" was saved")
       @policy_profile.reload
       expect(@policy_profile.members.count).to eq(1)
     end
