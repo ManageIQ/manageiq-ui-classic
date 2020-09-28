@@ -30,6 +30,7 @@ module ApplicationHelper::PageLayouts
       miq_policy
       miq_policy_export
       miq_policy_logs
+      miq_policy_set
       monitor_alerts_overview
       monitor_alerts_list
       monitor_alerts_most_recent

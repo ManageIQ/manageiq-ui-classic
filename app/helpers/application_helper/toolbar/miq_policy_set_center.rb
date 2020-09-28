@@ -11,7 +11,7 @@ class ApplicationHelper::Toolbar::MiqPolicySetCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Policy Profile'),
           t,
-          :url_parms    => "main_div",
+          :url          => "/edit",
           :send_checked => true,
           :klass        => ApplicationHelper::Button::ReadOnly),
         button(

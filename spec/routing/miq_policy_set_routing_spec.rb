@@ -11,13 +11,13 @@ describe 'routes for MiqPolicySetController' do
 
   describe '#miq_policy_set_edit' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/miq_policy_set_edit")).to route_to("#{controller_name}#miq_policy_set_edit")
+      expect(post("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
     end
   end
 
-  describe '#profile_field_changed' do
+  describe '#form_field_changed' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/miq_policy_set_edit")).to route_to("#{controller_name}#miq_policy_set_edit")
+      expect(post("/#{controller_name}/form_field_changed")).to route_to("#{controller_name}#form_field_changed")
     end
   end
 

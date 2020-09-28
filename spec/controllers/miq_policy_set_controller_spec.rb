@@ -2,7 +2,7 @@ describe MiqPolicySetController do
   before do
     stub_user(:features => :all)
   end
-  context "#miq_policy_set_edit" do
+  context "#edit" do
     render_views
 
     before do
@@ -22,10 +22,10 @@ describe MiqPolicySetController do
                                                :key        => "profile_edit__#{@policy_profile.id}",
                                                :profile_id => @policy_profile.id)
       session[:edit] = assigns(:edit)
-      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@lastaction, "show")
       controller.params = {:button => "save", :id => @policy_profile.id}
       expect(@policy_profile.members.count).to eq(2)
-      controller.miq_policy_set_edit
+      controller.edit
       expect(assigns(:flash_array).first[:message]).to include("Policy Profile \"#{@policy_profile.description}\" was saved")
       @policy_profile.reload
       expect(@policy_profile.members.count).to eq(1)
