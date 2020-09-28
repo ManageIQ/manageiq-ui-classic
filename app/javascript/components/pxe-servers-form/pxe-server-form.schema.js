@@ -99,6 +99,7 @@ const createSchema = isEditing => ({
           name: 'authentication.valid',
           edit: isEditing,
           validationDependencies: ['uri'],
+          isRequired: true,
           asyncValidate: formValues => new Promise((resolve, reject) => http.post('/pxe/pxe_server_async_cred_validation', {
             uri: formValues.uri,
             ...formValues.authentication,
