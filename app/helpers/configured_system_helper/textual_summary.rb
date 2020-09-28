@@ -17,15 +17,15 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_ipmi_present
-    {:label => _("IPMI Present"), :value => @record.ipmi_present}
+    create_label("IPMI Present", "", "ipmi_present")
   end
 
   def textual_ipaddress
-    {:label => _("IP Address"), :value => @record.ipaddress}
+    create_label("IP Address", "", "ipaddress")
   end
 
   def textual_mac_address
-    {:label => _("Mac address"), :value => @record.mac_address}
+    create_label("Mac address", "", "mac_address")
   end
 
   def textual_vendor
@@ -35,7 +35,7 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_zone
-    {:label => _("Zone"), :value => @record.configuration_manager.my_zone}
+    create_label("Zone", "configuration_manager", "my_zone")
   end
 
   def textual_group_relationships
@@ -90,15 +90,15 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_configuration_environment_name
-    {:label => _("Environment"), :value => @record.configuration_profile.try(:configuration_environment_name)}
+    create_label("Environment", "configuration_profile", "configuration_environment_name")
   end
 
   def textual_configuration_domain_name
-    {:label => _("Domain"), :value => @record.configuration_profile.try(:configuration_domain_name)}
+    create_label("Domain", "configuration_profile", "configuration_domain_name")
   end
 
   def textual_configuration_realm_name
-    {:label => _("Realm"), :value => @record.configuration_profile.try(:configuration_realm_name)}
+    create_label("Realm", "configuration_profile", "configuration_realm_name")
   end
 
   def textual_group_os
@@ -112,23 +112,23 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_configuration_compute_profile_name
-    {:label => _("Compute Profile"), :value => @record.configuration_profile.try(:configuration_compute_profile_name)}
+    create_label("Compute Profile", "configuration_profile", "configuration_compute_profile_name")
   end
 
   def textual_configuration_architecture_name
-    {:label => _("Architecture"), :value => @record.configuration_profile.try(:configuration_architecture_name)}
+    create_label("Architecture", "configuration_profile", "configuration_architecture_name")
   end
 
   def textual_operating_system_flavor_name
-    {:label => _("OS Information"), :value => @record.configuration_profile.try(:operating_system_flavor_name)}
+    create_label("OS Information", "configuration_profile", "operating_system_flavor_name")
   end
 
   def textual_customization_script_medium_name
-    {:label => _("Medium"), :value => @record.configuration_profile.try(:customization_script_medium_name)}
+    create_label("Medium", "configuration_profile", "customization_script_medium_name")
   end
 
   def textual_customization_script_ptable_name
-    {:label => _("Partition Table"), :value => @record.configuration_profile.try(:customization_script_ptable_name)}
+    create_label("Partition Table", "configuration_profile", "customization_script_ptable_name")
   end
 
   def textual_group_tenancy
@@ -136,6 +136,8 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_configuration_locations_name
+    return nil if @record.configuration_profile.try(:configuration_locations).blank?
+
     {
       :label => _("Configuration Location"),
       :value => (@record.configuration_profile.try(:configuration_locations) || []).collect(&:name).join(", ")
@@ -143,9 +145,18 @@ module ConfiguredSystemHelper::TextualSummary
   end
 
   def textual_configuration_organizations_name
+    return nil if @record.configuration_profile.try(:configuration_organizations).blank?
+
     {
       :label => _("Configuration Organization"),
       :value => (@record.configuration_profile.try(:configuration_organizations) || []).collect(&:name).join(", ")
     }
+  end
+
+  def create_label(name, relatedObject, property)
+    value = (relatedObject.blank?)? @record.try(property) : @record.try(relatedObject).try(property)
+    return nil if value.blank?
+
+    {:label => _(name), :value => value}
   end
 end
