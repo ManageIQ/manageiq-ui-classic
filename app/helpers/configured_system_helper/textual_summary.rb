@@ -153,8 +153,8 @@ module ConfiguredSystemHelper::TextualSummary
     }
   end
 
-  def create_label(name, relatedObject, property)
-    value = (relatedObject.blank?)? @record.try(property) : @record.try(relatedObject).try(property)
+  def create_label(name, related_object, property)
+    value = related_object.blank? ? @record.try(property) : @record.try(related_object).try(property)
     return nil if value.blank?
 
     {:label => _(name), :value => value}
