@@ -13,6 +13,7 @@ export const StaticGTLView = ({
   total,
   settings,
   pagination,
+  onItemButtonClick,
   onItemClick,
   onItemSelect,
   onSort,
@@ -34,7 +35,7 @@ export const StaticGTLView = ({
       onSelectAll={onSelectAll}
       onItemClick={onItemClick}
       onItemSelect={onItemSelect}
-      onItemButtonClick={() => console.log('onItemButtonClick')}
+      onItemButtonClick={onItemButtonClick}
       onPageSet={onPageSet}
       onPerPageSelect={onPerPageSelect}
     />
@@ -48,6 +49,7 @@ StaticGTLView.defaultProps = {
   onSort: (headerId, isAscending) => console.log('onSort', headerId, isAscending),
   onPerPageSelect: foo => console.log('onPerPageSelect', foo),
   onPageSet: foo => console.log('onPageSet', foo),
+  onItemButtonClick: foo => console.log('onItemButtonClick', foo),
   onItemClick: foo => console.log('onItemClick', foo),
   onItemSelect: foo => console.log('onItemSelect', foo),
   total: 128,
@@ -65,6 +67,7 @@ StaticGTLView.propTypes = {
     perPage: PropTypes.number,
     perPageOptions: PropTypes.arrayOf(PropTypes.number),
   }),
+  onItemButtonClick: PropTypes.func,
   onItemSelect: PropTypes.func,
   onRowClick: PropTypes.func,
   onSort: PropTypes.func,

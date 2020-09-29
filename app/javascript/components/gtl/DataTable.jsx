@@ -155,7 +155,7 @@ export const DataTable = ({
                   disabled={row.cells[columnKey].disabled}
                   title={row.cells[columnKey].title}
                   alt={row.cells[columnKey].title}
-                  onClick={ev => onItemButtonClick(row.cells[columnKey], ev)}
+                  onClick={ev => onItemButtonClick(row, ev)}
                 >
                   {row.cells[columnKey].text}
                 </button>
