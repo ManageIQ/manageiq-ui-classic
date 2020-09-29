@@ -1,5 +1,5 @@
 - angular ||= false
 
 %div{:id => "#{name}_div"}
-  .treeview-pf-hover.treeview-pf-select{:id => "#{name}box", :style => "overflow: hidden"}
+  .treeview-pf-hover.treeview-pf-select{:id => "#{name}box", :style => "height: 350px !important; overflow-y: auto !important"}
     = render :partial  => "layouts/tree", :locals => tree.locals_for_render.merge(:angular => angular)
