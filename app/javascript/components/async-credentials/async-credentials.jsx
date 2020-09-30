@@ -19,6 +19,7 @@ const AsyncCredentials = ({
   name,
   asyncValidate,
   validationDependencies,
+  isRequired,
   edit,
 }) => {
   const formOptions = useFormApi();
@@ -30,13 +31,12 @@ const AsyncCredentials = ({
   const [{
     validating,
     lastValid,
-    initialValues,
     errorMessage,
     depsValid,
-  }, setState] = useState(() => ({ lastValid: {}, initialValues: snapshot() }));
+  }, setState] = useState(() => ({}));
 
   const { input, meta } = useFieldApi({
-    initialValue: !!edit,
+    initialValue: !!edit || !isRequired, // The field is initially valid in edit mode or if the field is optional
     name,
     validate: [{ type: validatorTypes.REQUIRED }],
   });
@@ -80,20 +80,25 @@ const AsyncCredentials = ({
       <FormGroup validationState={meta.error ? 'error' : null}>
         <input type="hidden" {...input} />
 
-        <FormSpy subscription={{ values: true }}>
-          {() => {
+        <FormSpy subscription={{ values: true, dirtyFields: true }}>
+          {({ dirtyFields, values }) => {
             // The list of registered fields shows up after this render, so the validation has to happen
             // with a delay and has to be pulled back via the state.
             setTimeout(() => setState(state => ({ ...state, depsValid: validateDependentFields() })));
-            const currentValues = snapshot();
 
-            const isDirty = !(isEqual(currentValues, lastValid) || isEqual(currentValues, initialValues));
+            const currentValues = snapshot(values);
 
-            formOptions.change(name, !isDirty);
+            // The field itself is dirty when any of its children is dirty
+            const isDirty = Object.keys(dirtyFields).some(field =>
+              dirtyFields[field] && dependencies.includes(field) && !validationDependencies.includes(field));
+
+            // The field itself is valid if there are no modifications since the last validation or the initial values
+            const isValid = isEqual(currentValues, lastValid) || !isDirty;
+            formOptions.change(name, isValid);
 
             return (
               <>
-                <Button bsSize="small" bsStyle="primary" onClick={onClick} disabled={!(isDirty && depsValid) || validating}>
+                <Button bsSize="small" bsStyle="primary" onClick={onClick} disabled={isValid || !depsValid || validating}>
                   {validating ? validationProgressLabel : validateLabel}
                   {validating && <ButtonSpinner /> }
                 </Button>
