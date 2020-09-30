@@ -90,6 +90,19 @@
       %option{"value" => ""}
         = "<#{_('None')}>"
 
+.form-group{"ng-class" => "{'has-error': angularForm.volume_type.$invalid}",
+            "ng-if"    => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager'"}
+  %label.col-md-2.control-label
+    = _('Cloud Volume Type')
+  .col-md-8
+    %select{"name"        => "volume_type",
+            "ng-model"    => "vm.cloudVolumeModel.volume_type",
+            "ng-options"  => "voltype.name as voltype.name for voltype in vm.volumeTypes",
+            "ng-disabled" => "!vm.newRecord",
+            "pf-select"   => true}
+      %option{"value" => ""}
+        = "<#{_('None')}>"
+
 .form-group{"ng-class" => "{'has-error': angularForm.size.$invalid}"}
   %label.col-md-2.control-label
     = _('Size (in gigabytes)')
