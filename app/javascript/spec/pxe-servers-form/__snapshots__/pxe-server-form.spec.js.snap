@@ -124,10 +124,6 @@ exports[`PxeServersForm should render correctly 1`] = `
             "title": "Basic Information",
           },
           Object {
-            "component": "hr",
-            "name": "form-divider",
-          },
-          Object {
             "component": "sub-form",
             "fields": Array [
               Object {
