@@ -8,7 +8,12 @@ module ConfigurationProfileHelper::TextualSummary
   end
 
   def textual_configuration_profile_name
-    {:label => _("Name"), :value => @record.name}
+    h = {:label => _("Name"), :value => @record.name}
+    if @record.supports_console?
+      h[:link] = @record.console_url
+      h[:title] = _("Go to Configuration Profile's console")
+    end
+    h
   end
 
   def textual_configuration_profile_description
