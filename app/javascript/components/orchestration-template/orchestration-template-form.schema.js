@@ -102,12 +102,6 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     id: 'form-separator',
     name: 'form-separator',
   }, {
-    component: 'note',
-    id: 'form-note',
-    name: 'form-note',
-    label: __('Note: Select format type below to apply syntax highlighting for better readability'),
-    className: '',
-  },{
     component: 'code-editor',
     id: 'content',
     name: 'content',
@@ -115,6 +109,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     mode: setFormat(initialValues),
     modes: ['yaml', 'json'],
     validateOnMount: true,
+    helperText: __('Select the format type below to apply syntax highlighting for better readability'),
     isRequired: true,
     validate: [{
       type: validatorTypes.REQUIRED,
