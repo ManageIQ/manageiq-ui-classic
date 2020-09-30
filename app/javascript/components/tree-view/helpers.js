@@ -6,7 +6,7 @@ import Tree from '@manageiq/react-ui-components/dist/wooden-tree';
  * Sets undefined checkbox to null.
  * Moves the key to attr.key.
  */
-const convert = tree => tree.map((n) => {
+const convert = (tree, fn) => tree.map((n) => {
   let node = { ...n };
   if (node.class) {
     node = { ...node, classes: node.class };
@@ -26,10 +26,10 @@ const convert = tree => tree.map((n) => {
   }
 
   if (node.nodes) {
-    node = { ...node, nodes: convert(node.nodes) };
+    node = { ...node, nodes: convert(node.nodes, fn) };
   }
 
-  return node;
+  return fn ? fn(node) : node;
 });
 
 const flatten = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(data));

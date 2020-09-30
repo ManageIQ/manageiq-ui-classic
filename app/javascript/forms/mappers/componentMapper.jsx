@@ -10,6 +10,7 @@ import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
+import TreeViewField from '../../components/tree-view/field';
 
 const mapper = {
   ...componentMapper,
@@ -22,6 +23,7 @@ const mapper = {
   note: props => <div className={props.className} role="alert">{props.label}</div>,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
+  'tree-view': TreeViewField,
   [componentTypes.SELECT]: Select,
 };
 
