@@ -123,9 +123,6 @@ const createSchema = isEditing => ({
       },
       ...basicInformationCommonFields,
     ],
-  }, {
-    component: 'hr',
-    name: 'form-divider',
   },
   ...imageMenusSubForm,
   ],
