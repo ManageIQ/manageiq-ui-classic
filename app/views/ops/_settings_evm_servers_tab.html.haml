@@ -20,12 +20,6 @@
         .col-md-8
           %p.form-control-static
             = @selected_zone.settings.key?(:proxy_server_ip) ? @selected_zone.settings[:proxy_server_ip] : ''
-      .form-group
-        %label.col-md-2.control-label
-          = _("NTP Servers")
-        .col-md-8
-          %p.form-control-static
-            = @ntp_servers
 
       .form-group
         %label.col-md-2.control-label

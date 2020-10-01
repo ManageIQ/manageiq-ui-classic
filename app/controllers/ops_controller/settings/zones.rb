@@ -38,7 +38,6 @@ module OpsController::Settings::Zones
 
       zone_set_record_vars(@zone)
       if valid_record?(@zone) && @zone.save
-        zone_save_ntp_server_settings(@zone)
         AuditEvent.success(build_created_audit(@zone, @edit))
         if params[:button] == "save"
           add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
@@ -116,15 +115,6 @@ module OpsController::Settings::Zones
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, {:save => (mode != :validate)})
   end
 
-  private def zone_save_ntp_server_settings(zone)
-    if (new_servers = new_ntp_servers).present?
-      zone.add_settings_for_resource(:ntp => {:server => new_servers})
-    else
-      zone.remove_settings_path_for_resource(:ntp)
-    end
-    zone.ntp_reload_queue
-  end
-
   # Validate the zone record fields
   def valid_record?(zone)
     valid = true
@@ -147,7 +137,6 @@ module OpsController::Settings::Zones
     copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip userid password verify])
     @edit[:new][:concurrent_vm_scans] = params[:max_scans].to_i if params[:max_scans]
 
-    settings_get_form_vars_sync_ntp
     set_verify_status
   end
 
@@ -174,7 +163,6 @@ module OpsController::Settings::Zones
     @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
     @edit[:new][:password] = @zone.authentication_password(:windows_domain)
     @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:ntp] = @zone.settings_for_resource.ntp.to_h
 
     session[:verify_ems_status] = nil
     set_verify_status
