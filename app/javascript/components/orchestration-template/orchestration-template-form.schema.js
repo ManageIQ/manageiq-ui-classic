@@ -98,27 +98,23 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
     label: __('Draft'),
     component: componentTypes.CHECKBOX,
   }, {
-    component: 'hr',
-    id: 'form-separator',
-    name: 'form-separator',
-  }, {
-    component: 'note',
-    id: 'form-note',
-    name: 'form-note',
-    label: __('Note: Select format type below to apply syntax highlighting for better readability'),
-    className: '',
-  },{
-    component: 'code-editor',
-    id: 'content',
-    name: 'content',
-    label: __('Content'),
-    mode: setFormat(initialValues),
-    modes: ['yaml', 'json'],
-    validateOnMount: true,
-    isRequired: true,
-    validate: [{
-      type: validatorTypes.REQUIRED,
-    }, value => validateCopyContent(value, initialValues, isCopying)],
+    component: componentTypes.SUB_FORM,
+    id: 'code-section',
+    name: 'code-section',
+    fields: [{
+      component: 'code-editor',
+      id: 'content',
+      name: 'content',
+      label: __('Content'),
+      mode: setFormat(initialValues),
+      modes: ['yaml', 'json'],
+      validateOnMount: true,
+      helperText: __('Select the format type below to apply syntax highlighting for better readability'),
+      isRequired: true,
+      validate: [{
+        type: validatorTypes.REQUIRED,
+      }, value => validateCopyContent(value, initialValues, isCopying)],
+    }],
   }],
 });
 

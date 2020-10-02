@@ -18,8 +18,6 @@ const mapper = {
   'field-array': FieldArray,
   'dual-group': DualGroup,
   'dual-list-select': DualListSelect,
-  hr: () => <hr />,
-  note: props => <div className={props.className} role="alert">{props.label}</div>,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   [componentTypes.SELECT]: Select,

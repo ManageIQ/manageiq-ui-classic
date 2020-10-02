@@ -6,6 +6,7 @@ import {
   ControlLabel,
   Radio,
   HelpBlock,
+  FieldLevelHelp,
 } from 'patternfly-react';
 
 // editor modes
@@ -90,11 +91,13 @@ const CodeGroup = ({
   meta: { error },
   label,
   isRequired,
+  helperText,
   ...props
 }) => (
   <FormGroup name={name} validationState={error && 'error'}>
     <ControlLabel>
       {isRequired ? <RequiredLabel label={label} /> : label }
+      {helperText && <FieldLevelHelp content={helperText} />}
     </ControlLabel>
     <CodeEditor
       onChange={(_editor, _data, value) => onChange(value)}

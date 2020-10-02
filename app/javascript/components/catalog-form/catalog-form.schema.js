@@ -41,9 +41,6 @@ function createSchema(options, catalogId) {
       maxLength: 60,
     }],
   }, {
-    component: 'hr',
-    name: 'hr',
-  }, {
     component: componentTypes.SUB_FORM,
     title: __('Assign Catalog Items'),
     id: 'assign-catalog-items',
