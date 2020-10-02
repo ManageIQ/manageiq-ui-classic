@@ -6,8 +6,14 @@ import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
 const MenuCollapse = ({ expanded, toggle }) => (
   <SideNavItem className="menu-collapse">
     <div
+      role="button"
+      tabIndex="0"
       className="menu-collapse-button"
       onClick={toggle}
+      onKeyPress={toggle}
+      aria-expanded={expanded}
+      aria-controls="main-menu-primary"
+      aria-haspopup="true"
     >
       {expanded ? <ChevronLeft20 /> : <ChevronRight20 />}
     </div>
