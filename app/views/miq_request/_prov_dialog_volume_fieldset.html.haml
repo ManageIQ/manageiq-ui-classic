@@ -43,7 +43,8 @@
               - else
                 = options[:"#{key}_#{counter}"]
             - elsif workflow.get_field(key, dialog)[:data_type] == :boolean
-              %input{:checked           => options[:"#{key}_#{counter}"],
+              - isChecked = [nil, 'null'].exclude?(options[:"#{key}_#{counter}"])
+              %input{:checked           => isChecked,
                      :type              => "checkbox",
                      :id                => "volumes__#{key}_#{counter}",
                      :required          => workflow.get_field(key, dialog)[:required],
