@@ -377,7 +377,7 @@ const GtlView = ({
     };
   }
 
-  const onSort = ({ headerId, isAscending }) => {
+  const onSort = ({ headerId, isAscending }) => () => {
     getData(
       dispatch,
       modelName,
@@ -393,7 +393,7 @@ const GtlView = ({
   const inEditMode = () => additionalOptions.in_a_form;
   const noCheckboxes = () => additionalOptions.no_checkboxes;
 
-  const onItemButtonClick = (item, ev) => {
+  const onItemButtonClick = item => ev => {
     ev.stopPropagation();
     ev.preventDefault();
     miqOrderService(item.id);
