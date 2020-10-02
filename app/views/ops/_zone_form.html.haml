@@ -38,32 +38,6 @@
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       - if @zone.id && @zone.name.downcase == "default"
         = javascript_tag(javascript_focus('proxy_server_ip'))
-%hr
-%h3
-  = _("NTP Servers")
-.form-horizontal
-  .form-group
-    %label.control-label.col-md-2
-      = _("Servers")
-    .col-md-8
-      = text_field_tag("ntp_server_1",
-                        @edit.fetch_path(:new, :ntp, :server, 0),
-                        :maxlength => ViewHelper::MAX_NAME_LEN,
-                        :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-      %br/
-      = text_field_tag("ntp_server_2",
-                        @edit.fetch_path(:new, :ntp, :server, 1),
-                        :maxlength => ViewHelper::MAX_NAME_LEN,
-                        :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-      %br/
-      = text_field_tag("ntp_server_3",
-                        @edit.fetch_path(:new, :ntp, :server, 2),
-                        :maxlength => ViewHelper::MAX_NAME_LEN,
-                        :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-= _("* Specified NTP settings apply to this zone only and are not global.")
 
 %hr
 %h3

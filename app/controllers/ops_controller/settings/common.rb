@@ -403,7 +403,6 @@ module OpsController::Settings::Common
         @update[category] = @edit[:new][category].dup
       end
 
-      save_ntp_server_settings
 
       config_valid, config_errors = Vmdb::Settings.validate(@update)
       if config_valid
@@ -491,23 +490,6 @@ module OpsController::Settings::Common
 
   private def set_worker_setting(config, klass, *path, value)
     config.store_path(klass.config_settings_path + path, value)
-  end
-
-  private def new_ntp_servers
-    old_ntp_servers = @edit[:new][:ntp][:server] || []
-    [1, 2, 3].collect.with_index do |i, position|
-      field = "ntp_server_#{i}"
-      @edit[:new][:ntp].key?(field) ? @edit[:new][:ntp].delete(field).presence : old_ntp_servers[position]
-    end.compact
-  end
-
-  private def save_ntp_server_settings
-    if (new_servers = new_ntp_servers).present?
-      @update[:ntp] = {:server => new_servers}
-    else
-      @update.delete(:ntp)
-      MiqServer.find(@sb[:selected_server_id]).remove_settings_path_for_resource(:ntp)
-    end
   end
 
   def settings_update_reset
@@ -645,8 +627,6 @@ module OpsController::Settings::Common
       end
       @host_choices = session[:host_choices]
 
-      settings_get_form_vars_sync_ntp
-
       new[:server][:custom_support_url] = params[:custom_support_url].strip if params[:custom_support_url]
       new[:server][:custom_support_url_description] = params[:custom_support_url_description] if params[:custom_support_url_description]
       new[:server][:name] = params[:server_name] if params[:server_name]
@@ -771,17 +751,6 @@ module OpsController::Settings::Common
     end
   end
 
-  private def settings_get_form_vars_sync_ntp
-    [1, 2, 3].each do |field_num|
-      field = "ntp_server_#{field_num}"
-      next unless params.key?(field)
-
-      @edit[:new][:ntp][field] = params[field]
-      # remove unnecessary key from @edit[:new][:ntp] if there is no change
-      @edit[:new][:ntp].except!(field) if params[field] == @edit[:new][:ntp][:server][field_num - 1]
-    end
-  end
-
   # Load the @edit object from session based on which config screen we are on
   def settings_load_edit
     if selected?(x_node, "z") && @sb[:active_tab] != "settings_advanced"
@@ -809,7 +778,6 @@ module OpsController::Settings::Common
     @edit[:current][:server][:locale] = "default" if @edit[:current][:server][:locale].blank?
     @edit[:current][:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current][:smtp][:enable_starttls_auto].nil?
     @edit[:current][:smtp][:openssl_verify_mode] ||= "none"
-    @edit[:current][:ntp] ||= {}
     @edit[:current][:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
     @edit[:current][:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
 
@@ -1012,7 +980,6 @@ module OpsController::Settings::Common
     when "z"
       @servers = []
       @record = @zone = @selected_zone = Zone.find(nodes.last)
-      @ntp_servers = @selected_zone&.settings_for_resource&.ntp ? @selected_zone.settings_for_resource.ntp.to_h[:server].join(", ") : ''
       @right_cell_text = if my_zone_name == @selected_zone.name
                            _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
                                                                            :model => ui_lookup(:model => @selected_zone.class.to_s)}

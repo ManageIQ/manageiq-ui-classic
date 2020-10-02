@@ -51,6 +51,11 @@ export const DataTable = ({
              key={'selectAll'}
              checked={!!checkedItems['selectAll']}
              onChange={event => localOnSelectAll(rows, event)}
+             onKeyPress={event => localOnSelectAll(rows, event)}
+             role="checkbox"
+             aria-checked="false"
+             tabIndex="0"
+             aria-labelledby="chk1-label"
              title="Check All"/>
     );
   };
@@ -67,6 +72,8 @@ export const DataTable = ({
           (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes())) &&
             <th
               onClick={() => onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
+              onKeyPress={() => onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
+              tabIndex="0"
               className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
               key={`header_${index}`}
             >
@@ -110,6 +117,8 @@ export const DataTable = ({
           className={row.selected ? 'active' : ''}
           key={`check_${row.id}`}
           onClick={event => localOnClickItem(row, event)}
+          onKeyPress={event => localOnClickItem(row, event)}
+          tabIndex="0"
         >
           {columns.map((column, columnKey) => (
             <td
@@ -122,6 +131,11 @@ export const DataTable = ({
               { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode() &&
                 <input
                   onChange={ev => localOnItemSelected(row, ev)}
+                  onKeyPress={ev => localOnItemSelected(row, ev)}
+                  role="checkbox"
+                  aria-checked="false"
+                  tabIndex="0"
+                  aria-labelledby="chk1-label"
                   type="checkbox"
                   name={`check_${row.id}`}
                   value={row.id}
@@ -156,6 +170,8 @@ export const DataTable = ({
                   title={row.cells[columnKey].title}
                   alt={row.cells[columnKey].title}
                   onClick={ev => onItemButtonClick(row, ev)}
+                  onKeyPress={ev => onItemButtonClick(row, ev)}
+                  tabIndex="0"
                 >
                   {row.cells[columnKey].text}
                 </button>
