@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zone Form Component should render a new Zone form 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "cancelLabel": "Cancel",
+      "submitLabel": "Save",
+    }
+  }
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "isDisabled": false,
+              "isRequired": true,
+              "label": "Name",
+              "maxLength": 50,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "id": "description",
+              "isRequired": true,
+              "label": "Description",
+              "maxLength": 50,
+              "name": "description",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "id": "settings.proxy_server_ip",
+              "label": "SmartProxy Server IP",
+              "maxLength": 50,
+              "name": "settings.proxy_server_ip",
+            },
+          ],
+          "name": "zone-information-subform",
+          "title": "Zone Information",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "authentications.userid",
+              "label": "Username",
+              "maxLength": 50,
+              "name": "authentications.userid",
+            },
+            Object {
+              "component": "password-field",
+              "edit": false,
+              "id": "authentications.password",
+              "label": "Password",
+              "maxLength": 50,
+              "name": "authentications.password",
+              "type": "password",
+            },
+          ],
+          "name": "credentials-subform",
+          "title": "Credentials - Windows Domain",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "settings.concurrent_vm_scans",
+              "initialValue": 0,
+              "isRequired": true,
+              "label": "Max Active VM Scans",
+              "name": "settings.concurrent_vm_scans",
+              "options": Array [
+                Object {
+                  "label": "Unlimited",
+                  "value": 0,
+                },
+                Object {
+                  "label": 1,
+                  "value": 1,
+                },
+                Object {
+                  "label": 2,
+                  "value": 2,
+                },
+                Object {
+                  "label": 3,
+                  "value": 3,
+                },
+                Object {
+                  "label": 4,
+                  "value": 4,
+                },
+                Object {
+                  "label": 5,
+                  "value": 5,
+                },
+                Object {
+                  "label": 10,
+                  "value": 10,
+                },
+                Object {
+                  "label": 15,
+                  "value": 15,
+                },
+                Object {
+                  "label": 20,
+                  "value": 20,
+                },
+                Object {
+                  "label": 25,
+                  "value": 25,
+                },
+                Object {
+                  "label": 30,
+                  "value": 30,
+                },
+                Object {
+                  "label": 35,
+                  "value": 35,
+                },
+                Object {
+                  "label": 40,
+                  "value": 40,
+                },
+                Object {
+                  "label": 45,
+                  "value": 45,
+                },
+                Object {
+                  "label": 50,
+                  "value": 50,
+                },
+              ],
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+          "name": "settings-subform",
+          "title": "Settings",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`zone Form Component should render editing a zone 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <zone
+    recordId={5124}
+  />
+</Provider>
+`;

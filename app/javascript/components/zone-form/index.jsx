@@ -15,7 +15,8 @@ const ZoneForm = ({recordId}) => {
         const message = __('Zone was saved');
         const submitUrl = recordId ? `/ops/zone_edit/?button=save&id=${recordId}&name=${data.name}` : `/ops/zone_edit/?button=add&name=${data.name}`;
 
-        const request = recordId ? API.post(`/api/zones/${recordId}`, {action: "edit", resource: {...data, authentications: { authentications }}}) : 
+        // {action: "edit", resource: {...data, authentications: { authentications }}}
+        const request = recordId ? API.patch(`/api/zones/${recordId}`, data) : 
         API.post('/api/zones', { authentications: { authentications }, ...data });
         request.then(() => miqAjaxButton(submitUrl)).catch(miqSparkleOff);
     };
