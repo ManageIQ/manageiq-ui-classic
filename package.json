@@ -36,7 +36,7 @@
     "@data-driven-forms/pf3-component-mapper": "~2.8.13",
     "@data-driven-forms/react-form-renderer": "~2.8.13",
     "@manageiq/react-ui-components": "~0.11.70",
-    "@manageiq/ui-components": "~1.4.3",
+    "@manageiq/ui-components": "1.4.4",
     "@pf3/select": "~1.12.6",
     "@pf3/timeline": "~1.0.8",
     "actioncable": "^5.2.4-2",
