@@ -1812,7 +1812,7 @@ class CatalogController < ApplicationController
     @explorer = true
 
     # FIXME: make this functional
-    get_node_info(x_node) unless @tagging || @edit
+    get_node_info(x_node) unless @tagging || @edit || @in_a_form
     replace_trees   = @replace_trees   if @replace_trees    # get_node_info might set this
     right_cell_text = @right_cell_text if @right_cell_text  # get_node_info might set this too
 
