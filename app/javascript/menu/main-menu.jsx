@@ -2,27 +2,38 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { SideNav } from 'carbon-components-react/es/components/UIShell';
 
-import { FirstLevel } from './first-level';
-import { GroupSwitcher } from './group-switcher';
-import { MenuCollapse } from './menu-collapse';
-import { MenuSearch } from './search';
-import { MiqLogo } from './miq-logo';
-import { SearchResults } from './search-results';
-import { SecondLevel } from './second-level';
-import { Username } from './username';
+import FirstLevel from './first-level';
+import GroupSwitcher from './group-switcher';
+import MenuCollapse from './menu-collapse';
+import MenuSearch from './search';
+import MiqLogo from './miq-logo';
+import SearchResults from './search-results';
+import SecondLevel from './second-level';
+import Username from './username';
 import { updateActiveItem } from './history';
 
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
-export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand, logoLarge, logoSmall, menu: initialMenu, miqGroups, showLogo, showUser }) => {
+export const MainMenu = ({
+  applianceName,
+  currentGroup,
+  currentUser,
+  customBrand,
+  logoLarge,
+  logoSmall,
+  menu: initialMenu,
+  miqGroups,
+  showLogo,
+  showUser,
+}) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [menu, setMenu] = useState(initialMenu);
   const [searchResults, setSearch] = useState(null);
   const [activeSection, setSection] = useState(null);
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
-  const hideSecondary = (_e) => setSection(null);
+  const hideSecondary = () => setSection(null);
 
   useEffect(() => {
     // persist expanded state
@@ -59,18 +70,22 @@ export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand
           expanded={appearExpanded}
           isChildOfHeader={false}
         >
-          {showLogo && <MiqLogo
-            expanded={appearExpanded}
-            customBrand={customBrand}
-            logoLarge={logoLarge}
-            logoSmall={logoSmall}
-          />}
+          {showLogo && (
+            <MiqLogo
+              expanded={appearExpanded}
+              customBrand={customBrand}
+              logoLarge={logoLarge}
+              logoSmall={logoSmall}
+            />
+          )}
 
-          {showUser && <Username
-            applianceName={applianceName}
-            currentUser={currentUser}
-            expanded={appearExpanded}
-          />}
+          {showUser && (
+            <Username
+              applianceName={applianceName}
+              currentUser={currentUser}
+              expanded={appearExpanded}
+            />
+          )}
 
           <GroupSwitcher
             currentGroup={currentGroup}
@@ -87,11 +102,13 @@ export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand
           <hr className="bx--side-nav__hr" />
 
           {searchResults && <SearchResults results={searchResults} />}
-          {!searchResults && <FirstLevel
-            menu={menu}
-            setSection={setSection}
-            activeSection={activeSection && activeSection.id}
-          />}
+          {!searchResults && (
+            <FirstLevel
+              menu={menu}
+              setSection={setSection}
+              activeSection={activeSection && activeSection.id}
+            />
+          )}
 
           <MenuCollapse
             expanded={expanded /* not appearExpanded */}
@@ -101,21 +118,10 @@ export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand
       </div>
       { activeSection && (
         <>
-          <SideNav
-            aria-label={__("Secondary Menu")}
-            className="secondary"
-            expanded={true}
-            isChildOfHeader={false}
-          >
-            <SecondLevel
-              menu={activeSection.items}
-              hideSecondary={hideSecondary}
-            />
+          <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
+            <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} />
           </SideNav>
-          <div
-            className="miq-main-menu-overlay"
-            onClick={hideSecondary}
-          ></div>
+          <div className="miq-main-menu-overlay" onClick={hideSecondary} />
         </>
       )}
     </>

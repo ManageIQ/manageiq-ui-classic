@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
 import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
 
-export const MenuCollapse = ({ expanded, toggle }) => (
+const MenuCollapse = ({ expanded, toggle }) => (
   <SideNavItem className="menu-collapse">
     <div
       className="menu-collapse-button"
@@ -12,3 +13,14 @@ export const MenuCollapse = ({ expanded, toggle }) => (
     </div>
   </SideNavItem>
 );
+
+MenuCollapse.propTypes = {
+  expanded: PropTypes.bool,
+  toggle: PropTypes.func.isRequired,
+};
+
+MenuCollapse.defaultProps = {
+  expanded: false,
+};
+
+export default MenuCollapse;
