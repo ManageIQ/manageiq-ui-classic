@@ -573,6 +573,8 @@ class CloudVolumeController < ApplicationController
       options.merge!(cinder_manager_options)
     when "ManageIQ::Providers::Amazon::StorageManager::Ebs"
       options.merge!(aws_ebs_options)
+    when "ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager"
+      options.merge!(ibmcloud_powervs_options)
     end
     options
   end
@@ -598,6 +600,14 @@ class CloudVolumeController < ApplicationController
     options[:encrypted] = params[:aws_encryption]
 
     # Get the storage manager.
+    storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
+    options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
+    options
+  end
+
+  def ibmcloud_powervs_options
+    options = {}
+    options[:volume_type] = params[:volume_type] if params[:volume_type]
     storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
     options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
     options

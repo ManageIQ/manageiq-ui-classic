@@ -50,10 +50,11 @@ const MiqFormRenderer = ({
     <FormTemplate
       {...props}
       FormWrapper={FormWrapper}
-      buttonsLabels={{ ...defaultLabels, ...buttonsLabels }}
       disableSubmit={disableSubmit}
       canReset={canReset}
       showFormControls={showFormControls}
+      {...defaultLabels}
+      {...buttonsLabels}
     />
   ));
 
@@ -69,9 +70,12 @@ const MiqFormRenderer = ({
 
 MiqFormRenderer.propTypes = {
   className: PropTypes.string,
-  buttonsLabels: PropTypes.any,
+  buttonsLabels: PropTypes.shape({
+    submitLabel: PropTypes.string,
+    resetLabel: PropTypes.string,
+    cancelLabel: PropTypes.string,
+  }),
   componentMapper: PropTypes.any,
-  buttonsLabels: PropTypes.any,
   schema: PropTypes.shape({
     fields: PropTypes.arrayOf(PropTypes.any),
   }),
@@ -85,7 +89,6 @@ MiqFormRenderer.defaultProps = {
   className: 'form-react',
   buttonsLabels: {},
   componentMapper: defaultComponentMapper,
-  buttonsLabels: {},
   schema: {
     fields: [],
   },

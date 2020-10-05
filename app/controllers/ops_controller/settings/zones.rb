@@ -15,11 +15,39 @@ module OpsController::Settings::Zones
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
-      self.x_node = params[:button] == "save" ? "z-#{params[:id]}" : "xx-z"
-      @edit = nil
-      get_node_info(x_node)
-      if params[:button] == "save"
-        add_flash(_("Zone \"%{name}\" was saved") % {:name => params[:name]})
+        
+      id = params[:id] || "new"
+      return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
+
+      @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
+
+      unless @edit[:new][:name]
+        add_flash(_("Name can't be blank"), :error)
+      end
+      unless @edit[:new][:description]
+        add_flash(_("Description can't be blank"), :error)
+      end
+
+      # This is needed for cases when more than one required field is missing or is not correct, to prevent rendering same flash messages
+      if @flash_array
+        javascript_flash(:spinner_off => true)
+        return
+      end
+
+      zone_set_record_vars(@zone)
+      if valid_record?(@zone) && @zone.save
+        AuditEvent.success(build_created_audit(@zone, @edit))
+        if params[:button] == "save"
+          add_flash(_("Zone \"%{name}\" was saved") % {:name => params[:name]})
+        else
+          add_flash(_("Zone \"%{name}\" was added") % {:name => params[:name]})
+        end
+        @edit = nil
+        self.x_node = params[:button] == "save" ? "z-#{params[:id]}" : "xx-z"
+        get_node_info(x_node)
+        replace_right_cell(:nodetype => "root", :replace_trees => %i[settings diagnostics])
+
+        
       else
         add_flash(_("Zone \"%{name}\" was added") % {:name => params[:name]})
       end
@@ -83,15 +111,6 @@ module OpsController::Settings::Zones
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, {:save => (mode != :validate)})
   end
 
-  private def zone_save_ntp_server_settings(zone)
-    if (new_servers = new_ntp_servers).present?
-      zone.add_settings_for_resource(:ntp => {:server => new_servers})
-    else
-      zone.remove_settings_path_for_resource(:ntp)
-    end
-    zone.ntp_reload_queue
-  end
-
   # Validate the zone record fields
   def valid_record?(zone)
     valid = true
@@ -114,7 +133,6 @@ module OpsController::Settings::Zones
     copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip userid password verify])
     @edit[:new][:concurrent_vm_scans] = params[:max_scans].to_i if params[:max_scans]
 
-    settings_get_form_vars_sync_ntp
     set_verify_status
   end
 
@@ -141,7 +159,6 @@ module OpsController::Settings::Zones
     @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
     @edit[:new][:password] = @zone.authentication_password(:windows_domain)
     @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:ntp] = @zone.settings_for_resource.ntp.to_h
 
     session[:verify_ems_status] = nil
     set_verify_status

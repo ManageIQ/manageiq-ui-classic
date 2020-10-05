@@ -27,7 +27,7 @@ module MiqAeCustomizationController::CustomButtons
       @sb[:applies_to_class] = x_node.split('-').last.split('_').last
       asets = CustomButtonSet.find_all_by_class_name(@nodetype[1])
       @sb[:button_groups] = []
-      @sb[:button_groups].push("[Unassigned Buttons]")
+      @sb[:button_groups].push(_("[Unassigned Buttons]"))
       if asets.present?
         asets.each do |aset|
           group = {}

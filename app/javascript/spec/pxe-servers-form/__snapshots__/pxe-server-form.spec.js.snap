@@ -84,6 +84,7 @@ exports[`PxeServersForm should render correctly 1`] = `
                       },
                     ],
                     "id": "authentication.valid",
+                    "isRequired": true,
                     "name": "authentication.valid",
                     "validationDependencies": Array [
                       "uri",
@@ -121,10 +122,6 @@ exports[`PxeServersForm should render correctly 1`] = `
             "id": "basic-information",
             "name": "basic-information",
             "title": "Basic Information",
-          },
-          Object {
-            "component": "hr",
-            "name": "form-divider",
           },
           Object {
             "component": "sub-form",

@@ -45,10 +45,6 @@ exports[`Catalog form component should render add variant form 1`] = `
             "title": "Basic Info",
           },
           Object {
-            "component": "hr",
-            "name": "hr",
-          },
-          Object {
             "component": "sub-form",
             "fields": Array [
               Object {
@@ -139,10 +135,6 @@ exports[`Catalog form component should render edit variant form 1`] = `
             "id": "basic-info",
             "name": "basic-info",
             "title": "Basic Info",
-          },
-          Object {
-            "component": "hr",
-            "name": "hr",
           },
           Object {
             "component": "sub-form",

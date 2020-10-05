@@ -123,7 +123,7 @@ describe EmsCloudController do
       FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
-      expect(response).to render_template('layouts/angular/_gtl')
+      expect(response).to render_template('layouts/react/_gtl')
       expect(response.status).to eq(200)
     end
   end

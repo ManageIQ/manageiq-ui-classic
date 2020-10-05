@@ -1,5 +1,5 @@
 /* global miqAccordionSwap miqAddNodeChildren miqAsyncAjax miqBuildCalendar miqButtons miqDeleteTreeCookies miqDomElementExists miqExpandParentNodes miqInitDashboardCols
- * miqInitAccordions miqInitMainContent miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts miqGtlSetExtraClasses */
+ * miqInitAccordions miqInitMainContent miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts */
 ManageIQ.explorer = {};
 
 ManageIQ.explorer.updateElement = function(element, options) {
@@ -159,10 +159,6 @@ ManageIQ.explorer.focus = function(data) {
   }
 };
 
-ManageIQ.explorer.removePaging = function() {
-  miqGtlSetExtraClasses();
-};
-
 ManageIQ.explorer.updateRightCellText = function(data) {
   if (_.isString(data.rightCellText)) {
     $('h1#explorer_title > span#explorer_title_text')
@@ -278,13 +274,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     $('#providerPaused').hide();
   }
 
-  if (data.reportData && _.isObject(data.reportData)) {
-    sendDataWithRx({initController: {
-      name: data.reportData.controller_name,
-      data: data.reportData.data,
-    }});
-  }
-
   if (_.isArray(data.reloadToolbars) && data.reloadToolbars.length) {
     sendDataWithRx({
       redrawToolbar: data.reloadToolbars,
@@ -331,10 +320,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   }
   if (data.lockSidebar !== undefined) {
     ManageIQ.explorer.lockSidebar(data.lockSidebar);
-  }
-
-  if (data.removePaging) {
-    ManageIQ.explorer.removePaging();
   }
 
   if (_.isString(data.ajaxUrl)) {
