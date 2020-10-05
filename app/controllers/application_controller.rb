@@ -892,7 +892,8 @@ class ApplicationController < ActionController::Base
     timed_out = PrivilegeCheckerService.new.user_session_timed_out?(session, current_user) if timed_out.nil?
     reset_session
 
-    session[:start_url] = request.url if request.method == "GET"
+    # remember for after login, but make sure we don't redirect to logout, or POST actions
+    session[:start_url] = request.url if request.method == "GET" && !request.url.include?('/logout')
 
     respond_to do |format|
       format.html do
