@@ -489,6 +489,8 @@ class ApplicationHelper::ToolbarChooser
 
         return @lastaction == 'show_list' ? "#{@layout.pluralize}_center_tb" : "#{@layout}_center_tb"
 
+      elsif @layout == "configuration_profile"
+        return "configuration_profile_center_tb"
       elsif @layout == "configuration" && @tabform == "ui_4"
         return "time_profiles_center_tb"
       elsif @layout == "diagnostics"

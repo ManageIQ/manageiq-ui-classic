@@ -2498,6 +2498,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
+        launch_configuration_profile_console
       ]
     },
 
