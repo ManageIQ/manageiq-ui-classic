@@ -15,7 +15,6 @@ module OpsController::Settings::Zones
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
-        
       id = params[:id] || "new"
       return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
 
@@ -46,7 +45,6 @@ module OpsController::Settings::Zones
         self.x_node = params[:button] == "save" ? "z-#{params[:id]}" : "xx-z"
         get_node_info(x_node)
         replace_right_cell(:nodetype => "root", :replace_trees => %i[settings diagnostics])
-
         
       else
         add_flash(_("Zone \"%{name}\" was added") % {:name => params[:name]})

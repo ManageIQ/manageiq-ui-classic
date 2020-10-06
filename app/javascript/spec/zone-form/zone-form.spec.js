@@ -24,28 +24,25 @@ describe('zone Form Component', () => {
         fetchMock.restore();
     });
 
-    it('should render a new Zone form', (done) => {
-        fetchMock.mock('/api/zones',zone)
-        const wrapper = shallow(<ZoneForm/>);
-        setImmediate(() => {
-          wrapper.update();
-          expect(toJson(wrapper)).toMatchSnapshot();
-          done();
-        });
-      });
-
-    
-      it('should render editing a zone', async(done) => {
-        fetchMock.once('/api/zones', zone);
-        fetchMock.get('/api/zones/5124', zone);
-        let wrapper;
-    
-        await act(async() => {
-          wrapper = mount(<zone recordId={5124}/>);
-        });
+    it('should render a new Zone form', async(done) => {
+        const wrapper = shallow(<ZoneForm />);
         wrapper.update();
         expect(toJson(wrapper)).toMatchSnapshot();
         done();
       });
     
+      it('should render editing a zone', async(done) => {
+        fetchMock.get('/api/zones/5124', zone);
+        let wrapper;
+        await act(async() => {
+          wrapper = mount(<ZoneForm recordId={5124} {...zone}/>);
+        });
+        // const form = wrapper.find('form');
+        // expect(form.find('input[name="name"]')).toEqual("tes 23");
+        wrapper.update();
+        expect(toJson(wrapper)).toMatchSnapshot();
+        // expect(wrapper.find('input[name="name"]').instance().value).toEqual('tes 23');
+        // expect(wrapper.find('input[name="description"]').instance().value).toEqual('test 23');
+        done();
+      });
 });

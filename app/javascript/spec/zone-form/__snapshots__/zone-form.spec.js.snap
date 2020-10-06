@@ -183,6 +183,12 @@ exports[`zone Form Component should render editing a zone 1`] = `
   }
 >
   <zone
+    authentications={Array []}
+    created_on="2020-09-24T17:19:12Z"
+    description="test 23"
+    href="http://localhost:3000/api/zones/5124"
+    id="5124"
+    name="tes 23"
     recordId={5124}
   />
 </Provider>
