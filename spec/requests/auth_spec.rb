@@ -26,6 +26,12 @@ describe "Login process" do
       expect(session[:start_url]).to eq('http://www.example.com/report/explorer')
     end
 
+    it "redirects to 'login' and skips start_url for logout" do
+      get '/dashboard/logout'
+      expect(response).to redirect_to(:controller => 'dashboard', :action => 'login')
+      expect(session[:start_url]).to be_nil
+    end
+
     it "allows login with correct password" do
       post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'smartvm' }
       expect(response.status).to eq(200)
