@@ -4,13 +4,13 @@
            :description => current_group.description}
 - groups = current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } }
 
-= react('menu.Navbar')
 = react('menu.MainMenu', {:applianceName => appliance_name,
                           :currentGroup => group,
                           :currentUser => user,
                           :customBrand => ::Settings.server.custom_brand,
                           :logoLarge => image_path("layout/manageiq-logo-inverse.svg"),
                           :logoSmall => image_path("layout/manageiq-logo-glyph-inverse.svg"),
+                          :logoUrl => image_path("layout/brand.svg"),
                           :menu => menu_to_json,
                           :miqGroups => groups}, :id => 'main-menu')
 
