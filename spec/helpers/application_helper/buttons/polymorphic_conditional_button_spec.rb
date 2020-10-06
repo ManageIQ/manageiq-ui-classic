@@ -1,4 +1,4 @@
-fdescribe ApplicationHelper::Button::PolymorphicConditionalButton do
+describe ApplicationHelper::Button::PolymorphicConditionalButton do
   let(:view_context) { setup_view_context_with_sandbox({}) }
 
   describe "#backup_create" do
