@@ -21,6 +21,18 @@ module VmRemote
     params[:task_id] ? console_after_task('html5') : console_before_task('html5')
   end
 
+  def native_console
+    native_console_launch_task
+  end
+
+  def launch_native_console
+    miq_task = MiqTask.find(params[:task_id])
+    results = miq_task.task_results
+
+    disable_client_cache
+    send_data(Base64.decode64(results[:connection]), :type => results[:type], :filename => results[:name])
+  end
+
   def launch_vmrc_console
     render :template => "vm_common/console_vmrc", :layout => false, :locals => params.slice(:remote_url)
   end
@@ -91,6 +103,38 @@ module VmRemote
                                 :id         => j(params[:id]),
                                 :params     => miq_task.task_results)
             end
+      javascript_open_window(url)
+    end
+  end
+
+  def native_console_launch_task
+    record = identify_record(params[:id], VmOrTemplate)
+
+    task_id = record.native_console_connection_queue(session[:userid])
+    unless task_id.kind_of?(Integer)
+      add_flash(_("Native console access failed: Task start failed"), :error)
+    end
+
+    if @flash_array
+      javascript_flash(:spinner_off => true)
+    else
+      initiate_wait_for_task(:task_id => task_id, :action => 'native_console_task_complete')
+    end
+  end
+
+  def native_console_task_complete
+    miq_task = MiqTask.find(params[:task_id])
+    unless miq_task.results_ready?
+      add_flash(_("Native console access failed: %{message}") % {:message => miq_task.message}, :error)
+    end
+
+    if @flash_array
+      javascript_flash(:spinner_off => true)
+    else
+      url = url_for_only_path(:controller => controller_name,
+                              :action     => 'launch_native_console',
+                              :id         => j(params[:id]),
+                              :params     => {:task_id => miq_task.id})
       javascript_open_window(url)
     end
   end

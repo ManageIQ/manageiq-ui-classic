@@ -270,6 +270,15 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :confirm => N_("Opening a VMRC console requires that VMRC is installed and pre-configured to work in your browser. Are you sure?"),
           :klass   => ApplicationHelper::Button::VmVmrcConsole),
         button(
+          :vm_native_console,
+          'pficon pficon-screen fa-lg',
+          N_('Open a native console for this VM'),
+          N_('Native Console'),
+          :keepSpinner => true,
+          :url         => "native_console",
+          :klass       => ApplicationHelper::Button::VmNativeConsole
+        ),
+        button(
           :cockpit_console,
           'pficon pficon-screen fa-lg',
           N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
