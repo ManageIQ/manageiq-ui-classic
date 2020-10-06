@@ -103,7 +103,6 @@ describe CloudVolumeController do
     it "renders the correct template when the user has the privileges" do
       post :new, :params => {:button => "new", :format => :js}
       expect(assigns(:flash_array)).to be_nil
-      expect(response).to render_template('cloud_volume/_common_new_edit')
       expect(response.status).to eq(200)
     end
 

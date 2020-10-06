@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', '$scope', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q, $scope) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', '$timeout', '$q', '$scope', function(miqService, API, cloudVolumeFormId, storageManagerId, $timeout, $q, $scope) {
   var vm = this;
 
   var init = function() {
@@ -20,37 +20,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.newRecord = cloudVolumeFormId === 'new';
 
     miqService.sparkleOn();
-
-    // Load initial API data depending on what form we're displaying. Do as little requests as possible
-    // to support fine-grained API permissions.
-    var apiPromises = [];
-    switch (cloudVolumeFormOperation) {
-      case 'EDIT':
-        // Fetch relevant StorageManager, just enough to populate the disabled drop-down.
-        apiPromises.push(API.get('/api/providers/' + storageManagerId + '?attributes=id,name')
-          .then(getStorageManagers));
-        // Limit form options as permitted by this StorageManager.
-        apiPromises.push(vm.storageManagerChanged(storageManagerId));
-        // Fetch the volume.
-        apiPromises.push(loadVolume(cloudVolumeFormId));
-        break;
-      case 'NEW':
-        // New can be called
-        //   a) from a list of all storages w/o storageManagerId
-        //   b) from a nested list under a provider w/ storageManagerId
-        //   c) from a nested list under a storageManager w/ storageManagerId
-        // In case a) we need to populate the form or it will never get populated
-        if (storageManagerId) {
-          apiPromises.push(vm.storageManagerChanged(storageManagerId));
-        }
-        // Fetch StorageManagers that we can even create the new volume for.
-        apiPromises.push(API.get('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true')
-          .then(getStorageManagers));
-        break;
-      default:
-        // Fetch the volume.
-        apiPromises.push(loadVolume(cloudVolumeFormId));
-    }
 
     // After all the API data is at hand we show the form.
     $q.all(apiPromises).then(setForm).catch(miqService.handleFailure);
