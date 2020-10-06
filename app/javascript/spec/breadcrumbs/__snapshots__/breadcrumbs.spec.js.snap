@@ -152,6 +152,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
            
           <MiqIcon
             icon="carbon--Notification"
+            size={16}
           >
             <ForwardRef(Notification16)
               style={

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as icons from '@carbon/icons-react';
 
 export const carbonizeIcon = (classname, size = 20) => {
@@ -7,15 +8,26 @@ export const carbonizeIcon = (classname, size = 20) => {
   }
 
   if (!classname.startsWith('carbon--')) {
-    return (props) => (<i className={classname} {...props} />);
+    return props => <i className={classname} {...props} />;
   }
 
-  let name = classname.replace(/^carbon--/, '');
-  let key = `${name}${size}`;
+  const name = classname.replace(/^carbon--/, '');
+  const key = `${name}${size}`;
   return icons[key];
 };
 
-export const MiqIcon = ({ icon, size = 16 }) => {
+const MiqIcon = ({ icon, size }) => {
   const IconElement = carbonizeIcon(icon, size);
   return <IconElement style={{ marginBottom: '-4px' }} />;
 };
+
+MiqIcon.propTypes = {
+  icon: PropTypes.string.isRequired,
+  size: PropTypes.number,
+};
+
+MiqIcon.defaultProps = {
+  size: 16,
+};
+
+export default MiqIcon;
