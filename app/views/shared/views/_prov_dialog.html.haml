@@ -420,7 +420,7 @@
               :label                      => _("Upload File"),
               :prefix                     => "/miq_request/",
               :keys                       => keys})
-      - keys = %i[migratable, pin_policy]
+      - keys = %i[migratable pin_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
            :dialog                    => dialog,
