@@ -19,6 +19,12 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        :confirm => N_("Refresh relationships and power states for all items related to this Storage Manager?")),
                      separator,
                      button(
+                       :ems_storage_edit,
+                       'pficon pficon-edit fa-lg',
+                       t = N_('Edit this Storage Manager'),
+                       t
+                     ),
+                     button(
                        :ems_storage_delete,
                        'pficon pficon-delete fa-lg',
                        t = N_('Remove this Storage Manager from Inventory'),
