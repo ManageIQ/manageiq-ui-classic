@@ -1,0 +1,17 @@
+- action_url           ||= "edit"
+
+%table{:width => "100%"}
+  %tr
+    %td{:align => 'right'}
+      = button_tag(t = _("Add"),
+                         :class   => 'btn btn-primary',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url,
+                                                               :button => "add")}');")
+      = button_tag(t = _("Cancel"),
+                         :class   => 'btn btn-default',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url,
+                                                               :button => "cancel")}');")

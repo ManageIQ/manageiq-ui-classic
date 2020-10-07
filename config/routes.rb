@@ -2073,22 +2073,23 @@ Rails.application.routes.draw do
 
     :miq_policy               => {
       :get  => %w(
-        explorer
+        copy
+        edit
+        miq_event_edit
+        new
+        show
+        show_list
       ),
       :post => %w(
-        button
+        delete
+        edit
         miq_event_edit
-        miq_event_field_changed
         miq_policy_edit
         policy_field_changed
         quick_search
         reload
-        tree_autoload
-        tree_select
       ) +
-         adv_search_post +
-         exp_post +
-         x_post
+         adv_search_post
     },
 
     :miq_policy_log   => {

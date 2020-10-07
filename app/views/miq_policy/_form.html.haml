@@ -1,0 +1,156 @@
+- url = url_for_only_path(:action => 'policy_field_changed', :id => (@policy.id || 'new'))
+- observe_with_interval = {:interval => '.5', :url => url}.to_json
+#policy_details_div
+  - if @policy
+    #policy_info_div
+      = render :partial => "layouts/flash_msg"
+      -# Description and active fields
+      %h3
+        = _("Basic Information")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+            = _("Description")
+          .col-md-8
+            = text_field_tag("description", @edit[:new][:description],
+              :maxlength         => ViewHelper::MAX_DESC_LEN,
+              :class             => "form-control",
+              "data-miq_focus"   => true,
+              "data-miq_observe" => observe_with_interval)
+        .form-group
+          %label.control-label.col-md-2
+            = _("Active")
+          .col-md-8
+            = check_box_tag("active", "1", @edit[:new][:active], "data-miq_observe_checkbox" => {:url => url}.to_json)
+        .form-group
+          %label.control-label.col-md-2
+            = _("Applies To")
+          .col-md-8
+            = select_tag('towhat',
+              options_for_select(MiqPolicy::TOWHAT_APPLIES_TO_CLASSES, @edit[:new][:towhat]),
+              :class => "selectpicker form-control")
+
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("towhat", "#{url}");
+        .form-group
+          %label.control-label.col-md-2
+            = _("Mode")
+          .col-md-8
+            = select_tag('mode',
+              options_for_select(MiqPolicy::POLICY_MODES, @edit[:new][:mode]),
+              :class => "selectpicker form-control")
+
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("mode", "#{url}");
+
+      -# Scope
+      %h3= _("Scope")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            = render :partial => 'layouts/exp_editor'
+
+      -# Conditions for this policy
+      - if @edit[:typ] == "conditions"
+        %h3= _("Condition Selection")
+        .col-md-5
+          = _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
+          %span#choices_chosen_div
+            = select_tag('choices_chosen[]',
+              options_for_select(@edit[:choices].sort),
+              :multiple => true,
+              :size     => 15,
+              :class    => "form-control",
+              :style    => "overflow-x: scroll;",
+              :id       => "choices_chosen",
+              :onchange => 'rightArrowSwitch()')
+          %small
+            = _("* If all Conditions are removed from a Policy, it will be unconditional and always evaluate to true.")
+          :javascript
+            function rightArrowSwitch() {
+              document.querySelector('#btn-mv-right').disabled = (document.querySelector('#choices_chosen').selectedIndex == -1);
+            }
+
+        .col-md-1{:style => "padding: 10px"}
+          .spacer
+          .spacer
+          - [['btn-mv-right', _("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right',       true],
+             ['btn-rm-all',   _("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left', @edit[:new][:conditions].empty?],
+             ['btn-mv-left',  _("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left',        true]].each do |id, title, chosen_div, action, arrow_style, disabled|
+            %button.btn.btn-default.btn-block{:title       => title,
+                                    :id                    => id,
+                                    :disabled              => disabled,
+                                    :remote                => true,
+                                    "data-submit"          => chosen_div,
+                                    "data-method"          => :post,
+                                    "data-miq_sparkle_on"  => true,
+                                    "data-miq_sparkle_off" => true,
+                                    "data-click_url"       => {:url => url_for_only_path(:action => 'miq_policy_edit',
+                                                                                         :button => action,
+                                                                                         :id => @policy)}.to_json}
+              %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+              %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+          .spacer
+
+        .col-md-5
+          = _("Policy Conditions:")
+          %br
+          %span#members_chosen_div
+            = select_tag('members_chosen[]',
+              options_for_select(@edit[:new][:conditions].sort),
+              :multiple => true,
+              :size     => 15,
+              :class    => "form-control",
+              :style    => "overflow-x: scroll;",
+              :id       => "members_chosen",
+              :onchange => "leftArrowSwitch()")
+          :javascript
+            function leftArrowSwitch() {
+              document.querySelector('#btn-mv-left').disabled = (document.querySelector('#members_chosen').selectedIndex == -1);
+            }
+
+      -# Events for this policy
+      - if @edit[:typ] == "events"
+        %h3= _("Event Selection")
+        - @edit[:allevents].keys.sort.each do |k|
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = h(_(k))
+              .col-md-8
+                - @edit[:allevents][k].sort_by(&:first).each do |e|
+                  - checked = @edit[:new][:events].include?(e.last) ? true : false
+                  = check_box_tag("event_#{e.last}", 'true', checked,
+                                  :class => "bootstrap-switch-mini",
+                                  :data => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'})
+                  = h(e.first)
+                  :javascript
+                    miqInitBootstrapSwitch("event_#{e.last}", "#{url}")
+
+      -# Notes field
+      %h3= _("Notes")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            (
+            %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
+            \/ 512)
+            = text_area_tag("notes", @edit[:new][:notes],
+              :rows                       => 4,
+              :maxlength                  => "512",
+              :counter                    => "notes_count",
+              "data-miq_check_max_length" => true,
+              "data-miq_observe"          => observe_with_interval)
+
+- if @edit[:rec_id]
+  = render :partial => '/layouts/edit_form_buttons',
+           :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}
+-	else
+  = render :partial => '/layouts/add_form_buttons',
+           :locals  => {:action_url => "edit", :ajax_buttons => true}
+
+

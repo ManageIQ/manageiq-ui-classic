@@ -1,3 +1,5 @@
 #main_div
   - if @lastaction == "policy_logs"
     = render :partial => "layouts/log_viewer"
+  - else
+    = render :partial => "policy_details"

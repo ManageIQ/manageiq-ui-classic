@@ -1,278 +1,139 @@
-- if @edit
-  - url = url_for_only_path(:action => 'policy_field_changed', :id => (@policy.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #policy_details_div
   - if @policy
     #policy_info_div
       = render :partial => "layouts/flash_msg"
       -# Description and active fields
-      - if @edit
-        - if @edit && @edit[:typ] == "basic"
-          %h3
-            = _("Basic Information")
-          .form-horizontal
-            .form-group
-              %label.control-label.col-md-2
-                = _("Description")
-              - if @edit
-                .col-md-8
-                  = text_field_tag("description", @edit[:new][:description],
-                    :maxlength         => ViewHelper::MAX_DESC_LEN,
-                    :class             => "form-control",
-                    "data-miq_observe" => observe_with_interval)
-                  = javascript_tag(javascript_focus('description'))
-              - else
-                .col-md-8
-                  = h(@policy.description)
-            .form-group
-              %label.control-label.col-md-2
-                = _("Active")
-              .col-md-8
-                = check_box_tag("active", "1", @edit[:new][:active], "data-miq_observe_checkbox" => {:url => url}.to_json)
-          %hr
+      %h3= _('Basic Information')
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2= _('Active')
+          .col-md-8
+            %p.form-control-static= h(@policy.active ? _("Yes") : _("No"))
+        .form-group
+          %label.control-label.col-md-2= _('Created')
+          .col-md-8
+            %p.form-control-static
+              = h(_("By Username %{username} %{created_on}") % {:username => @policy.created_by || _("N/A"), :created_on => format_timezone(@policy.created_on, session[:user_tz], "gtl")})
 
-      - else
-        %h3= _('Basic Information')
-        .form-horizontal
+        - if @policy.created_on != @policy.updated_on
           .form-group
-            %label.control-label.col-md-2= _('Active')
-            .col-md-8
-              %p.form-control-static= h(@policy.active ? _("Yes") : _("No"))
-          .form-group
-            %label.control-label.col-md-2= _('Created')
+            %label.control-label.col-md-2= _("Last Updated")
             .col-md-8
               %p.form-control-static
-                = h(_("By Username %{username} %{created_on}") % {:username => @policy.created_by || _("N/A"), :created_on => format_timezone(@policy.created_on, session[:user_tz], "gtl")})
-
-          - if @policy.created_on != @policy.updated_on
-            .form-group
-              %label.control-label.col-md-2= _("Last Updated")
-              .col-md-8
-                %p.form-control-static
-                  = h(_("By Username %{username} %{updated_on}") % {:username => @policy.updated_by || _("N/A"), :updated_on => format_timezone(@policy.updated_on, session[:user_tz], "gtl")})
-        %hr
+                = h(_("By Username %{username} %{updated_on}") % {:username => @policy.updated_by || _("N/A"), :updated_on => format_timezone(@policy.updated_on, session[:user_tz], "gtl")})
+      %hr
 
       -# Scope
-      - if @edit
-        - if @edit[:typ] == "basic"
-          %h3= _("Scope")
-          .form-horizontal
-            .form-group
-              %label.control-label.col-md-2
-              .col-md-8
-                = render :partial => 'layouts/exp_editor'
-          %hr
-
-      - else
-        %h3= _("Scope")
-        .form-horizontal
-          .form-group
-            %label.control-label.col-md-2
-            .col-md-8
-              - if !@expression_table.nil?
-                - @expression_table.each do |token|
-                  - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                    = h([token].flatten.first)
-                  - else
-                    %font{:color => "black"}
-                      %b
-                        = h([token].flatten.first)
-              - else
-                = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
-          %hr
-
-      -# Conditions for this policy
-      - if @edit
-        - if @edit[:typ] == "conditions"
-          %h3= _("Condition Selection")
-          .col-md-5
-            = _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
-            %span#choices_chosen_div
-              = select_tag('choices_chosen[]',
-                options_for_select(@edit[:choices].sort),
-                :multiple => true,
-                :size     => 15,
-                :class    => "form-control",
-                :style    => "overflow-x: scroll;",
-                :id       => "choices_chosen",
-                :onchange => 'rightArrowSwitch()')
-            %small
-              = _("* If all Conditions are removed from a Policy, it will be unconditional and always evaluate to true.")
-            :javascript
-              function rightArrowSwitch() {
-                document.querySelector('#btn-mv-right').disabled = (document.querySelector('#choices_chosen').selectedIndex == -1);
-              }
-
-          .col-md-1{:style => "padding: 10px"}
-            .spacer
-            .spacer
-            - [['btn-mv-right', _("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right',       true],
-               ['btn-rm-all',   _("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left', @edit[:new][:conditions].empty?],
-               ['btn-mv-left',  _("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left',        true]].each do |id, title, chosen_div, action, arrow_style, disabled|
-              %button.btn.btn-default.btn-block{:title       => title,
-                                      :id                    => id,
-                                      :disabled              => disabled,
-                                      :remote                => true,
-                                      "data-submit"          => chosen_div,
-                                      "data-method"          => :post,
-                                      "data-miq_sparkle_on"  => true,
-                                      "data-miq_sparkle_off" => true,
-                                      "data-click_url"       => {:url => url_for_only_path(:action => 'miq_policy_edit',
-                                                                                           :button => action,
-                                                                                           :id => @policy)}.to_json}
-                %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
-                %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
-            .spacer
-
-          .col-md-5
-            = _("Policy Conditions:")
-            %br
-            %span#members_chosen_div
-              = select_tag('members_chosen[]',
-                options_for_select(@edit[:new][:conditions].sort),
-                :multiple => true,
-                :size     => 15,
-                :class    => "form-control",
-                :style    => "overflow-x: scroll;",
-                :id       => "members_chosen",
-                :onchange => "leftArrowSwitch()")
-            :javascript
-              function leftArrowSwitch() {
-                document.querySelector('#btn-mv-left').disabled = (document.querySelector('#members_chosen').selectedIndex == -1);
-              }
-
-
-      - else
-        %h3= _("Conditions")
-        - if @policy_conditions.empty?
-          = render :partial => 'layouts/info_msg', :locals => {:message => _("No conditions defined. This policy is unconditional and will ALWAYS return true.")}
-        - else
-          %table.table.table-striped.table-bordered.table-hover
-            %thead
-              %tr
-                %th.table-view-pf-select
-                %th= _("Description")
-                %th= _("Scopes / Expressions")
-            %tbody
-              - @policy_conditions.each do |c|
-                %tr
-                  %td.table-view-pf-select
-                    %i{:class => c.decorate.fonticon}
-                  %td
-                    = c.description
-                  %td
-                    - if c.applies_to_exp.present?
-                      %strong
-                        = _("Scope")
-                      %div
-                        = h(MiqExpression.to_human(c.applies_to_exp))
-                      %br
-
-                    %strong
-                      = _("Expression")
-                    %div
-                      = h(MiqExpression.to_human(c.expression))
+      %h3= _("Scope")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            - if !@expression_table.nil?
+              - @expression_table.each do |token|
+                - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+                  = h([token].flatten.first)
+                - else
+                  %font{:color => "black"}
+                    %b
+                      = h([token].flatten.first)
+            - else
+              = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
         %hr
 
-      -# Events for this policy
-      - if @edit
-        - if @edit[:typ] == "events"
-          %h3= _("Event Selection")
-          - @edit[:allevents].keys.sort.each do |k|
-            .form-horizontal
-              .form-group
-                %label.col-md-3.control-label
-                  = h(_(k))
-                .col-md-8
-                  - @edit[:allevents][k].sort_by(&:first).each do |e|
-                    - checked = @edit[:new][:events].include?(e.last) ? true : false
-                    = check_box_tag("event_#{e.last}", 'true', checked,
-                                    :class => "bootstrap-switch-mini",
-                                    :data => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'})
-                    = h(e.first)
-                    :javascript
-                      miqInitBootstrapSwitch("event_#{e.last}", "#{url}")
-                    %br
+      -# Conditions for this policy
+      %h3= _("Conditions")
+      - if @policy_conditions.empty?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("No conditions defined. This policy is unconditional and will ALWAYS return true.")}
       - else
-        %h3= _("Events")
-        - if @policy_events.empty?
-          = render :partial => 'layouts/info_msg', :locals => {:message => _("This policy does not currently respond to any Events.")}
-        - else
-          %table.table.table-striped.table-bordered.table-hover
-            %thead
+        %table.table.table-striped.table-bordered.table-hover
+          %thead
+            %tr
+              %th.table-view-pf-select
+              %th= _("Description")
+              %th= _("Scopes / Expressions")
+          %tbody
+            - @policy_conditions.each do |c|
               %tr
-                %th.table-view-pf-select
-                %th= _("Description")
-                %th= _("Actions")
-            %tbody
-              - @policy_events.each do |e|
-                %tr
-                  %td.table-view-pf-select
-                    %i{:class => e.decorate.try(:fonticon)}
-                  %td
-                    = h(e.description)
-                  %td
-                    - ta = @policy.actions_for_event(e, :success)
-                    - fa = @policy.actions_for_event(e, :failure)
-                    - if ta.empty? && fa.empty?
-                      = _("* No Actions are configured for this Event.")
-                    - else
-                      - unless ta.empty?
-                        %table
-                          %tbody
-                            - ta.each do |a|
-                              %tr
-                                %td
-                                  %span.pficon.pficon-ok
-                                  = h(a.description)
-                      - unless fa.empty?
-                        %table
-                          %tbody
-                            - fa.each do |a|
-                              %tr
-                                %td
-                                  %span.pficon.pficon-close
-                                  = h(a.description)
-          %hr
+                %td.table-view-pf-select
+                  %i{:class => c.decorate.fonticon}
+                %td
+                  = c.description
+                %td
+                  - if c.applies_to_exp.present?
+                    %strong
+                      = _("Scope")
+                    %div
+                      = h(MiqExpression.to_human(c.applies_to_exp))
+                    %br
+
+                  %strong
+                    = _("Expression")
+                  %div
+                    = h(MiqExpression.to_human(c.expression))
+      %hr
+
+      -# Events for this policy
+      %h3= _("Events")
+      - if @policy_events.empty?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("This policy does not currently respond to any Events.")}
+      - else
+        %table.table.table-striped.table-bordered.table-hover
+          %thead
+            %tr
+              %th.table-view-pf-select
+              %th= _("Description")
+              %th= _("Actions")
+          %tbody
+            - @policy_events.each do |e|
+              %tr
+                %td.table-view-pf-select
+                  %i{:class => e.decorate.try(:fonticon)}
+                %td
+                  = h(e.description)
+                %td
+                  - ta = @policy.actions_for_event(e, :success)
+                  - fa = @policy.actions_for_event(e, :failure)
+                  - if ta.empty? && fa.empty?
+                    = _("* No Actions are configured for this Event.")
+                  - else
+                    - unless ta.empty?
+                      %table
+                        %tbody
+                          - ta.each do |a|
+                            %tr
+                              %td
+                                %span.pficon.pficon-ok
+                                = h(a.description)
+                    - unless fa.empty?
+                      %table
+                        %tbody
+                          - fa.each do |a|
+                            %tr
+                              %td
+                                %span.pficon.pficon-close
+                                = h(a.description)
+        %hr
 
       -# Notes field
-      - if @edit
-        - if @edit[:typ] == "basic"
-          %h3= _("Notes")
-          .form-horizontal
-            .form-group
-              %label.control-label.col-md-2
-              .col-md-8
-                (
-                %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
-                \/ 512)
-                = text_area_tag("notes", @edit[:new][:notes],
-                  :rows                       => 4,
-                  :maxlength                  => "512",
-                  :counter                    => "notes_count",
-                  "data-miq_check_max_length" => true,
-                  "data-miq_observe"          => observe_with_interval)
+      %h3= _("Notes")
+      - if @policy.notes.blank?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
       - else
-        %h3= _("Notes")
-        - if @policy.notes.blank?
-          = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-        - else
-          = text_area_tag("notes", @policy.notes, :readonly => true, :rows => 4)
+        = text_area_tag("notes", @policy.notes, :readonly => true, :rows => 4)
 
       -# Profiles policy is assigned to
-      - unless @edit
-        - if x_active_tree == :policy_tree
-          %h3= _("Belongs to Profiles")
-          - if @policy_profiles.empty?
-            = render :partial => 'layouts/info_msg', :locals => {:message => _("This Policy is not assigned to any Profiles.")}
-          - else
-            %table.table.table-striped.table-bordered.table-hover
-              %tbody
-                - @policy_profiles.each do |pp|
-                  - id = "pp-#{pp.id}"
-                  %tr
-                    %td.table-view-pf-select
-                      %i{:class => pp.decorate.fonticon}
-                    %td
-                      = pp.description
+      %h3= _("Belongs to Profiles")
+      - if @policy_profiles.empty?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("This Policy is not assigned to any Profiles.")}
+      - else
+        %table.table.table-striped.table-bordered.table-hover
+          %tbody
+            - @policy_profiles.each do |pp|
+              - id = "pp-#{pp.id}"
+              %tr
+                %td.table-view-pf-select
+                  %i{:class => pp.decorate.fonticon}
+                %td
+                  = pp.description
   %br

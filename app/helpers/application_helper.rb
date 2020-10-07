@@ -635,7 +635,6 @@ module ApplicationHelper
       miq_ae_class
       miq_ae_export
       miq_ae_tools
-      miq_policy
       miq_policy_export
       miq_policy_rsop
       monitor_alerts_list

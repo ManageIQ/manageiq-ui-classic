@@ -11,9 +11,9 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           t = N_('Edit Basic Info, Scope, and Notes'),
           t,
-          :url_parms => "?typ=basic",
-          :klass     => ApplicationHelper::Button::PolicyEdit,
-          :options   => {:feature => 'miq_policy_edit'}
+          :url     => "/edit",
+          :klass   => ApplicationHelper::Button::PolicyEdit,
+          :options => {:feature => 'miq_policy_edit'}
         ),
         button(
           :miq_policy_copy,
@@ -31,9 +31,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                             :new_policy_description => truncate("Copy of #{@policy.description}", :length => 255, :omission => "")
                           }
                         end,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :klass        => ApplicationHelper::Button::PolicyCopy),
+          :url    => "/copy",
+          :send_checked => true),
         button(
           :miq_policy_delete,
           'pficon pficon-delete fa-lg',
@@ -47,8 +46,8 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                        'function-data' => {:api_url        => 'policies',
                                            :component_name => 'RemoveGenericItemModal',
                                            :controller     => 'provider_dialogs',
-                                           :display_field  => 'description',
-                                           :ajax_reload    => true}}),
+                                           :redirect_url   => '/miq_policy/show_list',
+                                           :display_field  => 'description'}}),
         button(
           :miq_policy_edit_conditions,
           'pficon pficon-edit fa-lg',
@@ -72,6 +71,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           t = N_('Edit Actions for this Policy\'s Event'),
           t,
+          :url          => "/miq_event_edit",
           :url_parms    => "main_div",
           :send_checked => true,
           :klass        => ApplicationHelper::Button::MiqActionModify

@@ -9,6 +9,9 @@ module Mixins
       render :update do |page|
         page << javascript_prologue
         if @edit
+          if params[:towhat]
+            page.replace("exp_atom_editor_div", :partial => "layouts/exp_atom/editor")
+          end
           if @refresh_inventory
             page.replace("action_options_div", :partial => "action_options")
           end
