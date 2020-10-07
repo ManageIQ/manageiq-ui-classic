@@ -17,12 +17,12 @@ const initialExpanded = window.localStorage.getItem('patternfly-navigation-prima
 
 export const MainMenu = ({
   applianceName,
+  brandUrl,
   currentGroup,
   currentUser,
   customBrand,
   logoLarge,
   logoSmall,
-  logoUrl,
   menu: initialMenu,
   miqGroups,
   showLogo,
@@ -73,7 +73,7 @@ export const MainMenu = ({
           onClickSideNavExpand={() => setExpanded(!expanded)}
           applianceName={applianceName}
           currentUser={currentUser}
-          logoUrl={logoUrl}
+          brandUrl={brandUrl}
         />
         <SideNav
           aria-label={__('Main Menu')}
