@@ -54,7 +54,7 @@
       %hr
       %div
     - counter += 1
-    - draw_fields = !options[:"name_#{counter}"].blank? && !options[:"size_#{counter}"].blank?
+    - draw_fields = options.has_key?(:"name_#{counter}") || options.has_key?(:"size_#{counter}")
 
 :javascript
   (function(){
