@@ -27,14 +27,16 @@ const MenuItem = ({
 MenuItem.propTypes = {
   active: PropTypes.bool,
   hideSecondary: PropTypes.func.isRequired,
-  href: PropTypes.string.isRequired,
+  href: PropTypes.string,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 MenuItem.defaultProps = {
   active: false,
+  href: undefined,
+  type: 'default',
 };
 
 
