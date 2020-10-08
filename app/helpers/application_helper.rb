@@ -738,6 +738,7 @@ module ApplicationHelper
   def display_adv_search?
     %w[auth_key_pair_cloud
        storage_resource
+       physical_storage
        availability_zone
        automation_manager
        cloud_network

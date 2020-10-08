@@ -192,6 +192,11 @@ module Menu
                                            'storage_resource',
                                            {:feature => 'storage_resource_show_list'},
                                            '/storage_resource/show_list'),
+                            Menu::Item.new('physical_storage',
+                                           N_('Storages'),
+                                           'physical_storage',
+                                           {:feature => 'physical_storage_show_list'},
+                                           '/physical_storage/show_list'),
                           ])
       end
 

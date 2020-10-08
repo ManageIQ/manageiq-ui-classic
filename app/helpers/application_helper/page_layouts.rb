@@ -180,7 +180,6 @@ module ApplicationHelper::PageLayouts
 
   def show_adv_search?
     show_search = %w[
-      storage_resource
       auth_key_pair_cloud
       availability_zone
       automation_manager
@@ -229,12 +228,14 @@ module ApplicationHelper::PageLayouts
       orchestration_stack
       persistent_volume
       physical_server
+      physical_storage
       resource_pool
       retired
       security_group
       security_policy
       security_policy_rule
       service
+      storage_resource
       templates
       vm
     ]
