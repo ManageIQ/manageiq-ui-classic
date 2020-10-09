@@ -1,0 +1,69 @@
+- url = url_for(:id => "#{@edit[:rec_id] || "new"}", :action => "atomic_form_field_changed")
+
+#options_div
+  .form-horizontal
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_ovf_templates]
+    .form-group
+      %label.col-md-2.control-label
+        = _('OVF Template')
+      .col-md-8
+        = select_tag('ovf_template_id',
+                          options_for_select(opts, @edit[:new][:ovf_template_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('ovf_template_id', '#{url}')
+
+    .form-group
+      %label.col-md-2.control-label
+        = _('VM Name')
+      .col-md-8{:style => "padding: 0px;"}
+        .col-md-4
+          = text_field_tag("vm_name",
+                           @edit[:new][:vm_name].to_s,
+                           :maxlength         => 40,
+                           :class             => "form-control",
+                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    .form-group
+      %label.col-md-2.control-label
+        = _('Accept EULA')
+      .col-md-8{:style => "padding: 0px;"}
+        .col-md-4
+          = check_box_tag("accept_all_eula", "1", @edit[:new][:accept_all_eula],
+                          "data-miq_observe_checkbox" => {:url => url}.to_json)
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_resource_pools]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Resource Pool')
+      .col-md-8
+        = select_tag('resource_pool_id',
+                          options_for_select(opts, @edit[:new][:resource_pool_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('resource_pool_id', '#{url}')
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_folders]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Folder')
+      .col-md-8
+        = select_tag('ems_folder_id',
+                          options_for_select(opts, @edit[:new][:ems_folder_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('ems_folder_id', '#{url}')
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_hosts]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Host')
+      .col-md-8
+        = select_tag('host_id',
+                          options_for_select(opts, @edit[:new][:host_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('host_id', '#{url}')

@@ -128,6 +128,46 @@
               = _('Additional Tenants')
             .col-md-8
               = render(:partial => "shared/tree", :locals => {:tree => @tenants_tree, :name => @tenants_tree.name})
+
+        - if @record.prov_type == "generic_ovf_template"
+          - options = @record.config_info[:provision]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('OVF Template')
+              .col-md-9
+                = provisioning[:ovf_template_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('VM Name')
+              .col-md-9
+                = options[:vm_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Accept EULA')
+              .col-md-9
+                &nbsp;
+                = check_box_tag("display", true, options[:accept_all_eula], :disabled => true)
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Resource Pool')
+              .col-md-9
+                = provisioning[:resource_pool_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Folder')
+              .col-md-9
+                = provisioning[:ems_folder_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Host')
+              .col-md-9
+                = provisioning[:host_name]
         .form-group
           .col-md-9
             #tag_group
