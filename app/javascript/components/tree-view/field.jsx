@@ -45,7 +45,7 @@ const TreeViewField = ({ loadData, lazyLoadData, isMulti, ...props }) => {
       return Tree.nodeChildren(node, value.filter(key => key.split('.').length === min));
     },
     [ActionTypes.CHECKED_DIRECTLY]: (node, value) => {
-      const values = formOptions.getFieldState(props.name).value;
+      const { value: values = [] } = formOptions.getFieldState(props.name);
       formOptions.change(props.name, value ? [...values, node.attr.key] : values.filter(item => item !== node.attr.key));
 
       return Tree.nodeChecked(node, value);
