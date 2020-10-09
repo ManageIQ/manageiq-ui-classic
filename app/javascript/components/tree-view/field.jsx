@@ -6,10 +6,8 @@ import {
 } from 'patternfly-react';
 
 import RequiredLabel from '../../forms/required-label';
-import { convert, flatten } from './helpers';
+import { convert } from './helpers';
 import { useFieldApi, useFormApi } from '@@ddf';
-
-const setChecked = (keys = []) => ({ state, ...node }) => ({ ...node, state: { ...state, checked: keys.includes(node.attr.key) } });
 
 const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
   const [{ nodes }, setState] = useState({});
@@ -19,7 +17,7 @@ const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
 
   useEffect(() => {
     loadData().then((values) => {
-      setState(state => ({ ...state, nodes: flatten(convert(values, setChecked(value))) }));
+      setState(state => ({ ...state, nodes: convert(values, { checked: value }) }));
     });
   }, [loadData]);
 
@@ -50,7 +48,7 @@ const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
   };
 
   const lazyLoad = node => lazyLoadData(node).then((result) => {
-    const data = flatten(convert(result, setChecked(value)));
+    const data = convert(result, { checked: value });
 
     let subtree = {};
     Object.keys(data).forEach((key) => {

@@ -9,7 +9,7 @@ import { combineReducers } from '../../helpers/redux';
 import reducers, { ACTIONS } from './reducers/index';
 import basicStore from './reducers/basicStore';
 import {
-  convert, callBack, activateNode, flatten,
+  convert, callBack, activateNode,
 } from './helpers';
 
 const TreeView = (props) => {
@@ -59,7 +59,7 @@ const TreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = activateNode(flatten(convert(JSON.parse(bs_tree))), silent_activate, select_node);
+    const tree = activateNode(convert(JSON.parse(bs_tree)), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, tree, namespace);
@@ -81,7 +81,7 @@ const TreeView = (props) => {
       tree: tree_name,
       mode: 'all',
     }).then((result) => {
-      const data = flatten(convert(result));
+      const data = convert(result);
       let subtree = {};
       Object.keys(data).forEach((key) => {
         if (key !== '') {
