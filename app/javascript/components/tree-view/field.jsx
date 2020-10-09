@@ -103,8 +103,12 @@ const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
 };
 
 TreeViewField.propTypes = {
-  loadData: PropTypes.func,
+  loadData: PropTypes.func.isRequired,
   lazyLoadData: PropTypes.func,
+};
+
+TreeViewField.defaultProps = {
+  lazyLoadData: () => undefined,
 };
 
 export default TreeViewField;
