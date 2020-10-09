@@ -2301,31 +2301,19 @@ Rails.application.routes.draw do
 
     :storage_resource   => {
       :get  => %w[
-        discover
         download_data
         download_summary_pdf
-        protect
         show
         show_list
-        tagging_edit
       ],
-        :post => %w[
-          button
-          listnav_search_selected
-          protect
-          quick_search
-          show
-          show_list
-          tagging_edit
-          tl_chooser
-          tree_autoload
-          wait_for_task
-        ] +
-            adv_search_post +
-            dialog_runner_post +
-            discover_get_post +
-            exp_post +
-            save_post
+      :post => %w[
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
     },
 
     :ops                      => {
