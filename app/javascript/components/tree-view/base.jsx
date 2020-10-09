@@ -46,17 +46,17 @@ const TreeViewBase = ({
   const lazyLoad = node => lazyLoadData(node).then((result) => {
     const data = convert(result, { checked, selected });
 
-    let subtree = {};
-    Object.keys(data).forEach((key) => {
+    return Object.keys(data).reduce((subtree, key) => {
       if (key !== '') {
         // Creating the node id from the parent id.
         const nodeId = `${node.nodeId}.${key}`;
         // Updating the children ids, so it does not point to something else.
         const element = { ...data[key], nodeId, nodes: data[key].nodes.map(child => `${node.nodeId}.${child}`) };
-        subtree = { ...subtree, [nodeId]: element };
+        return { ...subtree, [nodeId]: element };
       }
-    });
-    return subtree;
+
+      return subtree;
+    }, {});
   });
 
   const onDataChange = commands => setNodes(commands.reduce(
