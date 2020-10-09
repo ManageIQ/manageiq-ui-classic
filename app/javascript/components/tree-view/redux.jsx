@@ -12,7 +12,7 @@ import {
   convert, callBack, activateNode, flatten,
 } from './helpers';
 
-const HierarchicalTreeView = (props) => {
+const TreeView = (props) => {
   const {
     tree_name,
     bs_tree,
@@ -117,7 +117,7 @@ const HierarchicalTreeView = (props) => {
   );
 };
 
-HierarchicalTreeView.propTypes = {
+TreeView.propTypes = {
   tree_name: PropTypes.string.isRequired,
   bs_tree: PropTypes.string.isRequired,
   checkboxes: PropTypes.bool,
@@ -130,7 +130,7 @@ HierarchicalTreeView.propTypes = {
   hierarchical_check: PropTypes.bool,
 };
 
-HierarchicalTreeView.defaultProps = {
+TreeView.defaultProps = {
   checkboxes: false,
   allow_reselect: false,
   oncheck: undefined,
@@ -140,6 +140,6 @@ HierarchicalTreeView.defaultProps = {
   hierarchical_check: false,
 };
 
-const HierarchicalTreeViewConn = connect(null, { callBack })(HierarchicalTreeView);
+const TreeViewRedux = connect(null, { callBack })(TreeView);
 
-export default HierarchicalTreeViewConn;
+export default TreeViewRedux;

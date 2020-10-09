@@ -16,7 +16,7 @@ import FirmwareRegistryForm from '../components/firmware-registry/firmware-regis
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GtlView from  '../components/gtl-view';
-import { HierarchicalTreeView } from '../components/tree-view';
+import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal';
@@ -64,7 +64,7 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GtlView', GtlView);
-ManageIQ.component.addReact('HierarchicalTreeView', HierarchicalTreeView);
+ManageIQ.component.addReact('TreeViewRedux', TreeViewRedux);
 ManageIQ.component.addReact('FonticonPicker', FonticonPicker);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
