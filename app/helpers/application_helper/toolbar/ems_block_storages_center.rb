@@ -26,6 +26,16 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                        :url => "/new"
                      ),
                      button(
+                       :ems_block_storage_edit,
+                       'pficon pficon-edit fa-lg',
+                       N_('Select a single Storage Manager to edit'),
+                       N_('Edit Selected Storage Manager'),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1"
+                     ),
+                     button(
                        :ems_block_storage_delete,
                        'pficon pficon-delete fa-lg',
                        N_('Remove selected Block Storage Managers from Inventory'),

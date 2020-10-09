@@ -174,7 +174,7 @@
           :prefix                     => "/miq_request/",
           :keys                       => keys})
   - when :network
-    - keys = [:vlan, :mac_address]
+    - keys = [:vlan, :mac_address, :public_network]
     - keys << :subnet if wf.kind_of?(ManageIQ::Providers::Microsoft::InfraManager::ProvisionWorkflow)
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,
@@ -420,7 +420,7 @@
               :label                      => _("Upload File"),
               :prefix                     => "/miq_request/",
               :keys                       => keys})
-      - keys = %i[migratable, pin_policy]
+      - keys = %i[migratable pin_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
            :dialog                    => dialog,

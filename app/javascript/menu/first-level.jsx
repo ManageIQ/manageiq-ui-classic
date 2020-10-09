@@ -28,13 +28,19 @@ const MenuItem = ({
   </SideNavLink>
 );
 
-MenuItem.props = {
+MenuItem.propTypes = {
   active: PropTypes.bool,
-  href: PropTypes.string.isRequired,
-  icon: PropTypes.string,
+  href: PropTypes.string,
+  icon: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
+};
+
+MenuItem.defaultProps = {
+  active: false,
+  href: undefined,
+  type: 'default',
 };
 
 const MenuSection = ({

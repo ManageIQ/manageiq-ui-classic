@@ -180,6 +180,7 @@ module ApplicationHelper::PageLayouts
 
   def show_adv_search?
     show_search = %w[
+      storage_resource
       auth_key_pair_cloud
       availability_zone
       automation_manager

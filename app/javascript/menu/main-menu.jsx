@@ -67,7 +67,7 @@ export const MainMenu = ({
 
   return (
     <>
-      <div onClick={hideSecondary}>
+      <div onClick={hideSecondary} id="main-menu-primary">
         <Navbar
           isSideNavExpanded={expanded}
           onClickSideNavExpand={() => setExpanded(!expanded)}

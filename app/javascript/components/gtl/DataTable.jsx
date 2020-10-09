@@ -34,7 +34,7 @@ export const DataTable = ({
   const selectAll = () => {
     const [checkedItems, setCheckedItems] = useState({}); //plain object as state
 
-    const localOnSelectAll = (rows, ev) => {
+    const localOnSelectAll = (ev) => {
       if (ev.target.classList.contains('is-checkbox-cell') ||
         ev.target.parentElement.classList.contains('is-checkbox-cell')) {
         return;
@@ -50,7 +50,12 @@ export const DataTable = ({
              name={'selectAll'}
              key={'selectAll'}
              checked={!!checkedItems['selectAll']}
-             onChange={event => localOnSelectAll(rows, event)}
+             onChange={localOnSelectAll}
+             onKeyPress={localOnSelectAll}
+             role="checkbox"
+             aria-checked="false"
+             tabIndex="0"
+             aria-labelledby="selectAll"
              title="Check All"/>
     );
   };
@@ -60,13 +65,16 @@ export const DataTable = ({
       <tr>
         {!inEditMode() && !noCheckboxes() &&
         <th className="narrow table-view-pf-select">
+          <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
           {selectAll()}
         </th>
         }
         {columns.map((column, index) =>
           (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes())) &&
             <th
-              onClick={() => onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
+              onClick={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
+              onKeyPress={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
+              tabIndex="0"
               className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
               key={`header_${index}`}
             >
@@ -87,12 +95,12 @@ export const DataTable = ({
     </thead>
   );
 
-  const localOnItemSelected = (row, ev) => {
+  const localOnItemSelected = row => ev => {
     onItemSelect(row, ev.target.checked);
     ev.stopPropagation();
   };
 
-  const localOnClickItem = (row, ev) => {
+  const localOnClickItem = row => ev => {
     if (ev.target.classList.contains('is-checkbox-cell') ||
        ev.target.parentElement.classList.contains('is-checkbox-cell')) {
       return;
@@ -109,7 +117,9 @@ export const DataTable = ({
         <tr
           className={row.selected ? 'active' : ''}
           key={`check_${row.id}`}
-          onClick={event => localOnClickItem(row, event)}
+          onClick={localOnClickItem(row)}
+          onKeyPress={localOnClickItem(row)}
+          tabIndex="0"
         >
           {columns.map((column, columnKey) => (
             <td
@@ -120,8 +130,14 @@ export const DataTable = ({
               })}
             >
               { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode() &&
-                <input
-                  onChange={ev => localOnItemSelected(row, ev)}
+              <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label> &&
+              <input
+                  onChange={localOnItemSelected(row)}
+                  onKeyPress={localOnItemSelected(row)}
+                  role="checkbox"
+                  aria-checked="false"
+                  tabIndex="0"
+                  aria-labelledby={`check_${row.id}`}
                   type="checkbox"
                   name={`check_${row.id}`}
                   value={row.id}
@@ -155,7 +171,9 @@ export const DataTable = ({
                   disabled={row.cells[columnKey].disabled}
                   title={row.cells[columnKey].title}
                   alt={row.cells[columnKey].title}
-                  onClick={ev => onItemButtonClick(row, ev)}
+                  onClick={onItemButtonClick(row)}
+                  onKeyPress={onItemButtonClick(row)}
+                  tabIndex="0"
                 >
                   {row.cells[columnKey].text}
                 </button>

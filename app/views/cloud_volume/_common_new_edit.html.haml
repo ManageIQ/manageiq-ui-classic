@@ -9,6 +9,7 @@
             "required"    => "",
             "disabled"    => @storage_manager.present? || @volume.try(:id).present?,
             :checkchange  => true,
+            :class        => "form-control",
             "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
