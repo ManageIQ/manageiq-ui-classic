@@ -9,7 +9,7 @@ import RequiredLabel from '../../forms/required-label';
 import { convert } from './helpers';
 import { useFieldApi, useFormApi } from '@@ddf';
 
-const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
+const TreeViewField = ({ loadData, lazyLoadData, isMulti, ...props }) => {
   const [{ nodes }, setState] = useState({});
 
   const { input: { value }, meta } = useFieldApi(props);
@@ -25,7 +25,12 @@ const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
     [ActionTypes.EXPANDED]: Tree.nodeExpanded,
     [ActionTypes.CHECKED]: Tree.nodeChecked,
     [ActionTypes.DISABLED]: Tree.nodeDisabled,
-    [ActionTypes.SELECTED]: Tree.nodeSelected,
+    [ActionTypes.SELECTED]: (node, values) => {
+      if (values) {
+        formOptions.change(props.name, node.attr.key);
+      }
+      return Tree.nodeSelected(node, values);
+    },
     [ActionTypes.LOADING]: Tree.nodeLoading,
     [ActionTypes.CHILD_NODES]: (node, value) => {
       // There's a bug in the react-wooden-tree, the passed value here contains all the child
@@ -91,7 +96,7 @@ const TreeViewField = ({ loadData, lazyLoadData, ...props }) => {
         selectedIcon=""
         partiallyCheckedIcon="fa fa-fw fa-check-square"
         preventDeselect
-        showCheckbox
+        showCheckbox={isMulti}
         callbacks={{ onDataChange, lazyLoad }}
         {...props}
       />
