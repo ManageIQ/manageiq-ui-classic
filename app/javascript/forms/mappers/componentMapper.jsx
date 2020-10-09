@@ -10,7 +10,7 @@ import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
-import TreeViewField from '../../components/tree-view/field';
+import { TreeViewField } from '../../components/tree-view';
 
 const mapper = {
   ...componentMapper,
