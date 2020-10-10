@@ -59,7 +59,7 @@ const TreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = activateNode(convert(JSON.parse(bs_tree)), silent_activate, select_node);
+    const tree = activateNode(convert(JSON.parse(bs_tree), node => node.state.checked, node => node.state.selected), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, tree, namespace);

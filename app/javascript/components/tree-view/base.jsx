@@ -9,8 +9,8 @@ const TreeViewBase = ({
   loadData,
   lazyLoadData,
   isMulti,
-  checked,
-  selected,
+  check,
+  select,
   ...props
 }) => {
   const [nodes, setNodes] = useState([]);
@@ -39,12 +39,12 @@ const TreeViewBase = ({
 
   useEffect(() => {
     loadData().then((values) => {
-      setNodes(convert(values, { checked, selected }));
+      setNodes(convert(values, { check, select }));
     });
   }, [loadData]);
 
   const lazyLoad = node => lazyLoadData(node).then((result) => {
-    const data = convert(result, { checked, selected });
+    const data = convert(result, { check, select });
 
     return Object.keys(data).reduce((subtree, key) => {
       if (key !== '') {
@@ -91,16 +91,16 @@ TreeViewBase.propTypes = {
   loadData: PropTypes.func.isRequired,
   lazyLoadData: PropTypes.func,
   isMulti: PropTypes.bool,
-  checked: PropTypes.arrayOf(PropTypes.string),
-  selected: PropTypes.string,
+  check: PropTypes.func,
+  select: PropTypes.func,
 };
 
 TreeViewBase.defaultProps = {
   actionMapper: {},
   lazyLoadData: () => undefined,
   isMulti: false,
-  checked: [],
-  selected: null,
+  check: undefined,
+  select: undefined,
 };
 
 export default TreeViewBase;

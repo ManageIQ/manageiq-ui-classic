@@ -10,15 +10,15 @@ import RequiredLabel from '../../forms/required-label';
 import TreeViewBase from './base';
 
 const TreeViewField = ({
-  loadData, lazyLoadData, helperText, isRequired, label, ...props
+  loadData, lazyLoadData, helperText, isRequired, label, identifier, ...props
 }) => {
-  const { input: { value, name }, meta } = useFieldApi(props);
+  const { input: { value = [], name }, meta } = useFieldApi(props);
   const formOptions = useFormApi();
 
   const actionMapper = {
     [ActionTypes.CHECKED_DIRECTLY]: (node, value) => {
       const { value: values = [] } = formOptions.getFieldState(name);
-      formOptions.change(name, value ? [...values, node.attr.key] : values.filter(item => item !== node.attr.key));
+      formOptions.change(name, value ? [...values, identifier(node)] : values.filter(item => item !== identifier(node)));
       return Tree.nodeChecked(node, value);
     },
   };
@@ -33,7 +33,7 @@ const TreeViewField = ({
         loadData={loadData}
         lazyLoadData={lazyLoadData}
         actionMapper={actionMapper}
-        checked={value}
+        check={node => value.includes(identifier(node))}
         isMulti
         {...props}
       />
@@ -48,6 +48,7 @@ TreeViewField.propTypes = {
   helperText: PropTypes.string,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
+  identifier: PropTypes.func,
 };
 
 TreeViewField.defaultProps = {
@@ -55,6 +56,7 @@ TreeViewField.defaultProps = {
   helperText: undefined,
   isRequired: false,
   label: undefined,
+  identifier: node => node.attr.key,
 };
 
 export default TreeViewField;

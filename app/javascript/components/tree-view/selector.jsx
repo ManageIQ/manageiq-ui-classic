@@ -9,6 +9,7 @@ import TreeViewBase from './base';
 const TreeViewSelector = ({
   loadData,
   lazyLoadData,
+  identifier,
   isClearable,
   modalLabel,
   modalIcon,
@@ -33,7 +34,7 @@ const TreeViewSelector = ({
   const actionMapper = {
     [ActionTypes.SELECTED]: (node, values) => {
       if (values) {
-        setState(state => ({ ...state, active: node.attr.key }));
+        setState(state => ({ ...state, active: identifier(node) }));
       }
       return Tree.nodeSelected(node, values);
     },
@@ -82,7 +83,7 @@ const TreeViewSelector = ({
             loadData={loadData}
             lazyLoadData={lazyLoadData}
             actionMapper={actionMapper}
-            selected={value}
+            select={node => identifier(node) === value}
             {...props}
           />
         </Modal.Body>
@@ -102,6 +103,7 @@ const TreeViewSelector = ({
 TreeViewSelector.propTypes = {
   loadData: PropTypes.func.isRequired,
   lazyLoadData: PropTypes.func,
+  identifier: PropTypes.func,
   isClearable: PropTypes.bool,
   label: PropTypes.string,
   modalIcon: PropTypes.string,
@@ -115,6 +117,7 @@ TreeViewSelector.propTypes = {
 TreeViewSelector.defaultProps = {
   lazyLoadData: () => undefined,
   isClearable: false,
+  identifier: node => node.attr.key,
   label: undefined,
   modalIcon: 'ff ff-load-balancer',
   modalLabel: __('Toggle'),
