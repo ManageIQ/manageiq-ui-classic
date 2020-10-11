@@ -157,7 +157,15 @@ module Mixins
           :object_type => ui_lookup(:model => model.to_s),
           :object_name => @ems.name
         }, :error)
-        return redirect_to(:action => @lastaction || "show_list")
+        # If we are inside the dashboard we need the :action to be set to show and not to the value inside @lastaction which is show_dashboard
+        redirect_args = if @lastaction == "show_dashboard"
+                          {:action => "show", :id => @ems.id}
+                        elsif @lastaction == "show"
+                          {:action => "show", :id => @ems.id}
+                        else
+                          {:action => @lastaction || "show_list"}
+                        end
+        return redirect_to(redirect_args || "show_list")
       end
       @in_a_form = true
       session[:changed] = false

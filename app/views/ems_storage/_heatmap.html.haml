@@ -1,0 +1,11 @@
+.heatmap{"ng-controller" => "heatmapStorageController as vm"}
+  .card-pf.card-pf-heatmap
+    .card-pf-heading
+      %h2.card-pf-title
+        {{vm.title}}
+    .card-pf-body
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6.example-heatmap-container{"ng-repeat" => "(key, data) in vm.data"}
+          %pf-heatmap{'ng-attr-id' => "{{data[0].id}}", "chart-title" => "key", "data" => "data", "chart-data-available" => "vm.dataAvailable", "show-legend" => "vm.showLegends", "legend-labels" => "vm.legendLabels", "max-block-size" => "20", "block-padding" => "5", "heatmap-color-pattern" => "vm.heatmapColorPattern", "thresholds" => "vm.thresholds", "click-action" => "vm.clickAction", "loading-done" => true}
+          %span.trend-footer-pf
+            {{vm.timeframeLabel}}

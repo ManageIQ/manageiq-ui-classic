@@ -1,7 +1,7 @@
 module Mixins
   module DashboardViewMixin
     def dashboard_view
-      if @sb[:summary_mode].present?
+      if @sb and @sb[:summary_mode].present?
         @sb[:summary_mode] == 'dashboard'
       else
         mode = (@settings || {}).fetch_path(:views, :summary_mode)

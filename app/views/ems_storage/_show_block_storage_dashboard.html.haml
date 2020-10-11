@@ -1,0 +1,11 @@
+= render :partial => "layouts/flash_msg"
+.container-fluid.container-tiles-pf.ems-storage-dashboard
+  .row.row-tile-pf
+    = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_storage'}
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "heatmap"
+
+  :javascript
+    ManageIQ.angular.app.value('providerId', '#{@record.id}');
+    miq_bootstrap('.ems-storage-dashboard');
