@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tree, { ActionTypes } from '@manageiq/react-ui-components/dist/wooden-tree';
+import {Tree, ActionTypes } from 'react-wooden-tree';
 import {
   ControlLabel, FieldLevelHelp, FormGroup, HelpBlock,
 } from 'patternfly-react';
