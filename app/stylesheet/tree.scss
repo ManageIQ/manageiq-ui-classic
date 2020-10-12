@@ -1,0 +1,14 @@
+.react-tree-view {
+  ul {
+    padding-left: 0;
+  }
+
+  .dirty {
+    color: #39A5DC;
+  }
+
+  .selected {
+    background-color: #349ad3;
+    color: #FFFFFF;
+  }
+}

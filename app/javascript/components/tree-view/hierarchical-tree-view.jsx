@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Tree, { Node } from '@manageiq/react-ui-components/dist/wooden-tree';
+import { Tree, Node } from 'react-wooden-tree';
 
 import { http } from '../../http_api';
 import { combineReducers } from '../../helpers/redux';
