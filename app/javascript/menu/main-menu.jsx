@@ -17,6 +17,7 @@ const initialExpanded = window.localStorage.getItem('patternfly-navigation-prima
 
 export const MainMenu = ({
   applianceName,
+  brandUrl,
   currentGroup,
   currentUser,
   customBrand,
@@ -25,12 +26,15 @@ export const MainMenu = ({
   menu: initialMenu,
   miqGroups,
   showLogo,
+  showMenuCollapse,
   showUser,
 }) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [menu, setMenu] = useState(initialMenu);
   const [searchResults, setSearch] = useState(null);
   const [activeSection, setSection] = useState(null);
+  // code to override navbar in plugins
+  const Navbar = ManageIQ.component.getReact('menu.Navbar');
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
   const hideSecondary = () => setSection(null);
@@ -64,8 +68,15 @@ export const MainMenu = ({
   return (
     <>
       <div onClick={hideSecondary} id="main-menu-primary">
+        <Navbar
+          isSideNavExpanded={expanded}
+          onClickSideNavExpand={() => setExpanded(!expanded)}
+          applianceName={applianceName}
+          currentUser={currentUser}
+          brandUrl={brandUrl}
+        />
         <SideNav
-          aria-label={__("Main Menu")}
+          aria-label={__('Main Menu')}
           className="primary"
           expanded={appearExpanded}
           isChildOfHeader={false}
@@ -110,10 +121,12 @@ export const MainMenu = ({
             />
           )}
 
-          <MenuCollapse
-            expanded={expanded /* not appearExpanded */}
-            toggle={() => setExpanded(!expanded)}
-          />
+          {showMenuCollapse && (
+            <MenuCollapse
+              expanded={expanded /* not appearExpanded */}
+              toggle={() => setExpanded(!expanded)}
+            />
+          )}
         </SideNav>
       </div>
       { activeSection && (
@@ -148,10 +161,12 @@ MainMenu.propTypes = {
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
   miqGroups: PropTypes.arrayOf(propGroup).isRequired,
   showLogo: PropTypes.bool,
+  showMenuCollapse: PropTypes.bool,
   showUser: PropTypes.bool,
 };
 
 MainMenu.defaultProps = {
   showLogo: true,
+  showMenuCollapse: true,
   showUser: true,
 };
