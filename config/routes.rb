@@ -1443,7 +1443,6 @@ Rails.application.routes.draw do
     :physical_rack    =>  {
       :get  =>  %w(
         download_data
-        perf_top_chart
         protect
         show_list
         show
@@ -1490,7 +1489,6 @@ Rails.application.routes.draw do
     :physical_chassis    => {
       :get  => %w(
         download_data
-        perf_top_chart
         protect
         show_list
         show
