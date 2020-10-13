@@ -525,5 +525,6 @@ class ProviderForemanController < ApplicationController
     }
   end
 
+  feature_for_actions "provider_foreman_view", *ADV_SEARCH_ACTIONS
   menu_section :conf
 end
