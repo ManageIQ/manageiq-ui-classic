@@ -153,6 +153,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def configscript_service_dialog_submit
+    assert_privileges('configscript_service_dialog')
     case params[:button]
     when "cancel"
       configscript_service_dialog_submit_cancel
