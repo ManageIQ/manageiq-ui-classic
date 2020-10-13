@@ -20,6 +20,7 @@ module PxeController::PxeServers
   end
 
   def pxe_server_create_update
+    assert_privileges(params[:id] ? 'pxe_server_edit' : 'pxe_server_new')
     id = params[:id] || "new"
     return unless load_edit("pxe_edit__#{id}")
     pxe_server_get_form_vars
@@ -74,6 +75,7 @@ module PxeController::PxeServers
 
   # AJAX driven routine to check for changes in ANY field on the form
   def pxe_server_form_field_changed
+    assert_privileges(params[:id] == 'new' ? 'pxe_server_new' : 'pxe_server_edit')
     return unless load_edit("pxe_edit__#{params[:id]}", "replace_cell__explorer")
     @edit[:prev_protocol] = @edit[:new][:protocol]
     pxe_server_get_form_vars
