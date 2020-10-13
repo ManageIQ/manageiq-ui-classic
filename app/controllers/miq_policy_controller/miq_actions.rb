@@ -171,6 +171,7 @@ module MiqPolicyController::MiqActions
   end
 
   def action_get_all
+    assert_privileges('action_show_list')
     peca_get_all('action', -> { get_view(MiqAction) })
   end
 
