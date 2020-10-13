@@ -9,10 +9,10 @@ import { combineReducers } from '../../helpers/redux';
 import reducers, { ACTIONS } from './reducers/index';
 import basicStore from './reducers/basicStore';
 import {
-  convert, callBack, activateNode, flatten,
+  convert, callBack, activateNode,
 } from './helpers';
 
-const HierarchicalTreeView = (props) => {
+const TreeView = (props) => {
   const {
     tree_name,
     bs_tree,
@@ -59,7 +59,7 @@ const HierarchicalTreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = activateNode(flatten(convert(JSON.parse(bs_tree))), silent_activate, select_node);
+    const tree = activateNode(convert(JSON.parse(bs_tree), node => node.state.checked, node => node.state.selected), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, tree, namespace);
@@ -81,7 +81,7 @@ const HierarchicalTreeView = (props) => {
       tree: tree_name,
       mode: 'all',
     }).then((result) => {
-      const data = flatten(convert(result));
+      const data = convert(result);
       let subtree = {};
       Object.keys(data).forEach((key) => {
         if (key !== '') {
@@ -117,7 +117,7 @@ const HierarchicalTreeView = (props) => {
   );
 };
 
-HierarchicalTreeView.propTypes = {
+TreeView.propTypes = {
   tree_name: PropTypes.string.isRequired,
   bs_tree: PropTypes.string.isRequired,
   checkboxes: PropTypes.bool,
@@ -130,7 +130,7 @@ HierarchicalTreeView.propTypes = {
   hierarchical_check: PropTypes.bool,
 };
 
-HierarchicalTreeView.defaultProps = {
+TreeView.defaultProps = {
   checkboxes: false,
   allow_reselect: false,
   oncheck: undefined,
@@ -140,6 +140,6 @@ HierarchicalTreeView.defaultProps = {
   hierarchical_check: false,
 };
 
-const HierarchicalTreeViewConn = connect(null, { callBack })(HierarchicalTreeView);
+const TreeViewRedux = connect(null, { callBack })(TreeView);
 
-export default HierarchicalTreeViewConn;
+export default TreeViewRedux;
