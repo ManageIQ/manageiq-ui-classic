@@ -38,6 +38,7 @@ export const MainMenu = ({
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
   const hideSecondary = () => setSection(null);
+  const hideSecondaryEscape = e => e.keyCode === 27 && hideSecondary();
 
   useEffect(() => {
     // persist expanded state
@@ -67,7 +68,7 @@ export const MainMenu = ({
 
   return (
     <>
-      <div onClick={hideSecondary} id="main-menu-primary">
+      <div onClick={hideSecondary} onKeyDown={hideSecondaryEscape} role="navigation" id="main-menu-primary">
         <Navbar
           isSideNavExpanded={expanded}
           onClickSideNavExpand={() => setExpanded(!expanded)}
@@ -125,6 +126,7 @@ export const MainMenu = ({
             <MenuCollapse
               expanded={expanded /* not appearExpanded */}
               toggle={() => setExpanded(!expanded)}
+              onFocus={hideSecondary}
             />
           )}
         </SideNav>
@@ -132,9 +134,18 @@ export const MainMenu = ({
       { activeSection && (
         <>
           <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
-            <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} />
+            <div onKeyDown={hideSecondaryEscape} role="navigation">
+              <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} />
+            </div>
           </SideNav>
-          <div className="miq-main-menu-overlay" onClick={hideSecondary} />
+          <div
+            className="miq-main-menu-overlay"
+            role="navigation"
+            tabIndex="0"
+            onClick={hideSecondary}
+            onFocus={hideSecondary}
+            onKeyDown={hideSecondary}
+          />
         </>
       )}
     </>
