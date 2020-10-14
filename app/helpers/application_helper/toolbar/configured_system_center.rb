@@ -14,4 +14,22 @@ class ApplicationHelper::Toolbar::ConfiguredSystemCenter < ApplicationHelper::To
       ]
     ),
   ])
+  button_group('access', [
+    select(
+      :access_choice,
+      nil,
+      N_('Access'),
+      N_('Access'),
+      :items => [
+        button(
+          :configured_system_console,
+          'pficon pficon-screen fa-lg',
+          N_('Open the Configured System console'),
+          N_('Configured System console'),
+          :url   => "launch_configured_system_console",
+          :klass => ApplicationHelper::Button::ConfiguredSystemConsole
+        ),
+      ]
+    ),
+  ])
 end
