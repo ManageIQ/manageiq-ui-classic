@@ -157,7 +157,13 @@
     "vars-on-top": 0,
     "no-var": 0,
     "linebreak-style": [ "error", "unix" ],
-    "comma-dangle": [ "warn", "always-multiline" ],
+    "comma-dangle": [ "warn", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "only-multiline"
+    }],
     "space-unary-ops": [ "error", {
       "words": true,
       "nonwords": false,
@@ -189,7 +195,9 @@
 
     "curly": [ "warn", "all" ],
     "no-eq-null": 0,
-    "no-param-reassign": 1,
+    "no-param-reassign": [ "warn", {
+      "props": false
+    }],
     "no-fallthrough": [ "error", {
       "commentPattern": "fall.*through|pass"
     }],
