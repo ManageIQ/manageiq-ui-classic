@@ -28,6 +28,9 @@
     }],
     "func-names": 0,
     "implicit-arrow-linebreak": "off",
+    "import/no-unresolved": [ "error", {
+      "ignore": ["^@@ddf"]
+    }],
     "import/prefer-default-export": "off",
     "indent": [ "error", 2, {
       "SwitchCase": 1,
