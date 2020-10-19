@@ -4,11 +4,20 @@ class PhysicalStorageController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
   include Mixins::BreadcrumbsMixin
+  include Mixins::GenericButtonMixin
 
   before_action :check_privileges
   before_action :session_data
   after_action :cleanup_action
   after_action :set_session_data
+
+  toolbar :physical_storage, :physical_storages
+
+  def new
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},
+                    :url  => "/#{controller_name}/new")
+  end
 
   def self.table_name
     @table_name ||= "physical_storages"
@@ -44,5 +53,17 @@ class PhysicalStorageController < ApplicationController
         {:title => _("Storages"), :url => controller_url},
       ],
     }
+  end
+
+  private
+
+  def specific_buttons(pressed)
+    case pressed
+    when 'physical_storage_new'
+      javascript_redirect(:action => 'new')
+    else
+      return false
+    end
+    true
   end
 end
