@@ -17,20 +17,17 @@ export const flatten = (menuItems = []) => {
         process(item.items, newParents);
       } else {
         // item
-        flat.push({
-          item,
-          parents,
-        });
+        flat.push({ item, parents });
       }
     });
-  }
+  };
 
   process(menuItems);
   return flat;
 };
 
-export const MenuSearch = ({ expanded, menu, onSearch }) => {
-  if (! expanded) {
+const MenuSearch = ({ expanded, menu, onSearch }) => {
+  if (!expanded) {
     return (
       <SideNavItem className="padded menu-search vertical-center">
         <Search20 />
@@ -38,18 +35,17 @@ export const MenuSearch = ({ expanded, menu, onSearch }) => {
     );
   }
 
-  const flatMenu = flatten(menu)
-    .map(({item, parents}) => {
-      const titles = [...parents, item].map((p) => p.title);
-      const haystack = titles.join(' ').toLocaleLowerCase();
+  const flatMenu = flatten(menu).map(({ item, parents }) => {
+    const titles = [...parents, item].map(p => p.title);
+    const haystack = titles.join(' ').toLocaleLowerCase();
 
-      return {
-        haystack,
-        item,
-        parents,
-        titles,
-      };
-    });
+    return {
+      haystack,
+      item,
+      parents,
+      titles,
+    };
+  });
 
   const searchResults = (string) => {
     if (!string || string.match(/^\s*$/)) {
@@ -58,7 +54,7 @@ export const MenuSearch = ({ expanded, menu, onSearch }) => {
     }
 
     const needle = string.toLocaleLowerCase();
-    const results = flatMenu.filter((item) => item.haystack.includes(needle));
+    const results = flatMenu.filter(item => item.haystack.includes(needle));
 
     onSearch(results);
   };
@@ -69,7 +65,7 @@ export const MenuSearch = ({ expanded, menu, onSearch }) => {
         size="sm"
         placeHolderText={__("Find")}
         labelText={__("Find") /* hidden in css */}
-        onChange={(e) => searchResults(event.target.value)}
+        onChange={event => searchResults(event.target.value)}
       />
     </SideNavItem>
   );
@@ -86,3 +82,5 @@ MenuSearch.propTypes = {
 MenuSearch.defaultProps = {
   onSearch: () => null,
 };
+
+export default MenuSearch;

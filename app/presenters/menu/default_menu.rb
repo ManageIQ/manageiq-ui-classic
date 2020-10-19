@@ -143,12 +143,12 @@ module Menu
           Menu::Item.new('ems_network',      N_('Providers'),         'ems_network',      {:feature => 'ems_network_show_list'},     '/ems_network/show_list'),
           Menu::Item.new('cloud_network',    N_('Networks'),          'cloud_network',    {:feature => 'cloud_network_show_list'},   '/cloud_network/show_list'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),           'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},    '/cloud_subnet/show_list'),
-          Menu::Item.new('network_router',   N_('Network Routers'),   'network_router',   {:feature => 'network_router_show_list'},  '/network_router/show_list'),
-          Menu::Item.new('network_service',  N_('Network Services'),  'network_service',  {:feature => 'network_service_show_list'}, '/network_service/show_list'),
+          Menu::Item.new('network_router',   N_('Routers'),           'network_router',   {:feature => 'network_router_show_list'},  '/network_router/show_list'),
+          Menu::Item.new('network_service',  N_('Services'),          'network_service',  {:feature => 'network_service_show_list'}, '/network_service/show_list'),
           Menu::Item.new('security_group',   N_('Security Groups'),   'security_group',   {:feature => 'security_group_show_list'},  '/security_group/show_list'),
           Menu::Item.new('security_policy',  N_('Security Policies'), 'security_policy',  {:feature => 'security_policy_show_list'}, '/security_policy/show_list'),
           Menu::Item.new('floating_ip',      N_('Floating IPs'),      'floating_ip',      {:feature => 'floating_ip_show_list'},     '/floating_ip/show_list'),
-          Menu::Item.new('network_port',     N_('Network Ports'),     'network_port',     {:feature => 'network_port_show_list'},    '/network_port/show_list'),
+          Menu::Item.new('network_port',     N_('Ports'),             'network_port',     {:feature => 'network_port_show_list'},    '/network_port/show_list'),
           Menu::Item.new('network_topology', N_('Topology'),          'network_topology', {:feature => 'network_topology'},          '/network_topology/show'),
         ])
       end
@@ -187,6 +187,16 @@ module Menu
                                            'cloud_volume_type',
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
+                            Menu::Item.new('storage_resource',
+                                           N_('Storage Resources'),
+                                           'storage_resource',
+                                           {:feature => 'storage_resource_show_list'},
+                                           '/storage_resource/show_list'),
+                            Menu::Item.new('physical_storage',
+                                           N_('Storages'),
+                                           'physical_storage',
+                                           {:feature => 'physical_storage_show_list'},
+                                           '/physical_storage/show_list'),
                           ])
       end
 

@@ -1320,17 +1320,19 @@ Rails.application.routes.draw do
       )
     },
 
-    :physical_storage    => {
-      :get  => %w(
+    :physical_storage   => {
+      :get  => %w[
         download_data
-        show_list
+        download_summary_pdf
         show
-      ),
-
-      :post  => %w(
         show_list
+        new
+      ],
+      :post => %w[
+        listnav_search_selected
         quick_search
-      ) + adv_search_post + save_post,
+        show_list
+      ] + adv_search_post + save_post + exp_post
     },
 
     :physical_chassis    => {
@@ -2209,6 +2211,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        new
         button
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
@@ -2294,6 +2297,23 @@ Rails.application.routes.draw do
       ) +
         adv_search_post +
         dialog_runner_post +
+        exp_post +
+        save_post
+    },
+
+    :storage_resource   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ],
+      :post => %w[
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
         exp_post +
         save_post
     },
@@ -2498,6 +2518,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
+        launch_configuration_profile_console
       ]
     },
 
@@ -2518,6 +2539,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
+        launch_configured_system_console
       ] +
         adv_search_post +
         dialog_runner_post +
@@ -3144,6 +3166,7 @@ Rails.application.routes.draw do
     ems_network
     ems_physical_infra
     ems_physical_infra_dashboard
+    ems_storage
     miq_ae_customization
     pxe
   ].freeze
@@ -3201,7 +3224,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network].each do |resource|
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
 end

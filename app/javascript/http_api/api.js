@@ -24,11 +24,20 @@ const API = {
 
 export default API;
 
+function apiOnly(url) {
+  const path = new URL(url, document.location.href);
+  if (!path.pathname.match(/^\/api($|\/)/)) {
+    throw new Error(`${url} is not a valid API endpoint URL, try using 'http' instead of 'API'`);
+  }
+
+  return url;
+}
+
 function urlOnly(method) {
   return (url, options) => miqFetch({
     ...options,
     method,
-    url,
+    url: apiOnly(url),
     backendName: __('API'),
     cookieAndCsrf: true,
   }, null);
@@ -38,7 +47,7 @@ function withData(method) {
   return (url, data, options) => miqFetch({
     ...options,
     method,
-    url,
+    url: apiOnly(url),
     backendName: __('API'),
     cookieAndCsrf: true,
   }, data);

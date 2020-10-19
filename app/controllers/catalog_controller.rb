@@ -200,10 +200,8 @@ class CatalogController < ApplicationController
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
-
     get_form_vars
-    # Build Catalog Items tree unless @edit[:ae_tree_select]
-    build_automate_tree(:automate_catalog) if params[:display] || params[:template_id] || params[:manager_id]
+    build_automate_tree(:automate_catalog) if automate_tree_needed?
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
       if ansible_playbook?
@@ -242,7 +240,7 @@ class CatalogController < ApplicationController
         if params[:st_prov_type] || (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
           page.replace("form_div", :partial => "st_form")
         end
-        if params[:display] || params[:template_id] || params[:manager_id]
+        if automate_tree_needed?
           page.replace("basic_info_div", :partial => "form_basic_info")
         end
         if params[:display]
@@ -312,6 +310,7 @@ class CatalogController < ApplicationController
     template_locals = {:locals => {:controller => "catalog"}}
     template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
     template_locals[:locals].merge!(fetch_ct_details) if need_container_template_locals?
+    template_locals[:locals].merge!(fetch_ovf_template_details) if need_ovf_template_locals?
 
     render :layout => "application", :action => "explorer", :locals => template_locals
   end
@@ -841,7 +840,9 @@ class CatalogController < ApplicationController
   end
 
   def class_service_template(prov_type)
-    if prov_type.starts_with?('generic')
+    if content_library?
+      ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate
+    elsif prov_type.starts_with?('generic')
       prov_type.gsub(/(generic)(_.*)?/, 'service_template\2').classify.constantize
     else
       ServiceTemplate
@@ -878,6 +879,13 @@ class CatalogController < ApplicationController
         # ensure Provider is selectied, required field
         add_flash(_("Provider is required, please select one from the list"), :error)
       end
+    end
+
+    # For Content Library OVF TEmplate catalog item
+    if @edit[:new][:st_prov_type] == 'generic_ovf_template'
+      add_flash(_("OVF Template is required, please select one from the list"), :error) if @edit[:new][:ovf_template_id].blank?
+      add_flash(_("Resource Pool is required, please select one from the list"), :error) if @edit[:new][:resource_pool_id].blank?
+      validate_vm_name if @edit[:new][:vm_name].present?
     end
 
     add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
@@ -921,6 +929,12 @@ class CatalogController < ApplicationController
              ServiceTemplateContainerTemplate.find_by(:id => @edit[:rec_id]).update_catalog_item(add_container_template_vars)
            else
              ServiceTemplateContainerTemplate.create_catalog_item(add_container_template_vars)
+           end
+    elsif @edit[:new][:st_prov_type] == 'generic_ovf_template'
+      st = if @edit[:rec_id]
+             ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate.find_by(:id => @edit[:rec_id]).update_catalog_item(set_record_vars_ovf_template)
+           else
+             ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate.create_catalog_item(set_record_vars_ovf_template, User.current_user)
            end
     else
       st = if @edit[:rec_id]
@@ -1154,6 +1168,7 @@ class CatalogController < ApplicationController
                          _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
                        end
     build_automate_tree(:automate_catalog) # Build Catalog Items tree
+    form_available_vars_ovf_template if @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate)
   end
 
   def fetch_zones
@@ -1286,6 +1301,7 @@ class CatalogController < ApplicationController
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
+    fetch_form_vars_ovf_template if @edit[:new][:st_prov_type] == 'generic_ovf_template'
   end
 
   def code_currency_label(currency)
@@ -1722,6 +1738,125 @@ class CatalogController < ApplicationController
     ct_details
   end
 
+  def content_library_type?
+    prov_type = if params[:st_prov_type]
+                  params[:st_prov_type]
+                elsif @record
+                  @record.prov_type
+                elsif @edit
+                  @edit[:new][:st_prov_type]
+                end
+    prov_type == 'generic_ovf_template'
+  end
+
+  def content_library?
+    content_library = content_library_type?
+    @current_region = MiqRegion.my_region.region if content_library
+    content_library
+  end
+  helper_method :content_library?
+
+  def fetch_ovf_template_details
+    ovf_template_details = {}
+    ovf_template_details[:provisioning] = {}
+    provision = @record.config_info[:provision]
+
+    rp = ResourcePool.find_by(:id => provision[:resource_pool_id])
+    ovf_template_details[:provisioning][:resource_pool_name] = rp.try(:name)
+
+    host = Host.find_by(:id => provision[:host_id])
+    ovf_template_details[:provisioning][:host_name] = host.try(:name)
+
+    folder = EmsFolder.find_by(:id => provision[:ems_folder_id])
+    ovf_template_details[:provisioning][:ems_folder_name] = folder.try(:name)
+
+    ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => provision[:ovf_template_id])
+    ovf_template_details[:provisioning][:ovf_template_name] = ovf_template.try(:name)
+
+    ovf_template_details
+  end
+
+  def fetch_form_vars_ovf_template
+    @edit[:new][:accept_all_eula] = params[:accept_all_eula] == "1" if params[:accept_all_eula]
+    copy_params_if_present(@edit[:new], params, %i[ems_folder_id host_id ovf_template_id resource_pool_id vm_name])
+    form_available_vars_ovf_template if params[:st_prov_type] || params[:ovf_template_id]
+  end
+
+  def form_available_vars_ovf_template
+    @edit[:available_ovf_templates] = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.all
+                                                                                                      .collect { |m| [m.name, m.id] }
+                                                                                                      .sort
+    # set from existing record
+    if @record.try(:id) && params[:button] != "save"
+      options = @record.config_info[:provision]
+      @edit[:new][:ovf_template_id] ||= options[:ovf_template_id]
+      @edit[:new][:vm_name] ||= options[:vm_name]
+      @edit[:new][:resource_pool_id] ||= options[:resource_pool_id]
+      @edit[:new][:ems_folder_id] ||= options[:ems_folder_id]
+      @edit[:new][:host_id] ||= options[:host_id]
+      @edit[:new][:accept_all_eula] ||= options[:accept_all_eula] == true
+      @edit[:new][:fqname] ||= options[:fqname]
+    end
+
+    if @edit[:new][:ovf_template_id]
+      ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => @edit[:new][:ovf_template_id])
+      @edit[:available_resource_pools] = ovf_template.allowed_resource_pools
+                                                     .collect { |m| [m.last, m.first] }
+                                                     .sort
+      @edit[:available_folders] = ovf_template.allowed_folders
+                                              .collect { |m| [m.last, m.first] }
+                                              .sort
+      @edit[:available_hosts] = ovf_template.allowed_hosts
+                                            .collect { |h| [h.name, h.id] }
+                                            .sort
+    else
+      @edit[:available_resource_pools] = []
+      @edit[:available_folders]        = []
+      @edit[:available_hosts]          = []
+      @edit[:new][:resource_pool_id]   = nil
+      @edit[:new][:host_id]            = nil
+      @edit[:new][:ems_folder_id]      = nil
+    end
+  end
+
+  def set_record_vars_ovf_template
+    options = {}
+    options[:name] = @edit[:new][:name]
+    options[:description] = @edit[:new][:description]
+    options[:long_description] = @edit[:new][:display] ? @edit[:new][:long_description] : nil
+    options[:provision_cost] = @edit[:new][:provision_cost]
+    options[:display] = @edit[:new][:display]
+    options[:zone_id] = @edit[:new][:zone_id] if @edit[:new][:zone_id]
+    options[:additional_tenants] = Tenant.where(:id => @edit[:new][:tenant_ids]) if @edit[:new][:tenant_ids]
+    options[:service_template_catalog_id] = @edit[:new][:catalog_id].nil? ? nil : @edit[:new][:catalog_id]
+    provision = {}
+    provision[:ovf_template_id] = @edit[:new][:ovf_template_id] if @edit[:new][:ovf_template_id]
+    provision[:vm_name] = @edit[:new][:vm_name] if @edit[:new][:vm_name]
+    provision[:resource_pool_id] = @edit[:new][:resource_pool_id] if @edit[:new][:resource_pool_id]
+    provision[:ems_folder_id] = @edit[:new][:ems_folder_id] if @edit[:new][:ems_folder_id]
+    provision[:host_id] = @edit[:new][:host_id] if @edit[:new][:host_id]
+    provision[:accept_all_eula] = @edit[:new][:accept_all_eula] if @edit[:new][:accept_all_eula]
+    provision[:fqname] = @edit[:new][:fqname] if @edit[:new][:fqname]
+    options[:config_info] = {:provision => provision}
+    options
+  end
+
+  def need_ovf_template_locals?
+    x_active_tree == :sandt_tree &&
+      TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
+      @record.prov_type == "generic_ovf_template"
+  end
+
+  def validate_vm_name
+    ems_id = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => @edit[:new][:ovf_template_id]).ems_id
+    add_flash(_("VM Name already exists, Please select a different VM Name"), :error) if VmOrTemplate.find_by(:name => @edit[:new][:vm_name], :ems_id => ems_id).present?
+  end
+
+  def automate_tree_needed?
+    params[:display] || params[:template_id] || params[:manager_id] || params[:ovf_template_id]
+  end
+  helper_method :automate_tree_needed?
+
   def fetch_playbook_details
     playbook_details = {}
     provision = @record.config_info[:provision]
@@ -1812,7 +1947,7 @@ class CatalogController < ApplicationController
     @explorer = true
 
     # FIXME: make this functional
-    get_node_info(x_node) unless @tagging || @edit
+    get_node_info(x_node) unless @tagging || @edit || @in_a_form
     replace_trees   = @replace_trees   if @replace_trees    # get_node_info might set this
     right_cell_text = @right_cell_text if @right_cell_text  # get_node_info might set this too
 
@@ -1881,6 +2016,7 @@ class CatalogController < ApplicationController
                   template_locals = {:controller => "catalog"}
                   template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
                   template_locals.merge!(fetch_ct_details) if need_container_template_locals?
+                  template_locals.merge!(fetch_ovf_template_details) if need_ovf_template_locals?
                   r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
                 end
               elsif @sb[:buttons_node]

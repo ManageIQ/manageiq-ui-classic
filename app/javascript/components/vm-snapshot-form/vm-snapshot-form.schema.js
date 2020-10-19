@@ -25,7 +25,7 @@ const createSchema = (hideName, showMemory, descriptionRequired) => {
   const fields = [
     ...(hideName ? [] : [nameField]),
     {
-      component: componentTypes.TEXTAREA_FIELD,
+      component: componentTypes.TEXTAREA,
       id: 'description',
       name: 'description',
       label: __('Description'),

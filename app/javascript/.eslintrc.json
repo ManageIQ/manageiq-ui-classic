@@ -19,8 +19,18 @@
   "extends": ["airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],
   "rules": {
+    "comma-dangle": [ "warn", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "only-multiline"
+    }],
     "func-names": 0,
     "implicit-arrow-linebreak": "off",
+    "import/no-unresolved": [ "error", {
+      "ignore": ["^@@ddf"]
+    }],
     "import/prefer-default-export": "off",
     "indent": [ "error", 2, {
       "SwitchCase": 1,
@@ -35,6 +45,9 @@
       "ignoreComments": true
     }],
     "no-extra-boolean-cast": "off",
+    "no-param-reassign": [ "warn", {
+      "props": false
+    }],
     "no-shadow": "off",
     "no-underscore-dangle": "off",
     "no-unused-vars": ["error", {
@@ -54,6 +67,7 @@
     }],
     "react/jsx-filename-extension": "off",
     "react/jsx-first-prop-new-line": [1, "multiline"],
+    "react/jsx-props-no-spreading": "off",
     "react/destructuring-assignment": [1, "always"],
     "semi": [2, "always"],
     "space-before-function-paren": [2, "never"],

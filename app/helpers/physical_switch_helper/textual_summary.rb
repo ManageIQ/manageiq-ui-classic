@@ -57,19 +57,19 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def textual_product_name
-    {:label => _("Product Name"), :value => @record.asset_detail["product_name"] }
+    {:label => _("Product Name"), :value => @record.asset_detail&.product_name}
   end
 
   def textual_manufacturer
-    {:label => _("Manufacturer"), :value => @record.asset_detail["manufacturer"] }
+    {:label => _("Manufacturer"), :value => @record.asset_detail&.manufacturer}
   end
 
   def textual_serial_number
-    {:label => _("Serial Number"), :value => @record.asset_detail["serial_number"] }
+    {:label => _("Serial Number"), :value => @record.asset_detail&.serial_number}
   end
 
   def textual_part_number
-    {:label => _("Part Number"), :value => @record.asset_detail["part_number"] }
+    {:label => _("Part Number"), :value => @record.asset_detail&.part_number}
   end
 
   def textual_health_state
@@ -81,7 +81,7 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def textual_description
-    {:label => _("Description"), :value => @record.asset_detail["description"]}
+    {:label => _("Description"), :value => @record.asset_detail&.description}
   end
 
   def textual_power_state

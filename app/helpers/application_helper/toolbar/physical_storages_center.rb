@@ -19,6 +19,13 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
             :confirm => N_("Refresh relationships and power states for all items related to these Physical Storages?"),
             :options => {:feature => :refresh}
           ),
+          button(
+            :physical_storage_new,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Attach a new storage system'),
+            t,
+            :url => "/new"
+          ),
         ]
       ),
     ]

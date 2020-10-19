@@ -16,7 +16,7 @@ import FirmwareRegistryForm from '../components/firmware-registry/firmware-regis
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GtlView from  '../components/gtl-view';
-import { HierarchicalTreeView } from '../components/tree-view';
+import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal';
@@ -44,6 +44,7 @@ import VmServerRelationshipForm from '../components/vm-server-relationship-form'
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
 import ZoneForm from '../components/zone-form';
+import PhysicalStorageForm from '../components/physical-storage-form';
 
 /**
 * Add component definitions to this file.
@@ -65,7 +66,7 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GtlView', GtlView);
-ManageIQ.component.addReact('HierarchicalTreeView', HierarchicalTreeView);
+ManageIQ.component.addReact('TreeViewRedux', TreeViewRedux);
 ManageIQ.component.addReact('FonticonPicker', FonticonPicker);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
@@ -97,3 +98,4 @@ ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm
 ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);
+ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);

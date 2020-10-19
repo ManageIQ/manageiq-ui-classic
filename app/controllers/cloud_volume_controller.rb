@@ -38,16 +38,24 @@ class CloudVolumeController < ApplicationController
     when 'cloud_volume_edit'
       javascript_redirect(:action => 'edit', :id => checked_item_id)
     when 'cloud_volume_snapshot_create'
-      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:snapshot_create, CloudVolume)
+      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_new'
       javascript_redirect(:action => 'new')
     when 'cloud_volume_backup_create'
-      javascript_redirect(:action => 'backup_new', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:backup_create, CloudVolume)
+      javascript_redirect(:action => 'backup_new', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_backup_restore'
-      javascript_redirect(:action => 'backup_select', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:backup_restore, CloudVolume)
+      javascript_redirect(:action => 'backup_select', :id => checked_item_id) if validate_results[:action_supported]
     else
       return false
     end
+
+    if validate_results && validate_results[:message]
+      render_flash(validate_results[:message], :error)
+    end
+
     true
   end
 
@@ -575,8 +583,17 @@ class CloudVolumeController < ApplicationController
       options.merge!(aws_ebs_options)
     when "ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager"
       options.merge!(ibmcloud_powervs_options)
+    when "ManageIQ::Providers::Autosde::StorageManager"
+      options.merge!(autosde_options)
     end
     options
+  end
+
+  def autosde_options
+    {
+      :ems             => ExtManagementSystem.find(params[:storage_manager_id]),
+      :storage_service => StorageService.find(params[:storage_service_id])
+    }
   end
 
   def cinder_manager_options

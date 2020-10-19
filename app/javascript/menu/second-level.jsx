@@ -1,40 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { SideNavItems, SideNavMenu, SideNavMenuItem } from 'carbon-components-react/es/components/UIShell';
 import { itemId, linkProps } from './item-type';
 
 const mapItems = (items, hideSecondary) => items.map((item) => {
-  let Component = item.items.length ? MenuSection : MenuItem;
+  const Component = item.items.length ? MenuSection : MenuItem;
 
-  return <Component
-    hideSecondary={hideSecondary}
-    key={item.id}
-    {...item}
-  />
+  return <Component hideSecondary={hideSecondary} key={item.id} {...item} />;
 });
 
 
-const MenuItem = ({ active, href, id, title, type, hideSecondary }) => (
+const MenuItem = ({
+  active, href, id, title, type, hideSecondary,
+}) => (
   <SideNavMenuItem
     id={itemId(id)}
     isActive={active}
-    {...linkProps({ type, href, id, hideSecondary })}
+    {...linkProps({
+      type, href, id, hideSecondary,
+    })}
   >
     {__(title)}
   </SideNavMenuItem>
 );
 
-MenuItem.props = {
+MenuItem.propTypes = {
   active: PropTypes.bool,
-  hideSecondary: PropTypes.func,
-  href: PropTypes.string.isRequired,
+  hideSecondary: PropTypes.func.isRequired,
+  href: PropTypes.string,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
+};
+
+MenuItem.defaultProps = {
+  active: false,
+  href: undefined,
+  type: 'default',
 };
 
 
-const MenuSection = ({ active, id, items, title, hideSecondary }) => (
+const MenuSection = ({
+  active, id, items, title, hideSecondary,
+}) => (
   <SideNavMenu
     id={itemId(id, true)}
     isActive={active}
@@ -45,17 +53,27 @@ const MenuSection = ({ active, id, items, title, hideSecondary }) => (
   </SideNavMenu>
 );
 
-MenuSection.props = {
+MenuSection.propTypes = {
   active: PropTypes.bool,
-  hideSecondary: PropTypes.func,
+  hideSecondary: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
 };
 
+MenuSection.defaultProps = {
+  active: false,
+};
 
-export const SecondLevel = ({ menu, hideSecondary }) => (
+const SecondLevel = ({ menu, hideSecondary }) => (
   <SideNavItems>
     {mapItems(menu, hideSecondary)}
   </SideNavItems>
 );
+
+SecondLevel.propTypes = {
+  menu: PropTypes.any.isRequired,
+  hideSecondary: PropTypes.func.isRequired,
+};
+
+export default SecondLevel;

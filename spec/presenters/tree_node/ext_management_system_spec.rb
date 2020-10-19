@@ -38,6 +38,7 @@ describe TreeNode::ExtManagementSystem do
     :ems_vmware_cloud_network         => {},
     :ems_cinder                       => {},
     :ems_swift                        => {},
+    :ems_autosde                      => {},
     # :configuration_manager             => {},
     # :provisioning_manager              => {},
     # :ems_cloud                         => {},

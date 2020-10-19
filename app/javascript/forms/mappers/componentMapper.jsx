@@ -10,6 +10,7 @@ import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
+import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 
 const mapper = {
   ...componentMapper,
@@ -20,6 +21,8 @@ const mapper = {
   'dual-list-select': DualListSelect,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
+  'tree-view': TreeViewField,
+  'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,
 };
 

@@ -5,11 +5,7 @@ import { SideNavItems, SideNavMenuItem } from 'carbon-components-react/es/compon
 import { itemId, linkProps } from './item-type';
 
 const ResultItem = ({ item, titles }) => (
-  <SideNavMenuItem
-    id={itemId(item.id)}
-    isActive={item.active}
-    {...linkProps(item)}
-  >
+  <SideNavMenuItem id={itemId(item.id)} isActive={item.active} {...linkProps(item)}>
     <p className="menu-search-title">
       {titles[titles.length - 1]}
     </p>
@@ -22,25 +18,19 @@ const ResultItem = ({ item, titles }) => (
 );
 
 // can't use raw p as a descendant of items
-const Count = ({ length }) => (
-  <p>
-    {__("Results")}
-    {' '}
-    ({length})
-  </p>
-);
+const Count = ({ length }) => <p>{`__${__('Results')} (${length})`}</p>;
+
+Count.propTypes = {
+  length: PropTypes.number.isRequired,
+};
 
 // always expanded, or null
-export const SearchResults = ({ results }) => (
+const SearchResults = ({ results }) => (
   <SideNavItems className="menu-results">
     <Count length={results.length} />
 
     {results.map(({ item, titles }) => (
-      <ResultItem
-        key={item.id}
-        item={item}
-        titles={titles}
-      />
+      <ResultItem key={item.id} item={item} titles={titles} />
     ))}
   </SideNavItems>
 );
@@ -51,3 +41,5 @@ SearchResults.propTypes = {
     titles: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
 };
+
+export default SearchResults;
