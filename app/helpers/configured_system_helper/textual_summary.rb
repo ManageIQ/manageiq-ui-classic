@@ -31,7 +31,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_vendor
     return nil if @record.vendor.blank?
 
-    {:label => _("Vendor"), :value => @record.vendor}
+    {:label => _("Vendor"), :image => @record.decorate.fileicon, :value => @record.vendor}
   end
 
   def textual_zone
