@@ -162,12 +162,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def categories_for_select
-    categories = Classification.categories.sort_by(&:description)
-    categories.each_with_object([]) do |category, result|
-      next if category.read_only?
-
-      result << category.description
-    end
+    Classification.categories.reject(&:read_only?).sort_by(&:description).map(&:description)
   end
 
   # AJAX driven routine to check for changes in ANY field on the user form
