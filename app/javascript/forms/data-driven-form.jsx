@@ -29,6 +29,17 @@ const defaultLabels = {
   cancelLabel: __('Cancel'),
 };
 
+// This is a wrapper around the passed onSubmit function that filters out the values from the form
+// data that don't have corresponding fields in the declared form schema.
+const submitWrapper = (fn) => (values, formOptions, ...args) => {
+  // Get a list of all fields declared in the schema
+  const fields = formOptions.getRegisteredFields();
+
+  const filteredValues = fields.reduce((obj, field) => (_.has(values, field) ? _.set(obj, field, _.get(values, field)) : obj), {});
+  // For compatibility, we're passing all the other arguments as well
+  return fn(filteredValues, formOptions, ...args);
+};
+
 const MiqFormRenderer = ({
   className,
   componentMapper,
@@ -38,6 +49,7 @@ const MiqFormRenderer = ({
   showFormControls,
   schema: { fields, ...schema },
   initialize,
+  onSubmit,
   ...props
 }) => {
   const { current: FormWrapper } = useRef(({ children, ...props }) => (
@@ -63,6 +75,7 @@ const MiqFormRenderer = ({
       componentMapper={{ ...componentMapper, 'spy-field': SpyField }}
       FormTemplate={MiqFormTemplate}
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
+      onSubmit={submitWrapper(onSubmit)}
       {...props}
     />
   );
@@ -83,6 +96,7 @@ MiqFormRenderer.propTypes = {
   canReset: PropTypes.bool,
   showFormControls: PropTypes.bool,
   initialize: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 MiqFormRenderer.defaultProps = {
@@ -96,6 +110,7 @@ MiqFormRenderer.defaultProps = {
   canReset: false,
   showFormControls: true,
   initialize: undefined,
+  onSubmit: () => undefined,
 };
 
 export {
