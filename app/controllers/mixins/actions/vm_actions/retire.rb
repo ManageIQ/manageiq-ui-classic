@@ -41,25 +41,6 @@ module Mixins
         alias vm_retire retirevms
         alias orchestration_stack_retire retirevms
 
-        def retirement_info
-          obj = case request.parameters[:controller]
-                when 'orchestration_stack'
-                  assert_privileges('orchestration_stack_retire')
-                  find_record_with_rbac(OrchestrationStack, params[:id])
-                when 'service'
-                  assert_privileges('service_retire')
-                  find_record_with_rbac(Service, params[:id])
-                when 'vm', 'vm_cloud', 'vm_infra', 'vm_or_template'
-                  obj = find_record_with_rbac(Vm, params[:id])
-                  obj.cloud ? assert_privileges('instance_retire') : assert_privileges('vm_retire')
-                  obj
-                end
-          render :json => {
-            :retirement_date    => obj.retires_on,
-            :retirement_warning => obj.retirement_warn
-          }
-        end
-
         # Build the retire VMs screen
         def retire
           @sb[:explorer] = true if @explorer
@@ -73,67 +54,17 @@ module Mixins
                 end
           # Check RBAC for all items in session[:retire_items]
           @retireitems = find_records_with_rbac(kls.order(:name), session[:retire_items])
-          if params[:button]
-            begin
-              add_flash(retire_handle_form_buttons(kls))
-            rescue RuntimeError => e
-              add_flash(e.message, :error)
-            end
-            if @sb[:explorer]
-              replace_right_cell
-            else
-              flash_to_session
-              javascript_redirect(previous_breadcrumb_url)
-            end
-            return
-          end
-          session[:changed] = @changed = false
+
+          @redirect_url = @sb[:explorer] ? 'explorer' : previous_breadcrumb_url
+
           drop_breadcrumb(:name => _("Retire %{name}") % {:name => ui_lookup(:models => kls.to_s)},
                           :url  => "/#{session[:controller]}/retire")
           session[:cat] = nil # Clear current category
           build_targets_hash(@retireitems)
           @view = get_db_view(kls) # Instantiate the MIQ Report view object
-
-          if @retireitems.length == 1 && !@retireitems[0].retires_on.nil?
-            t = @retireitems[0].retires_on                                         # Single VM, set to current time
-            w = @retireitems[0].retirement_warn if @retireitems[0].retirement_warn # Single VM, get retirement warn
-          end
-          session[:retire_date] = "#{t.month}/#{t.day}/#{t.year}" unless t.nil?
-          session[:retire_warn] = w
           @in_a_form = true
-          @edit ||= {}
           @edit[:object_ids] = @retireitems
-          session[:edit] = @edit
           @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
-        end
-
-        private
-
-        def retire_handle_form_buttons(kls)
-          case params[:button]
-          when "cancel" then retire_handle_cancel_button
-          when "save"   then handle_save_button(kls)
-          end
-        end
-
-        def retire_handle_cancel_button
-          @sb[:action] = nil
-          _("Set/remove retirement date was cancelled by the user")
-        end
-
-        def handle_save_button(kls)
-          if params[:retire_date].blank?
-            flash = n_("Retirement date removed", "Retirement dates removed", session[:retire_items].length)
-          else
-            t = params[:retire_date].in_time_zone
-            w = params[:retire_warn].to_i
-
-            ts = t.strftime("%x %R %Z")
-            flash = n_("Retirement date set to %{time}", "Retirement dates set to %{time}", session[:retire_items].length) % {:time => ts}
-          end
-          kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
-          @sb[:action] = nil
-          flash
         end
       end
     end

@@ -2518,7 +2518,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        retirement_info
         index
         outputs
         parameters
@@ -2539,7 +2538,6 @@ Rails.application.routes.draw do
         parameters
         quick_search
         resources
-        retire
         sections_field_changed
         show
         show_list
@@ -2766,7 +2764,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         explorer
-        retirement_info
         reconfigure_form_fields
         retire
         service_form_fields
@@ -2780,7 +2777,6 @@ Rails.application.routes.draw do
         ownership_update
         quick_search
         reload
-        retire
         service_edit
         service_tag
         show
@@ -2867,7 +2863,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        retirement_info
         ownership
         policy_sim
         reconfigure
@@ -2907,7 +2902,6 @@ Rails.application.routes.draw do
         associate_floating_ip_vm
         disassociate_floating_ip_vm
         rename_vm
-        retire
         right_size
         set_checked_items
         show_list
@@ -2929,7 +2923,6 @@ Rails.application.routes.draw do
         drift_to_txt
         explorer
         filesystem_download
-        retirement_info
         reconfigure_form_fields
         launch_html5_console
         launch_vmrc_console
@@ -2983,7 +2976,6 @@ Rails.application.routes.draw do
         quick_search
         registry_items
         reload
-        retire
         reconfigure_update
         scan_histories
         sections_field_changed
@@ -3032,7 +3024,6 @@ Rails.application.routes.draw do
         drift_to_txt
         explorer
         filesystem_download
-        retirement_info
         reconfigure_form_fields
         right_size_print
         launch_html5_console
@@ -3074,7 +3065,6 @@ Rails.application.routes.draw do
         registry_items
         reload
         rename_vm
-        retire
         scan_histories
         sections_field_changed
         security_groups
@@ -3121,7 +3111,6 @@ Rails.application.routes.draw do
         launch_html5_console
         launch_vmrc_console
         launch_native_console
-        retirement_info
         reconfigure_form_fields
         policies
         protect
@@ -3164,7 +3153,6 @@ Rails.application.routes.draw do
         registry_items
         reload
         rename_vm
-        retire
         scan_histories
         sections_field_changed
         security_groups
