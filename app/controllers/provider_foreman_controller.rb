@@ -114,6 +114,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def x_show
+    assert_privileges('provider_foreman_view', 'configured_systems_filter_accord_view', 'configuration_script_view')
     tree_record unless unassigned_configuration_profile?(params[:id])
 
     if request.format.js? && !@record
@@ -525,5 +526,6 @@ class ProviderForemanController < ApplicationController
     }
   end
 
+  feature_for_actions "provider_foreman_view", *ADV_SEARCH_ACTIONS
   menu_section :conf
 end

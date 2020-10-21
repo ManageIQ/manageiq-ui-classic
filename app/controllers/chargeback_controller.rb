@@ -20,6 +20,7 @@ class ChargebackController < ApplicationController
   end
 
   def x_show
+    assert_privileges('chargeback')
     @explorer = true
     if x_active_tree == :cb_rates_tree
       @record = identify_record(params[:id], ChargebackRate)

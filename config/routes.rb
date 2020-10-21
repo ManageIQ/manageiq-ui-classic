@@ -169,7 +169,6 @@ Rails.application.routes.draw do
         download_summary_pdf
         explorer
         form_fields
-        show
         x_show
         x_button
         show_list
@@ -185,7 +184,6 @@ Rails.application.routes.draw do
         explorer
         form_field_changed
         new
-        provision
         quick_search
         refresh
         reload
@@ -1443,7 +1441,6 @@ Rails.application.routes.draw do
     :physical_rack    =>  {
       :get  =>  %w(
         download_data
-        perf_top_chart
         protect
         show_list
         show
@@ -1490,7 +1487,6 @@ Rails.application.routes.draw do
     :physical_chassis    => {
       :get  => %w(
         download_data
-        perf_top_chart
         protect
         show_list
         show

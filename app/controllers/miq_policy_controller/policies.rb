@@ -187,6 +187,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_get_all
+    assert_privileges('policy_view')
     peca_get_all('policy', -> { get_view(MiqPolicy, :named_scope => [[:with_mode, @sb[:mode].downcase], [:with_towhat, @sb[:nodeid].camelize]]) })
   end
 

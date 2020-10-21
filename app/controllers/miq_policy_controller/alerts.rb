@@ -238,6 +238,7 @@ module MiqPolicyController::Alerts
   end
 
   def alert_get_all
+    assert_privileges('alert')
     peca_get_all('alert', -> { get_view(MiqAlert) })
   end
 
