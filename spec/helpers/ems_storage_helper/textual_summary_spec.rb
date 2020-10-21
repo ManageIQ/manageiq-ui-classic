@@ -14,6 +14,8 @@ describe EmsStorageHelper::TextualSummary do
       cloud_volume_backups
       cloud_object_store_containers
       custom_button_events
+      physical_storages
+      storage_resources
     ]
 
     include_examples "textual_group", "Status", %i[refresh_status refresh_date]
@@ -34,6 +36,8 @@ describe EmsStorageHelper::TextualSummary do
       cloud_volume_backups
       cloud_object_store_containers
       custom_button_events
+      physical_storages
+      storage_resources
       cloud_volume_types
     ]
   end

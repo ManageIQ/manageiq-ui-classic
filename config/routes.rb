@@ -123,6 +123,15 @@ Rails.application.routes.draw do
   )
 
   controller_routes = {
+
+    :ems_storage_dashboard      => {
+      :get => %w[
+        show
+        aggregate_status_data
+        resources_capacity_data
+      ]
+    },
+
     :auth_key_pair_cloud      => {
       :get  => %w(
         download_data
@@ -3162,6 +3171,7 @@ Rails.application.routes.draw do
     ems_cloud_dashboard
     ems_container
     ems_infra
+    ems_storage_dashboard
     ems_infra_dashboard
     ems_network
     ems_physical_infra
