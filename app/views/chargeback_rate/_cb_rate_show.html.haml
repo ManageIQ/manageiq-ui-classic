@@ -13,7 +13,7 @@
       = _('Type')
     .col-md-8
       %p.form-control-static
-        = h(@record.rate_type)
+        = h(_(@record.rate_type))
 %hr
 %h3= _('Rate Details')
 %table.table.table-bordered
@@ -49,7 +49,7 @@
         %td{:rowspan => num_tiers}
           = h(rate_detail_group(detail.chargeable_field[:group]))
         %td{:rowspan => num_tiers}
-          = detail.chargeable_field[:description]
+          = _(detail.chargeable_field[:description])
           %br
           = Dictionary.gettext(detail.chargeable_field.metric_key, :type => :column, :notfound => :titleize)
           - if breakdown_present
@@ -60,7 +60,7 @@
         %td
           = tier.start ? tier.start : 0
         %td
-          = tier.finish ? tier.finish : Float::INFINITY.to_s
+          = tier.finish == Float::INFINITY ? _('Infinity') : tier.finish
         %td{:align => "right"}
           = tier.fixed_rate ? tier.fixed_rate : 0.0
         %td{:align => "right"}
@@ -73,7 +73,7 @@
           %td
             = tier.start
           %td
-            = tier.finish
+            = tier.finish == Float::INFINITY ? _('Infinity') : tier.finish
           %td{:align => "right"}
             = tier.fixed_rate
           %td{:align => "right"}
