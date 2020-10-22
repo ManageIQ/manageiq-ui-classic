@@ -163,6 +163,11 @@ describe OpsController do
     end
 
     context '#forest_accept' do
+      let(:user) { FactoryBot.create(:user, :features => %w(ops_settings)) }
+      before do
+        login_as user
+      end
+
       context 'adding an LDAP Trusted Forest' do
         before do
           EvmSpecHelper.create_guid_miq_server_zone

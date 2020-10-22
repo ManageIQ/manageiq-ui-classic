@@ -1,4 +1,8 @@
 describe OpsController do
+  before do
+    stub_user(:features => :all)
+  end
+
   let(:params) { {} }
   let(:session) { {} }
 

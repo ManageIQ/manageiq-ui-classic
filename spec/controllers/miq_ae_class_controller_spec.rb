@@ -827,6 +827,7 @@ describe MiqAeClassController do
                          :name     => "name02",
                          :class_id => @cls.id,
                          :priority => 2)
+      stub_user(:features => %w[miq_ae_field_seq])
     end
 
     it "moves selected field down" do
@@ -879,7 +880,8 @@ describe MiqAeClassController do
                                    :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ae_tree => {:active_node => "aec-someid"}},
-                                       :active_tree => :ae_tree)
+                                       :active_tree => :ae_tree,
+                                       :action      => "miq_ae_class_edit")
     end
 
     it "make sure data in data field still exists when edititng that field" do
