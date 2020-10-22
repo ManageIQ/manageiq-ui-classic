@@ -46,6 +46,8 @@ class ServiceController < ApplicationController
 
   # Service show selected, redirect to proper controller
   def show
+    assert_privileges('service_view')
+
     @record = Service.find(params[:id].to_i)
     @lastaction = "show"
 
@@ -207,11 +209,6 @@ class ServiceController < ApplicationController
 
   def reconfigure_form_fields
     assert_privileges('service_reconfigure')
-    super
-  end
-
-  def show
-    assert_privileges('service_view')
     super
   end
 
