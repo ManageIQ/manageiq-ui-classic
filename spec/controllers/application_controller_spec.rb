@@ -2,7 +2,7 @@ require 'ostruct'
 
 describe ApplicationController do
   describe "#report_only" do
-    let(:group) { FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role)) }
+    let(:group) { FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role, :features => %w[everything])) }
     let(:user)  { FactoryBot.create(:user, :miq_groups => [group]) }
     let(:report_title) { "VMs using thin provisioned disks" }
     let(:report) { FactoryBot.create(:miq_report, :title => report_title) }

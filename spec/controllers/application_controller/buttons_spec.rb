@@ -313,8 +313,8 @@ describe ApplicationController do
   end
 
   context "#button_set_record_vars" do
-    let(:role) { FactoryBot.create(:miq_user_role) }
-    let(:old_role) { FactoryBot.create(:miq_user_role) }
+    let(:role) { FactoryBot.create(:miq_user_role, :features => %w[everything]) }
+    let(:old_role) { FactoryBot.create(:miq_user_role, :features => %w[everything]) }
     let(:custom_button) { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"}) }
     let(:edit) {
       {:uri => '/test/',
@@ -350,6 +350,10 @@ describe ApplicationController do
   end
 
   context "#automate_button_field_changed" do
+    before do
+      stub_user(:features => :all)
+    end
+
     context 'sets dialog_id' do
       let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
       let(:button)          { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :resource_action => resource_action) }
@@ -368,6 +372,7 @@ describe ApplicationController do
       it "to id of selected dialog" do
         controller.params = {:id => button.id, :dialog_id => 42}.with_indifferent_access
         controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.instance_variable_set(:@sb, {:action => 'ab_button_new'})
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
       end
@@ -375,6 +380,7 @@ describe ApplicationController do
       it "to nil if no dialog selected" do
         controller.params = {"id" => button.id, "dialog_id" => ""}
         controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.instance_variable_set(:@sb, {:action => 'ab_button_new'})
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
       end
@@ -395,7 +401,9 @@ describe ApplicationController do
         session[:edit] = edit
       end
       it "to false for Vm and Template" do
+
         controller.params = {"id" => button_for_vm.id, "dialog_id" => ""}
+        controller.instance_variable_set(:@sb, {:action => 'ab_button_new'})
         controller.instance_variable_set(:@resolve, :target_class => "Vm")
         controller.instance_variable_set(:@custom_button, button_for_vm)
         controller.send(:automate_button_field_changed)
@@ -405,6 +413,7 @@ describe ApplicationController do
       it "to true for Availability Zone" do
         controller.params = {"id" => button_for_az.id, "dialog_id" => ""}
         controller.instance_variable_set(:@resolve, :target_class => "Availability Zone")
+        controller.instance_variable_set(:@sb, {:action => 'ab_button_new'})
         controller.instance_variable_set(:@custom_button, button_for_az)
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:disabled_open_url]).to be true

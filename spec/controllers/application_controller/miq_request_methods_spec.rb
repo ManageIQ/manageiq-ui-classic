@@ -2,6 +2,7 @@ describe MiqRequestController do
   describe "#dialog_partial_for_workflow" do
     before do
       @wf = FactoryBot.create(:miq_provision_virt_workflow)
+      stub_user(:features => %w[miq_request_edit])
     end
 
     it "calculates partial using wf from @edit hash" do

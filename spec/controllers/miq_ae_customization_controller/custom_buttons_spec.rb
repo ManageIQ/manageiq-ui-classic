@@ -1,6 +1,7 @@
 describe MiqAeCustomizationController do
   before do
     stub_user(:features => :all)
+    EvmSpecHelper.local_miq_server
   end
   context "::CustomButtons" do
     context "#ab_get_node_info" do
@@ -16,11 +17,16 @@ describe MiqAeCustomizationController do
   end
   render_views
   describe "#ab_form" do
+    before do
+      allow(controller).to receive(:feature_by_action).and_return("ab_button_new")
+    end
+
     it "displays the layout" do
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
       @sb = {:active_tree => :ab_tree,
              :trees       => {:ab_tree => {:tree => :ab_tree}},
-             :params      => {:instance_name => 'CustomButton_1'}}
+             :params      => {:instance_name => 'CustomButton_1'},
+             :action      => %w[ab_button_new]}
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 
@@ -37,6 +43,7 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
       session[:resolve] = {}
+
       post :automate_button_field_changed, :params => { :instance_name => 'CustomButton', :name => 'test', :button_icon => 'fa fa-star' }
       expect(response.status).to eq(200)
     end

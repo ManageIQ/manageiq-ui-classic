@@ -51,6 +51,10 @@ describe MiqAeCustomizationController do
     end
 
     context 'Adding a new Dialog' do
+      before do
+        stub_user(:features => :all)
+      end
+
       render_views
 
       it 'will show a flash error without Dialog Type' do

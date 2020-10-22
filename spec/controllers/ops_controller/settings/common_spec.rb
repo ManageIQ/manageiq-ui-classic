@@ -4,6 +4,7 @@ describe OpsController do
       MiqDatabase.seed
       MiqRegion.seed
       EvmSpecHelper.local_miq_server(:zone => Zone.seed)
+      stub_user(:features => :all)
     end
 
     context "SmartProxy Affinity" do

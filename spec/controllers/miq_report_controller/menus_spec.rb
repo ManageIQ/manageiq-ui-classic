@@ -1,6 +1,6 @@
 describe ReportController do
   describe "#menu_update" do
-    let(:user) { FactoryBot.create(:user_with_group) }
+    let(:user) { FactoryBot.create(:user, :features => %w[miq_report_menu_editor]) }
     let(:report) { FactoryBot.create(:miq_report, :rpt_type => "Default", :rpt_group => 'foo - bar', :miq_group => user.current_group) }
 
     before do
@@ -17,7 +17,6 @@ describe ReportController do
       expect(controller).to receive(:build_menu_roles_tree)
       expect(controller).to receive(:get_tree_data)
       expect(controller).to receive(:replace_right_cell)
-
       controller.menu_update
       expect(assigns(:edit)[:new]).to eq([["foo", [["bar", [report.name]]]]])
       expect(assigns(:flash_array).first[:message]).to include("default")
