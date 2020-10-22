@@ -54,7 +54,46 @@ exports[`TreeSelector component should render correctly 1`] = `
     label="tree-selector"
     name="tree-selector"
   >
-    <FormConditionWrapper>
+    <FormConditionWrapper
+      field={
+        Object {
+          "component": "text-field",
+          "initialValue": undefined,
+          "inputAddon": Object {
+            "after": Object {
+              "fields": Array [
+                Object {
+                  "component": "input-addon-button-group",
+                  "fields": Array [
+                    Object {
+                      "component": "button",
+                      "label": <i
+                        className="ff ff-load-balancer"
+                      />,
+                      "name": "tree-selector-toggle",
+                      "onClick": [Function],
+                      "title": "Toggle",
+                    },
+                    Object {
+                      "component": "button",
+                      "label": <i
+                        className="fa fa-times"
+                      />,
+                      "name": "tree-selector-clear",
+                      "onClick": [Function],
+                      "title": "Clear",
+                    },
+                  ],
+                  "name": "tree-selector-toggle-container",
+                },
+              ],
+            },
+          },
+          "label": "tree-selector",
+          "name": "tree-selector",
+        }
+      }
+    >
       <FormFieldHideWrapper
         hideField={false}
       >
@@ -255,7 +294,34 @@ exports[`TreeSelector component should render correctly 1`] = `
                         key="tree-selector-toggle-container"
                         name="tree-selector-toggle-container"
                       >
-                        <FormConditionWrapper>
+                        <FormConditionWrapper
+                          field={
+                            Object {
+                              "component": "input-addon-button-group",
+                              "fields": Array [
+                                Object {
+                                  "component": "button",
+                                  "label": <i
+                                    className="ff ff-load-balancer"
+                                  />,
+                                  "name": "tree-selector-toggle",
+                                  "onClick": [Function],
+                                  "title": "Toggle",
+                                },
+                                Object {
+                                  "component": "button",
+                                  "label": <i
+                                    className="fa fa-times"
+                                  />,
+                                  "name": "tree-selector-clear",
+                                  "onClick": [Function],
+                                  "title": "Clear",
+                                },
+                              ],
+                              "name": "tree-selector-toggle-container",
+                            }
+                          }
+                        >
                           <FormFieldHideWrapper
                             hideField={false}
                           >
@@ -303,7 +369,19 @@ exports[`TreeSelector component should render correctly 1`] = `
                                     onClick={[Function]}
                                     title="Toggle"
                                   >
-                                    <FormConditionWrapper>
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "button",
+                                          "label": <i
+                                            className="ff ff-load-balancer"
+                                          />,
+                                          "name": "tree-selector-toggle",
+                                          "onClick": [Function],
+                                          "title": "Toggle",
+                                        }
+                                      }
+                                    >
                                       <FormFieldHideWrapper
                                         hideField={false}
                                       >
@@ -357,7 +435,19 @@ exports[`TreeSelector component should render correctly 1`] = `
                                     onClick={[Function]}
                                     title="Clear"
                                   >
-                                    <FormConditionWrapper>
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "button",
+                                          "label": <i
+                                            className="fa fa-times"
+                                          />,
+                                          "name": "tree-selector-clear",
+                                          "onClick": [Function],
+                                          "title": "Clear",
+                                        }
+                                      }
+                                    >
                                       <FormFieldHideWrapper
                                         hideField={false}
                                       >
