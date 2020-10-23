@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import MiqFormRenderer from '@@ddf';
 import createSchema from './retirement-form.schema';
-import { API } from '../../http_api';
+import { API, http } from '../../http_api';
 import handleFailure from '../../helpers/handle-failure';
-// import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const RetirementForm = ({ retirementID }) => {
   const id = retirementID.split('"').filter(Number);
-  let delayed = true;
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!id,
     initialValues: {
@@ -21,16 +19,29 @@ const RetirementForm = ({ retirementID }) => {
   const cancelUrl = `/${ManageIQ.controller}/retire?button=cancel`;
   const saveURL = `/${ManageIQ.controller}/retire?button=save`;
 
+  const calculateDate = (months, weeks, days, hours) => {
+    const now = new Date();
+    now.setDate(now.getDate() + (weeks * 7) + days);
+    now.setMonth(now.getMonth() + months);
+    now.setHours(now.getHours() + hours);
+    return now;
+  };
+
   const onSubmit = (data) => {
-    API.post(`/api/services/${id}`, {
-      action: 'request_retire',
-      resource: { date: data.retirement_date_datepicker, warn: data.retirementWarning },
-    });
+    miqSparkleOn();
+    const date = data.formMode === 'delay' ? calculateDate(parseInt(data.months, 10), parseInt(data.weeks, 10), parseInt(data.days, 10), parseInt(data.hours, 10)) : data.retirement_date_datepicker;
+    const request = data.formMode === 'delay'
+      ? API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: data.retirementWarning } })
+      : API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: data.retirementWarning } });
+    request.then(() => {
+      miqAjaxButton(saveURL, { retire_date: date, retire_warn: data.retirementWarning });
+      console.log(request);
+    }).catch(miqSparkleOff);
   };
 
   useEffect(() => {
     if (id.length === 1) {
-      API.get(`/${ManageIQ.controller}/retirement_info/${id}`).then((res) => {
+      http.get(`/${ManageIQ.controller}/retirement_info/${id}`).then((res) => {
         console.log(res);
         if (res.retirement_date != null) {
           setState({
@@ -51,7 +62,7 @@ const RetirementForm = ({ retirementID }) => {
     !isLoading && (
       <MiqFormRenderer
         initialValues={initialValues}
-        schema={createSchema(delayed)}
+        schema={createSchema()}
         onSubmit={onSubmit}
         canReset={!!id}
         onCancel={() => miqAjaxButton(cancelUrl)}
