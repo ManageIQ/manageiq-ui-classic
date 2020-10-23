@@ -15,7 +15,7 @@ module ApplicationHelper
         "data-provide"         => "datepicker",
         "data-date-autoclose"  => "true",
         "data-date-format"     => "mm/dd/yyyy",
-        "data-date-language"   => FastGettext.locale,
+        "data-date-language"   => FastGettext.locale.sub('_', '-'),
         "data-date-week-start" => 0
       }
       text_field_tag(name, value, options.merge!(datepicker_options))
