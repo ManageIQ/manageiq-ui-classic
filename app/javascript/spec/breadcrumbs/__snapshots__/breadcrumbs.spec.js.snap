@@ -162,6 +162,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
               }
             >
               <Icon
+                fill="currentColor"
                 height={16}
                 preserveAspectRatio="xMidYMid meet"
                 style={
@@ -175,6 +176,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
               >
                 <svg
                   aria-hidden={true}
+                  fill="currentColor"
                   focusable="false"
                   height={16}
                   preserveAspectRatio="xMidYMid meet"
