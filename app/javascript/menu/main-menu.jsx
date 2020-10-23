@@ -33,6 +33,7 @@ export const MainMenu = ({
   const [menu, setMenu] = useState(initialMenu);
   const [searchResults, setSearch] = useState(null);
   const [activeSection, setSection] = useState(null);
+  const [openMenu, setOpen] = useState(false);
   // code to override navbar in plugins
   const Navbar = ManageIQ.component.getReact('menu.Navbar');
 
@@ -66,20 +67,53 @@ export const MainMenu = ({
     updateActiveItem(ManageIQ.redux.store.getState().router.location);
   }, []);
 
+  const showMenu = (event) => {
+    // when focus/tab is in leftnav, if menu is not expanded, open menu
+    if (!expanded) {
+      setExpanded(true);
+      // To understand if we are opening it manually on tab
+      setOpen(true);
+    }
+    if (event.keyCode === 27) hideSecondary();
+  };
+  const hideMenu = (event) => {
+    // if we open it manually, collpase menu on blur
+    if (!event.currentTarget.contains(event.relatedTarget) && openMenu) {
+      setExpanded(false);
+      setOpen(false);
+    }
+  };
+  const toggleMenu = () => {
+    // if it is already open on tabbing, keep it open
+    if (expanded && openMenu) {
+      setOpen(false);
+    } else {
+      setExpanded(!expanded);
+    }
+  };
+
   return (
     <>
-      <div onClick={hideSecondary} onKeyDown={hideSecondaryEscape} role="navigation" id="main-menu-primary">
-        <Navbar
-          isSideNavExpanded={expanded}
-          onClickSideNavExpand={() => setExpanded(!expanded)}
-          applianceName={applianceName}
-          currentUser={currentUser}
-          brandUrl={brandUrl}
-        />
+      <Navbar
+        isSideNavExpanded={expanded}
+        open={openMenu}
+        onClickSideNavExpand={() => setExpanded(!expanded)}
+        applianceName={applianceName}
+        currentUser={currentUser}
+        brandUrl={brandUrl}
+      />
+      <div
+        onClick={hideSecondary}
+        onKeyDown={showMenu}
+        onBlur={hideMenu}
+        role="presentation"
+        id="main-menu-primary"
+      >
         <SideNav
           aria-label={__('Main Menu')}
           className="primary"
           expanded={appearExpanded}
+          addFocusListeners={false}
           isChildOfHeader={false}
         >
           {showLogo && (
@@ -109,6 +143,7 @@ export const MainMenu = ({
             menu={menu}
             expanded={appearExpanded}
             onSearch={setSearch}
+            toggle={() => setExpanded(!expanded)}
           />
 
           <hr className="bx--side-nav__hr" />
@@ -119,14 +154,16 @@ export const MainMenu = ({
               menu={menu}
               setSection={setSection}
               activeSection={activeSection && activeSection.id}
+              expanded={appearExpanded}
             />
           )}
 
           {showMenuCollapse && (
             <MenuCollapse
-              expanded={expanded /* not appearExpanded */}
-              toggle={() => setExpanded(!expanded)}
+              expanded={expanded/* not appearExpanded */}
+              toggle={toggleMenu}
               onFocus={hideSecondary}
+              open={openMenu}
             />
           )}
         </SideNav>
@@ -134,14 +171,13 @@ export const MainMenu = ({
       { activeSection && (
         <>
           <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
-            <div onKeyDown={hideSecondaryEscape} role="navigation">
+            <div onKeyDown={hideSecondaryEscape} role="presentation">
               <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} />
             </div>
           </SideNav>
           <div
             className="miq-main-menu-overlay"
-            role="navigation"
-            tabIndex="0"
+            role="presentation"
             onClick={hideSecondary}
             onFocus={hideSecondary}
             onKeyDown={hideSecondary}

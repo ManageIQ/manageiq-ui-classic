@@ -70,6 +70,18 @@
   .vertical-center {
     display: flex;
     align-items: center;
+    padding: 0 !important;
+
+    &:hover {
+      background-color: $row-active-primary-bg;
+    }
+
+    .search_div {
+      height: 32px;
+      width: 48px;
+      padding: 0 1rem;
+      padding-top: 6px;
+    }
   }
 
   .menu-user,
@@ -91,6 +103,34 @@
 
   .menu-search {
     height: 32px;
+  }
+
+  .collapse_icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .bx--side-nav__item {
+    .bx--tooltip__trigger {
+      position: fixed;
+      &::before {
+        border-color: transparent $inverse-01 transparent transparent !important;
+      }
+
+      .pficon {
+        color: #f4f4f4;
+      }
+
+      svg {
+        fill: #f4f4f4;
+      }
+
+      .bx--assistive-text {
+        background-color: $inverse-01;
+        color: $text-04;
+      }
+
+    }
   }
 }
 
