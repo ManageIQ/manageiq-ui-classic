@@ -8,7 +8,7 @@ import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import { BreadcrumbsBar } from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
-import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
+import CloudTenantForm from '../components/cloud-tenant-form';
 import ProviderForm from '../components/provider-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
