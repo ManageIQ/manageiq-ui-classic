@@ -1,11 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { get } from 'lodash';
 
-import componentMapper from '../../forms/mappers/componentMapper';
-import { useFormApi, useFieldApi, componentTypes } from '@@ddf';
+import { useFormApi } from '@@ddf';
 import EditingContext from './editing-context';
-
-const Select = componentMapper[componentTypes.SELECT];
+import SelectWithOnChange from '../select';
 
 const filter = (items, toDelete) => Object.keys(items).filter(key => !toDelete.includes(key)).reduce((obj, key) => ({
   ...obj,
@@ -26,41 +24,43 @@ const ProtocolSelector = ({ initialValue: defaultValue, options, ...props }) => 
   const preSelected = !!providerId && options.find(({ pivot }) => get(formOptions.getState().values, pivot));
   const initialValue = preSelected ? preSelected.value : defaultValue;
 
-  const { input: { value } } = useFieldApi({ options, initialValue, ...props });
-  useEffect(() => {
-    if (value) {
-      setTimeout(() => {
-        // Load the initial and current values for the endpoints/authentications after the field value has been changed
-        const {
-          initialValues: {
-            endpoints: initialEndpoints = {},
-            authentications: initialAuthentications = {},
-          },
-          values: {
-            endpoints: currentEndpoints = {},
-            authentications: currentAuthentications = {},
-          },
-        } = formOptions.getState();
+  const onChange = value => setTimeout(() => {
+    // Load the initial and current values for the endpoints/authentications after the field value has been changed
+    const {
+      initialValues: {
+        endpoints: initialEndpoints = {},
+        authentications: initialAuthentications = {},
+      },
+      values: {
+        endpoints: currentEndpoints = {},
+        authentications: currentAuthentications = {},
+      },
+    } = formOptions.getState();
 
-        // Map the values of all possible options into an array
-        const optionValues = options.map(({ value }) => value);
-        // Determine which endpoint/authentication pair has to be removed from the form state
-        const toDelete = optionValues.filter(option => option !== value);
+    // Map the values of all possible options into an array
+    const optionValues = options.map(({ value }) => value);
+    // Determine which endpoint/authentication pair has to be removed from the form state
+    const toDelete = optionValues.filter(option => option !== value);
 
-        // Adjust the endpoints/authentications and pass them to the form state
-        formOptions.change('endpoints', {
-          ...filter(initialEndpoints, toDelete),
-          ...filter(currentEndpoints, optionValues),
-        });
-        formOptions.change('authentications', {
-          ...filter(initialAuthentications, toDelete),
-          ...filter(currentAuthentications, optionValues),
-        });
-      });
-    }
-  }, [value]);
+    // Adjust the endpoints/authentications and pass them to the form state
+    formOptions.change('endpoints', {
+      ...filter(initialEndpoints, toDelete),
+      ...filter(currentEndpoints, optionValues),
+    });
+    formOptions.change('authentications', {
+      ...filter(initialAuthentications, toDelete),
+      ...filter(currentAuthentications, optionValues),
+    });
+  });
 
-  return <Select options={options} {...props} />;
+  return (
+    <SelectWithOnChange
+      onChange={onChange}
+      options={options}
+      initialValue={initialValue}
+      {...props}
+    />
+  );
 };
 
 export default ProtocolSelector;

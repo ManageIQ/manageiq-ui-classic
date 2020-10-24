@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import FormRenderer, { useFormApi } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
 import ProtocolSelector from '../../components/provider-form/protocol-selector';
-import { EditingContext } from '../../components/provider-form';
+import EditingContext from '../../components/provider-form/editing-context';
 
 const DummyComponent = () => <div />;
 const FormApiComponent = () => {

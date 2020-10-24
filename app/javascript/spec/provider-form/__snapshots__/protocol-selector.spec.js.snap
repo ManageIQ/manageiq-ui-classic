@@ -24,6 +24,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
     component="protocol-selector"
     label="Type"
     name="type"
+    onChange={[Function]}
     options={
       Array [
         Object {
