@@ -64,8 +64,15 @@ module TextualSummaryHelper
   def process_textual_info(groups, record)
     groups.collect do |big_group|
       big_group.collect do |group_symbol|
-        group_result = send("textual_group_#{group_symbol}")
-        next if group_result.nil?
+        case group_symbol
+        when Symbol
+          group_result = send("textual_group_#{group_symbol}")
+          next if group_result.nil?
+        when TextualGroup
+          group_result = group_symbol
+        else
+          raise "groups_symbol needs to be either a symbol or a TextualGroup. Instead got #{group_symbol}"
+        end
 
         locals = group_result.locals
         case locals[:component]

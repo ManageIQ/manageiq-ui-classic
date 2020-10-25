@@ -557,11 +557,6 @@ class CloudVolumeController < ApplicationController
 
   private
 
-  def textual_group_list
-    [%i[properties relationships], %i[tags]]
-  end
-  helper_method :textual_group_list
-
   def form_params
     options = copy_params_if_set({}, params, %i[name size cloud_tenant_id vm_id device_path])
     options[:volume_type] = params[:volume_type] if params[:volume_type]

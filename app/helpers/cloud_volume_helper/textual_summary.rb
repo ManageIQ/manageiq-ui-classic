@@ -3,106 +3,81 @@ module CloudVolumeHelper::TextualSummary
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
   include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::NewTextualSummary
 
-  def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[name size bootable description status])
-  end
+  # old name for backward-compatibility
+  def textual_group_list
+    textual_summary do
+      textual_big_group do
+        textual_group "Properties" do
+          function_textual_field :name
+          textual_field :label => _("Size"), :value => number_to_human_size(@record.size, :precision => 2)
+          textual_field :label => _('Bootable'), :value => @record.bootable.to_s
+          function_textual_field :description
+          textual_field :label => _('Status'), :value => @record.status.to_s
+        end
 
-  def textual_group_relationships
-    TextualGroup.new(
-      _("Relationships"),
-      %i[
-        parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
-        cloud_volume_snapshots attachments custom_button_events
-      ]
-    )
-  end
+        textual_group "Relationships" do
+          hash_textual_field textual_link(
+                                 @record.ext_management_system.try(:parent_manager),
+                                 :label => _("Parent Cloud Provider"),)
+          hash_textual_field textual_link(@record.ext_management_system)
 
-  def textual_size
-    {:label => _("Size"), :value => number_to_human_size(@record.size, :precision => 2)}
-  end
+          textual_field(
+              :label => _('Availability Zone'),
+              :icon => "pficon pficon-zone",
+              :value => (@record.availability_zone.nil? ? _("None") : @record.availability_zone.name)) do
+            textual_field_link(
+                :title => _("Show this Volume's Availability Zone"),
+                :link => url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => @record.availability_zone),
+                :show_condition => @record.availability_zone && role_allows?(:feature => "availability_zone_show"))
+          end
+          textual_field(
+              :label => _('Cloud Tenants'),
+              :icon => "pficon pficon-cloud-tenant",
+              :value => (@record.cloud_tenant.nil? ? _("None") : @record.cloud_tenant.name)) do
+            textual_field_link(
+                :link => url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => @record.cloud_tenant),
+                :title => _("Show this Volume's Cloud Tenants"),
+                :show_condition => @record.cloud_tenant && role_allows?(:feature => "cloud_tenant_show"))
+          end
 
-  def textual_bootable
-    {:label => _('Bootable'), :value => @record.bootable.to_s}
-  end
 
-  def textual_status
-    {:label => _('Status'), :value => @record.status.to_s}
-  end
+          textual_field(
+              :label => _('Base Snapshot'),
+              :icon => "fa fa-camera",
+              :value => @record.respond_to?(:base_snapshot) ? @record.base_snapshot : _("None")) do
+            textual_field_link(
+                :link => url_for_only_path(:controller => 'cloud_volume_snapshot', :action => 'show', :id => @record.base_snapshot),
+                :title => _("Show this Volume's Base Snapshot"),
+                :show_condition => @record.respond_to?(:base_snapshot) && @record.base_snapshot.present? && role_allows?(:feature => "cloud_volume_snapshot_show"))
+          end
 
-  def textual_parent_ems_cloud
-    textual_link(@record.ext_management_system.try(:parent_manager), :label => _("Parent Cloud Provider"))
-  end
+          textual_field :label => _('Cloud Volume Backups'),
+                        :value => @record.number_of(:cloud_volume_backups),
+                        :icon => "pficon pficon-volume" do
+            textual_field_link :title => _("Show all Cloud Volume Backups"),
+                               :link => url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_backups'),
+                               :show_condition => @record.number_of(:cloud_volume_backups) > 0 && role_allows?(:feature => "cloud_volume_backup_show_list")
+          end
 
-  def textual_ems
-    textual_link(@record.ext_management_system)
-  end
+          textual_field :label => _('Cloud Volume Snapshots'), :icon => "fa fa-camera", :value => @record.number_of(:cloud_volume_snapshots) do
+            textual_field_link :title => _("Show all Cloud Volume Snapshots"),
+                               :link => url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_snapshots'),
+                               :show_condition => @record.number_of(:cloud_volume_snapshots) > 0 && role_allows?(:feature => "cloud_volume_snapshot_show_list")
+          end
 
-  def textual_availability_zone
-    availability_zone = @record.availability_zone
-    h = {
-      :label => _('Availability Zone'),
-      :icon  => "pficon pficon-zone",
-      :value => (availability_zone.nil? ? _("None") : availability_zone.name)
-    }
-    if availability_zone && role_allows?(:feature => "availability_zone_show")
-      h[:title] = _("Show this Volume's Availability Zone")
-      h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
+          textual_field :label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => @record.number_of(:attachments) do
+            textual_field_link :title => _("Show all attached Instances"),
+                               :link => url_for_only_path(:action => 'show', :id => @record, :display => 'instances'),
+                               :show_condition => @record.number_of(:attachments) > 0 && role_allows?(:feature => "vm_show_list")
+          end
+          function_textual_field :custom_button_events
+
+        end
+      end
+      textual_big_group { function_textual_group :tags }
     end
-    h
   end
 
-  def textual_base_snapshot
-    base_snapshot = @record.base_snapshot if @record.respond_to?(:base_snapshot)
-    h = {
-      :label => _('Base Snapshot'),
-      :icon  => "fa fa-camera",
-      :value => (base_snapshot.nil? ? _("None") : base_snapshot.name)
-    }
-    if base_snapshot && role_allows?(:feature => "cloud_volume_snapshot_show")
-      h[:title] = _("Show this Volume's Base Snapshot")
-      h[:link]  = url_for_only_path(:controller => 'cloud_volume_snapshot', :action => 'show', :id => base_snapshot)
-    end
-    h
-  end
-
-  def textual_cloud_tenant
-    cloud_tenant = @record.cloud_tenant if @record.respond_to?(:cloud_tenant)
-    h = {:label => _('Cloud Tenants'), :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
-    if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
-      h[:title] = _("Show this Volume's Cloud Tenants")
-      h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
-    end
-    h
-  end
-
-  def textual_cloud_volume_snapshots
-    num   = @record.number_of(:cloud_volume_snapshots)
-    h     = {:label => _('Cloud Volume Snapshots'), :icon => "fa fa-camera", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_volume_snapshot_show_list")
-      h[:title] = _("Show all Cloud Volume Snapshots")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_snapshots')
-    end
-    h
-  end
-
-  def textual_cloud_volume_backups
-    num   = @record.number_of(:cloud_volume_backups)
-    h     = {:label => _('Cloud Volume Backups'), :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_volume_backup_show_list")
-      h[:title] = _("Show all Cloud Volume Backups")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_backups')
-    end
-    h
-  end
-
-  def textual_attachments
-    num   = @record.number_of(:attachments)
-    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
-      h[:title] = _("Show all attached Instances")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-    end
-    h
-  end
 end
