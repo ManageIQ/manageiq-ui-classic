@@ -30,64 +30,93 @@ class TextualSummaryContext < BaseContext
 
   # big group
   def textual_big_group(&block)
-    @current_big_group = []
+    big_group_context = TextualBigGroupContext.new(@bind_obj, @record)
     if block_given?
-      instance_eval &block
+      big_group_context.instance_eval &block
     end
-    @big_groups.push @current_big_group
-    remove_instance_variable :@current_big_group
+    @big_groups.push big_group_context.result
   end
 
-  # group
+
+end
+
+class TextualBigGroupContext < BaseContext
+  def initialize(context_bind, record)
+    super
+    @groups = []
+  end
+
+  def result
+    @groups
+  end
+
   def textual_group(name, condition: true, &block)
     if condition
-      @current_group = []
+      textual_group_context = TextualGroupContext.new @bind_obj, @record, name
       if block_given?
-        instance_eval &block
+        textual_group_context.instance_eval &block
       end
-      @current_big_group.push TextualGroup.new(_(name), @current_group)
-      remove_instance_variable :@current_group
+      @groups.push textual_group_context.result
     end
   end
 
   def function_textual_group(group_symbol)
-    @current_big_group.push(group_symbol)
+    @groups.push(group_symbol)
+  end
+end
+
+class TextualGroupContext < BaseContext
+  def initialize(context_bind, record, name)
+    super context_bind, record
+    @name = name
+    @fields = []
   end
 
-  # field
+  def result
+    TextualGroup.new(_(@name), @fields)
+  end
 
+  def hash_textual_field(field_hash)
+    @fields.push(field_hash)
+  end
+
+  def function_textual_field(field_symbol)
+    @fields.push(field_symbol)
+  end
 
   def textual_field(value:, label:, icon: nil, title: nil, link: nil, &block)
-    @current_field = {:value => value, :label => label}.merge(
-        {:icon => icon, :title => title, :link => link}.compact)
+    textual_field_context = TextualFieldContext.new(@bind_obj, @record, :value => value, :label => label,
+                                                    :icon => icon, :title => title, :link => link)
 
     if block_given? and not value.nil?
-      instance_eval &block
+      textual_field_context.instance_eval &block
     end
 
-    @current_group.push({:value => display,
-                         :label => label}.merge(
-        {:icon => icon, :title => title, :link => link}.compact))
+    @fields.push(textual_field_context.result)
+  end
+end
+
+class TextualFieldContext < BaseContext
+  def initialize(context_bind, record, value:, label:, icon: nil, title: nil, link: nil, &block)
+    super context_bind, record
+    @field_hash = {:value => value, :label => label}.merge(
+        {:icon => icon, :title => title, :link => link}.compact)
+  end
+
+  def result
+    @field_hash
   end
 
   ##
   # @param show_condition whether to display the link
   def textual_field_link(link:, title:, show_condition: true)
     if show_condition
-      @current_field[:link] = link
-      @current_field[:title] = title
+      @field_hash[:link] = link
+      @field_hash[:title] = title
     end
   end
 
-  def hash_textual_field(field_hash)
-    @current_group.push(field_hash)
-  end
-
-  def function_textual_field(field_symbol)
-    @current_group.push(field_symbol)
-  end
 end
-
 
 module TextualMixins::NewTextualSummary
   def textual_summary(&block)
