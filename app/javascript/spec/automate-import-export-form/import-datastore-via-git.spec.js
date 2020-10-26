@@ -37,7 +37,7 @@ describe('Import datastore via git component', () => {
     const expectedCall = expect.arrayContaining([
       '/miq_ae_tools/retrieve_git_datastore',
       expect.objectContaining({
-        body: '{"git_verify_ssl":true,"git_url":"http://"}',
+        body: '{"git_url":"http://","git_verify_ssl":true}',
       }),
     ]);
     setImmediate(() => {
