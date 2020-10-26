@@ -7,6 +7,7 @@ import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
+import EditingContext from './editing-context';
 import ProtocolSelector from './protocol-selector';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
@@ -71,8 +72,6 @@ const typeSelectField = (edit, filter, setState) => ({
     fields: [firstField, ...fields],
   }))),
 });
-
-export const EditingContext = React.createContext({});
 
 const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const edit = !!providerId;

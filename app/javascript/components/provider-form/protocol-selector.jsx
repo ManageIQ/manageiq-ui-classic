@@ -3,7 +3,7 @@ import { get } from 'lodash';
 
 import componentMapper from '../../forms/mappers/componentMapper';
 import { useFormApi, useFieldApi, componentTypes } from '@@ddf';
-import { EditingContext } from './index';
+import EditingContext from './editing-context';
 
 const Select = componentMapper[componentTypes.SELECT];
 
