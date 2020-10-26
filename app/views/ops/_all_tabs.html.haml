@@ -4,7 +4,7 @@
   - when :settings_tree
     - if selected?(x_node, "z")
       = render :partial => "layouts/flash_msg"
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         = miq_tab_header("settings_evm_servers", @sb[:active_tab]) do
           = _("Zone")
         = miq_tab_header("settings_smartproxy_affinity", @sb[:active_tab]) do
@@ -21,7 +21,7 @@
     - elsif selected?(x_node, "svr")
       = render :partial => "layouts/flash_msg"
       - cur_svr_id = x_node.split("-").last.to_i
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         = miq_tab_header("settings_server", @sb[:active_tab]) do
           = _("Server")
         = miq_tab_header("settings_authentication", @sb[:active_tab]) do
@@ -52,7 +52,7 @@
             = render :partial => "settings_list_tab"
       - else
         = render(:partial => "layouts/flash_msg")
-        %ul.nav.nav-tabs
+        %ul.nav.nav-tabs{'role' => 'tablist'}
           = miq_tab_header("settings_details", @sb[:active_tab]) do
             = _("Details")
           = miq_tab_header("settings_cu_collection", @sb[:active_tab]) do
@@ -107,7 +107,7 @@
     -# Diagnostics
   - when :diagnostics_tree
     - if x_node.split("-")[0] == "z"
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         = miq_tab_header("diagnostics_roles_servers", @sb[:active_tab]) do
           = _("Roles by Servers")
         = miq_tab_header("diagnostics_servers_roles", @sb[:active_tab]) do
@@ -130,7 +130,7 @@
         = miq_tab_content("diagnostics_cu_repair", @sb[:active_tab]) do
           = render :partial => "diagnostics_cu_repair_tab"
     - elsif x_node.split("-")[0] == "svr"
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         - if @sb[:selected_server_id] == my_server.id || @selected_server.started?
           = miq_tab_header("diagnostics_summary", @sb[:active_tab]) do
             = _("Summary")
@@ -170,7 +170,7 @@
         = miq_tab_content("diagnostics_timelines", @sb[:active_tab]) do
           = render :partial => "diagnostics_timelines_tab"
     - else
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         = miq_tab_header("diagnostics_zones", @sb[:active_tab]) do
           = _("Zones")
         - if super_admin_user?

@@ -1,12 +1,12 @@
 - if @tabs
-  %ul{:class => "nav nav-tabs #{@layout == 'dashboard' ? 'nav-tabs-pf' : nil}"}
+  %ul{'role' => 'tablist', :class => "nav nav-tabs #{@layout == 'dashboard' ? 'nav-tabs-pf' : nil}"}
     - @tabs.each do |tab|
       - if tab[0] == @active_tab
-        %li.active
+        %li.active{'role' => 'tab', 'aria-selected' => "true"}
           %a
             = h(tab[1])
       - else
-        %li
+        %li{'role' => 'tab', 'aria-selected' => "false"}
           - if tab[0] == ""
             %a= h(tab[1])
           - else
