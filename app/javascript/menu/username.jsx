@@ -9,14 +9,14 @@ const Username = ({ applianceName, currentUser, expanded }) => {
   return (
     <div className="menu-user" data-userid={currentUser.userid} title={title}>
       { expanded && (
-        <SideNavItem className="padded vertical-center">
+        <SideNavItem className="padded collapse_icon">
           <span>
             {currentUser.name}
           </span>
         </SideNavItem>
       )}
       { expanded || (
-        <SideNavItem className="padded vertical-center">
+        <SideNavItem className="padded collapse_icon">
           <UserAvatar20 />
         </SideNavItem>
       )}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Dropdown from 'carbon-components-react/es/components/Dropdown';
 import SideNavItem from 'carbon-components-react/es/components/UIShell/SideNavItem';
 import { Collaborate20 } from '@carbon/icons-react';
+import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
 const { miqChangeGroup } = window;
 
@@ -24,13 +25,18 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
   };
 
   const collapsed = (
-    <SideNavItem className="padded vertical-center">
-      <Collaborate20 />
+    <SideNavItem className="padded collapse_icon">
+      <TooltipIcon
+        direction="right"
+        tooltipText={`${__('Current group:')} ${currentOption.label}`}
+      >
+        <Collaborate20 />
+      </TooltipIcon>
     </SideNavItem>
   );
 
   const singleGroup = (
-    <SideNavItem className="padded vertical-center">
+    <SideNavItem className="padded collapse_icon">
       {currentOption.label}
     </SideNavItem>
   );
@@ -51,7 +57,6 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
   return (
     <div
       className="menu-group"
-      title={`${__('Current group:')} ${currentOption.label}`}
     >
       { isExpanded ? expanded : collapsed }
     </div>

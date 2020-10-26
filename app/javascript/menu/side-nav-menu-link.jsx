@@ -4,11 +4,13 @@ import { SideNavIcon, SideNavItem } from 'carbon-components-react/es/components/
 import Link from 'carbon-components-react/es/components/UIShell/Link';
 import { ChevronRight20 } from '@carbon/icons-react';
 import cx from 'classnames';
+import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
 // SideNavLink with a chevron from SideNavMenu instead of SideNavLinkText
 // has an onClick, not items like SideNavMenu
 
 const SideNavMenuLink = ({
+  expanded,
   forceHover,
   id,
   isActive,
@@ -27,7 +29,15 @@ const SideNavMenuLink = ({
       <Link className={className} onClick={onClick} onKeyPress={onClick} tabIndex="0">
         {IconElement && (
           <SideNavIcon small>
-            <IconElement />
+            {expanded && (<IconElement />)}
+            {!expanded && (
+              <TooltipIcon
+                direction="right"
+                tooltipText={title}
+              >
+                <IconElement />
+              </TooltipIcon>
+            )}
           </SideNavIcon>
         )}
 
@@ -44,6 +54,7 @@ const SideNavMenuLink = ({
 };
 
 SideNavMenuLink.propTypes = {
+  expanded: PropTypes.bool.isRequired,
   forceHover: PropTypes.bool,
   id: PropTypes.string.isRequired,
   isActive: PropTypes.bool,

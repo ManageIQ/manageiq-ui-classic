@@ -5,13 +5,14 @@ import SideNavMenuLink from './side-nav-menu-link';
 import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
 
-const mapItems = (items, { activeSection, setSection }) => items.map(item => (
+const mapItems = (items, expanded, { activeSection, setSection }) => items.map(item => (
   item.items.length ? (
     <MenuSection
       key={item.id}
       {...item}
       hover={item.id === activeSection}
       setSection={setSection}
+      expanded={expanded}
     />
   ) : (
     <MenuItem key={item.id} {...item} />
@@ -44,9 +45,10 @@ MenuItem.defaultProps = {
 };
 
 const MenuSection = ({
-  active, hover, icon, id, items, title, setSection,
+  active, expanded, hover, icon, id, items, title, setSection,
 }) => (
   <SideNavMenuLink
+    expanded={expanded}
     id={itemId(id, true)}
     isActive={active}
     forceHover={hover}
@@ -59,8 +61,10 @@ const MenuSection = ({
   />
 );
 
+
 MenuSection.propTypes = {
   active: PropTypes.bool,
+  expanded: PropTypes.bool.isRequired,
   hover: PropTypes.bool,
   icon: PropTypes.string,
   id: PropTypes.string.isRequired,
@@ -76,14 +80,17 @@ MenuSection.defaultProps = {
 };
 
 
-const FirstLevel = ({ activeSection, menu, setSection }) => (
+const FirstLevel = ({
+  activeSection, expanded, menu, setSection,
+}) => (
   <SideNavItems className="menu-items">
-    {mapItems(menu, { setSection, activeSection })}
+    {mapItems(menu, expanded, { setSection, activeSection })}
   </SideNavItems>
 );
 
 FirstLevel.propTypes = {
   activeSection: PropTypes.string,
+  expanded: PropTypes.bool.isRequired,
   menu: PropTypes.any.isRequired,
   setSection: PropTypes.func.isRequired,
 };

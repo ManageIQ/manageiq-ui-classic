@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Search from 'carbon-components-react/es/components/Search';
 import { Search20 } from '@carbon/icons-react';
 import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
+import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
 export const flatten = (menuItems = []) => {
   const flat = [];
@@ -26,11 +27,26 @@ export const flatten = (menuItems = []) => {
   return flat;
 };
 
-const MenuSearch = ({ expanded, menu, onSearch }) => {
+const MenuSearch = ({
+  expanded, menu, onSearch, toggle,
+}) => {
   if (!expanded) {
     return (
       <SideNavItem className="padded menu-search vertical-center">
-        <Search20 />
+        <div
+          tabIndex="0"
+          className="search_div"
+          role="button"
+          onClick={toggle}
+          onKeyPress={toggle}
+        >
+          <TooltipIcon
+            direction="right"
+            tooltipText={__('Find')}
+          >
+            <Search20 />
+          </TooltipIcon>
+        </div>
       </SideNavItem>
     );
   }
@@ -63,8 +79,8 @@ const MenuSearch = ({ expanded, menu, onSearch }) => {
     <SideNavItem className="padded menu-search">
       <Search
         size="sm"
-        placeHolderText={__("Find")}
-        labelText={__("Find") /* hidden in css */}
+        placeHolderText={__('Find')}
+        labelText={__('Find') /* hidden in css */}
         onChange={event => searchResults(event.target.value)}
       />
     </SideNavItem>
@@ -77,10 +93,12 @@ MenuSearch.propTypes = {
     title: PropTypes.string.isRequired,
   })).isRequired,
   onSearch: PropTypes.func,
+  toggle: PropTypes.func,
 };
 
 MenuSearch.defaultProps = {
   onSearch: () => null,
+  toggle: () => null,
 };
 
 export default MenuSearch;
