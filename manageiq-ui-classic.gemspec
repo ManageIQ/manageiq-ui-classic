@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "coffee-rails"
   s.add_dependency "font-fabulous", "~> 1.0.5"
+  s.add_dependency "hamlit", "~> 2.11.0"
   s.add_dependency "high_voltage", "~> 3.0.0"
   s.add_dependency "more_core_extensions", ">= 3.2", "< 5"
   s.add_dependency "novnc-rails", "~>0.2"
