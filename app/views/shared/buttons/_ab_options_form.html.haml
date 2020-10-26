@@ -9,7 +9,7 @@
       .col-md-8
         - if @edit
           = select_tag('button_type',
-                options_for_select(CustomButton::TYPES.invert, @edit[:new][:button_type]),
+                options_for_select(CustomButton::TYPES.invert.map{|request, index| [_(request), index]}, @edit[:new][:button_type]),
                 :class => "selectpicker")
           :javascript
                 miqInitSelectPicker();
