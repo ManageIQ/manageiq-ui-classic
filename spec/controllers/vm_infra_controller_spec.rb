@@ -644,15 +644,6 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
-  it "render creation snapshot flash message" do
-    session[:edit] = {:explorer => true}
-    post :snap_vm, :params => {:name        => "test",
-                               :description => "test",
-                               :button      => "create",
-                               :id          => vm_vmware.id}
-    expect(assigns(:flash_array).first[:message]).to include("Create Snapshot")
-  end
-
   context 'simple searching' do
     let(:vm1) { FactoryBot.create(:vm_vmware, :name => 'foobar') }
     let(:vm2) { FactoryBot.create(:vm_vmware, :name => 'barbar') }

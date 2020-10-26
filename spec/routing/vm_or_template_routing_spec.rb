@@ -88,7 +88,6 @@ describe VmOrTemplateController do
     scan_histories
     sections_field_changed
     snap_pressed
-    snap_vm
     sort_ds_grid
     sort_host_grid
     sort_iso_img_grid

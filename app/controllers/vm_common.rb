@@ -367,7 +367,6 @@ module VmCommon
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @name = @description = ""
     @in_a_form = true
-    @show_snapshot_memory_checkbox = show_snapshot_memory_checkbox?(@vm)
     drop_breadcrumb(:name    => _("Snapshot VM '%{name}'") % {:name => @record.name},
                     :url     => "/vm_common/snap",
                     :display => "snapshot_info")
@@ -391,58 +390,6 @@ module VmCommon
       javascript_flash(:spinner_off => true)
     else
       render :action => "snap"
-    end
-  end
-
-  def show_snapshot_memory_checkbox?(vm)
-    return true unless vm.respond_to?(:snapshotting_memory_allowed?)
-    vm.snapshotting_memory_allowed?
-  end
-
-  def snap_vm
-    @vm = @record = identify_record(params[:id], VmOrTemplate)
-    if params["cancel"] || params[:button] == "cancel"
-      add_flash(_("Snapshot of VM %{name} was cancelled by the user") % {:name => @record.name})
-      if session[:edit] && session[:edit][:explorer]
-        @_params[:display] = "snapshot_info"
-        show
-      else
-        flash_to_session
-        redirect_to(:action => @lastaction, :id => @record.id)
-      end
-    elsif params["create.x"] || params[:button] == "create"
-      @name = params[:name]
-      @description = params[:description]
-      if params[:name].blank? && !@record.try(:snapshot_name_optional?)
-        render_missing_field(session, "Name")
-      elsif params[:description].blank? && @record.try(:snapshot_description_required?)
-        render_missing_field(session, "Description")
-      else
-        flash_error = false
-        begin
-          Vm.process_tasks(:ids         => [@record.id],
-                           :task        => "create_snapshot",
-                           :userid      => session[:userid],
-                           :name        => params[:name],
-                           :description => params[:description],
-                           :memory      => params[:snap_memory] == "true")
-        rescue => bang
-          puts bang.backtrace.join("\n")
-          flash = _("Error during 'Create Snapshot': %{message}") % {:message => bang.message}
-          flash_error = true
-        else
-          flash = _("Create Snapshot for VM and Instance \"%{name}\" was started") % {:name => @record.name}
-        end
-        add_flash(flash, flash_error ? :error : :success)
-        params[:id] = @record.id.to_s # reset id in params for show
-        if session[:edit] && session[:edit][:explorer]
-          @_params[:display] = "snapshot_info"
-          show
-        else
-          flash_to_session
-          redirect_to(:action => @lastaction, :id => @record.id, :display => "snapshot_info")
-        end
-      end
     end
   end
 
