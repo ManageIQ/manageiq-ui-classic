@@ -203,7 +203,7 @@ describe PhysicalStorageHelper::TextualSummary do
 
     it 'show the storage physical rack' do
       expect(subject).to eq(
-        :label => "Physical Rack",
+        :label => "Physical Racks",
         :value => "Rack XYZ",
         :icon  => "pficon pficon-enterprise",
         :image => nil
