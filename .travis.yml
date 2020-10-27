@@ -1,5 +1,4 @@
 ---
-dist: xenial
 language: ruby
 python: '2.7'
 rvm:
