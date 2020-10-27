@@ -1,45 +1,91 @@
 describe AnsibleCredentialHelper::TextualSummary do
   include_examples "textual_group_smart_management"
-  include_examples "textual_group", "Properties", %i(name type created updated)
-  include_examples "textual_group", "Relationships", %i(repositories)
+  include_examples "textual_group", "Properties", %i[name type created updated]
+  include_examples "textual_group", "Relationships", %i[repositories]
 
   class TestClass
-    API_ATTRIBUTES = {
-      :userid          => {
-        :label     => N_('Username'),
-        :help_text => N_('Username for this credential')
+    API_ATTRIBUTES = [
+      {
+        :component  => 'text-field',
+        :label      => N_('Username'),
+        :helperText => N_('Username for this credential'),
+        :name       => 'userid',
+        :id         => 'userid',
       },
-      :password        => {
-        :type      => :password,
-        :label     => N_('Password'),
-        :help_text => N_('Password for this credential')
+      {
+        :component  => 'password-field',
+        :label      => N_('Password'),
+        :helperText => N_('Password for this credential'),
+        :name       => 'password',
+        :id         => 'password',
+        :type       => 'password',
       },
-      :ssh_key_data    => {
-        :type      => :password,
-        :multiline => true,
-        :label     => N_('Private key'),
-        :help_text => N_('RSA or DSA private key to be used instead of password')
+      {
+        :component      => 'password-field',
+        :label          => N_('Private key'),
+        :helperText     => N_('RSA or DSA private key to be used instead of password'),
+        :componentClass => 'textarea',
+        :name           => 'ssh_key_data',
+        :id             => 'ssh_key_data',
+        :type           => 'password',
       },
-      :become_method   => {
-        :type      => :choice,
-        :label     => N_('Privilege Escalation'),
-        :help_text => N_('Privilege escalation method'),
-        :choices   => ['', 'sudo', 'su', 'pbrun', 'pfexec']
+      {
+        :component  => 'password-field',
+        :label      => N_('Private key passphrase'),
+        :helperText => N_('Passphrase to unlock SSH private key if encrypted'),
+        :name       => 'ssh_key_unlock',
+        :id         => 'ssh_key_unlock',
+        :maxLength  => 1024,
+        :type       => 'password',
       },
-      :become_username => {
-        :type       => :string,
+      {
+        :component   => 'select',
+        :label       => N_('Privilege Escalation'),
+        :helperText  => N_('Privilege escalation method'),
+        :name        => 'become_method',
+        :id          => 'become_method',
+        :type        => 'choice',
+        :isClearable => true,
+        :options     => %w[
+          sudo
+          su
+          pbrum
+          pfexec
+          doas
+          dzdo
+          pmrun
+          runas
+          enable
+          ksu
+          sesu
+          machinectl
+        ].map { |item| {:label => item, :value => item} },
+      },
+      {
+        :component  => 'text-field',
         :label      => N_('Privilege Escalation Username'),
-        :help_text  => N_('Privilege escalation username'),
-        :max_length => 1024
-      }
-    }.freeze
+        :helperText => N_('Privilege escalation username'),
+        :name       => 'become_username',
+        :id         => 'become_username',
+        :maxLength  => 1024,
+      },
+      {
+        :component  => 'password-field',
+        :label      => N_('Privilege Escalation Password'),
+        :helperText => N_('Password for privilege escalation method'),
+        :name       => 'become_password',
+        :id         => 'become_password',
+        :maxLength  => 1024,
+        :type       => 'password',
+      },
+    ].freeze
   end
 
   describe "#textual_group_options" do
     before { @record = TestClass.new }
 
     it "doesn't return options for password types" do
-      expect(textual_group_options.items).to match_array(%i[userid become_method become_username])
+      expect(textual_group_options.items).to(match_array(%i[userid become_method become_username]))
     end
 
     context "defines the textual methods" do
@@ -50,19 +96,19 @@ describe AnsibleCredentialHelper::TextualSummary do
   end
 
   describe "#attribute_value (private)" do
-    it "returns an attributes value" do
-      rec = double(:thing => "stuff", :options => nil)
-      expect(send(:attribute_value, :thing, rec)).to eq("stuff")
+    it "returns a sinmple value" do
+      rec = {'thing' => "stuff"}
+      expect(send(:attribute_value, 'thing', rec)).to(eq("stuff"))
     end
 
-    it "returns an options value" do
-      rec = double(:options => {:thing => "stuff"})
-      expect(send(:attribute_value, :thing, rec)).to eq("stuff")
+    it "returns deeply stored value" do
+      rec = {'foo' => {'bar' => 'baz'}}
+      expect(send(:attribute_value, 'foo.bar', rec)).to(eq("baz"))
     end
 
     it "returns nil if a key isn't present" do
-      rec = double(:secret => "password", :options => nil)
-      expect(send(:attribute_value, :thing, rec)).to be_nil
+      rec = {}
+      expect(send(:attribute_value, 'foo.bar', rec)).to(be_nil)
     end
   end
 end

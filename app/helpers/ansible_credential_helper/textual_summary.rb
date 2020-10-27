@@ -12,16 +12,16 @@ module AnsibleCredentialHelper::TextualSummary
   def textual_group_options
     options = []
 
-    @record.class::API_ATTRIBUTES.each do |key, value|
-      next if value[:type] == :password
+    DDF.traverse(:fields => @record.class::API_ATTRIBUTES) do |field|
+      next if field[:type].to_s == 'password' || field[:name].nil?
 
-      options << key
+      options << field[:name].to_sym
 
-      define_singleton_method "textual_#{key}" do
+      define_singleton_method "textual_#{field[:name]}" do
         {
-          :label => _(value[:label]),
-          :title => _(value[:help_text]),
-          :value => attribute_value(key, @record)
+          :label => _(field[:label]),
+          :title => _(field[:helperText]),
+          :value => attribute_value(field[:name], @record)
         }
       end
     end
@@ -30,7 +30,7 @@ module AnsibleCredentialHelper::TextualSummary
   end
 
   def attribute_value(key, rec)
-    (rec.try(key) || rec.options.try(:[], key)).presence
+    key.split('.').reduce(rec) { |obj, chunk| obj.send(:try, :[], chunk) }
   end
   private :attribute_value
 
