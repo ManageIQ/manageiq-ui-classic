@@ -1,11 +1,8 @@
-class BaseContext
+class BaseContext < SimpleDelegator
   def initialize(context_bind, record)
+    super context_bind.receiver
     @bind_obj = context_bind
     @record = record
-  end
-
-  def method_missing(m, *args, &block)
-    @bind_obj.receiver.__send__(m, *args, &block)
   end
 
   def result
