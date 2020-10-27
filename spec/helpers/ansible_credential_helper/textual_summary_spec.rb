@@ -1,7 +1,7 @@
 describe AnsibleCredentialHelper::TextualSummary do
   include_examples "textual_group_smart_management"
-  include_examples "textual_group", "Properties", %i(name type created updated)
-  include_examples "textual_group", "Relationships", %i(repositories)
+  include_examples "textual_group", "Properties", %i[name type created updated]
+  include_examples "textual_group", "Relationships", %i[repositories]
 
   class TestClass
     API_ATTRIBUTES = [
@@ -39,14 +39,14 @@ describe AnsibleCredentialHelper::TextualSummary do
         :type       => 'password',
       },
       {
-        :component        => 'select',
-        :label            => N_('Privilege Escalation'),
-        :helperText       => N_('Privilege escalation method'),
-        :name             => 'become_method',
-        :id               => 'become_method',
-        :type             => 'choice',
-        :isClearable      => true,
-        :options          => %w[
+        :component   => 'select',
+        :label       => N_('Privilege Escalation'),
+        :helperText  => N_('Privilege escalation method'),
+        :name        => 'become_method',
+        :id          => 'become_method',
+        :type        => 'choice',
+        :isClearable => true,
+        :options     => %w[
           sudo
           su
           pbrum
@@ -85,7 +85,7 @@ describe AnsibleCredentialHelper::TextualSummary do
     before { @record = TestClass.new }
 
     it "doesn't return options for password types" do
-      expect(textual_group_options.items).to match_array(%i[userid become_method become_username])
+      expect(textual_group_options.items).to(match_array(%i[userid become_method become_username]))
     end
 
     context "defines the textual methods" do
@@ -97,18 +97,18 @@ describe AnsibleCredentialHelper::TextualSummary do
 
   describe "#attribute_value (private)" do
     it "returns a sinmple value" do
-      rec = { 'thing' => "stuff" }
-      expect(send(:attribute_value, 'thing', rec)).to eq("stuff")
+      rec = {'thing' => "stuff"}
+      expect(send(:attribute_value, 'thing', rec)).to(eq("stuff"))
     end
 
     it "returns deeply stored value" do
-      rec = { 'foo' => { 'bar' => 'baz' } }
-      expect(send(:attribute_value, 'foo.bar', rec)).to eq("baz")
+      rec = {'foo' => {'bar' => 'baz'}}
+      expect(send(:attribute_value, 'foo.bar', rec)).to(eq("baz"))
     end
 
     it "returns nil if a key isn't present" do
       rec = {}
-      expect(send(:attribute_value, 'foo.bar', rec)).to be_nil
+      expect(send(:attribute_value, 'foo.bar', rec)).to(be_nil)
     end
   end
 end
