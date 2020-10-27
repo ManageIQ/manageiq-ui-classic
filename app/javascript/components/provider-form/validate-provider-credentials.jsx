@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { pick } from 'lodash';
 
 import AsyncCredentials from '../async-credentials/async-credentials';
-import { EditingContext } from './index';
+import EditingContext from './editing-context';
 
 const ValidateProviderCredentials = ({ ...props }) => {
   const { providerId } = useContext(EditingContext);

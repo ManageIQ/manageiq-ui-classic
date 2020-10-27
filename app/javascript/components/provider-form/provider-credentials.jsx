@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useFormApi } from '@@ddf';
-import { EditingContext } from './index';
+import EditingContext from './editing-context';
 
 const ProviderCredentials = ({ fields }) => {
   const { providerId } = useContext(EditingContext);
