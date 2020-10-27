@@ -1,81 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './vm-server-relationship-form.schema';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-class VmServerRelationShipForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-    };
-  }
+const VmServerRelationShipForm = ({ recordId, redirect }) => {
+  const [{ isLoading, initialValues }, setState] = useState({ isLoading: true });
 
-  componentDidMount() {
-    const { serverId } = this.props;
-    API.get('/api/servers?expand=resources&sort_by=name&sort_order=desc')
-      .then(({ resources }) => {
-        const assignedServer = resources.find(({ id }) => id === serverId);
-        const serverHref = assignedServer ? assignedServer.href : undefined;
-        this.setState({
-          isLoading: false,
-          schema: createSchema([
-            { label: `<${__('Not a Server')}>` },
-            ...resources.map(({ href, name, id }) => ({ value: href, label: `${name} (${id})` })),
-          ]),
-          initialValues: {
-            serverId: serverHref,
-          },
-        });
-      });
-  }
+  const promise = useMemo(() => API.get('/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc'), [recordId]);
 
-  onSubmit = (values) => {
-    const { vmId } = this.props;
-    const submitUrl = `/vm_or_template/evm_relationship_update/${vmId}?button=save`;
-    return API.post(`/api/vms/${vmId}`, {
+  useEffect(() => {
+    promise.then(({ resources }) => {
+      const { id } = resources.find(({ vm_id: vmId }) => vmId === recordId) || {};
+      setState({ isLoading: false, initialValues: { serverId: id } });
+    });
+  }, [recordId]);
+
+  const onSubmit = ({ serverId: id }) => {
+    miqSparkleOn();
+
+    // The `miq_server` field always needs to be sent, even if the value is not set
+    API.post(`/api/vms/${recordId}`, {
       action: 'set_miq_server',
       resource: {
-        miq_server: { href: values.serverId || undefined },
+        miq_server: {
+          id,
+        },
       },
-    })
-      .then(() => miqAjaxButton(submitUrl));
-  }
+    }).then(() => {
+      miqRedirectBack(__('Management Engine Relationship saved'), 'success', redirect);
+    }).catch(miqSparkleOff);
+  };
 
-  render() {
-    const { vmId } = this.props;
-    const { initialValues, isLoading, schema } = this.state;
-    const cancelUrl = `/vm_or_template/evm_relationship_update/${vmId}?button=cancel`;
+  const onCancel = () => miqRedirectBack(__('Edit Management Engine Relationship was cancelled by the user'), 'warning', redirect);
 
-    if (isLoading) { return null; }
-
-    return (
-      <Grid fluid>
-        <MiqFormRenderer
-          initialValues={initialValues}
-          schema={schema}
-          onSubmit={this.onSubmit}
-          onReset={() => add_flash(__('All changes have been reset'), 'warn')}
-          onCancel={() => miqAjaxButton(cancelUrl)}
-          canReset
-          buttonsLabels={{
-            submitLabel: __('Save'),
-          }}
-        />
-      </Grid>
-    );
-  }
-}
-
-VmServerRelationShipForm.propTypes = {
-  vmId: PropTypes.string.isRequired,
-  serverId: PropTypes.string,
+  return !isLoading && (
+    <Grid fluid>
+      <MiqFormRenderer
+        initialValues={initialValues}
+        schema={createSchema(promise)}
+        onSubmit={onSubmit}
+        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+        onCancel={onCancel}
+        canReset
+        buttonsLabels={{
+          submitLabel: __('Save'),
+        }}
+      />
+    </Grid>
+  );
 };
 
-VmServerRelationShipForm.defaultProps = {
-  serverId: undefined,
+VmServerRelationShipForm.propTypes = {
+  recordId: PropTypes.string.isRequired,
+  redirect: PropTypes.string.isRequired,
 };
 
 export default VmServerRelationShipForm;
