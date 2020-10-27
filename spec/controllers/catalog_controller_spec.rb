@@ -1383,7 +1383,7 @@ describe CatalogController do
     let!(:record) { FactoryBot.create(:service_template, :description => 'XXX', :tenant => Tenant.root_tenant) }
 
     let(:report) do
-      FactoryGirl.create(:miq_report,
+      FactoryBot.create(:miq_report,
                          :name        => 'Catalog Items',
                          :db          => 'ServiceTemplate',
                          :title       => 'Catalog Items',

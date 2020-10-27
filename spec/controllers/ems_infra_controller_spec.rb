@@ -498,7 +498,7 @@ describe EmsInfraController do
     let!(:record) { FactoryBot.create(:ems_infra, :tenant => Tenant.root_tenant) }
 
     let(:report) do
-      FactoryGirl.create(:miq_report,
+      FactoryBot.create(:miq_report,
                          :name        => 'Infrastructure Providers',
                          :db          => 'EmsInfra',
                          :title       => 'Infrastructure Providers',

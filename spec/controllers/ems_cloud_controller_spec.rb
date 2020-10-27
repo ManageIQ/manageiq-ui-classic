@@ -261,7 +261,7 @@ describe EmsCloudController do
     let!(:record) { FactoryBot.create(:ems_cloud, :tenant => Tenant.root_tenant) }
 
     let(:report) do
-      FactoryGirl.create(:miq_report,
+      FactoryBot.create(:miq_report,
                          :name        => 'Cloud Providers',
                          :db          => 'EmsCloud',
                          :title       => 'Cloud Providers',
