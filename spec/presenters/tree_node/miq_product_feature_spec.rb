@@ -4,7 +4,7 @@ describe TreeNode::MiqProductFeature do
 
   let(:feature_type) { "tenant" }
 
-  let(:object) { FactoryGirl.build(:miq_product_feature, :tenant => tenant, :identifier => "dialog_edit_editor_tenant_#{tenant.id}", :feature_type => feature_type) }
+  let(:object) { FactoryBot.build(:miq_product_feature, :tenant => tenant, :identifier => "dialog_edit_editor_tenant_#{tenant.id}", :feature_type => feature_type) }
 
   context "feature type is view" do
     let(:feature_type) { "view" }

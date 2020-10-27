@@ -38,8 +38,8 @@ describe EmsInfraDashboardService do
         User.current_user = user_admin
         Timecop.travel(rollup_timestamp)
         MiqRegion.seed
-        FactoryGirl.create(:metric_rollup, :resource => @ems1, :capture_interval_name => 'daily', :derived_memory_used => 2.kilobytes, :timestamp => rollup_timestamp, :time_profile => time_profile)
-        FactoryGirl.create(:metric_rollup, :resource => @ems1, :capture_interval_name => 'daily', :derived_memory_used => 2.kilobytes, :timestamp => rollup_timestamp, :time_profile => other_time_profile)
+        FactoryBot.create(:metric_rollup, :resource => @ems1, :capture_interval_name => 'daily', :derived_memory_used => 2.kilobytes, :timestamp => rollup_timestamp, :time_profile => time_profile)
+        FactoryBot.create(:metric_rollup, :resource => @ems1, :capture_interval_name => 'daily', :derived_memory_used => 2.kilobytes, :timestamp => rollup_timestamp, :time_profile => other_time_profile)
       end
 
       after do
