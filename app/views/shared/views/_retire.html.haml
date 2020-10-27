@@ -1,5 +1,5 @@
 = react "RetirementForm", :retirementID => @retireitems.collect(&:id).map(&:to_s).to_json
-%retirement-form{'object-ids' => @retireitems.collect(&:id).map(&:to_s).to_json}
+-# %retirement-form{'object-ids' => @retireitems.collect(&:id).map(&:to_s).to_json}
 
 %h3
   - if request.parameters[:controller] == "service"

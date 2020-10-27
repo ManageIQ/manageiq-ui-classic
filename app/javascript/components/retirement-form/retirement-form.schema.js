@@ -11,7 +11,6 @@ const createSchema = () => ({
       name: 'formMode',
       label: __('Enter Retirement Date as'),
       isRequired: true,
-      initialValue: 'date',
       options: [
         { label: __('Specific Date and Time'), value: 'date' },
         { label: __('Time Delay from Now'), value: 'delay' }],
@@ -28,28 +27,24 @@ const createSchema = () => ({
         type: 'number',
         label: __('Months'),
         name: 'months',
-        placeholder: '0',
         initialValue: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Weeks'),
         name: 'weeks',
-        placeholder: '0',
         initialValue: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Days'),
         name: 'days',
-        placeholder: '0',
         initialValue: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Hours'),
         name: 'hours',
-        placeholder: '0',
         initialValue: 0,
       },
       ],
@@ -59,12 +54,14 @@ const createSchema = () => ({
       name: 'retirementDate',
       variant: 'date-time',
       label: __('Retirement Date and Time'),
+      condition: {
+        or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
+      },
     }, {
       component: 'select',
       id: 'retirementWarning',
       name: 'retirementWarning',
       label: __('Retirement Warning'),
-      initialValue: '',
       description: __('* Saving a blank date will remove all retirement dates'),
       options: [
         { label: __('None'), value: '' },

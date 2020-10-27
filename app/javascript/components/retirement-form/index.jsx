@@ -6,12 +6,14 @@ import { API, http } from '../../http_api';
 import handleFailure from '../../helpers/handle-failure';
 
 const RetirementForm = ({ retirementID }) => {
+  console.log(retirementID)
   const id = retirementID.split('"').filter(Number);
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!id,
     initialValues: {
       retirementDate: null,
       retirementWarning: '',
+      formMode: '',
     },
   });
 
@@ -29,29 +31,35 @@ const RetirementForm = ({ retirementID }) => {
 
   const onSubmit = (data) => {
     miqSparkleOn();
-    const date = data.formMode === 'delay' ? calculateDate(parseInt(data.months, 10), parseInt(data.weeks, 10), parseInt(data.days, 10), parseInt(data.hours, 10)) : data.retirement_date_datepicker;
+    const date = data.formMode === 'delay' ? calculateDate(parseInt(data.months, 10), parseInt(data.weeks, 10), parseInt(data.days, 10), parseInt(data.hours, 10)) : data.retirementDate;
     const request = data.formMode === 'delay'
       ? API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: data.retirementWarning } })
       : API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: data.retirementWarning } });
     request.then(() => {
       miqAjaxButton(saveURL, { retire_date: date, retire_warn: data.retirementWarning });
-      console.log(request);
     }).catch(miqSparkleOff);
   };
 
   useEffect(() => {
     if (id.length === 1) {
-      http.get(`/${ManageIQ.controller}/retirement_info/${id}`).then((res) => {
-        console.log(res);
+      http.get(`/service/retirement_info/${id}`).then((res) => {
+        console.log('Manage IQ Controller')
+        console.log(ManageIQ.controller);
         if (res.retirement_date != null) {
-          setState({
-            initialValues: {
+          console.log(res);
+          setState(prevState => ({
+            ...prevState,
+            isLoading: false,
+            initialValues: { ...prevState.initialValues, 
               retirementDate: new Date(res.retirement_date),
               retirementWarning: res.retirement_warning || '',
-            },
-          });
+              formMode: 'date',
+            }
+          }));
         }
-        setState({ isLoading: false });
+        else {
+          setState(prev => ({ ...prev, isLoading: false }))
+        }
       }).catch(
         handleFailure,
       );
