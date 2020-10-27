@@ -33,9 +33,16 @@ class TreeBuilderProtect < TreeBuilder
   def x_get_tree_hash_kids(parent, count_only)
     nodes = parent[:nodes].map do |policy|
       icon = policy.towhat.safe_constantize.try(:decorate).try(:fonticon)
+      mode = if policy.mode == "control"
+               _("Control")
+             elsif policy.mode == "compliance"
+               _("Compliance")
+             else
+               policy.mode.capitalize
+             end
       {
         :id           => "policy_#{policy.id}",
-        :text         => prefixed_title("#{ui_lookup(:model => policy.towhat)} #{policy.mode.capitalize}", policy.description),
+        :text         => prefixed_title("#{ui_lookup(:model => policy.towhat)} #{mode}", policy.description),
         :icon         => "#{icon}#{policy.active ? '' : ' fa-inactive'}",
         :tip          => policy.description,
         :hideCheckbox => true,
