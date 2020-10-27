@@ -4,6 +4,7 @@ import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-compon
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
+import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import { BreadcrumbsBar } from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
@@ -52,6 +53,7 @@ import PhysicalStorageForm from '../components/physical-storage-form';
 */
 
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
+ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
