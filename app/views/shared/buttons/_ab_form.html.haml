@@ -21,7 +21,7 @@
   = render :partial => "layouts/flash_msg"
 
   #custom_button_tabs
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header('ab_options_tab', @sb[:active_tab]) do
         = _('Options')
       = miq_tab_header('ab_advanced_tab', @sb[:active_tab]) do

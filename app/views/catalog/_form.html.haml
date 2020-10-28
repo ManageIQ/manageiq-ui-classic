@@ -1,5 +1,5 @@
 #st_form_tabs
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('basic', @sb[:st_form_active_tab]) do
       = _('Basic Info')
     = miq_tab_header('details', @sb[:st_form_active_tab]) do

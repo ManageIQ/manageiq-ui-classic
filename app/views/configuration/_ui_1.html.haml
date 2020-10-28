@@ -1,7 +1,7 @@
 - url = url_for_only_path(:action => "form_field_changed")
 = render :partial => "layouts/flash_msg"
 
-#tab_div
+%div{:id => @tabs[0][1], 'role' => 'tabpanel', 'aria-labelledby' =>"#{@tabs[0][1]}_tab"}
   = form_tag({:action => "update"},
              :id     => "config_form",
              :class  => "form-horizontal",

@@ -11,7 +11,7 @@
       .row
         .col-md-12.col-lg-12
           #dialog_tabs
-            %ul.nav.nav-tabs
+            %ul.nav.nav-tabs{'role' => 'tablist'}
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
                 - options = tab_index == 0 ? {:class => "active"} : {}
                 = miq_tab_header(tab.id, nil, options) do
