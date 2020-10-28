@@ -1,7 +1,5 @@
-class BaseContext < SimpleDelegator
-  def initialize(context_bind, record)
-    super context_bind.receiver
-    @bind_obj = context_bind
+class BaseContext
+  def initialize(record)
     @record = record
   end
 
@@ -16,7 +14,7 @@ class TextualSummaryContext < BaseContext
   include ApplicationHelper
   include ActionView::RoutingUrlFor
 
-  def initialize(context_bind, record)
+  def initialize(record)
     super
     @big_groups = []
   end
@@ -27,7 +25,7 @@ class TextualSummaryContext < BaseContext
 
   # big group
   def textual_big_group(&block)
-    big_group_context = TextualBigGroupContext.new(@bind_obj, @record)
+    big_group_context = TextualBigGroupContext.new(@record)
     if block_given?
       big_group_context.instance_eval &block
     end
@@ -38,7 +36,7 @@ class TextualSummaryContext < BaseContext
 end
 
 class TextualBigGroupContext < BaseContext
-  def initialize(context_bind, record)
+  def initialize(record)
     super
     @groups = []
   end
@@ -49,7 +47,7 @@ class TextualBigGroupContext < BaseContext
 
   def textual_group(name, condition: true, &block)
     if condition
-      textual_group_context = TextualGroupContext.new @bind_obj, @record, name
+      textual_group_context = TextualGroupContext.new @record, name
       if block_given?
         textual_group_context.instance_eval &block
       end
@@ -63,8 +61,8 @@ class TextualBigGroupContext < BaseContext
 end
 
 class TextualGroupContext < BaseContext
-  def initialize(context_bind, record, name)
-    super context_bind, record
+  def initialize(record, name)
+    super record
     @name = name
     @fields = []
   end
@@ -82,20 +80,20 @@ class TextualGroupContext < BaseContext
   end
 
   def textual_field(value:, label:, icon: nil, title: nil, link: nil, &block)
-    textual_field_context = TextualFieldContext.new(@bind_obj, @record, :value => value, :label => label,
+    textual_field_context = TextualFieldContext.new(@record, :value => value, :label => label,
                                                     :icon => icon, :title => title, :link => link)
 
     if block_given? and not value.nil?
       textual_field_context.instance_eval &block
+      @fields.push(textual_field_context.result)
     end
 
-    @fields.push(textual_field_context.result)
   end
 end
 
 class TextualFieldContext < BaseContext
-  def initialize(context_bind, record, value:, label:, icon: nil, title: nil, link: nil, &block)
-    super context_bind, record
+  def initialize(record, value:, label:, icon: nil, title: nil, link: nil, &block)
+    super record
     @field_hash = {:value => value, :label => label}.merge(
         {:icon => icon, :title => title, :link => link}.compact)
   end
@@ -117,8 +115,18 @@ end
 
 module TextualMixins::NewTextualSummary
   def textual_summary(&block)
-    context = TextualSummaryContext.new binding, @record
+    receiver = binding.receiver
+    delegated_methods = []
+    (receiver.methods - BaseContext.instance_methods).each do |method_symbol|
+      delegated_methods.push method_symbol
+      l_ = ->(*args, &block) { receiver.__send__(method_symbol, *args, &block) }
+      BaseContext.define_method method_symbol, l_
+    end
+
+    context = TextualSummaryContext.new @record
     context.instance_eval(&block)
+
+    delegated_methods.each { |method_symbol| BaseContext.undef_method(method_symbol) }
 
     context.result
   end
