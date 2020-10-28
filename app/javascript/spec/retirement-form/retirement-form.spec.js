@@ -7,7 +7,6 @@ import { act } from 'react-dom/test-utils';
 import { mount } from '../helpers/mountForm';
 import RetirementForm from '../../components/retirement-form/index';
 
-
 const retirementForm = require('../../components/retirement-form/index');
 describe('Retirement Form Component', () => {
   const retire = {
@@ -30,7 +29,7 @@ describe('Retirement Form Component', () => {
   });
 
   it('should render Retirement Form with a set retirement date', async(done) => {
-    fetchMock.get('/service/retirement_info/42', retire);
+    fetchMock.get(`/${ManageIQ.controller}/retirement_info/42`, retire);
     let wrapper;
     await act(async() => {
       wrapper = mount(<RetirementForm retirementID={'["42"]'} {...retire} />);

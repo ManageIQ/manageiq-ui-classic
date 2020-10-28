@@ -42,7 +42,7 @@ const RetirementForm = ({ retirementID }) => {
 
   useEffect(() => {
     if (id.length === 1) {
-      http.get(`/service/retirement_info/${id}`).then((res) => {
+      http.get(`/${ManageIQ.controller}/retirement_info/${id}`).then((res) => {
         console.log('Manage IQ Controller')
         console.log(ManageIQ.controller);
         if (res.retirement_date != null) {
