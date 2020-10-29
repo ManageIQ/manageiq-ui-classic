@@ -4,10 +4,8 @@ class BaseContext
   end
 
   def result
-
   end
 end
-
 
 class TextualSummaryContext < BaseContext
   # include TextualSummaryHelper
@@ -28,12 +26,11 @@ class TextualSummaryContext < BaseContext
   def textual_big_group(&block)
     big_group_context = TextualBigGroupContext.new(@record)
     if block_given?
-      big_group_context.instance_eval &block
+      big_group_context.instance_eval(&block)
     end
-    @big_groups.push big_group_context.result
+    @big_groups.push(big_group_context.result)
   end
 end
-
 
 class TextualBigGroupContext < BaseContext
   def initialize(record)
@@ -47,11 +44,11 @@ class TextualBigGroupContext < BaseContext
 
   def textual_group(name, condition: true, &block)
     if condition
-      textual_group_context = TextualGroupContext.new @record, name
+      textual_group_context = TextualGroupContext.new(@record, name)
       if block_given?
-        textual_group_context.instance_eval &block
+        textual_group_context.instance_eval(&block)
       end
-      @groups.push textual_group_context.result
+      @groups.push(textual_group_context.result)
     end
   end
 
@@ -60,10 +57,9 @@ class TextualBigGroupContext < BaseContext
   end
 end
 
-
 class TextualGroupContext < BaseContext
   def initialize(record, name)
-    super record
+    super(record)
     @name = name
     @fields = []
   end
@@ -72,9 +68,9 @@ class TextualGroupContext < BaseContext
     TextualGroup.new(_(@name), @fields)
   end
 
-  def hash_textual_field(condition= true, &block)
+  def hash_textual_field(condition = true, &block)
     if condition
-      @fields.push instance_eval &block
+      @fields.push(instance_eval(&block))
     end
   end
 
@@ -86,18 +82,19 @@ class TextualGroupContext < BaseContext
     textual_field_context = TextualFieldContext.new(@record, :value => value, :label => label,
                                                     :icon => icon, :title => title, :link => link)
 
-    if block_given? and not value.nil?
-      textual_field_context.instance_eval &block
+    if block_given? && value.present?
+      textual_field_context.instance_eval(&block)
       @fields.push(textual_field_context.result)
     end
   end
 end
 
 class TextualFieldContext < BaseContext
-  def initialize(record, value:, label:, icon: nil, title: nil, link: nil, &block)
-    super record
+  def initialize(record, value:, label:, icon: nil, title: nil, link: nil)
+    super(record)
     @field_hash = {:value => value, :label => label}.merge(
-        {:icon => icon, :title => title, :link => link}.compact)
+      {:icon => icon, :title => title, :link => link}.compact
+    )
   end
 
   def result
@@ -113,7 +110,6 @@ class TextualFieldContext < BaseContext
     end
   end
 end
-
 
 module TextualSummaryHelper
   def textual_link(target, **opts, &blk)
@@ -361,12 +357,12 @@ module TextualSummaryHelper
     receiver = binding.receiver
     delegated_methods = []
     (receiver.methods - BaseContext.instance_methods).each do |method_symbol|
-      delegated_methods.push method_symbol
+      delegated_methods.push(method_symbol)
       l_ = ->(*args, &block) { receiver.__send__(method_symbol, *args, &block) }
-      BaseContext.define_method method_symbol, l_
+      BaseContext.define_method(method_symbol, l_)
     end
 
-    context = TextualSummaryContext.new @record
+    context = TextualSummaryContext.new(@record)
     context.instance_eval(&block)
 
     delegated_methods.each { |method_symbol| BaseContext.undef_method(method_symbol) }

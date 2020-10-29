@@ -14,10 +14,10 @@ module PhysicalStorageHelper::TextualSummary
           textual_field :label => _("Description"), :value => @record.asset_detail&.description
         end
         textual_group "Relationships" do
-          hash_textual_field {textual_link(ExtManagementSystem.find(@record.ems_id))}
+          hash_textual_field { textual_link(ExtManagementSystem.find(@record.ems_id)) }
 
-          hash_textual_field @record.physical_rack_id.present? {textual_link(PhysicalRack.find(@record.physical_rack_id))}
-          hash_textual_field @record.physical_chassis_id.present? {textual_link(PhysicalChassis.find(@record.physical_chassis_id))}
+          hash_textual_field(@record.physical_rack_id.present?) { textual_link(PhysicalRack.find(@record.physical_rack_id)) }
+          hash_textual_field(@record.physical_chassis_id.present?) { textual_link(PhysicalChassis.find(@record.physical_chassis_id)) }
         end
 
         textual_group "Asset Details" do
@@ -29,7 +29,6 @@ module PhysicalStorageHelper::TextualSummary
           textual_field :label => _("Rack Name"), :value => @record.asset_detail&.rack_name
           textual_field :label => _("Lowest Rack Unit"), :value => @record.asset_detail&.lowest_rack_unit
         end
-
       end
     end
   end
