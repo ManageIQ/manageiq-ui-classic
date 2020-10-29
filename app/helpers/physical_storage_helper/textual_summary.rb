@@ -1,5 +1,4 @@
 module PhysicalStorageHelper::TextualSummary
-  include TextualMixins::NewTextualSummary
 
   def textual_group_list
     textual_summary do

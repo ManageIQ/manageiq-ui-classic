@@ -3,7 +3,6 @@ module CloudVolumeHelper::TextualSummary
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
   include TextualMixins::TextualCustomButtonEvents
-  include TextualMixins::NewTextualSummary
 
   # old name for backward-compatibility
   def textual_group_list
