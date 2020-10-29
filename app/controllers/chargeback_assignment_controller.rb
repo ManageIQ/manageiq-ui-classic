@@ -31,12 +31,13 @@ class ChargebackAssignmentController < ApplicationController
   def form_field_changed
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     get_form_vars
+    build_tabs
     render :update do |page|
       page << javascript_prologue
       except = %i[cbshow_typ cbtag_cat cblabel_key]
       changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
       prefix = @edit[:new][:type].downcase
-      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
+      page.replace("#{prefix}", :partial => "#{prefix}_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
     end
   end
@@ -59,10 +60,11 @@ class ChargebackAssignmentController < ApplicationController
       end
     end
     set_form_vars
+    build_tabs
     render :update do |page|
       page << javascript_prologue
       prefix = @edit[:new][:type].downcase
-      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments")
+      page.replace("#{prefix}", :partial => "#{prefix}_assignments")
     end
   end
 
