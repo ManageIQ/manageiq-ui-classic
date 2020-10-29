@@ -550,72 +550,76 @@ module OpsController::Settings::Schedules
   end
 
   def build_search_filter_from_params(action_typ, filter_typ, filter_value)
+    model         = action_typ.starts_with?("vm") ? "Vm" : "MiqTemplate"
+    resource_type = action_typ.split("_").first.capitalize
+    value         = filter_value.split("__").first
+    other_value   = filter_value.split("__").size == 1 ? "" : filter_value.split("__").last
+
     case action_typ
     when "storage"
       case filter_typ
-      when "ems"     then {"CONTAINS" => {"field" => "Storage.ext_management_systems-name", "value" => filter_value}}
-      when "host"    then {"CONTAINS" => {"field" => "Storage.hosts-name", "value" => filter_value}}
-      when "storage" then {"=" => {"field" => "Storage-name", "value" => filter_value}}
+      when "ems"     then {"CONTAINS" => {"field" => "Storage.ext_management_systems-name", "value" => value}}
+      when "host"    then {"CONTAINS" => {"field" => "Storage.hosts-name", "value" => value}}
+      when "storage" then {"=" => {"field" => "Storage-name", "value" => value}}
       else                {"IS NOT NULL" => {"field" => "Storage-name"}}
       end
     when "host"
       case filter_typ
       when "cluster"
-        if filter_value.present?
+        if value.present?
           {"AND" => [
-            {"=" => {"field" => "Host-v_owning_cluster", "value" => filter_value.split("__").first}},
-            {"=" => {"field" => "Host-v_owning_datacenter", "value" => filter_value.split("__").size == 1 ? "" : filter_value.split("__").last}}
+            {"=" => {"field" => "Host-v_owning_cluster", "value" => value}},
+            {"=" => {"field" => "Host-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ems"  then {"=" => {"field" => "Host.ext_management_system-name", "value" => filter_value}}
-      when "host" then {"=" => {"field" => "Host-name", "value" => filter_value}}
+      when "ems"  then {"=" => {"field" => "Host.ext_management_system-name", "value" => value}}
+      when "host" then {"=" => {"field" => "Host-name", "value" => value}}
       else             {"IS NOT NULL" => {"field" => "Host-name"}}
       end
     when "container_image", "container_image_check_compliance"
       case filter_typ
-      when "ems" then {"=" => {"field" => "ContainerImage.ext_management_system-name", "value" => filter_value}}
-      when "container_image" then {"=" => {"field" => "ContainerImage-name", "value" => filter_value}}
+      when "ems" then {"=" => {"field" => "ContainerImage.ext_management_system-name", "value" => value}}
+      when "container_image" then {"=" => {"field" => "ContainerImage-name", "value" => value}}
       else {"IS NOT NULL" => {"field" => "ContainerImage-name"}}
       end
     when "emscluster"
       case filter_typ
       when "cluster"
-        if filter_value.present?
+        if value.present?
           {"AND" => [
-            {"=" => {"field" => "EmsCluster-name", "value" => filter_value.split("__").first}},
-            {"=" => {"field" => "EmsCluster-v_parent_datacenter", "value" => filter_value.split("__").size == 1 ? "" : filter_value.split("__").last}}
+            {"=" => {"field" => "EmsCluster-name", "value" => value}},
+            {"=" => {"field" => "EmsCluster-v_parent_datacenter", "value" => other_value}}
           ]}
         end
-      when "ems" then {"=" => {"field" => "EmsCluster.ext_management_system-name", "value" => filter_value}}
+      when "ems" then {"=" => {"field" => "EmsCluster.ext_management_system-name", "value" => value}}
       else            {"IS NOT NULL" => {"field" => "EmsCluster-name"}}
       end
     when /check_compliance\z/
       case filter_typ
       when "cluster"
-        if filter_value.present?
+        if value.present?
           {"AND" => [
-            {"=" => {"field" => "#{action_typ.split("_").first.capitalize}-v_owning_cluster", "value" => filter_value.split("__").first}},
-            {"=" => {"field" => "#{action_typ.split("_").first.capitalize}-v_owning_datacenter", "value" => filter_value.split("__").size == 1 ? "" : filter_value.split("__").last}}
+            {"=" => {"field" => "#{resource_type}-v_owning_cluster", "value" => value}},
+            {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ems"  then {"=" => {"field" => "#{action_typ.split("_").first.capitalize}.ext_management_system-name", "value" => filter_value}}
-      when "host" then {"=" => {"field" => "Host-name", "value" => filter_value}}
-      when "vm"   then {"=" => {"field" => "Vm-name", "value" => filter_value}}
-      else             {"IS NOT NULL" => {"field" => "#{action_typ.split("_").first.capitalize}-name"}}
+      when "ems"  then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
+      when "host" then {"=" => {"field" => "Host-name", "value" => value}}
+      when "vm"   then {"=" => {"field" => "Vm-name", "value" => value}}
+      else             {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
       end
     else
-      model = action_typ.starts_with?("vm") ? "Vm" : "MiqTemplate"
       case filter_typ
       when "cluster"
-        if filter_value.present?
+        if value.present?
           {"AND" => [
-            {"=" => {"field" => "#{model}-v_owning_cluster", "value" => filter_value.split("__").first}},
-            {"=" => {"field" => "#{model}-v_owning_datacenter", "value" => filter_value.split("__").size == 1 ? "" : filter_value.split("__").last}}
+            {"=" => {"field" => "#{model}-v_owning_cluster", "value" => value}},
+            {"=" => {"field" => "#{model}-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ems"          then {"=" => {"field" => "#{model}.ext_management_system-name", "value" => filter_value}}
-      when "host"         then {"=" => {"field" => "#{model}.host-name", "value" => filter_value}}
-      when "miq_template", "vm", "container_image" then {"=" => {"field" => "#{model}-name", "value" => filter_value}}
+      when "ems"          then {"=" => {"field" => "#{model}.ext_management_system-name", "value" => value}}
+      when "host"         then {"=" => {"field" => "#{model}.host-name", "value" => value}}
+      when "miq_template", "vm", "container_image" then {"=" => {"field" => "#{model}-name", "value" => value}}
       else {"IS NOT NULL" => {"field" => "#{model}-name"}}
       end
     end
