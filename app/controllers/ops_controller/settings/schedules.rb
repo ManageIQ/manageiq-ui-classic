@@ -532,7 +532,7 @@ module OpsController::Settings::Schedules
       schedule.filter     = nil # Clear out existing filter expression
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
     else # Build the filter expression
-      schedule.filter     = MiqExpression.new(build_search_filter_from_params)
+      schedule.filter     = build_filter_expression
       schedule.miq_search = nil if schedule.miq_search # Clear out any search relationship
     end
   end
@@ -543,6 +543,10 @@ module OpsController::Settings::Schedules
     klass = params[:target_class].constantize
     object = klass.find(params[:target_id])
     { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
+  end
+
+  def build_filter_expression
+    MiqExpression.new(build_search_filter_from_params)
   end
 
   def build_search_filter_from_params
