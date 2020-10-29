@@ -1,7 +1,7 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import FormRender from '@data-driven-forms/react-form-renderer';
-import ServiceForm from '../../components/service-form';
+import { act } from 'react-dom/test-utils';
+import EditServiceForm from '../../components/edit-service-form';
 import { mount } from '../helpers/mountForm';
 
 require('../helpers/addFlash.js');
@@ -17,7 +17,7 @@ describe('Service form component', () => {
     initialProps = {
       maxNameLen: 10,
       maxDescLen: 20,
-      serviceFormId: 3,
+      recordId: 3,
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
     flashSpy = jest.spyOn(window, 'add_flash');
@@ -29,17 +29,15 @@ describe('Service form component', () => {
     submitSpy.mockRestore();
   });
 
-  it('should request data after mount and set to state', (done) => {
+  it('should request data after mount and set to state', async(done) => {
     fetchMock
-      .getOnce('/service/service_form_fields/3', {
+      .getOnce('/api/services/3', {
         foo: 'bar',
       });
-    const wrapper = mount(<ServiceForm {...initialProps} />);
-    expect(fetchMock.lastUrl()).toEqual('/service/service_form_fields/3');
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.children().state().initialValues).toEqual({ foo: 'bar' });
-      done();
+    await act(async() => {
+      mount(<EditServiceForm {...initialProps} />);
     });
+    expect(fetchMock.lastUrl()).toEqual('/api/services/3');
+    done();
   });
 });

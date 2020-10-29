@@ -139,17 +139,9 @@ class ServiceController < ApplicationController
       service = find_record_with_rbac(Service, params[:id])
       add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.name})
       replace_right_cell
-    when "save", "add"
+    when "save"
       service = find_record_with_rbac(Service, params[:id])
-      service_set_record_vars(service)
-
-      begin
-        service.save
-      rescue => bang
-        add_flash(_("Error during 'Service Edit': %{message}") % {:message => bang.message}, :error)
-      else
-        add_flash(_("Service \"%{name}\" was saved") % {:name => service.name})
-      end
+      add_flash(_("Service \"%{name}\" was saved") % {:name => service.name})
       replace_right_cell(:replace_trees => [:svcs])
     when "reset", nil # Reset or first time in
       checked = find_checked_items
