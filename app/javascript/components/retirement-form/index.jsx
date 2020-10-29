@@ -6,7 +6,7 @@ import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 
 const RetirementForm = ({ retirementID }) => {
-  const id = retirementID.split('"').filter(Number);
+  const id = retirementID.replace(/\D/g,'');
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!id,
     initialValues: { formMode: '' },
@@ -25,7 +25,7 @@ const RetirementForm = ({ retirementID }) => {
   };
 
   useEffect(() => {
-    if (id.length === 1) {
+    if (id) {
       API.get(`/api/services/${id}?attributes=retires_on,retirement_warn`).then((res) => {
         if (res.retires_on != null) {
           setState({
