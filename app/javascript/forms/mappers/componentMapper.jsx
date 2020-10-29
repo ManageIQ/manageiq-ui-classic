@@ -1,5 +1,5 @@
 import React from 'react';
-import { componentMapper } from '@data-driven-forms/pf3-component-mapper';
+import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';

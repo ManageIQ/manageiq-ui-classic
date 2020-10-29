@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import FormRenderer from '@data-driven-forms/react-form-renderer';
-import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
+import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import TreeViewSelector from '../../components/tree-view/selector';
 
 const RendererWrapper = ({ initialValue, onSubmit = () => {}, ...props }) => (
