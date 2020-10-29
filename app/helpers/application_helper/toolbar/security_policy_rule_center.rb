@@ -4,8 +4,8 @@ class ApplicationHelper::Toolbar::SecurityPolicyRuleCenter < ApplicationHelper::
     [
       select(
         :security_policy_vmdb_choice,
-        'fa fa-shield fa-lg',
-        t = N_('Policy'),
+        'fa fa-cog fa-lg',
+        t = N_('Configuration'),
         t,
         :items => [
           button(
