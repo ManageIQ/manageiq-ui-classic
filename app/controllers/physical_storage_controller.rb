@@ -38,13 +38,6 @@ class PhysicalStorageController < ApplicationController
     process_show_list
   end
 
-  def textual_group_list
-    [
-      %i[properties relationships asset_details],
-    ]
-  end
-  helper_method(:textual_group_list)
-
   def breadcrumbs_options
     {
       :breadcrumbs => [

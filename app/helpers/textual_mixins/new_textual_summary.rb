@@ -8,6 +8,7 @@ class BaseContext
   end
 end
 
+
 class TextualSummaryContext < BaseContext
   include TextualSummaryHelper
   include StiRoutingHelper
@@ -31,9 +32,8 @@ class TextualSummaryContext < BaseContext
     end
     @big_groups.push big_group_context.result
   end
-
-
 end
+
 
 class TextualBigGroupContext < BaseContext
   def initialize(record)
@@ -60,6 +60,7 @@ class TextualBigGroupContext < BaseContext
   end
 end
 
+
 class TextualGroupContext < BaseContext
   def initialize(record, name)
     super record
@@ -71,8 +72,10 @@ class TextualGroupContext < BaseContext
     TextualGroup.new(_(@name), @fields)
   end
 
-  def hash_textual_field(field_hash)
-    @fields.push(field_hash)
+  def hash_textual_field(condition= true, &block)
+    if condition
+      @fields.push instance_eval &block
+    end
   end
 
   def function_textual_field(field_symbol)
@@ -87,7 +90,6 @@ class TextualGroupContext < BaseContext
       textual_field_context.instance_eval &block
       @fields.push(textual_field_context.result)
     end
-
   end
 end
 
@@ -110,7 +112,6 @@ class TextualFieldContext < BaseContext
       @field_hash[:title] = title
     end
   end
-
 end
 
 module TextualMixins::NewTextualSummary
@@ -130,5 +131,4 @@ module TextualMixins::NewTextualSummary
 
     context.result
   end
-
 end

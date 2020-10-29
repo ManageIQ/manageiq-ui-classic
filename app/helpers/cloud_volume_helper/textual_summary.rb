@@ -18,10 +18,10 @@ module CloudVolumeHelper::TextualSummary
         end
 
         textual_group "Relationships" do
-          hash_textual_field textual_link(
+          hash_textual_field {textual_link(
                                  @record.ext_management_system.try(:parent_manager),
-                                 :label => _("Parent Cloud Provider"),)
-          hash_textual_field textual_link(@record.ext_management_system)
+                                 :label => _("Parent Cloud Provider"),)}
+          hash_textual_field {textual_link(@record.ext_management_system)}
 
           textual_field(
               :label => _('Availability Zone'),
