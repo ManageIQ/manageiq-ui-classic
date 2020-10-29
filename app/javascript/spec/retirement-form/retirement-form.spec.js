@@ -10,8 +10,8 @@ import RetirementForm from '../../components/retirement-form/index';
 const retirementForm = require('../../components/retirement-form/index');
 describe('Retirement Form Component', () => {
   const retire = {
-    retirement_date: new Date('2024-06-08T15:49:04.816Z'),
-    retirement_warning: '',
+    retires_on: new Date('2024-06-08T15:49:04.816Z'),
+    retirement_warn: '',
     formMode: 'date',
 
   };
@@ -29,7 +29,7 @@ describe('Retirement Form Component', () => {
   });
 
   it('should render Retirement Form with a set retirement date', async(done) => {
-    fetchMock.get(`/${ManageIQ.controller}/retirement_info/42`, retire);
+    fetchMock.get(`/api/services/42?attributes=retires_on,retirement_warn`, retire);
     let wrapper;
     await act(async() => {
       wrapper = mount(<RetirementForm retirementID={'["42"]'} {...retire} />);
