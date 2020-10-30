@@ -12,7 +12,7 @@ import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ProviderForm from '../components/provider-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
-import FlavorForm from '../components/flavor-form/flavor-form';
+import FlavorForm from '../components/flavor-form';
 import FirmwareRegistryForm from '../components/firmware-registry/firmware-registry-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
