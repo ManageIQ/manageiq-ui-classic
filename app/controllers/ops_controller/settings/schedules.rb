@@ -532,7 +532,7 @@ module OpsController::Settings::Schedules
       schedule.filter     = nil # Clear out existing filter expression
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
     else # Build the filter expression
-      schedule.filter     = build_filter_expression_from(params[:action_typ], params[:filter_typ], params[:filter_value])
+      schedule.filter     = build_filter_expression_from(schedule, params[:filter_typ], params[:filter_value])
       schedule.miq_search = nil if schedule.miq_search # Clear out any search relationship
     end
   end
@@ -545,25 +545,35 @@ module OpsController::Settings::Schedules
     { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
   end
 
-  def build_filter_expression_from(action_typ, filter_typ, filter_value)
-    MiqExpression.new(build_search_filter_from_params(action_typ, filter_typ, filter_value))
+  def build_filter_expression_from(schedule, filter_typ, filter_value)
+    value       = filter_value.split("__").first
+    other_value = filter_value.split("__").size == 1 ? "" : filter_value.split("__").last
+
+    MiqExpression.new(build_search_filter_from_params(schedule, filter_typ, value, other_value))
   end
 
-  def build_search_filter_from_params(action_typ, filter_typ, filter_value)
-    model         = action_typ.starts_with?("vm") ? "Vm" : "MiqTemplate"
-    resource_type = action_typ.split("_").first.capitalize
-    value         = filter_value.split("__").first
-    other_value   = filter_value.split("__").size == 1 ? "" : filter_value.split("__").last
+  def build_search_filter_from_params(schedule, filter_typ, value, other_value)
+    resource_type = schedule.resource_type
+    check_compliance = schedule&.sched_action&.dig(:method) == "check_compliance"
+    filter_resource_type = if check_compliance
+                             if resource_type == "ContainerImage"
+                               "ContainerImageCheckCompliance"
+                             else
+                               "CheckCompliance"
+                             end
+                           else
+                             resource_type
+                           end
 
-    case action_typ
-    when "storage"
+    case filter_resource_type
+    when "Storage"
       case filter_typ
       when "ems"     then {"CONTAINS" => {"field" => "Storage.ext_management_systems-name", "value" => value}}
       when "host"    then {"CONTAINS" => {"field" => "Storage.hosts-name", "value" => value}}
       when "storage" then {"=" => {"field" => "Storage-name", "value" => value}}
       else                {"IS NOT NULL" => {"field" => "Storage-name"}}
       end
-    when "host"
+    when "Host"
       case filter_typ
       when "cluster"
         if value.present?
@@ -576,13 +586,13 @@ module OpsController::Settings::Schedules
       when "host" then {"=" => {"field" => "Host-name", "value" => value}}
       else             {"IS NOT NULL" => {"field" => "Host-name"}}
       end
-    when "container_image", "container_image_check_compliance"
+    when "ContainerImage", "ContainerImageCheckCompliance"
       case filter_typ
       when "ems" then {"=" => {"field" => "ContainerImage.ext_management_system-name", "value" => value}}
       when "container_image" then {"=" => {"field" => "ContainerImage-name", "value" => value}}
       else {"IS NOT NULL" => {"field" => "ContainerImage-name"}}
       end
-    when "emscluster"
+    when "EmsCluster"
       case filter_typ
       when "cluster"
         if value.present?
@@ -594,7 +604,7 @@ module OpsController::Settings::Schedules
       when "ems" then {"=" => {"field" => "EmsCluster.ext_management_system-name", "value" => value}}
       else            {"IS NOT NULL" => {"field" => "EmsCluster-name"}}
       end
-    when /check_compliance\z/
+    when "CheckCompliance"
       case filter_typ
       when "cluster"
         if value.present?
@@ -613,14 +623,14 @@ module OpsController::Settings::Schedules
       when "cluster"
         if value.present?
           {"AND" => [
-            {"=" => {"field" => "#{model}-v_owning_cluster", "value" => value}},
-            {"=" => {"field" => "#{model}-v_owning_datacenter", "value" => other_value}}
+            {"=" => {"field" => "#{resource_type}-v_owning_cluster", "value" => value}},
+            {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ems"          then {"=" => {"field" => "#{model}.ext_management_system-name", "value" => value}}
-      when "host"         then {"=" => {"field" => "#{model}.host-name", "value" => value}}
-      when "miq_template", "vm", "container_image" then {"=" => {"field" => "#{model}-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "#{model}-name"}}
+      when "ems"          then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
+      when "host"         then {"=" => {"field" => "#{resource_type}.host-name", "value" => value}}
+      when "miq_template", "vm", "container_image" then {"=" => {"field" => "#{resource_type}-name", "value" => value}}
+      else {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
       end
     end
   end
