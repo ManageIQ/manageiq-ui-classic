@@ -545,9 +545,15 @@ module OpsController::Settings::Schedules
     { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
   end
 
-  def build_filter_expression_from(schedule, filter_typ, filter_value)
+  def parse_filter_value(filter_value)
     value       = filter_value.split("__").first
     other_value = filter_value.split("__").size == 1 ? "" : filter_value.split("__").last
+
+    [value, other_value]
+  end
+
+  def build_filter_expression_from(schedule, filter_typ, filter_value)
+    value, other_value = parse_filter_value(filter_value)
 
     MiqExpression.new(build_search_filter_from_params(schedule, filter_typ, value, other_value))
   end
