@@ -1,3 +1,5 @@
+##
+# Base class for the textual summary DSL contexts.
 class BaseContext
   def initialize(record)
     @record = record
@@ -7,8 +9,9 @@ class BaseContext
   end
 end
 
+##
+# Top level context for textual summary DSL that provides top level DSL commands
 class TextualSummaryContext < BaseContext
-  # include TextualSummaryHelper
   include StiRoutingHelper
   include ApplicationHelper
   include ActionView::RoutingUrlFor
@@ -22,7 +25,10 @@ class TextualSummaryContext < BaseContext
     @big_groups
   end
 
-  # big group
+  ##
+  # Textual summary DSL command to create a new big group.
+  # Big groups can contain regular textual_groups.
+  # @param block can run commands from TextualBigGroupContext.
   def textual_big_group(&block)
     big_group_context = TextualBigGroupContext.new(@record)
     if block_given?
@@ -32,6 +38,8 @@ class TextualSummaryContext < BaseContext
   end
 end
 
+##
+# Textual summary DSL context for big-groups. Provides DSL commands that work in big-groups.
 class TextualBigGroupContext < BaseContext
   def initialize(record)
     super
@@ -42,6 +50,9 @@ class TextualBigGroupContext < BaseContext
     @groups
   end
 
+  ##
+  # Textual summary DSL command to create a textual-group in a big-group.
+  # @param block can run commands from TextualGroupContext
   def textual_group(name, condition: true, &block)
     if condition
       textual_group_context = TextualGroupContext.new(@record, name)
@@ -52,11 +63,17 @@ class TextualBigGroupContext < BaseContext
     end
   end
 
+  ##
+  # Textual summary DSL command to use a group method that was defined somewhere else
+  # Find a function, run it, and add its results to the big-group.
+  # @param group_symbol will look for a function called "textual_group_#{group_symbol}"
   def function_textual_group(group_symbol)
     @groups.push(group_symbol)
   end
 end
 
+##
+# Textual summary DSL context for textual-groups.
 class TextualGroupContext < BaseContext
   def initialize(record, name)
     super(record)
@@ -68,16 +85,29 @@ class TextualGroupContext < BaseContext
     TextualGroup.new(_(@name), @fields)
   end
 
+  ##
+  # Add a new field to the group, represented by a hash
+  # @param block Needs to return a hash that's aligned to how we represent fields
+  # @param condition If this is false, the field won't be added.
   def hash_textual_field(condition = true, &block)
     if condition
       @fields.push(instance_eval(&block))
     end
   end
 
+  ##
+  # Find a function and add its result as a new field in the group.
+  # @param field_symbol The suffix of the function to find "textual_#{field_symbol}"
   def function_textual_field(field_symbol)
     @fields.push(field_symbol)
   end
 
+  ##
+  # Add a new field to the textual group
+  # @param value what to display. If nil, the entire field will be omitted
+  # @param link a URI to turn the field into a clickable hyperlink.
+  # @param title if the field is a link, this will be the link's title
+  # @param block can run commands from TextualFieldContext
   def textual_field(value:, label:, icon: nil, title: nil, link: nil, &block)
     textual_field_context = TextualFieldContext.new(@record, :value => value, :label => label,
                                                     :icon => icon, :title => title, :link => link)
@@ -89,6 +119,8 @@ class TextualGroupContext < BaseContext
   end
 end
 
+##
+# Textual summary DSL context for textual-fields
 class TextualFieldContext < BaseContext
   def initialize(record, value:, label:, icon: nil, title: nil, link: nil)
     super(record)
@@ -102,9 +134,14 @@ class TextualFieldContext < BaseContext
   end
 
   ##
-  # @param show_condition whether to display the link
-  def textual_field_link(link:, title:, show_condition: true)
-    if show_condition
+  # Turn the field into a a clickable hyperlink. Only needed if you want to use the condition argument.
+  # Otherwise you can add these directly from the textual_field() method.
+  #
+  # @param condition whether to display the link
+  # @param link a URI to turn the field into a clickable hyperlink.
+  # @param title if the field is a link, this will be the link's title
+  def textual_field_link(link:, title:, condition: true)
+    if condition
       @field_hash[:link] = link
       @field_hash[:title] = title
     end
@@ -353,19 +390,22 @@ module TextualSummaryHelper
     end.compact
   end
 
+  ##
+  # Generate a context for textual summary DSL.
+  # @return a textual summary ready to use.
   def textual_summary(&block)
     receiver = binding.receiver
     delegated_methods = []
     (receiver.methods - BaseContext.instance_methods).each do |method_symbol|
       delegated_methods.push(method_symbol)
-      l_ = ->(*args, &block) { receiver.__send__(method_symbol, *args, &block) }
+      l_ = ->(*args, &l_block) { receiver.__send__(method_symbol, *args, &l_block) }
       BaseContext.define_method(method_symbol, l_)
     end
 
     context = TextualSummaryContext.new(@record)
     context.instance_eval(&block)
 
-    delegated_methods.each { |method_symbol| BaseContext.undef_method(method_symbol) }
+    delegated_methods.each { |method_symbol| BaseContext.remove_method(method_symbol) }
 
     context.result
   end
