@@ -112,8 +112,11 @@ class TextualGroupContext < BaseContext
     textual_field_context = TextualFieldContext.new(@record, :value => value, :label => label,
                                                     :icon => icon, :title => title, :link => link)
 
-    if block_given? && value.present?
-      textual_field_context.instance_eval(&block)
+    if value.present?
+      if block_given?
+          textual_field_context.instance_eval(&block)
+      end
+
       @fields.push(textual_field_context.result)
     end
   end
