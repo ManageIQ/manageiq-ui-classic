@@ -547,8 +547,9 @@ module OpsController::Settings::Schedules
   end
 
   def parse_filter_value(filter_value)
-    value       = filter_value.split("__").first
-    other_value = filter_value.split("__").size == 1 ? "" : filter_value.split("__").last
+    values      = filter_value&.split("__")
+    value       = values&.first
+    other_value = values&.size == 1 ? "" : values&.last
 
     [value, other_value]
   end
