@@ -21,7 +21,7 @@ export const linkProps = ({
   href: {
     big_iframe: `/dashboard/iframe?id=${id}`,
     default: href,
-    modal: undefined,
+    modal: '#',
     new_window: href,
   }[type || 'default'],
 
