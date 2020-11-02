@@ -310,7 +310,7 @@ table.non-breakable td:not(.table-view-pf-select) {
   word-break: unset !important;
 }
 
-table.table td:not(.table-view-pf-select) {
+table.table td:not(.table-view-pf-select):not(.generic-row-label) {
   //Force word break but prevent bs-switch from wrapping
   word-break: break-all;
 }
