@@ -102,7 +102,7 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-    elsif %w[condition miq_alert miq_alert_set miq_event miq_policy miq_policy_set].include?(@layout)
+    elsif %w[condition miq_action miq_alert miq_alert_set miq_event miq_policy miq_policy_set].include?(@layout)
       center_toolbar_filename_miq_policy
     elsif @layout == "ops"
       center_toolbar_filename_ops

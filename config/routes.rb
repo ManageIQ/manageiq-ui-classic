@@ -2142,6 +2142,7 @@ Rails.application.routes.draw do
         miq_action_edit
         action_field_changed
         button
+        reload
         tree_autoload
         tree_select
       ) +
