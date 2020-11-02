@@ -143,10 +143,25 @@ class TextualFieldContext < BaseContext
   # @param condition whether to display the link
   # @param link a URI to turn the field into a clickable hyperlink.
   # @param title if the field is a link, this will be the link's title
-  def textual_field_link(link:, title:, condition: true)
+  def textual_field_link(link: nil, title: nil, condition: true, &block)
     if condition
-      @field_hash[:link] = link
-      @field_hash[:title] = title
+      if link.present?
+        @field_hash[:link] = link
+      end
+      if title.present?
+        @field_hash[:title] = title
+      end
+
+      if block_given
+        def link(link_path)
+          @field_hash[:link] = link_path
+        end
+
+        def title(link_title)
+          @field_hash[:title] = link_title
+        end
+        block.call
+      end
     end
   end
 end
