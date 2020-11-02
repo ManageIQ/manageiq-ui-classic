@@ -639,7 +639,7 @@ module OpsController::Settings::Schedules
             {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ExtManagementSystem"  then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
+      when "ExtManagementSystem" then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
       when "Host" then {"=" => {"field" => "Host-name", "value" => value}}
       when "Vm"   then {"=" => {"field" => "Vm-name", "value" => value}}
       else             {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
@@ -653,7 +653,7 @@ module OpsController::Settings::Schedules
             {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
           ]}
         end
-      when "ExtManagementSystem"          then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
+      when "ExtManagementSystem" then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
       when "Host"         then {"=" => {"field" => "#{resource_type}.host-name", "value" => value}}
       when "MiqTemplate", "Vm", "ContainerImage" then {"=" => {"field" => "#{resource_type}-name", "value" => value}}
       else {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
