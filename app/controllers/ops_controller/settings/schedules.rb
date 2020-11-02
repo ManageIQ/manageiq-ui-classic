@@ -532,8 +532,9 @@ module OpsController::Settings::Schedules
       schedule.filter     = nil # Clear out existing filter expression
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
     else # Build the filter expression
-      filter_type         = convert_filter_type_to_klass(params[:filter_typ])
-      schedule.filter     = build_filter_expression(schedule, filter_type, *parse_filter_value(params[:filter_value]))
+      filter_type        = convert_filter_type_to_klass(params[:filter_typ])
+      value, other_value = parse_filter_value(params[:filter_value])
+      schedule.build_filter_expression_from(value, other_value, filter_type)
       schedule.miq_search = nil if schedule.miq_search # Clear out any search relationship
     end
   end
@@ -570,94 +571,6 @@ module OpsController::Settings::Schedules
       "MiqTemplate"
     else
       "Base"
-    end
-  end
-
-  def build_filter_expression(schedule, filter_type, value, other_value)
-    expression = build_search_filter_from_params(schedule, filter_type, value, other_value)
-    MiqExpression.new(expression)
-  end
-
-  def build_search_filter_from_params(schedule, filter_type, value, other_value)
-    resource_type = schedule.resource_type
-    check_compliance = schedule&.sched_action&.dig(:method) == "check_compliance"
-    filter_resource_type = if check_compliance
-                             if resource_type == "ContainerImage"
-                               "ContainerImageCheckCompliance"
-                             else
-                               "CheckCompliance"
-                             end
-                           else
-                             resource_type
-                           end
-
-    case filter_resource_type
-    when "Storage"
-      case filter_type
-      when "ExtManagementSystem" then {"CONTAINS" => {"field" => "Storage.ext_management_systems-name", "value" => value}}
-      when "Host"                then {"CONTAINS" => {"field" => "Storage.hosts-name", "value" => value}}
-      when "Storage"             then {"=" => {"field" => "Storage-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "Storage-name"}}
-      end
-    when "Host"
-      case filter_type
-      when "EmsCluster"
-        if value.present?
-          {"AND" => [
-            {"=" => {"field" => "Host-v_owning_cluster", "value" => value}},
-            {"=" => {"field" => "Host-v_owning_datacenter", "value" => other_value}}
-          ]}
-        end
-      when "ExtManagementSystem" then {"=" => {"field" => "Host.ext_management_system-name", "value" => value}}
-      when "Host"                then {"=" => {"field" => "Host-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "Host-name"}}
-      end
-    when "ContainerImage", "ContainerImageCheckCompliance"
-      case filter_type
-      when "ExtManagementSystem" then {"=" => {"field" => "ContainerImage.ext_management_system-name", "value" => value}}
-      when "ContainerImage"      then {"=" => {"field" => "ContainerImage-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "ContainerImage-name"}}
-      end
-    when "EmsCluster"
-      case filter_type
-      when "EmsCluster"
-        if value.present?
-          {"AND" => [
-            {"=" => {"field" => "EmsCluster-name", "value" => value}},
-            {"=" => {"field" => "EmsCluster-v_parent_datacenter", "value" => other_value}}
-          ]}
-        end
-      when "ExtManagementSystem" then {"=" => {"field" => "EmsCluster.ext_management_system-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "EmsCluster-name"}}
-      end
-    when "CheckCompliance"
-      case filter_type
-      when "EmsCluster"
-        if value.present?
-          {"AND" => [
-            {"=" => {"field" => "#{resource_type}-v_owning_cluster", "value" => value}},
-            {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
-          ]}
-        end
-      when "ExtManagementSystem" then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
-      when "Host" then {"=" => {"field" => "Host-name", "value" => value}}
-      when "Vm"   then {"=" => {"field" => "Vm-name", "value" => value}}
-      else             {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
-      end
-    else
-      case filter_type
-      when "EmsCluster"
-        if value.present?
-          {"AND" => [
-            {"=" => {"field" => "#{resource_type}-v_owning_cluster", "value" => value}},
-            {"=" => {"field" => "#{resource_type}-v_owning_datacenter", "value" => other_value}}
-          ]}
-        end
-      when "ExtManagementSystem" then {"=" => {"field" => "#{resource_type}.ext_management_system-name", "value" => value}}
-      when "Host"         then {"=" => {"field" => "#{resource_type}.host-name", "value" => value}}
-      when "MiqTemplate", "Vm", "ContainerImage" then {"=" => {"field" => "#{resource_type}-name", "value" => value}}
-      else {"IS NOT NULL" => {"field" => "#{resource_type}-name"}}
-      end
     end
   end
 
