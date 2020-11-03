@@ -98,7 +98,7 @@
         = render :partial => 'layouts/warn_msg', :locals => {:message => _("No records found for this report")}
       - else
         #rep_tabs
-          %ul.nav.nav-tabs
+          %ul.nav.nav-tabs{'role' => 'tablist'}
             = miq_tab_header('report_info', @sb[:active_tab]) do
               = _('Report Info')
             %li

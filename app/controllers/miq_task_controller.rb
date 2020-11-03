@@ -56,7 +56,7 @@ class MiqTaskController < ApplicationController
     @tasks_options[:zones] = Zone.visible.includes(:miq_servers).collect { |z| z.name if z.miq_servers.present? }.compact
     tasks_set_default_options if @tasks_options[@tabform].blank?
 
-    @tabs ||= []
+    @tabs = []
 
     if role_allows?(:feature => "miq_task_my_ui")
       @tabs.push(["1", _("My Tasks")])
@@ -396,6 +396,7 @@ class MiqTaskController < ApplicationController
     @layout = get_layout
     @tabform = session[:tabform] if session[:tabform]
     @tasks_options = session[:tasks_options] || ""
+    @tabs ||= session[:tabs]
   end
 
   def set_session_data
@@ -403,6 +404,7 @@ class MiqTaskController < ApplicationController
     session[:tabform]             = @tabform
     session[:layout]              = @layout
     session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
+    session[:tabs]                ||= @tabs 
   end
 
   def jobs_info

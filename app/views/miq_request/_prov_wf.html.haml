@@ -6,7 +6,7 @@
     - wf = options[:wf] || @edit[:wf]
     - tabname = (@tabactive || options[:current_tab_key]).to_s
     #prov_tabs
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         - wf.provisioning_tab_list.each do |dialog|
           = miq_tab_header(dialog[:name], tabname) do
             = dialog[:description]

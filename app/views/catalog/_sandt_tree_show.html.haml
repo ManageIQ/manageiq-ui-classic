@@ -1,6 +1,6 @@
 = render :partial => "layouts/flash_msg"
 #st_tabs
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('basic') do
       = _('Basic Info')
     - if @record.display && !@record.prov_type.try(:start_with?, "generic_")
@@ -274,7 +274,7 @@
 
 - if @record.prov_type == "generic_ansible_playbook"
   #playbook_tabs
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header('provisioning') do
         = _('Provisioning')
       - if @record.config_info.fetch_path(:retirement)

@@ -2,7 +2,7 @@
 .row
   .col-md-12.col-lg-12
     #dialog_tabs
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{'role' => 'tablist'}
         - @record.ordered_dialog_resources.each do |dt|
           = miq_tab_header("#{dt.resource.id}_tab") do
             = dt.resource.label

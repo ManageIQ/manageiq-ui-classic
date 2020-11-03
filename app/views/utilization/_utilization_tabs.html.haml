@@ -1,5 +1,5 @@
 #utilization_tabs
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('summary', @sb[:active_tab]) do
       = _('Summary')
     = miq_tab_header('details', @sb[:active_tab]) do

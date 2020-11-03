@@ -1147,6 +1147,9 @@ module ApplicationHelper
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
     tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
+                   'role' => 'tab',
+                   'aria-selected' => "#{active == id ? 'true' : 'false'}",
+                   'aria-controls' => "#{id}",
                    :id    => "#{id}_tab"}.merge!(options)
 
     content_tag(:li, tag_options) do
@@ -1167,7 +1170,7 @@ module ApplicationHelper
     options.delete(:lazy)
     options.delete(:class)
 
-    content_tag(:div, :id => id, :class => classname.join(' '), **options) do
+    content_tag(:div, :id => id, 'role' => 'tabpanel', 'aria-labelledby' => "#{id}_tab", :class => classname.join(' '), **options) do
       yield unless lazy
     end
   end

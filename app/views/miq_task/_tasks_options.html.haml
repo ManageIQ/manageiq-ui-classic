@@ -1,5 +1,5 @@
 - url = url_for_only_path(:action => 'tasks_change_options')
-#tasks_options_div
+%div{:id =>@tabform == "tasks_2" ? @tabs[1][1].split(" ")[0]:@tabs[0][1].split(" ")[0], 'role' => 'tabpanel', 'aria-labelledby' =>@tabform == "tasks_2" ?"#{@tabs[1][1].split(" ")[0]}_tab":"#{@tabs[0][1].split(" ")[0]}_tab"}
   %h3
     = _("Filter By")
   .form-horizontal
