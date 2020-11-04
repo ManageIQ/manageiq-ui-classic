@@ -1,5 +1,13 @@
 #main-menu {
+  @import '~@carbon/themes/scss/themes';
+  $carbon--theme: $carbon--theme--g90;
+  @include carbon--theme();
+
   @import './menu-colors.scss';
+
+  *:focus {
+    outline-color: $focus;
+  }
 
   list-style: none;
 

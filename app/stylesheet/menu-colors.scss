@@ -11,9 +11,10 @@ $user-fg: $text-05; // $carbon--gray-50
 
 $divider-fg: $disabled-02; // $carbon--gray-60;
 
+$find-bg: $carbon--gray-80;
+$find-placeholder-fg: $carbon--gray-50;
+
 // unused, theme default
-// $find-placeholder-fg: $carbon--gray-50;
-// $find-bg: $carbon--gray-80;
 // $row-selected-border: $carbon--blue-60;
 
 
@@ -62,4 +63,19 @@ li.menu-group {
 
 .menu-user {
   color: $user-fg;
+}
+
+.menu-search {
+  .bx--search-input {
+    background-color: $find-bg;
+    color: $row-fg-text;
+  }
+
+  .bx--search-close::before {
+    background-color: $find-bg;
+  }
+
+  .bx--label {
+    color: $find-placeholder-fg;
+  }
 }
