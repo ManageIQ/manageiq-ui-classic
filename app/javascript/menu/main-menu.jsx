@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { SideNav } from 'carbon-components-react/es/components/UIShell';
 
@@ -11,7 +11,6 @@ import SearchResults from './search-results';
 import SecondLevel from './second-level';
 import Username from './username';
 import { updateActiveItem } from './history';
-
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
@@ -40,6 +39,10 @@ export const MainMenu = ({
   const appearExpanded = expanded || !!activeSection || !!searchResults;
   const hideSecondary = () => setSection(null);
   const hideSecondaryEscape = e => e.keyCode === 27 && hideSecondary();
+
+  const secondLevelFirst = useRef(undefined);
+  const firstLevelNext = useRef(undefined);
+  const firstLevelPrev = useRef(undefined);
 
   useEffect(() => {
     // persist expanded state
@@ -89,6 +92,32 @@ export const MainMenu = ({
       setOpen(false);
     } else {
       setExpanded(!expanded);
+    }
+  };
+
+  const onSelect = (item) => {
+    setSection(item);
+    // The first menu item in the second level can be focused only after second level is actually displayed
+    if (item) {
+      setTimeout(() => {
+        if (secondLevelFirst.current) {
+          secondLevelFirst.current.focus();
+        }
+      });
+    }
+  };
+
+  const unFocusSecondary = (forward) => () => {
+    hideSecondary();
+
+    const { current } = forward ? firstLevelNext : firstLevelPrev;
+    // Focus the prev/next element in the first level if available
+    if (current) {
+      current.focus();
+      if (!expanded) {
+        setExpanded(true);
+        setOpen(true);
+      }
     }
   };
 
@@ -152,9 +181,13 @@ export const MainMenu = ({
           {!searchResults && (
             <FirstLevel
               menu={menu}
-              setSection={setSection}
+              onSelect={onSelect}
               activeSection={activeSection && activeSection.id}
               expanded={appearExpanded}
+              ref={{
+                prevRef: firstLevelPrev,
+                nextRef: firstLevelNext,
+              }}
             />
           )}
 
@@ -172,7 +205,9 @@ export const MainMenu = ({
         <>
           <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
             <div onKeyDown={hideSecondaryEscape} role="presentation">
-              <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} />
+              <span onFocus={unFocusSecondary(false)} role="presentation" tabIndex="0" />
+              <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} ref={secondLevelFirst} />
+              <span onFocus={unFocusSecondary(true)} role="presentation" tabIndex="0" />
             </div>
           </SideNav>
           <div

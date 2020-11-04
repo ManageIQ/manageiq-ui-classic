@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { SideNavIcon, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import Link from 'carbon-components-react/es/components/UIShell/Link';
@@ -9,7 +9,7 @@ import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 // SideNavLink with a chevron from SideNavMenu instead of SideNavLinkText
 // has an onClick, not items like SideNavMenu
 
-const SideNavMenuLink = ({
+const SideNavMenuLink = forwardRef(({
   expanded,
   forceHover,
   id,
@@ -17,7 +17,7 @@ const SideNavMenuLink = ({
   onClick,
   renderIcon: IconElement,
   title,
-}) => {
+}, ref) => {
   const className = cx({
     'bx--side-nav__link': true,
     'bx--side-nav__link--current': isActive,
@@ -26,7 +26,7 @@ const SideNavMenuLink = ({
 
   return (
     <SideNavItem id={id}>
-      <Link className={className} onClick={onClick} onKeyPress={onClick} tabIndex="0">
+      <Link className={className} onClick={onClick} onKeyPress={onClick} ref={ref} tabIndex="0">
         {IconElement && (
           <SideNavIcon small>
             {expanded && (<IconElement />)}
@@ -51,7 +51,7 @@ const SideNavMenuLink = ({
       </Link>
     </SideNavItem>
   );
-};
+});
 
 SideNavMenuLink.propTypes = {
   expanded: PropTypes.bool.isRequired,
