@@ -596,7 +596,7 @@ angular.module('ManageIQ').service('alertsCenterService', ['API', '$q', '$timeou
               id: provider.id,
               name: provider.name,
               objectName: provider.name,
-              displayType: 'providers',
+              displayType: __('providers'),
               tags: [],
               error: [],
               warning: [],
@@ -606,7 +606,7 @@ angular.module('ManageIQ').service('alertsCenterService', ['API', '$q', '$timeou
             providerType = getObjectType(provider);
             descriptors = provider.type.toLowerCase().split('::');
             if (descriptors.length >= 3) {
-              summaryItem.displayType = descriptors[1];
+              summaryItem.displayType = __(descriptors[1]);
               objectType = descriptors[2];
             }
 

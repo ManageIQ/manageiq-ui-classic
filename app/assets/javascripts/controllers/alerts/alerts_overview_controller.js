@@ -10,7 +10,6 @@ angular.module('ManageIQ').controller('alertsOverviewController',
       miqSparkleOn();
 
       function setupInitialValues() {
-
         setupConfig();
 
         // Default sort ascending by error count
@@ -116,7 +115,7 @@ angular.module('ManageIQ').controller('alertsOverviewController',
           var filter = _.find(vm.filterConfig.appliedFilters, function(filter) {
             return !alertsCenterService.matchesFilter(item, filter);
           });
-          filtered = filter != undefined;
+          filtered = filter !== undefined;
         }
         return filtered;
       }
