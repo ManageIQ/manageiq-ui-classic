@@ -50,9 +50,14 @@ module ConfigurationProfileHelper::TextualSummary
        configured_systems]
   end
 
+  def textual_object_icon(klass)
+    decorated = klass.decorate
+    {:icon => decorated.try(:fonticon), :image => decorated.try(:fileicon)}
+  end
+
   def textual_configuration_manager
     configuration_manager = @record.configuration_manager
-    h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
+    h = {:label => "Configuration Manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}.merge(textual_object_icon(configuration_manager))
     if configuration_manager && role_allows?(:feature => "ems_configuration_show")
       h[:title] = _("Show this Configuration Profile's Configuration Manager")
       h[:link]  = url_for_only_path(:controller => 'ems_configuration', :action => 'show', :id => configuration_manager)
@@ -62,7 +67,7 @@ module ConfigurationProfileHelper::TextualSummary
 
   def textual_configured_systems
     num   = @record.number_of(:configured_systems)
-    h     = {:label => _('Configured Systems'), :icon => "pficon pficon-configured_system", :value => num}
+    h     = {:label => _('Configured Systems'), :value => num}.merge(textual_object_icon(ConfiguredSystem))
     if num.positive? && role_allows?(:feature => "configured_system_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'configured_systems')
       h[:title] = _("Show all Configured Systems")
