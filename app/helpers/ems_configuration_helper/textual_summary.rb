@@ -45,9 +45,14 @@ module EmsConfigurationHelper::TextualSummary
     %i[configuration_profiles configured_systems]
   end
 
+  def textual_object_icon(klass)
+    decorated = klass.decorate
+    {:icon => decorated.try(:fonticon), :image => decorated.try(:fileicon)}
+  end
+
   def textual_configuration_profiles
     num   = @record.number_of(:configuration_profiles)
-    h     = {:label => _('Configuration Profiles'), :icon => "pficon pficon-configuration_profile", :value => num}
+    h     = {:label => _('Configuration Profiles'), :value => num}.merge(textual_object_icon(ConfigurationProfile))
     if num.positive? && role_allows?(:feature => "configuration_profile_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'configuration_profiles')
       h[:title] = _("Show all Configuration Profiles")
@@ -57,7 +62,7 @@ module EmsConfigurationHelper::TextualSummary
 
   def textual_configured_systems
     num   = @record.number_of(:configured_systems)
-    h     = {:label => _('Configured Systems'), :icon => "pficon pficon-configured_system", :value => num}
+    h     = {:label => _('Configured Systems'), :value => num}.merge(textual_object_icon(ConfiguredSystem))
     if num.positive? && role_allows?(:feature => "configured_system_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'configured_systems')
       h[:title] = _("Show all Configured Systems")
