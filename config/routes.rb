@@ -1338,6 +1338,7 @@ Rails.application.routes.draw do
         new
       ],
       :post => %w[
+        button
         listnav_search_selected
         quick_search
         show_list
