@@ -533,7 +533,7 @@ module OpsController::Settings::Schedules
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
     else # Build the filter expression
       filter_type         = convert_filter_type_to_klass(params[:filter_typ])
-      schedule.filter     = build_filter_expression_from(schedule, filter_type, *parse_filter_value(params[:filter_value]))
+      schedule.filter     = build_filter_expression(schedule, filter_type, *parse_filter_value(params[:filter_value]))
       schedule.miq_search = nil if schedule.miq_search # Clear out any search relationship
     end
   end
@@ -573,7 +573,7 @@ module OpsController::Settings::Schedules
     end
   end
 
-  def build_filter_expression_from(schedule, filter_type, value, other_value)
+  def build_filter_expression(schedule, filter_type, value, other_value)
     expression = build_search_filter_from_params(schedule, filter_type, value, other_value)
     MiqExpression.new(expression)
   end
