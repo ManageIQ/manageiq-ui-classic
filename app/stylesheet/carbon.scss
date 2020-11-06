@@ -14,7 +14,7 @@ $css--default-type: false;
 
 // Use the gray 90 theme
 @import '~@carbon/themes/scss/themes';
-$carbon--theme: $carbon--theme--g90;
+$carbon--theme: $carbon--theme--g10;
 @include carbon--theme();
 
 @import '~carbon-components/scss/globals/scss/styles.scss';
