@@ -43,7 +43,7 @@
             = select_tag('chosen_queue_timeout',
               options_for_select(opts, @edit[:new][:queue_timeout]),
               :multiple              => false,
-              :class                 => "selectpicker",
+              :class                 => "selectpicker form-control",
               "data-miq_sparkle_on"  => true,
               "data-miq_sparkle_off" => true)
             :javascript
