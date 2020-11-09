@@ -719,3 +719,7 @@ table.c3-tooltip td {
 #popover {
   z-index: 9999;
 }
+
+.table-summary-screen > tbody > tr:hover > td, .table-summary-screen > tbody > tr:hover > th {
+  background-color: transparent;
+}
