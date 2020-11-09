@@ -550,14 +550,7 @@ module VmCommon
 
   def evm_relationship
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    @edit = {}
-    @edit[:vm_id] = @record.id
-    @edit[:key] = "evm_relationship_edit__new"
-    @edit[:current] = {}
-    @edit[:new] = {}
-    evm_relationship_build_screen
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:changed] = false
+    @edit ||= {}
 
     @in_a_form = true
     if @explorer
@@ -569,43 +562,6 @@ module VmCommon
   alias_method :instance_evm_relationship, :evm_relationship
   alias_method :vm_evm_relationship, :evm_relationship
   alias_method :miq_template_evm_relationship, :evm_relationship
-
-  # Build the evm_relationship assignment screen
-  def evm_relationship_build_screen
-    @servers = {} # Users array for first chooser
-    MiqServer.all.each { |s| @servers["#{s.name} (#{s.id})"] = s.id.to_s }
-    @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil # Set to first category, if not already set
-  end
-
-  def evm_relationship_get_form_vars
-    @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
-  end
-
-  def evm_relationship_update
-    return unless load_edit("evm_relationship_edit__new")
-    evm_relationship_get_form_vars
-    case params[:button]
-    when "cancel"
-      add_flash(_("Edit Management Engine Relationship was cancelled by the user"))
-      if @edit[:explorer]
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        flash_to_session
-        javascript_redirect(:action => 'show', :id => @record.id)
-      end
-    when "save"
-      add_flash(_("Management Engine Relationship saved"))
-      if @edit[:explorer]
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        flash_to_session
-        javascript_redirect(:action => 'show', :id => @record.id)
-      end
-    end
-  end
 
   def delete
     @lastaction = "delete"
@@ -1463,7 +1419,7 @@ module VmCommon
       header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table),
                                                                                              :name           => name,
                                                                                              :product        => Vmdb::Appliance.PRODUCT_NAME}
-      action = "evm_relationship_update"
+      action = nil
     when "miq_request_new"
       partial = "miq_request/pre_prov"
       header = if request.parameters[:controller] == "vm_cloud"

@@ -79,10 +79,6 @@ Rails.application.routes.draw do
     exp_token_pressed
   )
 
-  evm_relationship_post = %w(
-    evm_relationship_update
-  )
-
   ownership_post = %w(
     ownership
     ownership_update
@@ -2944,7 +2940,6 @@ Rails.application.routes.draw do
                compare_post +
                dialog_runner_post +
                drift_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +
@@ -3032,7 +3027,6 @@ Rails.application.routes.draw do
                compare_post +
                dialog_runner_post +
                drift_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +
@@ -3128,7 +3122,6 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                dialog_runner_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +

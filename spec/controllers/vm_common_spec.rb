@@ -347,26 +347,6 @@ describe VmOrTemplateController do
     end
   end
 
-  describe '#evm_relationship_get_form_vars' do
-    before do
-      @vm = FactoryBot.create(:vm_vmware)
-      edit = {:vm_id => @vm.id, :new => {:server => nil}}
-      controller.instance_variable_set(:@edit, edit)
-    end
-
-    it 'does not set new server when params[:server_id] is not set' do
-      controller.params = {:server_id => ''}
-      controller.send(:evm_relationship_get_form_vars)
-      expect(assigns(:edit)[:new][:server]).to be(nil)
-    end
-
-    it 'sets new server when params[:server_id] is set' do
-      controller.params = {:server_id => '42'}
-      controller.send(:evm_relationship_get_form_vars)
-      expect(assigns(:edit)[:new][:server]).to eq(controller.params[:server_id])
-    end
-  end
-
   describe '#policy_show_options' do
     let(:vm) { FactoryBot.create(:vm_vmware) }
 
