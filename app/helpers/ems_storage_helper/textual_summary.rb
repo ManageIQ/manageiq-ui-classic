@@ -90,8 +90,4 @@ module EmsStorageHelper::TextualSummary
   def textual_physical_storages
     textual_link(@record.try(:physical_storages), :label => _('Physical Storages'))
   end
-
-  def textual_physical_storages
-    textual_link(@record.try(:physical_storages), :label => _('Storage Systems'))
-  end
 end
