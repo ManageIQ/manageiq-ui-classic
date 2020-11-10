@@ -139,7 +139,7 @@ describe DialogLocalService do
     end
 
     context "when the object is a CloudVolume" do
-      let(:obj) { double(:class => ManageIQ::Providers::Openstack::CloudManager::CloudVolume, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_volume", "CloudVolume", "cloud_volumes", "/cloud_volume"
