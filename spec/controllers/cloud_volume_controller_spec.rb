@@ -161,7 +161,7 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack)
+      @ems = FactoryBot.create(:ems_cinder)
       @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
       @snapshot = FactoryBot.create(:cloud_volume_snapshot)
     end
@@ -239,10 +239,10 @@ describe CloudVolumeController do
           :name                 => "volume",
           :size                 => 1,
           :cloud_tenant_id      => @tenant.id,
-          :emstype              => "ManageIQ::Providers::StorageManager::CinderManager",
+          :emstype              => "ManageIQ::Providers::Openstack::StorageManager::CinderManager",
           :availability_zone_id => @availability_zone.ems_ref
         }
-        @task_options = [@ems.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant, :availability_zone => @availability_zone.ems_ref }]
+        @task_options = [@ems.cinder_manager.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant, :availability_zone => @availability_zone.ems_ref }]
       end
 
       it_behaves_like "queue create volume task"

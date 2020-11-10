@@ -602,7 +602,7 @@ class CloudVolumeController < ApplicationController
     options[:volume_type] = params[:volume_type] if params[:volume_type]
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
-    options[:ems] = cloud_tenant.ext_management_system
+    options[:ems] = cloud_tenant.ext_management_system.cinder_manager
     options[:availability_zone] = params[:availability_zone_id] if params[:availability_zone_id]
     options
   end
