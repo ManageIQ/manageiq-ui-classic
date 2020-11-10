@@ -611,7 +611,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         filters_field_changed
-        form_field_changed
         theme_changed
         timeprofile_delete
         timeprofile_field_changed

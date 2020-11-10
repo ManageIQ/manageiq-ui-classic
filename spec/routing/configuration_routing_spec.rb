@@ -47,12 +47,6 @@ describe 'routes for ConfigurationController' do
     end
   end
 
-  describe '#form_field_changed' do
-    it 'routes' do
-      expect(post('/configuration/form_field_changed')).to route_to('configuration#form_field_changed')
-    end
-  end
-
   describe '#theme_changed' do
     it 'routes' do
       expect(post('/configuration/theme_changed')).to route_to('configuration#theme_changed')
