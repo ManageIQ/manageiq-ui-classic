@@ -3,6 +3,7 @@ import React from 'react';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
+import AdvancedSettingsForm from '../components/advanced-settings-form';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import { BreadcrumbsBar } from '../components/breadcrumbs';
@@ -52,6 +53,7 @@ import PhysicalStorageForm from '../components/physical-storage-form';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
+ManageIQ.component.addReact('AdvancedSettingsForm', AdvancedSettingsForm);
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);

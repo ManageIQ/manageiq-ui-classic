@@ -23,8 +23,6 @@ module OpsController::Settings::Common
         @refresh_div     = 'settings_server' # Replace main area
         @refresh_partial = 'settings_server_tab'
       end
-    when 'settings_advanced' # Advanced yaml edit
-      @changed = (@edit[:new] != @edit[:current])
     end
 
     render :update do |page|
@@ -237,10 +235,7 @@ module OpsController::Settings::Common
   end
 
   def fetch_advanced_settings(resource)
-    @edit = {}
-    @edit[:current] = {:file_data => resource.settings_for_resource_yaml}
-    @edit[:new] = copy_hash(@edit[:current])
-    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @record ||= resource
     @in_a_form = true
   end
 
@@ -385,17 +380,6 @@ module OpsController::Settings::Common
     when "settings_custom_logos" # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current])
       @update = ::Settings.to_hash
-    when "settings_advanced" # Advanced manual yaml editor tab
-      nodes = x_node.downcase.split("-")
-      resource = if selected?(x_node, "z")
-                   Zone.find(nodes.last)
-                 elsif selected?(x_node, "svr")
-                   MiqServer.find(@sb[:selected_server_id])
-                 else
-                   MiqRegion.my_region
-                 end
-      save_advanced_settings(resource)
-      return
     end
     if !%w[settings_advanced settings_workers].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
@@ -728,12 +712,6 @@ module OpsController::Settings::Common
       agent_log[:level] = params[:agent_log_level] if params[:agent_log_level]
       agent_log[:wrap_size] = params[:agent_log_wrapsize] if params[:agent_log_wrapsize]
       agent_log[:wrap_time] = @sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24 + @sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600 if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
-    when "settings_advanced"                          # Advanced tab
-      if params[:file_data]                           # If save sent in the file data
-        new[:file_data] = params[:file_data]          # Put into @edit[:new] hash
-      else
-        new[:file_data] += "..."                      # Update the new data to simulate a change
-      end
     end
 
     # This section scoops up the config second level keys changed in the UI
@@ -759,7 +737,7 @@ module OpsController::Settings::Common
 
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif %w[settings_server settings_authentication settings_workers
-             settings_custom_logos settings_advanced].include?(@sb[:active_tab])
+             settings_custom_logos].include?(@sb[:active_tab])
       return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
   end

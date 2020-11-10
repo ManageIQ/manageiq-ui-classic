@@ -101,7 +101,8 @@
     "table-resolver": "^4.1.1",
     "ui-select": "0.19.8",
     "whatwg-fetch": "~2.0.4",
-    "xml_display": "~0.1.1"
+    "xml_display": "~0.1.1",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

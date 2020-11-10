@@ -498,11 +498,10 @@ class OpsController < ApplicationController
       elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping" && @in_a_form
         action_url = "label_tag_mapping_edit"
         record_id = @lt_map.try(:id)
-      else
+      elsif @sb[:active_tab] != "settings_advanced"
         action_url = "settings_update"
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_cancel] = true
-        locals[:serialize] = true if @sb[:active_tab] == "settings_advanced"
       end
     elsif x_active_tree == :rbac_tree
       if %w[rbac_user_add rbac_user_copy rbac_user_edit].include?(@sb[:action])

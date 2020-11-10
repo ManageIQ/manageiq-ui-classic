@@ -1,5 +1,4 @@
 - if @sb[:active_tab] == "settings_advanced"
-  - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   #form_div
     .alert.alert-warning
       %span.pficon.pficon-warning-triangle-o
@@ -9,12 +8,4 @@
       %span.pficon.pficon-info
       %strong
         = advanced_tab_info
-
-    = text_area_tag("file_data", @edit[:new][:file_data], :style => "display:none;")
-    = render :partial => "/layouts/my_code_mirror",
-             :locals  => {:text_area_id => "file_data",
-                          :mode         => "yaml",
-                          :line_numbers => true,
-                          :url          => url}
-    :javascript
-      ManageIQ.editor.refresh();
+  = react 'AdvancedSettingsForm', :url => api_resource_path(@record + '/settings')
