@@ -198,6 +198,38 @@ describe ApplicationHelper do
     end
   end
 
+  describe '#api_collection_path' do
+    {
+      Vm                 => 'vms',
+      VmInfra            => 'vms',
+      VmCloud            => 'instances',
+      Service            => 'services',
+      OrchestrationStack => 'orchestration_stacks',
+    }.each do |klass, path|
+      context "collection is #{klass}" do
+        it 'returns with a valid API endpoint' do
+          expect(helper.api_collection_path(klass)).to eq("/api/#{path}")
+        end
+      end
+    end
+  end
+
+  describe '#api_resource_path' do
+    {
+      :vm_infra                  => 'vms',
+      :vm_cloud                  => 'instances',
+      :service                   => 'services',
+      :orchestration_stack_cloud => 'orchestration_stacks',
+    }.each do |factory, path|
+      context "resource is #{factory}" do
+        it 'returns with a valida API endpoint' do
+          record = FactoryBot.create(factory)
+          expect(helper.api_resource_path(record)).to eq("/api/#{path}/#{record.id}")
+        end
+      end
+    end
+  end
+
   describe "#url_for_db" do
     before do
       @action = 'show'

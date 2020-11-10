@@ -26,6 +26,23 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
+  def api_collection_path(klass)
+    identifier = api_identifier_by_class(klass)
+    send("api_#{identifier}_path")
+  end
+
+  def api_resource_path(record)
+    identifier = api_identifier_by_class(record.class).to_s.singularize
+    send("api_#{identifier}_path", nil, record.id)
+  end
+
+  def api_identifier_by_class(klass)
+    raise "API plugin not loaded" unless defined?(Api::ApiConfig)
+
+    @api_cc ||= Api::CollectionConfig.new
+    @api_cc.name_for_klass(klass) || @api_cc.name_for_subclass(klass)
+  end
+
   def settings(*path)
     @settings ||= {}
     @settings.fetch_path(*path)
