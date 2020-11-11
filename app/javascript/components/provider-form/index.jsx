@@ -173,7 +173,6 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
             schema={{ fields }}
             onSubmit={onSubmit}
             onCancel={onCancel}
-            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
             initialValues={initialValues}
             clearedValue={null}
             buttonsLabels={{ submitLabel }}

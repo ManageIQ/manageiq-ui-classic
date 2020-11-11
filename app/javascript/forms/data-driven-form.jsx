@@ -76,6 +76,7 @@ const MiqFormRenderer = ({
       FormTemplate={MiqFormTemplate}
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}
       onSubmit={submitWrapper(onSubmit)}
+      onReset={() => add_flash(__('All changes have been reset'), 'warn')}
       {...props}
     />
   );

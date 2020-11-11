@@ -121,7 +121,6 @@ class CatalogForm extends Component {
           schema={schema}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}
-          onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           canReset={!!catalogId}
           buttonsLabels={{
             submitLabel: catalogId ? __('Save') : __('Add'),

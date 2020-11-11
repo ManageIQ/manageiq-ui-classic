@@ -27,7 +27,6 @@ const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
         schema={createSchema(maxNameLen, maxDescLen)}
         onSubmit={onSubmit}
         onCancel={() => miqAjaxButton(`/service/service_edit/${recordId}?button=cancel`)}
-        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         canReset
         buttonsLabels={{
           submitLabel: __('Save'),

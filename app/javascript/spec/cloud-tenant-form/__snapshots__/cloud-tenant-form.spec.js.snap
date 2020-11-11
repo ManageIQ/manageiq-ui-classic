@@ -17,7 +17,6 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
     }
     canReset={false}
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
@@ -91,7 +90,6 @@ exports[`Cloud tenant form component should render editing form variant 1`] = `
     }
     canReset={true}
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {

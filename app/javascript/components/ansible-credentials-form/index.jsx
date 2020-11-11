@@ -77,7 +77,6 @@ const AnsibleCredentialsForm = ({ recordId }) => {
       initialValues={initialValues}
       canReset={!!recordId}
       onSubmit={onSubmit}
-      onReset={() => add_flash(__('All changes have been reset'), 'warn')}
       onCancel={onCancel}
       buttonsLabels={{ submitLabel }}
     />

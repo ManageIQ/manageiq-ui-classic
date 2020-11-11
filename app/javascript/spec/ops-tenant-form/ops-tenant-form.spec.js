@@ -153,7 +153,7 @@ describe('OpstTenantForm', () => {
     wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
     wrapper.update();
     wrapper.find('button').at(1).simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warning');
+    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warn');
     done();
   });
 

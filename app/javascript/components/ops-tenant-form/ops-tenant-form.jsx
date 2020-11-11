@@ -83,7 +83,6 @@ const OpsTenantForm = ({
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         canReset={!!recordId}
-        onReset={() => add_flash(__('All changes have been reset'), 'warning')}
         buttonsLabels={{
           submitLabel: !!recordId ? __('Save') : __('Add'),
         }}

@@ -114,7 +114,6 @@ function SetOwnershipForm(props) {
         initialValues={initialValues}
         schema={createSchema(userOptions, groupOptions)}
         onSubmit={values => handleSubmit(values, submitUrl)}
-        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         onCancel={() => miqAjaxButton(cancelUrl)}
         canReset
       />
