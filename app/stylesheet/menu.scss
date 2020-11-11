@@ -25,6 +25,11 @@
     .bx--side-nav__link-text {
       font-weight: 400;
     }
+
+    // ensure secondary overflow auto has the right height to work with
+    .bx--side-nav__items {
+      height: 100vh;
+    }
   }
 
   .bx--side-nav__header.padded,
