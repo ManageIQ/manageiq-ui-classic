@@ -48,7 +48,6 @@ const RegionForm = ({ id, maxDescLen }) => {
         schema={createSchema(maxDescLen)}
         onSubmit={onSubmit}
         onCancel={onCancel}
-        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         canReset
         buttonsLabels={{
           submitLabel: __('Save'),

@@ -44,7 +44,6 @@ exports[`Cloud Network form component should render edit variant 1`] = `
       }
     }
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
@@ -349,7 +348,6 @@ exports[`Cloud Network form component should render form 1`] = `
       }
     }
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {

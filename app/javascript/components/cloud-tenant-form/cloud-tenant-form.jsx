@@ -35,7 +35,6 @@ class CloudTenantForm extends Component {
           schema={this.state.schema}
           onSubmit={values => miqAjaxButton(submitUrl, values, { complete: false })}
           onCancel={() => miqAjaxButton(cancelUrl)}
-          onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           canReset={!!cloudTenantFormId}
           buttonsLabels={{
             submitLabel: cloudTenantFormId ? __('Save') : __('Add'),

@@ -42,7 +42,6 @@ const VmServerRelationShipForm = ({ recordId, redirect }) => {
         initialValues={initialValues}
         schema={createSchema(promise)}
         onSubmit={onSubmit}
-        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         onCancel={onCancel}
         canReset
         buttonsLabels={{
