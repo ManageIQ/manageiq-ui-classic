@@ -138,9 +138,6 @@ class ConfigurationController < ApplicationController
       get_form_vars if @tabform != "ui_3"
       case @tabform
       when "ui_1" # Visual tab
-        if @settings[:display][:locale] != @edit[:new][:display][:locale]
-          FastGettext.locale = @edit[:new][:display][:locale]
-        end
         @settings.merge!(@edit[:new]) # Apply the new saved settings
 
         if current_user
@@ -148,6 +145,7 @@ class ConfigurationController < ApplicationController
           current_user.update(:settings => user_settings)
 
           set_user_time_zone
+          set_gettext_locale
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
         else
           add_flash(_("User Interface settings saved for this session"))
