@@ -7,13 +7,13 @@ import DualListSelect from '../../components/dual-list-select';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
-import { DataDrivenFormCodeEditor } from '../../components/code-editor';
+import CodeEditor from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
 import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 
 const mapper = {
   ...componentMapper,
-  'code-editor': DataDrivenFormCodeEditor,
+  'code-editor': CodeEditor,
   'edit-password-field': EditPasswordField,
   'field-array': FieldArray,
   'dual-list-select': DualListSelect,

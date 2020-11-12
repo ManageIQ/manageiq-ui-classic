@@ -47,7 +47,7 @@ describe('OrcherstrationTemplate form', () => {
          * Code component is not standard input element
          * Two first parameters are codemirror element and data
          */
-      wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
+      wrapper.find(CodeEditor).find('Controlled').props().onChange(null, null, 'Some random content');
       wrapper.find('form').simulate('submit');
     });
 
@@ -127,7 +127,7 @@ describe('OrcherstrationTemplate form', () => {
            * Code component is not standard input element
            * Two first parameters are codemirror element and data
            */
-      wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
+      wrapper.find(CodeEditor).find('Controlled').props().onChange(null, null, 'updated content');
       wrapper.find('form').simulate('submit');
     });
 
