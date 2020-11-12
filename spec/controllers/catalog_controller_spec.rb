@@ -734,7 +734,7 @@ describe CatalogController do
       let(:repository) { FactoryBot.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
       let(:inventory_root_group) { FactoryBot.create(:inventory_root_group) }
       let(:ems) do
-        FactoryBot.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryBot.create(:provider_embedded_ansible))
+        FactoryBot.create(:embedded_automation_manager_ansible, :inventory_root_groups => [inventory_root_group])
       end
       let(:dialog) { FactoryBot.create(:dialog) }
       let(:playbook) do
