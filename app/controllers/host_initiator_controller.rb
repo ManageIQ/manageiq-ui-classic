@@ -11,6 +11,12 @@ class HostInitiatorController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def new
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
+                    :url  => "/#{controller_name}/new")
+  end
+
   def show
     if params[:id].nil?
       @breadcrumbs.clear
@@ -37,6 +43,16 @@ class HostInitiatorController < ApplicationController
         {:title => _("Host Initiators"), :url => controller_url},
       ],
     }
+  end
+
+  def specific_buttons(pressed)
+    case pressed
+    when 'host_initiator_define'
+      javascript_redirect(:action => 'new')
+    else
+      return false
+    end
+    true
   end
 
   menu_section " host_initiator"
