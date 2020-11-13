@@ -3,7 +3,6 @@ import { componentMapper } from '@data-driven-forms/pf3-component-mapper';
 import { componentTypes } from '@@ddf';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
-import DualGroup from '../../components/dual-group';
 import DualListSelect from '../../components/dual-list-select';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import PasswordField from '../../components/async-credentials/password-field';
@@ -17,7 +16,6 @@ const mapper = {
   'code-editor': DataDrivenFormCodeEditor,
   'edit-password-field': EditPasswordField,
   'field-array': FieldArray,
-  'dual-group': DualGroup,
   'dual-list-select': DualListSelect,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
