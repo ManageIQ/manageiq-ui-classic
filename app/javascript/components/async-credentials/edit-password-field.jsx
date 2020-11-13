@@ -1,56 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  ControlLabel,
-  FieldLevelHelp,
-  FormControl,
-  FormGroup,
-  HelpBlock,
-  InputGroup,
-} from 'patternfly-react';
+import { FormGroup, TextInput, Button } from 'carbon-components-react';
+import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
+import { EditOff16 } from '@carbon/icons-react';
 
 import { useFieldApi } from '@@ddf';
-import RequiredLabel from '../../forms/required-label';
 
 const EditPasswordField = ({ ...props }) => {
   const {
-    input,
-    meta,
-    label,
-    setEditMode,
-    dataType, // eslint-disable-line no-unused-vars
-    validateOnMount, // eslint-disable-line no-unused-vars
-    editMode,
-    isDisabled,
-    buttonLabel,
-    isRequired,
-    helperText,
-    ...rest
-  } = useFieldApi(props);
+    labelText, validateOnMount, isDisabled, editMode, setEditMode, buttonLabel, input, meta, ...rest
+  } = useFieldApi(prepareProps(props));
+
+  const invalid = (meta.touched || validateOnMount) && meta.error;
+  const warn = (meta.touched || validateOnMount) && meta.warning;
 
   return (
-    <FormGroup validationState={meta.error ? 'error' : null}>
-      <ControlLabel>
-        {isRequired ? <RequiredLabel label={label} /> : label }
-        {helperText && <FieldLevelHelp content={helperText} />}
-      </ControlLabel>
-      <InputGroup>
-        <FormControl
-          style={{ zIndex: 'initial' }}
-          {...input}
-          id={`${input.name}-input`}
-          autoFocus
-          {...rest}
-          disabled={editMode || isDisabled}
-          type="password"
-          autoComplete="new-password"
-        />
-        <InputGroup.Button>
-          <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
-        </InputGroup.Button>
-      </InputGroup>
-      {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
+    <FormGroup legendText={labelText}>
+      <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
+        <div className="bx--row">
+          <div className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3">
+            <TextInput
+              {...input}
+              key={input.name}
+              labelText=""
+              invalid={Boolean(invalid)}
+              invalidText={invalid || ''}
+              warn={Boolean(warn)}
+              warnText={warn || ''}
+              style={{ zIndex: 'initial' }}
+              id={`${input.name}-input`}
+              autoFocus
+              disabled={editMode || isDisabled}
+              type="password"
+              autoComplete="new-password"
+              {...rest}
+            />
+          </div>
+          <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
+            <Button hasIconOnly kind="secondary" size="field" onClick={setEditMode} iconDescription={buttonLabel} renderIcon={EditOff16} />
+          </div>
+        </div>
+      </div>
     </FormGroup>
   );
 };

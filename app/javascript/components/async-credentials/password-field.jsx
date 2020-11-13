@@ -1,17 +1,10 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  ControlLabel,
-  FieldLevelHelp,
-  FormControl,
-  FormGroup,
-  HelpBlock,
-  InputGroup,
-} from 'patternfly-react';
+import { FormGroup, TextInput, Button } from 'carbon-components-react';
+import { Edit16 } from '@carbon/icons-react';
+
 import { componentTypes, useFormApi } from '@@ddf';
 import { checkValidState } from './helper';
-import RequiredLabel from '../../forms/required-label';
 
 const PasswordField = ({
   cancelEditLabel,
@@ -33,7 +26,7 @@ const PasswordField = ({
   };
 
   return (
-    <Fragment>
+    <>
       {edit && editMode && formOptions.renderForm([{
         ...secretField,
         editMode: !editMode,
@@ -43,32 +36,41 @@ const PasswordField = ({
           if (parent && checkValidState(formOptions, parent)) {
             formOptions.change(parent, formOptions.getFieldState(parent).initial);
           }
-          setEditMode(editMode => !editMode); // reset edit mode
+          setEditMode((editMode) => !editMode); // reset edit mode
         },
       }], formOptions) }
+
       {edit && !editMode && (
-        <FormGroup>
-          <ControlLabel>
-            {rest.isRequired ? <RequiredLabel label={rest.label} /> : rest.label }
-            {helperText && <FieldLevelHelp content={helperText} />}
-          </ControlLabel>
-          <InputGroup>
-            <FormControl
-              id={`${rest.name}-password-placeholder`}
-              autoFocus
-              placeholder="●●●●●●●●"
-              disabled
-              type="password"
-              autoComplete="new-password"
-            />
-            <InputGroup.Button>
-              <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
-            </InputGroup.Button>
-          </InputGroup>
+        <FormGroup legendText={rest.label}>
+          <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
+            <div className="bx--row">
+              <div className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3">
+                <TextInput
+                  labelText=""
+                  id={`${rest.name}-password-placeholder`}
+                  placeholder="●●●●●●●●"
+                  disabled
+                  type="password"
+                  autoComplete="new-password"
+                />
+              </div>
+              <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
+                <Button
+                  hasIconOnly
+                  kind="primary"
+                  size="field"
+                  onClick={() => setEditMode((editMode) => !editMode)}
+                  iconDescription={changeEditLabel}
+                  renderIcon={Edit16}
+                />
+              </div>
+            </div>
+          </div>
         </FormGroup>
       )}
+
       {!edit && formOptions.renderForm([secretField], formOptions)}
-    </Fragment>
+    </>
   );
 };
 
