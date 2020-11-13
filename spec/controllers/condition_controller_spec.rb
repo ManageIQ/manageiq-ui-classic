@@ -1,7 +1,4 @@
-describe MiqPolicyController::Conditions do
-  let(:test_class) { Struct.new(:params) { include MiqPolicyController::Conditions } }
-  subject { test_class.new(params) }
-
+describe ConditionController do
   describe '#condition_edit' do
     context 'adding new condition' do
       let(:params) { {:button => 'add'} }
@@ -24,10 +21,11 @@ describe MiqPolicyController::Conditions do
                                                        :notes          => nil,
                                                        :expression     => {},
                                                        :applies_to_exp => {"???"=>"???"}})
-        subject.instance_variable_set(:@sb, {})
+        subject.instance_variable_set(:@sb, :folder => 'containerReplicator')
       end
 
       it 'sets new node correctly' do
+        controller.params = {:button => 'add'}
         subject.send(:condition_edit)
         expect(subject.instance_variable_get(:@new_condition_node)).to include('xx-containerReplicator_co-')
       end

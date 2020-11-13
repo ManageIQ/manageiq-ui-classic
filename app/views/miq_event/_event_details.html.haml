@@ -8,14 +8,14 @@
           %label.control-label.col-md-2= _("Event Group")
           .col-md-10
             %p.form-control-static= h(@event.memberof.first.description)
-        - unless x_active_tree == :event_tree
+        - if @policy
           .form-group
             %label.control-label.col-md-2= _("Attached to Policy")
             .col-md-10
               %p.form-control-static= h(@policy.description)
       %hr
 
-      - if x_active_tree == :event_tree
+      - if @event_policies
         %h3= _("Assigned to Policies")
         - if @event_policies.empty?
           = render :partial => 'layouts/info_msg', :locals => {:message => _("This Event is not assigned to any Policies.")}
@@ -24,8 +24,7 @@
             %tbody
               - @event_policies.each do |p|
                 - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
-                %tr{:title => _("Click to view Policy"),
-                  :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
+                %tr
                   %td.table-view-pf-select
                     %i{:class => p.decorate.fonticon}
                   %td
@@ -56,7 +55,7 @@
                                       "data-method" => :post,
                                       "data-miq_sparkle_on"  => true,
                                       "data-miq_sparkle_off" => true,
-                                      "data-click_url" => {:url => url_for_only_path(:action => 'event_edit',
+                                      "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
                                                                            :button => action,
                                                                            :id => @event)}.to_json}
                 %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
@@ -87,7 +86,7 @@
                                       "data-method" => :post,
                                       "data-miq_sparkle_on"  => true,
                                       "data-miq_sparkle_off" => true,
-                                      "data-click_url" => {:url => url_for_only_path(:action => 'event_edit',
+                                      "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
                                                                            :button => action,
                                                                            :id => @event)}.to_json}
                 - if %w(A S).include?(arrow_style)
@@ -110,11 +109,7 @@
                   %th= _("Type")
               %tbody
                 - @event_true_actions.each do |a|
-                  - id = "a-#{a.id}"
-                  - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
-                  - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
-                  %tr{:title => _("View this Event Action"),
-                    :onclick => (x_active_tree == :action_tree) ? t : f}
+                  %tr
                     %td.table-view-pf-select
                       %i.pficon.pficon-ok
                     %td
@@ -151,7 +146,7 @@
                                       "data-method" => :post,
                                       "data-miq_sparkle_on"  => true,
                                       "data-miq_sparkle_off" => true,
-                                      "data-click_url" => {:url => url_for_only_path(:action => 'event_edit',
+                                      "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
                                                                            :button => action,
                                                                            :id => @event)}.to_json}
                 %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
@@ -183,7 +178,7 @@
                                       "data-method" => :post,
                                       "data-miq_sparkle_on"  => true,
                                       "data-miq_sparkle_off" => true,
-                                      "data-click_url" => {:url => url_for_only_path(:action => 'event_edit',
+                                      "data-click_url" => {:url => url_for_only_path(:action => 'miq_event_edit',
                                                                            :button => action,
                                                                            :id => @event)}.to_json}
                 - if %w(A S).include?(arrow_style)
@@ -205,11 +200,7 @@
                   %th= _('Type')
               %tbody
                 - @event_false_actions.each do |a|
-                  - id = "a-#{a.id}"
-                  - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
-                  - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
-                  %tr{:title => _("View this Event Action"),
-                     :onclick => (x_active_tree == :action_tree) ? t : f}
+                  %tr
                     %td.table-view-pf-select
                       %i.pficon.pficon-error-circle-o
                     %td

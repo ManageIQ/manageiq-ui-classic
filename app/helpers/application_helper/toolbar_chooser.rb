@@ -102,7 +102,7 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-    elsif @layout == "miq_policy"
+    elsif %w[condition miq_action miq_alert miq_alert_set miq_event miq_policy miq_policy_set].include?(@layout)
       center_toolbar_filename_miq_policy
     elsif @layout == "ops"
       center_toolbar_filename_ops
@@ -222,23 +222,23 @@ class ApplicationHelper::ToolbarChooser
       elsif @conditions
         return "conditions_center_tb"
       elsif @alert_profiles
-        return "miq_alert_profiles_center_tb"
+        return "miq_alert_sets_center_tb"
       end
     end
     case @nodetype
     when "root"
       case x_active_tree
-      when :policy_profile_tree then  "miq_policy_profiles_center_tb"
+      when :policy_profile_tree then  "miq_policy_sets_center_tb"
       when :action_tree then          "miq_actions_center_tb"
       when :alert_tree then           "miq_alerts_center_tb"
       end
-    when "pp" then  "miq_policy_profile_center_tb"
+    when "pp" then  "miq_policy_set_center_tb"
     when "p" then   "miq_policy_center_tb"
     when "co" then  "condition_center_tb"
     when "ev" then  "miq_event_center_tb"
     when "a" then   "miq_action_center_tb"
     when "al" then  "miq_alert_center_tb"
-    when "ap" then  "miq_alert_profile_center_tb"
+    when "ap" then  "miq_alert_set_center_tb"
     end
   end
 

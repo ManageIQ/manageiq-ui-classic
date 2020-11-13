@@ -256,8 +256,7 @@
               %tbody
                 - @action_policies.each do |p|
                   - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
-                  %tr{:title => _("Click to view Policy"),
-                    :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
+                  %tr
                     %td.table-view-pf-select
                       %i{:class => p.decorate.fonticon}
                     %td

@@ -1,8 +1,86 @@
-module MiqPolicyController::Alerts
-  extend ActiveSupport::Concern
+class MiqAlertController < ApplicationController
+  before_action :check_privileges
+  before_action :get_session_data
+  after_action :cleanup_action
+  after_action :set_session_data
 
-  included do
-    helper_method :display_driving_event?
+  include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
+  include Mixins::PolicyMixin
+
+  def title
+    @title = _("Alerts")
+  end
+
+  def index
+    flash_to_session
+    redirect_to(:action => 'explorer')
+  end
+
+  # handle buttons pressed on the button bar
+  def button
+    @edit = session[:edit] # Restore @edit for adv search box
+    @refresh_div = "main_div" # Default div for button.rjs to refresh
+
+    unless @refresh_partial # if no button handler ran, show not implemented msg
+      add_flash(_("Button not yet implemented"), :error)
+      @refresh_partial = "layouts/flash_msg"
+      @refresh_div = "flash_msg_div"
+    end
+  end
+
+  ALERT_X_BUTTON_ALLOWED_ACTIONS = {
+    'miq_alert_edit' => :miq_alert_edit,
+    'miq_alert_copy' => :miq_alert_edit,
+    'miq_alert_new'  => :miq_alert_edit,
+  }.freeze
+
+  def x_button
+    generic_x_button(ALERT_X_BUTTON_ALLOWED_ACTIONS)
+  end
+
+  def explorer
+    @breadcrumbs = []
+    @explorer = true
+    session[:export_data] = nil
+
+    self.x_active_tree ||= 'alert_tree'
+    self.x_active_accord ||= 'alert'
+
+    build_accordions_and_trees
+    get_node_info(x_node)
+
+    render :layout => "application"
+  end
+
+  # Item clicked on in the explorer right cell
+  def x_show
+    @explorer = true
+    tree_select
+  end
+
+  def accordion_select
+    self.x_active_accord = params[:id].sub(/_accord$/, '')
+    self.x_active_tree   = "#{self.x_active_accord}_tree"
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def tree_select
+    # set these when a link on one of the summary screen was pressed
+    self.x_active_accord = params[:accord]           if params[:accord]
+    self.x_active_tree   = "#{params[:accord]}_tree" if params[:accord]
+    self.x_active_tree   = params[:tree]             if params[:tree]
+    self.x_node          = params[:id]
+
+    @sb[:action] = nil
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def search
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => x_node)
   end
 
   SEVERITIES = {"info" => N_('Info'), "warning" => N_('Warning'), "error" => N_('Error')}.freeze
@@ -21,9 +99,7 @@ module MiqPolicyController::Alerts
 
   def alert_edit_save_add
     id = params[:id] && params[:button] != "add" ? params[:id] : "new"
-    assert_privileges(id == 'new' ? 'alert_new' : 'alert_edit')
-
-    return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+    return unless load_edit("miq_alert_edit__#{id}", "replace_cell__explorer")
 
     alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
     alert_set_record_vars(alert)
@@ -36,7 +112,7 @@ module MiqPolicyController::Alerts
       return
     end
 
-    AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
+    AuditEvent.success(build_saved_audit(alert, @edit))
     flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") : _("Alert \"%{name}\" was added")
     add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_get_info(MiqAlert.find(alert.id))
@@ -48,16 +124,15 @@ module MiqPolicyController::Alerts
 
   def alert_edit_reset
     alert_build_edit_screen
-    @sb[:action] = "alert_edit"
+    @sb[:action] = "miq_alert_edit"
     if params[:button] == "reset"
       add_flash(_("All changes have been reset"), :warning)
     end
     replace_right_cell(:nodetype => "al")
   end
 
-  def alert_edit
-    assert_privileges(params[:id] ? 'alert_edit' : 'alert_new')
-
+  def miq_alert_edit
+    assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
       alert_edit_cancel
@@ -69,8 +144,7 @@ module MiqPolicyController::Alerts
   end
 
   def alert_field_changed
-    assert_privileges(params[:id] == 'new' ? 'alert_new' : 'alert_edit')
-    return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
+    return unless load_edit("miq_alert_edit__#{params[:id]}", "replace_cell__explorer")
 
     @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
@@ -218,6 +292,7 @@ module MiqPolicyController::Alerts
     (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing") ||
       %w[ContainerNode ContainerProject].include?(@edit[:new][:db])
   end
+  helper_method :display_driving_event?
 
   def alert_build_edit_screen
     @edit = {}
@@ -232,7 +307,7 @@ module MiqPolicyController::Alerts
       @alert = params[:id] ? MiqAlert.find(params[:id]) : MiqAlert.new
       @alert.enabled = true unless @alert.id # Default enabled to true if new record
     end
-    @edit[:key] = "alert_edit__#{@alert.id || "new"}"
+    @edit[:key] = "miq_alert_edit__#{@alert.id || "new"}"
     @edit[:rec_id] = @alert.id || nil
 
     @edit[:alert_id] = @alert.id
@@ -318,7 +393,7 @@ module MiqPolicyController::Alerts
 
     # Build hash of alarms if mgmt system option is present is present
     if !@alert.expression.kind_of?(MiqExpression) &&
-       @edit[:new][:expression][:options] && @edit[:new][:expression][:options][:ems_id]
+      @edit[:new][:expression][:options] && @edit[:new][:expression][:options][:ems_id]
       @edit[:ems_alarms] = alert_build_ems_alarms
     end
 
@@ -679,4 +754,144 @@ module MiqPolicyController::Alerts
       end
     end
   end
+
+  # Get all info for the node about to be displayed
+  def get_node_info(treenodeid, show_list = true)
+    @show_list = show_list
+    _modelname, nodeid, @nodetype = TreeBuilder.extract_node_model_and_id(valid_active_node(treenodeid))
+    node_ids = {}
+    treenodeid.split("_").each do |p|
+      # Create a hash of all record ids represented by the selected tree node
+      node_ids[p.split("-").first] = p.split("-").last
+    end
+    @sb[:node_ids] ||= {}
+    @sb[:node_ids][x_active_tree] = node_ids
+    x_node == "root" ? get_root_node_info : alert_get_info(MiqAlert.find(nodeid))
+    @show_adv_search = @nodetype == "root"
+    {:view => @view, :pages => @pages}
+  end
+
+  # Fetches right side info if a tree root is selected
+  def get_root_node_info
+    alert_get_all
+  end
+
+  # replace_trees can be an array of tree symbols to be replaced
+  def replace_right_cell(options = {})
+    nodetype, replace_trees, presenter = options.values_at(:nodetype, :replace_trees, :presenter)
+    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
+    replace_trees = Array(replace_trees)
+    @explorer = true
+
+    trees = build_replaced_trees(replace_trees, %i[alert])
+
+    c_tb = build_toolbar(center_toolbar_filename)
+
+    # Build a presenter to render the JS
+    presenter ||= ExplorerPresenter.new(
+      :active_tree => x_active_tree,
+      :open_accord => params[:accord]
+    )
+
+    self.x_node = @new_alert_node if @new_alert_node
+    reload_trees_by_presenter(presenter, trees)
+
+    presenter[:osf_node] = x_node
+
+    @changed = session[:changed] if @edit # to get save/reset buttons to highlight when fields are moved left/right
+
+    # Replace right side with based on selected tree node type
+    case nodetype
+    when 'root'
+      partial_name, model = ['alert_list', _('Alerts')]
+      presenter.update(:main_div, r[:partial => partial_name])
+      right_cell_text = _("All %{models}") % {:models => model}
+      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present?
+    when 'al'
+      presenter.update(:main_div, r[:partial => 'alert_details', :locals => {:read_only => true}])
+      right_cell_text = if @alert.id.blank?
+                          _("Adding a new Alert")
+                        elsif @assign && @edit
+                          _("Editing assignments for Alert \"%{name}\"") % {:name => @alert.description}
+                        elsif @assign
+                          _("Assignments for Alert \"%{name}\"") % {:name => @alert.description}
+                        elsif @edit
+                          _("Editing Alert \"%{name}\"") % {:name => @alert.description}
+                        else
+                          _("Alert \"%{name}\"") % {:name => @alert.description}
+                        end
+    end
+    presenter[:right_cell_text] = @right_cell_text = right_cell_text
+
+    presenter.reload_toolbars(:center => c_tb)
+
+    if ((@edit && @edit[:new]) || @assign) && params[:action] != "x_search_by_name"
+      locals = {
+        :action_url => @sb[:action],
+        :record_id  => @edit ? @edit[:rec_id] : @assign[:rec_id],
+      }
+      presenter.hide(:toolbar)
+      # If was hidden for summary screen and there were no records on show_list
+      presenter.show(:paging_div, :form_buttons_div)
+      presenter.remove_paging
+      presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
+    else
+      # Added so buttons can be turned off even tho div is not being displayed it still pops up
+      # Abandon changes box when trying to change a node on tree after saving a record
+      presenter.hide(:buttons_on).show(:toolbar).hide(:paging_div)
+    end
+
+    presenter.hide(:form_buttons_div) if options[:remove_form_buttons]
+
+    replace_search_box(presenter, :nameonly => true)
+
+    # Hide/show searchbox depending on if a list is showing
+    presenter.set_visibility(@show_adv_search, :adv_searchbox_div)
+
+    presenter[:record_id] = @record.try(:id)
+
+    presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
+
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
+
+    render :json => presenter.for_render
+  end
+
+  def get_session_data
+    @title = _("Alerts")
+    @layout =  "miq_alert"
+    @lastaction = session[:miq_alert_lastaction]
+    @display = session[:miq_alert_display]
+    @current_page = session[:miq_alert_current_page]
+    alert_build_pulldowns
+  end
+
+  def set_session_data
+    super
+    session[:layout]                 = @layout
+    session[:miq_alert_current_page] = @current_page
+  end
+
+  def features
+    [
+      {
+        :name     => :alert,
+        :title    => _("Alerts"),
+        :role     => "alert",
+        :role_any => true
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Control")},
+        {:title => _('Explorer')},
+      ].compact,
+      :record_title => :description,
+    }
+  end
+
+  menu_section :con
 end

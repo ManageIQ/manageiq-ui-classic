@@ -235,6 +235,6 @@ class GtlFormatter
   end
 
   def self.alert_severity_format(value)
-    [_(MiqPolicyController::Alerts::SEVERITIES[value]), nil]
+    [_(MiqAlertController::SEVERITIES[value]), nil]
   end
 end

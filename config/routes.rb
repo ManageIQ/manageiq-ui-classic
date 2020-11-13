@@ -2095,26 +2095,14 @@ Rails.application.routes.draw do
         rsop
       ),
       :post => %w(
-        accordion_select
-        action_edit
-        action_field_changed
-        alert_edit
-        alert_field_changed
-        alert_profile_assign
-        alert_profile_assign_changed
-        alert_profile_edit
-        alert_profile_field_changed
         button
-        condition_edit
-        condition_field_changed
-        event_edit
         export
         export_field_changed
         import
-        policy_edit
+        miq_event_edit
+        miq_event_field_changed
+        miq_policy_edit
         policy_field_changed
-        profile_edit
-        profile_field_changed
         quick_search
         reload
         rsop
@@ -2126,9 +2114,99 @@ Rails.application.routes.draw do
         upload
         wait_for_task
       ) +
-               adv_search_post +
-               exp_post +
-               x_post
+         adv_search_post +
+         exp_post +
+         x_post
+    },
+
+    :miq_policy_set => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        button
+        miq_policy_set_edit
+        profile_field_changed
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_action       => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        miq_action_edit
+        action_field_changed
+        button
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_alert => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        alert_field_changed
+        button
+        miq_alert_edit
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        exp_post +
+        x_post
+    },
+
+    :miq_alert_set  => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        alert_profile_assign_changed
+        alert_profile_field_changed
+        button
+        miq_alert_set_assign
+        miq_alert_set_edit
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_event => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :condition => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        condition_edit
+        condition_field_changed
+        reload
+        tree_autoload
+        tree_select
+      ) +
+          adv_search_post +
+          exp_post +
+          x_post
     },
 
     :miq_request              => {

@@ -49,7 +49,7 @@
                                             "data-method"          => :post,
                                             "data-miq_sparkle_on"  => true,
                                             "data-miq_sparkle_off" => true,
-                                            "data-click_url"       => {:url => url_for_only_path(:action => 'profile_edit',
+                                            "data-click_url"       => {:url => url_for_only_path(:action => 'miq_policy_set_edit',
                                                                                                  :button => action,
                                                                                                  :id => @profile)}.to_json}
             %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
@@ -76,8 +76,10 @@
         %table.table.table-striped.table-bordered.table-hover
           %tbody
             - @profile_policies.each do |p|
-              %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-                :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_p-#{p.id}');"}
+              %tr{:class => "no-hover"}
+                -# uncomment following 2 lines when de-explorizing
+                -#%tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
+                -#:onclick => remote_function(:url => "/miq_policy/show/xx-#{p.mode}_xx-#{p.mode}-#{p.towhat}_p-#{p.id}")}
                 %td.table-view-pf-select
                   %i{:class => p.decorate.fonticon}
                 %td

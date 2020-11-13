@@ -1,6 +1,6 @@
 describe MiqPolicyController do
   context "::Events" do
-    context "#event_edit" do
+    context "#miq_event_edit" do
       before do
         stub_user(:features => :all)
         @action = FactoryBot.create(:miq_action, :name => "compliance_failed")
@@ -31,7 +31,7 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
         controller.params = {:id => @event.id.to_s, :button => "save"}
-        controller.event_edit
+        controller.miq_event_edit
         expect(@policy.actions_for_event(@event, :success)).to include(@action)
       end
 
@@ -52,7 +52,7 @@ describe MiqPolicyController do
         session[:edit] = edit
         controller.params = {:id => @event.id.to_s, :button => "save"}
         expect(controller).to receive(:render)
-        controller.event_edit
+        controller.miq_event_edit
         expect(assigns(:flash_array).first[:message]).to include("At least one action must be selected to save this Policy Event")
       end
     end
@@ -64,6 +64,7 @@ describe MiqPolicyController do
         FactoryBot.create(:miq_action, :name => "compliance_failed")
         @event = FactoryBot.create(:miq_event_definition, :name => "vm_compliance_check")
         @policy = FactoryBot.create(:miq_policy, :name => "Foo", :mode => 'compliance')
+        MiqPolicyContent.create(:miq_policy => @policy, :miq_event_definition => @event)
         controller.instance_variable_set(:@sb,
                                          :node_ids    => {
                                            :policy_tree => {"p" => @policy.id}

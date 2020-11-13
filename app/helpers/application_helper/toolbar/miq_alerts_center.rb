@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::MiqAlertsCenter < ApplicationHelper::Toolbar::
       t,
       :items => [
         button(
-          :alert_new,
+          :miq_alert_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a New Alert'),
           t,

@@ -2,6 +2,6 @@ class ApplicationHelper::Button::PolicyEditConditions < ApplicationHelper::Butto
 
   def role_allows_feature?
     return true if super
-    role_allows?(:feature => "policy_edit_conditions")
+    role_allows?(:feature => "miq_policy_edit_conditions")
   end
 end

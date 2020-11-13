@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::MiqActionsCenter < ApplicationHelper::Toolbar:
       t,
       :items => [
         button(
-          :action_new,
+          :miq_action_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Action'),
           t,

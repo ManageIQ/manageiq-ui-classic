@@ -1,13 +1,13 @@
-class ApplicationHelper::Toolbar::MiqPolicyProfilesCenter < ApplicationHelper::Toolbar::Basic
-  button_group('policy_profile_vmdb', [
+class ApplicationHelper::Toolbar::MiqPolicySetsCenter < ApplicationHelper::Toolbar::Basic
+  button_group('miq_policy_set_new_vmdb', [
     select(
-      :policy_profile_vmdb_choice,
+      :miq_policy_set_new_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :items => [
         button(
-          :profile_new,
+          :miq_policy_set_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a New Policy Profile'),
           t,

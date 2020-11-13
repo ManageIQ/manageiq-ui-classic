@@ -1,13 +1,13 @@
-class ApplicationHelper::Toolbar::MiqPolicyProfileCenter < ApplicationHelper::Toolbar::Basic
-  button_group('policy_profile_vmdb', [
+class ApplicationHelper::Toolbar::MiqPolicySetCenter < ApplicationHelper::Toolbar::Basic
+  button_group('miq_policy_set_vmdb', [
     select(
-      :policy_profile_vmdb_choice,
+      :miq_policy_set_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :items => [
         button(
-          :profile_edit,
+          :miq_policy_set_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Policy Profile'),
           t,
@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::MiqPolicyProfileCenter < ApplicationHelper::To
           :send_checked => true,
           :klass        => ApplicationHelper::Button::ReadOnly),
         button(
-          :profile_delete,
+          :miq_policy_set_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Policy Profile'),
           t,

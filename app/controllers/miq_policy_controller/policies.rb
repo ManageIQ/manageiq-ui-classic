@@ -3,7 +3,7 @@ module MiqPolicyController::Policies
 
   def policy_edit_cancel
     id = params[:id] || "new"
-    return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+    return unless load_edit("miq_policy_edit__#{id}", "replace_cell__explorer")
 
     @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
     if @policy.present?
@@ -17,7 +17,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_edit_reset
-    @sb[:action] = "policy_edit"
+    @sb[:action] = "miq_policy_edit"
     policy_build_edit_screen(session[:edit].try(:key?, :typ) ? session[:edit][:typ] : params[:typ])
     if params[:button] == "reset"
       add_flash(_("All changes have been reset"), :warning)
@@ -63,7 +63,7 @@ module MiqPolicyController::Policies
       policy.replace_actions_for_event(event, action_list) # Add in the default action for the compliance event
     end
     policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
-    AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
+    AuditEvent.success(build_saved_audit(policy, @edit))
     if params[:button] == "save"
       add_flash(_("Policy \"%{name}\" was saved") % {:name => @edit[:new][:description]})
     else
@@ -73,17 +73,11 @@ module MiqPolicyController::Policies
     @sb[:action] = @edit = nil
     @nodetype = "p"
 
-    case x_active_tree
-    when :policy_profile_tree
-      replace_right_cell(:nodetype => "p", :replace_trees => %i[policy_profile policy], :remove_form_buttons => true)
-    when :policy_tree
-      @nodetype = "p"
-      if params[:button] == "add"
-        self.x_node = @new_policy_node = policy_node(policy)
-        get_node_info(@new_policy_node)
-      end
-      replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? %i[policy_profile policy] : %i[policy], :remove_form_buttons => true)
+    if params[:button] == "add"
+      self.x_node = @new_policy_node = policy_node(policy)
+      get_node_info(@new_policy_node)
     end
+    replace_right_cell(:nodetype => "p", :replace_trees => %i[policy], :remove_form_buttons => true)
   end
 
   def policy_edit_move
@@ -95,13 +89,12 @@ module MiqPolicyController::Policies
   def policy_edit_load_policy
     # Load @edit/vars for other buttons
     id = params[:id] || "new"
-    return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+    return unless load_edit("miq_policy_edit__#{id}", "replace_cell__explorer")
 
     @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
   end
 
-  def policy_edit
-    assert_privileges(params[:id] ? 'policy_edit' : 'policy_new')
+  def miq_policy_edit
     case params[:button]
     when "cancel"
       policy_edit_cancel
@@ -117,7 +110,7 @@ module MiqPolicyController::Policies
   end
 
   # Copy a policy
-  def policy_copy
+  def miq_policy_copy
     assert_privileges("policy_copy")
     policy = MiqPolicy.find(params[:id])
     new_desc = truncate("Copy of #{policy.description}", :length => 255, :omission => "")
@@ -140,8 +133,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_field_changed
-    assert_privileges(params[:id] == 'new' ? 'policy_new' : 'policy_edit')
-    return unless load_edit("policy_edit__#{params[:id]}", "replace_cell__explorer")
+    return unless load_edit("miq_policy_edit__#{params[:id]}", "replace_cell__explorer")
 
     @profile = @edit[:profile]
 
@@ -189,7 +181,7 @@ module MiqPolicyController::Policies
     @edit[:current] = {}
 
     @policy = params[:id] ? MiqPolicy.find(params[:id]) : MiqPolicy.new                   # Get existing or new record
-    @edit[:key] = "policy_edit__#{@policy.id || "new"}"
+    @edit[:key] = "miq_policy_edit__#{@policy.id || "new"}"
     @mode = params[:id] ? @policy.mode.capitalize : x_node.split("_").first.split("-").last
     @edit[:rec_id] = @policy.id || nil
 
