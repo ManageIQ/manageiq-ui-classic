@@ -1,43 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
-import {
-  ControlLabel, FieldLevelHelp, FormGroup, HelpBlock,
-} from 'patternfly-react';
+import { FormGroup } from 'carbon-components-react';
+import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
 
-import RequiredLabel from '../../forms/required-label';
+import HelperTextBlock from '../../forms/helper-text-block';
 import TreeViewBase from './base';
 
 const TreeViewField = ({
-  loadData, lazyLoadData, helperText, isRequired, label, identifier, ...props
+  loadData, lazyLoadData, validateOnMount, helperText, identifier, ...props
 }) => {
-  const { input: { value = [], name }, meta } = useFieldApi(props);
+  const {
+    labelText,
+    FormGroupProps,
+    input: { value = [], name },
+    meta: { error, warning, touched },
+  } = useFieldApi(prepareProps(props));
+
   const formOptions = useFormApi();
+
+  const invalid = (touched || validateOnMount) && error;
+  const warnText = (touched || validateOnMount) && warning;
 
   const actionMapper = {
     [ActionTypes.CHECKED_DIRECTLY]: (node, value) => {
       const { value: values = [] } = formOptions.getFieldState(name);
-      formOptions.change(name, value ? [...values, identifier(node)] : values.filter(item => item !== identifier(node)));
+      formOptions.change(name, value ? [...values, identifier(node)] : values.filter((item) => item !== identifier(node)));
       return Tree.nodeChecked(node, value);
     },
   };
 
   return (
-    <FormGroup validationState={meta.error ? 'error' : null}>
-      <ControlLabel>
-        {isRequired ? <RequiredLabel label={label} /> : label }
-        {helperText && <FieldLevelHelp content={helperText} />}
-      </ControlLabel>
+    <FormGroup legendText={labelText} {...FormGroupProps}>
       <TreeViewBase
         loadData={loadData}
         lazyLoadData={lazyLoadData}
         actionMapper={actionMapper}
-        check={node => value.includes(identifier(node))}
+        check={(node) => value.includes(identifier(node))}
         isMulti
         {...props}
       />
-      {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
+      <HelperTextBlock helperText={helperText} errorText={invalid} warnText={warnText} />
     </FormGroup>
   );
 };
@@ -47,16 +51,17 @@ TreeViewField.propTypes = {
   lazyLoadData: PropTypes.func,
   helperText: PropTypes.string,
   isRequired: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   identifier: PropTypes.func,
+  validateOnMount: PropTypes.bool,
 };
 
 TreeViewField.defaultProps = {
   lazyLoadData: () => undefined,
   helperText: undefined,
   isRequired: false,
-  label: undefined,
-  identifier: node => node.attr.key,
+  validateOnMount: undefined,
+  identifier: (node) => node.attr.key,
 };
 
 export default TreeViewField;
