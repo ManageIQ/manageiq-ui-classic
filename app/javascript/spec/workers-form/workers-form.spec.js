@@ -7,7 +7,6 @@ import '../helpers/miqSparkle';
 import '../helpers/addFlash';
 import '../helpers/sprintf';
 import MiqFormRenderer from '../../forms/data-driven-form';
-import Dualgroup from '../../components/dual-group';
 import { mount } from '../helpers/mountForm';
 
 describe('Workers form', () => {
@@ -127,7 +126,6 @@ describe('Workers form', () => {
 
     wrapper.update();
     expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-    expect(wrapper.find(Dualgroup)).toHaveLength(6);
     done();
   });
 
@@ -140,7 +138,6 @@ describe('Workers form', () => {
     setImmediate(() => {
       wrapper.update();
       expect(wrapper.find(MiqFormRenderer)).toHaveLength(0);
-      expect(wrapper.find(Dualgroup)).toHaveLength(0);
       expect(spyAddFlash).toHaveBeenCalledWith('Could not fetch the data', 'error');
       done();
     });
