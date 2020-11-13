@@ -733,15 +733,18 @@ describe CatalogController do
       let(:auth) { FactoryBot.create(:authentication, :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
       let(:repository) { FactoryBot.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
       let(:inventory_root_group) { FactoryBot.create(:inventory_root_group) }
-      let(:ems) do
-        FactoryBot.create(:embedded_automation_manager_ansible, :inventory_root_groups => [inventory_root_group])
-      end
+      let(:provider) { FactoryBot.create(:provider_embedded_ansible) }
+      let(:ems) { provider.automation_manager }
       let(:dialog) { FactoryBot.create(:dialog) }
       let(:playbook) do
         FactoryBot.create(:embedded_playbook,
                            :configuration_script_source => repository,
                            :manager                     => ems,
                            :inventory_root_group        => inventory_root_group)
+      end
+
+      before do
+        ems.update_attributes(:inventory_root_groups => [inventory_root_group])
       end
 
       it "returns playbook service template details for provision & retirement tabs for summary screen" do
