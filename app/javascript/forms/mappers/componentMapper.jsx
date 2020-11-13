@@ -8,14 +8,12 @@ import EditPasswordField from '../../components/async-credentials/edit-password-
 import PasswordField from '../../components/async-credentials/password-field';
 import Select from '../../components/select';
 import CodeEditor from '../../components/code-editor';
-import FieldArray from '../../components/field-array';
 import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 
 const mapper = {
   ...componentMapper,
   'code-editor': CodeEditor,
   'edit-password-field': EditPasswordField,
-  'field-array': FieldArray,
   'dual-list-select': DualListSelect,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
