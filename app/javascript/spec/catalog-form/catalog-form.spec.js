@@ -31,8 +31,8 @@ describe('Catalog form component', () => {
   };
 
   const originalRightValues = [
-    { key: 'http://localhost:3000/api/service_templates/2', label: 'template 2' },
-    { key: 'http://localhost:3000/api/service_templates/6', label: 'template 6' },
+    { value: 'http://localhost:3000/api/service_templates/2', label: 'template 2' },
+    { value: 'http://localhost:3000/api/service_templates/6', label: 'template 6' },
   ];
 
   const rightValues = [
@@ -81,7 +81,7 @@ describe('Catalog form component', () => {
     });
   });
 
-  it('should call cancel callback ', (done) => {
+  it('should call cancel callback', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
     const wrapper = mount(<CatalogForm catalogId="1001" />);
@@ -89,7 +89,7 @@ describe('Catalog form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      const button = wrapper.find('button').last();
+      const button = wrapper.find('Button[label="Cancel"] button').first();
       button.simulate('click');
       expect(spyMiqAjaxButton).toHaveBeenCalledWith(url);
       done();
@@ -157,7 +157,7 @@ describe('Catalog form component', () => {
       name: 'Some name',
       description: '11',
       service_templates: [
-        { key: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
+        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
       ],
     };
     wrapper.children().instance().submitValues(values).then(() => {
@@ -187,7 +187,7 @@ describe('Catalog form component', () => {
       name: 'Some name',
       description: '11',
       service_templates: [
-        { key: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
+        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
       ],
     };
 
@@ -242,7 +242,7 @@ describe('Catalog form component', () => {
       name: 'Some name',
       description: '11',
       service_templates: [
-        { key: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
+        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
       ],
     };
 
