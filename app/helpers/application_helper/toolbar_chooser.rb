@@ -229,11 +229,9 @@ class ApplicationHelper::ToolbarChooser
     case @nodetype
     when "root"
       case x_active_tree
-      when :policy_profile_tree then  "miq_policy_sets_center_tb"
       when :action_tree then          "miq_actions_center_tb"
       when :alert_tree then           "miq_alerts_center_tb"
       end
-    when "pp" then  "miq_policy_set_center_tb"
     when "p" then   "miq_policy_center_tb"
     when "co" then  "condition_center_tb"
     when "ev" then  "miq_event_center_tb"
@@ -470,7 +468,7 @@ class ApplicationHelper::ToolbarChooser
             container_build
             infra_networking
             infra_topology
-            ems_storage
+            ems_storagem
             container_topology
             cloud_topology
             orchestration_stack

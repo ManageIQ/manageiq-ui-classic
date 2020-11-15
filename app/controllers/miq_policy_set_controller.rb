@@ -174,5 +174,6 @@ class MiqPolicySetController < ApplicationController
     }
   end
 
+  toolbar :miq_policy_set,:miq_policy_sets
   menu_section :con
 end
