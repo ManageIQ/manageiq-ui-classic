@@ -40,7 +40,6 @@ const OpsTenantForm = ({
   const save = (values, method, url, message) => {
     miqSparkleOn();
     return API[method](url, values, { skipErrors: [400] })
-      .then(() => http.post('/ops/invalidate_miq_product_feature_caches', {}))
       .then(() => miqRedirectBack(message, 'success', redirectUrl))
       .catch((...args) => {
         miqSparkleOff();

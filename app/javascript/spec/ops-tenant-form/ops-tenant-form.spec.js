@@ -176,7 +176,6 @@ describe('OpstTenantForm', () => {
       resources: [],
     });
     fetchMock.postOnce('/api/tenants', {});
-    fetchMock.postOnce('/ops/invalidate_miq_product_feature_caches', {});
     const wrapper = mount(<OpsTenantForm {...initialProps} />);
     wrapper.find('input').at(0).simulate('change', { target: { value: 'foo' } });
     wrapper.find('input').at(1).simulate('change', { target: { value: 'bar' } });
@@ -210,7 +209,6 @@ describe('OpstTenantForm', () => {
       resources: [],
     });
     fetchMock.putOnce('/api/tenants/123', {});
-    fetchMock.postOnce('/ops/invalidate_miq_product_feature_caches', {});
     let wrapper;
     await act(async() => {
       wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);

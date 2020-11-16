@@ -22,11 +22,6 @@ module OpsController::OpsRbac
     super(options)
   end
 
-  def invalidate_miq_product_feature_caches
-    MiqProductFeature.invalidate_caches
-    render :json => {}
-  end
-
   # Edit user or group tags
   def rbac_tags_edit
     case params[:button]
