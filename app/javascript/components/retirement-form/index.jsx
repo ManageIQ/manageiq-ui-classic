@@ -16,7 +16,7 @@ const RetirementForm = ({ retirementID, redirect, title, url}) => {
   const onSubmit = ({ formMode, retirementDate, retirementWarning, days, weeks, months, hours }) => {
     miqSparkleOn();
     const date = formMode === 'delay' ? moment().add({ days:Number(days), weeks:Number(weeks), months:Number(months), hours:Number(hours) })._d : retirementDate;
-    const request = API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: retirementWarning } });
+    const request = API.post(`${url}/${id}`, { action: 'request_retire', resource: { date, warn: retirementWarning } });
     request.then(() => {
       const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
       miqRedirectBack(message, 'success', redirect);
@@ -31,7 +31,7 @@ const RetirementForm = ({ retirementID, redirect, title, url}) => {
 
   useEffect(() => {
     if (id) {
-      API.get(`/api/services/${id}?attributes=retires_on,retirement_warn`).then((res) => {
+      API.get(`${url}/${id}?attributes=retires_on,retirement_warn`).then((res) => {
         if (res.retires_on != null) {
           setState({
             isLoading: false,
