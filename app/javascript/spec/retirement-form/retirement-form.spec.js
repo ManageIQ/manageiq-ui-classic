@@ -12,8 +12,6 @@ describe('Retirement Form Component', () => {
   const retire = {
     retires_on: new Date('2024-06-08T15:49:04.816Z'),
     retirement_warn: '',
-    formMode: 'date',
-
   };
 
   afterEach(() => {
@@ -22,7 +20,10 @@ describe('Retirement Form Component', () => {
   });
 
   it('should render a new Retirement form', async(done) => {
-    const wrapper = shallow(<RetirementForm retirementID={'["180"]'}/>);
+    let wrapper 
+    await act(async() => {
+      wrapper = shallow(<RetirementForm retirementID={'["180"]'}/>);
+    });
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
@@ -37,7 +38,6 @@ describe('Retirement Form Component', () => {
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(1);
     expect(wrapper.find('input[name="retirementWarning"]').instance().value).toEqual('');
-    expect(wrapper.find('input[name="formMode"]').instance().value).toEqual('date');
     done();
   });
 });

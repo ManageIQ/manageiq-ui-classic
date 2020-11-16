@@ -1,4 +1,4 @@
-import { componentTypes } from '@@ddf';
+import { componentTypes, validatorTypes } from '@@ddf';
 
 const createSchema = () => ({
   fields: [{
@@ -10,7 +10,9 @@ const createSchema = () => ({
       id: 'formMode',
       name: 'formMode',
       label: __('Enter Retirement Date as'),
+      initialValue: 'date',
       isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
       options: [
         { label: __('Specific Date and Time'), value: 'date' },
         { label: __('Time Delay from Now'), value: 'delay' }],

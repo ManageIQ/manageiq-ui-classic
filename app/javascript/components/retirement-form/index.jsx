@@ -4,25 +4,30 @@ import moment from 'moment';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const RetirementForm = ({ retirementID }) => {
+const RetirementForm = ({ retirementID, redirect, title, url}) => {
+  console.log(`URL: ${url}`)
   const id = retirementID.replace(/\D/g,'');
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!id,
-    initialValues: { formMode: '' },
   });
 
-  const cancelUrl = `/${ManageIQ.controller}/retire?button=cancel`;
-  const saveURL = `/${ManageIQ.controller}/retire?button=save`;
-
-  const onSubmit = (data) => {
+  const onSubmit = ({ formMode, retirementDate, retirementWarning, days, weeks, months, hours }) => {
     miqSparkleOn();
-    const date = data.formMode === 'delay' ? moment().add({ days:Number(data.days), weeks:Number(data.weeks), months:Number(data.months), hours:Number(data.hours) })._d : data.retirementDate;
-    const request = API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: data.retirementWarning } });
+    const date = formMode === 'delay' ? moment().add({ days:Number(days), weeks:Number(weeks), months:Number(months), hours:Number(hours) })._d : retirementDate;
+    const request = API.post(`/api/services/${id}`, { action: 'request_retire', resource: { date, warn: retirementWarning } });
     request.then(() => {
-      miqAjaxButton(saveURL, { retire_date: date, retire_warn: data.retirementWarning });
+      const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
+      miqRedirectBack(message, 'success', redirect);
     }).catch(miqSparkleOff);
   };
+
+  const onCancel = () => {
+    miqSparkleOn();
+    const message = __('Set/remove retirement date was cancelled by the user');
+    miqRedirectBack(message, 'warn', redirect);
+  }
 
   useEffect(() => {
     if (id) {
@@ -33,7 +38,6 @@ const RetirementForm = ({ retirementID }) => {
             initialValues: {
               retirementDate: res.retires_on,
               retirementWarning: res.retirement_warn || '',
-              formMode: 'date',
             }
           });
         }
@@ -53,7 +57,7 @@ const RetirementForm = ({ retirementID }) => {
         schema={createSchema()}
         onSubmit={onSubmit}
         canReset={!!id}
-        onCancel={() => miqAjaxButton(cancelUrl)}
+        onCancel={onCancel}
         onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         buttonsLabels={{
           resetLabel: __('Reset'),
