@@ -385,8 +385,6 @@ class TreeBuilder
 
     # Control
     ## Explorer
-    ### Policy Profiles
-    :policy_profile                  => "TreeBuilderPolicyProfile",
     ### Policies
     :policy                          => "TreeBuilderPolicy",
     ### Events
