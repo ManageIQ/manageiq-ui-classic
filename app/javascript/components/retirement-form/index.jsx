@@ -6,17 +6,24 @@ import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const RetirementForm = ({ retirementID, redirect, title, url}) => {
-  console.log(`URL: ${url}`)
-  const id = retirementID.replace(/\D/g,'');
+const RetirementForm = ({ retirementID, redirect, url}) => {
+  const retireItems = retirementID.split('"').filter(Number);
   const [{ initialValues, isLoading }, setState] = useState({
-    isLoading: !!id,
+    isLoading: !!retireItems,
   });
+  const controller = ManageIQ.controller == 'service' ? 'services' : 'vms';
 
   const onSubmit = ({ formMode, retirementDate, retirementWarning, days, weeks, months, hours }) => {
     miqSparkleOn();
     const date = formMode === 'delay' ? moment().add({ days:Number(days), weeks:Number(weeks), months:Number(months), hours:Number(hours) })._d : retirementDate;
-    const request = API.post(`${url}/${id}`, { action: 'request_retire', resource: { date, warn: retirementWarning } });
+    var objects = [];
+    retireItems.forEach(id => objects.push({
+      id: id,
+      date: date,
+      warn: retirementWarning,
+    }));
+    const request = API.post(`/api/${controller}`, { action: 'request_retire', resources: objects });
+    console.log('request',request);
     request.then(() => {
       const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
       miqRedirectBack(message, 'success', redirect);
@@ -30,8 +37,8 @@ const RetirementForm = ({ retirementID, redirect, title, url}) => {
   }
 
   useEffect(() => {
-    if (id) {
-      API.get(`${url}/${id}?attributes=retires_on,retirement_warn`).then((res) => {
+    if (retireItems.length === 1) {
+      API.get(`${url}/${retireItems[0]}?attributes=retires_on,retirement_warn`).then((res) => {
         if (res.retires_on != null) {
           setState({
             isLoading: false,
@@ -40,15 +47,18 @@ const RetirementForm = ({ retirementID, redirect, title, url}) => {
               retirementWarning: res.retirement_warn || '',
             }
           });
-        }
+        } 
         else {
-          setState(prev => ({ ...prev, isLoading: false }))
+          setState(prev => ({ ...prev, isLoading: false }));
         }
       }).catch(
         handleFailure,
       );
     }
-  }, []);
+    else {
+      setState(prev => ({ ...prev, isLoading: false }));
+    }
+}, []);
 
   return (
     !isLoading && (
@@ -56,7 +66,7 @@ const RetirementForm = ({ retirementID, redirect, title, url}) => {
         initialValues={initialValues}
         schema={createSchema()}
         onSubmit={onSubmit}
-        canReset={!!id}
+        canReset={!!retireItems}
         onCancel={onCancel}
         onReset={() => add_flash(__('All changes have been reset'), 'warn')}
         buttonsLabels={{
