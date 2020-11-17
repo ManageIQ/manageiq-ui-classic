@@ -437,7 +437,6 @@ Rails.application.routes.draw do
 
     :cloud_tenant             => {
       :get => %w(
-        cloud_tenant_form_fields
         delete_cloud_tenants
         dialog_load
         download_data
@@ -454,14 +453,12 @@ Rails.application.routes.draw do
       :post => %w(
         button
         listnav_search_selected
-        create
         protect
         quick_search
         sections_field_changed
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
