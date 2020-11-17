@@ -15,6 +15,15 @@ export function APIFunction(actionType, entity, resources) {
       } else {
         add_flash(sprintf(__('Requested %s of selected item.'), actionType), 'success');
       }
+
+      if (data.results){
+        data.results.forEach(res => {
+          if (!res.success) {
+            add_flash(sprintf(__(res.message)), 'error');
+          }
+        });
+      }
+
       return data;
     })
     .catch(data => data);
