@@ -23,7 +23,6 @@ const RetirementForm = ({ retirementID, redirect, url}) => {
       warn: retirementWarning,
     }));
     const request = API.post(`/api/${controller}`, { action: 'request_retire', resources: objects });
-    console.log('request',request);
     request.then(() => {
       const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
       miqRedirectBack(message, 'success', redirect);
