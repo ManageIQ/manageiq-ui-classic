@@ -34,6 +34,11 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
        :text => _("AzureStack Templates"),
        :icon => "pficon pficon-template",
        :tip  => _("AzureStack Templates")},
+      {:id   => 'otovf',
+       :tree => "otovf_tree",
+       :text => _("OVF Templates"),
+       :icon => "pficon pficon-template",
+       :tip  => _("OVF Templates")},
       {:id   => 'otvnf',
        :tree => "otvnf_tree",
        :text => _("VNF Templates"),
@@ -55,7 +60,8 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
       "otazu" => ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate,
       "otazs" => ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate,
       "otvnf" => ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate,
-      "otvap" => ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
+      "otvap" => ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate,
+      "otovf" => ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate
     }
     count_only_or_objects_filtered(count_only, classes[object[:id]].where(:orderable => true), "name")
   end
