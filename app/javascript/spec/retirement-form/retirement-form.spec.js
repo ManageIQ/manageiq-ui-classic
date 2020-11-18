@@ -22,7 +22,7 @@ describe('Retirement Form Component', () => {
   it('should render a new Retirement form', async(done) => {
     let wrapper 
     await act(async() => {
-      wrapper = shallow(<RetirementForm retirementID={'["180"]'}/>);
+      wrapper = mount(<RetirementForm retirementID={'["180"]'} url={'/api/services'}/>);
     });
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -33,7 +33,7 @@ describe('Retirement Form Component', () => {
     fetchMock.get(`/api/services/42?attributes=retires_on,retirement_warn`, retire);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<RetirementForm retirementID={'["42"]'} {...retire} />);
+      wrapper = mount(<RetirementForm retirementID={'["42"]'} url={'/api/services'}  {...retire} />);
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(1);
