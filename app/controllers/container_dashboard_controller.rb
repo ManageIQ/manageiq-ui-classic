@@ -51,6 +51,10 @@ class ContainerDashboardController < ApplicationController
     "container_dashboard"
   end
 
+  def show
+    # the show doesn't need to set any contextual variables, it just renders the template
+  end
+
   private
 
   def get_session_data
