@@ -1779,6 +1779,9 @@ class CatalogController < ApplicationController
     host = Host.find_by(:id => provision[:host_id])
     ovf_template_details[:provisioning][:host_name] = host.try(:name)
 
+    storage = Storage.find_by(:id => provision[:storage_id])
+    ovf_template_details[:provisioning][:storage_name] = storage.try(:name)
+
     folder = EmsFolder.find_by(:id => provision[:ems_folder_id])
     ovf_template_details[:provisioning][:ems_folder_name] = folder.try(:name)
 
@@ -1790,7 +1793,7 @@ class CatalogController < ApplicationController
 
   def fetch_form_vars_ovf_template
     @edit[:new][:accept_all_eula] = params[:accept_all_eula] == "1" if params[:accept_all_eula]
-    copy_params_if_present(@edit[:new], params, %i[ems_folder_id host_id ovf_template_id resource_pool_id vm_name])
+    copy_params_if_present(@edit[:new], params, %i[ems_folder_id host_id ovf_template_id resource_pool_id vm_name storage_id])
     form_available_vars_ovf_template if params[:st_prov_type] || params[:ovf_template_id]
   end
 
@@ -1806,6 +1809,7 @@ class CatalogController < ApplicationController
       @edit[:new][:resource_pool_id] ||= options[:resource_pool_id]
       @edit[:new][:ems_folder_id] ||= options[:ems_folder_id]
       @edit[:new][:host_id] ||= options[:host_id]
+      @edit[:new][:storage_id] ||= options[:storage_id]
       @edit[:new][:accept_all_eula] ||= options[:accept_all_eula] == true
       @edit[:new][:fqname] ||= options[:fqname]
     end
@@ -1821,12 +1825,17 @@ class CatalogController < ApplicationController
       @edit[:available_hosts] = ovf_template.allowed_hosts
                                             .collect { |h| [h.name, h.id] }
                                             .sort
+      @edit[:available_storages] = ovf_template.allowed_storages
+                                               .collect { |s| [s.name, s.id] }
+                                               .sort
     else
       @edit[:available_resource_pools] = []
       @edit[:available_folders]        = []
       @edit[:available_hosts]          = []
+      @edit[:available_storages]       = []
       @edit[:new][:resource_pool_id]   = nil
       @edit[:new][:host_id]            = nil
+      @edit[:new][:storage_id]         = nil
       @edit[:new][:ems_folder_id]      = nil
     end
   end
@@ -1847,6 +1856,7 @@ class CatalogController < ApplicationController
     provision[:resource_pool_id] = @edit[:new][:resource_pool_id] if @edit[:new][:resource_pool_id]
     provision[:ems_folder_id] = @edit[:new][:ems_folder_id] if @edit[:new][:ems_folder_id]
     provision[:host_id] = @edit[:new][:host_id] if @edit[:new][:host_id]
+    provision[:storage_id] = @edit[:new][:storage_id] if @edit[:new][:storage_id]
     provision[:accept_all_eula] = @edit[:new][:accept_all_eula] if @edit[:new][:accept_all_eula]
     provision[:fqname] = @edit[:new][:fqname] if @edit[:new][:fqname]
     options[:config_info] = {:provision => provision}

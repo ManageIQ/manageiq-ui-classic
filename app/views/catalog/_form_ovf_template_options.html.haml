@@ -67,3 +67,15 @@
                           :class                => "selectpicker")
         :javascript
               miqSelectPickerEvent('host_id', '#{url}')
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_storages]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Storage')
+      .col-md-8
+        = select_tag('storage_id',
+                          options_for_select(opts, @edit[:new][:storage_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('host_id', '#{url}')
