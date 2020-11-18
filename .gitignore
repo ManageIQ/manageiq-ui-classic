@@ -1,6 +1,5 @@
 .bundle/
 .yardoc
-yarn.lock
 package-lock.json
 Gemfile.lock
 Gemfile.dev.rb
