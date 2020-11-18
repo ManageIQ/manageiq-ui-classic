@@ -148,7 +148,7 @@
                     options_for_select(MiqReport::GROUPINGS.map(&:reverse).map { |key, value| [_(key), value] }, selected),
                     :class    => "selectpicker show-tick",
                     :multiple => true,
-                    "title"   => "Check Option")
+                    "title"   => _("Check Option"))
                 :javascript
                   miqInitSelectPicker();
                   miqSelectPickerEvent("#{field_name}", "#{url}")
