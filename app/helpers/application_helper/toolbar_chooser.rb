@@ -198,7 +198,8 @@ class ApplicationHelper::ToolbarChooser
         "services_center_tb"
       end
     elsif x_active_tree == :ot_tree
-      if %w[root xx-otcfn xx-othot xx-otazu xx-otazs xx-otvnf xx-otvap].include?(x_node)
+      return nil if x_node == "xx-otovf" || @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate)
+      if %w[root xx-otcfn xx-othot xx-otazu xx-otazs xx-otvnf xx-otvap xx-ovf].include?(x_node)
         "orchestration_templates_center_tb"
       else
         "orchestration_template_center_tb"
