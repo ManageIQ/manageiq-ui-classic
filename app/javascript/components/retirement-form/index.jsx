@@ -7,7 +7,7 @@ import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const RetirementForm = ({ retirementID, redirect, url}) => {
-  const retireItems = retirementID.split('"').filter(Number);
+  const retireItems = JSON.parse(retirementID);
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!retireItems,
   });
