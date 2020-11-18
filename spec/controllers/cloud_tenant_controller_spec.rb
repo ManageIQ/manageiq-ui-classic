@@ -157,12 +157,6 @@ describe CloudTenantController do
 
       expect(assigns(:flash_array)).to be_nil
     end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, a_hash_including(queue_options))
-
-      post :update, :params => { :button => "save", :format => :js, :id => tenant.id, :name => "foo" }
-    end
   end
 
   describe "#delete" do
