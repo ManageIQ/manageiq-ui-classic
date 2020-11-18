@@ -7,12 +7,10 @@ import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const RetirementForm = ({ retirementID, redirect, url}) => {
-  console.log(url)
   const retireItems = JSON.parse(retirementID);
   const [{ initialValues, isLoading }, setState] = useState({
     isLoading: !!retireItems,
   });
-  // const controller = ManageIQ.controller == 'service' ? 'services' : 'vms';
 
   const onSubmit = ({ formMode, retirementDate, retirementWarning, days, weeks, months, hours }) => {
     miqSparkleOn();
