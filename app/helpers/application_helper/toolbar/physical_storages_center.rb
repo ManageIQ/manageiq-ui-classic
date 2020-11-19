@@ -24,7 +24,6 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Attach a new storage system'),
             t,
-            :url => "/new"
           ),
           api_button(
             :physical_storage_delete,

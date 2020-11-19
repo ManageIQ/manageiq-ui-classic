@@ -232,6 +232,7 @@ module Mixins
                                        "network_service_",
                                        "network_service_entry_",
                                        "orchestration_stack_",
+                                       "physical_storage_",
                                        "security_group_",
                                        "security_service_",
                                        "security_service_rule_",
