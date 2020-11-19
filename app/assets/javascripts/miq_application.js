@@ -1,4 +1,4 @@
-/* global add_flash dialogFieldRefresh getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqTreeObject miqValueStylePrefill performFiltering recalculateChartYAxisLabels */
+/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
 
 // MIQ specific JS functions
 
@@ -853,16 +853,9 @@ function miqSendDateRequest(el) {
   //  tack on the id and value to the URL
   var urlstring = url + '?' + el.prop('id') + '=' + el.val();
 
-  var attemptAutoRefreshTrigger = function() {
-    if (parms.auto_refresh === true) {
-      dialogFieldRefresh.triggerAutoRefresh(parms);
-    }
-  };
-
   var options = {
     beforeSend: !!el.attr('data-miq_sparkle_on'),
     complete: !!el.attr('data-miq_sparkle_off'),
-    done: attemptAutoRefreshTrigger,
   };
 
   return miqObserveRequest(urlstring, options);
