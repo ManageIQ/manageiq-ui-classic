@@ -1,4 +1,4 @@
-/* global dialogFieldRefresh miqCheckForChanges miqCheckMaxLength miqJqueryRequest miqMenuChangeRow miqObserveRequest miqSendDateRequest miqSendOneTrans miqSerializeForm miqSparkle miqSparkleOn */
+/* global miqCheckForChanges miqCheckMaxLength miqJqueryRequest miqMenuChangeRow miqObserveRequest miqSendDateRequest miqSendOneTrans miqSerializeForm miqSparkle miqSparkleOn */
 
 // MIQ unobtrusive javascript bindings run when document is fully loaded
 
@@ -65,15 +65,6 @@ $(document).ready(function() {
     $(this).data('params', miqSerializeForm(form_id));
   });
 
-  // Bind in the observe support. If interval is configured, use the observe_field function
-  var attemptAutoRefreshTrigger = function(parms) {
-    return function() {
-      if (parms.auto_refresh === true) {
-        dialogFieldRefresh.triggerAutoRefresh(parms);
-      }
-    };
-  };
-
   var observeWithInterval = function(el, parms) {
     if (el.data('isObserved')) {
       return;
@@ -90,12 +81,10 @@ $(document).ready(function() {
         // If submit element passed in
         miqObserveRequest(url, {
           data: miqSerializeForm(submit),
-          done: attemptAutoRefreshTrigger(parms),
         });
       } else if (oneTrans) {
         miqSendOneTrans(url, {
           observe: true,
-          done: attemptAutoRefreshTrigger(parms),
         });
       } else {
         // tack on the id and value to the URL
@@ -103,7 +92,6 @@ $(document).ready(function() {
         data[el.attr('id')] = el.prop('value');
 
         miqObserveRequest(url, {
-          done: attemptAutoRefreshTrigger(parms),
           data: data,
         });
       }
@@ -125,7 +113,6 @@ $(document).ready(function() {
         data: id + '=' + value,
         beforeSend: !!el.attr('data-miq_sparkle_on'),
         complete: !!el.attr('data-miq_sparkle_off'),
-        done: attemptAutoRefreshTrigger(parms),
       });
     }, 700, {leading: true, trailing: true}));
   };
@@ -153,7 +140,6 @@ $(document).ready(function() {
       data: id + '=' + value,
       beforeSend: !!el.attr('data-miq_sparkle_on'),
       complete: !!el.attr('data-miq_sparkle_off'),
-      done: attemptAutoRefreshTrigger(parms),
     });
   });
 
@@ -170,7 +156,6 @@ $(document).ready(function() {
       data: id + '=' + value,
       beforeSend: !!el.attr('data-miq_sparkle_on'),
       complete: !!el.attr('data-miq_sparkle_off'),
-      done: attemptAutoRefreshTrigger(parms),
     });
 
     event.stopPropagation();
