@@ -10,8 +10,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
       resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(init));
     });
-
-    Promise.resolve(apiCall).then(miqService.refreshSelectpicker);
   };
 
   function init(dialog) {
