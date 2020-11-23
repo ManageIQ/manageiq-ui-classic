@@ -84,7 +84,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       label: __('Provider'),
       component: componentTypes.SELECT,
       loadOptions: getManagers,
-      placeholder: `<${__('Choose')}>`,
+      includeEmpty: true,
       isRequired: true,
       validateOnMount: true,
       clearOnUnmount: true,

@@ -91,7 +91,7 @@ describe('Set ownership form component', () => {
       wrapper = mount(<SetOwnershipForm {...initialProps} />);
     });
     const form = wrapper.find('form');
-    form.find('input[name="user"]').simulate('change', 'z');
+    form.find('select[name="user"]').simulate('change', 'z');
     wrapper.update();
     await act(async() => {
       wrapper.find('form').simulate('submit');

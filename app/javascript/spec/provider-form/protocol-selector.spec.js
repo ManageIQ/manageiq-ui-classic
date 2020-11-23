@@ -115,7 +115,7 @@ describe('ProtocolSelector component', () => {
       wrapper.update();
     });
 
-    expect(wrapper.find('input[name="type"]').prop('value')).toEqual('stf');
+    expect(wrapper.find('select[name="type"]').prop('value')).toEqual('stf');
     expect(wrapper.find('input[name="endpoints.stf.host"]').prop('value')).toEqual('localhost');
     expect(wrapper.find('input[name="authentications.stf.username"]').prop('value')).toEqual('Bob Smith');
     expect(wrapper.contains('input[name="endpoints.amqp.host')).toBe(false);
@@ -135,7 +135,7 @@ describe('ProtocolSelector component', () => {
 
     wrapper.update();
 
-    expect(wrapper.find('input[name="type"]').prop('value')).toEqual('amqp');
+    expect(wrapper.find('select[name="type"]').prop('value')).toEqual('amqp');
     expect(wrapper.exists('input[name="endpoints.amqp.host"]')).toBe(true);
     expect(wrapper.exists('input[name="authentications.amqp.username"]')).toBe(true);
     expect(wrapper.exists('input[name="endpoints.stf.host"]')).toBe(false);

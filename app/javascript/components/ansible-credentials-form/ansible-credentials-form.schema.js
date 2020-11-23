@@ -34,6 +34,7 @@ const createSchema = (fields, promise, edit, loadSchema) => ({
       validate: [{ type: validatorTypes.REQUIRED }],
       isRequired: true,
       isDisabled: edit,
+      includeEmpty: true,
       onChange: value => promise.then(loadSchema(value)),
       loadOptions: () =>
         promise.then(

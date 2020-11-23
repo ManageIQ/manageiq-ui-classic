@@ -159,7 +159,7 @@ describe('Workers form', () => {
     expect(fetchMock.calls()).toHaveLength(1);
 
     Object.keys(expectedValues).forEach((key) => {
-      expect(wrapper.find(`input[name="${key}"]`).props().value).toEqual(expectedValues[key]);
+      expect(wrapper.find(`select[name="${key}"]`).props().value).toEqual(expectedValues[key]);
     });
 
     done();
@@ -179,7 +179,7 @@ describe('Workers form', () => {
     expect(fetchMock.calls()).toHaveLength(1);
 
     await act(async() => {
-      wrapper.find('Select[name="smart_proxy_worker.count"]').at(1).prop('onChange')(1);
+      wrapper.find('select[name="smart_proxy_worker.count"]').prop('onChange')(1);
     });
 
     wrapper.update();
@@ -200,7 +200,7 @@ describe('Workers form', () => {
       },
     }));
 
-    expect(wrapper.find('input[name="smart_proxy_worker.count"]').props().value).toEqual(1);
+    expect(wrapper.find('select[name="smart_proxy_worker.count"]').props().value).toEqual(1);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
     expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(2);

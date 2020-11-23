@@ -132,7 +132,7 @@ describe('Copy Dashboard form', () => {
 
     await act(async() => {
       wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
-      wrapper.find('Select[name="group_id"]').at(1).prop('onChange')('888');
+      wrapper.find('Select[name="group_id"]').prop('onChange')('888');
       wrapper.find('form').simulate('submit');
     });
 
