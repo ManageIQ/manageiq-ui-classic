@@ -38,6 +38,7 @@ class ConfigurationProfileController < ApplicationController
   end
 
   def launch_configuration_profile_console
+    assert_privileges('configuration_profile_console')
     record = self.class.model.find(params[:id])
     unless record.console_url
       add_flash(_("Configuration Profile console access failed: Task start failed"), :error)
