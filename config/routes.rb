@@ -3176,6 +3176,7 @@ Rails.application.routes.draw do
     pxe
     security_policy
     security_policy_rule
+    storage_resource
   ].freeze
 
   root :to => 'dashboard#login'

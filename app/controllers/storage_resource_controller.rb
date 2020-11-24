@@ -19,6 +19,16 @@ class StorageResourceController < ApplicationController
     super
   end
 
+  def download_summary_pdf
+    assert_privileges('storage_resource_view')
+    super
+  end
+
+  def download_data
+    assert_privileges('storage_resource_view')
+    super
+  end
+
   private
 
   def textual_group_list
@@ -33,6 +43,8 @@ class StorageResourceController < ApplicationController
   def set_session_data
     session[:layout] = @layout
   end
+
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   # needed to highlight the selected menu section
   menu_section "storage_resource"
