@@ -67,3 +67,42 @@
                           :class                => "selectpicker")
         :javascript
               miqSelectPickerEvent('host_id', '#{url}')
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_storages]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Storage')
+      .col-md-8
+        = select_tag('storage_id',
+                          options_for_select(opts, @edit[:new][:storage_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('storage_id', '#{url}')
+
+    .form-group
+      %label.col-md-2.control-label
+        = _('Disk Format')
+      .col-md-8
+        - @edit[:disk_formats].each do |f|
+          .radio
+            %label
+              %input{:type                => 'radio',
+                       :name              => 'disk_format',
+                       :id                => 'disk_format',
+                       :value             => f[0],
+                       "data-miq_observe" => {:url => url}.to_json,
+                       :checked           => @edit[:new][:disk_format] == f[0]}
+              = _(f[1])
+
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_vlans]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Virtual Network')
+      .col-md-8
+        = select_tag('network_id',
+                          options_for_select(opts, @edit[:new][:network_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('network_id', '#{url}')

@@ -1780,6 +1780,14 @@ class CatalogController < ApplicationController
     host = Host.find_by(:id => provision[:host_id])
     ovf_template_details[:provisioning][:host_name] = host.try(:name)
 
+    storage = Storage.find_by(:id => provision[:storage_id])
+    ovf_template_details[:provisioning][:storage_name] = storage.try(:name)
+
+    network = Lan.find_by(:id => provision[:network_id])
+    ovf_template_details[:provisioning][:network_name] = network.try(:name)
+
+    ovf_template_details[:provisioning][:disk_format] = provision[:disk_format]
+
     folder = EmsFolder.find_by(:id => provision[:ems_folder_id])
     ovf_template_details[:provisioning][:ems_folder_name] = folder.try(:name)
 
@@ -1791,7 +1799,7 @@ class CatalogController < ApplicationController
 
   def fetch_form_vars_ovf_template
     @edit[:new][:accept_all_eula] = params[:accept_all_eula] == "1" if params[:accept_all_eula]
-    copy_params_if_present(@edit[:new], params, %i[ems_folder_id host_id ovf_template_id resource_pool_id vm_name])
+    copy_params_if_present(@edit[:new], params, %i[disk_format ems_folder_id host_id network_id ovf_template_id resource_pool_id storage_id vm_name])
     form_available_vars_ovf_template if params[:st_prov_type] || params[:ovf_template_id]
   end
 
@@ -1799,6 +1807,12 @@ class CatalogController < ApplicationController
     @edit[:available_ovf_templates] = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.all
                                                                                                       .collect { |m| [m.name, m.id] }
                                                                                                       .sort
+    @edit[:disk_formats] = {
+      "thick"            => _("thick - Lazy Zero"),
+      "eagerZeroedThick" => _("thick - Eager Zero"),
+      "thin"             => _("thin")
+    }
+
     # set from existing record
     if @record.try(:id) && params[:button] != "save"
       options = @record.config_info[:provision]
@@ -1807,6 +1821,9 @@ class CatalogController < ApplicationController
       @edit[:new][:resource_pool_id] ||= options[:resource_pool_id]
       @edit[:new][:ems_folder_id] ||= options[:ems_folder_id]
       @edit[:new][:host_id] ||= options[:host_id]
+      @edit[:new][:storage_id] ||= options[:storage_id]
+      @edit[:new][:disk_format] ||= options[:disk_format]
+      @edit[:new][:network_id] ||= options[:network_id]
       @edit[:new][:accept_all_eula] ||= options[:accept_all_eula] == true
       @edit[:new][:fqname] ||= options[:fqname]
     end
@@ -1822,12 +1839,23 @@ class CatalogController < ApplicationController
       @edit[:available_hosts] = ovf_template.allowed_hosts
                                             .collect { |h| [h.name, h.id] }
                                             .sort
+      @edit[:available_storages] = ovf_template.allowed_storages
+                                               .collect { |s| [s.name, s.id] }
+                                               .sort
+      @edit[:available_vlans] = ovf_template.allowed_vlans
+                                            .collect { |v| [v.last, v.first] }
+                                            .sort
     else
       @edit[:available_resource_pools] = []
       @edit[:available_folders]        = []
       @edit[:available_hosts]          = []
+      @edit[:available_storages]       = []
+      @edit[:available_vlans]          = []
       @edit[:new][:resource_pool_id]   = nil
       @edit[:new][:host_id]            = nil
+      @edit[:new][:storage_id]         = nil
+      @edit[:new][:disk_format]        = nil
+      @edit[:new][:network_id]         = nil
       @edit[:new][:ems_folder_id]      = nil
     end
   end
@@ -1848,6 +1876,9 @@ class CatalogController < ApplicationController
     provision[:resource_pool_id] = @edit[:new][:resource_pool_id] if @edit[:new][:resource_pool_id]
     provision[:ems_folder_id] = @edit[:new][:ems_folder_id] if @edit[:new][:ems_folder_id]
     provision[:host_id] = @edit[:new][:host_id] if @edit[:new][:host_id]
+    provision[:storage_id] = @edit[:new][:storage_id] if @edit[:new][:storage_id]
+    provision[:disk_format] = @edit[:new][:disk_format] if @edit[:new][:disk_format]
+    provision[:network_id] = @edit[:new][:network_id] if @edit[:new][:network_id]
     provision[:accept_all_eula] = @edit[:new][:accept_all_eula] if @edit[:new][:accept_all_eula]
     provision[:fqname] = @edit[:new][:fqname] if @edit[:new][:fqname]
     options[:config_info] = {:provision => provision}
