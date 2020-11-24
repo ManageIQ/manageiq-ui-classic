@@ -1486,7 +1486,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        index
         show
         show_list
         tagging_edit
@@ -1495,7 +1494,6 @@ Rails.application.routes.draw do
         button
         quick_search
         listnav_search_selected
-        sections_field_changed
         show
         show_list
         tagging_edit
@@ -3178,6 +3176,7 @@ Rails.application.routes.draw do
     network_service
     physical_storage
     pxe
+    security_policy
   ].freeze
 
   root :to => 'dashboard#login'
