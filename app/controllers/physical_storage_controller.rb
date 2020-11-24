@@ -40,6 +40,11 @@ class PhysicalStorageController < ApplicationController
     process_show_list
   end
 
+  def download_summary_pdf
+    assert_privileges('physical_storage_show')
+    super
+  end
+
   def textual_group_list
     [
       %i[properties relationships asset_details],
@@ -57,6 +62,11 @@ class PhysicalStorageController < ApplicationController
     }
   end
 
+  def download_data
+    assert_privileges('physical_storage_show_list')
+    super
+  end
+
   private
 
   def specific_buttons(pressed)
@@ -67,10 +77,5 @@ class PhysicalStorageController < ApplicationController
       return false
     end
     true
-  end
-
-  def download_data
-    assert_privileges('physical_storage_show_list')
-    super
   end
 end
