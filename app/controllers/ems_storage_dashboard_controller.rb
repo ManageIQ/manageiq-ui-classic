@@ -7,16 +7,19 @@ class EmsStorageDashboardController < ApplicationController
   after_action :set_session_data
 
   def show
+    assert_privileges('ems_storage_show')
     if params[:id].nil?
       @breadcrumbs.clear
     end
   end
 
   def resources_capacity_data
+    assert_privileges('ems_storage_show')
     render :json => {:data => block_storage_heatmap_data(params[:id])}
   end
 
   def aggregate_status_data
+    assert_privileges('ems_storage_show')
     render :json => {:data => aggregate_status(params[:id])}
   end
 
