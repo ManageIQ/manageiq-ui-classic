@@ -30,6 +30,16 @@ class SecurityPolicyRuleController < ApplicationController
     nested_list(SecurityGroup, :association => :destination_vms, :breadcrumb_title => _("Destination Virtual Machines"))
   end
 
+  def download_summary_pdf
+    assert_privileges('security_policy_rules_view')
+    super
+  end
+
+  def download_data
+    assert_privileges('security_policy_rules_view')
+    super
+  end
+
   private
 
   def textual_group_list
@@ -54,6 +64,8 @@ class SecurityPolicyRuleController < ApplicationController
       ]
     }.compact
   end
+
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   menu_section :net
 end

@@ -31,6 +31,7 @@ class ConfiguredSystemController < ApplicationController
   end
 
   def launch_configured_system_console
+    assert_privileges('configured_system_console')
     record = self.class.model.find(params[:id])
     unless record.console_url
       add_flash(_("Configured System console access failed: Task start failed"), :error)

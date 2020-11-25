@@ -25,7 +25,7 @@ module Mixins
       adv_search_load_choice
       adv_search_name_typed
       adv_search_clear
-      adv_search_text_clear
+      search_clear
       adv_search_toggle
       listnav_search_selected
       save_default_search
