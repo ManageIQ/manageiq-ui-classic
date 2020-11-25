@@ -66,7 +66,7 @@ class ContainerDashboardController < ApplicationController
   end
 
   def show
-    # the show doesn't need to set any contextual variables, it just renders the template
+    assert_privileges('container_dashboard_view')
   end
 
   private

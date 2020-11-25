@@ -14,6 +14,16 @@ class SecurityPolicyController < ApplicationController
     %w[custom_button_events security_policy_rules]
   end
 
+  def download_summary_pdf
+    assert_privileges('security_policy_view')
+    super
+  end
+
+  def download_data
+    assert_privileges('security_policy_view')
+    super
+  end
+
   private
 
   def textual_group_list
@@ -38,6 +48,8 @@ class SecurityPolicyController < ApplicationController
       :record_info => @router,
     }.compact
   end
+
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
   menu_section :net
 end
