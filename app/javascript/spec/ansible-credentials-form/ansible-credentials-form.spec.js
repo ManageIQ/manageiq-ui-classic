@@ -68,7 +68,7 @@ describe('Ansible Credential Form Component', () => {
     let wrapper;
 
     await act(async() => {
-      wrapper = mount(<AnsibleCredentialsForm recordId={1} />);
+      wrapper = mount(<AnsibleCredentialsForm recordId="1" />);
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(3);
