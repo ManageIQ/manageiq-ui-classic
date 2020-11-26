@@ -58,6 +58,7 @@ describe('Copy Dashboard form', () => {
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
+
     let wrapper;
     await act(async() => {
       wrapper = mount(<CopyDashboardForm {...initialProps} />);
@@ -73,9 +74,12 @@ describe('Copy Dashboard form', () => {
   });
 
   it('should handle error', async(done) => {
+    const original = console.error;
+    console.error = jest.fn();
+
     fetchMock
       .getOnce(baseUrl, dashboardData)
-      .getOnce(apiUrl, 400)
+      .getOnce(apiUrl, { body: {}, status: 400 })
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
 
     handleFailure.default = jest.fn();
@@ -86,6 +90,8 @@ describe('Copy Dashboard form', () => {
 
     wrapper.update();
     expect(handleFailure.default).toHaveBeenCalled();
+    expect(console.error).toHaveBeenCalled();
+    console.error = original;
     done();
   });
 
@@ -120,27 +126,23 @@ describe('Copy Dashboard form', () => {
       wrapper = mount(<CopyDashboardForm {...initialProps} />);
     });
 
-    await act(async() => {
-      wrapper.update();
-    });
+    wrapper.update();
 
     expect(fetchMock.calls()).toHaveLength(2);
 
-    act(() => {
+    await act(async() => {
       wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
       wrapper.find('Select[name="group_id"]').at(1).prop('onChange')('888');
-    });
-    setTimeout(async() => {
-      wrapper.update();
       wrapper.find('form').simulate('submit');
-      setImmediate(() => {
-        expect(spyMiqAjaxButton).toHaveBeenCalledWith(
-          '/report/dashboard_render',
-          { group: '80s', name: 'new_name', original_name: 'original_name' },
-        );
-        expect(fetchMock.calls()).toHaveLength(4);
-        done();
-      });
+    });
+
+    setTimeout(() => {
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith(
+        '/report/dashboard_render',
+        { group: '80s', name: 'new_name', original_name: 'original_name' },
+      );
+      expect(fetchMock.calls()).toHaveLength(4);
+      done();
     }, 500);
   });
 });

@@ -39,15 +39,18 @@ describe('OrcherstrationTemplate form', () => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
     });
     wrapper.update();
-    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'foo' } });
-    /**
-       * manually change content value
-       * Code component is not standard input element
-       * Two first parameters are codemirror element and data
-       */
-    wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
-    wrapper.update();
-    wrapper.find('form').simulate('submit');
+
+    await act(async() => {
+      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'foo' } });
+      /**
+         * manually change content value
+         * Code component is not standard input element
+         * Two first parameters are codemirror element and data
+         */
+      wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
+      wrapper.find('form').simulate('submit');
+    });
+
     expect(fetchMock.lastCall()).toBeTruthy();
     expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
       name: 'foo',
@@ -57,15 +60,23 @@ describe('OrcherstrationTemplate form', () => {
     done();
   });
 
-  it('should call miqFlashLater on cancel action', () => {
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
+  it('should call miqFlashLater on cancel action', async(done) => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
+    });
     wrapper.update();
-    wrapper.find('button').last().simulate('click');
+
+    await act(async() => {
+      wrapper.find('button').last().simulate('click');
+    });
+
     expect(miqRedirectBack).toHaveBeenCalledWith(
       'Creation of a new Orchestration Template was cancelled by the user',
       'success',
       '/catalog/explorer',
     );
+    done();
   });
 
   it('should render edit variant', async(done) => {
@@ -102,20 +113,21 @@ describe('OrcherstrationTemplate form', () => {
       name: 'foo',
       content: 'content',
     });
+
     let wrapper;
     await act(async() => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
     });
     wrapper.update();
-    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'bar' } });
-    /**
-         * manually change content value
-         * Code component is not standard input element
-         * Two first parameters are codemirror element and data
-         */
-    wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
-    wrapper.update();
+
     await act(async() => {
+      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'bar' } });
+      /**
+           * manually change content value
+           * Code component is not standard input element
+           * Two first parameters are codemirror element and data
+           */
+      wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
       wrapper.find('form').simulate('submit');
     });
 
