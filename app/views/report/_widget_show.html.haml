@@ -36,7 +36,7 @@
           %p.form-control-static
             - unless (glyphicon = @widget.decorate.try(:secondary_icon)).nil?
               %i{:class => "#{glyphicon}"}
-            = h(@widget.status)
+            = h(_(@widget.status))
       .form-group
         %label.control-label.col-md-2= _('Last Run Time')
         .col-md-10
