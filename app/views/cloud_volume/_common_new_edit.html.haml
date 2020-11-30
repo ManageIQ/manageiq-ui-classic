@@ -128,7 +128,7 @@
     %select{"name"        => "storage_service_id",
             "ng-model"    => "vm.cloudVolumeModel.storage_service_id",
             "ng-options"  => "service.id as service.name for service in vm.storageServices",
-
+            "ng-disabled" => "!vm.newRecord",
             "required"    => "",
             :checkchange  => true,
             "miq-select"  => true}
