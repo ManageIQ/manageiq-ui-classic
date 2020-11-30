@@ -20,11 +20,21 @@ module PhysicalStorageConsumerHelper::TextualSummary
   end
 
   def textual_group_addresses
-    TextualGroup.new(
-        _("Addresses"),
-        %i[
-        address
-      ]
+    addresses_values = []
+
+    addresses = Address.where(physical_storage_consumer_id: @record.id)
+    addresses.each do |address|
+      if defined?(address.port.iqn) && address.port.iqn
+        addresses_values << [_("iqn"), address.port.iqn]
+      elsif defined?(address.port.wwpn) && address.port.wwpn
+        addresses_values << [_("wwpn"), address.port.wwpn]
+      end
+    end
+
+    TextualMultilabel.new(
+      _("Addresses"),
+      :labels => [_("Type"), _("Value")],
+      :values => addresses_values
     )
   end
 
@@ -44,13 +54,5 @@ module PhysicalStorageConsumerHelper::TextualSummary
     storage_id = @record.physical_storage_id
     return nil if storage_id.nil?
     textual_link(PhysicalStorage.find(storage_id))
-  end
-
-  def textual_address
-    # todo [liran] - need to be like textual_physical_storage
-    # Address.find(@record.addresses_id)
-    # Address.where( physical_storage_consumer_id: @record.id)
-    addresses = Address.where(physical_storage_consumer_id: @record.id)
-    {:label => _("iqn"), :value => addresses[0].iqn}
   end
 end
