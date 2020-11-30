@@ -1,4 +1,4 @@
-class StorageConsumerController < ApplicationController
+class PhysicalStorageConsumerController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
@@ -27,7 +27,7 @@ class StorageConsumerController < ApplicationController
   helper_method :textual_group_list
 
   def get_session_data
-    @layout = "storage_consumer"
+    @layout = "physical_storage_consumer"
   end
 
   def set_session_data
@@ -45,5 +45,5 @@ class StorageConsumerController < ApplicationController
   end
 
   # needed to highlight the selected menu section
-  menu_section "storage_consumer"
+  menu_section "physical_storage_consumer"
 end

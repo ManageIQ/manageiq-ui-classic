@@ -196,11 +196,11 @@ module Menu
                                            'storage_resource',
                                            {:feature => 'storage_resource_show_list'},
                                            '/storage_resource/show_list'),
-                            Menu::Item.new('storage_consumer',
+                            Menu::Item.new('physical_storage_consumer',
                                            N_('Storage Consumers'),
-                                           'storage_consumer',
-                                           {:feature => 'storage_consumer_show_list'},
-                                           '/storage_consumer/show_list'),
+                                           'physical_storage_consumer',
+                                           {:feature => 'physical_storage_consumer_show_list'},
+                                           '/physical_storage_consumer/show_list'),
                           ])
       end
 

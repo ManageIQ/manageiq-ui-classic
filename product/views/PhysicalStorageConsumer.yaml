@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Storage Consumers
+title: Physical Storage Consumers
 
 # Menu name
-name: StorageConsumer
+name: PhysicalStorageConsumer
 
 # Main DB table report is based on
-db: StorageConsumer
+db: PhysicalStorageConsumer
 include:
   ext_management_system:
     columns:

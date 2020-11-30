@@ -237,7 +237,7 @@ module ApplicationHelper::PageLayouts
       security_policy_rule
       service
       storage_resource
-      storage_consumer
+      physical_storage_consumer
       templates
       vm
     ]
