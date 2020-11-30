@@ -1,4 +1,4 @@
-- if %w(storage_consumer).include?(@display)
+- if %w(physical_storage_consumer).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
   - if @showtype == "item"

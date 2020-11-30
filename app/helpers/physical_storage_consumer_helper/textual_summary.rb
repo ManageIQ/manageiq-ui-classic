@@ -1,4 +1,4 @@
-module StorageConsumerHelper::TextualSummary
+module PhysicalStorageConsumerHelper::TextualSummary
   include TextualMixins::TextualGroupTags
 
   #
@@ -49,8 +49,8 @@ module StorageConsumerHelper::TextualSummary
   def textual_address
     # todo [liran] - need to be like textual_physical_storage
     # Address.find(@record.addresses_id)
-    # Address.where( storage_consumer_id: @record.id)
-    addresses = Address.where(storage_consumer_id: @record.id)
+    # Address.where( physical_storage_consumer_id: @record.id)
+    addresses = Address.where(physical_storage_consumer_id: @record.id)
     {:label => _("iqn"), :value => addresses[0].iqn}
   end
 end

@@ -120,7 +120,7 @@ module Mixins
           security_policy_rules
           storage_managers
           storage_resources
-          storage_consumer
+          physical_storage_consumer
           storages
           vms
         ]
