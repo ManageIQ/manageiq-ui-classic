@@ -61,7 +61,7 @@ export const DataTable = ({
   };
 
   const renderTableHeader = () => (
-    <thead>
+    <thead className="miq-thead">
       <tr>
         {!inEditMode() && !noCheckboxes() &&
         <th className="narrow table-view-pf-select">
