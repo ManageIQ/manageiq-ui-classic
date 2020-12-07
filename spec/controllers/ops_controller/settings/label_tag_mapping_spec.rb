@@ -17,7 +17,7 @@ describe OpsController do
 
     def use_form_to_create_amazon_mapping
       post :label_tag_mapping_edit
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :entity => 'Vm' }
+      post :label_tag_mapping_field_changed, :params => { :id => 'new', :entity => 'VmAmazon' }
       post :label_tag_mapping_field_changed, :params => { :id => 'new', :label_name => 'some-amazon-label' }
       post :label_tag_mapping_field_changed, :params => { :id => 'new', :category => 'Amazon Vms' }
       post :label_tag_mapping_edit, :params => { :button => 'add' }
@@ -44,7 +44,7 @@ describe OpsController do
     it "creates new scoped mapping on save" do
       use_form_to_create_amazon_mapping
       mapping = ProviderTagMapping.last
-      expect(mapping.labeled_resource_type).to eq('Vm')
+      expect(mapping.labeled_resource_type).to eq('VmAmazon')
       expect(mapping.label_name).to eq('some-amazon-label')
       expect(mapping.label_value).to be nil
       expect(mapping.tag.classification.category?).to be true
@@ -188,22 +188,22 @@ describe OpsController do
       mapping = ProviderTagMapping.last
 
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s }
-      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+      expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Amazon Vms')
 
       post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Amazon' }
-      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+      expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Edited Amazon')
 
       post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'reset' }
-      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+      expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Amazon Vms')
 
       post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Again Amazon' }
-      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+      expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Edited Again Amazon')
 
