@@ -9,7 +9,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       aws_encryption: false,
       incremental: false,
       force: false,
-      storage_manager_id: storageManagerId,
     };
 
     vm.formId = cloudVolumeFormId;
@@ -252,6 +251,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   var getCloudVolumeFormData = function(data) {
+    vm.cloudVolumeModel.storage_manager_id = storageManagerId;
     vm.cloudVolumeModel.emstype = data.ext_management_system.type;
     vm.cloudVolumeModel.name = data.name;
     // We have to display size in GB.
