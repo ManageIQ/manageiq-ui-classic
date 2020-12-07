@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::CloudVolumeSnapshotCenter < ApplicationHelper:
                    :items => [
                      button(
                        :cloud_volume_snapshot_delete,
-                       'pficon pficon-edit fa-lg',
+                       'pficon pficon-delete fa-lg',
                        t = N_('Delete Cloud Volume Snapshot'),
                        t
                      ),
