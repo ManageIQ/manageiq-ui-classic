@@ -203,18 +203,6 @@ shared_examples_for 'A controller that has vm_common routes' do
     end
   end
 
-  describe '#retire' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/retire")).to route_to("#{controller_name}#retire")
-    end
-  end
-
-  describe '#retirement_info' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/retirement_info")).to route_to("#{controller_name}#retirement_info")
-    end
-  end
-
   describe '#scan_histories' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/scan_histories")).to route_to("#{controller_name}#scan_histories")

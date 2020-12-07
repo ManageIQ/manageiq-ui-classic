@@ -1,4 +1,7 @@
-%retirement-form{'object-ids' => @retireitems.collect(&:id).map(&:to_s).to_json}
+= react("RetirementForm",
+  :retirementID => @retireitems.map { |i| i.id.to_s }.to_json,
+  :redirect => @redirect_url,
+  :url => api_collection_path(@retireitems.first.class))
 
 %h3
   - if request.parameters[:controller] == "service"
@@ -13,6 +16,3 @@
   - @embedded = true
   - @quadicon_no_url = true
   = render :partial => "layouts/gtl", :locals => {:no_flash_div => true}
-
-:javascript
-  miq_bootstrap('retirement-form');
