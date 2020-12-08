@@ -366,17 +366,6 @@ module OpsController::Diagnostics
     render :json => log_depot_json
   end
 
-  def db_gc_collection
-    begin
-      MiqSchedule.run_adhoc_db_gc(:userid => session[:userid])
-    rescue => bang
-      add_flash(_("Error during 'Database Garbage Collection': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_("Database Garbage Collection successfully initiated"))
-    end
-    javascript_flash(:spinner_off => true)
-  end
-
   # to delete orphaned records for user that was delete from db
   def orphaned_records_delete
     MiqReportResult.delete_by_userid(params[:userid])
