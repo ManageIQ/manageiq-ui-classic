@@ -138,14 +138,12 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        ems_form_choices
         download_private_key
         ownership
       ) +
         compare_get,
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         listnav_search_selected
         ownership_update
