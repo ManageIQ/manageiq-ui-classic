@@ -63,7 +63,6 @@ module Mixins
           build_targets_hash(@retireitems)
           @view = get_db_view(kls) # Instantiate the MIQ Report view object
           @in_a_form = true
-          @edit[:object_ids] = @retireitems
           @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
         end
       end
