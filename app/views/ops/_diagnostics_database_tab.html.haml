@@ -198,26 +198,5 @@
                     'on-click'       => "vm.submitButtonClicked('#{_("Are you sure you want to Run a Database Backup Now?")}')",
                     :primary         => 'true'}
 
-
-  %hr
-  %h3
-    = _("Run Database Garbage Collection Now")
-  .form-group
-    .col-md-8
-      = _("Press submit to start the Database Vacuum process")
-  %table{:width => "100%"}
-    %tr
-      %td{:align => "right"}
-        #gc_submit_on
-          - caption = _("Run Database Garbage Collection Now")
-          - submit = button_tag(_("Submit"), :class => "btn btn-primary", :alt => caption)
-
-          = link_to(submit, {:action => 'db_gc_collection'},
-            "data-miq_sparkle_on" => true,
-            :confirm              => _("Are you sure you want to Run Database Garbage Collection Now?"),
-            :remote               => true,
-            'data-method'         => :post,
-            :title                => caption)
-
 :javascript
   miq_bootstrap('#form_div');
