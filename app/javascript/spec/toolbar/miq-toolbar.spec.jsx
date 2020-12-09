@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import { Toolbar } from '../../components/toolbar';
 import MiqToolbar from '../../components/miq-toolbar';
 import DashboardToolbar from '../../components/dashboard_toolbar';
 import TopologyToolbar from '../../components/topology_toolbar';

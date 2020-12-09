@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
-import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
-import '@manageiq/react-ui-components/dist/toolbar.css';
+import { Toolbar } from './toolbar';
 
 import DashboardToolbar from './dashboard_toolbar';
 import TopologyToolbar from './topology_toolbar';
