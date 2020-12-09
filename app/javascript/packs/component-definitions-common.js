@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
-import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import { Toolbar } from '../components/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
