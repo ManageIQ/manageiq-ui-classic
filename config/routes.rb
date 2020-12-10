@@ -2183,13 +2183,12 @@ Rails.application.routes.draw do
 
     :miq_event => {
       :get  => %w(
-        explorer
+        show
+        show_list
       ),
       :post => %w(
-        tree_autoload
-        tree_select
-      ) +
-        x_post
+
+      )
     },
 
     :condition => {

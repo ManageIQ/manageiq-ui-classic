@@ -387,8 +387,6 @@ class TreeBuilder
     ## Explorer
     ### Policies
     :policy                          => "TreeBuilderPolicy",
-    ### Events
-    :event                           => "TreeBuilderEvent",
     ### Actions
     :action                          => "TreeBuilderAction",
     ### Alert Profiles
