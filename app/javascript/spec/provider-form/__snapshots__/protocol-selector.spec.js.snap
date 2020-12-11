@@ -41,6 +41,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
     }
   >
     <Select
+      allowNull={true}
       component="protocol-selector"
       label="Type"
       name="type"
@@ -105,6 +106,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
             </ControlLabel>
             <div>
               <Select
+                allowNull={true}
                 classNamePrefix="ddorg__pf3-component-mapper__select"
                 input={
                   Object {
@@ -137,6 +139,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
               >
                 <Select
                   SelectComponent={[Function]}
+                  allowNull={true}
                   className="ddorg__pf3-component-mapper__select"
                   classNamePrefix="ddorg__pf3-component-mapper__select"
                   components={
@@ -175,7 +178,8 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                   updatingMessage="Loading data"
                   value=""
                 >
-                  <StateManager
+                  <SelectComponent
+                    allowNull={true}
                     className="ddorg__pf3-component-mapper__select"
                     classNamePrefix="ddorg__pf3-component-mapper__select"
                     closeMenuOnSelect={true}
@@ -186,9 +190,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                         "Option": [Function],
                       }
                     }
-                    defaultInputValue=""
-                    defaultMenuIsOpen={false}
-                    defaultValue={null}
                     hideSelectedOptions={false}
                     isClearable={false}
                     isFetching={false}
@@ -216,13 +217,10 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                     placeholder="<Choose>"
                     value={Array []}
                   >
-                    <Select
-                      backspaceRemovesValue={true}
-                      blurInputOnSelect={true}
-                      captureMenuScroll={false}
+                    <StateManager
+                      allowNull={true}
                       className="ddorg__pf3-component-mapper__select"
                       classNamePrefix="ddorg__pf3-component-mapper__select"
-                      closeMenuOnScroll={false}
                       closeMenuOnSelect={true}
                       components={
                         Object {
@@ -231,40 +229,19 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                           "Option": [Function],
                         }
                       }
-                      controlShouldRenderValue={true}
-                      escapeClearsValue={false}
-                      filterOption={[Function]}
-                      formatGroupLabel={[Function]}
-                      getOptionLabel={[Function]}
-                      getOptionValue={[Function]}
+                      defaultInputValue=""
+                      defaultMenuIsOpen={false}
+                      defaultValue={null}
                       hideSelectedOptions={false}
-                      inputValue=""
                       isClearable={false}
-                      isDisabled={false}
                       isFetching={false}
-                      isLoading={false}
-                      isMulti={false}
-                      isOptionDisabled={[Function]}
-                      isRtl={false}
                       isSearchable={false}
-                      loadingMessage={[Function]}
-                      maxMenuHeight={300}
-                      menuIsOpen={false}
-                      menuPlacement="bottom"
-                      menuPosition="absolute"
-                      menuShouldBlockScroll={false}
-                      menuShouldScrollIntoView={true}
-                      minMenuHeight={140}
                       name="type"
                       noOptionsMessage={[Function]}
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
                       onInputChange={[Function]}
-                      onMenuClose={[Function]}
-                      onMenuOpen={[Function]}
-                      openMenuOnClick={true}
-                      openMenuOnFocus={false}
                       options={
                         Array [
                           Object {
@@ -279,31 +256,59 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                           },
                         ]
                       }
-                      pageSize={5}
                       placeholder="<Choose>"
-                      screenReaderStatus={[Function]}
-                      styles={Object {}}
-                      tabIndex="0"
-                      tabSelectsValue={true}
                       value={Array []}
                     >
-                      <SelectContainer
+                      <Select
+                        allowNull={true}
+                        backspaceRemovesValue={true}
+                        blurInputOnSelect={true}
+                        captureMenuScroll={false}
                         className="ddorg__pf3-component-mapper__select"
-                        clearValue={[Function]}
-                        cx={[Function]}
-                        getStyles={[Function]}
-                        getValue={[Function]}
-                        hasValue={false}
-                        innerProps={
+                        classNamePrefix="ddorg__pf3-component-mapper__select"
+                        closeMenuOnScroll={false}
+                        closeMenuOnSelect={true}
+                        components={
                           Object {
-                            "id": undefined,
-                            "onKeyDown": [Function],
+                            "ClearIndicator": [Function],
+                            "DropdownIndicator": [Function],
+                            "Option": [Function],
                           }
                         }
+                        controlShouldRenderValue={true}
+                        escapeClearsValue={false}
+                        filterOption={[Function]}
+                        formatGroupLabel={[Function]}
+                        getOptionLabel={[Function]}
+                        getOptionValue={[Function]}
+                        hideSelectedOptions={false}
+                        inputValue=""
+                        isClearable={false}
                         isDisabled={false}
-                        isFocused={false}
+                        isFetching={false}
+                        isLoading={false}
                         isMulti={false}
+                        isOptionDisabled={[Function]}
                         isRtl={false}
+                        isSearchable={false}
+                        loadingMessage={[Function]}
+                        maxMenuHeight={300}
+                        menuIsOpen={false}
+                        menuPlacement="bottom"
+                        menuPosition="absolute"
+                        menuShouldBlockScroll={false}
+                        menuShouldScrollIntoView={true}
+                        minMenuHeight={140}
+                        name="type"
+                        noOptionsMessage={[Function]}
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        onInputChange={[Function]}
+                        onMenuClose={[Function]}
+                        onMenuOpen={[Function]}
+                        openMenuOnClick={true}
+                        openMenuOnFocus={false}
                         options={
                           Array [
                             Object {
@@ -318,57 +323,33 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                             },
                           ]
                         }
-                        selectOption={[Function]}
-                        selectProps={
-                          Object {
-                            "backspaceRemovesValue": true,
-                            "blurInputOnSelect": true,
-                            "captureMenuScroll": false,
-                            "checked": undefined,
-                            "className": "ddorg__pf3-component-mapper__select",
-                            "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                            "closeMenuOnScroll": false,
-                            "closeMenuOnSelect": true,
-                            "components": Object {
-                              "ClearIndicator": [Function],
-                              "DropdownIndicator": [Function],
-                              "Option": [Function],
-                            },
-                            "controlShouldRenderValue": true,
-                            "escapeClearsValue": false,
-                            "filterOption": [Function],
-                            "formatGroupLabel": [Function],
-                            "getOptionLabel": [Function],
-                            "getOptionValue": [Function],
-                            "hideSelectedOptions": false,
-                            "inputValue": "",
-                            "isClearable": false,
-                            "isDisabled": false,
-                            "isFetching": false,
-                            "isLoading": false,
-                            "isMulti": false,
-                            "isOptionDisabled": [Function],
-                            "isRtl": false,
-                            "isSearchable": false,
-                            "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
-                            "menuIsOpen": false,
-                            "menuPlacement": "bottom",
-                            "menuPosition": "absolute",
-                            "menuShouldBlockScroll": false,
-                            "menuShouldScrollIntoView": true,
-                            "minMenuHeight": 140,
-                            "name": "type",
-                            "noOptionsMessage": [Function],
-                            "onBlur": [Function],
-                            "onChange": [Function],
-                            "onFocus": [Function],
-                            "onInputChange": [Function],
-                            "onMenuClose": [Function],
-                            "onMenuOpen": [Function],
-                            "openMenuOnClick": true,
-                            "openMenuOnFocus": false,
-                            "options": Array [
+                        pageSize={5}
+                        placeholder="<Choose>"
+                        screenReaderStatus={[Function]}
+                        styles={Object {}}
+                        tabIndex="0"
+                        tabSelectsValue={true}
+                        value={Array []}
+                      >
+                        <SelectContainer
+                          className="ddorg__pf3-component-mapper__select"
+                          clearValue={[Function]}
+                          cx={[Function]}
+                          getStyles={[Function]}
+                          getValue={[Function]}
+                          hasValue={false}
+                          innerProps={
+                            Object {
+                              "id": undefined,
+                              "onKeyDown": [Function],
+                            }
+                          }
+                          isDisabled={false}
+                          isFocused={false}
+                          isMulti={false}
+                          isRtl={false}
+                          options={
+                            Array [
                               Object {
                                 "label": "STF",
                                 "pivot": "endpoints.stf.host",
@@ -379,148 +360,149 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                 "pivot": "endponts.amqp.host",
                                 "value": "amqp",
                               },
-                            ],
-                            "pageSize": 5,
-                            "placeholder": "<Choose>",
-                            "screenReaderStatus": [Function],
-                            "styles": Object {},
-                            "tabIndex": "0",
-                            "tabSelectsValue": true,
-                            "value": Array [],
+                            ]
                           }
-                        }
-                        setValue={[Function]}
-                        theme={
-                          Object {
-                            "borderRadius": 4,
-                            "colors": Object {
-                              "danger": "#DE350B",
-                              "dangerLight": "#FFBDAD",
-                              "neutral0": "hsl(0, 0%, 100%)",
-                              "neutral10": "hsl(0, 0%, 90%)",
-                              "neutral20": "hsl(0, 0%, 80%)",
-                              "neutral30": "hsl(0, 0%, 70%)",
-                              "neutral40": "hsl(0, 0%, 60%)",
-                              "neutral5": "hsl(0, 0%, 95%)",
-                              "neutral50": "hsl(0, 0%, 50%)",
-                              "neutral60": "hsl(0, 0%, 40%)",
-                              "neutral70": "hsl(0, 0%, 30%)",
-                              "neutral80": "hsl(0, 0%, 20%)",
-                              "neutral90": "hsl(0, 0%, 10%)",
-                              "primary": "#2684FF",
-                              "primary25": "#DEEBFF",
-                              "primary50": "#B2D4FF",
-                              "primary75": "#4C9AFF",
-                            },
-                            "spacing": Object {
-                              "baseUnit": 4,
-                              "controlHeight": 38,
-                              "menuGutter": 8,
-                            },
-                          }
-                        }
-                      >
-                        <ForwardRef(render)
-                          __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
-                          className="ddorg__pf3-component-mapper__select"
-                          css={
+                          selectOption={[Function]}
+                          selectProps={
                             Object {
-                              "boxSizing": "border-box",
-                              "direction": null,
-                              "label": "container",
-                              "pointerEvents": null,
-                              "position": "relative",
+                              "allowNull": true,
+                              "backspaceRemovesValue": true,
+                              "blurInputOnSelect": true,
+                              "captureMenuScroll": false,
+                              "checked": undefined,
+                              "className": "ddorg__pf3-component-mapper__select",
+                              "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                              "closeMenuOnScroll": false,
+                              "closeMenuOnSelect": true,
+                              "components": Object {
+                                "ClearIndicator": [Function],
+                                "DropdownIndicator": [Function],
+                                "Option": [Function],
+                              },
+                              "controlShouldRenderValue": true,
+                              "escapeClearsValue": false,
+                              "filterOption": [Function],
+                              "formatGroupLabel": [Function],
+                              "getOptionLabel": [Function],
+                              "getOptionValue": [Function],
+                              "hideSelectedOptions": false,
+                              "inputValue": "",
+                              "isClearable": false,
+                              "isDisabled": false,
+                              "isFetching": false,
+                              "isLoading": false,
+                              "isMulti": false,
+                              "isOptionDisabled": [Function],
+                              "isRtl": false,
+                              "isSearchable": false,
+                              "loadingMessage": [Function],
+                              "maxMenuHeight": 300,
+                              "menuIsOpen": false,
+                              "menuPlacement": "bottom",
+                              "menuPosition": "absolute",
+                              "menuShouldBlockScroll": false,
+                              "menuShouldScrollIntoView": true,
+                              "minMenuHeight": 140,
+                              "name": "type",
+                              "noOptionsMessage": [Function],
+                              "onBlur": [Function],
+                              "onChange": [Function],
+                              "onFocus": [Function],
+                              "onInputChange": [Function],
+                              "onMenuClose": [Function],
+                              "onMenuOpen": [Function],
+                              "openMenuOnClick": true,
+                              "openMenuOnFocus": false,
+                              "options": Array [
+                                Object {
+                                  "label": "STF",
+                                  "pivot": "endpoints.stf.host",
+                                  "value": "stf",
+                                },
+                                Object {
+                                  "label": "AMQP",
+                                  "pivot": "endponts.amqp.host",
+                                  "value": "amqp",
+                                },
+                              ],
+                              "pageSize": 5,
+                              "placeholder": "<Choose>",
+                              "screenReaderStatus": [Function],
+                              "styles": Object {},
+                              "tabIndex": "0",
+                              "tabSelectsValue": true,
+                              "value": Array [],
                             }
                           }
-                          onKeyDown={[Function]}
+                          setValue={[Function]}
+                          theme={
+                            Object {
+                              "borderRadius": 4,
+                              "colors": Object {
+                                "danger": "#DE350B",
+                                "dangerLight": "#FFBDAD",
+                                "neutral0": "hsl(0, 0%, 100%)",
+                                "neutral10": "hsl(0, 0%, 90%)",
+                                "neutral20": "hsl(0, 0%, 80%)",
+                                "neutral30": "hsl(0, 0%, 70%)",
+                                "neutral40": "hsl(0, 0%, 60%)",
+                                "neutral5": "hsl(0, 0%, 95%)",
+                                "neutral50": "hsl(0, 0%, 50%)",
+                                "neutral60": "hsl(0, 0%, 40%)",
+                                "neutral70": "hsl(0, 0%, 30%)",
+                                "neutral80": "hsl(0, 0%, 20%)",
+                                "neutral90": "hsl(0, 0%, 10%)",
+                                "primary": "#2684FF",
+                                "primary25": "#DEEBFF",
+                                "primary50": "#B2D4FF",
+                                "primary75": "#4C9AFF",
+                              },
+                              "spacing": Object {
+                                "baseUnit": 4,
+                                "controlHeight": 38,
+                                "menuGutter": 8,
+                              },
+                            }
+                          }
                         >
-                          <div
-                            className="ddorg__pf3-component-mapper__select css-2b097c-container"
+                          <ForwardRef(render)
+                            __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                            className="ddorg__pf3-component-mapper__select"
+                            css={
+                              Object {
+                                "boxSizing": "border-box",
+                                "direction": null,
+                                "label": "container",
+                                "pointerEvents": null,
+                                "position": "relative",
+                              }
+                            }
                             onKeyDown={[Function]}
                           >
-                            <Control
-                              clearValue={[Function]}
-                              cx={[Function]}
-                              getStyles={[Function]}
-                              getValue={[Function]}
-                              hasValue={false}
-                              innerProps={
-                                Object {
-                                  "onMouseDown": [Function],
-                                  "onTouchEnd": [Function],
+                            <div
+                              className="ddorg__pf3-component-mapper__select css-2b097c-container"
+                              onKeyDown={[Function]}
+                            >
+                              <Control
+                                clearValue={[Function]}
+                                cx={[Function]}
+                                getStyles={[Function]}
+                                getValue={[Function]}
+                                hasValue={false}
+                                innerProps={
+                                  Object {
+                                    "onMouseDown": [Function],
+                                    "onTouchEnd": [Function],
+                                  }
                                 }
-                              }
-                              innerRef={[Function]}
-                              isDisabled={false}
-                              isFocused={false}
-                              isMulti={false}
-                              isRtl={false}
-                              menuIsOpen={false}
-                              options={
-                                Array [
-                                  Object {
-                                    "label": "STF",
-                                    "pivot": "endpoints.stf.host",
-                                    "value": "stf",
-                                  },
-                                  Object {
-                                    "label": "AMQP",
-                                    "pivot": "endponts.amqp.host",
-                                    "value": "amqp",
-                                  },
-                                ]
-                              }
-                              selectOption={[Function]}
-                              selectProps={
-                                Object {
-                                  "backspaceRemovesValue": true,
-                                  "blurInputOnSelect": true,
-                                  "captureMenuScroll": false,
-                                  "checked": undefined,
-                                  "className": "ddorg__pf3-component-mapper__select",
-                                  "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                  "closeMenuOnScroll": false,
-                                  "closeMenuOnSelect": true,
-                                  "components": Object {
-                                    "ClearIndicator": [Function],
-                                    "DropdownIndicator": [Function],
-                                    "Option": [Function],
-                                  },
-                                  "controlShouldRenderValue": true,
-                                  "escapeClearsValue": false,
-                                  "filterOption": [Function],
-                                  "formatGroupLabel": [Function],
-                                  "getOptionLabel": [Function],
-                                  "getOptionValue": [Function],
-                                  "hideSelectedOptions": false,
-                                  "inputValue": "",
-                                  "isClearable": false,
-                                  "isDisabled": false,
-                                  "isFetching": false,
-                                  "isLoading": false,
-                                  "isMulti": false,
-                                  "isOptionDisabled": [Function],
-                                  "isRtl": false,
-                                  "isSearchable": false,
-                                  "loadingMessage": [Function],
-                                  "maxMenuHeight": 300,
-                                  "menuIsOpen": false,
-                                  "menuPlacement": "bottom",
-                                  "menuPosition": "absolute",
-                                  "menuShouldBlockScroll": false,
-                                  "menuShouldScrollIntoView": true,
-                                  "minMenuHeight": 140,
-                                  "name": "type",
-                                  "noOptionsMessage": [Function],
-                                  "onBlur": [Function],
-                                  "onChange": [Function],
-                                  "onFocus": [Function],
-                                  "onInputChange": [Function],
-                                  "onMenuClose": [Function],
-                                  "onMenuOpen": [Function],
-                                  "openMenuOnClick": true,
-                                  "openMenuOnFocus": false,
-                                  "options": Array [
+                                innerRef={[Function]}
+                                isDisabled={false}
+                                isFocused={false}
+                                isMulti={false}
+                                isRtl={false}
+                                menuIsOpen={false}
+                                options={
+                                  Array [
                                     Object {
                                       "label": "STF",
                                       "pivot": "endpoints.stf.host",
@@ -531,156 +513,157 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                       "pivot": "endponts.amqp.host",
                                       "value": "amqp",
                                     },
-                                  ],
-                                  "pageSize": 5,
-                                  "placeholder": "<Choose>",
-                                  "screenReaderStatus": [Function],
-                                  "styles": Object {},
-                                  "tabIndex": "0",
-                                  "tabSelectsValue": true,
-                                  "value": Array [],
+                                  ]
                                 }
-                              }
-                              setValue={[Function]}
-                              theme={
-                                Object {
-                                  "borderRadius": 4,
-                                  "colors": Object {
-                                    "danger": "#DE350B",
-                                    "dangerLight": "#FFBDAD",
-                                    "neutral0": "hsl(0, 0%, 100%)",
-                                    "neutral10": "hsl(0, 0%, 90%)",
-                                    "neutral20": "hsl(0, 0%, 80%)",
-                                    "neutral30": "hsl(0, 0%, 70%)",
-                                    "neutral40": "hsl(0, 0%, 60%)",
-                                    "neutral5": "hsl(0, 0%, 95%)",
-                                    "neutral50": "hsl(0, 0%, 50%)",
-                                    "neutral60": "hsl(0, 0%, 40%)",
-                                    "neutral70": "hsl(0, 0%, 30%)",
-                                    "neutral80": "hsl(0, 0%, 20%)",
-                                    "neutral90": "hsl(0, 0%, 10%)",
-                                    "primary": "#2684FF",
-                                    "primary25": "#DEEBFF",
-                                    "primary50": "#B2D4FF",
-                                    "primary75": "#4C9AFF",
-                                  },
-                                  "spacing": Object {
-                                    "baseUnit": 4,
-                                    "controlHeight": 38,
-                                    "menuGutter": 8,
-                                  },
-                                }
-                              }
-                            >
-                              <ForwardRef(render)
-                                __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
-                                className="ddorg__pf3-component-mapper__select__control"
-                                css={
+                                selectOption={[Function]}
+                                selectProps={
                                   Object {
-                                    "&:hover": Object {
-                                      "borderColor": "hsl(0, 0%, 70%)",
+                                    "allowNull": true,
+                                    "backspaceRemovesValue": true,
+                                    "blurInputOnSelect": true,
+                                    "captureMenuScroll": false,
+                                    "checked": undefined,
+                                    "className": "ddorg__pf3-component-mapper__select",
+                                    "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                    "closeMenuOnScroll": false,
+                                    "closeMenuOnSelect": true,
+                                    "components": Object {
+                                      "ClearIndicator": [Function],
+                                      "DropdownIndicator": [Function],
+                                      "Option": [Function],
                                     },
-                                    "alignItems": "center",
-                                    "backgroundColor": "hsl(0, 0%, 100%)",
-                                    "borderColor": "hsl(0, 0%, 80%)",
-                                    "borderRadius": 4,
-                                    "borderStyle": "solid",
-                                    "borderWidth": 1,
-                                    "boxShadow": null,
-                                    "boxSizing": "border-box",
-                                    "cursor": "default",
-                                    "display": "flex",
-                                    "flexWrap": "wrap",
-                                    "justifyContent": "space-between",
-                                    "label": "control",
-                                    "minHeight": 38,
-                                    "outline": "0 !important",
-                                    "position": "relative",
-                                    "transition": "all 100ms",
+                                    "controlShouldRenderValue": true,
+                                    "escapeClearsValue": false,
+                                    "filterOption": [Function],
+                                    "formatGroupLabel": [Function],
+                                    "getOptionLabel": [Function],
+                                    "getOptionValue": [Function],
+                                    "hideSelectedOptions": false,
+                                    "inputValue": "",
+                                    "isClearable": false,
+                                    "isDisabled": false,
+                                    "isFetching": false,
+                                    "isLoading": false,
+                                    "isMulti": false,
+                                    "isOptionDisabled": [Function],
+                                    "isRtl": false,
+                                    "isSearchable": false,
+                                    "loadingMessage": [Function],
+                                    "maxMenuHeight": 300,
+                                    "menuIsOpen": false,
+                                    "menuPlacement": "bottom",
+                                    "menuPosition": "absolute",
+                                    "menuShouldBlockScroll": false,
+                                    "menuShouldScrollIntoView": true,
+                                    "minMenuHeight": 140,
+                                    "name": "type",
+                                    "noOptionsMessage": [Function],
+                                    "onBlur": [Function],
+                                    "onChange": [Function],
+                                    "onFocus": [Function],
+                                    "onInputChange": [Function],
+                                    "onMenuClose": [Function],
+                                    "onMenuOpen": [Function],
+                                    "openMenuOnClick": true,
+                                    "openMenuOnFocus": false,
+                                    "options": Array [
+                                      Object {
+                                        "label": "STF",
+                                        "pivot": "endpoints.stf.host",
+                                        "value": "stf",
+                                      },
+                                      Object {
+                                        "label": "AMQP",
+                                        "pivot": "endponts.amqp.host",
+                                        "value": "amqp",
+                                      },
+                                    ],
+                                    "pageSize": 5,
+                                    "placeholder": "<Choose>",
+                                    "screenReaderStatus": [Function],
+                                    "styles": Object {},
+                                    "tabIndex": "0",
+                                    "tabSelectsValue": true,
+                                    "value": Array [],
                                   }
                                 }
-                                onMouseDown={[Function]}
-                                onTouchEnd={[Function]}
+                                setValue={[Function]}
+                                theme={
+                                  Object {
+                                    "borderRadius": 4,
+                                    "colors": Object {
+                                      "danger": "#DE350B",
+                                      "dangerLight": "#FFBDAD",
+                                      "neutral0": "hsl(0, 0%, 100%)",
+                                      "neutral10": "hsl(0, 0%, 90%)",
+                                      "neutral20": "hsl(0, 0%, 80%)",
+                                      "neutral30": "hsl(0, 0%, 70%)",
+                                      "neutral40": "hsl(0, 0%, 60%)",
+                                      "neutral5": "hsl(0, 0%, 95%)",
+                                      "neutral50": "hsl(0, 0%, 50%)",
+                                      "neutral60": "hsl(0, 0%, 40%)",
+                                      "neutral70": "hsl(0, 0%, 30%)",
+                                      "neutral80": "hsl(0, 0%, 20%)",
+                                      "neutral90": "hsl(0, 0%, 10%)",
+                                      "primary": "#2684FF",
+                                      "primary25": "#DEEBFF",
+                                      "primary50": "#B2D4FF",
+                                      "primary75": "#4C9AFF",
+                                    },
+                                    "spacing": Object {
+                                      "baseUnit": 4,
+                                      "controlHeight": 38,
+                                      "menuGutter": 8,
+                                    },
+                                  }
+                                }
                               >
-                                <div
-                                  className="ddorg__pf3-component-mapper__select__control css-yk16xz-control"
+                                <ForwardRef(render)
+                                  __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                                  className="ddorg__pf3-component-mapper__select__control"
+                                  css={
+                                    Object {
+                                      "&:hover": Object {
+                                        "borderColor": "hsl(0, 0%, 70%)",
+                                      },
+                                      "alignItems": "center",
+                                      "backgroundColor": "hsl(0, 0%, 100%)",
+                                      "borderColor": "hsl(0, 0%, 80%)",
+                                      "borderRadius": 4,
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "boxShadow": null,
+                                      "boxSizing": "border-box",
+                                      "cursor": "default",
+                                      "display": "flex",
+                                      "flexWrap": "wrap",
+                                      "justifyContent": "space-between",
+                                      "label": "control",
+                                      "minHeight": 38,
+                                      "outline": "0 !important",
+                                      "position": "relative",
+                                      "transition": "all 100ms",
+                                    }
+                                  }
                                   onMouseDown={[Function]}
                                   onTouchEnd={[Function]}
                                 >
-                                  <ValueContainer
-                                    clearValue={[Function]}
-                                    cx={[Function]}
-                                    getStyles={[Function]}
-                                    getValue={[Function]}
-                                    hasValue={false}
-                                    isDisabled={false}
-                                    isMulti={false}
-                                    isRtl={false}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "STF",
-                                          "pivot": "endpoints.stf.host",
-                                          "value": "stf",
-                                        },
-                                        Object {
-                                          "label": "AMQP",
-                                          "pivot": "endponts.amqp.host",
-                                          "value": "amqp",
-                                        },
-                                      ]
-                                    }
-                                    selectOption={[Function]}
-                                    selectProps={
-                                      Object {
-                                        "backspaceRemovesValue": true,
-                                        "blurInputOnSelect": true,
-                                        "captureMenuScroll": false,
-                                        "checked": undefined,
-                                        "className": "ddorg__pf3-component-mapper__select",
-                                        "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                        "closeMenuOnScroll": false,
-                                        "closeMenuOnSelect": true,
-                                        "components": Object {
-                                          "ClearIndicator": [Function],
-                                          "DropdownIndicator": [Function],
-                                          "Option": [Function],
-                                        },
-                                        "controlShouldRenderValue": true,
-                                        "escapeClearsValue": false,
-                                        "filterOption": [Function],
-                                        "formatGroupLabel": [Function],
-                                        "getOptionLabel": [Function],
-                                        "getOptionValue": [Function],
-                                        "hideSelectedOptions": false,
-                                        "inputValue": "",
-                                        "isClearable": false,
-                                        "isDisabled": false,
-                                        "isFetching": false,
-                                        "isLoading": false,
-                                        "isMulti": false,
-                                        "isOptionDisabled": [Function],
-                                        "isRtl": false,
-                                        "isSearchable": false,
-                                        "loadingMessage": [Function],
-                                        "maxMenuHeight": 300,
-                                        "menuIsOpen": false,
-                                        "menuPlacement": "bottom",
-                                        "menuPosition": "absolute",
-                                        "menuShouldBlockScroll": false,
-                                        "menuShouldScrollIntoView": true,
-                                        "minMenuHeight": 140,
-                                        "name": "type",
-                                        "noOptionsMessage": [Function],
-                                        "onBlur": [Function],
-                                        "onChange": [Function],
-                                        "onFocus": [Function],
-                                        "onInputChange": [Function],
-                                        "onMenuClose": [Function],
-                                        "onMenuOpen": [Function],
-                                        "openMenuOnClick": true,
-                                        "openMenuOnFocus": false,
-                                        "options": Array [
+                                  <div
+                                    className="ddorg__pf3-component-mapper__select__control css-yk16xz-control"
+                                    onMouseDown={[Function]}
+                                    onTouchEnd={[Function]}
+                                  >
+                                    <ValueContainer
+                                      clearValue={[Function]}
+                                      cx={[Function]}
+                                      getStyles={[Function]}
+                                      getValue={[Function]}
+                                      hasValue={false}
+                                      isDisabled={false}
+                                      isMulti={false}
+                                      isRtl={false}
+                                      options={
+                                        Array [
                                           Object {
                                             "label": "STF",
                                             "pivot": "endpoints.stf.host",
@@ -691,143 +674,144 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                             "pivot": "endponts.amqp.host",
                                             "value": "amqp",
                                           },
-                                        ],
-                                        "pageSize": 5,
-                                        "placeholder": "<Choose>",
-                                        "screenReaderStatus": [Function],
-                                        "styles": Object {},
-                                        "tabIndex": "0",
-                                        "tabSelectsValue": true,
-                                        "value": Array [],
+                                        ]
                                       }
-                                    }
-                                    setValue={[Function]}
-                                    theme={
-                                      Object {
-                                        "borderRadius": 4,
-                                        "colors": Object {
-                                          "danger": "#DE350B",
-                                          "dangerLight": "#FFBDAD",
-                                          "neutral0": "hsl(0, 0%, 100%)",
-                                          "neutral10": "hsl(0, 0%, 90%)",
-                                          "neutral20": "hsl(0, 0%, 80%)",
-                                          "neutral30": "hsl(0, 0%, 70%)",
-                                          "neutral40": "hsl(0, 0%, 60%)",
-                                          "neutral5": "hsl(0, 0%, 95%)",
-                                          "neutral50": "hsl(0, 0%, 50%)",
-                                          "neutral60": "hsl(0, 0%, 40%)",
-                                          "neutral70": "hsl(0, 0%, 30%)",
-                                          "neutral80": "hsl(0, 0%, 20%)",
-                                          "neutral90": "hsl(0, 0%, 10%)",
-                                          "primary": "#2684FF",
-                                          "primary25": "#DEEBFF",
-                                          "primary50": "#B2D4FF",
-                                          "primary75": "#4C9AFF",
-                                        },
-                                        "spacing": Object {
-                                          "baseUnit": 4,
-                                          "controlHeight": 38,
-                                          "menuGutter": 8,
-                                        },
-                                      }
-                                    }
-                                  >
-                                    <ForwardRef(render)
-                                      __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
-                                      className="ddorg__pf3-component-mapper__select__value-container"
-                                      css={
+                                      selectOption={[Function]}
+                                      selectProps={
                                         Object {
-                                          "WebkitOverflowScrolling": "touch",
-                                          "alignItems": "center",
-                                          "boxSizing": "border-box",
-                                          "display": "flex",
-                                          "flex": 1,
-                                          "flexWrap": "wrap",
-                                          "overflow": "hidden",
-                                          "padding": "2px 8px",
-                                          "position": "relative",
+                                          "allowNull": true,
+                                          "backspaceRemovesValue": true,
+                                          "blurInputOnSelect": true,
+                                          "captureMenuScroll": false,
+                                          "checked": undefined,
+                                          "className": "ddorg__pf3-component-mapper__select",
+                                          "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                          "closeMenuOnScroll": false,
+                                          "closeMenuOnSelect": true,
+                                          "components": Object {
+                                            "ClearIndicator": [Function],
+                                            "DropdownIndicator": [Function],
+                                            "Option": [Function],
+                                          },
+                                          "controlShouldRenderValue": true,
+                                          "escapeClearsValue": false,
+                                          "filterOption": [Function],
+                                          "formatGroupLabel": [Function],
+                                          "getOptionLabel": [Function],
+                                          "getOptionValue": [Function],
+                                          "hideSelectedOptions": false,
+                                          "inputValue": "",
+                                          "isClearable": false,
+                                          "isDisabled": false,
+                                          "isFetching": false,
+                                          "isLoading": false,
+                                          "isMulti": false,
+                                          "isOptionDisabled": [Function],
+                                          "isRtl": false,
+                                          "isSearchable": false,
+                                          "loadingMessage": [Function],
+                                          "maxMenuHeight": 300,
+                                          "menuIsOpen": false,
+                                          "menuPlacement": "bottom",
+                                          "menuPosition": "absolute",
+                                          "menuShouldBlockScroll": false,
+                                          "menuShouldScrollIntoView": true,
+                                          "minMenuHeight": 140,
+                                          "name": "type",
+                                          "noOptionsMessage": [Function],
+                                          "onBlur": [Function],
+                                          "onChange": [Function],
+                                          "onFocus": [Function],
+                                          "onInputChange": [Function],
+                                          "onMenuClose": [Function],
+                                          "onMenuOpen": [Function],
+                                          "openMenuOnClick": true,
+                                          "openMenuOnFocus": false,
+                                          "options": Array [
+                                            Object {
+                                              "label": "STF",
+                                              "pivot": "endpoints.stf.host",
+                                              "value": "stf",
+                                            },
+                                            Object {
+                                              "label": "AMQP",
+                                              "pivot": "endponts.amqp.host",
+                                              "value": "amqp",
+                                            },
+                                          ],
+                                          "pageSize": 5,
+                                          "placeholder": "<Choose>",
+                                          "screenReaderStatus": [Function],
+                                          "styles": Object {},
+                                          "tabIndex": "0",
+                                          "tabSelectsValue": true,
+                                          "value": Array [],
+                                        }
+                                      }
+                                      setValue={[Function]}
+                                      theme={
+                                        Object {
+                                          "borderRadius": 4,
+                                          "colors": Object {
+                                            "danger": "#DE350B",
+                                            "dangerLight": "#FFBDAD",
+                                            "neutral0": "hsl(0, 0%, 100%)",
+                                            "neutral10": "hsl(0, 0%, 90%)",
+                                            "neutral20": "hsl(0, 0%, 80%)",
+                                            "neutral30": "hsl(0, 0%, 70%)",
+                                            "neutral40": "hsl(0, 0%, 60%)",
+                                            "neutral5": "hsl(0, 0%, 95%)",
+                                            "neutral50": "hsl(0, 0%, 50%)",
+                                            "neutral60": "hsl(0, 0%, 40%)",
+                                            "neutral70": "hsl(0, 0%, 30%)",
+                                            "neutral80": "hsl(0, 0%, 20%)",
+                                            "neutral90": "hsl(0, 0%, 10%)",
+                                            "primary": "#2684FF",
+                                            "primary25": "#DEEBFF",
+                                            "primary50": "#B2D4FF",
+                                            "primary75": "#4C9AFF",
+                                          },
+                                          "spacing": Object {
+                                            "baseUnit": 4,
+                                            "controlHeight": 38,
+                                            "menuGutter": 8,
+                                          },
                                         }
                                       }
                                     >
-                                      <div
-                                        className="ddorg__pf3-component-mapper__select__value-container css-1hwfws3"
-                                      >
-                                        <Placeholder
-                                          clearValue={[Function]}
-                                          cx={[Function]}
-                                          getStyles={[Function]}
-                                          getValue={[Function]}
-                                          hasValue={false}
-                                          isDisabled={false}
-                                          isFocused={false}
-                                          isMulti={false}
-                                          isRtl={false}
-                                          key="placeholder"
-                                          options={
-                                            Array [
-                                              Object {
-                                                "label": "STF",
-                                                "pivot": "endpoints.stf.host",
-                                                "value": "stf",
-                                              },
-                                              Object {
-                                                "label": "AMQP",
-                                                "pivot": "endponts.amqp.host",
-                                                "value": "amqp",
-                                              },
-                                            ]
+                                      <ForwardRef(render)
+                                        __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                                        className="ddorg__pf3-component-mapper__select__value-container"
+                                        css={
+                                          Object {
+                                            "WebkitOverflowScrolling": "touch",
+                                            "alignItems": "center",
+                                            "boxSizing": "border-box",
+                                            "display": "flex",
+                                            "flex": 1,
+                                            "flexWrap": "wrap",
+                                            "overflow": "hidden",
+                                            "padding": "2px 8px",
+                                            "position": "relative",
                                           }
-                                          selectOption={[Function]}
-                                          selectProps={
-                                            Object {
-                                              "backspaceRemovesValue": true,
-                                              "blurInputOnSelect": true,
-                                              "captureMenuScroll": false,
-                                              "checked": undefined,
-                                              "className": "ddorg__pf3-component-mapper__select",
-                                              "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                              "closeMenuOnScroll": false,
-                                              "closeMenuOnSelect": true,
-                                              "components": Object {
-                                                "ClearIndicator": [Function],
-                                                "DropdownIndicator": [Function],
-                                                "Option": [Function],
-                                              },
-                                              "controlShouldRenderValue": true,
-                                              "escapeClearsValue": false,
-                                              "filterOption": [Function],
-                                              "formatGroupLabel": [Function],
-                                              "getOptionLabel": [Function],
-                                              "getOptionValue": [Function],
-                                              "hideSelectedOptions": false,
-                                              "inputValue": "",
-                                              "isClearable": false,
-                                              "isDisabled": false,
-                                              "isFetching": false,
-                                              "isLoading": false,
-                                              "isMulti": false,
-                                              "isOptionDisabled": [Function],
-                                              "isRtl": false,
-                                              "isSearchable": false,
-                                              "loadingMessage": [Function],
-                                              "maxMenuHeight": 300,
-                                              "menuIsOpen": false,
-                                              "menuPlacement": "bottom",
-                                              "menuPosition": "absolute",
-                                              "menuShouldBlockScroll": false,
-                                              "menuShouldScrollIntoView": true,
-                                              "minMenuHeight": 140,
-                                              "name": "type",
-                                              "noOptionsMessage": [Function],
-                                              "onBlur": [Function],
-                                              "onChange": [Function],
-                                              "onFocus": [Function],
-                                              "onInputChange": [Function],
-                                              "onMenuClose": [Function],
-                                              "onMenuOpen": [Function],
-                                              "openMenuOnClick": true,
-                                              "openMenuOnFocus": false,
-                                              "options": Array [
+                                        }
+                                      >
+                                        <div
+                                          className="ddorg__pf3-component-mapper__select__value-container css-1hwfws3"
+                                        >
+                                          <Placeholder
+                                            clearValue={[Function]}
+                                            cx={[Function]}
+                                            getStyles={[Function]}
+                                            getValue={[Function]}
+                                            hasValue={false}
+                                            isDisabled={false}
+                                            isFocused={false}
+                                            isMulti={false}
+                                            isRtl={false}
+                                            key="placeholder"
+                                            options={
+                                              Array [
                                                 Object {
                                                   "label": "STF",
                                                   "pivot": "endpoints.stf.host",
@@ -838,92 +822,139 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                                   "pivot": "endponts.amqp.host",
                                                   "value": "amqp",
                                                 },
-                                              ],
-                                              "pageSize": 5,
-                                              "placeholder": "<Choose>",
-                                              "screenReaderStatus": [Function],
-                                              "styles": Object {},
-                                              "tabIndex": "0",
-                                              "tabSelectsValue": true,
-                                              "value": Array [],
+                                              ]
                                             }
-                                          }
-                                          setValue={[Function]}
-                                          theme={
-                                            Object {
-                                              "borderRadius": 4,
-                                              "colors": Object {
-                                                "danger": "#DE350B",
-                                                "dangerLight": "#FFBDAD",
-                                                "neutral0": "hsl(0, 0%, 100%)",
-                                                "neutral10": "hsl(0, 0%, 90%)",
-                                                "neutral20": "hsl(0, 0%, 80%)",
-                                                "neutral30": "hsl(0, 0%, 70%)",
-                                                "neutral40": "hsl(0, 0%, 60%)",
-                                                "neutral5": "hsl(0, 0%, 95%)",
-                                                "neutral50": "hsl(0, 0%, 50%)",
-                                                "neutral60": "hsl(0, 0%, 40%)",
-                                                "neutral70": "hsl(0, 0%, 30%)",
-                                                "neutral80": "hsl(0, 0%, 20%)",
-                                                "neutral90": "hsl(0, 0%, 10%)",
-                                                "primary": "#2684FF",
-                                                "primary25": "#DEEBFF",
-                                                "primary50": "#B2D4FF",
-                                                "primary75": "#4C9AFF",
-                                              },
-                                              "spacing": Object {
-                                                "baseUnit": 4,
-                                                "controlHeight": 38,
-                                                "menuGutter": 8,
-                                              },
-                                            }
-                                          }
-                                        >
-                                          <ForwardRef(render)
-                                            __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
-                                            className="ddorg__pf3-component-mapper__select__placeholder"
-                                            css={
+                                            selectOption={[Function]}
+                                            selectProps={
                                               Object {
-                                                "boxSizing": "border-box",
-                                                "color": "hsl(0, 0%, 50%)",
-                                                "label": "placeholder",
-                                                "marginLeft": 2,
-                                                "marginRight": 2,
-                                                "position": "absolute",
-                                                "top": "50%",
-                                                "transform": "translateY(-50%)",
+                                                "allowNull": true,
+                                                "backspaceRemovesValue": true,
+                                                "blurInputOnSelect": true,
+                                                "captureMenuScroll": false,
+                                                "checked": undefined,
+                                                "className": "ddorg__pf3-component-mapper__select",
+                                                "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                                "closeMenuOnScroll": false,
+                                                "closeMenuOnSelect": true,
+                                                "components": Object {
+                                                  "ClearIndicator": [Function],
+                                                  "DropdownIndicator": [Function],
+                                                  "Option": [Function],
+                                                },
+                                                "controlShouldRenderValue": true,
+                                                "escapeClearsValue": false,
+                                                "filterOption": [Function],
+                                                "formatGroupLabel": [Function],
+                                                "getOptionLabel": [Function],
+                                                "getOptionValue": [Function],
+                                                "hideSelectedOptions": false,
+                                                "inputValue": "",
+                                                "isClearable": false,
+                                                "isDisabled": false,
+                                                "isFetching": false,
+                                                "isLoading": false,
+                                                "isMulti": false,
+                                                "isOptionDisabled": [Function],
+                                                "isRtl": false,
+                                                "isSearchable": false,
+                                                "loadingMessage": [Function],
+                                                "maxMenuHeight": 300,
+                                                "menuIsOpen": false,
+                                                "menuPlacement": "bottom",
+                                                "menuPosition": "absolute",
+                                                "menuShouldBlockScroll": false,
+                                                "menuShouldScrollIntoView": true,
+                                                "minMenuHeight": 140,
+                                                "name": "type",
+                                                "noOptionsMessage": [Function],
+                                                "onBlur": [Function],
+                                                "onChange": [Function],
+                                                "onFocus": [Function],
+                                                "onInputChange": [Function],
+                                                "onMenuClose": [Function],
+                                                "onMenuOpen": [Function],
+                                                "openMenuOnClick": true,
+                                                "openMenuOnFocus": false,
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "STF",
+                                                    "pivot": "endpoints.stf.host",
+                                                    "value": "stf",
+                                                  },
+                                                  Object {
+                                                    "label": "AMQP",
+                                                    "pivot": "endponts.amqp.host",
+                                                    "value": "amqp",
+                                                  },
+                                                ],
+                                                "pageSize": 5,
+                                                "placeholder": "<Choose>",
+                                                "screenReaderStatus": [Function],
+                                                "styles": Object {},
+                                                "tabIndex": "0",
+                                                "tabSelectsValue": true,
+                                                "value": Array [],
+                                              }
+                                            }
+                                            setValue={[Function]}
+                                            theme={
+                                              Object {
+                                                "borderRadius": 4,
+                                                "colors": Object {
+                                                  "danger": "#DE350B",
+                                                  "dangerLight": "#FFBDAD",
+                                                  "neutral0": "hsl(0, 0%, 100%)",
+                                                  "neutral10": "hsl(0, 0%, 90%)",
+                                                  "neutral20": "hsl(0, 0%, 80%)",
+                                                  "neutral30": "hsl(0, 0%, 70%)",
+                                                  "neutral40": "hsl(0, 0%, 60%)",
+                                                  "neutral5": "hsl(0, 0%, 95%)",
+                                                  "neutral50": "hsl(0, 0%, 50%)",
+                                                  "neutral60": "hsl(0, 0%, 40%)",
+                                                  "neutral70": "hsl(0, 0%, 30%)",
+                                                  "neutral80": "hsl(0, 0%, 20%)",
+                                                  "neutral90": "hsl(0, 0%, 10%)",
+                                                  "primary": "#2684FF",
+                                                  "primary25": "#DEEBFF",
+                                                  "primary50": "#B2D4FF",
+                                                  "primary75": "#4C9AFF",
+                                                },
+                                                "spacing": Object {
+                                                  "baseUnit": 4,
+                                                  "controlHeight": 38,
+                                                  "menuGutter": 8,
+                                                },
                                               }
                                             }
                                           >
-                                            <div
-                                              className="ddorg__pf3-component-mapper__select__placeholder css-1wa3eu0-placeholder"
-                                            >
-                                              &lt;Choose&gt;
-                                            </div>
-                                          </ForwardRef(render)>
-                                        </Placeholder>
-                                        <DummyInput
-                                          disabled={false}
-                                          id="react-select-2-input"
-                                          innerRef={[Function]}
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          readOnly={true}
-                                          tabIndex="0"
-                                          value=""
-                                        >
-                                          <ForwardRef(render)
-                                            __EMOTION_TYPE_PLEASE_DO_NOT_USE__="input"
-                                            css={
-                                              Object {
-                                                "name": "62g3xt-dummyInput",
-                                                "next": undefined,
-                                                "styles": "label:dummyInput;background:0;border:0;font-size:inherit;outline:0;padding:0;width:1px;color:transparent;left:-100px;opacity:0;position:relative;transform:scale(0);",
+                                            <ForwardRef(render)
+                                              __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                                              className="ddorg__pf3-component-mapper__select__placeholder"
+                                              css={
+                                                Object {
+                                                  "boxSizing": "border-box",
+                                                  "color": "hsl(0, 0%, 50%)",
+                                                  "label": "placeholder",
+                                                  "marginLeft": 2,
+                                                  "marginRight": 2,
+                                                  "position": "absolute",
+                                                  "top": "50%",
+                                                  "transform": "translateY(-50%)",
+                                                }
                                               }
-                                            }
+                                            >
+                                              <div
+                                                className="ddorg__pf3-component-mapper__select__placeholder css-1wa3eu0-placeholder"
+                                              >
+                                                &lt;Choose&gt;
+                                              </div>
+                                            </ForwardRef(render)>
+                                          </Placeholder>
+                                          <DummyInput
+                                            aria-autocomplete="list"
                                             disabled={false}
-                                            id="react-select-2-input"
+                                            id="react-select-3-input"
+                                            innerRef={[Function]}
                                             onBlur={[Function]}
                                             onChange={[Function]}
                                             onFocus={[Function]}
@@ -931,96 +962,53 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                             tabIndex="0"
                                             value=""
                                           >
-                                            <input
-                                              className="css-62g3xt-dummyInput"
+                                            <ForwardRef(render)
+                                              __EMOTION_TYPE_PLEASE_DO_NOT_USE__="input"
+                                              aria-autocomplete="list"
+                                              css={
+                                                Object {
+                                                  "name": "62g3xt-dummyInput",
+                                                  "next": undefined,
+                                                  "styles": "label:dummyInput;background:0;border:0;font-size:inherit;outline:0;padding:0;width:1px;color:transparent;left:-100px;opacity:0;position:relative;transform:scale(0);",
+                                                }
+                                              }
                                               disabled={false}
-                                              id="react-select-2-input"
+                                              id="react-select-3-input"
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
                                               readOnly={true}
                                               tabIndex="0"
                                               value=""
-                                            />
-                                          </ForwardRef(render)>
-                                        </DummyInput>
-                                      </div>
-                                    </ForwardRef(render)>
-                                  </ValueContainer>
-                                  <IndicatorsContainer
-                                    clearValue={[Function]}
-                                    cx={[Function]}
-                                    getStyles={[Function]}
-                                    getValue={[Function]}
-                                    hasValue={false}
-                                    isDisabled={false}
-                                    isMulti={false}
-                                    isRtl={false}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "STF",
-                                          "pivot": "endpoints.stf.host",
-                                          "value": "stf",
-                                        },
-                                        Object {
-                                          "label": "AMQP",
-                                          "pivot": "endponts.amqp.host",
-                                          "value": "amqp",
-                                        },
-                                      ]
-                                    }
-                                    selectOption={[Function]}
-                                    selectProps={
-                                      Object {
-                                        "backspaceRemovesValue": true,
-                                        "blurInputOnSelect": true,
-                                        "captureMenuScroll": false,
-                                        "checked": undefined,
-                                        "className": "ddorg__pf3-component-mapper__select",
-                                        "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                        "closeMenuOnScroll": false,
-                                        "closeMenuOnSelect": true,
-                                        "components": Object {
-                                          "ClearIndicator": [Function],
-                                          "DropdownIndicator": [Function],
-                                          "Option": [Function],
-                                        },
-                                        "controlShouldRenderValue": true,
-                                        "escapeClearsValue": false,
-                                        "filterOption": [Function],
-                                        "formatGroupLabel": [Function],
-                                        "getOptionLabel": [Function],
-                                        "getOptionValue": [Function],
-                                        "hideSelectedOptions": false,
-                                        "inputValue": "",
-                                        "isClearable": false,
-                                        "isDisabled": false,
-                                        "isFetching": false,
-                                        "isLoading": false,
-                                        "isMulti": false,
-                                        "isOptionDisabled": [Function],
-                                        "isRtl": false,
-                                        "isSearchable": false,
-                                        "loadingMessage": [Function],
-                                        "maxMenuHeight": 300,
-                                        "menuIsOpen": false,
-                                        "menuPlacement": "bottom",
-                                        "menuPosition": "absolute",
-                                        "menuShouldBlockScroll": false,
-                                        "menuShouldScrollIntoView": true,
-                                        "minMenuHeight": 140,
-                                        "name": "type",
-                                        "noOptionsMessage": [Function],
-                                        "onBlur": [Function],
-                                        "onChange": [Function],
-                                        "onFocus": [Function],
-                                        "onInputChange": [Function],
-                                        "onMenuClose": [Function],
-                                        "onMenuOpen": [Function],
-                                        "openMenuOnClick": true,
-                                        "openMenuOnFocus": false,
-                                        "options": Array [
+                                            >
+                                              <input
+                                                aria-autocomplete="list"
+                                                className="css-62g3xt-dummyInput"
+                                                disabled={false}
+                                                id="react-select-3-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                readOnly={true}
+                                                tabIndex="0"
+                                                value=""
+                                              />
+                                            </ForwardRef(render)>
+                                          </DummyInput>
+                                        </div>
+                                      </ForwardRef(render)>
+                                    </ValueContainer>
+                                    <IndicatorsContainer
+                                      clearValue={[Function]}
+                                      cx={[Function]}
+                                      getStyles={[Function]}
+                                      getValue={[Function]}
+                                      hasValue={false}
+                                      isDisabled={false}
+                                      isMulti={false}
+                                      isRtl={false}
+                                      options={
+                                        Array [
                                           Object {
                                             "label": "STF",
                                             "pivot": "endpoints.stf.host",
@@ -1031,138 +1019,139 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                             "pivot": "endponts.amqp.host",
                                             "value": "amqp",
                                           },
-                                        ],
-                                        "pageSize": 5,
-                                        "placeholder": "<Choose>",
-                                        "screenReaderStatus": [Function],
-                                        "styles": Object {},
-                                        "tabIndex": "0",
-                                        "tabSelectsValue": true,
-                                        "value": Array [],
+                                        ]
                                       }
-                                    }
-                                    setValue={[Function]}
-                                    theme={
-                                      Object {
-                                        "borderRadius": 4,
-                                        "colors": Object {
-                                          "danger": "#DE350B",
-                                          "dangerLight": "#FFBDAD",
-                                          "neutral0": "hsl(0, 0%, 100%)",
-                                          "neutral10": "hsl(0, 0%, 90%)",
-                                          "neutral20": "hsl(0, 0%, 80%)",
-                                          "neutral30": "hsl(0, 0%, 70%)",
-                                          "neutral40": "hsl(0, 0%, 60%)",
-                                          "neutral5": "hsl(0, 0%, 95%)",
-                                          "neutral50": "hsl(0, 0%, 50%)",
-                                          "neutral60": "hsl(0, 0%, 40%)",
-                                          "neutral70": "hsl(0, 0%, 30%)",
-                                          "neutral80": "hsl(0, 0%, 20%)",
-                                          "neutral90": "hsl(0, 0%, 10%)",
-                                          "primary": "#2684FF",
-                                          "primary25": "#DEEBFF",
-                                          "primary50": "#B2D4FF",
-                                          "primary75": "#4C9AFF",
-                                        },
-                                        "spacing": Object {
-                                          "baseUnit": 4,
-                                          "controlHeight": 38,
-                                          "menuGutter": 8,
-                                        },
-                                      }
-                                    }
-                                  >
-                                    <ForwardRef(render)
-                                      __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
-                                      className="ddorg__pf3-component-mapper__select__indicators"
-                                      css={
+                                      selectOption={[Function]}
+                                      selectProps={
                                         Object {
-                                          "alignItems": "center",
-                                          "alignSelf": "stretch",
-                                          "boxSizing": "border-box",
-                                          "display": "flex",
-                                          "flexShrink": 0,
+                                          "allowNull": true,
+                                          "backspaceRemovesValue": true,
+                                          "blurInputOnSelect": true,
+                                          "captureMenuScroll": false,
+                                          "checked": undefined,
+                                          "className": "ddorg__pf3-component-mapper__select",
+                                          "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                          "closeMenuOnScroll": false,
+                                          "closeMenuOnSelect": true,
+                                          "components": Object {
+                                            "ClearIndicator": [Function],
+                                            "DropdownIndicator": [Function],
+                                            "Option": [Function],
+                                          },
+                                          "controlShouldRenderValue": true,
+                                          "escapeClearsValue": false,
+                                          "filterOption": [Function],
+                                          "formatGroupLabel": [Function],
+                                          "getOptionLabel": [Function],
+                                          "getOptionValue": [Function],
+                                          "hideSelectedOptions": false,
+                                          "inputValue": "",
+                                          "isClearable": false,
+                                          "isDisabled": false,
+                                          "isFetching": false,
+                                          "isLoading": false,
+                                          "isMulti": false,
+                                          "isOptionDisabled": [Function],
+                                          "isRtl": false,
+                                          "isSearchable": false,
+                                          "loadingMessage": [Function],
+                                          "maxMenuHeight": 300,
+                                          "menuIsOpen": false,
+                                          "menuPlacement": "bottom",
+                                          "menuPosition": "absolute",
+                                          "menuShouldBlockScroll": false,
+                                          "menuShouldScrollIntoView": true,
+                                          "minMenuHeight": 140,
+                                          "name": "type",
+                                          "noOptionsMessage": [Function],
+                                          "onBlur": [Function],
+                                          "onChange": [Function],
+                                          "onFocus": [Function],
+                                          "onInputChange": [Function],
+                                          "onMenuClose": [Function],
+                                          "onMenuOpen": [Function],
+                                          "openMenuOnClick": true,
+                                          "openMenuOnFocus": false,
+                                          "options": Array [
+                                            Object {
+                                              "label": "STF",
+                                              "pivot": "endpoints.stf.host",
+                                              "value": "stf",
+                                            },
+                                            Object {
+                                              "label": "AMQP",
+                                              "pivot": "endponts.amqp.host",
+                                              "value": "amqp",
+                                            },
+                                          ],
+                                          "pageSize": 5,
+                                          "placeholder": "<Choose>",
+                                          "screenReaderStatus": [Function],
+                                          "styles": Object {},
+                                          "tabIndex": "0",
+                                          "tabSelectsValue": true,
+                                          "value": Array [],
+                                        }
+                                      }
+                                      setValue={[Function]}
+                                      theme={
+                                        Object {
+                                          "borderRadius": 4,
+                                          "colors": Object {
+                                            "danger": "#DE350B",
+                                            "dangerLight": "#FFBDAD",
+                                            "neutral0": "hsl(0, 0%, 100%)",
+                                            "neutral10": "hsl(0, 0%, 90%)",
+                                            "neutral20": "hsl(0, 0%, 80%)",
+                                            "neutral30": "hsl(0, 0%, 70%)",
+                                            "neutral40": "hsl(0, 0%, 60%)",
+                                            "neutral5": "hsl(0, 0%, 95%)",
+                                            "neutral50": "hsl(0, 0%, 50%)",
+                                            "neutral60": "hsl(0, 0%, 40%)",
+                                            "neutral70": "hsl(0, 0%, 30%)",
+                                            "neutral80": "hsl(0, 0%, 20%)",
+                                            "neutral90": "hsl(0, 0%, 10%)",
+                                            "primary": "#2684FF",
+                                            "primary25": "#DEEBFF",
+                                            "primary50": "#B2D4FF",
+                                            "primary75": "#4C9AFF",
+                                          },
+                                          "spacing": Object {
+                                            "baseUnit": 4,
+                                            "controlHeight": 38,
+                                            "menuGutter": 8,
+                                          },
                                         }
                                       }
                                     >
-                                      <div
-                                        className="ddorg__pf3-component-mapper__select__indicators css-1wy0on6"
-                                      >
-                                        <IndicatorSeparator
-                                          clearValue={[Function]}
-                                          cx={[Function]}
-                                          getStyles={[Function]}
-                                          getValue={[Function]}
-                                          hasValue={false}
-                                          isDisabled={false}
-                                          isFocused={false}
-                                          isMulti={false}
-                                          isRtl={false}
-                                          options={
-                                            Array [
-                                              Object {
-                                                "label": "STF",
-                                                "pivot": "endpoints.stf.host",
-                                                "value": "stf",
-                                              },
-                                              Object {
-                                                "label": "AMQP",
-                                                "pivot": "endponts.amqp.host",
-                                                "value": "amqp",
-                                              },
-                                            ]
+                                      <ForwardRef(render)
+                                        __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                                        className="ddorg__pf3-component-mapper__select__indicators"
+                                        css={
+                                          Object {
+                                            "alignItems": "center",
+                                            "alignSelf": "stretch",
+                                            "boxSizing": "border-box",
+                                            "display": "flex",
+                                            "flexShrink": 0,
                                           }
-                                          selectOption={[Function]}
-                                          selectProps={
-                                            Object {
-                                              "backspaceRemovesValue": true,
-                                              "blurInputOnSelect": true,
-                                              "captureMenuScroll": false,
-                                              "checked": undefined,
-                                              "className": "ddorg__pf3-component-mapper__select",
-                                              "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                              "closeMenuOnScroll": false,
-                                              "closeMenuOnSelect": true,
-                                              "components": Object {
-                                                "ClearIndicator": [Function],
-                                                "DropdownIndicator": [Function],
-                                                "Option": [Function],
-                                              },
-                                              "controlShouldRenderValue": true,
-                                              "escapeClearsValue": false,
-                                              "filterOption": [Function],
-                                              "formatGroupLabel": [Function],
-                                              "getOptionLabel": [Function],
-                                              "getOptionValue": [Function],
-                                              "hideSelectedOptions": false,
-                                              "inputValue": "",
-                                              "isClearable": false,
-                                              "isDisabled": false,
-                                              "isFetching": false,
-                                              "isLoading": false,
-                                              "isMulti": false,
-                                              "isOptionDisabled": [Function],
-                                              "isRtl": false,
-                                              "isSearchable": false,
-                                              "loadingMessage": [Function],
-                                              "maxMenuHeight": 300,
-                                              "menuIsOpen": false,
-                                              "menuPlacement": "bottom",
-                                              "menuPosition": "absolute",
-                                              "menuShouldBlockScroll": false,
-                                              "menuShouldScrollIntoView": true,
-                                              "minMenuHeight": 140,
-                                              "name": "type",
-                                              "noOptionsMessage": [Function],
-                                              "onBlur": [Function],
-                                              "onChange": [Function],
-                                              "onFocus": [Function],
-                                              "onInputChange": [Function],
-                                              "onMenuClose": [Function],
-                                              "onMenuOpen": [Function],
-                                              "openMenuOnClick": true,
-                                              "openMenuOnFocus": false,
-                                              "options": Array [
+                                        }
+                                      >
+                                        <div
+                                          className="ddorg__pf3-component-mapper__select__indicators css-1wy0on6"
+                                        >
+                                          <IndicatorSeparator
+                                            clearValue={[Function]}
+                                            cx={[Function]}
+                                            getStyles={[Function]}
+                                            getValue={[Function]}
+                                            hasValue={false}
+                                            isDisabled={false}
+                                            isFocused={false}
+                                            isMulti={false}
+                                            isRtl={false}
+                                            options={
+                                              Array [
                                                 Object {
                                                   "label": "STF",
                                                   "pivot": "endpoints.stf.host",
@@ -1173,149 +1162,150 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                                   "pivot": "endponts.amqp.host",
                                                   "value": "amqp",
                                                 },
-                                              ],
-                                              "pageSize": 5,
-                                              "placeholder": "<Choose>",
-                                              "screenReaderStatus": [Function],
-                                              "styles": Object {},
-                                              "tabIndex": "0",
-                                              "tabSelectsValue": true,
-                                              "value": Array [],
+                                              ]
                                             }
-                                          }
-                                          setValue={[Function]}
-                                          theme={
-                                            Object {
-                                              "borderRadius": 4,
-                                              "colors": Object {
-                                                "danger": "#DE350B",
-                                                "dangerLight": "#FFBDAD",
-                                                "neutral0": "hsl(0, 0%, 100%)",
-                                                "neutral10": "hsl(0, 0%, 90%)",
-                                                "neutral20": "hsl(0, 0%, 80%)",
-                                                "neutral30": "hsl(0, 0%, 70%)",
-                                                "neutral40": "hsl(0, 0%, 60%)",
-                                                "neutral5": "hsl(0, 0%, 95%)",
-                                                "neutral50": "hsl(0, 0%, 50%)",
-                                                "neutral60": "hsl(0, 0%, 40%)",
-                                                "neutral70": "hsl(0, 0%, 30%)",
-                                                "neutral80": "hsl(0, 0%, 20%)",
-                                                "neutral90": "hsl(0, 0%, 10%)",
-                                                "primary": "#2684FF",
-                                                "primary25": "#DEEBFF",
-                                                "primary50": "#B2D4FF",
-                                                "primary75": "#4C9AFF",
-                                              },
-                                              "spacing": Object {
-                                                "baseUnit": 4,
-                                                "controlHeight": 38,
-                                                "menuGutter": 8,
-                                              },
-                                            }
-                                          }
-                                        >
-                                          <ForwardRef(render)
-                                            __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
-                                            className="ddorg__pf3-component-mapper__select__indicator-separator"
-                                            css={
+                                            selectOption={[Function]}
+                                            selectProps={
                                               Object {
-                                                "alignSelf": "stretch",
-                                                "backgroundColor": "hsl(0, 0%, 80%)",
-                                                "boxSizing": "border-box",
-                                                "label": "indicatorSeparator",
-                                                "marginBottom": 8,
-                                                "marginTop": 8,
-                                                "width": 1,
+                                                "allowNull": true,
+                                                "backspaceRemovesValue": true,
+                                                "blurInputOnSelect": true,
+                                                "captureMenuScroll": false,
+                                                "checked": undefined,
+                                                "className": "ddorg__pf3-component-mapper__select",
+                                                "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                                "closeMenuOnScroll": false,
+                                                "closeMenuOnSelect": true,
+                                                "components": Object {
+                                                  "ClearIndicator": [Function],
+                                                  "DropdownIndicator": [Function],
+                                                  "Option": [Function],
+                                                },
+                                                "controlShouldRenderValue": true,
+                                                "escapeClearsValue": false,
+                                                "filterOption": [Function],
+                                                "formatGroupLabel": [Function],
+                                                "getOptionLabel": [Function],
+                                                "getOptionValue": [Function],
+                                                "hideSelectedOptions": false,
+                                                "inputValue": "",
+                                                "isClearable": false,
+                                                "isDisabled": false,
+                                                "isFetching": false,
+                                                "isLoading": false,
+                                                "isMulti": false,
+                                                "isOptionDisabled": [Function],
+                                                "isRtl": false,
+                                                "isSearchable": false,
+                                                "loadingMessage": [Function],
+                                                "maxMenuHeight": 300,
+                                                "menuIsOpen": false,
+                                                "menuPlacement": "bottom",
+                                                "menuPosition": "absolute",
+                                                "menuShouldBlockScroll": false,
+                                                "menuShouldScrollIntoView": true,
+                                                "minMenuHeight": 140,
+                                                "name": "type",
+                                                "noOptionsMessage": [Function],
+                                                "onBlur": [Function],
+                                                "onChange": [Function],
+                                                "onFocus": [Function],
+                                                "onInputChange": [Function],
+                                                "onMenuClose": [Function],
+                                                "onMenuOpen": [Function],
+                                                "openMenuOnClick": true,
+                                                "openMenuOnFocus": false,
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "STF",
+                                                    "pivot": "endpoints.stf.host",
+                                                    "value": "stf",
+                                                  },
+                                                  Object {
+                                                    "label": "AMQP",
+                                                    "pivot": "endponts.amqp.host",
+                                                    "value": "amqp",
+                                                  },
+                                                ],
+                                                "pageSize": 5,
+                                                "placeholder": "<Choose>",
+                                                "screenReaderStatus": [Function],
+                                                "styles": Object {},
+                                                "tabIndex": "0",
+                                                "tabSelectsValue": true,
+                                                "value": Array [],
+                                              }
+                                            }
+                                            setValue={[Function]}
+                                            theme={
+                                              Object {
+                                                "borderRadius": 4,
+                                                "colors": Object {
+                                                  "danger": "#DE350B",
+                                                  "dangerLight": "#FFBDAD",
+                                                  "neutral0": "hsl(0, 0%, 100%)",
+                                                  "neutral10": "hsl(0, 0%, 90%)",
+                                                  "neutral20": "hsl(0, 0%, 80%)",
+                                                  "neutral30": "hsl(0, 0%, 70%)",
+                                                  "neutral40": "hsl(0, 0%, 60%)",
+                                                  "neutral5": "hsl(0, 0%, 95%)",
+                                                  "neutral50": "hsl(0, 0%, 50%)",
+                                                  "neutral60": "hsl(0, 0%, 40%)",
+                                                  "neutral70": "hsl(0, 0%, 30%)",
+                                                  "neutral80": "hsl(0, 0%, 20%)",
+                                                  "neutral90": "hsl(0, 0%, 10%)",
+                                                  "primary": "#2684FF",
+                                                  "primary25": "#DEEBFF",
+                                                  "primary50": "#B2D4FF",
+                                                  "primary75": "#4C9AFF",
+                                                },
+                                                "spacing": Object {
+                                                  "baseUnit": 4,
+                                                  "controlHeight": 38,
+                                                  "menuGutter": 8,
+                                                },
                                               }
                                             }
                                           >
-                                            <span
-                                              className="ddorg__pf3-component-mapper__select__indicator-separator css-1okebmr-indicatorSeparator"
-                                            />
-                                          </ForwardRef(render)>
-                                        </IndicatorSeparator>
-                                        <DropdownIndicator
-                                          clearValue={[Function]}
-                                          cx={[Function]}
-                                          getStyles={[Function]}
-                                          getValue={[Function]}
-                                          hasValue={false}
-                                          innerProps={
-                                            Object {
-                                              "aria-hidden": "true",
-                                              "onMouseDown": [Function],
-                                              "onTouchEnd": [Function],
+                                            <ForwardRef(render)
+                                              __EMOTION_TYPE_PLEASE_DO_NOT_USE__="span"
+                                              className="ddorg__pf3-component-mapper__select__indicator-separator"
+                                              css={
+                                                Object {
+                                                  "alignSelf": "stretch",
+                                                  "backgroundColor": "hsl(0, 0%, 80%)",
+                                                  "boxSizing": "border-box",
+                                                  "label": "indicatorSeparator",
+                                                  "marginBottom": 8,
+                                                  "marginTop": 8,
+                                                  "width": 1,
+                                                }
+                                              }
+                                            >
+                                              <span
+                                                className="ddorg__pf3-component-mapper__select__indicator-separator css-1okebmr-indicatorSeparator"
+                                              />
+                                            </ForwardRef(render)>
+                                          </IndicatorSeparator>
+                                          <DropdownIndicator
+                                            clearValue={[Function]}
+                                            cx={[Function]}
+                                            getStyles={[Function]}
+                                            getValue={[Function]}
+                                            hasValue={false}
+                                            innerProps={
+                                              Object {
+                                                "aria-hidden": "true",
+                                                "onMouseDown": [Function],
+                                                "onTouchEnd": [Function],
+                                              }
                                             }
-                                          }
-                                          isDisabled={false}
-                                          isFocused={false}
-                                          isMulti={false}
-                                          isRtl={false}
-                                          options={
-                                            Array [
-                                              Object {
-                                                "label": "STF",
-                                                "pivot": "endpoints.stf.host",
-                                                "value": "stf",
-                                              },
-                                              Object {
-                                                "label": "AMQP",
-                                                "pivot": "endponts.amqp.host",
-                                                "value": "amqp",
-                                              },
-                                            ]
-                                          }
-                                          selectOption={[Function]}
-                                          selectProps={
-                                            Object {
-                                              "backspaceRemovesValue": true,
-                                              "blurInputOnSelect": true,
-                                              "captureMenuScroll": false,
-                                              "checked": undefined,
-                                              "className": "ddorg__pf3-component-mapper__select",
-                                              "classNamePrefix": "ddorg__pf3-component-mapper__select",
-                                              "closeMenuOnScroll": false,
-                                              "closeMenuOnSelect": true,
-                                              "components": Object {
-                                                "ClearIndicator": [Function],
-                                                "DropdownIndicator": [Function],
-                                                "Option": [Function],
-                                              },
-                                              "controlShouldRenderValue": true,
-                                              "escapeClearsValue": false,
-                                              "filterOption": [Function],
-                                              "formatGroupLabel": [Function],
-                                              "getOptionLabel": [Function],
-                                              "getOptionValue": [Function],
-                                              "hideSelectedOptions": false,
-                                              "inputValue": "",
-                                              "isClearable": false,
-                                              "isDisabled": false,
-                                              "isFetching": false,
-                                              "isLoading": false,
-                                              "isMulti": false,
-                                              "isOptionDisabled": [Function],
-                                              "isRtl": false,
-                                              "isSearchable": false,
-                                              "loadingMessage": [Function],
-                                              "maxMenuHeight": 300,
-                                              "menuIsOpen": false,
-                                              "menuPlacement": "bottom",
-                                              "menuPosition": "absolute",
-                                              "menuShouldBlockScroll": false,
-                                              "menuShouldScrollIntoView": true,
-                                              "minMenuHeight": 140,
-                                              "name": "type",
-                                              "noOptionsMessage": [Function],
-                                              "onBlur": [Function],
-                                              "onChange": [Function],
-                                              "onFocus": [Function],
-                                              "onInputChange": [Function],
-                                              "onMenuClose": [Function],
-                                              "onMenuOpen": [Function],
-                                              "openMenuOnClick": true,
-                                              "openMenuOnFocus": false,
-                                              "options": Array [
+                                            isDisabled={false}
+                                            isFocused={false}
+                                            isMulti={false}
+                                            isRtl={false}
+                                            options={
+                                              Array [
                                                 Object {
                                                   "label": "STF",
                                                   "pivot": "endpoints.stf.host",
@@ -1326,67 +1316,132 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                                                   "pivot": "endponts.amqp.host",
                                                   "value": "amqp",
                                                 },
-                                              ],
-                                              "pageSize": 5,
-                                              "placeholder": "<Choose>",
-                                              "screenReaderStatus": [Function],
-                                              "styles": Object {},
-                                              "tabIndex": "0",
-                                              "tabSelectsValue": true,
-                                              "value": Array [],
+                                              ]
                                             }
-                                          }
-                                          setValue={[Function]}
-                                          theme={
-                                            Object {
-                                              "borderRadius": 4,
-                                              "colors": Object {
-                                                "danger": "#DE350B",
-                                                "dangerLight": "#FFBDAD",
-                                                "neutral0": "hsl(0, 0%, 100%)",
-                                                "neutral10": "hsl(0, 0%, 90%)",
-                                                "neutral20": "hsl(0, 0%, 80%)",
-                                                "neutral30": "hsl(0, 0%, 70%)",
-                                                "neutral40": "hsl(0, 0%, 60%)",
-                                                "neutral5": "hsl(0, 0%, 95%)",
-                                                "neutral50": "hsl(0, 0%, 50%)",
-                                                "neutral60": "hsl(0, 0%, 40%)",
-                                                "neutral70": "hsl(0, 0%, 30%)",
-                                                "neutral80": "hsl(0, 0%, 20%)",
-                                                "neutral90": "hsl(0, 0%, 10%)",
-                                                "primary": "#2684FF",
-                                                "primary25": "#DEEBFF",
-                                                "primary50": "#B2D4FF",
-                                                "primary75": "#4C9AFF",
-                                              },
-                                              "spacing": Object {
-                                                "baseUnit": 4,
-                                                "controlHeight": 38,
-                                                "menuGutter": 8,
-                                              },
+                                            selectOption={[Function]}
+                                            selectProps={
+                                              Object {
+                                                "allowNull": true,
+                                                "backspaceRemovesValue": true,
+                                                "blurInputOnSelect": true,
+                                                "captureMenuScroll": false,
+                                                "checked": undefined,
+                                                "className": "ddorg__pf3-component-mapper__select",
+                                                "classNamePrefix": "ddorg__pf3-component-mapper__select",
+                                                "closeMenuOnScroll": false,
+                                                "closeMenuOnSelect": true,
+                                                "components": Object {
+                                                  "ClearIndicator": [Function],
+                                                  "DropdownIndicator": [Function],
+                                                  "Option": [Function],
+                                                },
+                                                "controlShouldRenderValue": true,
+                                                "escapeClearsValue": false,
+                                                "filterOption": [Function],
+                                                "formatGroupLabel": [Function],
+                                                "getOptionLabel": [Function],
+                                                "getOptionValue": [Function],
+                                                "hideSelectedOptions": false,
+                                                "inputValue": "",
+                                                "isClearable": false,
+                                                "isDisabled": false,
+                                                "isFetching": false,
+                                                "isLoading": false,
+                                                "isMulti": false,
+                                                "isOptionDisabled": [Function],
+                                                "isRtl": false,
+                                                "isSearchable": false,
+                                                "loadingMessage": [Function],
+                                                "maxMenuHeight": 300,
+                                                "menuIsOpen": false,
+                                                "menuPlacement": "bottom",
+                                                "menuPosition": "absolute",
+                                                "menuShouldBlockScroll": false,
+                                                "menuShouldScrollIntoView": true,
+                                                "minMenuHeight": 140,
+                                                "name": "type",
+                                                "noOptionsMessage": [Function],
+                                                "onBlur": [Function],
+                                                "onChange": [Function],
+                                                "onFocus": [Function],
+                                                "onInputChange": [Function],
+                                                "onMenuClose": [Function],
+                                                "onMenuOpen": [Function],
+                                                "openMenuOnClick": true,
+                                                "openMenuOnFocus": false,
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "STF",
+                                                    "pivot": "endpoints.stf.host",
+                                                    "value": "stf",
+                                                  },
+                                                  Object {
+                                                    "label": "AMQP",
+                                                    "pivot": "endponts.amqp.host",
+                                                    "value": "amqp",
+                                                  },
+                                                ],
+                                                "pageSize": 5,
+                                                "placeholder": "<Choose>",
+                                                "screenReaderStatus": [Function],
+                                                "styles": Object {},
+                                                "tabIndex": "0",
+                                                "tabSelectsValue": true,
+                                                "value": Array [],
+                                              }
                                             }
-                                          }
-                                        >
-                                          <i
-                                            className="ddorg__pf3-component-mapper__select__dropdown-indicator fa fa-angle-down placeholder"
-                                          />
-                                        </DropdownIndicator>
-                                      </div>
-                                    </ForwardRef(render)>
-                                  </IndicatorsContainer>
-                                </div>
-                              </ForwardRef(render)>
-                            </Control>
-                            <input
-                              name="type"
-                              type="hidden"
-                              value=""
-                            />
-                          </div>
-                        </ForwardRef(render)>
-                      </SelectContainer>
-                    </Select>
-                  </StateManager>
+                                            setValue={[Function]}
+                                            theme={
+                                              Object {
+                                                "borderRadius": 4,
+                                                "colors": Object {
+                                                  "danger": "#DE350B",
+                                                  "dangerLight": "#FFBDAD",
+                                                  "neutral0": "hsl(0, 0%, 100%)",
+                                                  "neutral10": "hsl(0, 0%, 90%)",
+                                                  "neutral20": "hsl(0, 0%, 80%)",
+                                                  "neutral30": "hsl(0, 0%, 70%)",
+                                                  "neutral40": "hsl(0, 0%, 60%)",
+                                                  "neutral5": "hsl(0, 0%, 95%)",
+                                                  "neutral50": "hsl(0, 0%, 50%)",
+                                                  "neutral60": "hsl(0, 0%, 40%)",
+                                                  "neutral70": "hsl(0, 0%, 30%)",
+                                                  "neutral80": "hsl(0, 0%, 20%)",
+                                                  "neutral90": "hsl(0, 0%, 10%)",
+                                                  "primary": "#2684FF",
+                                                  "primary25": "#DEEBFF",
+                                                  "primary50": "#B2D4FF",
+                                                  "primary75": "#4C9AFF",
+                                                },
+                                                "spacing": Object {
+                                                  "baseUnit": 4,
+                                                  "controlHeight": 38,
+                                                  "menuGutter": 8,
+                                                },
+                                              }
+                                            }
+                                          >
+                                            <i
+                                              className="ddorg__pf3-component-mapper__select__dropdown-indicator fa fa-angle-down placeholder"
+                                            />
+                                          </DropdownIndicator>
+                                        </div>
+                                      </ForwardRef(render)>
+                                    </IndicatorsContainer>
+                                  </div>
+                                </ForwardRef(render)>
+                              </Control>
+                              <input
+                                name="type"
+                                type="hidden"
+                                value=""
+                              />
+                            </div>
+                          </ForwardRef(render)>
+                        </SelectContainer>
+                      </Select>
+                    </StateManager>
+                  </SelectComponent>
                 </Select>
               </Select>
             </div>
