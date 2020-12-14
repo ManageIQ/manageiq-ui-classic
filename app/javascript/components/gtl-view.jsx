@@ -110,9 +110,9 @@ const isCurrentControllerOrPolicies = (url) => {
   return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
 };
 
-const EXPAND_TREES = ['treeview-savedreports_tree', 'treeview-widgets_tree'];
+const EXPAND_TREES = ['policy_tree', 'reports_tree'];
 const activateNodeSilently = (itemId) => {
-  const treeId = angular.element('.collapse.in .treeview').attr('id');
+  const treeId = angular.element('.collapse.in miq-tree-view').attr('name');
   if (!EXPAND_TREES.includes(treeId)) {
     miqTreeExpandRecursive(treeId, itemId);
   }
