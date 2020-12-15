@@ -74,7 +74,7 @@
               "ng-change"      => "filterTypeChanged()",
               "checkchange"    => "",
               "selectpicker-for-select-tag"   => "")
-            = select_tag('log_protocol', options_for_select(@database_backup_options_for_select),
+            = select_tag('log_protocol', options_for_select(@database_backup_options_for_select.invert),
               "ng-switch-when" => "db_backup",
               "ng-model"       => "$parent.scheduleModel.log_protocol",
               "ng-change"      => "logProtocolChanged()",
@@ -143,7 +143,7 @@
                               :ng_reqd_uri         => "dbRequired(scheduleModel.uri)",
                               :ng_model_uri        => "scheduleModel.uri",
                               :ng_model_uri_prefix => "scheduleModel.uri_prefix",
-                              :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
+                              :uri_prefix_display  => "{{scheduleModel.uri_prefix}}://"}
 
         .form-group{"ng-class" => "{'has-error': angularForm.openstack_region.$invalid}",
                     "ng-if"    => 'swiftSecurityProtocolSelect()'}

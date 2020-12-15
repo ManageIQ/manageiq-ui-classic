@@ -5,9 +5,9 @@ ManageIQ.angular.app.component('logCollectionForm', {
   bindings: {
     'recordId': '@',
     'selectOptions': '<',
+    'uriPrefixes': '<',
     'logCollectionFormFieldsUrl': '@',
     'saveUrl': '@',
-    'logProtocolChangedUrl': '@',
     'message': '@',
   },
 
@@ -59,17 +59,11 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) === -1 &&
-       vm.logCollectionModel.log_protocol !== '') {
-      var url = vm.logProtocolChangedUrl;
-      $http.get(url + vm.recordId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
-        .then(getLogProtocolData)
-        .catch(miqService.handleFailure);
-    }
+    miqDBBackupService.resetAll(vm.logCollectionModel);
+    vm.logCollectionModel.uri_prefix = vm.uriPrefixes[vm.logCollectionModel.log_protocol];
     $scope.$broadcast('reactiveFocus');
-    miqDBBackupService.logProtocolChanged(vm.logCollectionModel);
     miqService.sparkleOff();
-  };
+  }
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.depot_name.$valid &&
@@ -112,22 +106,9 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
       vm.logCollectionModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
-    if (vm.logCollectionModel.log_protocol === '') {
-      vm.logCollectionModel.log_protocol = '<No Depot>';
-    }
-
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.logCollectionModel );
 
-    miqService.sparkleOff();
-  }
-
-  function getLogProtocolData(response) {
-    var data = response.data;
-
-    vm.logCollectionModel.depot_name = data.depot_name;
-    vm.logCollectionModel.uri = data.uri;
-    vm.logCollectionModel.uri_prefix = data.uri_prefix;
     miqService.sparkleOff();
   }
 

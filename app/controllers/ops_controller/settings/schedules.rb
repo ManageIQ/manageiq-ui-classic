@@ -118,7 +118,6 @@ module OpsController::Settings::Schedules
       depot                 = @schedule.file_depot
       full_uri, _query      = depot.try(:uri)&.split('?')
       @uri_prefix, @uri     = full_uri.to_s.split('://')
-      @protocol             = DatabaseBackup.supported_depots[@uri_prefix]
       @log_userid           = depot.try(:authentication_userid)
       @log_password         = depot.try(:authentication_password)
       @log_aws_region       = depot.try(:aws_region)
@@ -153,7 +152,7 @@ module OpsController::Settings::Schedules
       depot                = schedule.file_depot
       full_uri, _query     = depot.try(:uri).split('?')
       uri_prefix, uri      = full_uri.to_s.split('://')
-      protocol             = DatabaseBackup.supported_depots[uri_prefix]
+      protocol             = depot.try(:type)
       depot_name           = depot.try(:name)
       log_userid           = depot.try(:authentication_userid)
       log_aws_region       = depot.try(:aws_region)
@@ -380,8 +379,7 @@ module OpsController::Settings::Schedules
       build_listnav_search_list("Vm")
       filtered_item_list = @my_searches.collect { |search| [search.id, search.description] }
     else
-      filtered_item_list = []
-      DatabaseBackup.supported_depots.each { |depot| filtered_item_list.push(depot[1]) }
+      filtered_item_list = DatabaseBackup.supported_depots
     end
 
     filtered_item_list
@@ -757,9 +755,8 @@ module OpsController::Settings::Schedules
   end
 
   def build_db_options_for_select
-    @protocols_arr = []
-    DatabaseBackup.supported_depots.each { |depot| @protocols_arr.push(depot[1]) }
-    @database_backup_options_for_select = @protocols_arr.sort
+    @database_backup_options_for_select = DatabaseBackup.supported_depots
+    @database_backup_uri_prefixes = DatabaseBackup::SUPPORTED_DEPOTS.map { |model| [model, model.constantize.uri_prefix] }.to_h
     @regions_options_for_select = retrieve_aws_regions
     @api_versions_options_for_select = retrieve_openstack_api_versions
     @security_protocols_options_for_select = retrieve_security_protocols
@@ -804,8 +801,11 @@ module OpsController::Settings::Schedules
 
   def build_uri_settings(file_depot)
     uri_settings = {}
-    type = FileDepot.depot_description_to_class(params[:log_protocol])
-    if type.try(:requires_credentials?)
+    type = FileDepot.supported_protocols[params[:uri_prefix]]
+    raise _("Invalid or unsupported file depot type.") if type.nil?
+
+    protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+    if protocols[type].try(:requires_credentials?)
       log_password = params[:log_password] || file_depot.try(:authentication_password)
       uri_settings = {:username => params[:log_userid], :password => log_password}
     end

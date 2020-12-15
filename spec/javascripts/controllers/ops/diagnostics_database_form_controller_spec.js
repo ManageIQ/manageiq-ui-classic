@@ -1,11 +1,12 @@
 describe('diagnosticsDatabaseFormController', function() {
-  var $scope, $controller, $httpBackend, miqService, vm;
+  var $scope, $controller, $httpBackend, miqService, vm, uriPrefixes;
 
   beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_) {
 
   miqService = _miqService_;
+  uriPrefixes = {FileDepotSmb: "smb", FileDepotNfs: "nfs", FileDepotS3: "s3", FileDepotSwift: "swift"};
   spyOn(miqService, 'miqFlash');
   spyOn(miqService, 'miqAjaxButton');
   spyOn(miqService, 'sparkleOn');
@@ -23,7 +24,8 @@ describe('diagnosticsDatabaseFormController', function() {
   $controller = vm = _$controller_('diagnosticsDatabaseFormController',
                               {$scope: $scope,
                                $attrs: {'dbBackupFormFieldChangedUrl': '/ops/db_backup_form_field_changed/'},
-                               miqService: miqService
+                               miqService: miqService,
+                               uriPrefixes: uriPrefixes
                               });
   }));
 

@@ -18,7 +18,6 @@ describe('logCollectionForm', function() {
       selectOptions: ["some value"],
       logCollectionFormFieldsUrl: "/ops/log_collection_form_fields/",
       saveUrl: "/ops/log_depot_edit/",
-      logProtocolChangedUrl: "/ops/log_protocol_changed/"
     };
     $scope = $rootScope.$new();
 
@@ -107,33 +106,6 @@ describe('logCollectionForm', function() {
 
     it('sets flash message to be a warning with correct message', function() {
       expect(miqService.miqFlash).toHaveBeenCalledWith("warn", "All changes have been reset");
-    });
-  });
-
-  describe('when the log protocol is changed to Redhat dropbox', function() {
-    var logProtocolChangedFormResponse = {
-      depot_name: 'Red Hat Dropbox',
-      uri: 'ftp://dropbox.redhat.com',
-      uri_prefix: 'ftp'
-    };
-
-    beforeEach(inject(function() {
-      vm.logCollectionModel.log_protocol = 'Red Hat Dropbox';
-      vm.logProtocolChanged();
-      $httpBackend.whenGET('/ops/log_protocol_changed/123456?log_protocol=Red Hat Dropbox').respond(200, logProtocolChangedFormResponse);
-      $httpBackend.flush();
-    }));
-
-    it('sets the depot_name to the value returned from the http request', function () {
-      expect(vm.logCollectionModel.depot_name).toEqual(logProtocolChangedFormResponse.depot_name);
-    });
-
-    it('sets the uri to the value returned from the http request', function () {
-      expect(vm.logCollectionModel.uri).toEqual(logProtocolChangedFormResponse.uri);
-    });
-
-    it('sets the uri_prefix to the value returned from the http request', function () {
-      expect(vm.logCollectionModel.uri_prefix).toEqual(logProtocolChangedFormResponse.uri_prefix)
     });
   });
 

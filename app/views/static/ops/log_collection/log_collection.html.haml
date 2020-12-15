@@ -16,11 +16,12 @@
     .col-md-8
       = select_tag("log_protocol",
                    "",
-                   "ng-options" => "choice for choice in vm.selectOptions",
-                   "ng-model"   => "vm.logCollectionModel.log_protocol",
-                   "ng-change"  => "vm.logProtocolChanged()",
-                   "pf-select"  => true)
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== '<No Depot>'"}
+                   "ng-options"                  => "value as label for (value, label) in vm.selectOptions",
+                   "ng-model"                    => "vm.logCollectionModel.log_protocol",
+                   "ng-change"                   => "vm.logProtocolChanged()",
+                   "pf-select"                   => true,
+                   "selectpicker-for-select-tag" => "",)
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== ''"}
     .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
       %label.col-md-2.control-label{"for" => "depot_name"}
         = _("Depot Name")
@@ -35,7 +36,7 @@
                             "auto-focus"  => "reactiveFocus"}
         %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
           = _("Required")
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== '<No Depot>'"}
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== ''"}
     .form-group{"ng-class" => "{'has-error': angularForm.uri.$invalid}"}
       %label.col-md-2.control-label{"for" => "uri"}
         = _("URI")

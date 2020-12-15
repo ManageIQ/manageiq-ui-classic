@@ -92,13 +92,18 @@ module OpsController::Diagnostics
       end
 
       begin
-        if params[:log_protocol].blank? || params[:log_protocol] == "<No Depot>"
+        if params[:log_protocol].blank?
           @record.log_file_depot.try(:destroy)
         else
           new_uri = "#{params[:uri_prefix]}://#{params[:uri]}"
+          raise _("Unsupported log depot protocol: %{protocol}") % {:protocol => params[:log_protocol]} unless FileDepot.supported_depots.key?(params[:log_protocol])
+
           build_supported_depots_for_select
-          type    = FileDepot.depot_description_to_class(params[:log_protocol])
-          depot   = @record.log_file_depot.instance_of?(type) ? @record.log_file_depot : @record.build_log_file_depot(:type => type.to_s)
+          log_protocol = params[:log_protocol]
+          protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+          raise _('Invalid or unsupported file depot type.') unless protocols.key?(log_protocol)
+
+          depot = @record.log_file_depot.instance_of?(protocols[log_protocol]) ? @record.log_file_depot : @record.build_log_file_depot(:type => log_protocol)
           depot.update(:uri => new_uri, :name => params[:depot_name])
           creds = set_credentials
           depot.update_authentication(creds) if type.try(:requires_credentials?)
@@ -126,8 +131,11 @@ module OpsController::Diagnostics
       }
 
       begin
-        type = FileDepot.depot_description_to_class(params[:log_protocol])
-        type.validate_settings(settings)
+        log_protocol = params[:log_protocol]
+        protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+        raise _("Unsupported log depot protocol: %{protocol}") % {:protocol => log_protocol} unless protocols.key?(log_protocol)
+
+        protocols[log_protocol].validate_settings(settings)
       rescue => bang
         add_flash(_("Error during 'Validate': %{message}") % {:message => bang.message}, :error)
       else
@@ -344,13 +352,12 @@ module OpsController::Diagnostics
   def build_log_depot_json(log_depot)
     prefix, uri = log_depot[:uri].to_s.split('://')
     klass = @record.log_file_depot.try(:class)
-    protocol = Dictionary.gettext(klass.name, :type => :model, :notfound => :titleize) if klass.present?
 
     log_depot_json = {:depot_name   => log_depot[:name],
                       :uri          => uri,
                       :uri_prefix   => prefix,
                       :log_userid   => log_depot.authentication_userid,
-                      :log_protocol => protocol}
+                      :log_protocol => klass.to_s}
     log_depot_json
   end
 
@@ -362,20 +369,6 @@ module OpsController::Diagnostics
                       :log_password => '',
                       :log_protocol => ''}
     log_depot_json
-  end
-
-  def log_protocol_changed
-    assert_privileges("log_depot_edit")
-
-    depot = FileDepot.depot_description_to_class(params[:log_protocol]).new
-    # uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
-    full_uri, _query = depot.try(:uri)&.split('?')
-    uri_prefix, uri  = full_uri.to_s.split('://')
-
-    log_depot_json = {:depot_name => depot.name,
-                      :uri_prefix => uri_prefix,
-                      :uri        => uri}
-    render :json => log_depot_json
   end
 
   # to delete orphaned records for user that was delete from db
@@ -864,10 +857,10 @@ module OpsController::Diagnostics
   end
 
   def build_supported_depots_for_select
-    depots_for_select = FileDepot.supported_depots.values.sort.insert(0, "<No Depot>")
-    # S3 and Swift not currently supported for Log Collection
-    not_supported_depots = ["AWS S3", "OpenStack Swift"]
-    @supported_depots_for_select = depots_for_select - not_supported_depots
+    not_supported_depots = %w[FileDepotS3 FileDepotSwift]
+    supported_depots = FileDepot.supported_depots.reject { |model, _desc| not_supported_depots.include?(model) }
+    @uri_prefixes = supported_depots.keys.map { |model| [model, model.constantize.uri_prefix] }.to_h
+    @supported_depots_for_select = {'' => _('<No Depot>')}.merge(supported_depots)
   end
 
   def set_credentials
