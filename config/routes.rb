@@ -2118,8 +2118,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        edit
-        form_field_changed
         reload
         show
         show_list

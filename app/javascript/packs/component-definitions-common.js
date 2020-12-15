@@ -28,6 +28,7 @@ import NotificationDrawer from '../components/notification-drawer/notification-d
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
+import PolicyProfileForm from '../components/policy-profile-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RegionForm from '../components/region-form';
@@ -83,6 +84,7 @@ ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('Quadicon', Quadicon);
+ManageIQ.component.addReact('PolicyProfileForm', PolicyProfileForm);
 ManageIQ.component.addReact('RegionForm', RegionForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('RemoveGenericItemModal', RemoveGenericItemModal);

@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PolicyProfileForm form component should render adding form variant 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={false}
+>
+  <Connect(MiqFormRenderer)
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
+      }
+    }
+    canReset={false}
+    onCancel={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "text-field",
+            "id": "description",
+            "isRequired": true,
+            "label": "Description",
+            "name": "description",
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "allToRight": false,
+            "component": "dual-list-select",
+            "id": "policies",
+            "isRequired": true,
+            "label": "Policy Selection",
+            "leftTitle": "Available Policies",
+            "moveLeftTitle": "Move Selected items left",
+            "moveRightTitle": "Move Selected items right",
+            "name": "policies",
+            "options": undefined,
+            "rightTitle": "Profile Policies",
+            "size": 8,
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "textarea",
+            "id": "set_data.notes",
+            "label": "Notes",
+            "maxLength": 512,
+            "name": "set_data.notes",
+          },
+        ],
+      }
+    }
+  />
+</Grid>
+`;
+
+exports[`PolicyProfileForm form component should render editing form variant 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <PolicyProfileForm
+    recordId="1"
+  />
+</Provider>
+`;
