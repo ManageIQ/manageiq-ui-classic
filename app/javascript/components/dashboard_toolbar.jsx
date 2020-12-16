@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, MenuItem } from 'patternfly-react';
+import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
+import { ChevronDown20 } from '@carbon/icons-react';
 
-const addClick = item =>
+const addClick = (item) =>
   window.miqJqueryRequest(`widget_add?widget=${item.id}`, { beforeSend: true, complete: true });
 
 const resetClick = () => {
@@ -15,7 +16,7 @@ const resetClick = () => {
 const resetButton = () => (
   <button
     type="button"
-    className="btn btn-default"
+    className="btn btn-default refresh_button"
     title={__('Reset Dashboard Widgets to the defaults')}
     onClick={resetClick}
   >
@@ -23,30 +24,65 @@ const resetButton = () => (
   </button>
 );
 
+const closeFunc = () => {
+  document.getElementById('dropdown-custom-2').focus();
+};
+
+const MenuIcon = (props) => (
+  <div>
+    { props.image && <i className={props.image} /> }
+    &nbsp;
+    <span>{ props.text }</span>
+  </div>
+);
+
+MenuIcon.propTypes = {
+  image: PropTypes.string,
+  text: PropTypes.string,
+};
+
+MenuIcon.defaultProps = {
+  image: undefined,
+  text: undefined,
+};
+
 const addMenu = (items, locked) => {
   const title = locked
     ? __('Cannot add a Widget, this Dashboard has been locked by the Administrator')
     : __('Add a widget');
+  const buttonName = __('Add widget');
 
   return (
-    <Dropdown id="dropdown-custom-2" disabled={locked}>
-      <Dropdown.Toggle title={title}>
-        <span className="fa fa-plus fa-lg" />
-      </Dropdown.Toggle>
-      <Dropdown.Menu className="scrollable-menu">
-        { items.map(item => (
-          item.type === 'separator'
-            ? <MenuItem key={item.id} eventKey={item.id} divider />
-            : (
-              <MenuItem key={item.id} onClick={() => addClick(item)}>
-                <i className={item.image} />
-                &nbsp;
-                {item.text}
-              </MenuItem>
-            )
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
+    <OverflowMenu
+      ariaLabel={title}
+      id="dropdown-custom-2"
+      floatingmenu="true"
+      disabled={locked}
+      title={title}
+      onClose={closeFunc}
+      menuOptionsClass="scrollable-options"
+      renderIcon={() => (
+        <div className="toolbar-dashboard">
+          <span>{buttonName}</span>
+          <ChevronDown20 />
+        </div>
+      )}
+    >
+      { items.map((item) => (
+        <OverflowMenuItem
+          className="scrollable-menu"
+          key={item.id}
+          aria-label={item.title}
+          hasDivider={(item.type === 'separator')}
+          disabled={(item.type === 'separator')}
+          itemText={<MenuIcon image={item.image} text={item.text} />}
+          title={item.title ? item.title : null}
+          requireTitle
+          onClick={(item.type !== 'separator') ? (() => addClick(item)) : null}
+        />
+
+      )) }
+    </OverflowMenu>
   );
 };
 
@@ -69,10 +105,10 @@ const DashboardToolbar = (props) => {
   } = props;
 
   const renderContent = () => (
-    <React.Fragment>
+    <>
       { allowAdd && addMenu(items, locked) }
       { allowReset && resetButton() }
-    </React.Fragment>
+    </>
   );
 
   return (

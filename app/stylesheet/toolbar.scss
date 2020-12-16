@@ -154,3 +154,54 @@
 
 }
 
+#dropdown-custom-2 {
+  svg {
+    position:absolute;
+    top:10px;
+    margin-left: 15px;
+  }
+}
+
+.refresh_button {
+  margin-left:20px;
+  background-color: inherit;
+  border: none;
+  background-image: none;
+  box-shadow: none;
+  &:hover {
+    background-color: #e5e5e5;
+  }
+}
+
+.scrollable-options {
+  overflow-y: scroll !important;
+  max-height: 610px !important;
+}
+
+.topology_refresh,.search-topology-button {
+  background-color: inherit;
+  border: none;
+  background-image: none;
+  box-shadow: none;
+  bottom: 1px;
+  position: relative;
+}
+
+.topology_toolbar {
+  margin-bottom: 20px;
+  .text {
+    padding-left: 0px !important;
+  }
+  .topology-checkbox {
+    padding-top: 8px;
+  }
+  .search-pf-input-group {
+    margin-top: 5px;
+  }
+}
+
+.bx--overflow-menu--divider { 
+  .scrollable-menu {
+    display: none;
+  }
+}

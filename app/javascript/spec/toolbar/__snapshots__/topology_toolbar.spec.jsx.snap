@@ -3,7 +3,7 @@
 exports[`<TopologyToolbar /> renders ok 1`] = `
 <TopologyToolbar>
   <div
-    className="toolbar-pf-actions miq-toolbar-actions"
+    className="toolbar-pf-actions miq-toolbar-actions topology_toolbar"
   >
     <div
       className="miq-toolbar-group form-group"
@@ -26,7 +26,7 @@ exports[`<TopologyToolbar /> renders ok 1`] = `
         className="form-group"
       >
         <button
-          className="btn btn-default"
+          className="btn btn-default topology_refresh"
           onClick={[Function]}
           title="Refresh this page"
           type="button"
@@ -34,6 +34,8 @@ exports[`<TopologyToolbar /> renders ok 1`] = `
           <i
             className="fa fa-refresh fa-lg"
           />
+           
+          Refresh
         </button>
       </div>
       <form
