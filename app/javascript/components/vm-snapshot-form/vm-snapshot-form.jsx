@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
-import createSchema from './vm-snapshot-form.schema';
 
-const VmSnapshotForm = ({
-  createURL, cancelURL, hideName, descriptionRequired, showMemory,
-}) => {
-  return (
+const VmSnapshotForm = ({ url, redirect }) => {
+  const [{ isLoading, schema }, setState] = useState({ isLoading: true });
+
+  useEffect(() => {
+    API.options(url).then(({ data: { snapshot_form_schema: schema } }) => setState({ isLoading: false, schema }));
+  }, [url]);
+
+  const onSubmit = (values) => {
+    miqSparkleOn();
+    API.post(url, values).then(() => {
+      miqRedirectBack(_('Create Snapshot for VM or Instance was started'), 'success', redirect);
+    }).catch(miqSparkleOff);
+  };
+
+  return !isLoading && (
     <Grid fluid>
       <MiqFormRenderer
-        schema={createSchema(hideName, showMemory, descriptionRequired)}
-        onSubmit={values => window.miqAjaxButton(createURL, values)}
-        onCancel={() => window.miqAjaxButton(cancelURL)}
+        schema={schema}
+        onSubmit={onSubmit}
+        onCancel={() => miqRedirectBack(_('Snapshot of VM or Instance was cancelled by the user'), 'warning', redirect)}
         buttonsLabels={{
           submitLabel: __('Create'),
         }}
@@ -23,11 +34,8 @@ const VmSnapshotForm = ({
 };
 
 VmSnapshotForm.propTypes = {
-  hideName: PropTypes.bool.isRequired,
-  descriptionRequired: PropTypes.bool.isRequired,
-  showMemory: PropTypes.bool.isRequired,
-  createURL: PropTypes.string.isRequired,
-  cancelURL: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  redirect: PropTypes.string.isRequired,
 };
 
 export default VmSnapshotForm;

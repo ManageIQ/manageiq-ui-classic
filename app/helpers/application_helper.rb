@@ -26,14 +26,14 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
-  def api_collection_path(klass)
+  def api_collection_path(klass, *options)
     identifier = api_identifier_by_class(klass)
-    send("api_#{identifier}_path")
+    send("api_#{identifier}_path", *options)
   end
 
-  def api_resource_path(record)
+  def api_resource_path(record, *options)
     identifier = api_identifier_by_class(record.class).to_s.singularize
-    send("api_#{identifier}_path", nil, record.id)
+    send("api_#{identifier}_path", nil, record.id, *options)
   end
 
   def api_identifier_by_class(klass)

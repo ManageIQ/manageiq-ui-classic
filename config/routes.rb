@@ -108,7 +108,6 @@ Rails.application.routes.draw do
 
   snap_post = %w(
     snap_pressed
-    snap_vm
   )
 
   x_post = %w(
