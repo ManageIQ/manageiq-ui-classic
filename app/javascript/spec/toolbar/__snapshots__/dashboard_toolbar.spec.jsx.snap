@@ -23,148 +23,101 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
     <div
       className="miq-toolbar-group form-group"
     >
-      <ForwardRef
+      <ForwardRef(OverflowMenu)
+        ariaLabel="Add a widget"
         disabled={false}
+        floatingmenu="true"
         id="dropdown-custom-2"
+        menuOptionsClass="scrollable-options"
+        onClose={[Function]}
+        renderIcon={[Function]}
+        title="Add a widget"
       >
-        <Uncontrolled(Dropdown)
+        <OverflowMenu
+          ariaLabel="Add a widget"
+          direction="bottom"
           disabled={false}
+          flipped={false}
+          floatingmenu="true"
+          iconDescription="open and close list of options"
           id="dropdown-custom-2"
           innerRef={null}
+          light={false}
+          menuOffset={[Function]}
+          menuOffsetFlip={[Function]}
+          menuOptionsClass="scrollable-options"
+          onClick={[Function]}
+          onClose={[Function]}
+          onKeyDown={[Function]}
+          onOpen={[Function]}
+          open={false}
+          renderIcon={[Function]}
+          selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+          title="Add a widget"
         >
-          <Dropdown
-            bsClass="dropdown"
-            componentClass={[Function]}
-            disabled={false}
-            id="dropdown-custom-2"
-            onToggle={[Function]}
+          <ClickListener
+            onClickOutside={[Function]}
           >
-            <ButtonGroup
-              block={false}
-              bsClass="btn-group"
-              className="dropdown"
-              justified={false}
-              vertical={false}
+            <button
+              aria-expanded={false}
+              aria-haspopup={true}
+              aria-label="Add a widget"
+              className="bx--overflow-menu"
+              disabled={false}
+              floatingmenu="true"
+              id="dropdown-custom-2"
+              onClick={[Function]}
+              onClose={[Function]}
+              onKeyDown={[Function]}
+              open={false}
+              title="Add a widget"
+              type="button"
             >
-              <div
-                className="dropdown btn-group"
+              <renderIcon
+                aria-label="open and close list of options"
+                className="bx--overflow-menu__icon"
+                onClick={[Function]}
+                onKeyDown={[Function]}
               >
-                <DropdownToggle
-                  bsClass="dropdown-toggle"
-                  bsRole="toggle"
-                  disabled={false}
-                  id="dropdown-custom-2"
-                  key=".0"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  open={false}
-                  title="Add a widget"
-                  useAnchor={false}
+                <div
+                  className="toolbar-dashboard"
                 >
-                  <Button
-                    active={false}
-                    aria-expanded={false}
-                    aria-haspopup={true}
-                    block={false}
-                    bsClass="btn"
-                    bsStyle="default"
-                    className="dropdown-toggle"
-                    disabled={false}
-                    id="dropdown-custom-2"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    role="button"
-                    title="Add a widget"
-                  >
-                    <button
-                      aria-expanded={false}
-                      aria-haspopup={true}
-                      className="dropdown-toggle btn btn-default"
-                      disabled={false}
-                      id="dropdown-custom-2"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      role="button"
-                      title="Add a widget"
-                      type="button"
+                  <span>
+                    Add widget
+                  </span>
+                  <ForwardRef(ChevronDown20)>
+                    <Icon
+                      fill="currentColor"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <span
-                        className="fa fa-plus fa-lg"
-                      />
-                       
-                      <span
-                        className="caret"
-                      />
-                    </button>
-                  </Button>
-                </DropdownToggle>
-                <DropdownMenu
-                  bsClass="dropdown-menu"
-                  bsRole="menu"
-                  className="scrollable-menu"
-                  key=".1"
-                  labelledBy="dropdown-custom-2"
-                  onClose={[Function]}
-                  onSelect={[Function]}
-                  pullRight={false}
-                >
-                  <RootCloseWrapper
-                    disabled={true}
-                    event="click"
-                    onRootClose={[Function]}
-                  >
-                    <ul
-                      aria-labelledby="dropdown-custom-2"
-                      className="scrollable-menu dropdown-menu"
-                      role="menu"
-                    >
-                      <MenuItem
-                        bsClass="dropdown"
-                        disabled={false}
-                        divider={false}
-                        header={false}
-                        key=".$31"
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        onSelect={[Function]}
+                      <svg
+                        aria-hidden={true}
+                        fill="currentColor"
+                        focusable="false"
+                        height={20}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <li
-                          className=""
-                          role="presentation"
-                        >
-                          <SafeAnchor
-                            componentClass="a"
-                            onClick={[Function]}
-                            onKeyDown={[Function]}
-                            role="menuitem"
-                            tabIndex="-1"
-                          >
-                            <a
-                              href="#"
-                              onClick={[Function]}
-                              onKeyDown={[Function]}
-                              role="menuitem"
-                              tabIndex="-1"
-                            >
-                              <i
-                                className="fa fa-pie-chart fa-lg"
-                              />
-                               
-                              add
-                            </a>
-                          </SafeAnchor>
-                        </li>
-                      </MenuItem>
-                    </ul>
-                  </RootCloseWrapper>
-                </DropdownMenu>
-              </div>
-            </ButtonGroup>
-          </Dropdown>
-        </Uncontrolled(Dropdown)>
-      </ForwardRef>
+                        <path
+                          d="M16 22L6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                        />
+                      </svg>
+                    </Icon>
+                  </ForwardRef(ChevronDown20)>
+                </div>
+              </renderIcon>
+            </button>
+          </ClickListener>
+        </OverflowMenu>
+      </ForwardRef(OverflowMenu)>
       <button
-        className="btn btn-default"
+        className="btn btn-default refresh_button"
         onClick={[Function]}
         title="Reset Dashboard Widgets to the defaults"
         type="button"
