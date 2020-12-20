@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Physical Storage Consumers
+title: Host Initiators
 
 # Menu name
-name: PhysicalStorageConsumer
+name: HostInitiator
 
 # Main DB table report is based on
-db: PhysicalStorageConsumer
+db: HostInitiator
 include:
   ext_management_system:
     columns:

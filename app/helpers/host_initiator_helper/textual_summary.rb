@@ -1,4 +1,4 @@
-module PhysicalStorageConsumerHelper::TextualSummary
+module HostInitiatorHelper::TextualSummary
   include TextualMixins::TextualGroupTags
 
   #
@@ -19,22 +19,22 @@ module PhysicalStorageConsumerHelper::TextualSummary
   def textual_group_relationships
   end
 
-  def textual_group_addresses
-    addresses_values = []
+  def textual_group_san_addresses
+    san_addresses_values = []
 
-    addresses = Address.where(physical_storage_consumer_id: @record.id)
-    addresses.each do |address|
-      if defined?(address.port.iqn) && address.port.iqn
-        addresses_values << [_("iqn"), address.port.iqn]
-      elsif defined?(address.port.wwpn) && address.port.wwpn
-        addresses_values << [_("wwpn"), address.port.wwpn]
+    san_addresses = SanAddress.where(owner_id: @record.id)
+    san_addresses.each do |san_address|
+      if defined?(san_address.port.iqn) && san_address.port.iqn
+        san_addresses_values << [_("iqn"), san_address.port.iqn]
+      elsif defined?(address.port.wwpn) && san_address.port.wwpn
+        san_addresses_values << [_("wwpn"), san_address.port.wwpn]
       end
     end
 
     TextualMultilabel.new(
-      _("Addresses"),
+      _("SAN Addresses"),
       :labels => [_("Type"), _("Value")],
-      :values => addresses_values
+      :values => san_addresses_values
     )
   end
 

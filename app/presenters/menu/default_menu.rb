@@ -186,6 +186,11 @@ module Menu
                                            'cloud_volume_type',
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
+                            Menu::Item.new('host_initiator',
+                                           N_('Host Initiator'),
+                                           'host_initiator',
+                                           {:feature => 'host_initiator_show_list'},
+                                           '/host_initiator/show_list'),
                             Menu::Item.new('physical_storage',
                                            N_('Storages'),
                                            'physical_storage',
@@ -196,11 +201,6 @@ module Menu
                                            'storage_resource',
                                            {:feature => 'storage_resource_show_list'},
                                            '/storage_resource/show_list'),
-                            Menu::Item.new('physical_storage_consumer',
-                                           N_('Storage Consumers'),
-                                           'physical_storage_consumer',
-                                           {:feature => 'physical_storage_consumer_show_list'},
-                                           '/physical_storage_consumer/show_list'),
                           ])
       end
 

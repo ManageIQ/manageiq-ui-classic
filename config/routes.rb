@@ -2385,7 +2385,7 @@ Rails.application.routes.draw do
         save_post
     },
 
-    :physical_storage_consumer   => {
+    :host_initiator   => {
       :get  => %w[
         download_data
         download_summary_pdf

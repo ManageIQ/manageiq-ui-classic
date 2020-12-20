@@ -1,4 +1,4 @@
-class PhysicalStorageConsumerController < ApplicationController
+class  HostInitiatorController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
@@ -22,12 +22,12 @@ class PhysicalStorageConsumerController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties relationships addresses], %i[tags]]
+    [%i[properties relationships san_addresses], %i[tags]]
   end
   helper_method :textual_group_list
 
   def get_session_data
-    @layout = "physical_storage_consumer"
+    @layout = " host_initiator"
   end
 
   def set_session_data
@@ -39,11 +39,11 @@ class PhysicalStorageConsumerController < ApplicationController
       :breadcrumbs => [
         {:title => _("Storage")},
         {:title => _("Block Storage")},
-        {:title => _("Storage Consumers"), :url => controller_url},
+        {:title => _("Host Initiators"), :url => controller_url},
       ],
     }
   end
 
   # needed to highlight the selected menu section
-  menu_section "physical_storage_consumer"
+  menu_section " host_initiator"
 end

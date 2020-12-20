@@ -98,6 +98,7 @@ module Mixins
           flavors
           floating_ips
           host_aggregates
+          host_initiators
           hosts
           images
           instances
@@ -120,7 +121,6 @@ module Mixins
           security_policy_rules
           storage_managers
           storage_resources
-          physical_storage_consumer
           storages
           vms
         ]
