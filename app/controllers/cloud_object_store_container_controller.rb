@@ -113,6 +113,12 @@ class CloudObjectStoreContainerController < ApplicationController
       # Get the storage manager.
       storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
       options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
+    when "ManageIQ::Providers::StorageManager::SwiftManager"
+      storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
+      options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
+      tenant_id = options[:ems][:tenant_id]
+      cloud_tenant = find_record_with_rbac(CloudTenant, tenant_id)
+      options[:cloud_tenant] = cloud_tenant
     end
     options
   end
