@@ -24,10 +24,10 @@ module HostInitiatorHelper::TextualSummary
 
     san_addresses = SanAddress.where(owner_id: @record.id)
     san_addresses.each do |san_address|
-      if defined?(san_address.port.iqn) && san_address.port.iqn
-        san_addresses_values << [_("iqn"), san_address.port.iqn]
-      elsif defined?(address.port.wwpn) && san_address.port.wwpn
-        san_addresses_values << [_("wwpn"), san_address.port.wwpn]
+      if san_address.iqn
+        san_addresses_values << [_("iqn"), san_address.iqn]
+      elsif san_address.wwpn
+        san_addresses_values << [_("wwpn"), san_address.wwpn]
       end
     end
 
