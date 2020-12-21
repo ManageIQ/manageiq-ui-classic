@@ -15,6 +15,7 @@ describe EmsStorageHelper::TextualSummary do
       cloud_object_store_containers
       custom_button_events
       host_initiators
+      volume_mappings
       physical_storages
       storage_resources
     ]
@@ -38,6 +39,7 @@ describe EmsStorageHelper::TextualSummary do
       cloud_object_store_containers
       custom_button_events
       host_initiators
+      volume_mappings
       physical_storages
       storage_resources
       cloud_volume_types
