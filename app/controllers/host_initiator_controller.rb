@@ -27,7 +27,7 @@ class  HostInitiatorController < ApplicationController
   helper_method :textual_group_list
 
   def get_session_data
-    @layout = " host_initiator"
+    @layout = "host_initiator"
   end
 
   def set_session_data
