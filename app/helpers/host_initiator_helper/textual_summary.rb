@@ -16,19 +16,11 @@ module HostInitiatorHelper::TextualSummary
     )
   end
 
-  def textual_group_relationships
-  end
-
   def textual_group_san_addresses
     san_addresses_values = []
 
-    san_addresses = SanAddress.where(owner_id: @record.id)
-    san_addresses.each do |san_address|
-      if san_address.iqn
-        san_addresses_values << [_("iqn"), san_address.iqn]
-      elsif san_address.wwpn
-        san_addresses_values << [_("wwpn"), san_address.wwpn]
-      end
+    @record.san_addresses.each do |san_address|
+      san_addresses_values << san_address.get_address_info
     end
 
     TextualMultilabel.new(
@@ -51,8 +43,6 @@ module HostInitiatorHelper::TextualSummary
   end
 
   def textual_physical_storage
-    storage_id = @record.physical_storage_id
-    return nil if storage_id.nil?
-    textual_link(PhysicalStorage.find(storage_id))
+    textual_link(@record.physical_storage)
   end
 end

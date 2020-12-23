@@ -22,13 +22,9 @@ class  HostInitiatorController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties relationships san_addresses], %i[tags]]
+    [%i[properties san_addresses], %i[tags]]
   end
   helper_method :textual_group_list
-
-  def get_session_data
-    @layout = "host_initiator"
-  end
 
   def set_session_data
     session[:layout] = @layout
