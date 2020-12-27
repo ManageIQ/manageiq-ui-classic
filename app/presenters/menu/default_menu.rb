@@ -222,7 +222,7 @@ module Menu
 
       def control_menu_section
         Menu::Section.new(:con, N_("Control"), 'carbon--IbmSecurity', [
-          Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set/show_list'}, '/miq_policy_set/show_list'),
+          Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set_show_list'},     '/miq_policy_set/show_list'),
           Menu::Item.new('miq_policy',        N_('Policies'),        'miq_policy',           {:feature => 'miq_policy', :any => true},     '/miq_policy/explorer'),
           Menu::Item.new('miq_event',         N_('Events'),          'miq_event',            {:feature => 'miq_event', :any => true},      '/miq_event/explorer'),
           Menu::Item.new('condition',         N_('Conditions'),      'condition',            {:feature => 'condition', :any => true},      '/condition/explorer'),
