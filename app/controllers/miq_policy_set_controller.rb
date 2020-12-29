@@ -84,7 +84,6 @@ class MiqPolicySetController < ApplicationController
     add_flash(_("Policy Profile must contain at least one Policy"), :error) if @edit[:new][:policies].length.zero? # At least one member is required
 
     profile = params[:id].blank? ? MiqPolicySet.new : MiqPolicySet.find_by(:id => params[:id]) # Get new or existing record
-    p "XXXX #{@edit.inspect}"
     profile.description = @edit[:new][:description]
     profile.notes = @edit[:new][:notes]
     if profile.valid? && !@flash_array && profile.save

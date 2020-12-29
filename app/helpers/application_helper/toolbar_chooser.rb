@@ -468,7 +468,7 @@ class ApplicationHelper::ToolbarChooser
             container_build
             infra_networking
             infra_topology
-            ems_storagem
+            ems_storage
             container_topology
             cloud_topology
             orchestration_stack
