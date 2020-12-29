@@ -157,7 +157,7 @@ module Mixins
         return
       end
 
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         params[members_chosen].each do |mc|
           idx = nil
@@ -186,7 +186,7 @@ module Mixins
       end
 
       mems = @edit[choices].invert
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         params[choices_chosen].each do |mc|
           # Add selection to chosen members array, default to synch = true
@@ -208,7 +208,7 @@ module Mixins
         return
       end
 
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         @edit[:new][members].each do |m|
           # Put description/id of each chosen member back into choices hash

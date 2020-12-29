@@ -53,7 +53,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Policy\'s Condition assignments'),
           t,
-          :url_parms => "?typ=conditions",
+          :url       => "/miq_policy_edit_conditions",
           :klass     => ApplicationHelper::Button::PolicyEditConditions,
           :options   => {:feature => 'miq_policy_edit_conditions'}
         ),
@@ -62,9 +62,9 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Policy\'s Event assignments'),
           t,
-          :url_parms => "?typ=events",
+          :url       => "/miq_policy_edit_events",
           :klass     => ApplicationHelper::Button::PolicyEditEvents,
-          :options   => {:feature => 'miq_policy_edit'}
+          :options   => {:feature => 'miq_policy_edit_events'}
         ),
         button(
           :miq_event_edit,
@@ -72,7 +72,6 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           t = N_('Edit Actions for this Policy\'s Event'),
           t,
           :url          => "/miq_event_edit",
-          :url_parms    => "main_div",
           :send_checked => true,
           :klass        => ApplicationHelper::Button::MiqActionModify
         ),

@@ -23,7 +23,7 @@ module MiqPolicyController::Events
     id = params[:id] || "new"
     return unless load_edit("event_edit__#{id}")
 
-    @event = @edit[:event_id] ? MiqEventDefinition.find(@edit[:event_id]) : MiqEventDefinition.new
+    @event = @edit[:new][:event_id] ? MiqEventDefinition.find(@edit[:new][:event_id]) : MiqEventDefinition.new
     @policy = MiqPolicy.find_by(:id => @edit[:new][:policy_id])
 
     case params[:button]
@@ -65,36 +65,27 @@ module MiqPolicyController::Events
     end
   end
 
-  private
+  def event_build_action_values
+    # Reload @edit/vars for other buttons
+    id = params[:id] || "new"
+    return unless load_edit("event_edit__#{id}")
+    @edit[:new][:event_id] = params[:event_id] if params[:event_id]
+    get_event_actions
 
-  def event_build_edit_screen
-    @edit = {}
-    @edit[:new] = {}
-    @edit[:current] = {}
-
-    @policy = MiqPolicy.find_by(:id => params[:id]) # Get the policy above this event
-    @edit[:new][:policy_id] = @policy.id
-    @edit[:events] = []
-    event_definitions = @policy.miq_event_definitions
-    event_definitions.each do |ev|
-      @edit[:events].push([ev.description, ev.id])
-    end
-    @event = event_definitions.first if event_definitions.count == 1
-    @edit[:event_id] = @event.id if @event
-    @edit[:key] = "event_edit__#{@policy.id || "new"}"
-    @edit[:rec_id] = @policy.id || nil
-    event_build_action_values if @event
     @edit[:current] = copy_hash(@edit[:new])
-
-    @embedded = true
-    @in_a_form = true
-    @edit[:current][:add] = true if @edit[:rec_id].nil? # Force changed to be true if adding a record
-    session[:changed] = (@edit[:new] != @edit[:current])
+    @changed = (@edit[:new] != @edit[:current])
+    render :update do |page|
+      page << javascript_prologue
+      page.replace('event_edit_div', :partial => 'event_edit')
+      page << javascript_for_miq_button_visibility(@changed)
+      page << "miqSparkle(false);"
+    end
   end
 
-  def event_build_action_values
-    @edit[:event_id] = params[:event_id] if params[:event_id]
-    @event ||= MiqEventDefinition.find_by(:id => @edit[:event_id])
+  private
+
+  def get_event_actions
+    @event ||= MiqEventDefinition.find_by(:id => @edit[:new][:event_id])
     @edit[:new][:actions_true] = []
     @policy ||= MiqPolicy.find_by(:id => @edit[:new][:policy_id]) # Get the policy above this event
 
@@ -124,7 +115,30 @@ module MiqPolicyController::Events
     @edit[:new][:actions_false].each do |as|
       @edit[:choices_false].delete(as[0].slice(4..-1)) # Remove any choices already in the list (desc is first element, but has "(x) " in front)
     end
+  end
 
+  def event_build_edit_screen
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+
+    @policy = MiqPolicy.find_by(:id => params[:id]) # Get the policy above this event
+    @edit[:new][:policy_id] = @policy.id
+    @edit[:events] = []
+    event_definitions = @policy.miq_event_definitions
+    event_definitions.each do |ev|
+      @edit[:events].push([ev.description, ev.id])
+    end
+    @event = event_definitions.first if event_definitions.count == 1
+    @edit[:new][:event_id] = @event.id if @event
+    @edit[:key] = "event_edit__#{@policy.id || "new"}"
+    @edit[:rec_id] = @policy.id || nil
+    get_event_actions if @event
     @edit[:current] = copy_hash(@edit[:new])
+
+    @embedded = true
+    @in_a_form = true
+    @edit[:current][:add] = true if @edit[:rec_id].nil? # Force changed to be true if adding a record
+    session[:changed] = (@edit[:new] != @edit[:current])
   end
 end

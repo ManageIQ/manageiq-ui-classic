@@ -26,24 +26,30 @@
           %label.control-label.col-md-2
             = _("Applies To")
           .col-md-8
-            = select_tag('towhat',
-              options_for_select(MiqPolicy::TOWHAT_APPLIES_TO_CLASSES, @edit[:new][:towhat]),
-              :class => "selectpicker form-control")
+            - if @policy.id
+              = MiqPolicy::POLICY_TOWHAT_APPLIES_TO_CLASSES[@edit[:new][:towhat]]
+            - else
+              = select_tag('towhat',
+                options_for_select(MiqPolicy::POLICY_TOWHAT_APPLIES_TO_CLASSES.invert, @edit[:new][:towhat]),
+                :class => "selectpicker form-control")
 
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("towhat", "#{url}");
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent("towhat", "#{url}");
         .form-group
           %label.control-label.col-md-2
             = _("Mode")
           .col-md-8
-            = select_tag('mode',
-              options_for_select(MiqPolicy::POLICY_MODES, @edit[:new][:mode]),
-              :class => "selectpicker form-control")
+            - if @policy.id
+              = MiqPolicy::POLICY_MODES[@edit[:new][:mode]]
+            - else
+              = select_tag('mode',
+                options_for_select(MiqPolicy::POLICY_MODES.invert, MiqPolicy::POLICY_MODES[@edit[:new][:mode]]),
+                :class => "selectpicker form-control")
 
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("mode", "#{url}");
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent("mode", "#{url}");
 
       -# Scope
       %h3= _("Scope")

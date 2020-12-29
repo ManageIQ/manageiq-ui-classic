@@ -1,5 +1,5 @@
 #event_edit_div
-  - url = url_for_only_path(:action => 'miq_event_edit', :id => @policy.id)
+  - url = url_for_only_path(:action => 'event_build_action_values', :id => @policy.id)
   = render :partial => "layouts/flash_msg"
   %h3= _("Basic Information")
   .form-horizontal
@@ -20,7 +20,7 @@
           %p.form-control-static= h(@event.description)
         - else
           = select_tag('event_id',
-                        options_for_select([_("<Choose>"), ''] + @edit[:events], @edit[:new][:event_id]),
+                        options_for_select([["<#{_('Choose')}>", nil]] + @edit[:events], @edit[:new][:event_id]),
                         :class    => "selectpicker")
           :javascript
             miqInitSelectPicker();

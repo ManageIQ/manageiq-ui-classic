@@ -2076,6 +2076,8 @@ Rails.application.routes.draw do
         copy
         edit
         miq_event_edit
+        miq_policy_edit_conditions
+        miq_policy_edit_events
         new
         show
         show_list
@@ -2083,8 +2085,11 @@ Rails.application.routes.draw do
       :post => %w(
         delete
         edit
+        event_build_action_values
         miq_event_edit
         miq_policy_edit
+        miq_policy_edit_conditions
+        miq_policy_edit_events
         policy_field_changed
         quick_search
         reload
