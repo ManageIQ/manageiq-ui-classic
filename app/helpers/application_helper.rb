@@ -323,7 +323,7 @@ module ApplicationHelper
                  PxeImageType
                  IsoDatastore
                  CustomizationTemplate].include?(view.db) &&
-              %w[miq_action miq_alert miq_policy ops pxe report].include?(params[:controller])
+              %w[miq_action miq_policy ops pxe report].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         elsif %w[MiqPolicy].include?(view.db) && %w[miq_policy].include?(params[:controller])
           return "/#{params[:controller]}/x_show/?id=#{x_node}"

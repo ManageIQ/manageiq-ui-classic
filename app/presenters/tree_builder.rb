@@ -391,8 +391,7 @@ class TreeBuilder
     :action                          => "TreeBuilderAction",
     ### Alert Profiles
     :alert_profile                   => "TreeBuilderAlertProfile",
-    ### Alerts
-    :alert                           => "TreeBuilderAlert",
+
 
     # Automation
     ## Ansible Tower
@@ -435,7 +434,6 @@ class TreeBuilder
     "aei"  => "MiqAeInstance",
     "aem"  => "MiqAeMethod",
     "aen"  => "MiqAeNamespace",
-    "al"   => "MiqAlert",
     "ap"   => "MiqAlertSet",
     "asr"  => "AssignedServerRole",
     "az"   => "AvailabilityZone",
