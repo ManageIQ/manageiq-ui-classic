@@ -23,6 +23,7 @@ module ApplicationHelper::PageLayouts
       cloud_topology
       diagnostics
       exception
+      miq_action
       miq_ae_automate_button
       miq_ae_customization
       miq_ae_export
