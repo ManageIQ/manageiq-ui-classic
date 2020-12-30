@@ -1,16 +1,31 @@
 describe MiqAlertController do
-  context "alert edit" do
+  before { stub_user(:features => :all) }
+
+  describe "#show_list" do
+    render_views
+
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
+  end
+
+  describe "#edit" do
     before do
       login_as user_with_feature(%w[miq_alert miq_alert_edit miq_alert_profile_new])
       @miq_alert = FactoryBot.create(:miq_alert)
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
-                                       :active_tree => :alert_tree)
+      controller.instance_variable_set(:@lastaction, "show")
+    end
+
+    it "first time in" do
+      controller.edit
+      expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     describe "#alert_build_edit_screen" do
       it "it should skip id when copying all attributes of an existing alert" do
-        controller.params = {:id => @miq_alert.id, :copy => "copy"}
+        controller.params = {:id => @miq_alert.id, :action => "copy"}
         controller.send(:alert_build_edit_screen)
         expect(assigns(:alert).id).to eq(nil)
       end
@@ -54,19 +69,21 @@ describe MiqAlertController do
       end
     end
 
-    describe "#alert_edit_cancel" do
-      before { allow(controller).to receive(:replace_right_cell).and_return(true) }
-
+    describe "#edit" do
       it "it should correctly cancel edit screen of existing alert" do
-        session[:edit] = {:alert_id => @miq_alert.id}
-        controller.send(:alert_edit_cancel)
-        expect(assigns(:flash_array).first[:message]).to match(/Edit of Alert \".+\" was cancelled/)
+        controller.params = {:button => "cancel", :id => @miq_alert.id}
+        expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                                 :flash_msg => _("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @miq_alert.name},
+                                                                 :id        => @miq_alert.id)
+        controller.send(:edit)
       end
 
       it "it should correctly cancel edit screen of new alert" do
-        session[:edit] = {:alert_id => nil}
-        controller.send(:alert_edit_cancel)
-        expect(assigns(:flash_array).first[:message]).to include('Add of new Alert was cancelled')
+        controller.params = {:button => "cancel"}
+        expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                                 :flash_msg => _("Add of new Alert was cancelled by the user"),
+                                                                 :id        => nil)
+        controller.send(:edit)
       end
     end
   end
@@ -77,33 +94,23 @@ describe MiqAlertController do
       login_as FactoryBot.create(:user, :features => %w[alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
       # login_as FactoryBot.create(:user, :features => "alert_admin")
       @miq_alert = FactoryBot.create(:miq_alert)
-      allow(controller).to receive(:x_active_tree).and_return(:alert_tree)
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
-                                       :active_tree => :alert_tree)
     end
 
     let(:alert) { FactoryBot.create(:miq_alert, :read_only => false) }
 
     it "alert edit" do
-      post :x_button, :params => {:pressed => 'miq_alert_edit', :id => alert.id}
+      post :edit, :params => {:id => alert.id}
       expect(response.status).to eq(200)
     end
 
     it "alert copy" do
-      post :x_button, :params => {:pressed => 'miq_alert_copy', :id => alert.id}
+      post :copy, :params => {:id => alert.id}
       expect(response.status).to eq(200)
     end
 
     it "alert new" do
-      post :x_button, :params => {:pressed => 'miq_alert_profile_new'}
+      post :new, :params => {:pressed => 'new'}
       expect(response.status).to eq(200)
-    end
-
-    it "tree select" do
-      post :tree_select, :params => {:id => "al-#{@miq_alert.id}"}
-      expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => 'miq_alert/_alert_details')
     end
   end
 

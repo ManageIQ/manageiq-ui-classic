@@ -2150,18 +2150,18 @@ Rails.application.routes.draw do
 
     :miq_alert => {
       :get  => %w(
-        explorer
+        copy
+        edit
+        new
+        show
+        show_list
       ),
       :post => %w(
         alert_field_changed
-        button
-        miq_alert_edit
-        reload
-        tree_autoload
-        tree_select
-      ) +
-        exp_post +
-        x_post
+        edit
+        show
+        show_list
+      )
     },
 
     :miq_alert_set  => {

@@ -1,5 +1,5 @@
 - if @edit
-  - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
+  - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.try(:id) || 'new'))
   - observe = {:url => url}.to_json
 #alert_details_div
   - if @alert
@@ -17,8 +17,8 @@
                 @edit[:new][:description],
                 :maxlength         => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
+                "data-miq_focus"   => true,
                 "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-              = javascript_tag(javascript_focus('description'))
         -# Enabled
         .form-group
           %label.control-label.col-md-2
@@ -284,25 +284,23 @@
           %hr
       -# Alert Profiles alert is assigned to
       - unless @edit
-        - if x_active_tree == :alert_tree
-          %tr
-            %td
-              %h3= _('Belongs to Alert Profiles')
-              - if @alert_profiles.empty?
-                = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not assigned to any Alert Profiles.")}
-              - else
-                %table
-                  %tbody
-                    - @alert_profiles.each do |ap|
-                      - id = "xx-#{@alert.db}_ap-#{ap.id}"
-                      %tr
-                        %td
-                          %i.pficon.pficon-warning-triangle-o
-                        %td
-                          = ap.description
+        %tr
+          %td
+            %h3= _('Belongs to Alert Profiles')
+            - if @alert_profiles.empty?
+              = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not assigned to any Alert Profiles.")}
+            - else
+              %table
+                %tbody
+                  - @alert_profiles.each do |ap|
+                    %tr
+                      %td
+                        %i.pficon.pficon-warning-triangle-o
+                      %td
+                        = ap.description
       -# Show any owning actions
       - unless @edit
-        - if x_active_tree == :alert_tree && !@alert.owning_miq_actions.empty?
+        - unless @alert.owning_miq_actions.empty?
           %tr
             %td
               %h3= _('Referenced by Actions')
@@ -319,3 +317,23 @@
                         %td.table-view-pf-select
                           = oa.description
               %hr
+  - if @edit
+    - unless @edit[:rec_id]
+      %table{:width => "100%"}
+        %tr
+          %td{:align => 'right'}
+            = button_tag(t = _("Add"),
+                           :class   => 'btn btn-primary',
+                           :alt     => t,
+                           :title   => t,
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                                 :button => "add")}');")
+            = button_tag(t = _("Cancel"),
+                           :class   => 'btn btn-default',
+                           :alt     => t,
+                           :title   => t,
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                                 :button => "cancel")}');")
+    -	else
+      = render :partial => '/layouts/edit_form_buttons',
+               :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}

@@ -11,15 +11,15 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Alert'),
           t,
-          :url_parms    => "main_div",
+          :url          => "/edit",
           :send_checked => true),
         button(
           :miq_alert_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this Alert'),
           t,
-          :confirm   => N_("Are you sure you want to copy this Alert?"),
-          :url_parms => "?copy=true"),
+          :confirm => N_("Are you sure you want to copy this Alert?"),
+          :url     => "/copy"),
         button(
           :miq_alert_delete,
           'pficon pficon-delete fa-lg',
