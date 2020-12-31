@@ -36,3 +36,24 @@
       = _('Selections')
     - if @assign[:obj_tree]
       = render(:partial => 'shared/tree', :locals => {:tree => @assign[:obj_tree], :name => @assign[:obj_tree].name})
+
+  - if @assign
+    - unless @assign[:rec_id]
+      %table{:width => "100%"}
+        %tr
+          %td{:align => 'right'}
+            = button_tag(t = _("Add"),
+                           :class   => 'btn btn-primary',
+                           :alt     => t,
+                           :title   => t,
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit_assignment',
+                                                                 :button => "add")}');")
+            = button_tag(t = _("Cancel"),
+                           :class   => 'btn btn-default',
+                           :alt     => t,
+                           :title   => t,
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit_assignment',
+                                                                 :button => "cancel")}');")
+    -	else
+      = render :partial => '/layouts/edit_form_buttons',
+               :locals  => {:action_url => "edit_assignment", :record_id => @assign[:rec_id], :ajax_buttons => true}

@@ -35,6 +35,9 @@ module Mixins
             page.replace("alert_profile_assign_div", :partial => "alert_profile_assign")
           end
         end
+        if params[:mode]
+          page.replace("alert_profile_details_div", :partial => "alert_profile_details")
+        end
         page << javascript_for_miq_button_visibility_changed(@changed)
         page << "miqSparkle(false);"
       end
