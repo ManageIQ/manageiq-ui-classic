@@ -3,9 +3,9 @@ require 'routing/shared_examples'
 describe 'routes for MiqAlertSetController' do
   let(:controller_name) { 'miq_alert_set' }
 
-  describe '#miq_alert_set_assign' do
+  describe '#edit_assignment' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/miq_alert_set_assign")).to route_to("#{controller_name}#miq_alert_set_assign")
+      expect(post("/#{controller_name}/edit_assignment")).to route_to("#{controller_name}#edit_assignment")
     end
   end
 
@@ -17,9 +17,23 @@ describe 'routes for MiqAlertSetController' do
     end
   end
 
-  describe '#miq_alert_set_edit' do
+  describe '#edit' do
+    it 'routes with GET' do
+      expect(get("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
+    end
+
     it 'routes with POST' do
-      expect(post("/#{controller_name}/miq_alert_set_edit")).to route_to("#{controller_name}#miq_alert_set_edit")
+      expect(post("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
+    end
+  end
+
+  describe '#new' do
+    it 'routes with GET' do
+      expect(get("/#{controller_name}/new")).to route_to("#{controller_name}#new")
+    end
+
+    it 'routes with POST' do
+      expect(post("/#{controller_name}/new")).to route_to("#{controller_name}#new")
     end
   end
 
@@ -31,21 +45,23 @@ describe 'routes for MiqAlertSetController' do
     end
   end
 
-  describe '#x_button' do
+  describe '#show_list' do
+    it 'routes with GET' do
+      expect(get("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
+    end
+
     it 'routes with POST' do
-      expect(post("/#{controller_name}/x_button")).to route_to("#{controller_name}#x_button")
+      expect(post("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
   end
 
-  describe '#x_history' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/x_history")).to route_to("#{controller_name}#x_history")
+  describe '#show' do
+    it 'routes with GET' do
+      expect(get("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
-  end
 
-  describe '#x_show' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/x_show")).to route_to("#{controller_name}#x_show")
+      expect(post("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
   end
 end
