@@ -2195,18 +2195,23 @@ Rails.application.routes.draw do
 
     :condition => {
       :get  => %w(
-        explorer
+        copy
+        copy_to_policy
+        condition_remove
+        edit
+        new
+        show
+        show_list
       ),
       :post => %w(
         condition_edit
         condition_field_changed
-        reload
-        tree_autoload
-        tree_select
+        edit
+        show
+        show_list
       ) +
           adv_search_post +
-          exp_post +
-          x_post
+          exp_post
     },
 
     :miq_request              => {

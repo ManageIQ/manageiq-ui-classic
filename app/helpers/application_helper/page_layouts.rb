@@ -13,6 +13,7 @@ module ApplicationHelper::PageLayouts
       chargeback_assignment
       chargeback_rate
       chargeback_report
+      condition
       configuration
       container_dashboard
       container_topology
