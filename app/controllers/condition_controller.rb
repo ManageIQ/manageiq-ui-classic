@@ -56,7 +56,7 @@ class ConditionController < ApplicationController
       end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = false
-      javascript_redirect(:action => @edit[:new][:copy] ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      javascript_redirect(:action => @condition.id ? @lastaction : "show_list", :id => params[:id], :flash_msg => flash_msg)
       return
     when "reset", nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
@@ -103,7 +103,7 @@ class ConditionController < ApplicationController
         end
         @edit = session[:edit] = nil # clean out the saved info
         session[:changed] = @changed = false
-        javascript_redirect(:action => @edit[:new][:copy] ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
+        javascript_redirect(:action => params[:button] == "add" ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
       else
         condition.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -120,6 +120,8 @@ class ConditionController < ApplicationController
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page.replace_html("condition_details_div", :partial => "condition_details") unless @flash_errors
+        page << javascript_for_miq_button_visibility(@changed)
+        page << "miqSparkle(false);"
       end
     end
   end
