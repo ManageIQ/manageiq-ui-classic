@@ -2196,8 +2196,6 @@ Rails.application.routes.draw do
     :condition => {
       :get  => %w(
         copy
-        copy_to_policy
-        condition_remove
         edit
         new
         show

@@ -26,7 +26,7 @@
         %label.control-label.col-md-2
           = _("Applies To")
         .col-md-8
-          - if @condition.id
+          - if @condition.id || @edit[:new][:copy]
             = Condition::TOWHAT_APPLIES_TO_CLASSES[@edit ? @edit[:new][:towhat] : @condition.towhat]
           - else
             = select_tag('towhat',

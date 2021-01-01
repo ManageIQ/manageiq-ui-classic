@@ -56,7 +56,7 @@ class ConditionController < ApplicationController
       end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = false
-      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      javascript_redirect(:action => @edit[:new][:copy] ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
       return
     when "reset", nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
@@ -103,7 +103,7 @@ class ConditionController < ApplicationController
         end
         @edit = session[:edit] = nil # clean out the saved info
         session[:changed] = @changed = false
-        javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+        javascript_redirect(:action => @edit[:new][:copy] ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
       else
         condition.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -164,9 +164,10 @@ class ConditionController < ApplicationController
     @edit[:new] = {}
     @edit[:current] = {}
 
-    if params[:copy] # If copying, create a new condition based on the original
+    if params[:action] == "copy" # If copying, create a new condition based on the original
       cond = Condition.find(params[:id])
       @condition = cond.dup.tap { |c| c.name = nil }
+      @edit[:new][:copy] = true
     else
       @condition = params[:id] && params[:typ] != "new" ? Condition.find(params[:id]) : Condition.new # Get existing or new record
     end
