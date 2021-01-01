@@ -21,16 +21,6 @@ class ApplicationHelper::Toolbar::ConditionCenter < ApplicationHelper::Toolbar::
           :url   => "/copy",
           :klass => ApplicationHelper::Button::Condition),
         button(
-          :condition_policy_copy,
-          'fa fa-files-o fa-lg',
-          t = proc do
-            _('Copy this Condition to a new Condition assigned to Policy [%{condition_policy_description}]') %
-              {:condition_policy_description => @condition_policy.try(:description)}
-          end,
-          t,
-          :url   => "/copy_to_policy",
-          :klass => ApplicationHelper::Button::ConditionPolicyCopy),
-        button(
           :condition_delete,
           'pficon pficon-delete fa-lg',
           t = proc do
@@ -44,21 +34,6 @@ class ApplicationHelper::Toolbar::ConditionCenter < ApplicationHelper::Toolbar::
                                          :component_name => 'RemoveGenericItemModal',
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description'}}),
-        button(
-          :condition_remove,
-          'pficon pficon-delete fa-lg',
-          t = proc do
-            _('Remove this Condition from Policy [%{condition_policy_description}]') %
-            {:condition_policy_description => @condition_policy.try(:description)}
-          end,
-          t,
-          :url     => "/condition_remove",
-          :klass   => ApplicationHelper::Button::ConditionPolicy,
-          :confirm => proc do
-                          _("Are you sure you want to remove this Condition from Policy [%{condition_policy_description}]?") %
-                          {:condition_policy_description => @condition_policy.try(:description)}
-                        end
-        ),
       ]),
     ])
 end
