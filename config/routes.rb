@@ -2180,8 +2180,7 @@ Rails.application.routes.draw do
         new
         show
         show_list
-      ) +
-        x_post
+      )
     },
 
     :miq_event_definition => {
