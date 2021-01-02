@@ -287,7 +287,7 @@
         %tr
           %td
             %h3= _('Belongs to Alert Profiles')
-            - if @alert_profiles.empty?
+            - if @alert_profiles.blank?
               = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not assigned to any Alert Profiles.")}
             - else
               %table
