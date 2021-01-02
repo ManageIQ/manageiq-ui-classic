@@ -2083,7 +2083,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        delete
         edit
         event_build_action_values
         miq_event_edit
