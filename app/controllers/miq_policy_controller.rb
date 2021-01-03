@@ -54,7 +54,7 @@ class MiqPolicyController < ApplicationController
   # Get information for a policy
   def show
     super
-    @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
+    @center_toolbar = "miq_policy"
     @record = @policy = MiqPolicy.find_by(:id => params[:id])
     @policy_conditions = @policy.conditions
     @policy_events = @policy.miq_event_definitions
@@ -105,6 +105,5 @@ class MiqPolicyController < ApplicationController
     {:title => _('Explorer')}
   end
 
-  toolbar :miq_policy, :miq_policies
   menu_section :con
 end

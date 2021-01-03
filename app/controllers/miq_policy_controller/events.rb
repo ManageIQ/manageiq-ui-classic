@@ -5,7 +5,7 @@ module MiqPolicyController::Events
     assert_privileges("miq_event_edit")
     case params[:button]
     when "cancel"
-      @sb[:action] = @edit = nil
+      @edit = nil
       flash_msg = _("Edit Event cancelled by user")
       session[:changed] = false
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -40,8 +40,9 @@ module MiqPolicyController::Events
       @policy.replace_actions_for_event(event, action_list)
       AuditEvent.success(build_saved_audit(event, @edit))
       flash_msg = _("Actions for Policy Event \"%{events}\" were saved") % {:events => event.description}
-      @sb[:action] = @edit = nil
+      @edit = nil
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      return
     when "true_right", "true_left", "true_allleft", "true_up", "true_down", "true_sync", "true_async"
       handle_selection_buttons(:actions_true, :members_chosen_true, :choices_true, :choices_chosen_true)
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
