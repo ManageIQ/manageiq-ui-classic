@@ -119,7 +119,7 @@ class ConditionController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("condition_details_div", :partial => "condition_details") unless @flash_errors
+        page.replace_html("form_div", :partial => "form") unless @flash_errors
         page << javascript_for_miq_button_visibility(@changed)
         page << "miqSparkle(false);"
       end

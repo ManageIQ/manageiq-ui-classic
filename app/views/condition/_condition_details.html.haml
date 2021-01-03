@@ -1,111 +1,80 @@
-- if @edit
-  - url = url_for_only_path(:action => 'condition_field_changed', :id => (@condition.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #condition_details_div
-  #condition_info_div
-    = render :partial => "layouts/flash_msg"
-    .form-horizontal
-      -# Don't show basic info box with description only unless in edit mode
-      %h3= _("Basic Information")
-      .form-horizontal
-        .form-group
-          %label.control-label.col-md-2
-            = _("Description")
-          .col-md-8
-            - if @edit
-              = text_field_tag("description", @edit[:new][:description],
-                :maxlength         => ViewHelper::MAX_DESC_LEN,
-                "data-miq_observe" => observe_with_interval,
-                "data-miq_focus"   => true,
-                :class             => "form-control")
-            - else
-              %p.form-control-static
-                = h(@condition.description)
+  = render :partial => "layouts/flash_msg"
+  .form-horizontal
+    -# Don't show basic info box with description only unless in edit mode
+    %h3= _("Basic Information")
     .form-horizontal
       .form-group
         %label.control-label.col-md-2
-          = _("Applies To")
+          = _("Description")
         .col-md-8
-          - if @condition.id || @edit[:new][:copy]
-            = Condition::TOWHAT_APPLIES_TO_CLASSES[@edit ? @edit[:new][:towhat] : @condition.towhat]
-          - else
-            = select_tag('towhat',
-                  options_for_select([[_("<Choose>"), nil]] + Array(Condition::TOWHAT_APPLIES_TO_CLASSES.invert), @edit[:new][:towhat]),
-                  :class => "selectpicker form-control")
+          %p.form-control-static
+            = h(@condition.description)
 
-            :javascript
-                  miqInitSelectPicker();
-                  miqSelectPickerEvent("towhat", "#{url}");
-      - if @edit
-        %h3= _("Scope")
-        .form-horizontal
-          .form-group
-            %label.control-label.col-md-2
-            .col-md-8
-              = render :partial => "form_scope"
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2
+        = _("Applies To")
+      .col-md-8
+        = Condition::TOWHAT_APPLIES_TO_CLASSES[@edit ? @edit[:new][:towhat] : @condition.towhat]
+
+    %h3= _("Scope")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+          = _("Description")
+        .col-md-8
+          - if !@applies_to_exp_table.nil?
+            - @applies_to_exp_table.each do |token|
+              - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+                = h([token].flatten.first)
+              - else
+                %font{:color => "black"}
+                  %b
+                    = h([token].flatten.first)
+          - else
+            = render :partial => 'layouts/info_msg', :locals => {:message => _("No scope defined, the scope of this condition includes all elements.")}
+    %hr
+
+    %h3= _("Expression")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+          - if !@expression_table.nil?
+            - @expression_table.each do |token|
+              - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+                = h([token].flatten.first)
+              - else
+                %font{:color => "black"}
+                  %b
+                    = h([token].flatten.first)
+          - else
+            = render :partial => 'layouts/info_msg', :locals => {:message => _("A condition must contain a valid expression.")}
+    %hr
+
+    -# Notes field
+    %h3= _("Notes")
+    .form-horizontal
+      - if @condition.notes.blank?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
       - else
-        %h3= _("Scope")
-        .form-horizontal
-          .form-group
-            %label.control-label.col-md-2
-              = _("Description")
-            .col-md-8
-              - if !@applies_to_exp_table.nil?
-                - @applies_to_exp_table.each do |token|
-                  - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                    = h([token].flatten.first)
-                  - else
-                    %font{:color => "black"}
-                      %b
-                        = h([token].flatten.first)
-              - else
-                = render :partial => 'layouts/info_msg', :locals => {:message => _("No scope defined, the scope of this condition includes all elements.")}
-      %hr
+        = text_area_tag("notes", @condition.notes, :readonly => true, :rows => 5)
+        %hr
 
-      %h3= _("Expression")
-      .form-horizontal
-        .form-group
-          %label.control-label.col-md-2
-          .col-md-8
-            - if @edit && @edit[:new][:towhat]
-              = render :partial => "form_expression"
-            - else
-              - if !@expression_table.nil?
-                - @expression_table.each do |token|
-                  - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                    = h([token].flatten.first)
-                  - else
-                    %font{:color => "black"}
-                      %b
-                        = h([token].flatten.first)
-              - else
-                = render :partial => 'layouts/info_msg', :locals => {:message => _("A condition must contain a valid expression.")}
-      %hr
-
-
-      -# Notes field
-      %h3= _("Notes")
-      .form-horizontal
-        - if @edit
-          .form-group
-            %label.control-label.col-md-2
-            .col-md-8
-              (
-              %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
-              \/ 512)
-              = text_area_tag("notes", @edit[:new][:notes],
-                :rows                       => 4,
-                :maxlength                  => "512",
-                :counter                    => "notes_count",
-                "data-miq_check_max_length" => true,
-                "data-miq_observe"          => observe_with_interval)
-        - else
-          - if @condition.notes.blank?
-            = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-          - else
-            = text_area_tag("notes", @condition.notes, :readonly => true, :rows => 5)
-          %hr
-
+      %h3= _("Assigned to Policies")
+      - if @condition_policies.empty?
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("This Condition is not assigned to any Policies.")}
+      - else
+        %table.table.table-striped.table-bordered.table-hover
+          %tbody
+            - @condition_policies.each do |p|
+              - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
+              %tr{:title => _("Click to view Policy")}
+                %td.table-view-pf-select
+                  %i{:class => p.decorate.fonticon}
+                %td
+                  = p.description
         - if !@edit
           %h3= _("Assigned to Policies")
           - if @condition_policies.empty?
@@ -120,23 +89,3 @@
                       %i{:class => p.decorate.fonticon}
                     %td
                       = p.description
-  - if @edit
-    - unless @edit[:rec_id]
-      %table{:width => "100%"}
-        %tr
-          %td{:align => 'right'}
-            = button_tag(t = _("Add"),
-                           :class   => 'btn btn-primary',
-                           :alt     => t,
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
-                                                                 :button => "add")}');")
-            = button_tag(t = _("Cancel"),
-                           :class   => 'btn btn-default',
-                           :alt     => t,
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
-                                                                 :button => "cancel")}');")
-    -	else
-      = render :partial => '/layouts/edit_form_buttons',
-               :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}
