@@ -1,0 +1,49 @@
+#form_div
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Basic Information')
+  .form-horizontal
+    -# Don't show description unless in edit mode
+    - url = url_for_only_path(:action => 'action_field_changed', :id => (@edit[:rec_id] || 'new')) if @edit
+    .form-group
+      %label.col-md-2.control-label
+        = _('Description')
+      .col-md-8
+        = text_field_tag("description",
+          @edit[:new][:description],
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
+          :class             => "form-control",
+          "data-miq_focus"   => true,
+          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    .form-group
+      %label.col-md-2.control-label
+        = _('Action Type')
+      .col-md-8
+        = select_tag('miq_action_type',
+          options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.map { |k, v| [_(v), k] }.sort, @edit[:new][:action_type]),
+          :class => "selectpicker form-control")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
+  %hr
+    = render :partial => "action_options"
+  %hr
+  - unless @edit[:rec_id]
+    %table{:width => "100%"}
+      %tr
+        %td{:align => 'right'}
+          = button_tag(t = _("Add"),
+                         :class   => 'btn btn-primary',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "add")}');")
+          = button_tag(t = _("Cancel"),
+                         :class   => 'btn btn-default',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "cancel")}');")
+  -	else
+    = render :partial => '/layouts/edit_form_buttons',
+             :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}
