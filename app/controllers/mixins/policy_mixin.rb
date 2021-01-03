@@ -18,7 +18,7 @@ module Mixins
           if @action_type_changed || @snmp_trap_refresh
             page.replace("action_options_div", :partial => "action_options")
           elsif @alert_refresh
-            page.replace("alert_details_div",  :partial => "alert_details")
+            page.replace("form_div",  :partial => "form")
           elsif @to_email_refresh
             page.replace("edit_to_email_div",
                          :partial => "layouts/edit_to_email",
