@@ -1,182 +1,81 @@
-- if @edit
-  - url = url_for_only_path(:action => 'alert_profile_field_changed', :id => (@alert_profile.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #alert_profile_details_div
-  #alert_profile_info_div
-    = render :partial => "layouts/flash_msg"
-    %h3= _('Basic Information')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2= _("Description")
-        .col-md-8
-          - if @edit
-            = text_field_tag("description", @edit[:new][:description],
-              :maxlength         => ViewHelper::MAX_DESC_LEN,
-              "data-miq_observe" => observe_with_interval,
-              "data-miq_focus"   => true,
-              :class             => "form-control",
-              :style             => "overflow-x: scroll;")
-          - else
-            %p.form-control-static= h(@alert_profile.description)
+  = render :partial => "layouts/flash_msg"
+  %h3= _('Basic Information')
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2= _("Description")
+      .col-md-8
+        %p.form-control-static= h(@alert_profile.description)
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2
+        = _("Mode")
+      .col-md-8
+        = MiqAlertSet::ALERT_SET_MODES[@alert_profile.mode]
+
+  - unless @assign
+    %h3= _('Alerts')
+    - if @alert_profile_alerts.empty?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Alerts are defined.")}
+    - else
+      %table.table.table-striped.table-bordered.table-hover
+        %tbody
+          - @alert_profile_alerts.each do |a|
+            %tr
+              %td.table-view-pf-select
+                %i.pficon.pficon-warning-triangle-o
+              %td
+                = h(a.description)
+    %hr
+
+  -# Notes field
+  %h3
+    = _('Notes')
+  - if @alert_profile.notes.blank?
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
+  - else
+    = text_area_tag("notes", @alert_profile.notes, :readonly => true, :rows => 4)
+  %hr
+
+  -# Show assignments
+  %h3= _('Assigned To')
+  - aa = @alert_profile.get_assigned_tos
+  - if !aa[:objects].empty?
+    -# Objects are assigned
+    - if aa[:objects].first.kind_of?(MiqEnterprise)
+      -# Assigned to Enterprise object
+      = _('The Enterprise')
+    - else
+      -# Assigned to CIs
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+            = ui_lookup(:models => aa[:objects].first.class.to_s)
+          .col-md-8
+            %table
+              %tbody
+                - objs = []
+                - aa[:objects].each do |o|
+                  - if o.kind_of?(EmsFolder)
+                    - objs.push("#{o.ext_management_system.name}/#{o.folder_path(:exclude_root_folder => true, :exclude_non_display_folders => true)}")
+                  - elsif o.kind_of?(ResourcePool)
+                    - objs.push(o.absolute_path(:exclude_hidden => true))
+                  - else
+                    - objs.push(o.name)
+                - objs.sort_by(&:downcase).each do |obj|
+                  %tr
+                    %td
+                      = h(obj)
+  - elsif !aa[:tags].empty?
+    -# Tags are assigned
     .form-horizontal
       .form-group
         %label.control-label.col-md-2
-          = _("Mode")
+          = _("%{alert_profiles} with %{type} Tags") % {:alert_profiles => ui_lookup(:tables => aa[:tags].first.last), :type => @alert_profile_tag.description}
         .col-md-8
-          - if @alert_profile.id
-            = MiqAlertSet::ALERT_SET_MODES[@edit ? @edit[:new][:mode] : @alert_profile.mode]
-          - else
-            = select_tag('mode',
-              options_for_select([[_("<Choose>"), nil]] + Array(MiqAlertSet::ALERT_SET_MODES.invert), @edit[:new][:mode]),
-              :class => "selectpicker form-control")
-
-            :javascript
-              miqInitSelectPicker();
-              miqSelectPickerEvent("mode", "#{url}");
-    - if !(@edit || @assign)
-      %h3= _('Alerts')
-      - if @alert_profile_alerts.empty?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("No Alerts are defined.")}
-      - else
-        %table.table.table-striped.table-bordered.table-hover
-          %tbody
-            - @alert_profile_alerts.each do |a|
-              %tr
-                %td.table-view-pf-select
-                  %i.pficon.pficon-warning-triangle-o
-                %td
-                  = h(a.description)
-      %hr
-    - elsif @edit
-      %h3= _('Alert Selection')
-      .col-md-5
-        = _("Available %{model} Alerts:") % {:model => ui_lookup(:model => @edit[:new][:mode])}
-
-        %span#choices_chosen_div
-          = select_tag('choices_chosen[]', options_for_select(@edit[:choices].sort),
-            :multiple => true,
-            :size     => 15,
-            :class    => "form-control",
-            :style    => "overflow-x: scroll;",
-            :id       => "choices_chosen")
-
-      .col-md-1{:style => "padding: 10px"}
-        .spacer
-        .spacer
-        - [[_("Move selected Alerts into this Profile"),   'choices_chosen_div', 'move_right',   'fa-angle-right'],
-           [_("Remove all Alerts from this Profile"),      nil,                  'move_allleft', 'fa-angle-double-left'],
-           [_("Remove selected Alerts from this Profile"), 'members_chosen_div', 'move_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
-          %button.btn.btn-default.btn-block{:title => title,
-                                  :remote => true,
-                                  "data-submit" => chosen_div,
-                                  "data-method" => :post,
-                                  "data-miq_sparkle_on"  => true,
-                                  "data-miq_sparkle_off" => true,
-                                  "data-click_url" => {:url => url_for_only_path(:action => 'edit',
-                                                                       :button => action,
-                                                                       :id     => @alert_profile)}.to_json}
-            %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
-            %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
-
-        .spacer
-
-      .col-md-5
-        = _("Profile Alerts:")
-        %span#members_chosen_div
-          = select_tag('members_chosen[]', options_for_select(@edit[:new][:alerts].sort),
-            :multiple => true,
-            :size     => 15,
-            :class    => "form-control",
-            :id       => "members_chosen")
-
-
-    -# Notes field
-    - if @edit
-      .row
-        .col-md-12
-          %hr
-          %h3
-            = _("Notes")
-            (
-            %span#notes_count
-              = @edit[:new][:notes] ? @edit[:new][:notes].length : 0
-            \/ 512)
-          = text_area_tag("notes", @edit[:new][:notes],
-            :rows => 4,
-            :maxlength                  => "512",
-            :counter                    => "notes_count",
-            "data-miq_check_max_length" => true,
-            "data-miq_observe"          => observe_with_interval)
-          %hr
-    - else
-      %h3
-        = _('Notes')
-      - if @alert_profile.notes.blank?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-      - else
-        = text_area_tag("notes", @alert_profile.notes, :readonly => true, :rows => 4)
-      %hr
-
-    - unless @edit
-      -# Show assignments
-      %h3= _('Assigned To')
-      - aa = @alert_profile.get_assigned_tos
-      - if !aa[:objects].empty?
-        -# Objects are assigned
-        - if aa[:objects].first.kind_of?(MiqEnterprise)
-          -# Assigned to Enterprise object
-          = _('The Enterprise')
-        - else
-          -# Assigned to CIs
-          .form-horizontal
-            .form-group
-              %label.control-label.col-md-2
-                = ui_lookup(:models => aa[:objects].first.class.to_s)
-              .col-md-8
-                %table
-                  %tbody
-                    - objs = []
-                    - aa[:objects].each do |o|
-                      - if o.kind_of?(EmsFolder)
-                        - objs.push("#{o.ext_management_system.name}/#{o.folder_path(:exclude_root_folder => true, :exclude_non_display_folders => true)}")
-                      - elsif o.kind_of?(ResourcePool)
-                        - objs.push(o.absolute_path(:exclude_hidden => true))
-                      - else
-                        - objs.push(o.name)
-                    - objs.sort_by(&:downcase).each do |obj|
-                      %tr
-                        %td
-                          = h(obj)
-      - elsif !aa[:tags].empty?
-        -# Tags are assigned
-        .form-horizontal
-          .form-group
-            %label.control-label.col-md-2
-              = _("%{alert_profiles} with %{type} Tags") % {:alert_profiles => ui_lookup(:tables => aa[:tags].first.last), :type => @alert_profile_tag.description}
-            .col-md-8
-              - aa[:tags].sort_by { |a| a.first.description.downcase }.each do |tag|
-                = h(tag.first.description)
-                %br
-      - else
-        = _('Nothing')
-      %hr
-  - if @edit
-    - unless @edit[:rec_id]
-      %table{:width => "100%"}
-        %tr
-          %td{:align => 'right'}
-            = button_tag(t = _("Add"),
-                           :class   => 'btn btn-primary',
-                           :alt     => t,
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
-                                                                 :button => "add")}');")
-            = button_tag(t = _("Cancel"),
-                           :class   => 'btn btn-default',
-                           :alt     => t,
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
-                                                                 :button => "cancel")}');")
-    -	else
-      = render :partial => '/layouts/edit_form_buttons',
-               :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}
+          - aa[:tags].sort_by { |a| a.first.description.downcase }.each do |tag|
+            = h(tag.first.description)
+            %br
+  - else
+    = _('Nothing')
+  %hr
