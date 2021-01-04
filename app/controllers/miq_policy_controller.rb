@@ -380,6 +380,98 @@ class MiqPolicyController < ApplicationController
     @changed = session[:changed] if @edit # to get save/reset buttons to highlight when fields are moved left/right
 
     # Replace right side with based on selected tree node type
+    if @sb[:mode] == 'compliance'
+      case @sb[:nodeid]
+      when 'host'
+        summary = _("All Host Compliance Policies")
+        adding = _("Adding a new Host Compliance Policy")
+        editing = @edit ? _("Editing Host Compliance Policy \"%{name}\"") : _("Host Compliance Policy \"%{name}\"")
+      when 'vm'
+        summary = _("All VM and Instance Compliance Policies")
+        adding = _("Adding a new VM and Instance Compliance Policy")
+        editing = @edit ? _("Editing VM and Instance Compliance Policy \"%{name}\"") : _("VM and Instance Compliance Policy \"%{name}\"")
+      when 'containerReplicator'
+        summary = _("All Container Replicator Compliance Policies")
+        adding = _("Adding a new Container Replicator Compliance Policy")
+        editing = @edit ? _("Editing Container Replicator Compliance Policy \"%{name}\"") : _("Container Replicator Compliance Policy \"%{name}\"")
+      when 'containerGroup'
+        summary = _("All Container Pod Compliance Policies")
+        adding = _("Adding a new Container Pod Compliance Policy")
+        editing = @edit ? _("Editing Container Pod Compliance Policy \"%{name}\"") : _("Container Pod Compliance Policy \"%{name}\"")
+      when 'containerNode'
+        summary = _("All Container Node Compliance Policies")
+        adding = _("Adding a new Container Node Compliance Policy")
+        editing = @edit ? _("Editing Container Node Compliance Policy \"%{name}\"") : _("Container Node Compliance Policy \"%{name}\"")
+      when 'containerImage'
+        summary = _("All Container Image Compliance Policies")
+        adding = _("Adding a new Container Image Compliance Policy")
+        editing = @edit ? _("Editing Container Image Compliance Policy \"%{name}\"") : _("Container Image Compliance Policy \"%{name}\"")
+      when 'containerProject'
+        summary = _("All Container Project Compliance Policies")
+        adding = _("Adding a new Container Project Compliance Policy")
+        editing = @edit ? _("Editing Container Project Compliance Policy \"%{name}\"") : _("Container Project Compliance Policy \"%{name}\"")
+      when 'extManagementSystem'
+        summary = _("All Provider Compliance Policies")
+        adding = _("Adding a new Provider Compliance Policy")
+        editing = @edit ? _("Editing Provider Compliance Policy \"%{name}\"") : _("Provider Compliance Policy \"%{name}\"")
+      when 'physicalServer'
+        summary = _("All Physical Server Compliance Policies")
+        adding = _("Adding a new Physical Server Compliance Policy")
+        editing = @edit ? _("Editing Physical Server Compliance Policy \"%{name}\"") : _("Physical Server Compliance Policy \"%{name}\"")
+      else
+        summary = _("All %{model} Compliance Policies")
+        adding = _("Adding a new %{model} Compliance Policy")
+        editing = @edit ? _("Editing %{model} Compliance Policy \"%{name}\"") : _("%{model} Compliance Policy \"%{name}\"")
+      end
+    elsif @sb[:mode] == 'control'
+      case @sb[:nodeid]
+      when 'host'
+        summary = _("All Host Control Policies")
+        adding = _("Adding a new Host Control Policy")
+        editing = @edit ? _("Editing Host Control Policy \"%{name}\"") : _("Host Control Policy \"%{name}\"")
+      when 'vm'
+        summary = _("All VM and Instance Control Policies")
+        adding = _("Adding a new VM and Instance Control Policy")
+        editing = @edit ? _("Editing VM and Instance Control Policy \"%{name}\"") : _("VM and Instance Control Policy \"%{name}\"")
+      when 'containerReplicator'
+        summary = _("All Container Replicator Control Policies")
+        adding = _("Adding a new Container Replicator Control Policy")
+        editing = @edit ? _("Editing Container Replicator Control Policy \"%{name}\"") : _("Container Replicator Control Policy \"%{name}\"")
+      when 'containerGroup'
+        summary = _("All Container Pod Control Policies")
+        adding = _("Adding a new Container Pod Control Policy")
+        editing = @edit ? _("Editing Container Pod Control Policy \"%{name}\"") : _("Container Pod Control Policy \"%{name}\"")
+      when 'containerNode'
+        summary = _("All Container Node Control Policies")
+        adding = _("Adding a new Container Node Control Policy")
+        editing = @edit ? _("Editing Container Node Control Policy \"%{name}\"") : _("Container Node Control Policy \"%{name}\"")
+      when 'containerImage'
+        summary = _("All Container Image Control Policies")
+        adding = _("Adding a new Container Image Control Policy")
+        editing = @edit ? _("Editing Container Image Control Policy \"%{name}\"") : _("Container Image Control Policy \"%{name}\"")
+      when 'containerProject'
+        summary = _("All Container Project Control Policies")
+        adding = _("Adding a new Container Project Control Policy")
+        editing = @edit ? _("Editing Container Project Control Policy \"%{name}\"") : _("Container Project Control Policy \"%{name}\"")
+      when 'extManagementSystem'
+        summary = _("All Provider Control Policies")
+        adding = _("Adding a new Provider Control Policy")
+        editing = @edit ? _("Editing Provider Control Policy \"%{name}\"") : _("Provider Control Policy \"%{name}\"")
+      when 'physicalServer'
+        summary = _("All Physical Server Control Policies")
+        adding = _("Adding a new Physical Server Control Policy")
+        editing = @edit ? _("Editing Physical Server Control Policy \"%{name}\"") : _("Physical Server Control Policy \"%{name}\"")
+      else
+        summary = _("All %{model} Control Policies")
+        adding = _("Adding a new %{model} Control Policy")
+        editing = @edit ? _("Editing %{model} Control Policy \"%{name}\"") : _("%{model} Control Policy \"%{name}\"")
+      end
+    else
+      summary = _("All %{model} %{mode} Policies")
+      adding = _("Adding a new %{model} %{mode} Policy")
+      editing = @edit ? _("Editing %{model} %{mode} Policy \"%{name}\"") : _("%{model} %{mode} Policy \"%{name}\"")
+    end
+
     case nodetype
     when 'root'
       partial_name, model = ['policy_folders', _('Policies')]
@@ -390,7 +482,8 @@ class MiqPolicyController < ApplicationController
       presenter.update(
         :main_div,
         if @policies || (@view && @sb[:tree_typ] == 'policies')
-          right_cell_text = _("All %{typ} Policies") % {:typ => "#{ui_lookup(:model => @sb[:nodeid].try(:camelize))} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}"}
+          options = {:mode => @sb[:mode] ? _(@sb[:mode].capitalize) : "", :model => ui_lookup(:model => @sb[:nodeid].try(:camelize))}
+          right_cell_text = summary % options
           r[:partial => 'policy_list']
         elsif @folders
           mode = @sb[:folder]
@@ -407,18 +500,12 @@ class MiqPolicyController < ApplicationController
       right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && !@folders
     when 'p'
       presenter.update(:main_div, r[:partial => 'policy_details', :locals => {:read_only => true}])
-      model_name = ui_lookup(:model => @sb[:nodeid].try(:camelize))
       if @policy.id.blank?
-        right_cell_text = if @sb[:mode]
-                            _("Adding a new %{model_name} %{mode} Policy") %
-                              {:model_name => model_name, :mode => _(@sb[:mode].capitalize)}
-                          else
-                            _("Adding a new %{model_name} Policy") % {:model_name => model_name}
-                          end
+        options = {:mode => @sb[:mode] ? _(@sb[:mode].capitalize) : "", :model => ui_lookup(:model => @sb[:nodeid].try(:camelize))}
+        right_cell_text = adding % options
       else
-        options = {:model => "#{model_name} #{@sb[:mode] ? _(@sb[:mode].capitalize) : ""}",
-                   :name  => @policy.description}
-        right_cell_text = @edit ? _("Editing %{model} Policy \"%{name}\"") % options : _("%{model} Policy \"%{name}\"") % options
+        options = {:mode => @sb[:mode] ? _(@sb[:mode].capitalize) : "", :model => ui_lookup(:model => @sb[:nodeid].try(:camelize)), :name => @policy.description}
+        right_cell_text = editing % options
         if @edit && @edit[:typ] == 'conditions'
           right_cell_text += _(" Condition Assignments")
         end
