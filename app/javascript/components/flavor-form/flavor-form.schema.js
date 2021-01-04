@@ -1,163 +1,131 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-function addSchema(emsList = [], cloudTenants = []) {
-  const fields = [
+const providerUrl = '/api/providers?expand=resources&attributes=id,name,supports_create_flavor&filter[]=supports_create_flavor=true';
+
+const loadCloudTenants = (emsId) => API.get(`/api/providers/${emsId}/cloud_tenants?expand=resources&attributes=id,name`)
+  .then(({ resources }) => resources.map(({ id, name }) => ({ label: name, value: id })));
+
+const commonValidators = (min) => [
+  {
+    type: validatorTypes.REQUIRED,
+  },
+  {
+    type: validatorTypes.PATTERN,
+    pattern: '^[-+]?[0-9]\\d*$',
+    message: __('Must be an integer'),
+  },
+  {
+    type: validatorTypes.MIN_NUMBER_VALUE,
+    value: 1,
+    message: sprintf(__('Must be greater than or equal to %d'), min),
+  },
+];
+
+const createSchema = (emsId, setState) => ({
+  fields: [
     {
-      component: componentTypes.SELECT_COMPONENT,
-      name: 'ems_id',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-      }],
-      options: emsList.map(item => ({ label: item.name, value: item.id })),
+      component: componentTypes.SELECT,
+      id: 'emsId',
+      name: 'emsId',
       label: __('Provider'),
-      validateOnMount: true,
+      isRequired: true,
       isSearchable: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      loadOptions: () => API.get(providerUrl).then(({ resources }) => resources.map(({ id, name }) => ({ value: id, label: name }))),
+      onChange: (value) => setState((state) => ({ ...state, emsId: value })),
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      }],
+      validate: [{ type: validatorTypes.REQUIRED }],
       label: __('Name'),
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'ram',
       name: 'ram',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      },
-      {
-        type: validatorTypes.PATTERN_VALIDATOR,
-        pattern: '^[-+]?[0-9]\\d*$',
-        message: __('Ram must be integer'),
-      },
-      {
-        type: validatorTypes.MIN_NUMBER_VALUE,
-        value: 1,
-        message: __('Ram must be greater than 0'),
-      },
-      ],
-      label: __('Ram size in MB'),
+      label: __('RAM size (in MB)'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
+      validate: commonValidators(1),
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'vcpus',
       name: 'vcpus',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      },
-      {
-        type: validatorTypes.PATTERN_VALIDATOR,
-        pattern: '^[-+]?[0-9]\\d*$',
-        message: __('VCPUs must be integer'),
-      },
-      {
-        type: validatorTypes.MIN_NUMBER_VALUE,
-        value: 1,
-        message: __('VCPUs must be greater than 0'),
-      }],
       label: __('VCPUs'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
+      validate: commonValidators(1),
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'disk',
       name: 'disk',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      },
-      {
-        type: validatorTypes.PATTERN_VALIDATOR,
-        pattern: '^[-+]?[0-9]\\d*$',
-        message: __('Disk size must be integer'),
-      },
-      {
-        type: validatorTypes.MIN_NUMBER_VALUE,
-        value: 1,
-        message: __('Disk size must be greater than 0'),
-      }],
       label: __('Disk size in GB'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
+      validate: commonValidators(1),
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'swap',
       name: 'swap',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      },
-      {
-        type: validatorTypes.PATTERN_VALIDATOR,
-        pattern: '^[-+]?[0-9]\\d*$',
-        message: __('Swap size must be integer'),
-      },
-      {
-        type: validatorTypes.MIN_NUMBER_VALUE,
-        value: 0,
-        message: __('Swap size must be greater or equal to 0'),
-      }],
-      label: __('Swap size in MB'),
+      label: __('Swap size (in MB)'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
+      validate: commonValidators(0),
     },
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'rxtx_factor',
       name: 'rxtx_factor',
-      validate: [{
-        type: validatorTypes.REQUIRED,
-        message: __('Required'),
-      },
-      {
-        type: validatorTypes.PATTERN_VALIDATOR,
-        pattern: '^[-+]?[0-9]\\d*\\.?\\d*$',
-        message: __('RXTX factor must be number'),
-      },
-      {
-        type: validatorTypes.MIN_NUMBER_VALUE,
-        value: 0,
-        message: __('RXTX factor must be greater than or equal to 0'),
-      }],
       label: __('RXTX factor'),
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
+      initialValue: 1.0,
+      validate: commonValidators(0),
     },
     {
       component: componentTypes.SWITCH,
+      id: 'is_public',
       name: 'is_public',
-      label: __('Public?'),
-      assignFieldProvider: true,
-      bsSize: 'mini',
-      onText: __('True'),
-      offText: __('False'),
+      label: __('Public'),
+      onText: __('Yes'),
+      offText: __('No'),
+      initialValue: true,
     },
     {
-      component: componentTypes.SELECT_COMPONENT,
+      component: componentTypes.SELECT,
+      id: 'cloud_tenant_refs',
       name: 'cloud_tenant_refs',
-      options: cloudTenants.map(item => ({ label: item.name, value: item.ems_ref })),
-      label: __('Cloud Tenant'),
+      key: `cloud_tenant_refs-${emsId}`,
+      label: __('Cloud Tenants'),
+      loadOptions: () => (emsId ? loadCloudTenants(emsId) : Promise.resolve([])),
       placeholder: __('Nothing selected'),
-      multi: true,
-      condition: {
-        when: 'is_public',
-        is: false,
-      },
+      isMulti: true,
       isSearchable: true,
       isClearable: true,
+      condition: {
+        and: [
+          {
+            when: 'is_public',
+            is: false,
+          },
+          {
+            when: 'emsId',
+            isNotEmpty: true,
+          },
+        ],
+      },
     },
-  ];
-  return { fields };
-}
+  ],
+});
 
-export default addSchema;
+export default createSchema;

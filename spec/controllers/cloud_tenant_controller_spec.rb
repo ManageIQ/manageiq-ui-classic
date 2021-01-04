@@ -133,38 +133,6 @@ describe CloudTenantController do
     end
   end
 
-  describe "#create" do
-    let(:tenant) { FactoryBot.create(:cloud_tenant_openstack) }
-    let(:task_options) do
-      {
-        :action => "creating Cloud Tenant for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => CloudTenant.class_by_ems(ems).name,
-        :method_name => "create_cloud_tenant",
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => ems.my_zone,
-        :args        => [ems.id, {:name => "foo" }]
-      }
-    end
-
-    it "builds create screen" do
-      post :button, :params => { :pressed => "cloud_tenant_new", :format => :js }
-
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-
-      post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
-    end
-  end
-
   describe "#edit" do
     let(:task_options) do
       {
@@ -188,50 +156,6 @@ describe CloudTenantController do
       post :button, :params => { :pressed => "cloud_tenant_edit", :format => :js, :id => tenant.id }
 
       expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, a_hash_including(queue_options))
-
-      post :update, :params => { :button => "save", :format => :js, :id => tenant.id, :name => "foo" }
-    end
-  end
-
-  describe '#update' do
-    before do
-      allow(controller).to receive(:assert_privileges)
-      controller.params = {:button => 'cancel', :id => tenant.id}
-    end
-
-    it 'calls flash_and_redirect for canceling editing Cloud Tenant' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => tenant.name})
-      controller.send(:update)
-    end
-  end
-
-  describe '#update_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'ok', :message => 'some message') }
-
-    before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => tenant.name}})
-    end
-
-    it 'calls flash_and_redirect with appropriate arguments for succesful updating of a Cloud Tenant' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Cloud Tenant \"%{name}\" updated") % {:name => tenant.name})
-      controller.send(:update_finished)
-    end
-
-    context 'unsuccesful updating of a Cloud Tenant' do
-      let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'Error', :message => 'some message') }
-
-      it 'calls flash_and_redirect with appropriate arguments' do
-        expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Cloud Tenant \"%{name}\": %{details}") % {
-          :name    => tenant.name,
-          :details => miq_task.message
-        }, :error)
-        controller.send(:update_finished)
-      end
     end
   end
 

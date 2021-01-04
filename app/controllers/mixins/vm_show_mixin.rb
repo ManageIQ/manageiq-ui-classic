@@ -30,20 +30,27 @@ module VmShowMixin
 
     if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
       upload_sysprep_file
-      set_form_locals_for_sysprep
+      set_form_locals_for_file_upload
+    elsif params[:commit] == 'Upload Script'
+      upload_user_script
+      set_form_locals_for_file_upload
+    elsif params[:commit] == "Clear Script"
+      clear_user_script
+      set_form_locals_for_file_upload
     end
+
     if params[:id]
       # if you click on a link to VM on a dashboard widget that will redirect you
       # to explorer with params[:id] and you get into the true branch
       redirected = set_elements_and_redirect_unauthorized_user
     else
-      set_active_elements(allowed_features.first) unless @upload_sysprep_file
+      set_active_elements(allowed_features.first) unless @upload_sysprep_file || @upload_user_script
     end
 
     render :layout => "application" unless redirected
   end
 
-  def set_form_locals_for_sysprep
+  def set_form_locals_for_file_upload
     _partial, action, @right_cell_text = set_right_cell_vars
     locals = {:submit_button => true,
               :no_reset      => true,

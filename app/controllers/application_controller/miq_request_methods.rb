@@ -205,7 +205,6 @@ module ApplicationController::MiqRequestMethods
     end
   end
 
-  # Add/edit a provision request
   def prov_edit
     if params[:button] == "cancel"
       req = MiqRequest.find(session[:edit][:req_id]) if session[:edit] && session[:edit][:req_id]
@@ -227,6 +226,12 @@ module ApplicationController::MiqRequestMethods
       @layout = layout_from_tab_name(params[:org_controller])
       if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
         upload_sysprep_file
+        @tabactive = "customize"
+      elsif params[:commit] == 'Upload Script'
+        upload_user_script
+        @tabactive = "customize"
+      elsif params[:commit] == "Clear Script"
+        clear_user_script
         @tabactive = "customize"
       else
         if params[:req_id]
@@ -710,6 +715,13 @@ module ApplicationController::MiqRequestMethods
             else
               @edit[:new][f.to_sym] = []
               params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v.to_i) }
+            end
+          elsif f == "cloud_volumes"
+            if params[key] == ""
+              @edit[:new][f.to_sym] = [nil]
+            else
+              @edit[:new][f.to_sym] = []
+              params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v) }
             end
           else
             @edit[:new][f.to_sym] = [val, field[:values][val]] # Save [value, description]

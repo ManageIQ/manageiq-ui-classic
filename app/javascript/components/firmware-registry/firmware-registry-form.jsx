@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid } from 'patternfly-react';
 import schema from './firmware-registry-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -8,7 +8,7 @@ const FirmwareRegistryForm = () => {
     rest_api_depot: { value: 'FirmwareRegistry::RestApiDepot', label: __('Rest API Depot') },
   };
 
-  useEffect(() => {
+  const initialize = (formOptions) => {
     ManageIQ.redux.store.dispatch({
       type: 'FormButtons.init',
       payload: {
@@ -20,7 +20,11 @@ const FirmwareRegistryForm = () => {
       type: 'FormButtons.customLabel',
       payload: __('Add'),
     });
-  }, []);
+    ManageIQ.redux.store.dispatch({
+      type: 'FormButtons.callbacks',
+      payload: { addClicked: () => formOptions.submit() },
+    });
+  };
 
   const submitValues = values => API.post('/api/firmware_registries', values).then((response) => {
     if (response.results) {
@@ -29,21 +33,6 @@ const FirmwareRegistryForm = () => {
       add_flash(response.error.message, 'error');
     }
   });
-
-  const handleFormStateUpdate = (formState) => {
-    ManageIQ.redux.store.dispatch({
-      type: 'FormButtons.saveable',
-      payload: formState.valid,
-    });
-    ManageIQ.redux.store.dispatch({
-      type: 'FormButtons.pristine',
-      payload: formState.pristine,
-    });
-    ManageIQ.redux.store.dispatch({
-      type: 'FormButtons.callbacks',
-      payload: { addClicked: () => submitValues(formState.values) },
-    });
-  };
 
   return (
     <Grid fluid>
@@ -54,7 +43,7 @@ const FirmwareRegistryForm = () => {
         buttonsLabels={{ submitLabel: __('Create') }}
         className=""
         showFormControls={false}
-        onStateUpdate={handleFormStateUpdate}
+        initialize={initialize}
       />
     </Grid>
   );

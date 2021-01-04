@@ -37,7 +37,6 @@ describe VmOrTemplateController do
     drift_to_txt
     launch_html5_console
     launch_vmrc_console
-    retirement_info
     vm_show
   ).each do |path|
     describe "##{path}" do
@@ -84,11 +83,9 @@ describe VmOrTemplateController do
     reconfigure_update
     registry_items
     reload
-    retire
     scan_histories
     sections_field_changed
     snap_pressed
-    snap_vm
     sort_ds_grid
     sort_host_grid
     sort_iso_img_grid

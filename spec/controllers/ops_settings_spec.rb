@@ -149,8 +149,7 @@ describe OpsController do
                    :action => "zone_edit",
                    :button => "add"}
         edit = {:new => {:name        => @zone.name,
-                         :description => "description02",
-                         :ntp         => {}}}
+                         :description => "description02"}}
         controller.instance_variable_set(:@edit, edit)
         controller.params = @params
         seed_session_trees('ops', :settings_tree)

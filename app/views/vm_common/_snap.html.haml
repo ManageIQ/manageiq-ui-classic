@@ -2,8 +2,6 @@
 = render :partial => "layouts/flash_msg"
 %h3
   = _('Snapshot information')
-= react 'VmSnapshotForm', {:createURL => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "create" : nil),
-                           :cancelURL => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "cancel" : nil),
-                           :hideName => n = @record.try(:snapshot_name_optional?),
-                           :showMemory => @show_snapshot_memory_checkbox,
-                           :descriptionRequired => n || @record.vendor === "openstack"}
+= react('VmSnapshotForm',
+        :url => "#{api_resource_path(@record)}/snapshots",
+        :redirect => url_for(:action => @lastaction, :id => @record.id))

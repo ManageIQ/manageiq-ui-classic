@@ -34,7 +34,7 @@
       - edit ||= false
       - entry = (@sb[:miq_tab].split("_")[0] == "edit" || session[:set_copy] == "copy") ? "edit" : "new"
       #ap_tabs
-        %ul.nav.nav-tabs
+        %ul.nav.nav-tabs{'role' => 'tablist'}
           - if @edit[:new][:scan_mode] == "Host"
             = miq_tab_header('file', @sb[:ap_active_tab]) do
               = _("File")

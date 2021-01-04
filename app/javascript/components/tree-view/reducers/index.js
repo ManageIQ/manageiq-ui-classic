@@ -1,4 +1,4 @@
-import Tree, { ActionTypes } from '@manageiq/react-ui-components/dist/wooden-tree';
+import { Tree, ActionTypes } from 'react-wooden-tree';
 import {
   checkAll,
   select,

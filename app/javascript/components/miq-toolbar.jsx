@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
-import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
-import '@manageiq/react-ui-components/dist/toolbar.css';
+import { Toolbar } from './toolbar';
 
 import DashboardToolbar from './dashboard_toolbar';
 import TopologyToolbar from './topology_toolbar';
@@ -208,7 +207,7 @@ const toolbarReducer = (state, action) => {
     case 'DECREMENT':
       return {
         ...state,
-        count: state.count - 1,
+        count: state.count > 0 ? state.count - 1 : 0,
       };
     case 'SET':
       return {
@@ -218,6 +217,7 @@ const toolbarReducer = (state, action) => {
     case 'TOOLBARS':
       return {
         ...state,
+        count: 0,
         toolbars: sanitizeToolbars(action.toolbars),
       };
     case 'CHANGES':

@@ -20,7 +20,9 @@ const entryPath = join(settings.source_path, settings.source_entry_path);
 const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
 const sharedPackages = [
+  '@carbon/icons-react',
   'angular',
+  'carbon-components-react',
   'connected-react-router',
   'jquery',
   'lodash',

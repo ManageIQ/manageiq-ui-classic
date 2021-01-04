@@ -168,21 +168,6 @@ describe OpsController do
       end
     end
 
-    describe '#settings_get_form_vars_sync_ntp' do
-      before do
-        controller.params = {'ntp_server_2' => '1'}
-        controller.instance_variable_set(:@edit, :current => {:ntp => {:server => ['0', '1', '2']}},
-                                                 :new     => {:ntp => {:server => ['0', '1', '2'], 'ntp_server_2' => ''}})
-      end
-
-      subject { controller.instance_variable_get(:@edit) }
-
-      it 'removes unnecessary key from @edit[:new][:ntp]' do
-        controller.send(:settings_get_form_vars_sync_ntp)
-        expect(subject[:new]).to eq(subject[:current])
-      end
-    end
-
     describe "#pglogical_save_subscriptions" do
       before { allow(controller).to receive(:javascript_flash) }
 
@@ -251,17 +236,6 @@ describe OpsController do
           controller.instance_variable_set(:@sb, :active_tab => 'settings_help_menu')
           controller.send(:settings_get_info, 'root-0')
           expect(edit[:new]).to eq(edit[:current])
-        end
-      end
-
-      context 'zone node' do
-        it 'sets ntp server info for display' do
-          _guid, miq_server, zone = EvmSpecHelper.local_guid_miq_server_zone
-          controller.instance_variable_set(:@sb, :active_tab => 'settings_zone')
-          controller.instance_variable_set(:@edit, :new => {:ntp => {:server => ["1.example.com", "2.example.com"]}})
-          controller.send(:zone_save_ntp_server_settings, zone)
-          controller.send(:settings_get_info, "z-#{zone.id}")
-          expect(assigns(:ntp_servers)).to eq("1.example.com, 2.example.com")
         end
       end
 

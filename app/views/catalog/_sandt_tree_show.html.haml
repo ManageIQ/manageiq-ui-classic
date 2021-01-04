@@ -1,6 +1,6 @@
 = render :partial => "layouts/flash_msg"
 #st_tabs
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('basic') do
       = _('Basic Info')
     - if @record.display && !@record.prov_type.try(:start_with?, "generic_")
@@ -128,6 +128,64 @@
               = _('Additional Tenants')
             .col-md-8
               = render(:partial => "shared/tree", :locals => {:tree => @tenants_tree, :name => @tenants_tree.name})
+
+        - if @record.prov_type == "generic_ovf_template"
+          - options = @record.config_info[:provision]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('OVF Template')
+              .col-md-9
+                = provisioning[:ovf_template_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('VM Name')
+              .col-md-9
+                = options[:vm_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Accept EULA')
+              .col-md-9
+                &nbsp;
+                = check_box_tag("display", true, options[:accept_all_eula], :disabled => true)
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Resource Pool')
+              .col-md-9
+                = provisioning[:resource_pool_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Folder')
+              .col-md-9
+                = provisioning[:ems_folder_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Host')
+              .col-md-9
+                = provisioning[:host_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Storage')
+              .col-md-9
+                = provisioning[:storage_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Disk Format')
+              .col-md-9
+                = provisioning[:disk_format]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
+                = _('Virtual Network')
+              .col-md-9
+                = provisioning[:network_name]
         .form-group
           .col-md-9
             #tag_group
@@ -234,7 +292,7 @@
 
 - if @record.prov_type == "generic_ansible_playbook"
   #playbook_tabs
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header('provisioning') do
         = _('Provisioning')
       - if @record.config_info.fetch_path(:retirement)

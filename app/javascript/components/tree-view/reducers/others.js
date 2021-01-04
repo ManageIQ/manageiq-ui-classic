@@ -1,4 +1,4 @@
-import Tree from '@manageiq/react-ui-components/dist/wooden-tree';
+import { Tree } from 'react-wooden-tree';
 import { nodeCheckedWithDirty } from './helpers';
 
 export const nodeFromKey = (state, key) => Tree.nodeSelector(state, Tree.nodeSearch(state, null, 'key', key)[0]);

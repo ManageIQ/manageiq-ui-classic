@@ -19,6 +19,7 @@ const getTenants = id => API.get(`/api/providers/${id}/cloud_tenants?expand=reso
 function createSchema(ems, cloudNetworkId) {
   const dynamicPlacement = ems.map((tenant => ({
     component: componentTypes.SELECT,
+    id: 'cloud_tenant',
     name: 'cloud_tenant',
     key: `id-${tenant.id}`,
     label: __('Cloud Tenant'),
@@ -40,6 +41,7 @@ function createSchema(ems, cloudNetworkId) {
   const subForm = [
     {
       component: componentTypes.SUB_FORM,
+      id: 'subform-1',
       name: 'subform-1',
       condition: {
         when: 'provider_network_type',
@@ -50,6 +52,7 @@ function createSchema(ems, cloudNetworkId) {
           component: componentTypes.TEXT_FIELD,
           label: __('Physical Network'),
           maxLength: 128,
+          id: 'provider_physical_network',
           name: 'provider_physical_network',
           isDisabled: !!cloudNetworkId,
           validateOnMount: true,
@@ -61,6 +64,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
+      id: 'subform-2',
       name: 'subform-2',
       condition: {
         when: 'provider_network_type',
@@ -71,6 +75,7 @@ function createSchema(ems, cloudNetworkId) {
           component: componentTypes.TEXT_FIELD,
           label: __('Segmentation ID'),
           maxLength: 128,
+          id: 'provider_segmentation_id',
           name: 'provider_segmentation_id',
           isDisabled: !!cloudNetworkId,
           validateOnMount: true,
@@ -82,6 +87,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
+      id: 'subform-3',
       name: 'subform-3',
       condition: {
         when: 'provider_network_type',
@@ -91,6 +97,7 @@ function createSchema(ems, cloudNetworkId) {
         component: componentTypes.TEXT_FIELD,
         label: __('Physical Network'),
         maxLength: 128,
+        id: 'provider_physical_network',
         name: 'provider_physical_network',
         isDisabled: !!cloudNetworkId,
         validateOnMount: true,
@@ -103,6 +110,7 @@ function createSchema(ems, cloudNetworkId) {
         component: componentTypes.TEXT_FIELD,
         label: __('Segmentation ID'),
         maxLength: 128,
+        id: 'provider_segmentation_id',
         name: 'provider_segmentation_id',
         isDisabled: !!cloudNetworkId,
         validateOnMount: true,
@@ -114,6 +122,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
+      id: 'subform-4',
       name: 'subform-4',
       condition: {
         when: 'provider_network_type',
@@ -124,6 +133,7 @@ function createSchema(ems, cloudNetworkId) {
           component: componentTypes.TEXT_FIELD,
           label: __('Segmentation ID'),
           maxLength: 128,
+          id: 'provider_segmentation_id',
           name: 'provider_segmentation_id',
           isDisabled: !!cloudNetworkId,
         },
@@ -134,9 +144,11 @@ function createSchema(ems, cloudNetworkId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Network Provider'),
+    id: 'network-provider',
     name: 'network-provider',
     fields: [{
       component: componentTypes.SELECT,
+      id: 'ems_id',
       name: 'ems_id',
       label: __('Network Manager'),
       placeholder: `<${__('Choose')}>`,
@@ -151,6 +163,7 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Placement'),
+    id: 'placement',
     name: 'placement',
     condition: {
       when: 'ems_id',
@@ -160,6 +173,7 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Network Provider Information'),
+    id: 'provider-information',
     name: 'provider-information',
     condition: {
       when: 'cloud_tenant',
@@ -167,6 +181,7 @@ function createSchema(ems, cloudNetworkId) {
     },
     fields: [{
       component: componentTypes.SELECT,
+      id: 'provider_network_type',
       name: 'provider_network_type',
       label: __('Provider Network Type'),
       placeholder: __('Nothing selected'),
@@ -176,9 +191,11 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Network Information'),
+    id: 'network-information',
     name: 'network-information',
     fields: [{
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validateOnMount: true,
       label: __('Network Name'),

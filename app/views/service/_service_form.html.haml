@@ -1,2 +1,2 @@
 = render :partial => "layouts/flash_msg"
-= react('ServiceForm', { :maxNameLen => ViewHelper::MAX_NAME_LEN, :maxDescLen => ViewHelper::MAX_DESC_LEN, :serviceFormId => @service.id})
+= react('EditServiceForm', { :maxNameLen => ViewHelper::MAX_NAME_LEN, :maxDescLen => ViewHelper::MAX_DESC_LEN, :recordId => @service.id})

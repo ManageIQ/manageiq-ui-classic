@@ -73,6 +73,7 @@ class ApplicationController < ActionController::Base
   include_concern 'ReportDownloads'
   include_concern 'SessionSize'
   include_concern 'SysprepAnswerFile'
+  include_concern 'UserScriptFile'
   include_concern 'Tags'
   include_concern 'Tenancy'
   include_concern 'Timelines'
@@ -782,7 +783,7 @@ class ApplicationController < ActionController::Base
       }
 
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
-        new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
+        new_row[:parent_id] = "rep-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_id(target) if target
@@ -891,7 +892,8 @@ class ApplicationController < ActionController::Base
     timed_out = PrivilegeCheckerService.new.user_session_timed_out?(session, current_user) if timed_out.nil?
     reset_session
 
-    session[:start_url] = request.url if request.method == "GET"
+    # remember for after login, but make sure we don't redirect to logout, or POST actions
+    session[:start_url] = request.url if request.method == "GET" && !request.url.include?('/logout')
 
     respond_to do |format|
       format.html do
@@ -1310,7 +1312,7 @@ class ApplicationController < ActionController::Base
 
   def get_db_view(db, options = {})
     if %w[ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm]
-       .include?(db) && options[:association] == "vms_and_templates"
+       .include?(db) && options[:association] == "all_vms_and_templates"
       options[:association] = nil
     end
 
@@ -1348,6 +1350,8 @@ class ApplicationController < ActionController::Base
       javascript_redirect(edit_ems_network_path(params[:id]))
     elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]
       javascript_redirect(edit_ems_physical_infra_path(params[:id]))
+    elsif params[:pressed] == "ems_storage_edit" && params[:id]
+      javascript_redirect(edit_ems_storage_path(params[:id]))
     else
       javascript_redirect(:action => @refresh_partial, :id => @redirect_id)
     end

@@ -38,16 +38,24 @@ class CloudVolumeController < ApplicationController
     when 'cloud_volume_edit'
       javascript_redirect(:action => 'edit', :id => checked_item_id)
     when 'cloud_volume_snapshot_create'
-      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:snapshot_create, CloudVolume)
+      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_new'
       javascript_redirect(:action => 'new')
     when 'cloud_volume_backup_create'
-      javascript_redirect(:action => 'backup_new', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:backup_create, CloudVolume)
+      javascript_redirect(:action => 'backup_new', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_backup_restore'
-      javascript_redirect(:action => 'backup_select', :id => checked_item_id)
+      validate_results = validate_item_supports_action_button(:backup_restore, CloudVolume)
+      javascript_redirect(:action => 'backup_select', :id => checked_item_id) if validate_results[:action_supported]
     else
       return false
     end
+
+    if validate_results && validate_results[:message]
+      render_flash(validate_results[:message], :error)
+    end
+
     true
   end
 
@@ -573,8 +581,19 @@ class CloudVolumeController < ApplicationController
       options.merge!(cinder_manager_options)
     when "ManageIQ::Providers::Amazon::StorageManager::Ebs"
       options.merge!(aws_ebs_options)
+    when "ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager"
+      options.merge!(ibmcloud_powervs_options)
+    when "ManageIQ::Providers::Autosde::StorageManager"
+      options.merge!(autosde_options)
     end
     options
+  end
+
+  def autosde_options
+    {
+      :ems             => ExtManagementSystem.find(params[:storage_manager_id]),
+      :storage_service => StorageService.find(params[:storage_service_id])
+    }
   end
 
   def cinder_manager_options
@@ -583,7 +602,7 @@ class CloudVolumeController < ApplicationController
     options[:volume_type] = params[:volume_type] if params[:volume_type]
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
-    options[:ems] = cloud_tenant.ext_management_system
+    options[:ems] = cloud_tenant.ext_management_system.cinder_manager
     options[:availability_zone] = params[:availability_zone_id] if params[:availability_zone_id]
     options
   end
@@ -598,6 +617,14 @@ class CloudVolumeController < ApplicationController
     options[:encrypted] = params[:aws_encryption]
 
     # Get the storage manager.
+    storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
+    options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
+    options
+  end
+
+  def ibmcloud_powervs_options
+    options = {}
+    options[:volume_type] = params[:volume_type] if params[:volume_type]
     storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
     options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
     options

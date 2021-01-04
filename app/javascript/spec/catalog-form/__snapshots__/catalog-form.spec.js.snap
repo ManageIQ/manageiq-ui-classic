@@ -12,7 +12,6 @@ exports[`Catalog form component should render add variant form 1`] = `
     }
     canReset={false}
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
@@ -23,6 +22,7 @@ exports[`Catalog form component should render add variant form 1`] = `
               Object {
                 "autoFocus": true,
                 "component": "text-field",
+                "id": "name",
                 "label": "Name",
                 "maxLength": 40,
                 "name": "name",
@@ -33,25 +33,23 @@ exports[`Catalog form component should render add variant form 1`] = `
               },
               Object {
                 "component": "text-field",
+                "id": "description",
                 "label": "Description",
                 "maxLength": 60,
                 "name": "description",
               },
             ],
+            "id": "basic-info",
             "name": "basic-info",
             "title": "Basic Info",
-          },
-          Object {
-            "component": "hr",
-            "name": "hr",
           },
           Object {
             "component": "sub-form",
             "fields": Array [
               Object {
                 "allToRight": false,
-                "assignFieldProvider": true,
                 "component": "dual-list-select",
+                "id": "service_templates",
                 "leftId": "available_fields",
                 "leftTitle": "Unassigned:",
                 "moveLeftTitle": "Move Selected buttons left",
@@ -72,6 +70,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 "size": 8,
               },
             ],
+            "id": "assign-catalog-items",
             "name": "assign-catalog-items",
             "title": "Assign Catalog Items",
           },
@@ -104,7 +103,6 @@ exports[`Catalog form component should render edit variant form 1`] = `
       }
     }
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
@@ -115,6 +113,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
               Object {
                 "autoFocus": true,
                 "component": "text-field",
+                "id": "name",
                 "label": "Name",
                 "maxLength": 40,
                 "name": "name",
@@ -125,25 +124,23 @@ exports[`Catalog form component should render edit variant form 1`] = `
               },
               Object {
                 "component": "text-field",
+                "id": "description",
                 "label": "Description",
                 "maxLength": 60,
                 "name": "description",
               },
             ],
+            "id": "basic-info",
             "name": "basic-info",
             "title": "Basic Info",
-          },
-          Object {
-            "component": "hr",
-            "name": "hr",
           },
           Object {
             "component": "sub-form",
             "fields": Array [
               Object {
                 "allToRight": false,
-                "assignFieldProvider": true,
                 "component": "dual-list-select",
+                "id": "service_templates",
                 "leftId": "available_fields",
                 "leftTitle": "Unassigned:",
                 "moveLeftTitle": "Move Selected buttons left",
@@ -172,6 +169,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 "size": 8,
               },
             ],
+            "id": "assign-catalog-items",
             "name": "assign-catalog-items",
             "title": "Assign Catalog Items",
           },

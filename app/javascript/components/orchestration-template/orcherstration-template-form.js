@@ -70,7 +70,6 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
         initialValues={initialValues}
         onCancel={() => miqRedirectBack(cancelMessage, 'success', '/catalog/explorer')}
         canReset={!!otId && !copy}
-        onReset={() => add_flash(__('All changes have been reset'), 'warning')}
         buttonsLabels={{
           submitLabel: otId && !copy ? __('Save') : __('Add'),
         }}

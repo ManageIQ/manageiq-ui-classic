@@ -19,6 +19,12 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        :confirm => N_("Refresh relationships and power states for all items related to this Storage Manager?")),
                      separator,
                      button(
+                       :ems_storage_edit,
+                       'pficon pficon-edit fa-lg',
+                       t = N_('Edit this Storage Manager'),
+                       t
+                     ),
+                     button(
                        :ems_storage_delete,
                        'pficon pficon-delete fa-lg',
                        t = N_('Remove this Storage Manager from Inventory'),
@@ -65,6 +71,25 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        :url       => "/show",
                        :url_parms => "?display=timeline"),
                    ]
+                 ),
+               ])
+  button_group('ems_storage_view', [
+                 twostate(
+                   :view_dashboard,
+                   'fa fa-tachometer fa-1xplus',
+                   N_('Dashboard View'),
+                   nil,
+                   :url       => "/",
+                   :url_parms => "?display=dashboard",
+                   :klass     => ApplicationHelper::Button::ViewDashboard
+                 ),
+                 twostate(
+                   :view_summary,
+                   'fa fa-th-list',
+                   N_('Summary View'),
+                   nil,
+                   :url       => "/",
+                   :url_parms => "?display=main"
                  ),
                ])
 end

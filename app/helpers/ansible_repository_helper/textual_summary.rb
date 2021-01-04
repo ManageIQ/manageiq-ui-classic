@@ -35,7 +35,7 @@ module AnsibleRepositoryHelper::TextualSummary
   end
 
   def textual_provider
-    @record.manager.try(:name)
+    {:label => _("Provider"), :value => @record.manager.try(:name)}
   end
 
   def textual_playbooks

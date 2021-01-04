@@ -64,3 +64,7 @@ Object.defineProperty(Array.prototype, 'flat', {
  * unfortunately this cannot be mocked in some helper file it will only work in global setup
  */
 jest.mock('../app/javascript/helpers/miq-redirect-back', () => jest.fn());
+
+// Loading the API global to the test context
+import { API } from '../app/javascript/http_api';
+window.API = API;

@@ -1,28 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { SideNav } from 'carbon-components-react/es/components/UIShell';
 
-import { FirstLevel } from './first-level';
-import { GroupSwitcher } from './group-switcher';
-import { MenuCollapse } from './menu-collapse';
-import { MenuSearch } from './search';
-import { MiqLogo } from './miq-logo';
-import { SearchResults } from './search-results';
-import { SecondLevel } from './second-level';
-import { Username } from './username';
+import FirstLevel from './first-level';
+import GroupSwitcher from './group-switcher';
+import MenuCollapse from './menu-collapse';
+import MenuSearch from './search';
+import MiqLogo from './miq-logo';
+import SearchResults from './search-results';
+import SecondLevel from './second-level';
+import Username from './username';
 import { updateActiveItem } from './history';
-
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
-export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand, logoLarge, logoSmall, menu: initialMenu, miqGroups, showLogo, showUser }) => {
+export const MainMenu = ({
+  applianceName,
+  brandUrl,
+  currentGroup,
+  currentUser,
+  customBrand,
+  logoLarge,
+  logoSmall,
+  menu: initialMenu,
+  miqGroups,
+  showLogo,
+  showMenuCollapse,
+  showUser,
+}) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [menu, setMenu] = useState(initialMenu);
   const [searchResults, setSearch] = useState(null);
   const [activeSection, setSection] = useState(null);
+  const [openMenu, setOpen] = useState(false);
+  // code to override navbar in plugins
+  const Navbar = ManageIQ.component.getReact('menu.Navbar');
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
-  const hideSecondary = (_e) => setSection(null);
+  const hideSecondary = () => setSection(null);
+  const hideSecondaryEscape = e => e.keyCode === 27 && hideSecondary();
+
+  const secondLevelFirst = useRef(undefined);
+  const firstLevelNext = useRef(undefined);
+  const firstLevelPrev = useRef(undefined);
 
   useEffect(() => {
     // persist expanded state
@@ -50,27 +70,97 @@ export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand
     updateActiveItem(ManageIQ.redux.store.getState().router.location);
   }, []);
 
+  const showMenu = (event) => {
+    // when focus/tab is in leftnav, if menu is not expanded, open menu
+    if (!expanded) {
+      setExpanded(true);
+      // To understand if we are opening it manually on tab
+      setOpen(true);
+    }
+    if (event.keyCode === 27) hideSecondary();
+  };
+  const hideMenu = (event) => {
+    // if we open it manually, collpase menu on blur
+    if (!event.currentTarget.contains(event.relatedTarget) && openMenu) {
+      setExpanded(false);
+      setOpen(false);
+    }
+  };
+  const toggleMenu = () => {
+    // if it is already open on tabbing, keep it open
+    if (expanded && openMenu) {
+      setOpen(false);
+    } else {
+      setExpanded(!expanded);
+    }
+  };
+
+  const onSelect = (item) => {
+    setSection(item);
+    // The first menu item in the second level can be focused only after second level is actually displayed
+    if (item) {
+      setTimeout(() => {
+        if (secondLevelFirst.current) {
+          secondLevelFirst.current.focus();
+        }
+      });
+    }
+  };
+
+  const unFocusSecondary = (forward) => () => {
+    hideSecondary();
+
+    const { current } = forward ? firstLevelNext : firstLevelPrev;
+    // Focus the prev/next element in the first level if available
+    if (current) {
+      current.focus();
+      if (!expanded) {
+        setExpanded(true);
+        setOpen(true);
+      }
+    }
+  };
+
   return (
     <>
-      <div onClick={hideSecondary}>
+      <Navbar
+        isSideNavExpanded={expanded}
+        open={openMenu}
+        onClickSideNavExpand={() => setExpanded(!expanded)}
+        applianceName={applianceName}
+        currentUser={currentUser}
+        brandUrl={brandUrl}
+      />
+      <div
+        onClick={hideSecondary}
+        onKeyDown={showMenu}
+        onBlur={hideMenu}
+        role="presentation"
+        id="main-menu-primary"
+      >
         <SideNav
-          aria-label={__("Main Menu")}
+          aria-label={__('Main Menu')}
           className="primary"
           expanded={appearExpanded}
+          addFocusListeners={false}
           isChildOfHeader={false}
         >
-          {showLogo && <MiqLogo
-            expanded={appearExpanded}
-            customBrand={customBrand}
-            logoLarge={logoLarge}
-            logoSmall={logoSmall}
-          />}
+          {showLogo && (
+            <MiqLogo
+              expanded={appearExpanded}
+              customBrand={customBrand}
+              logoLarge={logoLarge}
+              logoSmall={logoSmall}
+            />
+          )}
 
-          {showUser && <Username
-            applianceName={applianceName}
-            currentUser={currentUser}
-            expanded={appearExpanded}
-          />}
+          {showUser && (
+            <Username
+              applianceName={applianceName}
+              currentUser={currentUser}
+              expanded={appearExpanded}
+            />
+          )}
 
           <GroupSwitcher
             currentGroup={currentGroup}
@@ -82,40 +172,51 @@ export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand
             menu={menu}
             expanded={appearExpanded}
             onSearch={setSearch}
+            toggle={() => setExpanded(!expanded)}
           />
 
           <hr className="bx--side-nav__hr" />
 
           {searchResults && <SearchResults results={searchResults} />}
-          {!searchResults && <FirstLevel
-            menu={menu}
-            setSection={setSection}
-            activeSection={activeSection && activeSection.id}
-          />}
+          {!searchResults && (
+            <FirstLevel
+              menu={menu}
+              onSelect={onSelect}
+              activeSection={activeSection && activeSection.id}
+              expanded={appearExpanded}
+              ref={{
+                prevRef: firstLevelPrev,
+                nextRef: firstLevelNext,
+              }}
+            />
+          )}
 
-          <MenuCollapse
-            expanded={expanded /* not appearExpanded */}
-            toggle={() => setExpanded(!expanded)}
-          />
+          {showMenuCollapse && (
+            <MenuCollapse
+              expanded={expanded/* not appearExpanded */}
+              toggle={toggleMenu}
+              onFocus={hideSecondary}
+              open={openMenu}
+            />
+          )}
         </SideNav>
       </div>
       { activeSection && (
         <>
-          <SideNav
-            aria-label={__("Secondary Menu")}
-            className="secondary"
-            expanded={true}
-            isChildOfHeader={false}
-          >
-            <SecondLevel
-              menu={activeSection.items}
-              hideSecondary={hideSecondary}
-            />
+          <SideNav aria-label={__('Secondary Menu')} className="secondary" isChildOfHeader={false} expanded>
+            <div onKeyDown={hideSecondaryEscape} role="presentation">
+              <span onFocus={unFocusSecondary(false)} role="presentation" tabIndex="0" />
+              <SecondLevel menu={activeSection.items} hideSecondary={hideSecondary} ref={secondLevelFirst} />
+              <span onFocus={unFocusSecondary(true)} role="presentation" tabIndex="0" />
+            </div>
           </SideNav>
           <div
             className="miq-main-menu-overlay"
+            role="presentation"
             onClick={hideSecondary}
-          ></div>
+            onFocus={hideSecondary}
+            onKeyDown={hideSecondary}
+          />
         </>
       )}
     </>
@@ -142,10 +243,12 @@ MainMenu.propTypes = {
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
   miqGroups: PropTypes.arrayOf(propGroup).isRequired,
   showLogo: PropTypes.bool,
+  showMenuCollapse: PropTypes.bool,
   showUser: PropTypes.bool,
 };
 
 MainMenu.defaultProps = {
   showLogo: true,
+  showMenuCollapse: true,
   showUser: true,
 };

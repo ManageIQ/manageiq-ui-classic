@@ -6,10 +6,10 @@ export const asyncValidator = value =>
   http.get('/catalog/servicetemplates_names')
     .then((json) => {
       if (json.names.includes(value)) {
-        return __('Name has already been taken');
+        throw __('Name has already been taken');
       }
       if (value === '' || value === undefined) {
-        return __("Name can't be blank");
+        throw __("Name can't be blank");
       }
       return undefined;
     });
@@ -19,6 +19,7 @@ function createSchema() {
   const fields = [
     {
       component: componentTypes.TEXT_FIELD,
+      id: 'name',
       name: 'name',
       validate: [
         value => asyncValidatorDebounced(value),
@@ -30,6 +31,7 @@ function createSchema() {
     },
     {
       component: componentTypes.CHECKBOX,
+      id: 'copy_tags',
       name: 'copy_tags',
       label: __('Copy Tags'),
     }];

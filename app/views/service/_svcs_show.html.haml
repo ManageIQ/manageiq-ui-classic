@@ -1,6 +1,6 @@
 #service_details
   #services_tab
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header("details") do
         = _("Details")
       - if @record.type == "ServiceAnsiblePlaybook"

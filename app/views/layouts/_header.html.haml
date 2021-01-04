@@ -4,8 +4,8 @@
            :description => current_group.description}
 - groups = current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } }
 
-= react('menu.Navbar')
 = react('menu.MainMenu', {:applianceName => appliance_name,
+                          :brandUrl => image_path("layout/brand.svg"),
                           :currentGroup => group,
                           :currentUser => user,
                           :customBrand => ::Settings.server.custom_brand,

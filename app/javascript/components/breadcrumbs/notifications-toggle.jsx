@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
-import { MiqIcon } from '../../menu/icon';
+import MiqIcon from '../../menu/icon';
 
 export const NotificationsToggle = () => {
   const dispatch = useDispatch();

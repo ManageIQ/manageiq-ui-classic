@@ -102,7 +102,7 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-    elsif @layout == "miq_policy"
+    elsif %w[condition miq_action miq_alert miq_alert_set miq_event miq_policy miq_policy_set].include?(@layout)
       center_toolbar_filename_miq_policy
     elsif @layout == "ops"
       center_toolbar_filename_ops
@@ -198,7 +198,8 @@ class ApplicationHelper::ToolbarChooser
         "services_center_tb"
       end
     elsif x_active_tree == :ot_tree
-      if %w[root xx-otcfn xx-othot xx-otazu xx-otazs xx-otvnf xx-otvap].include?(x_node)
+      return nil if x_node == "xx-otovf" || @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate)
+      if %w[root xx-otcfn xx-othot xx-otazu xx-otazs xx-otvnf xx-otvap xx-ovf].include?(x_node)
         "orchestration_templates_center_tb"
       else
         "orchestration_template_center_tb"
@@ -222,23 +223,23 @@ class ApplicationHelper::ToolbarChooser
       elsif @conditions
         return "conditions_center_tb"
       elsif @alert_profiles
-        return "miq_alert_profiles_center_tb"
+        return "miq_alert_sets_center_tb"
       end
     end
     case @nodetype
     when "root"
       case x_active_tree
-      when :policy_profile_tree then  "miq_policy_profiles_center_tb"
+      when :policy_profile_tree then  "miq_policy_sets_center_tb"
       when :action_tree then          "miq_actions_center_tb"
       when :alert_tree then           "miq_alerts_center_tb"
       end
-    when "pp" then  "miq_policy_profile_center_tb"
+    when "pp" then  "miq_policy_set_center_tb"
     when "p" then   "miq_policy_center_tb"
     when "co" then  "condition_center_tb"
     when "ev" then  "miq_event_center_tb"
     when "a" then   "miq_action_center_tb"
     when "al" then  "miq_alert_center_tb"
-    when "ap" then  "miq_alert_profile_center_tb"
+    when "ap" then  "miq_alert_set_center_tb"
     end
   end
 
@@ -386,7 +387,7 @@ class ApplicationHelper::ToolbarChooser
     to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
                     cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts
                     network_ports network_routers network_services orchestration_stacks resource_pools
-                    security_groups security_policies security_policy_rules storages]
+                    security_groups security_policies security_policy_rules storages physical_storages]
     to_display_center = %w[stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices]
     performance_layouts = %w[vm host ems_container]
 
@@ -489,6 +490,8 @@ class ApplicationHelper::ToolbarChooser
 
         return @lastaction == 'show_list' ? "#{@layout.pluralize}_center_tb" : "#{@layout}_center_tb"
 
+      elsif @layout == "configuration_profile"
+        return "configuration_profile_center_tb"
       elsif @layout == "configuration" && @tabform == "ui_4"
         return "time_profiles_center_tb"
       elsif @layout == "diagnostics"

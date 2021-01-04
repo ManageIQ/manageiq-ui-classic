@@ -358,10 +358,19 @@ class MiqAeCustomizationController < ApplicationController
 
   def right_cell_text_for_node(record, model_name)
     if record.try(:id)
-      _("Editing %{model} \"%{name}\"") % {:name  => record.kind_of?(CustomButtonSet) ? record.name.split("|").first : record.name,
-                                           :model => ui_lookup(:model => model_name)}
+      case model_name
+      when "CustomButton"
+        _("Editing Button \"%{name}\"") % {:name => record.name}
+      when "CustomButtonSet"
+        _("Editing Button Group \"%{name}\"") % {:name => record.name.split("|").first}
+      end
     else
-      _("Adding a new %{model}") % {:model => ui_lookup(:model => model_name)}
+      case model_name
+      when "CustomButton"
+        _("Adding a new Button")
+      when "CustomButtonSet"
+        _("Adding a new Button Group")
+      end
     end
   end
 

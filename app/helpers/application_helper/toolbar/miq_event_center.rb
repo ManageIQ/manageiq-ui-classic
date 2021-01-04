@@ -1,13 +1,13 @@
 class ApplicationHelper::Toolbar::MiqEventCenter < ApplicationHelper::Toolbar::Basic
-  button_group('policy_vmdb', [
+  button_group('miq_event_vmdb', [
     select(
-      :policy_vmdb_choice,
+      :miq_event_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :items => [
         button(
-          :event_edit,
+          :miq_event_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit Actions for this Policy Event'),
           t,

@@ -79,10 +79,6 @@ Rails.application.routes.draw do
     exp_token_pressed
   )
 
-  evm_relationship_post = %w(
-    evm_relationship_update
-  )
-
   ownership_post = %w(
     ownership
     ownership_update
@@ -112,7 +108,6 @@ Rails.application.routes.draw do
 
   snap_post = %w(
     snap_pressed
-    snap_vm
   )
 
   x_post = %w(
@@ -123,6 +118,15 @@ Rails.application.routes.draw do
   )
 
   controller_routes = {
+
+    :ems_storage_dashboard      => {
+      :get => %w[
+        show
+        aggregate_status_data
+        resources_capacity_data
+      ]
+    },
+
     :auth_key_pair_cloud      => {
       :get  => %w(
         download_data
@@ -133,14 +137,12 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        ems_form_choices
         download_private_key
         ownership
       ) +
         compare_get,
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         listnav_search_selected
         ownership_update
@@ -432,7 +434,6 @@ Rails.application.routes.draw do
 
     :cloud_tenant             => {
       :get => %w(
-        cloud_tenant_form_fields
         delete_cloud_tenants
         dialog_load
         download_data
@@ -449,14 +450,12 @@ Rails.application.routes.draw do
       :post => %w(
         button
         listnav_search_selected
-        create
         protect
         quick_search
         sections_field_changed
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -1011,6 +1010,7 @@ Rails.application.routes.draw do
         network_metrics_data
         pod_metrics_data
         project_data
+        show
       )
     },
 
@@ -1320,17 +1320,20 @@ Rails.application.routes.draw do
       )
     },
 
-    :physical_storage    => {
-      :get  => %w(
+    :physical_storage   => {
+      :get  => %w[
         download_data
-        show_list
+        download_summary_pdf
         show
-      ),
-
-      :post  => %w(
         show_list
+        new
+      ],
+      :post => %w[
+        button
+        listnav_search_selected
         quick_search
-      ) + adv_search_post + save_post,
+        show_list
+      ] + adv_search_post + save_post + exp_post
     },
 
     :physical_chassis    => {
@@ -2088,26 +2091,14 @@ Rails.application.routes.draw do
         rsop
       ),
       :post => %w(
-        accordion_select
-        action_edit
-        action_field_changed
-        alert_edit
-        alert_field_changed
-        alert_profile_assign
-        alert_profile_assign_changed
-        alert_profile_edit
-        alert_profile_field_changed
         button
-        condition_edit
-        condition_field_changed
-        event_edit
         export
         export_field_changed
         import
-        policy_edit
+        miq_event_edit
+        miq_event_field_changed
+        miq_policy_edit
         policy_field_changed
-        profile_edit
-        profile_field_changed
         quick_search
         reload
         rsop
@@ -2119,9 +2110,99 @@ Rails.application.routes.draw do
         upload
         wait_for_task
       ) +
-               adv_search_post +
-               exp_post +
-               x_post
+         adv_search_post +
+         exp_post +
+         x_post
+    },
+
+    :miq_policy_set => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        button
+        miq_policy_set_edit
+        profile_field_changed
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_action       => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        miq_action_edit
+        action_field_changed
+        button
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_alert => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        alert_field_changed
+        button
+        miq_alert_edit
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        exp_post +
+        x_post
+    },
+
+    :miq_alert_set  => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        alert_profile_assign_changed
+        alert_profile_field_changed
+        button
+        miq_alert_set_assign
+        miq_alert_set_edit
+        reload
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :miq_event => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        tree_autoload
+        tree_select
+      ) +
+        x_post
+    },
+
+    :condition => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        condition_edit
+        condition_field_changed
+        reload
+        tree_autoload
+        tree_select
+      ) +
+          adv_search_post +
+          exp_post +
+          x_post
     },
 
     :miq_request              => {
@@ -2209,6 +2290,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        new
         button
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
@@ -2298,6 +2380,23 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :storage_resource   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ],
+      :post => %w[
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
     :ops                      => {
       :get  => %w(
         dialog_load
@@ -2336,7 +2435,6 @@ Rails.application.routes.draw do
         cu_repair_field_changed
         db_backup
         db_backup_form_field_changed
-        db_gc_collection
         diagnostics_server_list
         diagnostics_tree_select
         explorer
@@ -2346,7 +2444,6 @@ Rails.application.routes.draw do
         forest_form_field_changed
         forest_select
         help_menu_form_field_changed
-        invalidate_miq_product_feature_caches
         label_tag_mapping_delete
         label_tag_mapping_edit
         label_tag_mapping_update
@@ -2417,7 +2514,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        retirement_info
         index
         outputs
         parameters
@@ -2438,7 +2534,6 @@ Rails.application.routes.draw do
         parameters
         quick_search
         resources
-        retire
         sections_field_changed
         show
         show_list
@@ -2498,6 +2593,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
+        launch_configuration_profile_console
       ]
     },
 
@@ -2518,6 +2614,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
+        launch_configured_system_console
       ] +
         adv_search_post +
         dialog_runner_post +
@@ -2663,7 +2760,6 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         explorer
-        retirement_info
         reconfigure_form_fields
         retire
         service_form_fields
@@ -2677,7 +2773,6 @@ Rails.application.routes.draw do
         ownership_update
         quick_search
         reload
-        retire
         service_edit
         service_tag
         show
@@ -2764,7 +2859,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        retirement_info
         ownership
         policy_sim
         reconfigure
@@ -2804,7 +2898,6 @@ Rails.application.routes.draw do
         associate_floating_ip_vm
         disassociate_floating_ip_vm
         rename_vm
-        retire
         right_size
         set_checked_items
         show_list
@@ -2826,7 +2919,6 @@ Rails.application.routes.draw do
         drift_to_txt
         explorer
         filesystem_download
-        retirement_info
         reconfigure_form_fields
         launch_html5_console
         launch_vmrc_console
@@ -2880,7 +2972,6 @@ Rails.application.routes.draw do
         quick_search
         registry_items
         reload
-        retire
         reconfigure_update
         scan_histories
         sections_field_changed
@@ -2913,7 +3004,6 @@ Rails.application.routes.draw do
                compare_post +
                dialog_runner_post +
                drift_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +
@@ -2930,7 +3020,6 @@ Rails.application.routes.draw do
         drift_to_txt
         explorer
         filesystem_download
-        retirement_info
         reconfigure_form_fields
         right_size_print
         launch_html5_console
@@ -2972,7 +3061,6 @@ Rails.application.routes.draw do
         registry_items
         reload
         rename_vm
-        retire
         scan_histories
         sections_field_changed
         security_groups
@@ -3001,7 +3089,6 @@ Rails.application.routes.draw do
                compare_post +
                dialog_runner_post +
                drift_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +
@@ -3020,7 +3107,6 @@ Rails.application.routes.draw do
         launch_html5_console
         launch_vmrc_console
         launch_native_console
-        retirement_info
         reconfigure_form_fields
         policies
         protect
@@ -3063,7 +3149,6 @@ Rails.application.routes.draw do
         registry_items
         reload
         rename_vm
-        retire
         scan_histories
         sections_field_changed
         security_groups
@@ -3097,7 +3182,6 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                dialog_runner_post +
-               evm_relationship_post +
                exp_post +
                policy_post +
                pre_prov_post +
@@ -3140,10 +3224,12 @@ Rails.application.routes.draw do
     ems_cloud_dashboard
     ems_container
     ems_infra
+    ems_storage_dashboard
     ems_infra_dashboard
     ems_network
     ems_physical_infra
     ems_physical_infra_dashboard
+    ems_storage
     miq_ae_customization
     pxe
   ].freeze
@@ -3201,7 +3287,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network].each do |resource|
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
 end

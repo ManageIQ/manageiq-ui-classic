@@ -9,7 +9,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       aws_encryption: false,
       incremental: false,
       force: false,
-      storage_manager_id: storageManagerId,
     };
 
     vm.formId = cloudVolumeFormId;
@@ -136,10 +135,14 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,volume_availability_zones,cloud_tenants,cloud_volume_snapshots,cloud_volume_types')
+    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,volume_availability_zones,cloud_tenants,cloud_volume_snapshots,cloud_volume_types,storage_services,supports_storage_services')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
+
+  vm.StorageServiceChanged = function(id) {
+    vm.cloudVolumeModel.storage_service_id = id
+  }
 
   vm.sizeChanged = function(size) {
     if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
@@ -248,13 +251,19 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   var getCloudVolumeFormData = function(data) {
+    vm.cloudVolumeModel.storage_manager_id = storageManagerId;
     vm.cloudVolumeModel.emstype = data.ext_management_system.type;
     vm.cloudVolumeModel.name = data.name;
     // We have to display size in GB.
     vm.cloudVolumeModel.size = data.size / 1073741824;
     vm.cloudVolumeModel.cloud_tenant_id = data.cloud_tenant_id;
     vm.cloudVolumeModel.volume_type = data.volume_type;
-    vm.cloudVolumeModel.availability_zone_id = data.availability_zone.ems_ref;
+    vm.cloudVolumeModel.storage_service_id = data.storage_service_id;
+    if (data.availability_zone) {
+      vm.cloudVolumeModel.availability_zone_id = data.availability_zone.ems_ref;
+    } else {
+      vm.cloudVolumeModel.availability_zone_id = data.availability_zone_id;
+    }
     // Currently, this is only relevant for AWS volumes so we are prefixing the
     // model attribute with AWS.
     vm.cloudVolumeModel.aws_encryption = data.encrypted;
@@ -273,16 +282,22 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   var getStorageManagerFormData = function(data) {
     vm.cloudVolumeModel.emstype = data.type;
+    vm.storageServices = data.storage_services;
     vm.cloudTenantChoices = data.cloud_tenants;
     vm.availabilityZoneChoices = data.volume_availability_zones;
     vm.baseSnapshotChoices = data.cloud_volume_snapshots;
+
     vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
     vm.supportsVolumeResizing = data.supports_volume_resizing;
     vm.supportsVolumeAvailabilityZones = data.supports_volume_availability_zones;
+    vm.supportsStorageServices = data.supports_storage_services;
+
     if (vm.supportsCinderVolumeTypes) {
       vm.volumeTypes = data.cloud_volume_types;
     } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
       loadEBSVolumeTypes();
+    } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::IbmCloud::PowerVirtualServers::StorageManager') {
+      vm.volumeTypes = data.cloud_volume_types;
     }
     miqService.sparkleOff();
   };

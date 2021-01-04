@@ -497,7 +497,7 @@ describe CatalogController do
         %w[root xx-otcfn xx-othot xx-otazu xx-otazs].each do |id|
           post :tree_select, :params => { :id => id, :format => :js }
           expect(response).to have_http_status 200
-          expect(response).to render_template('layouts/angular/_gtl')
+          expect(response).to render_template('layouts/react/_gtl')
         end
       end
 
@@ -733,15 +733,18 @@ describe CatalogController do
       let(:auth) { FactoryBot.create(:authentication, :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
       let(:repository) { FactoryBot.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
       let(:inventory_root_group) { FactoryBot.create(:inventory_root_group) }
-      let(:ems) do
-        FactoryBot.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryBot.create(:provider_embedded_ansible))
-      end
+      let(:provider) { FactoryBot.create(:provider_embedded_ansible) }
+      let(:ems) { provider.automation_manager }
       let(:dialog) { FactoryBot.create(:dialog) }
       let(:playbook) do
         FactoryBot.create(:embedded_playbook,
                            :configuration_script_source => repository,
                            :manager                     => ems,
                            :inventory_root_group        => inventory_root_group)
+      end
+
+      before do
+        ems.update_attributes(:inventory_root_groups => [inventory_root_group])
       end
 
       it "returns playbook service template details for provision & retirement tabs for summary screen" do
@@ -1383,7 +1386,7 @@ describe CatalogController do
     let!(:record) { FactoryBot.create(:service_template, :description => 'XXX', :tenant => Tenant.root_tenant) }
 
     let(:report) do
-      FactoryGirl.create(:miq_report,
+      FactoryBot.create(:miq_report,
                          :name        => 'Catalog Items',
                          :db          => 'ServiceTemplate',
                          :title       => 'Catalog Items',

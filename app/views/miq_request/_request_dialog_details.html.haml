@@ -32,6 +32,8 @@
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || '' # it returns in format Clasification::id
-      - _, classification_id = value.split('::')
-      - current_classification = Classification.find_by(:id => classification_id)
-      = h(current_classification.nil? ? '' : current_classification.description)
+      - classifications = value.split(',').map { |c| Classification.find_by(:id => c.split('::').second).description }
+      - if classifications.empty?
+        = h('')
+      -else
+        = h(classifications.join(', '))

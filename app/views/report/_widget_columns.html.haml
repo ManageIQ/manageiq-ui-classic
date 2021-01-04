@@ -5,7 +5,7 @@
       *
     = _('Column 1')
   .col-md-8
-    = select_tag("chosen_pivot1", options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options1, @pivot.by1),
+    = select_tag("chosen_pivot1", options_for_select([_(ReportHelper::NOTHING_STRING)] + @pivot.options1, @pivot.by1),
       :multiple             => false,
       :class                => "selectpicker",
       :disabled             => @edit[:read_only])
@@ -19,7 +19,7 @@
         *
       = _('Column 2')
     .col-md-8
-      = select_tag("chosen_pivot2", options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options2, @pivot.by2),
+      = select_tag("chosen_pivot2", options_for_select([_(ReportHelper::NOTHING_STRING)] + @pivot.options2, @pivot.by2),
         :multiple             => false,
         :class                => "selectpicker",
         :disabled             => @edit[:read_only])
@@ -33,7 +33,7 @@
           *
         = _('Column 3')
       .col-md-8
-        = select_tag("chosen_pivot3", options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options3, @pivot.by3),
+        = select_tag("chosen_pivot3", options_for_select([_(ReportHelper::NOTHING_STRING)] + @pivot.options3, @pivot.by3),
           :multiple             => false,
           :class                => "selectpicker",
           :disabled             => @edit[:read_only])
@@ -47,7 +47,7 @@
           *
         = _('Column 4')
       .col-md-8
-        = select_tag("chosen_pivot4", options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options4, @pivot.by4),
+        = select_tag("chosen_pivot4", options_for_select([_(ReportHelper::NOTHING_STRING)] + @pivot.options4, @pivot.by4),
           :multiple             => false,
           :class                => "selectpicker",
           :disabled             => @edit[:read_only],

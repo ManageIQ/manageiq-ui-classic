@@ -1,0 +1,28 @@
+#form_scope_div
+  - if @expkey == :applies_to_exp
+    %h3= _("Choose an element of the scope to edit")
+    = render :partial => 'layouts/exp_editor'
+    %hr
+  - else
+    = link_to({:action                => 'condition_edit',
+               :button                => "applies_to_exp",
+               :id                    => @condition.id || 'new'},
+               "data-miq_sparkle_on"  => true,
+               "data-miq_sparkle_off" => true,
+               :remote                => true,
+               "data-method"          => :post) do
+              
+      %button.btn.btn-default
+        - if @edit[:scope_table].nil?
+          = _("Define Scope")
+        - else
+          = _("Edit Scope")
+    - unless @edit[:scope_table].nil?
+      .spacer
+      - @edit[:scope_table].each do |token|
+        - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+          = h([token].flatten.first)
+        - else
+          %font{:color => "black"}
+            %b
+              = h([token].flatten.first)

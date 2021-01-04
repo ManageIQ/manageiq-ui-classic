@@ -169,6 +169,7 @@ module ApplicationController::Explorer
   # Accordion selected in explorer
   def accordion_select(node_info = false)
     @lastaction = "explorer"
+    @sb[:action] = nil if @sb
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
 

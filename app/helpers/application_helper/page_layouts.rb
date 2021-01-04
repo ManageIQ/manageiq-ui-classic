@@ -82,6 +82,7 @@ module ApplicationHelper::PageLayouts
       ems_infra
       ems_network
       ems_physical_infra
+      ems_block_storage
     ].include?(controller_name) &&
       action_name == 'show_list' &&
       controller.class.model.none?
@@ -227,12 +228,14 @@ module ApplicationHelper::PageLayouts
       orchestration_stack
       persistent_volume
       physical_server
+      physical_storage
       resource_pool
       retired
       security_group
       security_policy
       security_policy_rule
       service
+      storage_resource
       templates
       vm
     ]

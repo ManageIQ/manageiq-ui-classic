@@ -86,7 +86,7 @@ describe OrchestrationStackController do
       end
 
       it "hides ansible jobs" do
-        expect(response.body).to include("modelName: 'OrchestrationStack'")
+        expect(response.body).to include('"modelName":"OrchestrationStack"')
       end
     end
   end

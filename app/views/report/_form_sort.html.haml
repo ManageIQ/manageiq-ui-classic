@@ -12,7 +12,7 @@
         - else
           - sortby1 = @sortby1
         = select_tag('chosen_sort1',
-          options_for_select([ReportHelper::NOTHING_STRING] + @sort1, sortby1),
+          options_for_select([_(ReportHelper::NOTHING_STRING)] + @sort1, sortby1),
           :multiple              => false,
           :class                 => "selectpicker")
         :javascript
@@ -87,7 +87,7 @@
           - else
             - sortby2 = @sortby2
           = select_tag('chosen_sort2',
-            options_for_select([ReportHelper::NOTHING_STRING] + @sort2, sortby2),
+            options_for_select([_(ReportHelper::NOTHING_STRING)] + @sort2, sortby2),
             :multiple              => false,
             :class                 => "selectpicker")
           :javascript
@@ -145,10 +145,10 @@
                 - col = field_to_col(f.last)
                 - selected = @edit[:new][:col_options][col] && @edit[:new][:col_options][col][:grouping] ? @edit[:new][:col_options][col][:grouping] : []
                 = select_tag(field_name,
-                    options_for_select(MiqReport::GROUPINGS.map(&:reverse), selected),
+                    options_for_select(MiqReport::GROUPINGS.map { |key, value, values| [key, _(value)] }.map(&:reverse), selected),
                     :class    => "selectpicker show-tick",
                     :multiple => true,
-                    "title"   => "Check Option")
+                    "title"   => _("Check Option"))
                 :javascript
                   miqInitSelectPicker();
                   miqSelectPickerEvent("#{field_name}", "#{url}")

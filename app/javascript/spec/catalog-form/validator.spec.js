@@ -14,7 +14,7 @@ describe('catalog form - promise validator', () => {
       ],
     });
 
-    return asyncValidator('a1', '2').then(data => expect(data).toEqual(__('Name has already been taken')));
+    return expect(asyncValidator('a1', '2')).rejects.toEqual(__('Name has already been taken'));
   });
 
   it('returns nothing when name is taken but by the same catalog', () => {
@@ -32,7 +32,7 @@ describe('catalog form - promise validator', () => {
       resources: [],
     });
 
-    return asyncValidator(undefined, '1').then(data => expect(data).toEqual(__("Name can't be blank")));
+    return expect(asyncValidator(undefined, '1')).rejects.toEqual(__("Name can't be blank"));
   });
 
   it('returns nothing when passes', () => {

@@ -1,0 +1,51 @@
+[
+  {
+    "id": "view_grid",
+    "type": "buttonTwoState",
+    "img": "view_grid.png",
+    "imgdis": "view_grid.png",
+    "icon": "fa fa-th",
+    "name": "view_grid",
+    "hidden": false,
+    "pressed": null,
+    "onwhen": null,
+    "data": null,
+    "enabled": true,
+    "title": "Grid View",
+    "url_parms": "?type=grid",
+    "url": "/show_list"
+  },
+  {
+    "id": "view_tile",
+    "type": "buttonTwoState",
+    "img": "view_tile.png",
+    "imgdis": "view_tile.png",
+    "icon": "fa fa-th-large",
+    "name": "view_tile",
+    "hidden": false,
+    "pressed": null,
+    "onwhen": null,
+    "data": null,
+    "enabled": true,
+    "title": "Tile View",
+    "url_parms": "?type=tile",
+    "url": "/show_list"
+  },
+  {
+    "id": "view_list",
+    "type": "buttonTwoState",
+    "img": "view_list.png",
+    "imgdis": "view_list.png",
+    "icon": "fa fa-th-list",
+    "name": "view_list",
+    "hidden": false,
+    "pressed": null,
+    "onwhen": null,
+    "data": null,
+    "enabled": false,
+    "title": "List View",
+    "url_parms": "?type=list",
+    "selected": true,
+    "url": "/show_list"
+  }
+]

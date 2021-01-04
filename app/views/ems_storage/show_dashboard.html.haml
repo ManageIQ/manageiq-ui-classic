@@ -1,0 +1,5 @@
+#main_div
+  -if @ems.supports?(:block_storage)
+    = render :partial => "show_block_storage_dashboard"
+  -else
+    = render :partial => "show_object_storage_dashboard"

@@ -2,7 +2,8 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
-import CloudTenantForm from '../../components/cloud-tenant-form/cloud-tenant-form';
+import { act } from 'react-dom/test-utils';
+import CloudTenantForm from '../../components/cloud-tenant-form';
 import { mount } from '../helpers/mountForm';
 
 require('../helpers/miqSparkle.js');
@@ -28,24 +29,18 @@ describe('Cloud tenant form component', () => {
   });
 
   it('should render adding form variant', () => {
-    const wrapper = shallow(<CloudTenantForm emsChoices={emsChoices} />);
+    const wrapper = shallow(<CloudTenantForm />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should render editing form variant', () => {
-    fetchMock
-      .getOnce('/cloud_tenant/cloud_tenant_form_fields/1', { name: 'foo' });
-    const wrapper = shallow(<CloudTenantForm cloudTenantFormId={1} />);
-    expect(fetchMock._calls[0]).toHaveLength(2);
-    expect(fetchMock._calls[0][0]).toEqual('/cloud_tenant/cloud_tenant_form_fields/1');
+  it('should render editing form variant', async(done) => {
+    fetchMock.getOnce('/api/cloud_tenants/1', { name: 'foo' });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<CloudTenantForm recordId="1" />);
+    });
+    expect(fetchMock.called('/api/cloud_tenants/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
-  });
-
-  it('should call cancel callback ', () => {
-    const wrapper = mount(<CloudTenantForm emsChoices={emsChoices} />);
-
-    const button = wrapper.find('button').last();
-    button.simulate('click');
-    expect(submitSpy).toHaveBeenCalledWith('/cloud_tenant/create/new?button=cancel');
+    done();
   });
 });

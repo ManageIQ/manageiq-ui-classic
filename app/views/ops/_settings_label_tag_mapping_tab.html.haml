@@ -1,4 +1,10 @@
 - if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping"
+  - if @any_mapping_is_all_entities
+    #form_div
+      .alert.alert-warning
+        %span.pficon.pficon-warning-triangle-o
+        %strong
+          = _("Caution: Mappings with Resource Entity 'All-Entities' could cause overwriting existing tags on resources with mapped provider labels.")
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr

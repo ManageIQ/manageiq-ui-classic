@@ -6,9 +6,6 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
   componentClass="div"
   fluid={true}
 >
-  <h3>
-    Basic Information
-  </h3>
   <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
@@ -16,54 +13,50 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
       }
     }
     canReset={false}
+    initialValues={Object {}}
     onCancel={[Function]}
-    onReset={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
         "fields": Array [
           Object {
-            "component": "select-field",
-            "label": "Cloud Provider/Parent Cloud Tenant",
-            "menuPlacement": "bottom",
-            "name": "ems_id",
-            "options": Array [
-              Object {
-                "label": "Label 1",
-                "value": 1,
-              },
-              Object {
-                "label": "Label 2",
-                "value": 2,
-              },
-              Object {
-                "label": "Label 3",
-                "value": 3,
-              },
-              Object {
-                "label": "Label 4",
-                "value": 4,
-              },
-            ],
-            "placeholder": "<Choose>",
-            "validate": Array [
-              Object {
-                "type": "required-validator",
-              },
-            ],
-            "validateOnMount": true,
-          },
-          Object {
             "component": "text-field",
+            "id": "name",
+            "isRequired": true,
             "label": "Tenant Name",
             "maxLength": 128,
             "name": "name",
             "validate": Array [
               Object {
-                "type": "required-validator",
+                "type": "required",
               },
             ],
-            "validateOnMount": true,
+          },
+          Object {
+            "component": "select",
+            "id": "ems_id",
+            "isRequired": true,
+            "label": "Cloud Provider",
+            "loadOptions": [Function],
+            "name": "ems_id",
+            "onChange": [Function],
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "select",
+            "condition": Object {
+              "isNotEmpty": true,
+              "when": "ems_id",
+            },
+            "id": "parent_id",
+            "key": "parent_id-undefined",
+            "label": "Parent Cloud Tenant",
+            "loadOptions": [Function],
+            "name": "parent_id",
           },
         ],
       }
@@ -73,42 +66,24 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
 `;
 
 exports[`Cloud tenant form component should render editing form variant 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
 >
-  <h3>
-    Edit Cloud Tenant
-  </h3>
-  <Connect(MiqFormRenderer)
-    buttonsLabels={
-      Object {
-        "submitLabel": "Save",
-      }
-    }
-    canReset={true}
-    onCancel={[Function]}
-    onReset={[Function]}
-    onSubmit={[Function]}
-    schema={
-      Object {
-        "fields": Array [
-          Object {
-            "component": "text-field",
-            "label": "Tenant Name",
-            "maxLength": 128,
-            "name": "name",
-            "validate": Array [
-              Object {
-                "type": "required-validator",
-              },
-            ],
-            "validateOnMount": true,
-          },
-        ],
-      }
-    }
+  <CloudTenantForm
+    recordId="1"
   />
-</Grid>
+</Provider>
 `;

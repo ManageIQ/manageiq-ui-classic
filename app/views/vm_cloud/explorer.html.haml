@@ -12,6 +12,10 @@
       = render(:partial => "layouts/tl_show_async")
     - else
       = render :partial => "layouts/textual_groups_generic"
+- elsif @upload_user_script
+  #main_div
+    = render(:partial => 'miq_request/prov_edit')
+    - @upload_user_script = false
 - else
   -# Showing a list of VMs
   #main_div

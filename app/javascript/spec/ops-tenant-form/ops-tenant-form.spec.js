@@ -130,7 +130,7 @@ describe('OpstTenantForm', () => {
     expect(pfSwitch).toHaveLength(1);
     pfSwitch.find('input').simulate('change', { target: { checked: false } });
     wrapper.update();
-    expect(wrapper.find('input').first().props().disabled).toEqual(false);
+    expect(!!wrapper.find('input').first().props().disabled).toEqual(false);
     done();
   });
 
@@ -153,7 +153,7 @@ describe('OpstTenantForm', () => {
     wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
     wrapper.update();
     wrapper.find('button').at(1).simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warning');
+    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warn');
     done();
   });
 
@@ -176,7 +176,6 @@ describe('OpstTenantForm', () => {
       resources: [],
     });
     fetchMock.postOnce('/api/tenants', {});
-    fetchMock.postOnce('/ops/invalidate_miq_product_feature_caches', {});
     const wrapper = mount(<OpsTenantForm {...initialProps} />);
     wrapper.find('input').at(0).simulate('change', { target: { value: 'foo' } });
     wrapper.find('input').at(1).simulate('change', { target: { value: 'bar' } });
@@ -210,7 +209,6 @@ describe('OpstTenantForm', () => {
       resources: [],
     });
     fetchMock.putOnce('/api/tenants/123', {});
-    fetchMock.postOnce('/ops/invalidate_miq_product_feature_caches', {});
     let wrapper;
     await act(async() => {
       wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from '../helpers/mountForm';
-import { HierarchicalTreeView } from '../../components/tree-view';
+import { TreeViewRedux } from '../../components/tree-view';
 
 ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
 
@@ -67,7 +67,7 @@ describe('Tree View component', () => {
   };
 
   it('should mount to the correct redux store', () => {
-    mount(<HierarchicalTreeView {...props} />);
+    mount(<TreeViewRedux {...props} />);
     expect(ManageIQ.redux.store.getState().object_tree).toBeTruthy();
   });
 });

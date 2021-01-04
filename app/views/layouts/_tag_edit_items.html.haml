@@ -2,7 +2,117 @@
 %div
   %h3
     - t = {:amount => @tagitems.length, :object => ui_lookup(:model => @edit[:tagging]), :objects => ui_lookup(:models => @edit[:tagging])}
-    = n_("%{amount} %{object} Being Tagged", "%{amount} %{objects} Being Tagged", @tagitems.length) % t
+    - case @edit[:tagging]
+      - when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
+        = n_("%{amount} Ansible Tower Job Being Tagged", "%{amount} Ansible Tower Jobs Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::AnsibleTower::AutomationManager"
+        = n_("%{amount} Automation Manager (Ansible Tower) Being Tagged", "%{amount} Automation Managers (Ansible Tower) Being Tagged", @tagitems.length) % t
+      - when "AvailabilityZone"
+        = n_("%{amount} Availability Zone Being Tagged", "%{amount} Availability Zones Being Tagged", @tagitems.length) % t
+      - when "CloudNetwork"
+        = n_("%{amount} Cloud Network Being Tagged", "%{amount} Cloud Networks Being Tagged", @tagitems.length) % t
+      - when "CloudObjectStoreContainer"
+        = n_("%{amount} Cloud Object Store Container Being Tagged", "%{amount} Cloud Object Store Containers Being Tagged", @tagitems.length) % t
+      - when "CloudObjectStoreObject"
+        = n_("%{amount} Cloud Object Store Object Being Tagged", "%{amount} Cloud Object Store Objects Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::CloudManager"
+        = n_("%{amount} Cloud Provider Being Tagged", "%{amount} Cloud Providers Being Tagged", @tagitems.length) % t
+      - when "CloudSubnet"
+        = n_("%{amount} Cloud Subnet Being Tagged", "%{amount} Cloud Subnets Being Tagged", @tagitems.length) % t
+      - when "CloudTenant"
+        = n_("%{amount} Cloud Tenant Being Tagged", "%{amount} Cloud Tenants Being Tagged", @tagitems.length) % t
+      - when "CloudVolume"
+        = n_("%{amount} Cloud Volume Being Tagged", "%{amount} Cloud Volumes Being Tagged", @tagitems.length) % t
+      - when "CloudVolumeSnapshot"
+        = n_("%{amount} Cloud Volume Snapshot Being Tagged", "%{amount} Cloud Volume Snapshots Being Tagged", @tagitems.length) % t
+      - when "CloudVolumeType"
+        = n_("%{amount} Cloud Volume Type Being Tagged", "%{amount} Cloud Volume Types Being Tagged", @tagitems.length) % t
+      - when "EmsCluster"
+        = n_("%{amount} Cluster Being Tagged", "%{amount} Clusters Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::ConfigurationManager"
+        = n_("%{amount} Configuration Manager Being Tagged", "%{amount} Configuration Managers Being Tagged", @tagitems.length) % t
+      - when "ConfiguredSystem"
+        = n_("%{amount} Configured System Being Tagged", "%{amount} Configured Systems Being Tagged", @tagitems.length) % t
+      - when "Container"
+        = n_("%{amount} Container Being Tagged", "%{amount} Containers Being Tagged", @tagitems.length) % t
+      - when "ContainerBuild"
+        = n_("%{amount} Container Build Being Tagged", "%{amount} Container Builds Being Tagged", @tagitems.length) % t
+      - when "ContainerImage"
+        = n_("%{amount} Container Image Being Tagged", "%{amount} Container Images Being Tagged", @tagitems.length) % t
+      - when "ContainerImageRegistry"
+        = n_("%{amount} Container Image Registry Being Tagged", "%{amount} Container Image Registries Being Tagged", @tagitems.length) % t
+      - when "ContainerNode"
+        = n_("%{amount} Container Node Being Tagged", "%{amount} Container Nodes Being Tagged", @tagitems.length) % t
+      - when "ContainerGroup"
+        = n_("%{amount} Container Pod Being Tagged", "%{amount} Container Pods Being Tagged", @tagitems.length) % t
+      - when "ContainerProject"
+        = n_("%{amount} Container Project Being Tagged", "%{amount} Container Projects Being Tagged", @tagitems.length) % t
+      - when "ContainerReplicator"
+        = n_("%{amount} Container Replicator Being Tagged", "%{amount} Container Replicators Being Tagged", @tagitems.length) % t
+      - when "ContainerRoute"
+        = n_("%{amount} Container Route Being Tagged", "%{amount} Container Routes Being Tagged", @tagitems.length) % t
+      - when "ContainerService"
+        = n_("%{amount} Container Service Being Tagged", "%{amount} Container Services Being Tagged", @tagitems.length) % t
+      - when "ContainerTemplate"
+        = n_("%{amount} Container Template Being Tagged", "%{amount} Container Templates Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::ContainerManager"
+        = n_("%{amount} Containers Provider Being Tagged", "%{amount} Containers Providers Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
+        = n_("%{amount} Credential Being Tagged", "%{amount} Credentials Being Tagged", @tagitems.length) % t
+      - when "Storage"
+        = n_("%{amount} Datastore Being Tagged", "%{amount} Datastores Being Tagged", @tagitems.length) % t
+      - when "Flavor"
+        = n_("%{amount} Flavor Being Tagged", "%{amount} Flavors Being Tagged", @tagitems.length) % t
+      - when "FloatingIp"
+        = n_("%{amount} Floating IP Being Tagged", "%{amount} Floating IPs Being Tagged", @tagitems.length) % t
+      - when "Host"
+        = n_("%{amount} Host Being Tagged", "%{amount} Hosts Being Tagged", @tagitems.length) % t
+      - when "HostAggregate"
+        = n_("%{amount} Host Aggregate Being Tagged", "%{amount} Host Aggregates Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::InfraManager"
+        = n_("%{amount} Infrastructure Provider Being Tagged", "%{amount} Infrastructure Providers Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::CloudManager::AuthKeyPair"
+        = n_("%{amount} Key Pair Being Tagged", "%{amount} Key Pairs Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::NetworkManager"
+        = n_("%{amount} Network Manager Being Tagged", "%{amount} Network Managers Being Tagged", @tagitems.length) % t
+      - when "NetworkPort"
+        = n_("%{amount} Network Port Being Tagged", "%{amount} Network Ports Being Tagged", @tagitems.length) % t
+      - when "NetworkRouter"
+        = n_("%{amount} Network Router Being Tagged", "%{amount} Network Routers Being Tagged", @tagitems.length) % t
+      - when "OrchestrationStack"
+        = n_("%{amount} Orchestration Stack Being Tagged", "%{amount} Orchestration Stacks Being Tagged", @tagitems.length) % t
+      - when "OrchestrationTemplate"
+        = n_("%{amount} Orchestration Template Being Tagged", "%{amount} Orchestration Templates Being Tagged", @tagitems.length) % t
+      - when "PxeServer"
+        = n_("%{amount} PXE Server Being Tagged", "%{amount} PXE Servers Being Tagged", @tagitems.length) % t
+      - when "PersistentVolume"
+        = n_("%{amount} Persistent Volume Being Tagged", "%{amount} Persistent Volumes Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::PhysicalInfraManager"
+        = n_("%{amount} Physical Infrastructure Provider Being Tagged", "%{amount} Physical Infrastructure Providers Being Tagged", @tagitems.length) % t
+      - when "PhysicalServer"
+        = n_("%{amount} Physical Server Being Tagged", "%{amount} Physical Servers Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
+        = n_("%{amount} Playbook (Embedded Ansible) Being Tagged", "%{amount} Playbooks (Embedded Ansible) Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource"
+        = n_("%{amount} Repository Being Tagged", "%{amount} Repositorys Being Tagged", @tagitems.length) % t
+      - when "ResourcePool"
+        = n_("%{amount} Resource Pool Being Tagged", "%{amount} Resource Pools Being Tagged", @tagitems.length) % t
+      - when "SecurityGroup"
+        = n_("%{amount} Security Group Being Tagged", "%{amount} Security Groups Being Tagged", @tagitems.length) % t
+      - when "Service"
+        = n_("%{amount} Service Being Tagged", "%{amount} Services Being Tagged", @tagitems.length) % t
+      - when "ServiceTemplate"
+        = n_("%{amount} Service Catalog Item Being Tagged", "%{amount} Service Catalog Items Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::StorageManager"
+        = n_("%{amount} Storage Manager Being Tagged", "%{amount} Storage Managers Being Tagged", @tagitems.length) % t
+      - when "Switch"
+        = n_("%{amount} Switch Being Tagged", "%{amount} Switches Being Tagged", @tagitems.length) % t
+      - when "ConfigurationScript"
+        = n_("%{amount} Template (Ansible Tower) Being Tagged", "%{amount} Templates (Ansible Tower) Being Tagged", @tagitems.length) % t
+      - when "VmOrTemplate"
+        = n_("%{amount} VM or Template Being Tagged", "%{amount} VMs or Templates Being Tagged", @tagitems.length) % t
+      - else
+        = n_("%{amount} %{object} Being Tagged", "%{amount} %{objects} Being Tagged", @tagitems.length) % t
 
   - if @tagitems
     - @embedded = true

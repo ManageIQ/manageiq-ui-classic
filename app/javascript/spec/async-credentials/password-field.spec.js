@@ -2,43 +2,50 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import PasswordField from '../../components/async-credentials/password-field';
-import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
-const DummyComponent = ({
-  isDisabled,
-  validateOnMount, // eslint-disable-line
-  validate, // eslint-disable-line
-  editMode, // eslint-disable-line
+let mockChangeSpy;
+let mockGetStateSpy;
+
+jest.mock('@@ddf', () => ({
+  useFormApi: () => ({
+    renderForm: ([secret]) => <MockDummyComponent {...secret} />,
+    change: mockChangeSpy,
+    getState: mockGetStateSpy,
+  }),
+  componentTypes: {
+    TEXT_FIELD: 'text-field',
+  },
+}));
+
+const MockDummyComponent = ({
   buttonLabel,
+  editMode, // eslint-disable-line
+  isDisabled,
+  helperText, // eslint-disable-line
   setEditMode,
+  validate, // eslint-disable-line
+  validateOnMount, // eslint-disable-line
   ...props
 }) => <button {...props} onClick={setEditMode} disabled={isDisabled} type="button">{buttonLabel || 'Dummy'}</button>;
 
 
 describe('Secret switch field component', () => {
   let initialProps;
-  let changeSpy;
-  let getStateSpy;
+
   beforeEach(() => {
-    changeSpy = jest.fn();
-    getStateSpy = jest.fn().mockReturnValue({
+    mockChangeSpy = jest.fn();
+    mockGetStateSpy = jest.fn().mockReturnValue({
       values: {},
       initialValues: { foo: 'value-foo', bar: 'value-bar', nonAsync: 'non-async' },
     });
     initialProps = {
-      FieldProvider,
       edit: false,
       name: 'foo',
-      formOptions: {
-        renderForm: ([secret]) => <DummyComponent {...secret} />,
-        change: changeSpy,
-        getState: getStateSpy,
-      },
     };
   });
 
   afterEach(() => {
-    changeSpy.mockReset();
+    mockChangeSpy.mockReset();
   });
 
   it('should render correctly in non edit mode', () => {
@@ -59,17 +66,17 @@ describe('Secret switch field component', () => {
    */
   it('should render correctly switch to editing', () => {
     const wrapper = mount(<PasswordField {...initialProps} edit />);
-    expect(wrapper.find(DummyComponent)).toHaveLength(0);
+    expect(wrapper.find(MockDummyComponent)).toHaveLength(0);
     wrapper.find('button').simulate('click');
     wrapper.update();
-    expect(wrapper.find(DummyComponent)).toHaveLength(1);
+    expect(wrapper.find(MockDummyComponent)).toHaveLength(1);
   });
 
   it('should render correctly reset sercret field', () => {
     const wrapper = mount(<PasswordField {...initialProps} edit />);
     wrapper.find('button').simulate('click');
-    expect(wrapper.find(DummyComponent)).toHaveLength(1);
+    expect(wrapper.find(MockDummyComponent)).toHaveLength(1);
     wrapper.find('button').simulate('click');
-    expect(changeSpy).toHaveBeenCalledWith('foo', undefined);
+    expect(mockChangeSpy).toHaveBeenCalledWith('foo', undefined);
   });
 });

@@ -15,7 +15,6 @@
 //= require ./miq_qe
 //= require ./git_import
 //= require ./automate_import_export
-//= require ./dialog_field_refresh
 //= require ./miq_c3_config
 //= require ./miq_ujs_bindings
 //= require ./miq_tree

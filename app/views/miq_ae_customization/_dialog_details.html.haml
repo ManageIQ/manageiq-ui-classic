@@ -3,7 +3,7 @@
 - if @record
   = render :partial => "layouts/flash_msg"
   #dialog_info_tabs
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header('sample_tab', @sb[:active_tab]) do
         = _('Sample')
       = miq_tab_header('info_tab', @sb[:active_tab]) do

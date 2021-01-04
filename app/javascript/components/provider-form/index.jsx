@@ -6,9 +6,9 @@ import { pick, keyBy } from 'lodash';
 import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
+import mapper from '../../forms/mappers/componentMapper';
+import EditingContext from './editing-context';
 import ProtocolSelector from './protocol-selector';
-import ProviderSelectField from './provider-select-field';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
@@ -19,21 +19,10 @@ const findSkipSubmits = (schema, items) => {
   return [...found, ...children];
 };
 
-const typeSelectField = (edit, filter) => ({
-  component: 'provider-select-field',
-  name: 'type',
-  label: __('Type'),
-  kind: filter,
-  isDisabled: edit,
-  loadOptions: () =>
-    API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
-      .filter(({ kind }) => kind === filter)
-      .map(({ title, type }) => ({ value: type, label: title }))),
-});
-
 const commonFields = [
   {
     component: componentTypes.TEXT_FIELD,
+    id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
@@ -43,6 +32,7 @@ const commonFields = [
   },
   {
     component: componentTypes.SELECT,
+    id: 'zone_id',
     name: 'zone_id',
     label: __('Zone'),
     loadOptions: () =>
@@ -55,22 +45,37 @@ const commonFields = [
   },
 ];
 
-export const loadProviderFields = (kind, type) => API.options(`/api/providers?type=${type}`).then(
+const loadProviderFields = type => API.options(`/api/providers?type=${type}`).then(
   ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
     ...commonFields,
     {
       component: componentTypes.SUB_FORM,
+      id: type,
       name: type,
       ...provider_form_schema, // eslint-disable-line camelcase
     },
   ]),
 );
 
-export const EditingContext = React.createContext({});
+const typeSelectField = (edit, filter, setState) => ({
+  component: 'select',
+  id: 'type',
+  name: 'type',
+  label: __('Type'),
+  kind: filter,
+  isDisabled: edit,
+  loadOptions: () =>
+    API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
+      .filter(({ kind }) => kind === filter)
+      .map(({ title, type }) => ({ value: type, label: title }))),
+  onChange: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
+    fields: [firstField, ...fields],
+  }))),
+});
 
 const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const edit = !!providerId;
-  const [{ fields, initialValues }, setState] = useState({ fields: edit ? undefined : [typeSelectField(false, kind)] });
+  const [{ fields, initialValues }, setState] = useState({});
 
   const submitLabel = edit ? __('Save') : __('Add');
 
@@ -90,7 +95,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
         const endpoints = keyBy(_endpoints, 'role');
         const authentications = keyBy(_authentications, 'authtype');
 
-        loadProviderFields(kind, type).then((fields) => {
+        loadProviderFields(type).then((fields) => {
           setState({
             fields: [typeSelectField(true, kind), ...fields],
             initialValues: {
@@ -102,6 +107,10 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
           });
         }).then(miqSparkleOff);
       });
+    } else {
+      // As the typeSelectField relies on the setState() function, it's necessary to set the initial state
+      // here and not above in the useState() function.
+      setState({ fields: [typeSelectField(false, kind, setState)] });
     }
   }, [providerId]);
 
@@ -147,10 +156,9 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
     request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
   };
 
-  const formFieldsMapper = {
-    ...fieldsMapper,
+  const componentMapper = {
+    ...mapper,
     'protocol-selector': ProtocolSelector,
-    'provider-select-field': ProviderSelectField,
     'provider-credentials': ProviderCredentials,
     'validate-provider-credentials': ValidateProviderCredentials,
     'detect-button': DetectButton,
@@ -161,16 +169,16 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
       { fields && (
         <EditingContext.Provider value={{ providerId, setState }}>
           <MiqFormRenderer
-            formFieldsMapper={formFieldsMapper}
+            componentMapper={componentMapper}
             schema={{ fields }}
             onSubmit={onSubmit}
             onCancel={onCancel}
-            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
             initialValues={initialValues}
             clearedValue={null}
             buttonsLabels={{ submitLabel }}
             canReset={edit}
             clearOnUnmount
+            keepDirtyOnReinitilize
           />
         </EditingContext.Provider>
       ) }

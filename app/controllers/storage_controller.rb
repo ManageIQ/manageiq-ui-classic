@@ -263,6 +263,7 @@ class StorageController < ApplicationController
   end
 
   def explorer
+    @showtype = nil
     @breadcrumbs = []
     @explorer = true
     @lastaction = "explorer"
@@ -463,7 +464,7 @@ class StorageController < ApplicationController
   end
 
   def tagging_explorer_controller?
-    @explorer
+    @explorer && @showtype.nil?
   end
 
   # called by explorer.rb x_button

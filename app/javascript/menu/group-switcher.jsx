@@ -1,11 +1,13 @@
-import Dropdown from 'carbon-components-react/es/components/Dropdown';
 import React from 'react';
+import PropTypes from 'prop-types';
+import Dropdown from 'carbon-components-react/es/components/Dropdown';
 import SideNavItem from 'carbon-components-react/es/components/UIShell/SideNavItem';
 import { Collaborate20 } from '@carbon/icons-react';
+import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
 const { miqChangeGroup } = window;
 
-export const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
+const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
   const options = miqGroups.map(({ id, description }) => ({
     label: description,
     value: id,
@@ -16,31 +18,36 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded })
     value: currentGroup.id,
   };
 
-  const groupChange = ({ selectedItem: { value: group_id } }) => {
-    if (group_id && group_id !== currentGroup.id) {
-      miqChangeGroup(group_id);
+  const groupChange = ({ selectedItem: { value } }) => {
+    if (value && value !== currentGroup.id) {
+      miqChangeGroup(value);
     }
   };
 
   const collapsed = (
-    <SideNavItem className="padded vertical-center">
-      <Collaborate20 />
+    <SideNavItem className="padded collapse_icon">
+      <TooltipIcon
+        direction="right"
+        tooltipText={`${__('Current group:')} ${currentOption.label}`}
+      >
+        <Collaborate20 />
+      </TooltipIcon>
     </SideNavItem>
   );
 
   const singleGroup = (
-    <SideNavItem className="padded vertical-center">
+    <SideNavItem className="padded collapse_icon">
       {currentOption.label}
     </SideNavItem>
   );
 
   const multiGroup = (
     <Dropdown
-      ariaLabel={__("Change current group")}
-      id='miq-nav-group-switch-dropdown'
+      ariaLabel={__('Change current group')}
+      id="miq-nav-group-switch-dropdown"
       initialSelectedItem={currentOption}
       items={options}
-      label={__("Change current group")}
+      label={__('Change current group')}
       onChange={groupChange}
     />
   );
@@ -50,9 +57,28 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded })
   return (
     <div
       className="menu-group"
-      title={`${__("Current group:")} ${currentOption.label}`}
     >
       { isExpanded ? expanded : collapsed }
     </div>
   );
 };
+
+GroupSwitcher.propTypes = {
+  miqGroups: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  })),
+  currentGroup: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }),
+  expanded: PropTypes.bool,
+};
+
+GroupSwitcher.defaultProps = {
+  miqGroups: [],
+  currentGroup: {},
+  expanded: false,
+};
+
+export default GroupSwitcher;

@@ -31,7 +31,7 @@
                             'maxlength' => 128,
                             'ng-model'  => 'vm.cloudSubnetModel.ext_management_system.name'}
     .form-group{'ng-class' => '{"has-error": angularForm.cloud_tenant_id.$invalid}',
-                'ng-if' => 'vm.cloudSubnetModel.ems_id'}
+                'ng-if' => 'vm.cloudSubnetModel.ems_id && vm.available_tenants.length'}
       %label.col-md-2.control-label
         = _('Cloud Tenant Placement')
       .col-md-8{'ng-if' => 'vm.newRecord'}

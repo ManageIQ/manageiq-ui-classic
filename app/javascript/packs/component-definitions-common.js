@@ -1,21 +1,24 @@
 import React from 'react';
 
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
-import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import { Toolbar } from '../components/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
+import AnsibleCredentialsForm from '../components/ansible-credentials-form';
+import AuthKeypairCloudForm from '../components/auth-key-pair-cloud';
 import { BreadcrumbsBar } from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
-import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
+import CloudTenantForm from '../components/cloud-tenant-form';
 import ProviderForm from '../components/provider-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
-import FlavorForm from '../components/flavor-form/flavor-form';
+import FlavorForm from '../components/flavor-form';
 import FirmwareRegistryForm from '../components/firmware-registry/firmware-registry-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
-import { HierarchicalTreeView } from '../components/tree-view';
+import GtlView from  '../components/gtl-view';
+import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal';
@@ -31,8 +34,9 @@ import RegionForm from '../components/region-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import RemoveGenericItemModal from '../components/remove-generic-item-modal';
 import ReportDataTable from '../components/report-data-table';
+import RetirementForm from '../components/retirement-form';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
-import ServiceForm from '../components/service-form';
+import EditServiceForm from '../components/edit-service-form';
 import SetOwnershipForm from '../components/set-ownership-form';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import TaggingWrapperConnected from '../components/taggingWrapper';
@@ -42,6 +46,7 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
+import PhysicalStorageForm from '../components/physical-storage-form';
 
 /**
 * Add component definitions to this file.
@@ -50,6 +55,8 @@ import WorkersForm from '../components/workers-form/workers-form';
 */
 
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
+ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
+ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
 ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
@@ -62,7 +69,8 @@ ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
-ManageIQ.component.addReact('HierarchicalTreeView', HierarchicalTreeView);
+ManageIQ.component.addReact('GtlView', GtlView);
+ManageIQ.component.addReact('TreeViewRedux', TreeViewRedux);
 ManageIQ.component.addReact('FonticonPicker', FonticonPicker);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
@@ -79,8 +87,9 @@ ManageIQ.component.addReact('RegionForm', RegionForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('RemoveGenericItemModal', RemoveGenericItemModal);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
+ManageIQ.component.addReact('RetirementForm', RetirementForm);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);
-ManageIQ.component.addReact('ServiceForm', ServiceForm);
+ManageIQ.component.addReact('EditServiceForm', EditServiceForm);
 ManageIQ.component.addReact('SetOwnershipForm', SetOwnershipForm);
 ManageIQ.component.addReact('TableListView', TableListView);
 ManageIQ.component.addReact('TableListViewWrapper', TableListViewWrapper);
@@ -93,3 +102,4 @@ ManageIQ.component.addReact('Toolbar', Toolbar);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
 ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
+ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);

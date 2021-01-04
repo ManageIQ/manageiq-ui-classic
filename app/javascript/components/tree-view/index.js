@@ -1,1 +1,5 @@
-export { default as HierarchicalTreeView } from './hierarchical-tree-view';
+import TreeViewRedux from './redux';
+import TreeViewField from './field';
+import TreeViewSelector from './selector';
+
+export { TreeViewRedux, TreeViewField, TreeViewSelector };

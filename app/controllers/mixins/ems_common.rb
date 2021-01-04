@@ -119,6 +119,7 @@ module Mixins
           security_policies
           security_policy_rules
           storage_managers
+          storage_resources
           storages
           vms
         ]
@@ -156,7 +157,15 @@ module Mixins
           :object_type => ui_lookup(:model => model.to_s),
           :object_name => @ems.name
         }, :error)
-        return redirect_to(:action => @lastaction || "show_list")
+        # If we are inside the dashboard we need the :action to be set to show and not to the value inside @lastaction which is show_dashboard
+        redirect_args = if @lastaction == "show_dashboard"
+                          {:action => "show", :id => @ems.id}
+                        elsif @lastaction == "show"
+                          {:action => "show", :id => @ems.id}
+                        else
+                          {:action => @lastaction || "show_list"}
+                        end
+        return redirect_to(redirect_args || "show_list")
       end
       @in_a_form = true
       session[:changed] = false
@@ -223,6 +232,7 @@ module Mixins
                                        "network_service_",
                                        "network_service_entry_",
                                        "orchestration_stack_",
+                                       "physical_storage_",
                                        "security_group_",
                                        "security_service_",
                                        "security_service_rule_",
@@ -264,6 +274,7 @@ module Mixins
         when "storage_delete"                   then deletestorages
         when "storage_scan"                     then scanstorage
         when "storage_tag"                      then tag(Storage)
+        when "physical_storage_new"             then javascript_redirect(:action => 'new', :controller => 'physical_storage', :storage_manager_id => block_storage_manager_id(params[:id]))
         # Edit Tags for Network Manager Relationship pages
         when "availability_zone_tag"            then tag(AvailabilityZone)
         when "cloud_network_tag"                then tag(CloudNetwork)
@@ -384,6 +395,7 @@ module Mixins
           ems_container_recheck_auth_status
           ems_infra_recheck_auth_status
           ems_physical_infra_recheck_auth_status
+          ems_storage_recheck_auth_status
         ].include?(params[:pressed])
           if params[:id]
             table_key = :table

@@ -7,7 +7,7 @@ module VmCommon
 
   def textual_group_list
     [
-      %i[properties multi_region lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes],
+      %i[properties multi_region lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes labels],
       %i[compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags]
     ]
   end
@@ -367,7 +367,6 @@ module VmCommon
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @name = @description = ""
     @in_a_form = true
-    @show_snapshot_memory_checkbox = show_snapshot_memory_checkbox?(@vm)
     drop_breadcrumb(:name    => _("Snapshot VM '%{name}'") % {:name => @record.name},
                     :url     => "/vm_common/snap",
                     :display => "snapshot_info")
@@ -391,58 +390,6 @@ module VmCommon
       javascript_flash(:spinner_off => true)
     else
       render :action => "snap"
-    end
-  end
-
-  def show_snapshot_memory_checkbox?(vm)
-    return true unless vm.respond_to?(:snapshotting_memory_allowed?)
-    vm.snapshotting_memory_allowed?
-  end
-
-  def snap_vm
-    @vm = @record = identify_record(params[:id], VmOrTemplate)
-    if params["cancel"] || params[:button] == "cancel"
-      add_flash(_("Snapshot of VM %{name} was cancelled by the user") % {:name => @record.name})
-      if session[:edit] && session[:edit][:explorer]
-        @_params[:display] = "snapshot_info"
-        show
-      else
-        flash_to_session
-        redirect_to(:action => @lastaction, :id => @record.id)
-      end
-    elsif params["create.x"] || params[:button] == "create"
-      @name = params[:name]
-      @description = params[:description]
-      if params[:name].blank? && !@record.try(:snapshot_name_optional?)
-        render_missing_field(session, "Name")
-      elsif params[:description].blank? && @record.try(:snapshot_description_required?)
-        render_missing_field(session, "Description")
-      else
-        flash_error = false
-        begin
-          Vm.process_tasks(:ids         => [@record.id],
-                           :task        => "create_snapshot",
-                           :userid      => session[:userid],
-                           :name        => params[:name],
-                           :description => params[:description],
-                           :memory      => params[:snap_memory] == "true")
-        rescue => bang
-          puts bang.backtrace.join("\n")
-          flash = _("Error during 'Create Snapshot': %{message}") % {:message => bang.message}
-          flash_error = true
-        else
-          flash = _("Create Snapshot for VM and Instance \"%{name}\" was started") % {:name => @record.name}
-        end
-        add_flash(flash, flash_error ? :error : :success)
-        params[:id] = @record.id.to_s # reset id in params for show
-        if session[:edit] && session[:edit][:explorer]
-          @_params[:display] = "snapshot_info"
-          show
-        else
-          flash_to_session
-          redirect_to(:action => @lastaction, :id => @record.id, :display => "snapshot_info")
-        end
-      end
     end
   end
 
@@ -550,14 +497,7 @@ module VmCommon
 
   def evm_relationship
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    @edit = {}
-    @edit[:vm_id] = @record.id
-    @edit[:key] = "evm_relationship_edit__new"
-    @edit[:current] = {}
-    @edit[:new] = {}
-    evm_relationship_build_screen
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:changed] = false
+    @edit ||= {}
 
     @in_a_form = true
     if @explorer
@@ -569,43 +509,6 @@ module VmCommon
   alias_method :instance_evm_relationship, :evm_relationship
   alias_method :vm_evm_relationship, :evm_relationship
   alias_method :miq_template_evm_relationship, :evm_relationship
-
-  # Build the evm_relationship assignment screen
-  def evm_relationship_build_screen
-    @servers = {} # Users array for first chooser
-    MiqServer.all.each { |s| @servers["#{s.name} (#{s.id})"] = s.id.to_s }
-    @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil # Set to first category, if not already set
-  end
-
-  def evm_relationship_get_form_vars
-    @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
-  end
-
-  def evm_relationship_update
-    return unless load_edit("evm_relationship_edit__new")
-    evm_relationship_get_form_vars
-    case params[:button]
-    when "cancel"
-      add_flash(_("Edit Management Engine Relationship was cancelled by the user"))
-      if @edit[:explorer]
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        flash_to_session
-        javascript_redirect(:action => 'show', :id => @record.id)
-      end
-    when "save"
-      add_flash(_("Management Engine Relationship saved"))
-      if @edit[:explorer]
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        flash_to_session
-        javascript_redirect(:action => 'show', :id => @record.id)
-      end
-    end
-  end
 
   def delete
     @lastaction = "delete"
@@ -1027,7 +930,7 @@ module VmCommon
                          end
     else
       rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(node_id)
-      options[:association] = @nodetype == 'az' ? 'vms' : 'vms_and_templates'
+      options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
       options[:parent] = rec
       options[:named_scope] << :active
 
@@ -1463,7 +1366,7 @@ module VmCommon
       header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table),
                                                                                              :name           => name,
                                                                                              :product        => Vmdb::Appliance.PRODUCT_NAME}
-      action = "evm_relationship_update"
+      action = nil
     when "miq_request_new"
       partial = "miq_request/pre_prov"
       header = if request.parameters[:controller] == "vm_cloud"

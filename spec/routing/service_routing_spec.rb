@@ -34,18 +34,6 @@ describe 'routes for ServiceController' do
     end
   end
 
-  describe "#retire" do
-    it "routes with POST" do
-      expect(post("/service/retire")).to route_to("service#retire")
-    end
-  end
-
-  describe "#retirement_info" do
-    it "routes with GET" do
-      expect(get("/service/retirement_info")).to route_to("service#retirement_info")
-    end
-  end
-
   describe "#service_edit" do
     it "routes with POST" do
       expect(post("/service/service_edit")).to route_to("service#service_edit")

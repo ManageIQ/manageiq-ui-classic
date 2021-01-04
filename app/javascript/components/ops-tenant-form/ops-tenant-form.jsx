@@ -40,7 +40,6 @@ const OpsTenantForm = ({
   const save = (values, method, url, message) => {
     miqSparkleOn();
     return API[method](url, values, { skipErrors: [400] })
-      .then(() => http.post('/ops/invalidate_miq_product_feature_caches', {}))
       .then(() => miqRedirectBack(message, 'success', redirectUrl))
       .catch((...args) => {
         miqSparkleOff();
@@ -83,7 +82,6 @@ const OpsTenantForm = ({
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         canReset={!!recordId}
-        onReset={() => add_flash(__('All changes have been reset'), 'warning')}
         buttonsLabels={{
           submitLabel: !!recordId ? __('Save') : __('Add'),
         }}

@@ -28,7 +28,7 @@ ManageIQ.angular.app.component('miqRequestOptions', {
 
     this.applyNewScope = function(response) {
       var data = response.data;
-      sendDataWithRx({setScope: {name: 'reportDataController'}, data: data.data.scope});
+      sendDataWithRx({type: 'setScope', namedScope: data.data.scope});
     };
 
     this.resetClick = function() {

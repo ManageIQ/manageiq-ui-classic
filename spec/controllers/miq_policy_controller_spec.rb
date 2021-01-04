@@ -141,47 +141,18 @@ describe MiqPolicyController do
   end
 
   describe '#explorer' do
-    context 'when profile param present, but non-existent' do
-      it 'renders explorer with flash message' do
-        post :explorer, :params => { :profile => 42 }
-        expect(response).to render_template('explorer')
-        flash_messages = controller.instance_variable_get(:@flash_array)
-        expect(flash_messages.find { |m| m[:message] == 'Policy Profile no longer exists' }).not_to be_nil
-      end
-    end
-
-    context 'when profile param not present' do
-      it 'renders explorer w/o flash message' do
-        post :explorer
-        expect(response).to render_template('explorer')
-        flash_messages = controller.instance_variable_get(:@flash_array)
-        expect(flash_messages).to be_nil
-      end
-    end
-
-    context 'when profile param is valid' do
-      it 'renders explorer w/o flash and assigns to x_node' do
-        profile = FactoryBot.create(:miq_policy_set)
-        allow(controller).to receive(:get_node_info).and_return(true)
-        post :explorer, :params => { :profile => profile.id }
-        expect(response).to render_template('explorer')
-        flash_messages = controller.instance_variable_get(:@flash_array)
-        expect(flash_messages).to be_nil
-        expect(controller.x_node).to eq("pp-#{profile.id}")
-      end
+    it 'renders explorer' do
+      post :explorer
+      expect(response).to render_template('explorer')
+      flash_messages = controller.instance_variable_get(:@flash_array)
+      expect(flash_messages).to be_nil
     end
   end
 
   describe '#tree_select' do
     [
       # [tree_sym, node, partial_name]
-      [:policy_profile_tree, 'root', 'miq_policy/_profile_list'],
       [:policy_tree, 'root', 'miq_policy/_policy_folders'],
-      [:event_tree, 'root', 'miq_policy/_event_list'],
-      [:condition_tree, 'root', 'miq_policy/_condition_folders'],
-      [:action_tree, 'root', 'miq_policy/_action_list'],
-      [:alert_profile_tree, 'root', 'miq_policy/_alert_profile_folders'],
-      [:alert_tree, 'root', 'miq_policy/_alert_list'],
     ].each do |tree_sym, node, partial_name|
       it "renders #{partial_name} when #{tree_sym} tree #{node} node is selected" do
         session[:sandboxes] = {"miq_policy" => {:active_tree => tree_sym}}
@@ -235,7 +206,6 @@ describe MiqPolicyController do
       before do
         allow(controller).to receive(:params).and_return(:action => 'x_search_by_name')
         allow(controller).to receive(:render)
-        controller.instance_variable_set(:@conditions, {})
         controller.instance_variable_set(:@sb, tree)
         controller.instance_variable_set(:@search_text, search)
       end
@@ -247,16 +217,7 @@ describe MiqPolicyController do
 
         it 'updates right cell text according to search text' do
           controller.send(:replace_right_cell, :nodetype => 'root')
-          expect(subject).to eq("All Policy Profiles (Names with \"#{search}\")")
-        end
-      end
-
-      context 'conditions node' do
-        let(:tree) { {:active_tree => :condition_tree, :folder => "host"} }
-
-        it 'updates right cell text according to search text' do
-          controller.send(:replace_right_cell, :nodetype => 'xx')
-          expect(subject).to eq("All Host Conditions (Names with \"#{search}\")")
+          expect(subject).to eq("All Policies (Names with \"#{search}\")")
         end
       end
     end
@@ -346,25 +307,25 @@ describe MiqPolicyController do
     end
   end
 
-  context 'removing conditions' do
-    let(:condition) { FactoryBot.create(:condition) }
-    let(:policy) { FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition]) }
-
-    before do
-      login_as FactoryBot.create(:user, :features => 'condition_remove')
-      controller.params = {:policy_id => policy.id, :id => condition.id}
-      controller.instance_variable_set(:@sb, {})
-      allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
-    end
-
-    it 'removes condition successfully' do
-      expect(controller).to receive(:replace_right_cell)
-      controller.send(:condition_remove)
-      policy.reload
-      expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
-      expect(policy.conditions).to eq([])
-    end
-  end
+  # context 'removing conditions' do
+  #   let(:condition) { FactoryBot.create(:condition) }
+  #   let(:policy) { FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition]) }
+  #
+  #   before do
+  #     login_as FactoryBot.create(:user, :features => 'condition_remove')
+  #     controller.params = {:policy_id => policy.id, :id => condition.id}
+  #     controller.instance_variable_set(:@sb, {})
+  #     allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
+  #   end
+  #
+  #   it 'removes condition successfully' do
+  #     expect(controller).to receive(:replace_right_cell)
+  #     controller.send(:condition_remove)
+  #     policy.reload
+  #     expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
+  #     expect(policy.conditions).to eq([])
+  #   end
+  # end
 
   describe "breadcrumbs" do
     before { EvmSpecHelper.local_miq_server }

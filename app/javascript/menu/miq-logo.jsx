@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SideNavHeader } from 'carbon-components-react/es/components/UIShell';
 
-export const MiqLogo = ({
+const MiqLogo = ({
   alt,
   customBrand,
   expanded,
@@ -15,24 +15,12 @@ export const MiqLogo = ({
   const url = customBrand ? logoCustom : (expanded ? logoLarge : logoSmall);
 
   const miqLogo = () => (
-    <a
-      href={href}
-      title={title}
-    >
-      <img
-        alt={alt}
-        className="navbar-brand-name"
-        src={url}
-      />
+    <a href={href} title={title}>
+      <img alt={alt} className="navbar-brand-name" src={url} />
     </a>
   );
 
-  return (
-    <SideNavHeader
-      className="padded menu-logo"
-      renderIcon={miqLogo}
-    />
-  );
+  return <SideNavHeader className="padded menu-logo" renderIcon={miqLogo} />;
 };
 
 MiqLogo.propTypes = {
@@ -53,3 +41,5 @@ MiqLogo.defaultProps = {
   logoCustom: '/upload/custom_brand.png',
   title: __('Go to my start page'),
 };
+
+export default MiqLogo;

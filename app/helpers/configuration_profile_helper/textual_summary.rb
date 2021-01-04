@@ -1,20 +1,30 @@
 module ConfigurationProfileHelper::TextualSummary
   def textual_configuration_profile_group_properties
     %i[configuration_profile_name
+       configuration_profile_description
+       configuration_profile_target_platform
        configuration_profile_region
        configuration_profile_zone]
   end
 
   def textual_configuration_profile_name
-    {:label => _("Name"), :value => @record.name}
+    create_label('Name', 'name')
+  end
+
+  def textual_configuration_profile_description
+    create_label('Description', 'description')
+  end
+
+  def textual_configuration_profile_target_platform
+    create_label('Target Platform', 'target_platform')
   end
 
   def textual_configuration_profile_region
-    {:label => _("Region"), :value => @record.region_description}
+    create_label('Region', 'region_description')
   end
 
   def textual_configuration_profile_zone
-    {:label => _("Zone"), :value => @record.my_zone}
+    create_label('Zone', 'my_zone')
   end
 
   def textual_configuration_profile_group_environment
@@ -24,15 +34,15 @@ module ConfigurationProfileHelper::TextualSummary
   end
 
   def textual_configuration_profile_environment
-    {:label => _("Environment"), :value => @record.configuration_environment_name}
+    create_label('Environment', 'configuration_environment_name')
   end
 
   def textual_configuration_profile_domain
-    {:label => _("Domain"), :value => @record.configuration_domain_name}
+    create_label('Domain', 'configuration_domain_name')
   end
 
   def textual_configuration_profile_puppet_realm
-    {:label => _("Puppet Realm"), :value => @record.configuration_realm_name}
+    create_label('Puppet Realm', 'configuration_realm_name')
   end
 
   def textual_configuration_profile_group_relationships
@@ -40,9 +50,14 @@ module ConfigurationProfileHelper::TextualSummary
        configured_systems]
   end
 
+  def textual_object_icon(klass)
+    decorated = klass.decorate
+    {:icon => decorated.try(:fonticon), :image => decorated.try(:fileicon)}
+  end
+
   def textual_configuration_manager
     configuration_manager = @record.configuration_manager
-    h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
+    h = {:label => "Configuration Manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}.merge(textual_object_icon(configuration_manager))
     if configuration_manager && role_allows?(:feature => "ems_configuration_show")
       h[:title] = _("Show this Configuration Profile's Configuration Manager")
       h[:link]  = url_for_only_path(:controller => 'ems_configuration', :action => 'show', :id => configuration_manager)
@@ -52,7 +67,7 @@ module ConfigurationProfileHelper::TextualSummary
 
   def textual_configured_systems
     num   = @record.number_of(:configured_systems)
-    h     = {:label => _('Configured Systems'), :icon => "pficon pficon-configured_system", :value => num}
+    h     = {:label => _('Configured Systems'), :value => num}.merge(textual_object_icon(ConfiguredSystem))
     if num.positive? && role_allows?(:feature => "configured_system_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'configured_systems')
       h[:title] = _("Show all Configured Systems")
@@ -69,23 +84,23 @@ module ConfigurationProfileHelper::TextualSummary
   end
 
   def textual_configuration_profile_compute_profile
-    {:label => _("Compute Profile"), :value => @record.configuration_compute_profile_name}
+    create_label('Compute Profile', 'configuration_compute_profile_name')
   end
 
   def textual_configuration_profile_architecture
-    {:label => _("Architecture"), :value => @record.configuration_architecture_name}
+    create_label('Architecture', 'configuration_architecture_name')
   end
 
   def textual_configuration_profile_os
-    {:label => _("OS"), :value => @record.operating_system_flavor_name}
+    create_label('OS', 'operating_system_flavor_name')
   end
 
   def textual_configuration_profile_medium
-    {:label => _("Medium"), :value => @record.customization_script_medium_name}
+    create_label('Medium', 'customization_script_medium_name')
   end
 
   def textual_configuration_profile_partition_table
-    {:label => _("Partition Table"), :value => @record.customization_script_ptable_name}
+    create_label('Partition Table', 'customization_script_ptable_name')
   end
 
   def textual_configuration_profile_group_tenancy
@@ -94,6 +109,8 @@ module ConfigurationProfileHelper::TextualSummary
   end
 
   def textual_configuration_profile_configuration_locations
+    return nil if @record.configuration_locations.empty?
+
     {
       :label => _("Configuration Location"),
       :value => @record.configuration_locations.collect(&:name).join(", ")
@@ -101,9 +118,18 @@ module ConfigurationProfileHelper::TextualSummary
   end
 
   def textual_configuration_profile_configuration_organizations
+    return nil if @record.configuration_organizations.empty?
+
     {
       :label => _("Configuration Organization"),
       :value => @record.configuration_organizations.collect(&:name).join(", ")
     }
+  end
+
+  def create_label(name, property)
+    value = @record.try(property)
+    return nil if value.blank?
+
+    {:label => _(name), :value => value}
   end
 end

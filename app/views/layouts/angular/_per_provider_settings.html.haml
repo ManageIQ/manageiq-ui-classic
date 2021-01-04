@@ -1,7 +1,7 @@
 #settings_tabs
   %h3
     = _("Settings")
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('proxy_settings', nil,
       'ng-if' => "emsOptionsModel.provider_options.hasOwnProperty('proxy_settings')") do
       = _("Proxy")

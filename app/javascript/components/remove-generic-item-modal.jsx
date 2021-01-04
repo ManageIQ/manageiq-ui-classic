@@ -5,8 +5,14 @@ import { Modal, Spinner } from 'patternfly-react';
 import { API } from '../http_api';
 
 const apiTransformFunctions = {
-  buttonGroup: (item) => ({id: item.id, name: item.name.split('|')[0]}),
-  default: (item) => ({id: item.id, name: item.name}),
+  buttonGroup: (item) => ({
+    id: item.id,
+    name: item.name.split('|')[0],
+  }),
+  default: (item, { display_field = 'name' }) => ({
+    id: item.id,
+    name: item[display_field],
+  }),
 };
 
 const parseApiError = (error) => {
@@ -52,7 +58,7 @@ export const removeItems = (items, { ajaxReload, apiUrl, asyncDelete, redirectUr
           window.location.href = redirectUrl;
           miqSparkleOff();
         } else {
-          sendDataWithRx({ controller: 'reportDataController', type: 'gtlUnselectAll' });
+          sendDataWithRx({ type: 'gtlUnselectAll' });
           miqAjax(treeSelect ? `tree_select?id=${treeSelect}` : `reload?deleted=true`)
             .then(() => miqFlashSaved());
         }
@@ -87,11 +93,7 @@ class RemoveGenericItemModal extends React.Component {
     }
     // Load modal data from API
     Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}`)))
-      .then(apiData => apiData.map(transformFn))
-      .then((apiData) => apiData.map((item) => ({
-        id: item.id,
-        name: item[display_field],
-      })))
+      .then(apiData => apiData.map((item) => transformFn(item, { display_field })))
       .then((data) => this.setState({
         data,
         loaded: true,

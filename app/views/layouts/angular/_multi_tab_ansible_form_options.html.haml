@@ -1,5 +1,5 @@
 #options_tabs
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
     = miq_tab_header('provisioning') do
       %i{"error-on-tab" => "provisioning", :style => "color:#cc0000"}
       = _("Provisioning")

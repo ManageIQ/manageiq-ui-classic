@@ -33,7 +33,7 @@ describe PersistentVolumeController do
     }
 
     post :show_list, :params => {:controller => 'persistent_volume', :id => persistent_volume.id}
-    expect(response).to render_template('layouts/angular/_gtl')
+    expect(response).to render_template('layouts/react/_gtl')
     expect(response.status).to eq(200)
   end
 

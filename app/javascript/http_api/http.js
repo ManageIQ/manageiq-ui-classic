@@ -5,10 +5,18 @@ export default {
   post,
 };
 
+function nonApiOnly(url) {
+  if (url.match(/^[^/]|(\/api($|\/))/)) {
+    throw new Error(`${url} is an API endpoint URL, try using 'API' instead of 'http'`);
+  }
+
+  return url;
+}
+
 function get(url, options = {}) {
   return miqFetch({
     ...options,
-    url,
+    url: nonApiOnly(url),
     method: 'GET',
     backendName: __('http'),
     cookieAndCsrf: true,
@@ -22,7 +30,7 @@ function post(url, data, { headers, ...options } = {}) {
       'Content-Type': 'application/json',
       ...headers,
     },
-    url,
+    url: nonApiOnly(url),
     method: 'POST',
     backendName: __('http'),
     cookieAndCsrf: true,

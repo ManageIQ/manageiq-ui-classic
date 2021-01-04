@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Flavor form component should render form 1`] = `
+exports[`Flavor form component matches the snapshot 1`] = `
 <Grid
   bsClass="container"
   componentClass="div"
@@ -12,201 +12,189 @@ exports[`Flavor form component should render form 1`] = `
         "submitLabel": "Add",
       }
     }
-    initialValues={
-      Object {
-        "ems_id": 1,
-        "is_public": true,
-        "rxtx_factor": "1.0",
-      }
-    }
     onCancel={[Function]}
     onSubmit={[Function]}
     schema={
       Object {
         "fields": Array [
           Object {
-            "component": "select-field",
+            "component": "select",
+            "id": "emsId",
+            "isRequired": true,
             "isSearchable": true,
             "label": "Provider",
-            "name": "ems_id",
-            "options": Array [
-              Object {
-                "label": "name1",
-                "value": 1,
-              },
-              Object {
-                "label": "name2",
-                "value": 2,
-              },
-            ],
+            "loadOptions": [Function],
+            "name": "emsId",
+            "onChange": [Function],
             "validate": Array [
               Object {
-                "type": "required-validator",
+                "type": "required",
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "id": "name",
+            "isRequired": true,
             "label": "Name",
             "name": "name",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
-            "label": "Ram size in MB",
+            "id": "ram",
+            "isRequired": true,
+            "label": "RAM size (in MB)",
             "name": "ram",
             "type": "number",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
-                "message": "Ram must be integer",
+                "message": "Must be an integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
-                "message": "Ram must be greater than 0",
+                "message": "Must be greater than or equal to 1",
                 "type": "min-number-value",
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "vcpus",
+            "isRequired": true,
             "label": "VCPUs",
             "name": "vcpus",
             "type": "number",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
-                "message": "VCPUs must be integer",
+                "message": "Must be an integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
-                "message": "VCPUs must be greater than 0",
+                "message": "Must be greater than or equal to 1",
                 "type": "min-number-value",
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "id": "disk",
+            "isRequired": true,
             "label": "Disk size in GB",
             "name": "disk",
             "type": "number",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
-                "message": "Disk size must be integer",
+                "message": "Must be an integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
-                "message": "Disk size must be greater than 0",
+                "message": "Must be greater than or equal to 1",
                 "type": "min-number-value",
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
-            "label": "Swap size in MB",
+            "id": "swap",
+            "isRequired": true,
+            "label": "Swap size (in MB)",
             "name": "swap",
             "type": "number",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
-                "message": "Swap size must be integer",
+                "message": "Must be an integer",
                 "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
               Object {
-                "message": "Swap size must be greater or equal to 0",
+                "message": "Must be greater than or equal to 0",
                 "type": "min-number-value",
-                "value": 0,
+                "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "id": "rxtx_factor",
+            "initialValue": 1,
+            "isRequired": true,
             "label": "RXTX factor",
             "name": "rxtx_factor",
             "type": "number",
             "validate": Array [
               Object {
-                "message": "Required",
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
-                "message": "RXTX factor must be number",
-                "pattern": "^[-+]?[0-9]\\\\d*\\\\.?\\\\d*$",
-                "type": "pattern-validator",
+                "message": "Must be an integer",
+                "pattern": "^[-+]?[0-9]\\\\d*$",
+                "type": "pattern",
               },
               Object {
-                "message": "RXTX factor must be greater than or equal to 0",
+                "message": "Must be greater than or equal to 0",
                 "type": "min-number-value",
-                "value": 0,
+                "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
-            "assignFieldProvider": true,
-            "bsSize": "mini",
-            "component": "switch-field",
-            "label": "Public?",
+            "component": "switch",
+            "id": "is_public",
+            "initialValue": true,
+            "label": "Public",
             "name": "is_public",
-            "offText": "False",
-            "onText": "True",
+            "offText": "No",
+            "onText": "Yes",
           },
           Object {
-            "component": "select-field",
+            "component": "select",
             "condition": Object {
-              "is": false,
-              "when": "is_public",
+              "and": Array [
+                Object {
+                  "is": false,
+                  "when": "is_public",
+                },
+                Object {
+                  "isNotEmpty": true,
+                  "when": "emsId",
+                },
+              ],
             },
+            "id": "cloud_tenant_refs",
             "isClearable": true,
+            "isMulti": true,
             "isSearchable": true,
-            "label": "Cloud Tenant",
-            "multi": true,
+            "key": "cloud_tenant_refs-undefined",
+            "label": "Cloud Tenants",
+            "loadOptions": [Function],
             "name": "cloud_tenant_refs",
-            "options": Array [
-              Object {
-                "label": "name3",
-                "value": undefined,
-              },
-              Object {
-                "label": "name4",
-                "value": undefined,
-              },
-            ],
             "placeholder": "Nothing selected",
           },
         ],

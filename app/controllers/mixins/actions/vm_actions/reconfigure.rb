@@ -255,7 +255,7 @@ module Mixins
 
           # if only one vm that supports disk reconfiguration is selected, get the disks information
           vmdisks = []
-          @reconfigureitems.first.hardware.disks.sort_by(&:filename).each do |disk|
+          @reconfigureitems.first.hardware.disks.order(:filename).each do |disk|
             next if disk.device_type != 'disk'
 
             dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))

@@ -26,33 +26,37 @@ exports[`Import datastore via git component should render correctly 1`] = `
         "fields": Array [
           Object {
             "component": "text-field",
+            "id": "git_url",
             "label": "Git URL",
             "name": "git_url",
             "validate": Array [
               Object {
-                "type": "required-validator",
+                "type": "required",
               },
               Object {
                 "message": "Please provide a valid git URL",
                 "pattern": "^(http|https)://.*",
-                "type": "pattern-validator",
+                "type": "pattern",
               },
             ],
             "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "id": "git_username",
             "label": "Username",
             "name": "git_username",
           },
           Object {
             "component": "text-field",
+            "id": "git_password",
             "label": "Password",
             "name": "git_password",
             "type": "password",
           },
           Object {
             "component": "checkbox",
+            "id": "git_verify_ssl",
             "label": "Verify Peer Certificate",
             "name": "git_verify_ssl",
           },

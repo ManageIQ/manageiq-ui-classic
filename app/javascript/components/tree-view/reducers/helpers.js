@@ -1,4 +1,4 @@
-import Tree from '@manageiq/react-ui-components/dist/wooden-tree';
+import { Tree } from 'react-wooden-tree';
 
 export const nodeCheckedWithDirty = (propNode, value) => {
   let node = { ...propNode };

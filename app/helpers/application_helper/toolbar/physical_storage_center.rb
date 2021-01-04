@@ -19,6 +19,21 @@ class ApplicationHelper::Toolbar::PhysicalStorageCenter < ApplicationHelper::Too
             :confirm => N_("Refresh relationships and power states for all items related to this Physical Storage?"),
             :options => {:feature => :refresh}
           ),
+          api_button(
+            :physical_storage_delete,
+            nil,
+            t = N_('Delete the Physical Storage'),
+            t,
+            :icon         => "pficon pficon-delete fa-lg",
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete},
+            :api          => {
+              :action => 'delete',
+              :entity => 'physical_storages'
+            },
+            :confirm      => N_("Are you sure you want to delete this physical storage?\nNote that all of the attached services (e.g. volumes) will be unmapped."),
+            :send_checked => true
+          ),
         ]
       ),
     ]

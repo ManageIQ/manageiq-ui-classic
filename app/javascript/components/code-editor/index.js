@@ -6,6 +6,7 @@ import {
   ControlLabel,
   Radio,
   HelpBlock,
+  FieldLevelHelp,
 } from 'patternfly-react';
 
 // editor modes
@@ -14,6 +15,8 @@ import 'codemirror/mode/yaml/yaml';
 // editor help
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+
+import { useFieldApi } from '@@ddf';
 
 import RequiredLabel from '../../forms/required-label';
 
@@ -86,14 +89,15 @@ CodeEditor.defaultProps = {
 const CodeGroup = ({
   input: { value, onChange, name },
   meta: { error },
-  formOptions: _formOptions,
   label,
   isRequired,
+  helperText,
   ...props
 }) => (
   <FormGroup name={name} validationState={error && 'error'}>
     <ControlLabel>
       {isRequired ? <RequiredLabel label={label} /> : label }
+      {helperText && <FieldLevelHelp content={helperText} />}
     </ControlLabel>
     <CodeEditor
       onChange={(_editor, _data, value) => onChange(value)}
@@ -105,11 +109,9 @@ const CodeGroup = ({
   </FormGroup>
 );
 
-export const DataDrivenFormCodeEditor = ({
-  FieldProvider,
-  ...props
-}) => (
-  <FieldProvider {...props} component={CodeGroup} />
-);
+export const DataDrivenFormCodeEditor = (props) => {
+  const { input, meta, ...rest } = useFieldApi(props);
+  return <CodeGroup input={input} meta={meta} {...rest} />;
+};
 
 export default CodeEditor;

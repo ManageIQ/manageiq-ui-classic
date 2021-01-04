@@ -9,13 +9,6 @@ describe OpsController do
       allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
     end
 
-    it 'confirms existence of route and action with name invalidate_miq_product_feature_caches ' do
-      EvmSpecHelper.local_miq_server
-
-      post :invalidate_miq_product_feature_caches
-      expect(response.status).to eq(200)
-    end
-
     describe "#rbac_edit_tags_reset" do
       let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:another_tenant) { FactoryBot.create(:tenant) }

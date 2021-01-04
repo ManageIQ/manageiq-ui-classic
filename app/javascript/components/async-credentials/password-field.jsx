@@ -2,21 +2,18 @@ import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  FormGroup,
   ControlLabel,
-  InputGroup,
+  FieldLevelHelp,
   FormControl,
+  FormGroup,
   HelpBlock,
+  InputGroup,
 } from 'patternfly-react';
-import { componentTypes } from '@@ddf';
+import { componentTypes, useFormApi } from '@@ddf';
 import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 
 const PasswordField = ({
-  formOptions,
-  isDisabled,
-  FieldProvider, // eslint-disable-line no-unused-vars
-  validate,
   cancelEditLabel,
   changeEditLabel,
   helperText,
@@ -24,17 +21,17 @@ const PasswordField = ({
   parent,
   ...rest
 }) => {
+  const formOptions = useFormApi();
   const [editMode, setEditMode] = useState(!edit);
   const secretField = {
-    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
     type: 'password',
     autoComplete: 'new-password',
-    isDisabled,
     validateOnMount: rest.validateOnMount,
-    validate: [validate],
     helperText,
     ...rest,
+    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
   };
+
   return (
     <Fragment>
       {edit && editMode && formOptions.renderForm([{
@@ -53,6 +50,7 @@ const PasswordField = ({
         <FormGroup>
           <ControlLabel>
             {rest.isRequired ? <RequiredLabel label={rest.label} /> : rest.label }
+            {helperText && <FieldLevelHelp content={helperText} />}
           </ControlLabel>
           <InputGroup>
             <FormControl
@@ -67,7 +65,6 @@ const PasswordField = ({
               <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
             </InputGroup.Button>
           </InputGroup>
-          { helperText && <HelpBlock>{ helperText }</HelpBlock> }
         </FormGroup>
       )}
       {!edit && formOptions.renderForm([secretField], formOptions)}
@@ -76,14 +73,8 @@ const PasswordField = ({
 };
 
 PasswordField.propTypes = {
-  FieldProvider: PropTypes.func.isRequired,
-  formOptions: PropTypes.shape({
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   cancelEditLabel: PropTypes.string,
   changeEditLabel: PropTypes.string,
-  isDisabled: PropTypes.bool,
-  validate: PropTypes.func,
   helperText: PropTypes.string,
   edit: PropTypes.bool,
   parent: PropTypes.string,
@@ -92,8 +83,6 @@ PasswordField.propTypes = {
 PasswordField.defaultProps = {
   cancelEditLabel: __('Cancel'),
   changeEditLabel: __('Change'),
-  isDisabled: false,
-  validate: undefined,
   helperText: undefined,
   edit: false,
   parent: undefined,

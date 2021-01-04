@@ -1,0 +1,207 @@
+// copied: src/styles/toolbar.scss
+.dropdown-kebab-pf {
+  .dropdown-submenu {
+    .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -6px;
+      margin-left: -1px;
+
+      &:after, &:before {
+        border: none;
+      }
+
+      a:empty {
+        display: none;
+      }
+    }
+  }
+}
+
+.miq-toolbar-actions {
+  margin-top: -10px;
+  margin-left: -20px;  /* this compensates for toolbar-pf-filter not being in the first position */
+  .bx--overflow-menu {
+    width: 100%;
+    padding: 0 3rem 0 1rem;
+    max-width: 30rem;
+    font-size: 14px;
+    .toolbar-overflow {
+      span {
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.29;
+        letter-spacing: .16px;
+        overflow: hidden;
+        color: #161616;
+        white-space: nowrap;
+        text-overflow: ellipsis; 
+      }
+      svg {
+        right: 15px;
+        position: absolute;
+        top: 10px;
+      }
+    }
+  }
+  .form-group {
+    margin-top: 10px;
+    padding-left: 20px;
+    display: inline-flex;
+    padding-right: 15px; /* adjusted to account for button margin */
+    white-space: nowrap;
+    height: 40px;
+    .toolbar-button { 
+        background-color: inherit;
+        border: none;
+        background-image: none;
+        box-shadow: none;
+        &:hover {
+          background-color: #e5e5e5;
+        }
+    }
+    .btn { /* margin for buttons (not part of Patternfly) */
+      margin-right: 5px;
+      i {
+        margin-right: 2px;
+        margin-left: 2px;
+      }
+    }
+  }
+}
+
+.miq-custom-html {
+  .form-group.text,
+  .form-group.has-clear {
+    padding-right: 20px;
+  }
+}
+
+.kebab .btn-group.open .dropdown-toggle {
+  box-shadow: none;
+}
+
+// disabled menu-items do not change on click
+.miq-toolbar-group .dropdown-menu > li.disabled > a:active {
+  color: #9c9c9c !important;
+}
+
+.bx--overflow-menu-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 12px;
+    text-align: left;
+    list-style: none;
+    width:auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #bbb;
+    border: 1px solid #bbb;
+    border-radius: 1px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    & :after {
+      top:unset;
+    }
+    .bx--overflow-menu-options__option {
+      height: unset;
+    }
+    .bx--overflow-menu-options__btn {
+    display: block;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.66666667;
+    color: #363636;
+    white-space: nowrap;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 0;
+    padding: 1px 10px;
+    max-width: unset;
+    }
+    .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn {
+      color: #c6c6c6;
+      pointer-events: inherit;
+    }
+    
+}
+
+.bx--overflow-menu-options[data-floating-menu-direction=bottom]::after {
+  top: unset;
+  width: unset;
+}
+
+.overflow-menu-disabled {
+  span {
+    color: #c6c6c6 !important;
+  }
+  svg {
+    fill: #c6c6c6 !important;
+  }
+  outline: none;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: transparent;
+  &:hover {
+    background-color: transparent;
+  }
+
+}
+
+#dropdown-custom-2 {
+  svg {
+    position:absolute;
+    top:10px;
+    margin-left: 15px;
+  }
+}
+
+.refresh_button {
+  margin-left:20px;
+  background-color: inherit;
+  border: none;
+  background-image: none;
+  box-shadow: none;
+  &:hover {
+    background-color: #e5e5e5;
+  }
+}
+
+.scrollable-options {
+  overflow-y: scroll !important;
+  max-height: 610px !important;
+}
+
+.topology_refresh,.search-topology-button {
+  background-color: inherit;
+  border: none;
+  background-image: none;
+  box-shadow: none;
+  bottom: 1px;
+  position: relative;
+}
+
+.topology_toolbar {
+  margin-bottom: 20px;
+  .text {
+    padding-left: 0px !important;
+  }
+  .topology-checkbox {
+    padding-top: 8px;
+  }
+  .search-pf-input-group {
+    margin-top: 5px;
+  }
+}
+
+.bx--overflow-menu--divider { 
+  .scrollable-menu {
+    display: none;
+  }
+}

@@ -80,7 +80,6 @@ class CloudNetworkForm extends Component {
           schema={createSchema(ems, cloudNetworkId)}
           onSubmit={this.saveClicked}
           onCancel={this.cancelClicked}
-          onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           canReset={!!cloudNetworkId}
           buttonsLabels={{
             submitLabel: cloudNetworkId ? __('Save') : __('Add'),

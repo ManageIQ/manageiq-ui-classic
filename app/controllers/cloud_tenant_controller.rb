@@ -53,69 +53,11 @@ class CloudTenantController < ApplicationController
 
   def new
     assert_privileges("cloud_tenant_new")
-    @tenant = CloudTenant.new
     @in_a_form = true
-    @ems_choices = {}
-    Rbac::Filterer.filtered(ManageIQ::Providers::Openstack::CloudManager).each do |ems|
-      @ems_choices[ems.name] = ems.id
-      # keystone v3 allows for hierarchical tenants
-      next unless ems.api_version == "v3"
-
-      Rbac::Filterer.filtered(ems.cloud_tenants).each do |ems_cloud_tenant|
-        tenant_choice_name = ems.name + " (" + ems_cloud_tenant.name + ")"
-        tenant_choice_id = ems.id.to_s + ":" + ems_cloud_tenant.id.to_s
-        @ems_choices[tenant_choice_name] = tenant_choice_id
-      end
-    end
     drop_breadcrumb(
       :name => _("Add New Cloud Tenant"),
       :url  => "/cloud_tenant/new"
     )
-  end
-
-  def create
-    assert_privileges("cloud_tenant_new")
-    case params[:button]
-    when "cancel"
-      javascript_redirect(:action    => 'show_list',
-                          :flash_msg => _("Add of Cloud Tenant was cancelled by the user"))
-    when "add"
-      @tenant = CloudTenant.new
-      options = form_params
-      ems = find_record_with_rbac(ExtManagementSystem, options[:ems_id])
-      options.delete(:ems_id)
-
-      task_id = CloudTenant.create_cloud_tenant_queue(session[:userid], ems, options)
-
-      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-      end
-    end
-  end
-
-  def create_finished
-    task_id = session[:async][:params][:task_id]
-    tenant_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Tenant \"%{name}\" created") % {
-        :name => tenant_name
-      })
-    else
-      add_flash(_("Unable to create Cloud Tenant \"%{name}\": %{details}") % {
-        :name    => tenant_name,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show_list")
   end
 
   def edit
@@ -126,53 +68,6 @@ class CloudTenantController < ApplicationController
       :name => _("Edit Cloud Tenant \"%{name}\"") % {:name => @tenant.name},
       :url  => "/cloud_tenant/edit/#{@tenant.id}"
     )
-  end
-
-  def update
-    assert_privileges("cloud_tenant_edit")
-    @tenant = find_record_with_rbac(CloudTenant, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => @tenant.name})
-
-    when "save"
-      options = form_params
-      task_id = @tenant.update_cloud_tenant_queue(session[:userid], options)
-
-      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
-      end
-    end
-  end
-
-  def update_finished
-    task_id = session[:async][:params][:task_id]
-    tenant_id = session[:async][:params][:id]
-    tenant_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      flash_and_redirect(_("Cloud Tenant \"%{name}\" updated") % {
-        :name => tenant_name
-      })
-    else
-      flash_and_redirect(_("Unable to update Cloud Tenant \"%{name}\": %{details}") % {
-        :name    => tenant_name,
-        :details => task.message
-      }, :error)
-    end
-  end
-
-  def cloud_tenant_form_fields
-    assert_privileges("cloud_tenant_edit")
-    tenant = find_record_with_rbac(CloudTenant, params[:id])
-    render :json => {
-      :name => tenant.name
-    }
   end
 
   def delete_cloud_tenants

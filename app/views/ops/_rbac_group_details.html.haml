@@ -189,7 +189,7 @@
     = @edit ? _("Assign Filters") : _("Assigned Filters (read only)")
 
   #rbac_group_tabs
-    %ul.nav.nav-tabs
+    %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header('rbac_customer_tags', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_customer_tags')"}) do
         = _("%{current_tenant} Tags") % {:current_tenant => current_tenant.name}
       = miq_tab_header('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_hosts_clusters')"}) do

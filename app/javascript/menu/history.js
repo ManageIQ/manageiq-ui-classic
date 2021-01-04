@@ -1,6 +1,6 @@
 import { flatten } from './search';
 
-const unsetActive = (menu) => menu.map((item) => ({
+const unsetActive = menu => menu.map(item => ({
   ...item,
   active: false,
   items: item.items && unsetActive(item.items),
@@ -23,12 +23,12 @@ export const updateActiveItem = (_location) => {
 
   const current = _.find(flat, { href: currentUrl });
 
-  if (! current) {
+  if (!current) {
     return;
   }
 
   current.item.active = true;
-  current.parents.forEach((p) => p.active = true);
+  current.parents.forEach(p => { p.active = true });
 
   setMenu(deactivated);
 };

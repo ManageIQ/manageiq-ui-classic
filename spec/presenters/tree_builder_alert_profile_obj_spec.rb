@@ -33,7 +33,7 @@ describe TreeBuilderAlertProfileObj do
         expect(subject.send(:tree_init_options)).to eq(
           :checkboxes => true,
           :oncheck    => "miqOnCheckGeneric",
-          :check_url  => "/miq_policy/alert_profile_assign_changed/"
+          :check_url  => "/miq_alert_set/alert_profile_assign_changed/"
         )
       end
     end
@@ -41,7 +41,7 @@ describe TreeBuilderAlertProfileObj do
     describe '#set_locals_for_render' do
       it 'sets locals for render correctly' do
         locals = subject.send(:set_locals_for_render)
-        expect(locals[:check_url]).to eq("/miq_policy/alert_profile_assign_changed/")
+        expect(locals[:check_url]).to eq("/miq_alert_set/alert_profile_assign_changed/")
         expect(locals[:oncheck]).to eq("miqOnCheckGeneric")
         expect(locals[:checkboxes]).to be_truthy
         expect(locals[:selectable]).to be_falsey

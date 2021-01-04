@@ -4,7 +4,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipmi_present ipaddress mac_address zone]
+      %i[hostname ipmi_present ipaddress mac_address vendor zone]
     )
   end
 
@@ -28,6 +28,12 @@ module ConfiguredSystemHelper::TextualSummary
     {:label => _("Mac address"), :value => @record.mac_address}
   end
 
+  def textual_vendor
+    return nil if @record.vendor.blank?
+
+    {:label => _("Vendor"), :image => @record.decorate.fileicon, :value => @record.vendor}
+  end
+
   def textual_zone
     {:label => _("Zone"), :value => @record.configuration_manager.my_zone}
   end
@@ -35,13 +41,18 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[configuration_manager configuration_profile]
+      %i[configuration_manager configuration_profile counterpart]
     )
+  end
+
+  def textual_object_icon(klass)
+    decorated = klass.decorate
+    {:icon => decorated.try(:fonticon), :image => decorated.try(:fileicon)}
   end
 
   def textual_configuration_manager
     configuration_manager = @record.configuration_manager
-    h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
+    h = {:label => "Configuration Manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}.merge(textual_object_icon(configuration_manager))
     if configuration_manager && role_allows?(:feature => "ems_configuration_show")
       h[:title] = _("Show this Configured System's Configuration Manager")
       h[:link]  = url_for_only_path(:controller => 'ems_configuration', :action => 'show', :id => configuration_manager)
@@ -51,12 +62,29 @@ module ConfiguredSystemHelper::TextualSummary
 
   def textual_configuration_profile
     configuration_profile = @record.configuration_profile
-    h = {:label => "Configuration Profile", :icon => "pficon pficon-configuration_profile", :value => (configuration_profile.nil? ? _("None") : configuration_profile.name)}
+    h = {:label => "Configuration Profile", :value => (configuration_profile.nil? ? _("None") : configuration_profile.name)}.merge(textual_object_icon(configuration_profile))
     if configuration_profile && role_allows?(:feature => "configuration_profile_show")
       h[:title] = _("Show this Configured System's Configuration Profile")
       h[:link]  = url_for_only_path(:controller => 'configuration_profile', :action => 'show', :id => configuration_profile)
     end
     h
+  end
+
+  def textual_counterpart
+    counterpart_ems = @record.counterpart.try(:ext_management_system)
+    return nil if counterpart_ems.nil?
+
+    counterpart_entity_name = counterpart_ems.kind_of?(EmsCloud) ? _("Instance") : _("Virtual Machine")
+    {
+      :label => counterpart_entity_name,
+      :image => counterpart_ems.decorate.fileicon,
+      :value => @record.counterpart.name.to_s,
+      :link  => url_for_only_path(
+        :action     => 'show',
+        :controller => 'vm_or_template',
+        :id         => @record.counterpart.id
+      )
+    }
   end
 
   def textual_group_environment

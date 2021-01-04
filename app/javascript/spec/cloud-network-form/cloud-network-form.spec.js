@@ -79,7 +79,7 @@ describe('Cloud Network form component', () => {
   });
 
   it('should render edit variant', (done) => {
-    fetchMock.getOnce('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
+    fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
     const wrapper = shallow(<CloudNetworkForm cloudNetworkId="1" />);
 
     setImmediate(() => {
@@ -116,8 +116,8 @@ describe('Cloud Network form component', () => {
     });
 
     it('should set edit variant initialValues', (done) => {
-      fetchMock.getOnce('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-      fetchMock.getOnce('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
+      fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
+      fetchMock.get('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
 
       const wrapper = mount(<CloudNetworkForm cloudNetworkId="1" />);
 
@@ -152,8 +152,8 @@ describe('Cloud Network form component', () => {
     });
 
     it('when editing', (done) => {
-      fetchMock.getOnce('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-      fetchMock.getOnce('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
+      fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
+      fetchMock.get('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
 
       const wrapper = mount(<CloudNetworkForm cloudNetworkId="1" />);
 
@@ -195,8 +195,8 @@ describe('Cloud Network form component', () => {
         ...networkMock,
         cloud_tenant: { id: '2', name: 'admin' },
       };
-      fetchMock.getOnce('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-      fetchMock.getOnce('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
+      fetchMock.get('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
+      fetchMock.get('/api/providers/8/cloud_tenants?expand=resources&attributes=id,name', tenantsMock);
 
       const wrapper = mount(<CloudNetworkForm cloudNetworkId="1" />);
 

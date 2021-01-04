@@ -32,8 +32,8 @@ const PfAggregateStatusCard = ({
       </h2>
       <div className="card-pf-body">
         <p className="card-pf-aggregate-status-notifications">
-          { notifications.map(notification => (
-            <span key={notification} className="card-pf-aggregate-status-notification">
+          { notifications.map((notification, i) => (
+            <span key={i} className="card-pf-aggregate-status-notification">
               <a href={notification.href}>
                 { notification.iconImage && (
                   <React.Fragment>

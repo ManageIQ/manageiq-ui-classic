@@ -1,1 +1,7 @@
-#main_div= render :partial => "layouts/gtl"
+#main_div
+  - if ManageIQ::Providers::StorageManager.any?
+    = render :partial => 'layouts/gtl'
+  - else
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Block Storage Manager"),
+                         :documentation => ::Settings.docs.storage_manager}

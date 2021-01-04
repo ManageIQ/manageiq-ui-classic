@@ -143,12 +143,12 @@ module Menu
           Menu::Item.new('ems_network',      N_('Providers'),         'ems_network',      {:feature => 'ems_network_show_list'},     '/ems_network/show_list'),
           Menu::Item.new('cloud_network',    N_('Networks'),          'cloud_network',    {:feature => 'cloud_network_show_list'},   '/cloud_network/show_list'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),           'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},    '/cloud_subnet/show_list'),
-          Menu::Item.new('network_router',   N_('Network Routers'),   'network_router',   {:feature => 'network_router_show_list'},  '/network_router/show_list'),
-          Menu::Item.new('network_service',  N_('Network Services'),  'network_service',  {:feature => 'network_service_show_list'}, '/network_service/show_list'),
+          Menu::Item.new('network_router',   N_('Routers'),           'network_router',   {:feature => 'network_router_show_list'},  '/network_router/show_list'),
+          Menu::Item.new('network_service',  N_('Services'),          'network_service',  {:feature => 'network_service_show_list'}, '/network_service/show_list'),
           Menu::Item.new('security_group',   N_('Security Groups'),   'security_group',   {:feature => 'security_group_show_list'},  '/security_group/show_list'),
           Menu::Item.new('security_policy',  N_('Security Policies'), 'security_policy',  {:feature => 'security_policy_show_list'}, '/security_policy/show_list'),
           Menu::Item.new('floating_ip',      N_('Floating IPs'),      'floating_ip',      {:feature => 'floating_ip_show_list'},     '/floating_ip/show_list'),
-          Menu::Item.new('network_port',     N_('Network Ports'),     'network_port',     {:feature => 'network_port_show_list'},    '/network_port/show_list'),
+          Menu::Item.new('network_port',     N_('Ports'),             'network_port',     {:feature => 'network_port_show_list'},    '/network_port/show_list'),
           Menu::Item.new('network_topology', N_('Topology'),          'network_topology', {:feature => 'network_topology'},          '/network_topology/show'),
         ])
       end
@@ -187,6 +187,16 @@ module Menu
                                            'cloud_volume_type',
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
+                            Menu::Item.new('storage_resource',
+                                           N_('Storage Resources'),
+                                           'storage_resource',
+                                           {:feature => 'storage_resource_show_list'},
+                                           '/storage_resource/show_list'),
+                            Menu::Item.new('physical_storage',
+                                           N_('Storages'),
+                                           'physical_storage',
+                                           {:feature => 'physical_storage_show_list'},
+                                           '/physical_storage/show_list'),
                           ])
       end
 
@@ -212,10 +222,16 @@ module Menu
 
       def control_menu_section
         Menu::Section.new(:con, N_("Control"), 'carbon--IbmSecurity', [
-          Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),
-          Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},     '/miq_policy/rsop'),
-          Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},  '/miq_policy/export'),
-          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},            "/miq_policy/log")
+          Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set', :any => true}, '/miq_policy_set/explorer'),
+          Menu::Item.new('miq_policy',        N_('Policies'),        'miq_policy',           {:feature => 'miq_policy', :any => true},     '/miq_policy/explorer'),
+          Menu::Item.new('miq_event',         N_('Events'),          'miq_event',            {:feature => 'miq_event', :any => true},      '/miq_event/explorer'),
+          Menu::Item.new('condition',         N_('Conditions'),      'condition',            {:feature => 'condition', :any => true},      '/condition/explorer'),
+          Menu::Item.new('miq_action',        N_('Actions'),         'miq_action',           {:feature => 'miq_action', :any => true},     '/miq_action/explorer'),
+          Menu::Item.new('miq_alert_set',     N_('Alert Profiles'),  'miq_alert_set',        {:feature => 'miq_alert_set', :any => true},  '/miq_alert_set/explorer'),
+          Menu::Item.new('miq_alert',         N_('Alerts'),          'miq_alert',            {:feature => 'miq_alert', :any => true},      '/miq_alert/explorer'),
+          Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},            '/miq_policy/rsop'),
+          Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},         '/miq_policy/export'),
+          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},                   '/miq_policy/log')
         ])
       end
 

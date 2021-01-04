@@ -26,6 +26,23 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
+  def api_collection_path(klass, *options)
+    identifier = api_identifier_by_class(klass)
+    send("api_#{identifier}_path", *options)
+  end
+
+  def api_resource_path(record, *options)
+    identifier = api_identifier_by_class(record.class).to_s.singularize
+    send("api_#{identifier}_path", nil, record.id, *options)
+  end
+
+  def api_identifier_by_class(klass)
+    raise "API plugin not loaded" unless defined?(Api::ApiConfig)
+
+    @api_cc ||= Api::CollectionConfig.new
+    @api_cc.name_for_klass(klass) || @api_cc.name_for_subclass(klass)
+  end
+
   def settings(*path)
     @settings ||= {}
     @settings.fetch_path(*path)
@@ -255,6 +272,8 @@ module ApplicationHelper
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
       if %w[MiqTask].include?(view.db) && %w[miq_task].include?(params[:controller])
+
+        # This disables the click-through in GTL unless parent_path & parent_id are set on a row.
         return true
       end
       if @explorer
@@ -304,10 +323,10 @@ module ApplicationHelper
                  PxeImageType
                  IsoDatastore
                  CustomizationTemplate].include?(view.db) &&
-              %w[miq_policy ops pxe report].include?(params[:controller])
+              %w[miq_action miq_alert miq_policy ops pxe report].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         elsif %w[MiqPolicy].include?(view.db) && %w[miq_policy].include?(params[:controller])
-          return "/#{params[:controller]}/tree_select/?id=#{x_node}"
+          return "/#{params[:controller]}/x_show/?id=#{x_node}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
@@ -735,6 +754,8 @@ module ApplicationHelper
 
   def display_adv_search?
     %w[auth_key_pair_cloud
+       storage_resource
+       physical_storage
        availability_zone
        automation_manager
        cloud_network
@@ -784,6 +805,7 @@ module ApplicationHelper
        orchestration_stack
        persistent_volume
        physical_server
+       provider_foreman
        resource_pool
        retired
        security_group
@@ -1040,94 +1062,95 @@ module ApplicationHelper
   end
 
   DOWNLOAD_VIEW_LAYOUTS = %w[action
-                        auth_key_pair_cloud
-                        availability_zone
-                        alerts_overview
-                        alerts_list
-                        alerts_most_recent
-                        cloud_network
-                        cloud_object_store_container
-                        cloud_object_store_object
-                        cloud_subnet
-                        cloud_tenant
-                        cloud_topology
-                        cloud_volume
-                        cloud_volume_backup
-                        cloud_volume_snapshot
-                        cloud_volume_type
-                        condition
-                        configuration_job
-                        configuration_profile
-                        configuration_script_source
-                        configured_system
-                        container
-                        container_build
-                        container_dashboard
-                        container_group
-                        container_image
-                        container_image_registry
-                        container_node
-                        container_project
-                        container_replicator
-                        container_route
-                        container_service
-                        container_template
-                        container_topology
-                        ems_block_storage
-                        ems_cloud
-                        ems_cluster
-                        ems_configuration
-                        ems_container
-                        ems_infra
-                        ems_infra_dashboard
-                        ems_network
-                        ems_object_storage
-                        ems_physical_infra
-                        ems_storage
-                        infra_topology
-                        event
-                        flavor
-                        floating_ip
-                        generic_object
-                        generic_object_definition
-                        guest_device
-                        host
-                        host_aggregate
-                        load_balancer
-                        manageiq/providers/embedded_ansible/automation_manager/playbook
-                        manageiq/providers/embedded_automation_manager/authentication
-                        manageiq/providers/embedded_automation_manager/configuration_script_source
-                        miq_schedule
-                        miq_template
-                        monitor_alerts_overview
-                        monitor_alerts_list
-                        monitor_alerts_most_recent
-                        network_port
-                        network_router
-                        network_service
-                        network_service_entry
-                        network_topology
-                        offline
-                        orchestration_stack
-                        physical_infra_topology
-                        physical_rack
-                        physical_chassis
-                        physical_switch
-                        physical_storage
-                        physical_server
-                        persistent_volume
-                        policy
-                        policy_group
-                        security_policy
-                        security_policy_rule
-                        policy_profile
-                        resource_pool
-                        retired
-                        scan_profile
-                        security_group
-                        services
-                        storage
-                        templates].freeze
+                             auth_key_pair_cloud
+                             availability_zone
+                             alerts_overview
+                             alerts_list
+                             alerts_most_recent
+                             cloud_network
+                             cloud_object_store_container
+                             cloud_object_store_object
+                             cloud_subnet
+                             cloud_tenant
+                             cloud_topology
+                             cloud_volume
+                             cloud_volume_backup
+                             cloud_volume_snapshot
+                             cloud_volume_type
+                             condition
+                             configuration_job
+                             configuration_profile
+                             configuration_script_source
+                             configured_system
+                             container
+                             container_build
+                             container_dashboard
+                             container_group
+                             container_image
+                             container_image_registry
+                             container_node
+                             container_project
+                             container_replicator
+                             container_route
+                             container_service
+                             container_template
+                             storage_resource
+                             container_topology
+                             ems_block_storage
+                             ems_cloud
+                             ems_cluster
+                             ems_configuration
+                             ems_container
+                             ems_infra
+                             ems_infra_dashboard
+                             ems_network
+                             ems_object_storage
+                             ems_physical_infra
+                             ems_storage
+                             infra_topology
+                             event
+                             flavor
+                             floating_ip
+                             generic_object
+                             generic_object_definition
+                             guest_device
+                             host
+                             host_aggregate
+                             load_balancer
+                             manageiq/providers/embedded_ansible/automation_manager/playbook
+                             manageiq/providers/embedded_automation_manager/authentication
+                             manageiq/providers/embedded_automation_manager/configuration_script_source
+                             miq_schedule
+                             miq_template
+                             monitor_alerts_overview
+                             monitor_alerts_list
+                             monitor_alerts_most_recent
+                             network_port
+                             network_router
+                             network_service
+                             network_service_entry
+                             network_topology
+                             offline
+                             orchestration_stack
+                             physical_infra_topology
+                             physical_rack
+                             physical_chassis
+                             physical_switch
+                             physical_storage
+                             physical_server
+                             persistent_volume
+                             policy
+                             policy_group
+                             security_policy
+                             security_policy_rule
+                             policy_profile
+                             resource_pool
+                             retired
+                             scan_profile
+                             security_group
+                             services
+                             storage
+                             templates].freeze
 
   def render_download_view_tb?
     DOWNLOAD_VIEW_LAYOUTS.include?(@layout) && !@record && !@tagitems &&
@@ -1141,6 +1164,9 @@ module ApplicationHelper
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
     tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
+                   'role' => 'tab',
+                   'aria-selected' => "#{active == id ? 'true' : 'false'}",
+                   'aria-controls' => "#{id}",
                    :id    => "#{id}_tab"}.merge!(options)
 
     content_tag(:li, tag_options) do
@@ -1161,7 +1187,7 @@ module ApplicationHelper
     options.delete(:lazy)
     options.delete(:class)
 
-    content_tag(:div, :id => id, :class => classname.join(' '), **options) do
+    content_tag(:div, :id => id, 'role' => 'tabpanel', 'aria-labelledby' => "#{id}_tab", :class => classname.join(' '), **options) do
       yield unless lazy
     end
   end

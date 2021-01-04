@@ -13,7 +13,7 @@ describe TreeBuilderEmsFolders do
       expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
                                                      :checkboxes => true,
                                                      :oncheck    => "miqOnCheckGeneric",
-                                                     :check_url  => "/miq_policy/alert_profile_assign_changed/")
+                                                     :check_url  => "/miq_alert_set/alert_profile_assign_changed/")
     end
   end
 

@@ -30,6 +30,19 @@ class ConfiguredSystemController < ApplicationController
     process_show_list(options)
   end
 
+  def launch_configured_system_console
+    record = self.class.model.find(params[:id])
+    unless record.console_url
+      add_flash(_("Configured System console access failed: Task start failed"), :error)
+    end
+
+    if @flash_array
+      javascript_flash(:spinner_off => true)
+    else
+      javascript_open_window(record.console_url)
+    end
+  end
+
   private
 
   def textual_group_list

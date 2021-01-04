@@ -2,7 +2,7 @@ describe "ops/_zone_form.html.haml" do
   before do
     assign(:sb, :active_tab => "settings_evm_servers")
     @selected_zone = FactoryBot.create(:zone, :name => 'One Zone', :description => " One Description", :settings =>
-                                                {:proxy_server_ip => '1.2.3.4', :concurrent_vm_scans => 0, :ntp => {:server => ['Server 1']}})
+                                                {:proxy_server_ip => '1.2.3.4', :concurrent_vm_scans => 0})
     @servers = []
   end
 
@@ -16,16 +16,14 @@ describe "ops/_zone_form.html.haml" do
                                           :concurrent_vm_scans => '0',
                                           :userid              => nil,
                                           :password            => nil,
-                                          :verify              => nil,
-                                          :ntp                 => {:server =>[]}},
+                                          :verify              => nil},
                :current               => {:name                => nil,
                                           :description         => nil,
                                           :proxy_server_ip     => nil,
                                           :concurrent_vm_scans => '0',
                                           :userid              => nil,
                                           :password            => nil,
-                                          :verify              => nil,
-                                          :ntp                 => { :server => []}},
+                                          :verify              => nil},
                :key                   => 'zone_edit__new',
                :default_verify_status => true}
     end
@@ -34,7 +32,6 @@ describe "ops/_zone_form.html.haml" do
       expect(response.body).to include('Name')
       expect(response.body).to include('Description')
       expect(response.body).to include('SmartProxy Server IP')
-      expect(response.body).to include('NTP Servers')
       expect(response.body).to include('Max Active VM Scans')
     end
 

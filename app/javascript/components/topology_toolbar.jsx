@@ -14,7 +14,7 @@ const resetSearchClick = () => {
 };
 
 const TopologyToolbar = () => (
-  <div className="toolbar-pf-actions miq-toolbar-actions">
+  <div className="toolbar-pf-actions miq-toolbar-actions topology_toolbar">
     <div className="miq-toolbar-group form-group">
       <div className="form-group text">
         <label htmlFor="box_display_names" className="topology-checkbox checkbox-inline">
@@ -23,14 +23,16 @@ const TopologyToolbar = () => (
         </label>
       </div>
       <div className="form-group">
-        <button type="button" className="btn btn-default" title={__('Refresh this page')} onClick={refreshClick}>
+        <button type="button" className="btn btn-default topology_refresh" title={__('Refresh this page')} onClick={refreshClick}>
           <i className="fa fa-refresh fa-lg" />
+&nbsp;
+          {__('Refresh')}
         </button>
       </div>
       <form
         style={{ display: 'inline' }}
         className="topology-tb topology-search"
-        onSubmit={e => searchClick(e)}
+        onSubmit={(e) => searchClick(e)}
       >
         <div className="form-group has-clear">
           <div className="search-pf-input-group" style={{ position: 'relative' }}>
