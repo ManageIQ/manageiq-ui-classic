@@ -4,7 +4,6 @@ class MiqPolicySetController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin

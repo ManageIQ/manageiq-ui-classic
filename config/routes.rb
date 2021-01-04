@@ -2123,7 +2123,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        button
         edit
         form_field_changed
         reload

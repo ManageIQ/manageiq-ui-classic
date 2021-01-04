@@ -11,7 +11,6 @@ describe 'routes for MiqPolicySetController' do
   ]
 
   post_routes = %w[
-    button
     edit
     form_field_changed
     reload
