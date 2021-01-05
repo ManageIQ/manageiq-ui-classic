@@ -55,11 +55,6 @@ class MiqPolicyController < ApplicationController
   def show
     super
     @center_toolbar = "miq_policy"
-    @record = @policy = MiqPolicy.find_by(:id => params[:id])
-    @policy_conditions = @policy.conditions
-    @policy_events = @policy.miq_event_definitions
-    @expression_table = @policy.expression.kind_of?(MiqExpression) ? exp_build_table(@policy.expression.exp) : nil
-    @policy_profiles = @policy.memberof.sort_by { |pp| pp.description.downcase }
   end
 
   def new
@@ -97,12 +92,13 @@ class MiqPolicyController < ApplicationController
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,
+      :record_info    => @policy || @record,
       :record_title => :description,
     }
   end
 
   def menu_breadcrumb
-    {:title => _('Explorer')}
+    return {:title => _("Policies"), :url => controller_url}
   end
 
   menu_section :con

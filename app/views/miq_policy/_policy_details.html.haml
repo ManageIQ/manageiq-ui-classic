@@ -1,139 +1,142 @@
 #policy_details_div
-  - if @policy
-    #policy_info_div
-      = render :partial => "layouts/flash_msg"
-      -# Description and active fields
-      %h3= _('Basic Information')
-      .form-horizontal
+  -  policy_conditions = @record.conditions
+  -  policy_events = @record.miq_event_definitions
+  -  expression_table = @record.expression.kind_of?(MiqExpression) ? exp_build_table(@record.expression.exp) : nil
+  -  policy_profiles = @record.memberof.sort_by { |pp| pp.description.downcase }
+  #policy_info_div
+    = render :partial => "layouts/flash_msg"
+    -# Description and active fields
+    %h3= _('Basic Information')
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2= _('Active')
+        .col-md-8
+          %p.form-control-static= h(@record.active ? _("Yes") : _("No"))
+      .form-group
+        %label.control-label.col-md-2= _('Created')
+        .col-md-8
+          %p.form-control-static
+            = h(_("By Username %{username} %{created_on}") % {:username => @record.created_by || _("N/A"), :created_on => format_timezone(@record.created_on, session[:user_tz], "gtl")})
+
+      - if @record.created_on != @record.updated_on
         .form-group
-          %label.control-label.col-md-2= _('Active')
-          .col-md-8
-            %p.form-control-static= h(@policy.active ? _("Yes") : _("No"))
-        .form-group
-          %label.control-label.col-md-2= _('Created')
+          %label.control-label.col-md-2= _("Last Updated")
           .col-md-8
             %p.form-control-static
-              = h(_("By Username %{username} %{created_on}") % {:username => @policy.created_by || _("N/A"), :created_on => format_timezone(@policy.created_on, session[:user_tz], "gtl")})
+              = h(_("By Username %{username} %{updated_on}") % {:username => @record.updated_by || _("N/A"), :updated_on => format_timezone(@record.updated_on, session[:user_tz], "gtl")})
+    %hr
 
-        - if @policy.created_on != @policy.updated_on
-          .form-group
-            %label.control-label.col-md-2= _("Last Updated")
-            .col-md-8
-              %p.form-control-static
-                = h(_("By Username %{username} %{updated_on}") % {:username => @policy.updated_by || _("N/A"), :updated_on => format_timezone(@policy.updated_on, session[:user_tz], "gtl")})
+    -# Scope
+    %h3= _("Scope")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+          - if !expression_table.nil?
+            - expression_table.each do |token|
+              - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+                = h([token].flatten.first)
+              - else
+                %font{:color => "black"}
+                  %b
+                    = h([token].flatten.first)
+          - else
+            = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
       %hr
 
-      -# Scope
-      %h3= _("Scope")
-      .form-horizontal
-        .form-group
-          %label.control-label.col-md-2
-          .col-md-8
-            - if !@expression_table.nil?
-              - @expression_table.each do |token|
-                - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                  = h([token].flatten.first)
-                - else
-                  %font{:color => "black"}
-                    %b
-                      = h([token].flatten.first)
-            - else
-              = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
-        %hr
-
-      -# Conditions for this policy
-      %h3= _("Conditions")
-      - if @policy_conditions.empty?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("No conditions defined. This policy is unconditional and will ALWAYS return true.")}
-      - else
-        %table.table.table-striped.table-bordered.table-hover
-          %thead
+    -# Conditions for this policy
+    %h3= _("Conditions")
+    - if policy_conditions.empty?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No conditions defined. This policy is unconditional and will ALWAYS return true.")}
+    - else
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th.table-view-pf-select
+            %th= _("Description")
+            %th= _("Scopes / Expressions")
+        %tbody
+          - policy_conditions.each do |c|
             %tr
-              %th.table-view-pf-select
-              %th= _("Description")
-              %th= _("Scopes / Expressions")
-          %tbody
-            - @policy_conditions.each do |c|
-              %tr
-                %td.table-view-pf-select
-                  %i{:class => c.decorate.fonticon}
-                %td
-                  = c.description
-                %td
-                  - if c.applies_to_exp.present?
-                    %strong
-                      = _("Scope")
-                    %div
-                      = h(MiqExpression.to_human(c.applies_to_exp))
-                    %br
-
+              %td.table-view-pf-select
+                %i{:class => c.decorate.fonticon}
+              %td
+                = c.description
+              %td
+                - if c.applies_to_exp.present?
                   %strong
-                    = _("Expression")
+                    = _("Scope")
                   %div
-                    = h(MiqExpression.to_human(c.expression))
+                    = h(MiqExpression.to_human(c.applies_to_exp))
+                  %br
+
+                %strong
+                  = _("Expression")
+                %div
+                  = h(MiqExpression.to_human(c.expression))
+    %hr
+
+    -# Events for this policy
+    %h3= _("Events")
+    - if policy_events.empty?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("This policy does not currently respond to any Events.")}
+    - else
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th.table-view-pf-select
+            %th= _("Description")
+            %th= _("Actions")
+        %tbody
+          - policy_events.each do |e|
+            %tr
+              %td.table-view-pf-select
+                %i{:class => e.decorate.try(:fonticon)}
+              %td
+                = h(e.description)
+              %td
+                - ta = @record.actions_for_event(e, :success)
+                - fa = @record.actions_for_event(e, :failure)
+                - if ta.empty? && fa.empty?
+                  = _("* No Actions are configured for this Event.")
+                - else
+                  - unless ta.empty?
+                    %table
+                      %tbody
+                        - ta.each do |a|
+                          %tr
+                            %td
+                              %span.pficon.pficon-ok
+                              = h(a.description)
+                  - unless fa.empty?
+                    %table
+                      %tbody
+                        - fa.each do |a|
+                          %tr
+                            %td
+                              %span.pficon.pficon-close
+                              = h(a.description)
       %hr
 
-      -# Events for this policy
-      %h3= _("Events")
-      - if @policy_events.empty?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("This policy does not currently respond to any Events.")}
-      - else
-        %table.table.table-striped.table-bordered.table-hover
-          %thead
+    -# Notes field
+    %h3= _("Notes")
+    - if @record.notes.blank?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
+    - else
+      = text_area_tag("notes", @record.notes, :readonly => true, :rows => 4)
+
+    -# Profiles policy is assigned to
+    %h3= _("Belongs to Profiles")
+    - if policy_profiles.empty?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("This Policy is not assigned to any Profiles.")}
+    - else
+      %table.table.table-striped.table-bordered.table-hover
+        %tbody
+          - policy_profiles.each do |pp|
+            - id = "pp-#{pp.id}"
             %tr
-              %th.table-view-pf-select
-              %th= _("Description")
-              %th= _("Actions")
-          %tbody
-            - @policy_events.each do |e|
-              %tr
-                %td.table-view-pf-select
-                  %i{:class => e.decorate.try(:fonticon)}
-                %td
-                  = h(e.description)
-                %td
-                  - ta = @policy.actions_for_event(e, :success)
-                  - fa = @policy.actions_for_event(e, :failure)
-                  - if ta.empty? && fa.empty?
-                    = _("* No Actions are configured for this Event.")
-                  - else
-                    - unless ta.empty?
-                      %table
-                        %tbody
-                          - ta.each do |a|
-                            %tr
-                              %td
-                                %span.pficon.pficon-ok
-                                = h(a.description)
-                    - unless fa.empty?
-                      %table
-                        %tbody
-                          - fa.each do |a|
-                            %tr
-                              %td
-                                %span.pficon.pficon-close
-                                = h(a.description)
-        %hr
-
-      -# Notes field
-      %h3= _("Notes")
-      - if @policy.notes.blank?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-      - else
-        = text_area_tag("notes", @policy.notes, :readonly => true, :rows => 4)
-
-      -# Profiles policy is assigned to
-      %h3= _("Belongs to Profiles")
-      - if @policy_profiles.empty?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("This Policy is not assigned to any Profiles.")}
-      - else
-        %table.table.table-striped.table-bordered.table-hover
-          %tbody
-            - @policy_profiles.each do |pp|
-              - id = "pp-#{pp.id}"
-              %tr
-                %td.table-view-pf-select
-                  %i{:class => pp.decorate.fonticon}
-                %td
-                  = pp.description
-  %br
+              %td.table-view-pf-select
+                %i{:class => pp.decorate.fonticon}
+              %td
+                = pp.description
+%br

@@ -1,6 +1,6 @@
 class ApplicationHelper::Button::PolicyEditEvents < ApplicationHelper::Button::PolicyEdit
 
   def visible?
-    !(@policy.mode == "compliance")
+    !(@record.mode == "compliance")
   end
 end

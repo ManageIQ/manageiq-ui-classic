@@ -20,15 +20,15 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           'fa fa-files-o fa-lg',
           proc do
             _('Copy this Policy to new Policy [%{new_policy_description}]') % {
-              :new_policy_description => truncate("Copy of #{@policy.description}", :length => 255, :omission => "")
+              :new_policy_description => truncate("Copy of #{@record.description}", :length => 255, :omission => "")
             }
           end,
           proc do
-            _('Copy this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
+            _('Copy this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @record.towhat)}
           end,
           :confirm   => proc do
                           _("Are you sure you want to create Policy [%{new_policy_description}] from this Policy?") % {
-                            :new_policy_description => truncate("Copy of #{@policy.description}", :length => 255, :omission => "")
+                            :new_policy_description => truncate("Copy of #{@record.description}", :length => 255, :omission => "")
                           }
                         end,
           :url    => "/copy",
@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           :miq_policy_delete,
           'pficon pficon-delete fa-lg',
           t = proc do
-            _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
+            _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @record.towhat)}
           end,
           t,
           :klass   => ApplicationHelper::Button::PolicyDelete,
