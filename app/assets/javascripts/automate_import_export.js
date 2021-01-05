@@ -18,7 +18,7 @@ var Automate = {
         $('#import_file_upload_id').val(importFileUploadId);
         $('.import-data').show();
         $('.import-or-export').hide();
-        showSuccessMessage(JSON.parse(message).message);
+        showSuccessMessage(message.message);
       })
       .fail(function(failedMessage) {
         var messageData = JSON.parse(failedMessage.responseText);

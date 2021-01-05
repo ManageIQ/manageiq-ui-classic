@@ -10,8 +10,10 @@
   %h3
     = _('Import Datastore classes (*.zip)')
   = form_tag({:action => "upload_import_file"},
+             :id        => 'upload_import_file_form',
              :multipart => true,
-             :method    => :post) do
+             :method    => :post,
+             :remote    => true) do
     .form-horizontal
       .form-group
         .col-md-4
@@ -144,15 +146,11 @@
   $(function() {
     miqInitSelectPicker();
 
-    $("#upload_file").on("change", function() {
-      ImportSetup.setUpUploadImportButton('#upload-datastore-import')
+    ImportSetup.setupFileImport({
+      button: '#upload-datastore-import',
+      form: '#upload_import_file_form',
+      input: '#upload_file',
     });
 
-    $('#upload-datastore-import').on("click", function() {
-      miqSparkleOn();
-    });
-
-    ImportSetup.listenForPostMessages(Automate.getAndRenderAutomateJson);
-    ImportSetup.listenForGitPostMessages();
     Automate.setUpAutomateImportClickHandlers();
   });

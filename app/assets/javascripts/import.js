@@ -17,53 +17,58 @@ var showWarningMessage = function(message) {
 };
 
 var ImportSetup = {
-  listenForPostMessages: function(getAndRenderJsonCallback) {
-    window.addEventListener('message', function(event) {
-      if (event.data.import_file_upload_id) {
-        ImportSetup.respondToPostMessages(event, getAndRenderJsonCallback);
-      }
+  setUpUploadImportButton: function(button_id) {
+    var empty = ! $('#upload_file').val();
+    $(button_id).prop('disabled', empty);
+  },
+
+  setupFileImport: function(options) {
+    $(options.input).on('change', function() {
+      ImportSetup.setUpUploadImportButton(options.button);
+    });
+
+    $(options.form).on('submit', function(e) {
+      miqSparkleOn();
+
+      miqJqueryRequest('/miq_ae_tools/upload_import_file', {
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        cache: false,
+      }).then(function(response) {
+        ImportSetup.respondToPostMessages(JSON.parse(response));
+      });
+
+      e.preventDefault();
     });
   },
 
-  setUpUploadImportButton: function(button_id) {
-    if ($('#upload_file').val()) {
-      $(button_id).prop('disabled', false);
-    } else {
-      $(button_id).prop('disabled', true);
+  respondToGitPostMessages: function(response) {
+    miqSparkleOff();
+
+    if (response.message && response.message.level === 'error') {
+      showErrorMessage(response.message.message);
+      $('#git-url-import').prop('disabled', null);
+    } else if (response.git_branches || response.git_tags) {
+      Automate.renderGitImport(
+        response.git_branches,
+        response.git_tags,
+        response.git_repo_id,
+        response.message
+      );
     }
   },
 
-  listenForGitPostMessages: function() {
-    window.addEventListener('message', function(event) {
-      var messageData = event.data.message;
-
-      if (messageData && messageData.level === 'error') {
-        showErrorMessage(messageData.message);
-        $('#git-url-import').prop('disabled', null);
-      } else if (event.data.git_branches || event.data.git_tags) {
-        Automate.renderGitImport(
-          event.data.git_branches,
-          event.data.git_tags,
-          event.data.git_repo_id,
-          event.data.message
-        );
-      }
-
-      miqSparkleOff();
-    });
-  },
-
-  respondToPostMessages: function(event, getAndRenderJsonCallback) {
+  respondToPostMessages: function(response) {
     miqSparkleOff();
     clearMessages();
 
-    var importFileUploadId = event.data.import_file_upload_id;
+    var importFileUploadId = response.import_file_upload_id;
 
     if (importFileUploadId) {
-      getAndRenderJsonCallback(importFileUploadId, event.data.message);
+      Automate.getAndRenderAutomateJson(importFileUploadId, response.message);
     } else {
-      var unencodedMessage = event.data.message.replace(/&quot;/g, '"');
-      var messageData = JSON.parse(unencodedMessage);
+      var messageData = response.message;
 
       if (messageData.level === 'warning') {
         showWarningMessage(messageData.message);
