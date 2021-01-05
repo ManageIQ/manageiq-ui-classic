@@ -2117,17 +2117,18 @@ Rails.application.routes.draw do
 
     :miq_policy_set => {
       :get  => %w(
-        explorer
+        edit
+        new
+        show
+        show_list
       ),
       :post => %w(
-        button
-        miq_policy_set_edit
-        profile_field_changed
+        edit
+        form_field_changed
         reload
-        tree_autoload
-        tree_select
-      ) +
-        x_post
+        show
+        show_list
+      )
     },
 
     :miq_action       => {
