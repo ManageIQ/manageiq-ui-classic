@@ -1,5 +1,3 @@
-%iframe.import-hidden-iframe{:name => "upload_target", :style => "display: none;"}
-
 = render :partial => "layouts/flash_msg"
 .import-flash-message
   .alert
@@ -12,7 +10,6 @@
   %h3
     = _('Import Datastore classes (*.zip)')
   = form_tag({:action => "upload_import_file"},
-             :target    => "upload_target",
              :multipart => true,
              :method    => :post) do
     .form-horizontal
@@ -26,7 +23,6 @@
   %h3
     = _('Import Datastore via git')
   = form_tag({:action => "retrieve_git_datastore"},
-              :target => "upload_target",
               :method => :post,
               :id     => "retrieve-git-datastore-form") do
     .form-horizontal
