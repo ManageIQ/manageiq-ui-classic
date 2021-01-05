@@ -3,8 +3,7 @@ dist: xenial
 language: ruby
 python: '2.7'
 rvm:
-- 2.5.7
-- 2.6.5
+- 2.6.6
 cache:
   bundler: true
   yarn: true
@@ -18,14 +17,6 @@ env:
   - TEST_SUITE=spec:javascript
   - TEST_SUITE=spec:compile
   - TEST_SUITE=spec:jest
-matrix:
-  exclude:
-  - rvm: 2.5.7
-    env: TEST_SUITE=spec:javascript
-  - rvm: 2.5.7
-    env: TEST_SUITE=spec:compile
-  - rvm: 2.5.7
-    env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 install: true

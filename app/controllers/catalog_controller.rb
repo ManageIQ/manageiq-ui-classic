@@ -1634,15 +1634,27 @@ class CatalogController < ApplicationController
     ROOT_NODE_MODELS[tree]
   end
 
+  def root_node_right_cell_text(tree)
+    case tree
+    when :svccat_tree
+      _('All Services')
+    when :sandt_tree
+      _('All Catalog Items')
+    when :ot_tree
+      _('All Orchestration Templates')
+    when :stcat_tree
+      _('All Catalogs')
+    end
+  end
+
   def get_node_info_handle_root_node
-    typ = root_node_model(x_active_tree)
     @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
       service_template_list(%i[displayed with_existent_service_template_catalog_id public_service_templates], :no_checkboxes => true)
     else
-      process_show_list(get_show_list_options(typ))
+      process_show_list(get_show_list_options(root_node_model(x_active_tree)))
     end
-    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+    @right_cell_text = root_node_right_cell_text(x_active_tree)
   end
 
   def get_show_list_options(typ)
