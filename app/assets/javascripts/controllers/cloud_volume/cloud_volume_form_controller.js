@@ -9,7 +9,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       aws_encryption: false,
       incremental: false,
       force: false,
-      storage_manager_id: storageManagerId,
     };
 
     vm.formId = cloudVolumeFormId;
@@ -252,13 +251,19 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   var getCloudVolumeFormData = function(data) {
+    vm.cloudVolumeModel.storage_manager_id = storageManagerId;
     vm.cloudVolumeModel.emstype = data.ext_management_system.type;
     vm.cloudVolumeModel.name = data.name;
     // We have to display size in GB.
     vm.cloudVolumeModel.size = data.size / 1073741824;
     vm.cloudVolumeModel.cloud_tenant_id = data.cloud_tenant_id;
     vm.cloudVolumeModel.volume_type = data.volume_type;
-    vm.cloudVolumeModel.availability_zone_id = data.availability_zone.ems_ref;
+    vm.cloudVolumeModel.storage_service_id = data.storage_service_id;
+    if (data.availability_zone) {
+      vm.cloudVolumeModel.availability_zone_id = data.availability_zone.ems_ref;
+    } else {
+      vm.cloudVolumeModel.availability_zone_id = data.availability_zone_id;
+    }
     // Currently, this is only relevant for AWS volumes so we are prefixing the
     // model attribute with AWS.
     vm.cloudVolumeModel.aws_encryption = data.encrypted;
