@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 import PropTypes from 'prop-types';
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
 import { ChevronDown20 } from '@carbon/icons-react';
@@ -9,6 +9,7 @@ import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
+  const [overflowTab,setoverflowTab] = useState(false);//set this true for overflowmenu keydown event
 
   // Filter out invisible items.
   const visibleItems = props.items.filter((i) => !i.hidden);
@@ -30,9 +31,19 @@ export const ToolbarList = (props) => {
     };
   });
 
+  const keydownFunc = (event) => {
+    if(event.keyCode  === 9 || event.keyCode  === 27 ){
+      setoverflowTab(true);  
+    }
+  }; 
+
   const closeFunc = () => {
-    document.getElementById(props.id).focus();
+    if (overflowTab === true) {
+      document.getElementById(props.id).focus();
+      setoverflowTab(false);
+    }
   };
+
 
   return (
     <OverflowMenu
@@ -61,6 +72,7 @@ export const ToolbarList = (props) => {
           hasDivider={(item.type === 'separator')}
           itemText={<MenuIcon text={item.text ? item.text : (item.title && item.title)} icon={item.icon} color={item.color} />}
           disabled={!item.enabled}
+          onKeyDown={keydownFunc}
           title={item.title}
           requireTitle
           onClick={props.onClick && item.enabled ? (() => props.onClick(item)) : null}
