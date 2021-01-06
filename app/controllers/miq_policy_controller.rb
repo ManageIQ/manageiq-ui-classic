@@ -1,7 +1,6 @@
 class MiqPolicyController < ApplicationController
   include_concern 'Events'
   include_concern 'Policies'
-  include_concern 'Rsop'
 
   before_action :check_privileges
   before_action :get_session_data
@@ -395,11 +394,7 @@ class MiqPolicyController < ApplicationController
 
   def get_session_data
     @title = _("Policies")
-    @layout = if request.parameters["action"] == "wait_for_task" # Don't change layout when wait_for_task came in for RSOP
-                session[:layout]
-              else
-                params[:action]&.starts_with?("rsop") ? "miq_policy_rsop" : "miq_policy"
-              end
+    @layout = "miq_policy"
     @lastaction = session[:miq_policy_lastaction]
     @display = session[:miq_policy_display]
     @current_page = session[:miq_policy_current_page]
@@ -430,7 +425,7 @@ class MiqPolicyController < ApplicationController
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,
-      :not_tree     => %w[rsop log].include?(action_name),
+      :not_tree     => %w[log].include?(action_name),
       :record_title => :description,
     }
   end
@@ -438,7 +433,7 @@ class MiqPolicyController < ApplicationController
   def menu_breadcrumb
     return nil if %w[log].include?(action_name)
 
-    {:title => action_name == 'rsop' ? _('Simulation') : _('Explorer')}
+    {:title => _('Explorer')}
   end
 
   menu_section :con

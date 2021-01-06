@@ -1,9 +1,27 @@
-module MiqPolicyController::Rsop
-  extend ActiveSupport::Concern
+class MiqPolicyRsopController < ApplicationController
+  before_action :check_privileges
+  before_action :get_session_data
+  after_action :cleanup_action
+  after_action :set_session_data
+
+  include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
+
+  def title
+    @title = _("Simulation")
+  end
+
+  def self.table_name
+    @table_name = "simulation"
+  end
+
+  def index
+    flash_to_session
+    redirect_to(:action => 'rsop')
+  end
 
   def rsop
     assert_privileges('policy_simulation')
-    @explorer = true
     if params[:button] == "submit"
       if params[:task_id]                         # First time thru, kick off the report generate task
         miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
@@ -57,7 +75,7 @@ module MiqPolicyController::Rsop
       rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
       @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
       @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
-      render :layout => "application"
+      # render :layout => "application"
     end
   end
 
@@ -156,4 +174,35 @@ module MiqPolicyController::Rsop
       page << javascript_reload_toolbars
     end
   end
+
+  def get_session_data
+    @title = _("Simulation")
+    @layout = "miq_policy_rsop"
+    @lastaction = session[:miq_policy_rsop_lastaction]
+    @display = session[:miq_policy_rsop_display]
+    @current_page = session[:miq_policy_rsop_current_page]
+  end
+
+  def set_session_data
+    super
+    session[:layout]                  = @layout
+    session[:miq_policy_rsop_current_page] = @current_page
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Control")},
+        menu_breadcrumb,
+      ].compact,
+      # :not_tree     => %w[rsop export log].include?(action_name),
+      # :record_title => :description,
+    }
+  end
+
+  def menu_breadcrumb
+    {:title => _('Simulation')}
+  end
+
+  menu_section :con
 end

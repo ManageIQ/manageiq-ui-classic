@@ -2077,6 +2077,7 @@ Rails.application.routes.draw do
         fetch_yaml
         get_json
         import
+        log
       ),
       :post => %w(
         export
@@ -2091,7 +2092,6 @@ Rails.application.routes.draw do
         explorer
         fetch_log
         log
-        rsop
       ),
       :post => %w(
         button
@@ -2101,10 +2101,6 @@ Rails.application.routes.draw do
         policy_field_changed
         quick_search
         reload
-        rsop
-        rsop_option_changed
-        rsop_show_options
-        rsop_toggle
         tree_autoload
         tree_select
         wait_for_task
@@ -2112,6 +2108,19 @@ Rails.application.routes.draw do
          adv_search_post +
          exp_post +
          x_post
+    },
+
+    :miq_policy_rsop         => {
+      :get  => %w(
+        rsop
+      ),
+      :post => %w(
+        rsop
+        rsop_option_changed
+        rsop_show_options
+        rsop_toggle
+        wait_for_task
+      )
     },
 
     :miq_policy_set => {
