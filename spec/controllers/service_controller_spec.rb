@@ -166,7 +166,7 @@ describe ServiceController do
 
     it 'displays the selected generic object' do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user)
+      login_as FactoryBot.create(:user, :features => %w[everything])
       controller.instance_variable_set(:@breadcrumbs, [])
       service = FactoryBot.create(:service, :name => "Abc")
       go1 = FactoryBot.create(:generic_object,
@@ -188,7 +188,7 @@ describe ServiceController do
 
     it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user)
+      login_as FactoryBot.create(:user, :features => %w[everything])
       controller.instance_variable_set(:@breadcrumbs, [])
       service = FactoryBot.create(:service, :name => "Abc")
       go = FactoryBot.create(
