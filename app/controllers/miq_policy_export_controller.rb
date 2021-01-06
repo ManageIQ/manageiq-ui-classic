@@ -9,7 +9,7 @@ class MiqPolicyExportController < ApplicationController
 
   def index
     flash_to_session
-    redirect_to(:action => 'export')
+    export_reset_set
   end
 
   def self.table_name
@@ -27,7 +27,7 @@ class MiqPolicyExportController < ApplicationController
       if @lastaction != "fetch_yaml"
         add_flash(_("Export cancelled by user"))
       end
-      javascript_redirect(:action => "explorer")
+      javascript_redirect(:action => "index")
     when "export"
       @sb[:new][:choices_chosen] = params[:choices_chosen] || []
       if @sb[:new][:choices_chosen].empty? # At least one member is required
@@ -56,10 +56,7 @@ class MiqPolicyExportController < ApplicationController
         end
       end
     when "reset", nil # Reset or first time in
-      dbtype = params[:dbtype].nil? ? "pp" : params[:dbtype]
-      type = params[:typ].nil? ? "export" : params[:typ]
-
-      export_chooser(dbtype, type)
+      export_reset_set
     end
   end
 
@@ -85,11 +82,11 @@ class MiqPolicyExportController < ApplicationController
         redirect_options[:import_file_upload_id] = import_file_upload.id
       rescue StandardError => err
         flash_to_session(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
-        redirect_options[:action] = 'export'
+        redirect_options[:action] = 'index'
       end
     else
       flash_to_session(_("Use the Choose file button to locate an Import file"), :error)
-      redirect_options[:action] = 'export'
+      redirect_options[:action] = 'index'
     end
 
     redirect_to(redirect_options)
@@ -110,7 +107,7 @@ class MiqPolicyExportController < ApplicationController
     @breadcrumbs = []
     @layout = "miq_policy_export"
     @import_file_upload_id = params[:import_file_upload_id]
-    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy_export/export")
+    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy_export")
 
     if params[:commit] == "import"
       begin
@@ -131,7 +128,7 @@ class MiqPolicyExportController < ApplicationController
       miq_policy_import_service.cancel_import(@import_file_upload_id)
 
       flash_to_session(_("Import cancelled by user"))
-      javascript_redirect(:action => 'export')
+      javascript_redirect(:action => 'index')
 
     # init import
     else
@@ -159,6 +156,13 @@ class MiqPolicyExportController < ApplicationController
   end
 
   private
+
+  def export_reset_set
+    dbtype = params[:dbtype].nil? ? "pp" : params[:dbtype]
+    type = params[:typ].nil? ? "export" : params[:typ]
+
+    export_chooser(dbtype, type)
+  end
 
   def import_as_json(yaml_array)
     iterate_status(yaml_array) if yaml_array
