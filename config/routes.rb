@@ -2091,6 +2091,7 @@ Rails.application.routes.draw do
         explorer
         fetch_log
         log
+        rsop
       ),
       :post => %w(
         button
@@ -2107,6 +2108,16 @@ Rails.application.routes.draw do
          adv_search_post +
          exp_post +
          x_post
+    },
+
+    :miq_policy_log   => {
+      :get => %w(
+        fetch_log
+        log
+      ),
+      :post => %w(
+        button
+      )
     },
 
     :miq_policy_rsop         => {
