@@ -129,15 +129,13 @@ describe MiqPolicyController do
     let(:lastaction) { 'lastaction' }
     let(:display) { 'display' }
     let(:current_page) { 'current_page' }
-    let(:server_options) { 'server options' }
-    let(:layout) { 'miq_policy' }
+    let(:layout) { 'layout' }
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
         allow(controller).to receive(:session).and_return(:miq_policy_lastaction   => lastaction,
                                                           :miq_policy_display      => display,
                                                           :miq_policy_current_page => current_page,
-                                                          :server_options          => server_options,
                                                           :layout                  => layout)
         allow(controller).to receive(:alert_build_pulldowns).and_return(nil)
         controller.send(:get_session_data)
@@ -147,7 +145,6 @@ describe MiqPolicyController do
         expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
         expect(controller.instance_variable_get(:@display)).to eq(display)
         expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
-        expect(controller.instance_variable_get(:@server_options)).to eq(server_options)
       end
     end
 
@@ -157,37 +154,15 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@display, display)
         controller.instance_variable_set(:@current_page, current_page)
         controller.instance_variable_set(:@layout, layout)
-        controller.instance_variable_set(:@server_options, server_options)
         controller.send(:set_session_data)
 
         expect(controller.session[:miq_policy_lastaction]).to eq(lastaction)
         expect(controller.session[:miq_policy_display]).to eq(display)
         expect(controller.session[:miq_policy_current_page]).to eq(current_page)
         expect(controller.session[:layout]).to eq(layout)
-        expect(controller.session[:server_options]).to eq(server_options)
       end
     end
   end
-
-  # context 'removing conditions' do
-  #   let(:condition) { FactoryBot.create(:condition) }
-  #   let(:policy) { FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition]) }
-  #
-  #   before do
-  #     login_as FactoryBot.create(:user, :features => 'condition_remove')
-  #     controller.params = {:policy_id => policy.id, :id => condition.id}
-  #     controller.instance_variable_set(:@sb, {})
-  #     allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
-  #   end
-  #
-  #   it 'removes condition successfully' do
-  #     expect(controller).to receive(:replace_right_cell)
-  #     controller.send(:condition_remove)
-  #     policy.reload
-  #     expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
-  #     expect(policy.conditions).to eq([])
-  #   end
-  # end
 
   describe "breadcrumbs" do
     before { EvmSpecHelper.local_miq_server }
@@ -196,12 +171,6 @@ describe MiqPolicyController do
       get :explorer
 
       expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Explorer")
-    end
-
-    it "shows 'log' on log screen" do
-      get :log
-
-      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Log")
     end
   end
 end

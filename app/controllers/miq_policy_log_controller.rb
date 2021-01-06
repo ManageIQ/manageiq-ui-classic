@@ -9,7 +9,18 @@ class MiqPolicyLogController < ApplicationController
 
   def index
     flash_to_session
-    redirect_to(:action => 'show')
+    assert_privileges('policy_log')
+    @breadcrumbs = []
+    @log = $policy_log.contents(nil, 1000)
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
+    @lastaction = "policy_logs"
+    @layout = "miq_policy_logs"
+    @msg_title = "Policy"
+    @download_action = "fetch_log"
+    @server_options ||= {}
+    @server_options[:server_id] ||= MiqServer.my_server.id
+    @server = MiqServer.my_server
+    drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_policy/log")
   end
 
   # handle buttons pressed on the button bar
@@ -26,21 +37,6 @@ class MiqPolicyLogController < ApplicationController
       @refresh_partial = "layouts/flash_msg"
       @refresh_div = "flash_msg_div"
     end
-  end
-
-  def log
-    assert_privileges('policy_log')
-    @breadcrumbs = []
-    @log = $policy_log.contents(nil, 1000)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
-    @lastaction = "policy_logs"
-    @layout = "miq_policy_logs"
-    @msg_title = "Policy"
-    @download_action = "fetch_log"
-    @server_options ||= {}
-    @server_options[:server_id] ||= MiqServer.my_server.id
-    @server = MiqServer.my_server
-    drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_policy/log")
   end
 
   def refresh_log
@@ -69,7 +65,7 @@ class MiqPolicyLogController < ApplicationController
   private
 
   def get_session_data
-    @title = _("Policies")
+    @title = _("Log")
     @layout = "miq_policy_log"
     @lastaction = session[:miq_policy_log_lastaction]
     @server_options = session[:server_options] if session[:server_options]
@@ -79,6 +75,7 @@ class MiqPolicyLogController < ApplicationController
     super
     session[:layout]         = @layout
     session[:server_options] = @server_options
+    session[:miq_policy_log_lastaction] = @lastaction
   end
 
   def breadcrumbs_options
