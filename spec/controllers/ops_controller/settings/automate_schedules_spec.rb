@@ -18,6 +18,7 @@ describe OpsController do
 
     before do
       session = instance_double('ApplicationController', :session => {:userid => user.userid})
+      ops.instance_variable_set(:@_params, {})
       ops.instance_variable_set(:@current_user, user)
       ops.instance_variable_set(:@_request, session)
     end
@@ -94,6 +95,7 @@ describe OpsController do
 
     before do
       session = instance_double('ApplicationController', :session => {:userid => user.userid})
+      ops.instance_variable_set(:@_params, {})
       ops.instance_variable_set(:@current_user, user)
       ops.instance_variable_set(:@_request, session)
     end

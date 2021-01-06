@@ -1,5 +1,9 @@
 describe PxeController do
   context "#template_create_update" do
+    before do
+      stub_user(:features => :all)
+    end
+
     it "correct method is being called when reset button is pressed" do
       customization_template = FactoryBot.create(:customization_template)
       controller.instance_variable_set(:@sb, :trees       => {

@@ -3,7 +3,7 @@ describe MiqAeCustomizationController do
     context "#dialog_delete" do
       before do
         EvmSpecHelper.local_miq_server
-        login_as FactoryBot.create(:user, :features => "dialog_delete")
+        login_as FactoryBot.create(:user, :features => %w[dialog_delete old_dialogs_accord])
         allow(controller).to receive(:check_privileges).and_return(true)
       end
 

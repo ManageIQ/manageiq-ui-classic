@@ -262,6 +262,7 @@ describe ReportController do
         allow(controller).to receive(:load_edit).and_return(true)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@edit, :new => {:model => model})
+        stub_user(:features => %w[miq_report_edit miq_report_new])
       end
 
       context 'configuring Report Columns and Chargeback for VMs' do
