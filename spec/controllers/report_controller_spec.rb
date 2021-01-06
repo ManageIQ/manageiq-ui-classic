@@ -833,6 +833,7 @@ describe ReportController do
     let(:params) { {:widgets => widget_list} }
 
     before do
+      stub_user(:features => :all)
       bypass_rescue
     end
 
@@ -890,6 +891,7 @@ describe ReportController do
     let(:widget_import_service) { double("WidgetImportService") }
 
     before do
+      stub_user(:features => :all)
       bypass_rescue
       allow(controller).to receive(:x_node) { 'xx-exportwidgets' }
       controller.instance_variable_set(:@in_a_form, true)
@@ -979,6 +981,7 @@ describe ReportController do
     let(:widget_import_service) { double("WidgetImportService") }
 
     before do
+      stub_user(:features => :all)
       bypass_rescue
       allow(controller).to receive(:x_node) { 'xx-exportwidgets' }
       controller.instance_variable_set(:@in_a_form, true)
