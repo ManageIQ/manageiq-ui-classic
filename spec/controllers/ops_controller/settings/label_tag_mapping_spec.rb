@@ -1,4 +1,8 @@
 describe OpsController do
+  before do
+    stub_user(:features => :all)
+  end
+
   include_context "valid session"
 
   describe '#label_tag_mapping_edit' do

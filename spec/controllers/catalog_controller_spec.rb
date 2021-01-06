@@ -1016,7 +1016,7 @@ describe CatalogController do
   context "tests that need only specific rbac feature access" do
     describe "#st_tags_edit" do
       before do
-        user = FactoryBot.create(:user, :features => "catalogitem_tag")
+        user = FactoryBot.create(:user, :features => %w[everything])
         login_as user
 
         @st = FactoryBot.create(:service_template)
@@ -1315,6 +1315,7 @@ describe CatalogController do
                                                         :tenant_ids   => []})
       controller.params = {:grp_id => 1, :id => 1}
       controller.instance_variable_set(:@sb, {})
+      stub_user(:features => :all)
     end
 
     it 'sets @available_catalogs with tenants and ancestors' do
