@@ -1,49 +1,19 @@
 /* global miqSparkleOff miqSparkleOn */
 
-
 var clearMessages = function() {
-  $('.import-flash-message .alert').removeClass('alert-success alert-danger alert-warning');
-  $('.icon-placeholder').removeClass('pficon pficon-ok pficon-layered');
-  $('.pficon-error-circle-o').removeClass('pficon-error-circle-o');
-  $('.pficon-error-exclamation').removeClass('pficon-error-exclamation');
-  $('.pficon-warning-triangle-o').removeClass('pficon-warning-triangle-o');
-  $('.pficon-warning-exclamation').removeClass('pficon-warning-exclamation');
-};
-
-var flashMessageClickHandler = function() {
-  clearMessages();
-  $(this).hide();
+  clearFlash();
 };
 
 var showErrorMessage = function(message) {
-  $('.import-flash-message .alert').addClass('alert-danger');
-  $('.icon-placeholder').addClass('pficon-layered');
-  $('.icon-placeholder .pficon').first().addClass('pficon-error-circle-o');
-  $('.icon-placeholder .pficon').last().addClass('pficon-error-exclamation');
-  $('.import-flash-message .alert .message').html(message);
-  $('.import-flash-message').show();
-
-  $('.import-flash-message').click(flashMessageClickHandler);
+  add_flash(message, 'error');
 };
 
 var showSuccessMessage = function(message) {
-  $('.import-flash-message .alert').addClass('alert-success');
-  $('.icon-placeholder').addClass('pficon-ok').addClass('pficon');
-  $('.import-flash-message .alert .message').html(message);
-  $('.import-flash-message').show();
-
-  $('.import-flash-message').click(flashMessageClickHandler);
+  add_flash(message, 'success');
 };
 
 var showWarningMessage = function(message) {
-  $('.import-flash-message .alert').addClass('alert-warning');
-  $('.icon-placeholder').addClass('pficon-layered');
-  $('.icon-placeholder .pficon').first().addClass('pficon-warning-triangle-o');
-  $('.icon-placeholder .pficon').last().addClass('pficon-warning-exclamation');
-  $('.import-flash-message .alert .message').html(message);
-  $('.import-flash-message').show();
-
-  $('.import-flash-message').click(flashMessageClickHandler);
+  add_flash(message, 'warning');
 };
 
 var ImportSetup = {
