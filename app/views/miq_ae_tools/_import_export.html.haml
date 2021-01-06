@@ -1,19 +1,9 @@
 = render :partial => "layouts/flash_msg"
-.import-flash-message
-  .alert
-    %span.icon-placeholder
-      %span.pficon
-      %span.pficon
-    %strong.message
 
 .import-or-export
   %h3
     = _('Import Datastore classes (*.zip)')
-  = form_tag({:action => "upload_import_file"},
-             :id        => 'upload_import_file_form',
-             :multipart => true,
-             :method    => :post,
-             :remote    => true) do
+  %form#upload_import_file_form{:multipart => true}
     .form-horizontal
       .form-group
         .col-md-4
@@ -24,9 +14,7 @@
   %hr
   %h3
     = _('Import Datastore via git')
-  = form_tag({:action => "retrieve_git_datastore"},
-              :method => :post,
-              :id     => "retrieve-git-datastore-form") do
+  %form#retrieve-git-datastore-form
     .form-horizontal
       .form-group
         %label.col-sm-2.control-label
