@@ -16,6 +16,10 @@ describe OpsController do
         }
       end
 
+      before do
+        stub_user(:features => %w[region_edit])
+      end
+
       it 'sets the form field value internally' do
         post :help_menu_form_field_changed, :params => {:documentation_title => 'something_else'}, :session => session
         expect(assigns(:edit)[:new][:documentation][:title]).to eq('something_else')
