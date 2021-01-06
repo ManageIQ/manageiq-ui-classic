@@ -13,14 +13,14 @@ class MiqPolicyExportController < ApplicationController
   end
 
   def self.table_name
-    @table_name = "export"
+    @table_name = "miq_policy_export"
   end
 
   def export
     assert_privileges('policy_import_export')
     @breadcrumbs = []
     @layout = "miq_policy_export"
-    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy_export/export")
+    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy_export")
     case params[:button]
     when "cancel"
       @sb = nil
