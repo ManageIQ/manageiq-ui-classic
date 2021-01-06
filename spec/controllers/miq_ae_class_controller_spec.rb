@@ -827,6 +827,7 @@ describe MiqAeClassController do
                          :name     => "name02",
                          :class_id => @cls.id,
                          :priority => 2)
+      stub_user(:features => %w[miq_ae_field_seq])
     end
 
     it "moves selected field down" do
@@ -878,7 +879,8 @@ describe MiqAeClassController do
       @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class", :data => "exit MIQ_OK")
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ae_tree => {:active_node => "aec-#{@method.class_id}"}},
-                                       :active_tree => :ae_tree)
+                                       :active_tree => :ae_tree,
+                                       :action      => "miq_ae_class_edit")
     end
 
     it "make sure data in data field still exists when edititng that field" do
@@ -1073,6 +1075,7 @@ describe MiqAeClassController do
     let(:ae_domain) { FactoryBot.create(:miq_ae_domain) }
 
     before do
+      stub_user(:features => :all)
       controller.instance_variable_set(:@sb, {})
       controller.params = {:id => ae_domain.id}
     end

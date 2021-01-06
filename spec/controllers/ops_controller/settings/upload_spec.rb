@@ -1,4 +1,8 @@
 describe OpsController do
+  before do
+    stub_user(:features => :all)
+  end
+
   describe '#upload_csv' do
     let(:file) { StringIO.new("name,category,entry\nevm1,Environment,Test") }
 

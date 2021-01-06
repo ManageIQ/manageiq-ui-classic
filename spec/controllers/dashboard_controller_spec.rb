@@ -209,7 +209,7 @@ describe DashboardController do
 
   context "Create Dashboard" do
     before do
-      @group = FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role))
+      @group = FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role, :features => %w[everything]))
       @user = FactoryBot.create(:user, :miq_groups => [@group])
       # create dashboard for a group
       @ws = FactoryBot.create(:miq_widget_set,
@@ -323,7 +323,7 @@ describe DashboardController do
 
   context "building tabs" do
     let(:group) do
-      role = FactoryBot.create(:miq_user_role)
+      role = FactoryBot.create(:miq_user_role, :features => %w[everything])
       FactoryBot.create(:miq_group, :miq_user_role => role)
     end
 
@@ -459,7 +459,7 @@ describe DashboardController do
 
   describe '#show' do
     context 'changing tabs' do
-      let(:group) { FactoryBot.create(:miq_group) }
+      let(:group) { FactoryBot.create(:miq_group, :features => %w[everything]) }
       let(:user) { FactoryBot.create(:user_admin, :current_group => group, :miq_groups => [group]) }
       let(:ws1) do
         FactoryBot.create(:miq_widget_set,

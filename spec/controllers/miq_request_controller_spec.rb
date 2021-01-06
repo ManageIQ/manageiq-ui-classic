@@ -505,6 +505,7 @@ describe MiqRequestController do
     before do
       allow(controller).to receive(:session).and_return(:edit => {:wf => wf})
       controller.params = {:field => 'retrieve_ldap'}
+      stub_user(:features => %w[miq_request_edit])
     end
 
     it 'calls render method and sets @edit according to the session' do

@@ -579,6 +579,7 @@ describe AutomationManagerController do
     before { controller.params = {:id => @automation_manager1.id} }
 
     it 'displays Automation Manager provider through Tenants textual summary' do
+      stub_user(:features => :all)
       expect(controller).to receive(:build_accordions_and_trees)
       expect(controller).to receive(:generic_x_show)
       controller.send(:show)
