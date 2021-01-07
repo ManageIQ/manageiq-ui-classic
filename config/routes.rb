@@ -2111,9 +2111,6 @@ Rails.application.routes.draw do
     },
 
     :miq_policy_rsop         => {
-      :get  => %w(
-        rsop
-      ),
       :post => %w(
         rsop
         rsop_option_changed

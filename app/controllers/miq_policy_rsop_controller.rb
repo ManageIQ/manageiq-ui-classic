@@ -17,7 +17,16 @@ class MiqPolicyRsopController < ApplicationController
 
   def index
     flash_to_session
-    redirect_to(:action => 'rsop')
+    @breadcrumbs = []
+    session[:changed] = false
+    @sb[:rsop] ||= {} # Leave exising values
+    rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)
+    rsop_put_objects_in_sb(find_filtered(EmsCluster), :clusters)
+    rsop_put_objects_in_sb(find_filtered(Host), :hosts)
+    rsop_put_objects_in_sb(find_filtered(Vm), :vms)
+    rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
   end
 
   def rsop
@@ -63,19 +72,7 @@ class MiqPolicyRsopController < ApplicationController
     elsif params[:button] == "reset"
       @sb[:rsop] = {} # Reset all RSOP stored values
       session[:changed] = nil
-      javascript_redirect(:action => 'rsop')
-    else # No params, first time in
-      @breadcrumbs = []
-      session[:changed] = false
-      @sb[:rsop] ||= {} # Leave exising values
-      rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)
-      rsop_put_objects_in_sb(find_filtered(EmsCluster), :clusters)
-      rsop_put_objects_in_sb(find_filtered(Host), :hosts)
-      rsop_put_objects_in_sb(find_filtered(Vm), :vms)
-      rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
-      @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-      @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
-      # render :layout => "application"
+      javascript_redirect(:action => 'index')
     end
   end
 

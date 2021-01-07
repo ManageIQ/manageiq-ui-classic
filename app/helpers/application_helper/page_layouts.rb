@@ -152,8 +152,7 @@ module ApplicationHelper::PageLayouts
       begin
         @explorer || params[:action] == "explorer" ||
           (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-          (params[:controller] == "miq_policy_rsop" && params[:action] == "rsop") ||
-          params[:controller] == "utilization"
+          params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
       end
   end
 
