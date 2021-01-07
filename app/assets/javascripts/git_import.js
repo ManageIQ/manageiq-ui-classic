@@ -1,4 +1,4 @@
-/* global miqSparkleOn miqSparkleOff showErrorMessage clearMessages */
+/* global miqSparkleOn miqSparkleOff */
 
 var GitImport = {
   TASK_POLL_TIMEOUT: 1500,
@@ -7,12 +7,12 @@ var GitImport = {
     $('.git-retrieve-datastore').click(function(event) {
       event.preventDefault();
       miqSparkleOn();
-      clearMessages();
+      clearFlash();
 
       $.post('retrieve_git_datastore', $('#retrieve-git-datastore-form').serialize(), function(data) {
         var messages = data.message;
         if (messages && messages.level === 'error') {
-          showErrorMessage(messages.message);
+          add_flash(messages.message, 'error');
           miqSparkleOff();
         } else {
           GitImport.pollForGitTaskCompletion(data);

@@ -1,6 +1,6 @@
 //= require import
 
-/* global miqSparkleOn miqSparkleOff showSuccessMessage showErrorMessage showWarningMessage clearMessages */
+/* global miqSparkleOn miqSparkleOff */
 
 var Automate = {
   getAndRenderAutomateJson: function(importFileUploadId, message) {
@@ -18,36 +18,27 @@ var Automate = {
         $('#import_file_upload_id').val(importFileUploadId);
         $('.import-data').show();
         $('.import-or-export').hide();
-        showSuccessMessage(message.message);
+
+        add_flash(message.message, 'success');
       })
       .fail(function(failedMessage) {
         var messageData = JSON.parse(failedMessage.responseText);
-
-        if (messageData.level === 'warning') {
-          showWarningMessage(messageData.message);
-        } else {
-          showErrorMessage(messageData.message);
-        }
+        add_flash(messageData.message, messageData.level);
       });
   },
 
   renderGitImport: function(branches, tags, gitRepoId, messages) {
-    clearMessages();
+    clearFlash();
 
     var message = messages.message;
     var messageLevel = messages.level;
 
-    if (messageLevel === 'error') {
-      showErrorMessage(message);
-    } else {
+    add_flash(message, messageLevel);
+
+    if (messageLevel !== 'error') {
       $('.hidden-git-repo-id').val(gitRepoId);
       $('.git-import-data').show();
       $('.import-or-export').hide();
-      if (messageLevel === 'warning') {
-        showWarningMessage(message);
-      } else {
-        showSuccessMessage(message);
-      }
 
       var addToDropDown = function(identifier, child) {
         $('select.git-' + identifier).append(
@@ -142,7 +133,7 @@ var Automate = {
     $('.import-commit').click(function(event) {
       event.preventDefault();
       miqSparkleOn();
-      clearMessages();
+      clearFlash();
 
       var postData = $('#import-form').serialize();
       postData += '&';
@@ -155,11 +146,7 @@ var Automate = {
 
       $.post('import_automate_datastore', postData, function(data) {
         var flashMessage = data[0];
-        if (flashMessage.level === 'error') {
-          showErrorMessage(flashMessage.message);
-        } else {
-          showSuccessMessage(flashMessage.message);
-        }
+        add_flash(flashMessage.message, flashMessage.level);
 
         miqSparkleOff();
       });
@@ -172,15 +159,11 @@ var Automate = {
     $('.git-import-submit').click(function(event) {
       event.preventDefault();
       miqSparkleOn();
-      clearMessages();
+      clearFlash();
 
       $.post('import_via_git', $('#git-branch-tag-form').serialize(), function(data) {
         var flashMessage = data[0];
-        if (flashMessage.level === 'error') {
-          showErrorMessage(flashMessage.message);
-        } else {
-          showSuccessMessage(flashMessage.message);
-        }
+        add_flash(flashMessage.message, flashMessage.level);
 
         tearDownGitImportOptions();
 
@@ -191,13 +174,13 @@ var Automate = {
     $('.import-back').click(function(event) {
       event.preventDefault();
       miqSparkleOn();
-      clearMessages();
+      clearFlash();
 
       $('.domain-tree').empty();
 
       $.post('cancel_import', $('#import-form').serialize(), function(data) {
         var flashMessage = data[0];
-        showSuccessMessage(flashMessage.message);
+        add_flash(flashMessage.message, flashMessage.level);
 
         $('.import-or-export').show();
         $('.import-data').hide();
@@ -207,9 +190,9 @@ var Automate = {
 
     $('.git-import-cancel').click(function(event) {
       event.preventDefault();
-      clearMessages();
+      clearFlash();
       tearDownGitImportOptions();
-      showSuccessMessage('Import cancelled');
+      add_flash('Import cancelled', 'success');
     });
 
     $('#toggle-all').on('change', function() {

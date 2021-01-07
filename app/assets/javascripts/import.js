@@ -1,21 +1,5 @@
 /* global miqSparkleOff miqSparkleOn */
 
-var clearMessages = function() {
-  clearFlash();
-};
-
-var showErrorMessage = function(message) {
-  add_flash(message, 'error');
-};
-
-var showSuccessMessage = function(message) {
-  add_flash(message, 'success');
-};
-
-var showWarningMessage = function(message) {
-  add_flash(message, 'warning');
-};
-
 var ImportSetup = {
   setUpUploadImportButton: function(button_id) {
     var empty = ! $('#upload_file').val();
@@ -47,7 +31,7 @@ var ImportSetup = {
     miqSparkleOff();
 
     if (response.message && response.message.level === 'error') {
-      showErrorMessage(response.message.message);
+      add_flash(response.message.message, response.message.level);
       $('#git-url-import').prop('disabled', null);
     } else if (response.git_branches || response.git_tags) {
       Automate.renderGitImport(
@@ -61,7 +45,7 @@ var ImportSetup = {
 
   respondToPostMessages: function(response) {
     miqSparkleOff();
-    clearMessages();
+    clearFlash();
 
     var importFileUploadId = response.import_file_upload_id;
 
@@ -69,12 +53,7 @@ var ImportSetup = {
       Automate.getAndRenderAutomateJson(importFileUploadId, response.message);
     } else {
       var messageData = response.message;
-
-      if (messageData.level === 'warning') {
-        showWarningMessage(messageData.message);
-      } else {
-        showErrorMessage(messageData.message);
-      }
+      add_flash(messageData.message, messageData.level);
     }
   },
 };
