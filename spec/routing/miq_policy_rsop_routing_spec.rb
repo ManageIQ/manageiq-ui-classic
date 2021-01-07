@@ -4,10 +4,6 @@ describe 'routes for MiqPolicyRsopController' do
   let(:controller_name) { 'miq_policy_rsop' }
 
   describe '#rsop' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/rsop")).to route_to("#{controller_name}#rsop")
-    end
-
     it 'routes with POST' do
       expect(post("/#{controller_name}/rsop")).to route_to("#{controller_name}#rsop")
     end

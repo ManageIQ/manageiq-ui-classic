@@ -12,7 +12,7 @@ class MiqPolicyRsopController < ApplicationController
   end
 
   def self.table_name
-    @table_name = "simulation"
+    @table_name = "miq_policy_rsop"
   end
 
   def index

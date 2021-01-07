@@ -130,7 +130,7 @@ describe MiqPolicyController do
     let(:display) { 'display' }
     let(:current_page) { 'current_page' }
     let(:server_options) { 'server options' }
-    let(:layout) { 'layout' }
+    let(:layout) { 'miq_policy' }
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
@@ -140,7 +140,6 @@ describe MiqPolicyController do
                                                           :server_options          => server_options,
                                                           :layout                  => layout)
         allow(controller).to receive(:alert_build_pulldowns).and_return(nil)
-        allow(controller.request).to receive(:parameters).and_return('action' => 'wait_for_task')
         controller.send(:get_session_data)
 
         expect(controller.instance_variable_get(:@title)).to eq("Policies")
@@ -197,12 +196,6 @@ describe MiqPolicyController do
       get :explorer
 
       expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Explorer")
-    end
-
-    it "shows 'simulation' on rsop screen" do
-      get :rsop
-
-      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Simulation")
     end
 
     it "shows 'log' on log screen" do
