@@ -16,10 +16,6 @@ class MiqPolicyLogController < ApplicationController
     @lastaction = "policy_logs"
     @layout = "miq_policy_logs"
     @msg_title = "Policy"
-    @download_action = "fetch_log"
-    @server_options ||= {}
-    @server_options[:server_id] ||= MiqServer.my_server.id
-    @server = MiqServer.my_server
     drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_policy/log")
   end
 
@@ -68,13 +64,11 @@ class MiqPolicyLogController < ApplicationController
     @title = _("Log")
     @layout = "miq_policy_log"
     @lastaction = session[:miq_policy_log_lastaction]
-    @server_options = session[:server_options] if session[:server_options]
   end
 
   def set_session_data
     super
     session[:layout]         = @layout
-    session[:server_options] = @server_options
     session[:miq_policy_log_lastaction] = @lastaction
   end
 

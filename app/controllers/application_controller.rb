@@ -1614,9 +1614,6 @@ class ApplicationController < ActionController::Base
     # Set @edit key default for the expression editor to use
     @expkey = session[:expkey] || :expression
 
-    # Get server hash, if it is in the session for supported controllers
-    @server_options = session[:server_options] if %w[configuration support].include?(controller_name)
-
     # Get timelines hash, if it is in the session for the running controller
     @tl_options = tl_session_data
 
@@ -1667,9 +1664,6 @@ class ApplicationController < ActionController::Base
     session[:miq_compressed] = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
     session[:last_trans_time] = Time.now
-
-    # Set server hash, if @server_options is present
-    session[:server_options] = @server_options
 
     # Set timelines hash, if it is in the session for the running controller
     set_tl_session_data
