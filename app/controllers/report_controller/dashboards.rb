@@ -127,6 +127,7 @@ module ReportController::Dashboards
       if params[:button] == "add"
         g = MiqGroup.find(@sb[:nodes][2])
         @dashboard.owner = g
+        @dashboard.group_id = g.id
       end
       if @flash_array.nil? && @dashboard.save
         db_save_members
