@@ -1534,6 +1534,7 @@ MiqEventController:
 - x_search_by_name
 - x_show
 MiqPolicyController:
+- accordion_select
 - adv_search_button
 - adv_search_clear
 - adv_search_load_choice
@@ -1545,7 +1546,6 @@ MiqPolicyController:
 - index
 - miq_event_field_changed
 - miq_policy_edit
-- policy_field_changed
 - quick_search
 - reload
 - report_data
@@ -1761,6 +1761,7 @@ OrchestrationStackController:
 - quick_search
 - report_data
 - retire
+- retirement_info
 - save_default_search
 - search_clear
 - sections_field_changed
@@ -2058,6 +2059,7 @@ ServiceController:
 - reload
 - report_data
 - retire
+- retirement_info
 - save_default_search
 - search_clear
 - tree_autoload
@@ -2186,6 +2188,7 @@ VmCloudController:
 - dynamic_text_box_refresh
 - edit_vm
 - event_logs
+- evm_relationship_update
 - exp_button
 - exp_changed
 - exp_token_pressed
@@ -2224,6 +2227,7 @@ VmCloudController:
 - reload
 - report_data
 - retire
+- retirement_info
 - right_size_print
 - scan_histories
 - search_clear
@@ -2231,6 +2235,7 @@ VmCloudController:
 - security_groups
 - show
 - snap_pressed
+- snap_vm
 - tl_chooser
 - tree_autoload
 - tree_select
@@ -2261,6 +2266,7 @@ VmController:
 - rename_vm
 - report_data
 - retire
+- retirement_info
 - right_size
 - set_checked_items
 - show
@@ -2307,6 +2313,7 @@ VmInfraController:
 - dynamic_text_box_refresh
 - edit_vm
 - event_logs
+- evm_relationship_update
 - exp_button
 - exp_changed
 - exp_token_pressed
@@ -2346,6 +2353,7 @@ VmInfraController:
 - rename_vm
 - report_data
 - retire
+- retirement_info
 - right_size_print
 - scan_histories
 - search_clear
@@ -2353,6 +2361,7 @@ VmInfraController:
 - security_groups
 - show
 - snap_pressed
+- snap_vm
 - tl_chooser
 - tree_autoload
 - tree_select
@@ -2405,6 +2414,7 @@ VmOrTemplateController:
 - dynamic_text_box_refresh
 - edit_vm
 - event_logs
+- evm_relationship_update
 - exp_button
 - exp_changed
 - exp_token_pressed
@@ -2445,12 +2455,14 @@ VmOrTemplateController:
 - rename_vm
 - report_data
 - retire
+- retirement_info
 - scan_histories
 - search_clear
 - sections_field_changed
 - security_groups
 - show
 - snap_pressed
+- snap_vm
 - tl_chooser
 - tree_select
 - users
