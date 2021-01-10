@@ -17,10 +17,8 @@ module HostInitiatorHelper::TextualSummary
   end
 
   def textual_group_san_addresses
-    san_addresses_values = []
-
-    @record.san_addresses.each do |san_address|
-      san_addresses_values << san_address.get_address_info
+    san_addresses_values = @record.san_addresses.map do |san_address|
+      [san_address.class.display_name, san_address.address_value]
     end
 
     TextualMultilabel.new(
