@@ -8,6 +8,7 @@ class MiqPolicyLogController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def index
+    assert_privileges('policy_log')
     flash_to_session
     assert_privileges('policy_log')
     @breadcrumbs = []
