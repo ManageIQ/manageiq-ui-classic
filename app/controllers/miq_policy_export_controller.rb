@@ -8,6 +8,7 @@ class MiqPolicyExportController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def index
+    assert_privileges('policy_import_export')
     flash_to_session
     export_reset_set
   end
