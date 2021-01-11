@@ -1,12 +1,8 @@
 describe('import.js', function() {
   describe('ImportSetup', function() {
     describe('#respondToPostMessages', function() {
-      var test = {
-        callback: function(uploadId, message) { }
-      };
-
       beforeEach(function() {
-        spyOn(test, 'callback');
+        spyOn(Automate, 'getAndRenderAutomateJson');
         spyOn(window, 'miqSparkleOff');
         spyOn(window, 'clearFlash');
         spyOn(window, 'add_flash');
@@ -17,11 +13,11 @@ describe('import.js', function() {
           var event = {
             data: {
               import_file_upload_id: 123,
-              message: 'the message'
-            }
+              message: 'the message',
+            },
           };
 
-          ImportSetup.respondToPostMessages(event, test.callback);
+          ImportSetup.respondToPostMessages(event);
         });
 
         it('turns the sparkle off', function() {
@@ -33,7 +29,7 @@ describe('import.js', function() {
         });
 
         it('triggers the callback', function() {
-          expect(test.callback).toHaveBeenCalledWith(123, 'the message');
+          expect(Automate.getAndRenderAutomateJson).toHaveBeenCalledWith(123, 'the message');
         });
       });
 
@@ -42,8 +38,11 @@ describe('import.js', function() {
 
         context('when the message level is warning', function() {
           beforeEach(function() {
-            event.data.message = '{&quot;message&quot;:&quot;lol&quot;,&quot;level&quot;:&quot;warning&quot;}';
-            ImportSetup.respondToPostMessages(event, test.callback);
+            event.data.message = {
+              level: 'warning',
+              message: 'lol',
+            };
+            ImportSetup.respondToPostMessages(event);
           });
 
           it('turns the sparkle off', function() {
@@ -61,8 +60,11 @@ describe('import.js', function() {
 
         context('when the message level is not warning', function() {
           beforeEach(function() {
-            event.data.message = '{&quot;message&quot;:&quot;lol2&quot;,&quot;level&quot;:&quot;error&quot;}';
-            ImportSetup.respondToPostMessages(event, test.callback);
+            event.data.message = {
+              message: 'lol',
+              level: 'error',
+            };
+            ImportSetup.respondToPostMessages(event);
           });
 
           it('turns the sparkle off', function() {
@@ -81,36 +83,24 @@ describe('import.js', function() {
     });
 
     describe('#listenForGitPostMessages', function() {
-      var gitPostMessageCallback;
-
-      beforeEach(function() {
-        spyOn(window, 'addEventListener').and.callFake(
-          function(_, callback) {
-            gitPostMessageCallback = callback;
-          }
-        );
-      });
-
-      it('sets up an event listener', function() {
-        ImportSetup.listenForGitPostMessages();
-        expect(window.addEventListener).toHaveBeenCalledWith('message', gitPostMessageCallback);
-      });
-
       describe('post message callback', function() {
-        var event = {};
-
         beforeEach(function() {
           spyOn(window, 'miqSparkleOff');
         });
 
         context('when the message data level is an error', function() {
+          var event = {};
+
           beforeEach(function() {
             spyOn(window, 'add_flash');
             spyOn($.fn, 'prop');
             event.data = {
-              message: {level: 'error', message: 'test'}
+              message: {
+                level: 'error',
+                message: 'test',
+              }
             };
-            gitPostMessageCallback(event);
+            ImportSetup.respondToGitPostMessages(event);
           });
 
           it('shows the error message', function() {
@@ -128,18 +118,21 @@ describe('import.js', function() {
         });
 
         context('when the message data level is not error', function() {
+          var event = {};
+
           beforeEach(function() {
             spyOn(Automate, 'renderGitImport');
             event.data = {
-              message: '{&quot;level&quot;: &quot;success&quot;, &quot;message&quot;: &quot;test&quot;}',
-              git_repo_id: 123
+              git_repo_id: 123,
+              level: 'success',
+              message: 'test',
             };
           });
 
           context('when the data has branches', function() {
             beforeEach(function() {
               event.data.git_branches = 'branches';
-              gitPostMessageCallback(event);
+              ImportSetup.respondToGitPostMessages(event);
             });
 
             it('calls renderGitImport with the branches, tags, repo_id, and message', function() {
@@ -154,7 +147,7 @@ describe('import.js', function() {
           context('when the data has tags with no branches', function() {
             beforeEach(function() {
               event.data.git_tags = 'tags';
-              gitPostMessageCallback(event);
+              ImportSetup.respondToGitPostMessages(event);
             });
 
             it('calls renderGitImport with the branches, tags, repo_id, and message', function() {
@@ -168,7 +161,7 @@ describe('import.js', function() {
 
           context('when the data has neither tags nor branches', function() {
             beforeEach(function() {
-              gitPostMessageCallback(event);
+              ImportSetup.respondToGitPostMessages(event);
             });
 
             it('does not call renderGitImport', function() {
