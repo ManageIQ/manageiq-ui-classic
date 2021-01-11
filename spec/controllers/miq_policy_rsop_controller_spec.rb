@@ -31,6 +31,24 @@ describe MiqPolicyRsopController do
     end
   end
 
+  describe "#index" do
+    it "first time on RSOP screen, session[:changed] should be false" do
+      session[:changed] = true
+      controller.instance_variable_set(:@current_user,
+                                       FactoryBot.create(:user,
+                                                         :name       => "foo",
+                                                         :miq_groups => [],
+                                                         :userid     => "foo"))
+      controller.instance_variable_set(:@sb, {})
+      allow(controller).to receive(:rsop_put_objects_in_sb)
+      allow(controller).to receive(:find_filtered)
+      allow(controller).to receive(:appliance_name)
+      get :index
+      expect(session[:changed]).to be_falsey
+      expect(response).to render_template('miq_policy_rsop/index')
+    end
+  end
+
   describe "breadcrumbs" do
     before { EvmSpecHelper.local_miq_server }
 
