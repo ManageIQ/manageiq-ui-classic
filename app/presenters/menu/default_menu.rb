@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/LineLength
 module Menu
   class DefaultMenu
     class << self
