@@ -29,9 +29,13 @@ describe 'Application routes' do
               allow(subject).to receive(:session)
               allow(subject).to receive(:current_user)
               allow(subject).to receive(:params).and_return({})
+              allow(subject).to receive(:request).and_return(request)
+              allow(request).to receive(:xml_http_request?).and_return(false)
             end
 
             let(:check_service) { double(PrivilegeCheckerService) }
+
+            let(:request) { double }
 
             it 'is enforced' do
               pending('ignored') if pending_routes[controller.to_s]&.include?(action)
