@@ -16,6 +16,7 @@ class MiqPolicyRsopController < ApplicationController
   end
 
   def index
+    assert_privileges('policy_simulation')
     flash_to_session
     @breadcrumbs = []
     session[:changed] = false
