@@ -7,7 +7,7 @@
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
     -# Load the required JS based on the console type
-    = javascript_include_tag 'jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}", 'remote_console'
+    = javascript_pack_tag("manageiq-ui-classic/remote_consoles/#{@console[:type]}.js")
   %body
     #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret], 'data-is-vcloud' => @console[:is_vcloud], 'data-vmx' => @console[:vmx]}
     %footer.remote-console

@@ -1,10 +1,11 @@
-//= require jquery/dist/jquery.js
+window.$ = window.jQuery = require('jquery');
 //= require jquery-ui/ui/unique-id.js
 //= require jquery-ui/ui/widget.js
 //= require jquery-ui/ui/widgets/dialog.js
 //= require jquery-ui/ui/widgets/button.js
 //= require_tree ../locale
 //= require gettext/all
+require('../../oldjs/remote_console.js');
 
 /* global WMKS */
 

@@ -1,7 +1,8 @@
-//= require jquery/dist/jquery.js
+window.$ = window.jQuery = require('jquery');
 //= require spice-html5-bower/spice-html5-rails
 //= require_tree ../locale
 //= require gettext/all
+require('../../oldjs/remote_console.js');
 
 $(function() {
   var host = window.location.hostname;
