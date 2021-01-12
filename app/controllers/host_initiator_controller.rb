@@ -4,7 +4,6 @@ class  HostInitiatorController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
-  include Mixins::GenericShowMixin
   include Mixins::GenericButtonMixin
 
   before_action :check_privileges
@@ -40,6 +39,9 @@ class  HostInitiatorController < ApplicationController
     }
   end
 
-  # needed to highlight the selected menu section
   menu_section " host_initiator"
+
+  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
+  feature_for_actions "#{controller_name}_show_list", :download_data
+  feature_for_actions "#{controller_name}_show", :download_summary_pdf
 end

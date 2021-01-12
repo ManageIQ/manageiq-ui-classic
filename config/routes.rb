@@ -2377,6 +2377,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        index
         show
         show_list
       ],
