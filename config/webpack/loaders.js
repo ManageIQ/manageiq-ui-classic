@@ -33,6 +33,11 @@ module.exports = [
     test: require.resolve('bootstrap-select'),
     use: 'imports-loader?module=>undefined,define=>undefined,this=>window',
   },
+  {
+    // matches both the actual path and the aliased one
+    test: /gettext_i18n_rails_js.*jed\.js/,
+    use: 'imports-loader?exports=>undefined,define=>undefined,this=>window',
+  },
 
   {
     test: /\.(scss|sass|css)$/i,
