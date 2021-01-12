@@ -14,6 +14,7 @@
 //= require ./miq_change_stored_password
 //= require ./miq_qe
 //= require ./git_import
+//= require ./import
 //= require ./automate_import_export
 //= require ./miq_c3_config
 //= require ./miq_ujs_bindings

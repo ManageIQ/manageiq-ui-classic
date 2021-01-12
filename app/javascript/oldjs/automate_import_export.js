@@ -1,5 +1,3 @@
-//= require import
-
 /* global miqSparkleOn miqSparkleOff showSuccessMessage showErrorMessage showWarningMessage clearMessages */
 
 var Automate = {
