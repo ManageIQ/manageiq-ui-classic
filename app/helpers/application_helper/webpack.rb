@@ -20,7 +20,9 @@ module ApplicationHelper
         concat(javascript_pack_tag('manageiq-ui-classic/globals.js'))
         concat "\n"
 
-        concat(javascript_include_tag('application'))
+        concat(javascript_pack_tag('manageiq-ui-classic/oldjs.js'))
+        concat "\n"
+
         concat(javascript_common_packs)
       end
     end
