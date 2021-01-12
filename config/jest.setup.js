@@ -13,7 +13,7 @@ window.sprintf = require('sprintf-js').sprintf;
 
 require('whatwg-fetch');
 
-require('../app/assets/javascripts/miq_global');
+require('../app/javascript/oldjs/miq_global.js');
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;
