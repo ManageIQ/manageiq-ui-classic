@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # rubocop:disable AlignHash
-  # rubocop:disable MultilineOperationIndentation
+  # rubocop:disable Layout/HashAlignment
+  # rubocop:disable Layout/MultilineOperationIndentation
   # default routes for each controller
   default_routes = %w(
     report_data
@@ -3288,4 +3288,6 @@ Rails.application.routes.draw do
   %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
+  # rubocop:enable Layout/HashAlignment
+  # rubocop:enable Layout/MultilineOperationIndentation
 end
