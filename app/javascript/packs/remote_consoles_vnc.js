@@ -1,7 +1,7 @@
 window.$ = window.jQuery = require('jquery');
 require('@novnc/novnc');
-require('../../oldjs/i18n.js');
-require('../../oldjs/remote_console.js');
+require('../oldjs/i18n.js');
+require('../oldjs/remote_console.js');
 
 $(function() {
   var host = window.location.hostname;
@@ -22,7 +22,7 @@ $(function() {
     local_cursor: true,
     shared: true,
     view_only: false,
-    onUpdateState: function(_, state, _, msg) {
+    onUpdateState: function(_a, state, _b, msg) {
       if (['normal', 'loaded'].indexOf(state) >= 0) {
         $('#connection-status').removeClass('label-danger label-warning').addClass('label-success');
         $('#connection-status').text(__('Connected'));

@@ -26,8 +26,8 @@ require('spice-html5-bower/spiceHTML5/playback.js');
 require('spice-html5-bower/spiceHTML5/resize.js');
 require('spice-html5-bower/spiceHTML5/webm.js');
 require('spice-html5-bower/spiceHTML5/port.js');
-require('../../oldjs/i18n.js');
-require('../../oldjs/remote_console.js');
+require('../oldjs/i18n.js');
+require('../oldjs/remote_console.js');
 
 $(function() {
   var host = window.location.hostname;
