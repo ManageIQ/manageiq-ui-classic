@@ -12,7 +12,7 @@ describe ApplicationController do
       end
 
       it "returns with print" do
-        expect(controller).to receive(:render).with(:layout => '/layouts/print', :template => '/layouts/print/textual_summary')
+        expect(controller).to receive(:render).with(:layout => 'layouts/print', :template => 'layouts/print/textual_summary')
         controller.send(:set_summary_pdf_data)
       end
     end
