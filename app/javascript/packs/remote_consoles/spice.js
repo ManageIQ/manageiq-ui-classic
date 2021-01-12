@@ -1,7 +1,6 @@
 window.$ = window.jQuery = require('jquery');
 require('spice-html5-bower/spice-html5-rails');
-require('../../oldjs/locale/');
-require('gettext/all');
+require('../../oldjs/i18n.js');
 require('../../oldjs/remote_console.js');
 
 $(function() {

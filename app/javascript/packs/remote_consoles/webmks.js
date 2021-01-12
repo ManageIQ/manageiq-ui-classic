@@ -4,8 +4,7 @@ require('jquery-ui/ui/unique-id.js');
 require('jquery-ui/ui/widget.js');
 require('jquery-ui/ui/widgets/dialog.js');
 require('jquery-ui/ui/widgets/button.js');
-require('../../oldjs/locale/');
-require('gettext/all');
+require('../../oldjs/i18n.js');
 require('../../oldjs/remote_console.js');
 
 /* global WMKS */

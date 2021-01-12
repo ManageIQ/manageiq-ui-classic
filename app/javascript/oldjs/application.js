@@ -2,8 +2,6 @@ require('./miq_global.js');
 require('./jquery_overrides.js');
 
 // locales
-require('./locale/');
-require('gettext/all'); // TODO gettext_i18n_rails_js-1.3.0/lib/assets/javascripts/gettext/all.js
 require('./i18n.js');
 require('./gettextCatalog.js');
 
