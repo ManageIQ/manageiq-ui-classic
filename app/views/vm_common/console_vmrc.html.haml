@@ -2,7 +2,7 @@
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     = miq_favicon_link_tag
-    = javascript_include_tag 'jquery/dist/jquery.js'
+    = javascript_pack_tag('manageiq-ui-classic/remote_consoles/vmrc.js')
     :javascript
       // INITIALIZE
       $(document).ready(function(){
