@@ -1,6 +1,6 @@
 window.$ = window.jQuery = require('jquery');
 require('novnc-rails');
-//= require_tree ../locale
+require('../../oldjs/locale/');
 require('gettext/all');
 require('../../oldjs/remote_console.js');
 

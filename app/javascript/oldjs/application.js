@@ -1,15 +1,20 @@
 require('./miq_global.js');
 require('./jquery_overrides.js');
-//= require_tree ./locale
+
+// locales
+require('./locale/');
 require('gettext/all'); // TODO gettext_i18n_rails_js-1.3.0/lib/assets/javascripts/gettext/all.js
 require('./i18n.js');
 require('./gettextCatalog.js');
+
+// angular
 require('./miq_api.js');
 require('./miq_angular_application.js');
-//= require_tree ./controllers/
-//= require_tree ./directives/
-//= require_tree ./components/
-//= require_tree ./services/
+require('./controllers/');
+require('./directives/');
+require('./components/');
+require('./services/');
+
 require('./miq_browser_detect.js');
 require('./miq_application.js');
 require('./miq_flash.js');

@@ -1,6 +1,6 @@
 window.$ = window.jQuery = require('jquery');
 require('spice-html5-bower/spice-html5-rails');
-//= require_tree ../locale
+require('../../oldjs/locale/');
 require('gettext/all');
 require('../../oldjs/remote_console.js');
 
