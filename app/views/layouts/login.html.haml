@@ -7,10 +7,6 @@
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
     = javascript_dependencies
-    - if Rails.env.development?
-      = javascript_include_tag 'miq_debug'
-      = stylesheet_link_tag 'miq_debug'
-
     = render :partial => 'layouts/i18n_js'
 
   %body.login{:class => ::Settings.server.custom_login_logo ? 'whitelabel' : ''}
