@@ -15,7 +15,4 @@ Rails.application.config.assets.precompile += %w(
 
   print.scss
   report_colors.scss
-
-  jasmine-jquery/lib/jasmine-jquery.js
-  angular-mocks/angular-mocks.js
 )
