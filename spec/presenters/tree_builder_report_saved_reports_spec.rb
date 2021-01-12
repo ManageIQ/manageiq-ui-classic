@@ -10,11 +10,11 @@ describe TreeBuilderReportSavedReports do
         role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
         # User1 with current group Group2
-        @user1 = create_user_with_group('User1', "Group1", role)
+        @user1 = create_user_with_group('User-1', "Group-1", role)
 
         # User2 with 2 groups(Group1,Group2), current group: Group2
-        @user2 = create_user_with_group('User2', "Group2", role)
-        @user2.miq_groups << MiqGroup.where(:description => "Group1")
+        @user2 = create_user_with_group('User-2', "Group-2", role)
+        @user2.miq_groups << MiqGroup.where(:description => "Group-1")
 
         login_as @user2
         @rpt = create_and_generate_report_for_user("Vendor and Guest OS", @user1)
