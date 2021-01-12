@@ -13,7 +13,7 @@ module ApplicationHelper
     end
 
     # all js dependencies excluding screen-specific packs
-    def javascript_dependencies
+    def javascript_dependencies(common = true)
       capture do
         concat(javascript_essential_dependencies)
 
@@ -23,7 +23,7 @@ module ApplicationHelper
         concat(javascript_pack_tag('manageiq-ui-classic/oldjs.js'))
         concat "\n"
 
-        concat(javascript_common_packs)
+        concat(javascript_common_packs) if common
       end
     end
 

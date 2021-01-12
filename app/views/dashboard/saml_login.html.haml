@@ -3,7 +3,7 @@
     = miq_favicon_link_tag
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
-    = javascript_pack_tag 'manageiq-ui-classic/oldjs.js'
+    = javascript_dependencies(false)
 
   %body
     - if validation_url
