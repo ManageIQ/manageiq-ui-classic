@@ -555,7 +555,7 @@ class ApplicationController < ActionController::Base
 
   def filter_config(data)
     @parameter_filter ||=
-      ActionDispatch::Http::ParameterFilter.new(
+      ActiveSupport::ParameterFilter.new(
         Rails.application.config.filter_parameters + PASSWORD_FIELDS
       )
     return data.map { |e| filter_config(e) } if data.kind_of?(Array)
