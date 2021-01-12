@@ -1,0 +1,15 @@
+require('./alerts_center_service.js');
+require('./bootstrap_tree_subscription_service.js');
+require('./catalog/catalog_item_data.js');
+require('./configuration_manager_service/configuration_manager_service.js');
+require('./dashboard_service.js');
+require('./dialog_editor_http_service.js');
+require('./dialog_field_refresh_service.js');
+require('./dialog_user_submit_error_handler_service.js');
+require('./index.js');
+require('./miq_db_backup_service.js');
+require('./miq_service.js');
+require('./post_service.js');
+require('./subscription_service.js');
+require('./timer_option_service.js');
+require('./topology_service.js');
