@@ -1,28 +1,30 @@
-//= require ./miq_global
-//= require ./jquery_overrides
-//= require ./i18n
-//= require ./gettextCatalog
-//= require ./miq_api
-//= require ./miq_angular_application
+require('./miq_global.js');
+require('./jquery_overrides.js');
+//= require_tree ./locale
+require('gettext/all'); // TODO gettext_i18n_rails_js-1.3.0/lib/assets/javascripts/gettext/all.js
+require('./i18n.js');
+require('./gettextCatalog.js');
+require('./miq_api.js');
+require('./miq_angular_application.js');
 //= require_tree ./controllers/
 //= require_tree ./directives/
 //= require_tree ./components/
 //= require_tree ./services/
-//= require ./miq_browser_detect
-//= require ./miq_application
-//= require ./miq_flash
-//= require ./miq_change_stored_password
-//= require ./miq_qe
-//= require ./git_import
-//= require ./import
-//= require ./automate_import_export
-//= require ./miq_c3_config
-//= require ./miq_ujs_bindings
-//= require ./miq_tree
-//= require ./miq_formatters
-//= require ./miq_grid
-//= require ./miq_list_grid
-//= require ./miq_toolbar
-//= require ./miq_c3
-//= require ./miq_explorer
-//= require ./miq_timeline
+require('./miq_browser_detect.js');
+require('./miq_application.js');
+require('./miq_flash.js');
+require('./miq_change_stored_password.js');
+require('./miq_qe.js');
+require('./git_import.js');
+require('./import.js');
+require('./automate_import_export.js');
+require('./miq_c3_config.js');
+require('./miq_ujs_bindings.js');
+require('./miq_tree.js');
+require('./miq_formatters.js');
+require('./miq_grid.js');
+require('./miq_list_grid.js');
+require('./miq_toolbar.js');
+require('./miq_c3.js');
+require('./miq_explorer.js');
+require('./miq_timeline.js');

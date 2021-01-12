@@ -5,14 +5,6 @@ Rails.application.config.assets.precompile << proc do |filename, path|
 end
 
 Rails.application.config.assets.precompile += %w(
-  jquery/dist/jquery.js
-  jquery-ui/ui/*.js
-  jquery-ui/ui/widgets/*.js
-
-  jquery_overrides.js
-  remote_consoles/*.js
-  remote_console.js
-
   print.scss
   report_colors.scss
 )
