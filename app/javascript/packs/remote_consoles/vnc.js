@@ -1,5 +1,5 @@
 window.$ = window.jQuery = require('jquery');
-require('novnc-rails');
+require('@novnc/novnc');
 require('../../oldjs/i18n.js');
 require('../../oldjs/remote_console.js');
 

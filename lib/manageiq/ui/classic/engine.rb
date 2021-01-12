@@ -22,7 +22,6 @@ else
 end
 
 require 'high_voltage'
-require "novnc-rails"
 require 'webpacker'
 
 module ManageIQ
