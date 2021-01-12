@@ -2,7 +2,6 @@ require('./de/app.js');
 require('./en/app.js');
 require('./es/app.js');
 require('./fr/app.js');
-require('./index.js');
 require('./it/app.js');
 require('./ja/app.js');
 require('./ko/app.js');

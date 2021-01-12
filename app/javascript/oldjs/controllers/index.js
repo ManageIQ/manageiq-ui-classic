@@ -1,4 +1,3 @@
-require('./.eslintrc.json');
 require('./alerts/alerts_list_controller.js');
 require('./alerts/alerts_most_recent_controller.js');
 require('./alerts/alerts_overview_controller.js');
@@ -37,7 +36,6 @@ require('./floating_ip/floating_ip_form_controller.js');
 require('./fonticon_picker_controller.js');
 require('./host/host_form_controller.js');
 require('./host_aggregate/host_aggregate_form_controller.js');
-require('./index.js');
 require('./live_metrics/ad_hoc_metrics_controller.js');
 require('./live_metrics/util/metrics-config-factory.js');
 require('./live_metrics/util/metrics-http-factory.js');
