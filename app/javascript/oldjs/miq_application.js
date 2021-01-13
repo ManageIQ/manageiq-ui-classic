@@ -58,7 +58,7 @@ window.miqPrepRightCellForm = function(tree) {
 
 window.miqCalendarDateConversion = function(server_offset) {
   return moment().utcOffset(Number(server_offset) / 60).toDate();
-}
+};
 
 // The expressions variable is used only in the following two functions
 // TODO: Remove this scope wrapper after the expressions were moved to Ruby
