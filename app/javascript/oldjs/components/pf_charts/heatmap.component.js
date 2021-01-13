@@ -21,7 +21,7 @@ angular.module('patternfly.charts').component('pfHeatmap', {
 });
 heatmapController.$inject = ['$element', '$window', '$compile', '$scope', '$timeout'];
 
-window.heatmapController = function($element, $window, $compile, $scope, $timeout) {
+function heatmapController($element, $window, $compile, $scope, $timeout) {
   'use strict';
   var vm = this;
   var prevData;

@@ -8,7 +8,7 @@ angular.module('patternfly.charts').component('pfC3Chart', {
 });
 c3ChartController.$inject = ['$timeout', '$attrs'];
 
-window.c3ChartController = function($timeout, $attrs) {
+function c3ChartController($timeout, $attrs) {
   var vm = this;
   var prevConfig;
 

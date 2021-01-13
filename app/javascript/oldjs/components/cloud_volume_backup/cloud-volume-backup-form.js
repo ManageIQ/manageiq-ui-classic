@@ -9,7 +9,7 @@ ManageIQ.angular.app.component('cloudVolumeBackupForm', {
 
 cloudVolumeBackupFormController.$inject = ['miqService', '$http', '$scope'];
 
-window.cloudVolumeBackupFormController = function(miqService, $http, $scope) {
+function cloudVolumeBackupFormController(miqService, $http, $scope) {
   var vm = this;
 
   var init = function() {

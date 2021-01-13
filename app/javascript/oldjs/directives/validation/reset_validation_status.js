@@ -14,7 +14,7 @@ ManageIQ.angular.app.directive('resetValidationStatus', ['$rootScope', function(
   };
 }]);
 
-window.getScopeOrController = function(scope) {
+function getScopeOrController(scope) {
   return scope.controllerName ? scope[scope.controllerName] : scope;
 }
 

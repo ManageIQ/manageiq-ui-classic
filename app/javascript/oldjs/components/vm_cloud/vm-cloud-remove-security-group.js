@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('vmCloudRemoveSecurityGroup', {
 
 vmCloudRemoveSecurityGroupFormController.$inject = ['API', 'miqService'];
 
-window.vmCloudRemoveSecurityGroupFormController = function(API, miqService) {
+function vmCloudRemoveSecurityGroupFormController(API, miqService) {
   var vm = this;
 
   vm.$onInit = function() {

@@ -1,7 +1,7 @@
 ManageIQ.angular.app.service('playbookReusableCodeMixin', playbookReusableCodeMixin);
 playbookReusableCodeMixin.$inject = ['API', '$q', 'miqService'];
 
-window.playbookReusableCodeMixin = function(API, $q, miqService) {
+function playbookReusableCodeMixin(API, $q, miqService) {
   var sortOptions = '&sort_by=name&sort_order=ascending';
   var allApiPromises = [];
 

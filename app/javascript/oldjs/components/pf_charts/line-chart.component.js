@@ -12,7 +12,7 @@ angular.module('patternfly.charts').component('pfLineChart', {
 });
 lineChartController.$inject = ['pfUtils'];
 
-window.lineChartController = function(pfUtils) {
+function lineChartController(pfUtils) {
   'use strict';
   var vm = this;
   var prevChartData;

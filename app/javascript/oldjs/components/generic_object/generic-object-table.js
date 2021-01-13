@@ -24,7 +24,7 @@ ManageIQ.angular.app.component('genericObjectTable', {
 
 genericObjectTableController.$inject = ['$timeout'];
 
-window.genericObjectTableController = function($timeout) {
+function genericObjectTableController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {

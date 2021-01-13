@@ -28,7 +28,7 @@ ManageIQ.constants = {
   reportData: 'report_data',
 };
 
-window.miqHttpInject = function(angular_app) {
+function miqHttpInject(angular_app) {
   angular_app.config(['$locationProvider', function($locationProvider) {
     /**
      * hashPrefix must be empty othervise it will conflict with HashRouter and create infinite loop

@@ -12,7 +12,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
 });
 sparklineChartController.$inject = ['pfUtils', '$document'];
 
-window.sparklineChartController = function(pfUtils, $document) {
+function sparklineChartController(pfUtils, $document) {
   'use strict';
   var vm = this;
   var prevChartData;

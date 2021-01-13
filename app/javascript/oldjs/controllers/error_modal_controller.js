@@ -1,5 +1,5 @@
 ErrorModalController.$inject = ['$timeout'];
-window.ErrorModalController = function($timeout) {
+function ErrorModalController($timeout) {
   var $ctrl = this;
   $ctrl.data = null;
   $ctrl.error = null;

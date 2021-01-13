@@ -12,7 +12,7 @@ angular.module('patternfly.charts').component('pfDonutPctChart', {
 });
 donutPctChartController.$inject = ['pfUtils'];
 
-window.donutPctChartController = function(pfUtils) {
+function donutPctChartController(pfUtils) {
   'use strict';
   var vm = this;
   var prevData;
