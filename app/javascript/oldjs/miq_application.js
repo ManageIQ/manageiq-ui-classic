@@ -1532,7 +1532,7 @@ window.miqFormatNotification = function(text, bindings) {
   return str;
 }
 
-var fontIconChar = _.memoize(function(klass) {
+window.fontIconChar = _.memoize(function(klass) {
   var tmp = document.createElement('i');
   tmp.className = 'hidden ' + klass;
   document.body.appendChild(tmp);

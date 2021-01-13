@@ -1,7 +1,6 @@
 /* global miqSparkleOff miqSparkleOn */
 
-
-var clearMessages = function() {
+window.clearMessages = function() {
   $('.import-flash-message .alert').removeClass('alert-success alert-danger alert-warning');
   $('.icon-placeholder').removeClass('pficon pficon-ok pficon-layered');
   $('.pficon-error-circle-o').removeClass('pficon-error-circle-o');
@@ -10,12 +9,12 @@ var clearMessages = function() {
   $('.pficon-warning-exclamation').removeClass('pficon-warning-exclamation');
 };
 
-var flashMessageClickHandler = function() {
+window.flashMessageClickHandler = function() {
   clearMessages();
   $(this).hide();
 };
 
-var showErrorMessage = function(message) {
+window.showErrorMessage = function(message) {
   $('.import-flash-message .alert').addClass('alert-danger');
   $('.icon-placeholder').addClass('pficon-layered');
   $('.icon-placeholder .pficon').first().addClass('pficon-error-circle-o');
@@ -26,7 +25,7 @@ var showErrorMessage = function(message) {
   $('.import-flash-message').click(flashMessageClickHandler);
 };
 
-var showSuccessMessage = function(message) {
+window.showSuccessMessage = function(message) {
   $('.import-flash-message .alert').addClass('alert-success');
   $('.icon-placeholder').addClass('pficon-ok').addClass('pficon');
   $('.import-flash-message .alert .message').html(message);
@@ -35,7 +34,7 @@ var showSuccessMessage = function(message) {
   $('.import-flash-message').click(flashMessageClickHandler);
 };
 
-var showWarningMessage = function(message) {
+window.showWarningMessage = function(message) {
   $('.import-flash-message .alert').addClass('alert-warning');
   $('.icon-placeholder').addClass('pficon-layered');
   $('.icon-placeholder .pficon').first().addClass('pficon-warning-triangle-o');
@@ -46,7 +45,7 @@ var showWarningMessage = function(message) {
   $('.import-flash-message').click(flashMessageClickHandler);
 };
 
-var ImportSetup = {
+window.ImportSetup = {
   listenForPostMessages: function(getAndRenderJsonCallback) {
     window.addEventListener('message', function(event) {
       if (event.data.import_file_upload_id) {
@@ -104,7 +103,7 @@ var ImportSetup = {
   },
 };
 
-var setUpImportClickHandlers = function(url, grid, importCallback) {
+window.setUpImportClickHandlers = function(url, grid, importCallback) {
   $('.import-commit').click(function() {
     miqSparkleOn();
     clearMessages();
