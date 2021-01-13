@@ -1,4 +1,4 @@
-class  HostInitiatorController < ApplicationController
+class HostInitiatorController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
