@@ -10,6 +10,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
+const { execSync } = require('child_process');
 
 const { env, settings, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
@@ -18,6 +19,8 @@ const RailsEnginesPlugin = require('./RailsEnginesPlugin');
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const moduleDir = engines['manageiq-ui-classic'].node_modules;
+
+const gettextDir = execSync('bundle info --path gettext_i18n_rails_js', { encoding: 'utf-8' }).trim();
 
 const sharedPackages = [
   '@carbon/icons-react',
@@ -149,6 +152,7 @@ module.exports = {
       '@patternfly/patternfly': resolveModule('NONEXISTENT'),
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
       '@@ddf': resolve(dirname(__filename), '../../app/javascript/forms/data-driven-form'),
+      'gettext_i18n_rails_js': gettextDir,
     },
     extensions: settings.extensions,
     modules: [],

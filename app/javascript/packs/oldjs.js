@@ -1,0 +1,1 @@
+require('../oldjs/application.js');

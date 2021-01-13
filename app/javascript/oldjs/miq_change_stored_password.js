@@ -1,6 +1,6 @@
 /* global miqJqueryRequest */
 
-function changeStoredPassword(pfx, url) {
+window.changeStoredPassword = function(pfx, url) {
   var prefix = '';
   if (pfx.length > 1) {
     prefix = pfx + '_';
@@ -18,7 +18,7 @@ function changeStoredPassword(pfx, url) {
   $('#' + prefix + 'password').focus();
 }
 
-function cancelPasswordChange(pfx, url) {
+window.cancelPasswordChange = function(pfx, url) {
   var storedPasswordPlaceholder = '●●●●●●●●';
   var prefix = '';
   if (pfx.length > 1) {

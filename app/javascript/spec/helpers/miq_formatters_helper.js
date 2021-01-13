@@ -7,4 +7,4 @@ require('moment-strftime');
 require('moment-timezone');
 
 window.numeral = require('numeral');
-require('../../../assets/javascripts/miq_formatters.js');
+require('../../oldjs/miq_formatters.js');

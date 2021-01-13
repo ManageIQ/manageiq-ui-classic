@@ -1,6 +1,6 @@
 /* global miqSparkleOn miqSparkleOff showErrorMessage clearMessages */
 
-var GitImport = {
+window.GitImport = {
   TASK_POLL_TIMEOUT: 1500,
 
   retrieveDatastoreClickHandler: function() {

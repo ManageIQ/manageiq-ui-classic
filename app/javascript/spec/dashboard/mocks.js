@@ -11,12 +11,12 @@ window.ManageIQ = {
 };
 window.__ = x => x;
 
-// FIXME: app/assets/javascripts/services/
+// FIXME: app/javascript/oldjs/services/
 ManageIQ.angular.app.service('miqService', function handleFailure() {
   this.handleFailure = () => null;
 });
 
-// FIXME: miq_application.js
+// FIXME: app/javascript/oldjs/miq_application.js
 window.miqDeferred = () => {
   const deferred = {};
 

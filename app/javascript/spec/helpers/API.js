@@ -1,5 +1,5 @@
 import { API } from '../../http_api';
 
-require('../../../assets/javascripts/miq_api.js');
+require('../../oldjs/miq_api.js');
 
 window.vanillaJsAPI = API;

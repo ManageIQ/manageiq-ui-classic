@@ -16,9 +16,7 @@ src_files:
 - packs/shims.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/globals.js
-- assets/application.js
-- assets/jasmine-jquery/lib/jasmine-jquery.js
-- assets/angular-mocks.js
+- packs/manageiq-ui-classic/jasmine-assets.js
 - __spec__/helpers/fixtures-fix.js
 - packs/manageiq-ui-classic/application-common.js
 - packs/manageiq-ui-classic/toolbar-actions-common.js
