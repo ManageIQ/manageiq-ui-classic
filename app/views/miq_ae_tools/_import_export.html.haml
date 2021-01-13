@@ -1,20 +1,9 @@
-%iframe.import-hidden-iframe{:name => "upload_target", :style => "display: none;"}
-
 = render :partial => "layouts/flash_msg"
-.import-flash-message
-  .alert
-    %span.icon-placeholder
-      %span.pficon
-      %span.pficon
-    %strong.message
 
 .import-or-export
   %h3
     = _('Import Datastore classes (*.zip)')
-  = form_tag({:action => "upload_import_file"},
-             :target    => "upload_target",
-             :multipart => true,
-             :method    => :post) do
+  %form#upload_import_file_form{:multipart => true}
     .form-horizontal
       .form-group
         .col-md-4
@@ -25,10 +14,7 @@
   %hr
   %h3
     = _('Import Datastore via git')
-  = form_tag({:action => "retrieve_git_datastore"},
-              :target => "upload_target",
-              :method => :post,
-              :id     => "retrieve-git-datastore-form") do
+  %form#retrieve-git-datastore-form
     .form-horizontal
       .form-group
         %label.col-sm-2.control-label
@@ -148,15 +134,11 @@
   $(function() {
     miqInitSelectPicker();
 
-    $("#upload_file").on("change", function() {
-      ImportSetup.setUpUploadImportButton('#upload-datastore-import')
+    ImportSetup.setupFileImport({
+      button: '#upload-datastore-import',
+      form: '#upload_import_file_form',
+      input: '#upload_file',
     });
 
-    $('#upload-datastore-import').on("click", function() {
-      miqSparkleOn();
-    });
-
-    ImportSetup.listenForPostMessages(Automate.getAndRenderAutomateJson);
-    ImportSetup.listenForGitPostMessages();
     Automate.setUpAutomateImportClickHandlers();
   });

@@ -10,7 +10,7 @@ describe('GitImport', function() {
       html += '</form>';
 
       spyOn(window, 'miqSparkleOn');
-      spyOn(window, 'clearMessages');
+      spyOn(window, 'clearFlash');
 
       spyOn($, 'post').and.callFake(function(url, data, callback) {
         retrieveGitDatastoreCallback = callback;
@@ -27,7 +27,7 @@ describe('GitImport', function() {
 
     it('clears the messages', function() {
       $('.git-retrieve-datastore').trigger('click');
-      expect(window.clearMessages).toHaveBeenCalled();
+      expect(window.clearFlash).toHaveBeenCalled();
     });
 
     it('makes a post to retrieve the git datastore', function() {
@@ -39,14 +39,14 @@ describe('GitImport', function() {
     describe('#retrieveDatastoreClickHandler retrieveGitDatastoreCallback', function() {
       describe('when there are messages and the level is "error"', function() {
         beforeEach(function() {
-          spyOn(window, 'showErrorMessage');
+          spyOn(window, 'add_flash');
           spyOn(window, 'miqSparkleOff');
 
           retrieveGitDatastoreCallback({"message": {"message": "the message", "level": "error"}});
         });
 
         it('shows error messages', function() {
-          expect(window.showErrorMessage).toHaveBeenCalledWith('the message');
+          expect(window.add_flash).toHaveBeenCalledWith('the message', 'error');
         });
 
         it('turns off the sparkle', function() {

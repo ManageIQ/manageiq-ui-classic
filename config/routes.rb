@@ -2039,7 +2039,6 @@ Rails.application.routes.draw do
         import_export
         log
         resolve
-        review_import
       ),
       :post => %w(
         button

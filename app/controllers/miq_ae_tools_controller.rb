@@ -188,26 +188,19 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   def upload_import_file
     assert_privileges('miq_ae_class_import_export')
-    redirect_options = {:action => :review_import}
-
     upload_file = params.fetch_path(:upload, :file)
 
     if upload_file.blank?
       add_flash(_("Use the Choose file button to locate an import file"), :warning)
     else
-      import_file_upload_id = automate_import_service.store_for_import(upload_file.read)
+      import_file_upload = automate_import_service.store_for_import(upload_file.read)
       add_flash(_("Import file was uploaded successfully"), :success)
-      redirect_options[:import_file_upload_id] = import_file_upload_id
     end
 
-    flash_to_session
-    redirect_to(redirect_options)
-  end
-
-  def review_import
-    assert_privileges('miq_ae_class_import_export')
-    @import_file_upload_id = params[:import_file_upload_id]
-    @message = @flash_array.first.to_json
+    render :json => {
+      :import_file_upload_id => import_file_upload&.id&.to_s, # nil on error
+      :message => @flash_array.first,
+    }
   end
 
   def retrieve_git_datastore

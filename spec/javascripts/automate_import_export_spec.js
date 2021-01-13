@@ -195,24 +195,24 @@ describe('Automate', function() {
       html += '<select class="git-branches"></select>';
       html += '<select class="git-tags"></select>';
 
-      spyOn(window, 'clearMessages');
+      spyOn(window, 'clearFlash');
 
       setFixtures(html);
     });
 
     context('when the message level is an error', function() {
       beforeEach(function() {
-        spyOn(window, 'showErrorMessage');
+        spyOn(window, 'add_flash');
       });
 
       it('clears messages', function() {
         Automate.renderGitImport('branches', 'tags', 'gitrepoid', {message: 'the message', level: 'error'});
-        expect(window.clearMessages).toHaveBeenCalled();
+        expect(window.clearFlash).toHaveBeenCalled();
       });
 
-      it('calls showErrorMessage with the message', function() {
+      it('calls add_flash with the message', function() {
         Automate.renderGitImport('branches', 'tags', 'gitrepoid', {message: 'the message', level: 'error'});
-        expect(window.showErrorMessage).toHaveBeenCalledWith('the message');
+        expect(window.add_flash).toHaveBeenCalledWith('the message', 'error');
       });
     });
 
@@ -224,7 +224,7 @@ describe('Automate', function() {
 
       context('when the message level is a warning', function() {
         beforeEach(function() {
-          spyOn(window, 'showWarningMessage');
+          spyOn(window, 'add_flash');
         });
 
         it('assigns the repo id into the hidden input', function() {
@@ -242,9 +242,9 @@ describe('Automate', function() {
           expect($('.import-or-export')).not.toBeVisible();
         });
 
-        it('calls showWarningMessage with the message', function() {
+        it('calls add_flash with the message', function() {
           Automate.renderGitImport(['branches'], ['tags'], '123', {message: 'the message', level: 'warning'});
-          expect(window.showWarningMessage).toHaveBeenCalledWith('the message');
+          expect(window.add_flash).toHaveBeenCalledWith('the message', 'warning');
         });
 
         it('adds the options to the dropdowns', function() {
@@ -265,12 +265,6 @@ describe('Automate', function() {
           expect($.fn.selectpicker.calls.allArgs()).toEqual([['refresh'], ['refresh']]);
           expect($.fn.selectpicker.calls.first().object.selector).toEqual('select.git-branches');
           expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('select.git-tags');
-        });
-      });
-
-      context('when the message level is not a warning', function() {
-        beforeEach(function() {
-          spyOn(window, 'showSuccessMessage');
         });
       });
     });
