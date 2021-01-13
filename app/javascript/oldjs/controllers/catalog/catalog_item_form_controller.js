@@ -541,7 +541,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
 }]);
 
 // Javascript function to be called from confirmation modal outside of Angular controller.
-function cancelOrCopyProvisioning(buttonType) {
+window.cancelOrCopyProvisioning = function(buttonType) {
   var scope = angular.element('#form_div').scope();
   scope.$apply(function() {
     if (buttonType === 'cancel') {

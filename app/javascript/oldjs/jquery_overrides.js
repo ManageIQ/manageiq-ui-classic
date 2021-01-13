@@ -1,4 +1,4 @@
-function logError(fn) {
+window.logError = function(fn) {
   return function(text) {
     try {
       return fn(text);

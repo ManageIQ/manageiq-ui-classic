@@ -1,7 +1,7 @@
 /* global DoNav miqDomElementExists miqJqueryRequest miqSetButtons miqUpdateButtons */
 
 // Handle row click (ajax or normal html trans)
-function miqRowClick(row_id, row_url, row_url_ajax) {
+window.miqRowClick = function(row_id, row_url, row_url_ajax) {
   if (!row_url) {
     return;
   }
@@ -42,7 +42,7 @@ window.miqGridGetCheckedRows = function(grid) {
 }
 
 // checks/unchecks all grid rows
-function miqGridCheckAll(state, grid) {
+window.miqGridCheckAll = function(state, grid) {
   grid = grid || 'list_grid';
   state = !!state;
 
@@ -52,13 +52,13 @@ function miqGridCheckAll(state, grid) {
 }
 
 // Order a service from the catalog list view
-function miqOrderService(id) {
+window.miqOrderService = function(id) {
   var url = '/' + ManageIQ.controller + '/x_button/' + id + '?pressed=svc_catalog_provision';
   miqJqueryRequest(url, {beforeSend: true, complete: true});
 }
 
 // Handle checkbox
-function miqGridOnCheck(elem, button_div, grid) {
+window.miqGridOnCheck = function(elem, button_div, grid) {
   if (elem) {
     miqUpdateButtons(elem, button_div);
   }
@@ -94,7 +94,7 @@ window.miqGetSortUrl = function(col_id) {
   return url;
 }
 
-function miqGridSort(col_id) {
+window.miqGridSort = function(col_id) {
   var url = miqGetSortUrl(col_id);
   miqJqueryRequest(url, {beforeSend: true, complete: true});
 }

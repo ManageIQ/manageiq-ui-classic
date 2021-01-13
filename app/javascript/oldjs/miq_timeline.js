@@ -171,7 +171,7 @@
   };
 })(ManageIQ);
 
-function miqInitTimeline(json) {
+window.miqInitTimeline = function(json) {
   if (!json) {
     return;
   }

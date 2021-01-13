@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('recentResource', {
 
 resentResourceController.$inject = ['miqService', '$q', '$http', 'chartsMixin', '$scope'];
 
-function resentResourceController(miqService, $q, $http, chartsMixin, $scope) {
+window.resentResourceController = function(miqService, $q, $http, chartsMixin, $scope) {
   var vm = this;
   this.$onInit = function() {
     vm.id = _.uniqueId('recentResourcesLineChart_' + vm.providerId);

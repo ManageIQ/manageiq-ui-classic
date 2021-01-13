@@ -1,6 +1,6 @@
 /* global ManageIQ chartData miqBuildChartMenuEx miqSparkleOff */
 
-function load_c3_charts() {
+window.load_c3_charts = function() {
   for (var set in ManageIQ.charts.chartData) {
     for (var i = 0; i < ManageIQ.charts.chartData[set].length; i++) {
       var chart_id = 'miq_chart_' + set + '_' + i.toString();
@@ -19,7 +19,7 @@ function load_c3_charts() {
   miqSparkleOff();
 }
 
-function load_c3_chart(data, chart_id, height) {
+window.load_c3_chart = function(data, chart_id, height) {
   if (typeof (data.miqChart) === 'undefined') {
     data.miqChart = 'Line';
   }
@@ -62,7 +62,7 @@ function load_c3_chart(data, chart_id, height) {
 }
 
 
-function recalculateChartYAxisLabels(id) {
+window.recalculateChartYAxisLabels = function(id) {
   // hide/show chart with id
   this.api.toggle(id);
 
@@ -97,7 +97,7 @@ function recalculateChartYAxisLabels(id) {
   }
 }
 
-function validatePrecision(minShowed, maxShowed, format, min, max) {
+window.validatePrecision = function(minShowed, maxShowed, format, min, max) {
   if (min === max) {
     return {'changed': false, 'format': ManageIQ.charts.formatters[format.function].c3(format.options)};
   }
@@ -109,7 +109,7 @@ function validatePrecision(minShowed, maxShowed, format, min, max) {
   };
 }
 
-function recalculatePrecision(minShowed, maxShowed, format, min, max) {
+window.recalculatePrecision = function(minShowed, maxShowed, format, min, max) {
   var changed = false;
   if (maxShowed - minShowed <= Math.pow(10, 1 - format.options.precision)) {
     // if min and max are close, labels should be more precise
@@ -134,7 +134,7 @@ function recalculatePrecision(minShowed, maxShowed, format, min, max) {
   return {'changed': changed, 'format': format};
 }
 
-function getMinMaxFromChart(chart) {
+window.getMinMaxFromChart = function(chart) {
   var data = [];
   _.forEach(chart.api.data.shown(), function(o) {
     _.forEach(o.values, function(elem) {
@@ -154,22 +154,22 @@ function getMinMaxFromChart(chart) {
   return [min, max];
 }
 
-function getChartColumnDataValues(columns) {
+window.getChartColumnDataValues = function(columns) {
   return _.filter(_.flatten(_.tail(columns).map(_.tail)), function(o) {
     return o !== null;
   });
 }
 
-function getChartFormatedValue(format, value) {
+window.getChartFormatedValue = function(format, value) {
   return numeral(ManageIQ.charts.formatters[format.function].c3(format.options)(value).split(/[^0-9\,\.]/)[0]).value();
 }
 
-function getChartFormatedValueWithFormat(format, value) {
+window.getChartFormatedValueWithFormat = function(format, value) {
   var tmp = /^([0-9\,\.]+)(.*)/.exec(ManageIQ.charts.formatters[format.function].c3(format.options)(value));
   return [numeral(tmp[1]).value(), tmp[2]];
 }
 
-function validateMinMax(min, max, minShowed, maxShowed) {
+window.validateMinMax = function(min, max, minShowed, maxShowed) {
   var invalid = false;
   // if there are no valid values or there is only single values big enough, then not change formating function
   if (max <= min || maxShowed < minShowed) {

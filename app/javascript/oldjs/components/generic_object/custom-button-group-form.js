@@ -8,7 +8,7 @@ ManageIQ.angular.app.component('customButtonGroupForm', {
   templateUrl: '/static/generic_object/custom_button_group_form.html.haml',
 });
 
-function customButtonGroupFormController() {
+window.customButtonGroupFormController = function() {
   var vm = this;
 
   vm.iconSelect = function(selectedIcon) {

@@ -12,7 +12,7 @@ ManageIQ.angular.app.component('assignButtons', {
   templateUrl: '/static/generic_object/assign-buttons.html.haml',
 });
 
-function assignButtonsController() {
+window.assignButtonsController = function() {
   var vm = this;
 
   vm.model = {

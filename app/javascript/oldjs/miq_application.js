@@ -3,7 +3,7 @@
 // MIQ specific JS functions
 
 // Things to be done on page loads
-function miqOnLoad() {
+window.miqOnLoad = function() {
   // controller to be used in url in miqDropComplete method
   ManageIQ.widget.dashboardUrl = 'dashboard/widget_dd_done';
 
@@ -47,7 +47,7 @@ function miqOnLoad() {
   miqFlashSaved();
 }
 
-function miqPrepRightCellForm(tree) {
+window.miqPrepRightCellForm = function(tree) {
   if (miqDomElementExists('adv_searchbox_div')) {
     $('#adv_searchbox_div').hide();
   }
@@ -56,7 +56,7 @@ function miqPrepRightCellForm(tree) {
   miqDimDiv(tree + '_div', true);
 }
 
-function miqCalendarDateConversion(server_offset) {
+window.miqCalendarDateConversion = function(server_offset) {
   return moment().utcOffset(Number(server_offset) / 60).toDate();
 }
 
@@ -181,14 +181,14 @@ function miqCalendarDateConversion(server_offset) {
 })();
 
 // Get user's time zone offset
-function miqGetTZO() {
+window.miqGetTZO = function() {
   if (miqDomElementExists('user_TZO')) {
     $('#user_TZO').val(moment().utcOffset() / 60);
   }
 }
 
 // Get user's browswer info
-function miqGetBrowserInfo() {
+window.miqGetBrowserInfo = function() {
   var bd = miqBrowserDetect();
 
   if (miqDomElementExists('browser_name')) {
@@ -203,7 +203,7 @@ function miqGetBrowserInfo() {
 }
 
 // Turn highlight on or off
-function miqHighlight(elem, status) {
+window.miqHighlight = function(elem, status) {
   if ($(elem).length) {
     return;
   }
@@ -216,7 +216,7 @@ function miqHighlight(elem, status) {
 }
 
 // Turn on activity indicator
-function miqSparkle(status) {
+window.miqSparkle = function(status) {
   if (status) {
     // Make sure an ajax request is active before sparkling
     if ($.active) {
@@ -246,7 +246,7 @@ window.miqSparkleOn = function() {
   }
 }
 
-function miqSparkleOff() {
+window.miqSparkleOff = function() {
   // this prevents ajax requests on GTL screens from disabling the spinner too early
   if (ManageIQ.gtl.loading) {
     return;
@@ -265,7 +265,7 @@ function miqSparkleOff() {
 }
 
 // dim/un-dim a div: pass divname and status (true to dim, false to un-dim)
-function miqDimDiv(divname, status) {
+window.miqDimDiv = function(divname, status) {
   if ($(divname).length) {
     if (status) {
       $(divname).addClass('dimmed');
@@ -276,7 +276,7 @@ function miqDimDiv(divname, status) {
 }
 
 // Check for changes and prompt
-function miqCheckForChanges() {
+window.miqCheckForChanges = function() {
   var type = 'old'; // 'old' | 'angular' | 'tagging' | 'react'
   var dirty = false;
   var ignore = miqDomElementExists('ignore_form_changes');
@@ -322,7 +322,7 @@ function miqCheckForChanges() {
 }
 
 // Hide/show form buttons
-function miqButtons(h_or_s, prefix) {
+window.miqButtons = function(h_or_s, prefix) {
   $('#flash_msg_div').hide();
 
   var on = h_or_s === 'show' ? 'on' : 'off';
@@ -335,7 +335,7 @@ function miqButtons(h_or_s, prefix) {
 }
 
 // Hide/show form validate buttons
-function miqValidateButtons(h_or_s, prefix) {
+window.miqValidateButtons = function(h_or_s, prefix) {
   var buttonPrefix = prefix || '';
   var buttonsOnId = buttonPrefix + 'validate_buttons_on';
   var buttonsOffId = buttonPrefix + 'validate_buttons_off';
@@ -361,7 +361,7 @@ function miqValidateButtons(h_or_s, prefix) {
 
 // update all checkboxes on a form when the masterToggle checkbox is changed
 // parms: button_div=<id of div with buttons to update>
-function miqUpdateAllCheckboxes(button_div) {
+window.miqUpdateAllCheckboxes = function(button_div) {
   if (!miqDomElementExists('masterToggle')) {
     return;
   }
@@ -395,7 +395,7 @@ function miqUpdateAllCheckboxes(button_div) {
 
 // Update buttons based on number of checkboxes that are checked
 // parms: obj=<checkbox element>, button_div=<id of div with buttons to update>
-function miqUpdateButtons(obj, button_div) {
+window.miqUpdateButtons = function(obj, button_div) {
   var count = 0;
 
   sendDataWithRx({rowSelect: obj});
@@ -416,7 +416,7 @@ function miqUpdateButtons(obj, button_div) {
   miqSetButtons(count, button_div);
 }
 
-function miqSetToolbarCount(count) {
+window.miqSetToolbarCount = function(count) {
   sendDataWithRx({
     eventType: 'updateToolbarCount',
     countSelected: count,
@@ -424,7 +424,7 @@ function miqSetToolbarCount(count) {
 }
 
 // Set the buttons in a div based on the count of checked items passed in
-function miqSetButtons(count, button_div) {
+window.miqSetButtons = function(count, button_div) {
   if (button_div.match('_tb$') && count === 0) {
     // FIXME: this should be happening regardless of `count === 0`
     // ..but that needs more refactoring around miqUpdateAllCheckboxes, miqUpdateButtons, etc.
@@ -442,12 +442,12 @@ function miqSetButtons(count, button_div) {
 }
 
 // go to the specified URL when a table cell is clicked
-function DoNav(theUrl) {
+window.DoNav = function(theUrl) {
   document.location.href = theUrl;
 }
 
 // Routines to get the size of the window
-function miqResetSizeTimer() {
+window.miqResetSizeTimer = function() {
   var height = window.innerHeight;
   var offset = 427;
   var h = height - offset;
@@ -469,7 +469,7 @@ window.miqPassFields = function (url, args) {
   return url + '?' + $.param(args);
 };
 
-function miqChartLinkData(col, row, value, category, series, id, message) {
+window.miqChartLinkData = function(col, row, value, category, series, id, message) {
   // Create the context menu
   if (typeof miqMenu !== 'undefined') {
     miqMenu.hideContextMenu();
@@ -484,7 +484,7 @@ function miqChartLinkData(col, row, value, category, series, id, message) {
   }, 250);
 }
 
-function miqBuildChartMenu(col, row, _value, category, series, id, _message) {
+window.miqBuildChartMenu = function(col, row, _value, category, series, id, _message) {
   var set = id.split('_')[1]; // Get the chart set
   var idx = id.split('_')[2]; // Get the chart index
   var chart_data = ManageIQ.charts.chartData[set];
@@ -517,13 +517,13 @@ function miqBuildChartMenu(col, row, _value, category, series, id, _message) {
   }
 }
 
-function miqChartBindEvents() {
+window.miqChartBindEvents = function() {
   if (ManageIQ.charts.provider === 'c3') {
     // noop
   }
 }
 
-function miqBuildChartMenuEx(col, row, _value, category, series, chart_set, chart_index) {
+window.miqBuildChartMenuEx = function(col, row, _value, category, series, chart_set, chart_index) {
   var chart_data = ManageIQ.charts.chartData[chart_set];
   var chart_el = $('#miq_chart_parent_' + chart_set + '_' + chart_index);
   var chartmenu_el = $('#miq_chartmenu_' + chart_set + '_' + chart_index);
@@ -559,7 +559,7 @@ function miqBuildChartMenuEx(col, row, _value, category, series, chart_set, char
 }
 
 // Handle chart context menu clicks
-function miqChartMenuClick(itemId) {
+window.miqChartMenuClick = function(itemId) {
   if (miqDomElementExists('menu_div')) {
     $('#menu_div').hide();
   }
@@ -568,7 +568,7 @@ function miqChartMenuClick(itemId) {
   }
 }
 
-function miqRESTAjaxButton(url, button, dataType, data) {
+window.miqRESTAjaxButton = function(url, button, dataType, data) {
   var form = $(button).parents('form:first')[0];
   if (form) {
     $(form).submit(function(e) {
@@ -594,7 +594,7 @@ function miqRESTAjaxButton(url, button, dataType, data) {
 
 // Handle an ajax form button press (i.e. Submit) by starting the spinning Q,
 // then waiting for .7 seconds for observers to finish
-function miqAjaxButton(url, serialize_fields, options) {
+window.miqAjaxButton = function(url, serialize_fields, options) {
   if (typeof serialize_fields === 'undefined') {
     serialize_fields = false;
   }
@@ -608,7 +608,7 @@ function miqAjaxButton(url, serialize_fields, options) {
 }
 
 // Send ajax url after any outstanding ajax requests, wait longer if needed
-function miqAjaxButtonSend(url, serialize_fields, options) {
+window.miqAjaxButtonSend = function(url, serialize_fields, options) {
   if ($.active) {
     setTimeout(function() {
       miqAjaxButtonSend(url, serialize_fields, options);
@@ -619,7 +619,7 @@ function miqAjaxButtonSend(url, serialize_fields, options) {
 }
 
 // Function to generate an Ajax request
-function miqAjax(url, serialize_fields, options) {
+window.miqAjax = function(url, serialize_fields, options) {
   var data;
 
   if (serialize_fields === true) {
@@ -649,14 +649,14 @@ function miqAjax(url, serialize_fields, options) {
 }
 
 // Function to generate an Ajax request for EVM async processing
-function miqAsyncAjax(url) {
+window.miqAsyncAjax = function(url) {
   miqJqueryRequest(url, {beforeSend: true});
 }
 
 ManageIQ.oneTransition.oneTrans = 0;
 
 // Function to generate an Ajax request, but only once for a drawn screen
-function miqSendOneTrans(url, observe) {
+window.miqSendOneTrans = function(url, observe) {
   if (ManageIQ.oneTransition.oneTrans) {
     return;
   }
@@ -670,7 +670,7 @@ function miqSendOneTrans(url, observe) {
 }
 
 // Check max length on a text area and set remaining chars
-function miqCheckMaxLength(obj) {
+window.miqCheckMaxLength = function(obj) {
   var ml = obj.getAttribute ? parseInt(obj.getAttribute('maxlength'), 10) : '';
   var counter = obj.getAttribute ? obj.getAttribute('counter') : '';
 
@@ -683,7 +683,7 @@ function miqCheckMaxLength(obj) {
 }
 
 // Check for enter key pressed
-function miqEnterPressed(e) {
+window.miqEnterPressed = function(e) {
   var keycode;
 
   if (window.event) {
@@ -697,7 +697,7 @@ function miqEnterPressed(e) {
 }
 
 // Send login authentication via ajax
-function miqAjaxAuth(url) {
+window.miqAjaxAuth = function(url) {
   miqEnableLoginFields(false);
 
   return miqJqueryRequest(url || '/dashboard/authenticate', {
@@ -718,13 +718,13 @@ function miqAjaxAuth(url) {
   });
 }
 
-function miqAjaxAuthFail() {
+window.miqAjaxAuthFail = function() {
   miqClearLoginFields();
   miqEnableLoginFields(true);
 }
 
 // Send SSO login authentication via ajax
-function miqAjaxAuthSso(url) {
+window.miqAjaxAuthSso = function(url) {
   miqEnableLoginFields(false);
   miqSparkleOn();
 
@@ -734,7 +734,7 @@ function miqAjaxAuthSso(url) {
 }
 
 // Send External Authentication via ajax
-function miqAjaxExtAuth(url) {
+window.miqAjaxExtAuth = function(url) {
   miqEnableLoginFields(false);
   miqSparkleOn();
 
@@ -744,7 +744,7 @@ function miqAjaxExtAuth(url) {
   });
 }
 
-function miqEnableLoginFields(enabled) {
+window.miqEnableLoginFields = function(enabled) {
   $('#user_name').prop('readonly', !enabled);
   $('#user_password').prop('readonly', !enabled);
   if (miqDomElementExists('user_new_password')) {
@@ -756,13 +756,13 @@ function miqEnableLoginFields(enabled) {
 }
 
 // reset form fields on login failure
-function miqClearLoginFields() {
+window.miqClearLoginFields = function() {
   $('#user_name').val('').focus();
   $('#user_password').val('');
 }
 
 // Initialize dashboard column jQuery sortables
-function miqInitDashboardCols() {
+window.miqInitDashboardCols = function() {
   if (miqDomElementExists('col1')) {
     $('#col1').sortable({
       connectWith: '#col2, #col3',
@@ -799,7 +799,7 @@ function miqInitDashboardCols() {
 }
 
 // Send the updated sortable order after jQuery drag/drop
-function miqDropComplete(_event, _ui) {
+window.miqDropComplete = function(_event, _ui) {
   var el = $(this);
   var url = '/' + ManageIQ.widget.dashboardUrl + '?' + el.sortable(
     'serialize', {key: el.attr('id') + '[]'}
@@ -812,7 +812,7 @@ function miqDropComplete(_event, _ui) {
 }
 
 // Attach a calendar control to all text boxes that start with miq_date_
-function miqBuildCalendar() {
+window.miqBuildCalendar = function() {
   // Get all of the input boxes with ids starting with "miq_date_"
   var all = $('input[id^=miq_date_]');
 
@@ -847,7 +847,7 @@ function miqBuildCalendar() {
   });
 }
 
-function miqSendDateRequest(el) {
+window.miqSendDateRequest = function(el) {
   var parms = $.parseJSON(el.attr('data-miq_observe_date'));
   var url = parms.url;
   //  tack on the id and value to the URL
@@ -862,7 +862,7 @@ function miqSendDateRequest(el) {
 }
 
 // common function to pass ajax request to server
-function miqAjaxRequest(itemId, path) {
+window.miqAjaxRequest = function(itemId, path) {
   if (miqCheckForChanges()) {
     miqJqueryRequest(
       miqPassFields(path, {id: itemId}),
@@ -873,7 +873,7 @@ function miqAjaxRequest(itemId, path) {
 }
 
 // Handle an element onclick to open href in a new window with optional confirmation
-function miqClickAndPop(el) {
+window.miqClickAndPop = function(el) {
   var conmsg = el.getAttribute('data-miq_confirm');
 
   if (conmsg == null || confirm(conmsg)) {
@@ -883,7 +883,7 @@ function miqClickAndPop(el) {
   return false;
 }
 
-function miq_tabs_init(id, url, parms) {
+window.miq_tabs_init = function(id, url, parms) {
   $(id + ' > ul.nav-tabs a[data-toggle="tab"]').on('show.bs.tab', function(e) {
     if ($(e.target).parent().hasClass('disabled')) {
       e.preventDefault();
@@ -936,22 +936,22 @@ function miq_tabs_init(id, url, parms) {
 }
 
 // refresh multiple/single code mirror textboxes on screen
-function miq_refresh_code_mirror() {
+window.miq_refresh_code_mirror = function() {
   $('.CodeMirror').each(function(_i, el) {
     el.CodeMirror.refresh();
   });
 }
 
-function miq_tabs_disable_inactive(id) {
+window.miq_tabs_disable_inactive = function(id) {
   $(id + ' ul.nav-tabs > li:not(.active)').addClass('disabled');
 }
 
-function miq_tabs_show_hide(tab_id, show) {
+window.miq_tabs_show_hide = function(tab_id, show) {
   $(tab_id).toggleClass('hidden', !show);
 }
 
 // Send explorer search by name via ajax
-function miqSearchByName(button) {
+window.miqSearchByName = function(button) {
   if (button == null) {
     miqJqueryRequest('x_search_by_name', {beforeSend: true, data: miqSerializeForm('searchbox')});
   }
@@ -959,14 +959,14 @@ function miqSearchByName(button) {
 
 // Send transaction to server so automate tree selection box can be made active
 // and rest of the screen can be blocked
-function miqShowAE_Tree(typ) {
+window.miqShowAE_Tree = function(typ) {
   var ae_url = '/' + ManageIQ.controller + '/ae_tree_select_toggle';
   miqJqueryRequest(miqPassFields(ae_url, {typ: typ}));
   return true;
 }
 
 // Toggle the user options div in the page header (:onclick from layouts/user_options)
-function miqChangeGroup(id) {
+window.miqChangeGroup = function(id) {
   miqSparkleOn();
 
   // prevent login redirect once current requests fail after the group gets changed
@@ -976,7 +976,7 @@ function miqChangeGroup(id) {
 }
 
 // Check for enter/escape on quick search box
-function miqQsEnterEscape(e) {
+window.miqQsEnterEscape = function(e) {
   var keycode;
 
   if (window.event) {
@@ -1000,7 +1000,7 @@ function miqQsEnterEscape(e) {
 }
 
 // Start/stop the JS spinner
-function miqSpinner(status) {
+window.miqSpinner = function(status) {
   if (!miqSpinner.spinner) {
     miqSpinner.spinner = new Spinner({
       lines: 15, // The number of lines to draw
@@ -1022,7 +1022,7 @@ function miqSpinner(status) {
 }
 
 // Start/stop the search spinner
-function miqSearchSpinner(status) {
+window.miqSearchSpinner = function(status) {
   if (!miqSearchSpinner.spinner) {
     miqSearchSpinner.spinner = new Spinner({
       lines: 13, // The number of lines to draw
@@ -1045,7 +1045,7 @@ function miqSearchSpinner(status) {
   }
 }
 
-function miqProcessObserveQueue() {
+window.miqProcessObserveQueue = function() {
   if (!ManageIQ.observe.queue.length) {
     return;
   }
@@ -1071,7 +1071,7 @@ function miqProcessObserveQueue() {
     });
 }
 
-function miqDeferred() {
+window.miqDeferred = function() {
   var deferred = {};
 
   deferred.promise = new Promise(function(resolve, reject) {
@@ -1082,7 +1082,7 @@ function miqDeferred() {
   return deferred;
 }
 
-function miqObserveRequest(url, options) {
+window.miqObserveRequest = function(url, options) {
   options = _.cloneDeep(options || {});
   options.observe = true;
 
@@ -1157,19 +1157,19 @@ window.miqJqueryRequest = function(url, options) {
   });
 }
 
-function miqDomElementExists(element) {
+window.miqDomElementExists = function(element) {
   return $('#' + element).length;
 }
 
-function miqSerializeForm(element) {
+window.miqSerializeForm = function(element) {
   return $('#' + element).find('input,select,textarea').serialize().replace(/%0D%0A/g, '%0A');
 }
 
-function miqSerializeField(element, fieldName) {
+window.miqSerializeField = function(element, fieldName) {
   return $('#' + element + ' :input[id=' + fieldName + ']').serialize();
 }
 
-function miqInitSelectPicker(selector, options) {
+window.miqInitSelectPicker = function(selector, options) {
   $(selector || '.selectpicker').selectpicker(Object.assign({
     size: 10,
     dropupAuto: false,
@@ -1178,7 +1178,7 @@ function miqInitSelectPicker(selector, options) {
   $('.bootstrap-select > button[title]').not('.selectpicker').tooltip({container: 'none'});
 }
 
-function miqInitCodemirror(options) {
+window.miqInitCodemirror = function(options) {
   if (!miqDomElementExists(options.text_area_id)) {
     return;
   }
@@ -1216,7 +1216,7 @@ function miqInitCodemirror(options) {
   }
 }
 
-function miqSelectPickerEvent(element, url, options) {
+window.miqSelectPickerEvent = function(element, url, options) {
   options = options || {};
   options.no_encoding = true;
   var firstarg = !url.includes('?');
@@ -1245,7 +1245,7 @@ function miqSelectPickerEvent(element, url, options) {
   }, 700, {leading: true, trailing: true}));
 }
 
-function miqAccordSelect(e) {
+window.miqAccordSelect = function(e) {
   if (ManageIQ.noCollapseEvent) { // implicitly return true when the noCollapseEvent is set
     return true;
   }
@@ -1261,7 +1261,7 @@ function miqAccordSelect(e) {
   return true;
 }
 
-function miqInitBootstrapSwitch(element, url, options) {
+window.miqInitBootstrapSwitch = function(element, url, options) {
   $('[name=' + element + ']').bootstrapSwitch();
 
   $('#' + element).on('switchChange.bootstrapSwitch', function(_event, state) {
@@ -1276,7 +1276,7 @@ function miqInitBootstrapSwitch(element, url, options) {
 }
 
 // Function to expand/collapse a pair of accordions
-function miqAccordionSwap(_collapse, expand) {
+window.miqAccordionSwap = function(_collapse, expand) {
   /*
    * Blocked by: https://github.com/twbs/bootstrap/issues/18418
    * TODO: uncomment this and delete below when the issue is fixed
@@ -1298,7 +1298,7 @@ function miqAccordionSwap(_collapse, expand) {
   ManageIQ.noCollapseEvent = false;
 }
 
-function miqInitAccordions() {
+window.miqInitAccordions = function() {
   var height = $('#left_div').height() - $('#toolbar').outerHeight() - $('#breadcrumbs').outerHeight();
   var panel = $('#left_div .panel-heading').outerHeight();
   var count = $('#accordion:visible > .panel .panel-body').length;
@@ -1315,7 +1315,7 @@ function miqInitAccordions() {
 }
 
 // Function to resize the main content for best fit between the toolbar & footer
-function miqInitMainContent() {
+window.miqInitMainContent = function() {
   var toolbar = $('#toolbar');
   var breadcrumbs = $('#breadcrumbs');
   var footer = $('#paging_div');
@@ -1334,7 +1334,7 @@ function miqInitMainContent() {
   $('#main-content').css('height', 'calc(100% - ' + height + 'px)');
 }
 
-function miqHideSearchClearButton(explorer) {
+window.miqHideSearchClearButton = function(explorer) {
   // Hide the clear button if the search input is empty
   $('.search-pf .has-clear .clear').each(function() {
     if (!$(this).prev('.form-control').val()) {
@@ -1356,13 +1356,13 @@ function miqHideSearchClearButton(explorer) {
   });
 }
 
-function toggle_expansion(link) {
+window.toggle_expansion = function(link) {
   link = $(link);
   link.find('i').toggleClass('fa-angle-right fa-angle-down');
   link.closest('td').children(0).toggleClass('expanded');
 }
 
-function check_for_ellipsis() {
+window.check_for_ellipsis = function() {
   var $element = $('.expand');
   $.each($element, function(_i, value) {
     var $val = $(value);
@@ -1374,11 +1374,11 @@ function check_for_ellipsis() {
   });
 }
 
-function add_expanding_icon(element) {
+window.add_expanding_icon = function(element) {
   element.find('.pull-right').append("<a onclick='toggle_expansion(this)'> <i class='fa fa-angle-right'></i>");
 }
 
-function rbacGroupLoadTab(id) {
+window.rbacGroupLoadTab = function(id) {
   var lazy = $('#' + id).hasClass('lazy');
   if (!lazy) {
     // already loaded
@@ -1393,7 +1393,7 @@ function rbacGroupLoadTab(id) {
   });
 }
 
-function chartData(type, data, data2) {
+window.chartData = function(type, data, data2) {
   if (type === undefined) {
     return emptyChart();
   }
@@ -1445,7 +1445,7 @@ function chartData(type, data, data2) {
   return _.defaultsDeep({}, data, config, data2);
 }
 
-function validateChartAxis(axis) {
+window.validateChartAxis = function(axis) {
   return _.isObject(axis) &&
          _.isObject(axis.y) &&
          _.isObject(axis.y.tick) &&
@@ -1453,7 +1453,7 @@ function validateChartAxis(axis) {
          axis.y.tick.format.function;
 }
 
-function emptyChart() {
+window.emptyChart = function() {
   return {
     data: {
       columns: [],
@@ -1461,7 +1461,7 @@ function emptyChart() {
   };
 }
 
-function customizeChart(data) {
+window.customizeChart = function(data) {
   // set maximum count of x axis tick labels for C&U charts
   if (data.miq.performance_chart) {
     data.axis.x.tick.centered = true;
@@ -1490,7 +1490,7 @@ function customizeChart(data) {
   }
 }
 
-function correctPatternflyOptions(config) {
+window.correctPatternflyOptions = function(config) {
   // some PatternFly default configs define contents function, but it breaks formatting
   if (_.isObject(config.tooltip)) {
     config.tooltip.contents = undefined;
@@ -1512,14 +1512,14 @@ $(function() {
   check_for_ellipsis();
 });
 
-function miqScrollToSelected(div_name) {
+window.miqScrollToSelected = function(div_name) {
   var rowpos = $('tr.selected').position();
   if (rowpos) {
     $('#' + div_name).scrollTop(rowpos.top);
   }
 }
 
-function miqFormatNotification(text, bindings) {
+window.miqFormatNotification = function(text, bindings) {
   if (!text) {
     // prevent Jed exceptions when a notification has missing text (__(undefined))
     return '';
@@ -1542,7 +1542,7 @@ var fontIconChar = _.memoize(function(klass) {
   return {font: font, char: char};
 });
 
-function redirectLogin(msg) {
+window.redirectLogin = function(msg) {
   if (ManageIQ.logoutInProgress) {
     return; // prevent double redirect after pressing the Logout button or when changing group
   }
@@ -1551,7 +1551,7 @@ function redirectLogin(msg) {
   window.document.location.href = '/dashboard/login?timeout=true';
 }
 
-function camelizeQuadicon(quad) {
+window.camelizeQuadicon = function(quad) {
   return _.reduce(quad, function(result, current, key) {
     var item = {};
     item[_.camelCase(key)] = current;

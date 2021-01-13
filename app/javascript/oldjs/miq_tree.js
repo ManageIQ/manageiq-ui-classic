@@ -1,11 +1,11 @@
 /* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetToolbarCount miqSparkle */
 
-function isReduxTree(treeName) {
+window.isReduxTree = function(treeName) {
   var store = ManageIQ.redux.store.getState();
   return store.hasOwnProperty(treeName);
 }
 
-function miqTreeObject(tree) {
+window.miqTreeObject = function(tree) {
   var obj;
   try {
     obj = $('#' + tree + 'box').treeview(true);
@@ -29,7 +29,7 @@ window.miqTreeFindNodeByKey = function(tree, key) {
   });
 }
 
-function miqAddNodeChildren(treename, key, selected_node, children) {
+window.miqAddNodeChildren = function(treename, key, selected_node, children) {
   var node = miqTreeFindNodeByKey(treename, key);
   if (node.lazyLoad) {
     node.lazyLoad = false;
@@ -38,7 +38,7 @@ function miqAddNodeChildren(treename, key, selected_node, children) {
   miqTreeActivateNodeSilently(treename, selected_node);
 }
 
-function miqTreeResetState(treename) {
+window.miqTreeResetState = function(treename) {
   // FIXME: this is probably not enough, keeping the original dynatree code in comments for the future
   miqTreeClearState(treename);
   /*
@@ -50,7 +50,7 @@ function miqTreeResetState(treename) {
   */
 }
 
-function miqRemoveNodeChildren(treename, key) {
+window.miqRemoveNodeChildren = function(treename, key) {
   var node = miqTreeFindNodeByKey(treename, key);
   if (node.nodes) {
     node.nodes.slice().forEach(function(child) {
@@ -59,13 +59,13 @@ function miqRemoveNodeChildren(treename, key) {
   }
 }
 
-function miqTreeSelect(key) {
+window.miqTreeSelect = function(key) {
   var url = '/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(key.split('__')[0]);
   miqJqueryRequest(url, {beforeSend: true});
 }
 
 // Activate and focus on a node within a tree given the node's key
-function miqTreeActivateNode(tree, key) {
+window.miqTreeActivateNode = function(tree, key) {
   miqSparkle(true);
   if (isReduxTree(tree)) {
     ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNode', key: key});
@@ -81,7 +81,7 @@ function miqTreeActivateNode(tree, key) {
 }
 
 // Activate silently (no onActivate event) and focus on a node within a tree given the node's key
-function miqTreeActivateNodeSilently(tree, key) {
+window.miqTreeActivateNodeSilently = function(tree, key) {
   if (isReduxTree(tree)) {
     ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNodeSilent', key: key});
     ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/expandNode', key: key});
@@ -97,20 +97,20 @@ function miqTreeActivateNodeSilently(tree, key) {
 }
 
 // Activate a node silently and fire the activation event manually
-function miqTreeForceActivateNode(tree, key) {
+window.miqTreeForceActivateNode = function(tree, key) {
   miqTreeActivateNodeSilently(tree, key);
   miqTreeObject(tree).options.onNodeSelected(0, miqTreeFindNodeByKey(tree, key));
 }
 
 // expand all parent nodes of selected node on initial load
-function miqExpandParentNodes(treename, selected_node) {
+window.miqExpandParentNodes = function(treename, selected_node) {
   var node = miqTreeFindNodeByKey(treename, selected_node);
   if (node) {
     miqTreeObject(treename).revealNode(node, {silent: true});
   }
 }
 
-function miqTreeScrollToNode(tree, id) {
+window.miqTreeScrollToNode = function(tree, id) {
   var node = miqTreeFindNodeByKey(tree, id);
   var parentPanelBody = node.$el.parents('div.panel-body');
   if (parentPanelBody.length > 0) {
@@ -131,12 +131,12 @@ function miqTreeScrollToNode(tree, id) {
 }
 
 // delete specific tree cookies
-function miqDeleteTreeCookies(tree_prefix) {
+window.miqDeleteTreeCookies = function(tree_prefix) {
   miqTreeClearState(tree_prefix);
 }
 
 // toggle expand/collapse all nodes in tree
-function miqTreeToggleExpand(treename, expand_mode) {
+window.miqTreeToggleExpand = function(treename, expand_mode) {
   if (isReduxTree(treename)) {
     ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandAll', value: expand_mode});
   } else {
@@ -149,7 +149,7 @@ function miqTreeToggleExpand(treename, expand_mode) {
  * @param  {Object} tree  The tree object itself.
  * @return {Array}        Array of keys.
  */
-function miqGetSelectedKeys(tree) {
+window.miqGetSelectedKeys = function(tree) {
   return Object.values(tree).filter(function(entry) {
     return (entry.state && entry.state.checked);
   }).map(function(entry) {
@@ -158,13 +158,13 @@ function miqGetSelectedKeys(tree) {
 }
 
 // Generic OnCheck handler for the checkboxes in tree
-function miqOnCheckGeneric(key, checked) {
+window.miqOnCheckGeneric = function(key, checked) {
   miqJqueryRequest(ManageIQ.tree.checkUrl + encodeURIComponent(key) + '?check=' + (checked ? '1' : '0'));
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
 // Compute -> Infra -> VMs -> Compare VM's
-function miqOnCheckSections(key, checked, tree) {
+window.miqOnCheckSections = function(key, checked, tree) {
   var selectedKeys = miqGetSelectedKeys(tree);
 
   var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + checked;
@@ -173,7 +173,7 @@ function miqOnCheckSections(key, checked, tree) {
 }
 
 // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
-function miqOnCheckGenealogy(key, checked, tree) {
+window.miqOnCheckGenealogy = function(key, checked, tree) {
   var selectedKeys = getSelectedKeys(tree);
 
   // Activate toolbar items according to the selection
@@ -183,14 +183,14 @@ function miqOnCheckGenealogy(key, checked, tree) {
 }
 
 // Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
-function miqOnCheckTenantTree(key) {
+window.miqOnCheckTenantTree = function(key) {
   sendDataWithRx({
     controller: 'catalogItemFormController',
     key: key,
   });
 }
 
-function miqCheckAll(cb, treeName) {
+window.miqCheckAll = function(cb, treeName) {
   // Set the checkboxes according to the master checkbox
   ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});
 
@@ -211,12 +211,12 @@ function miqCheckAll(cb, treeName) {
 }
 
 // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
-function miqOnClickGeneric(id) {
+window.miqOnClickGeneric = function(id) {
   miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
 }
 
 // Settings -> Diagnostics -> Roles By servers tab
-function miqOnClickDiagnostics(id) {
+window.miqOnClickDiagnostics = function(id) {
   var typ = id.split('-')[0]; // Break apart the node ids
   if (['svr', 'role', 'asr'].includes(typ)) {
     miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
@@ -224,27 +224,27 @@ function miqOnClickDiagnostics(id) {
 }
 
 // Compute -> Infra -> VMs -> Select one -> Snapshot button
-function miqOnClickSnapshots(id) {
+window.miqOnClickSnapshots = function(id) {
   var pieces = id.split(/-/);
   var shortId = pieces[pieces.length - 1];
   miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
 }
 
 // Compute -> Infra -> Networking
-function miqOnClickHostNet(id) {
+window.miqOnClickHostNet = function(id) {
   var ids = id.split('|')[0].split('_'); // Break apart the node ids
   var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
   DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
 }
 
-function miqOnClickSelectRbacTreeNode(id) {
+window.miqOnClickSelectRbacTreeNode = function(id) {
   var tree = 'rbac_tree';
   miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
   miqTreeScrollToNode(tree, id);
 }
 
 // Settings -> Access Control -> Roles/Edit Roles // Seems like not doing anything
-function miqOnClickMenuRoles(id) {
+window.miqOnClickMenuRoles = function(id) {
   var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
   miqJqueryRequest(url, {
     beforeSend: true,
@@ -254,20 +254,20 @@ function miqOnClickMenuRoles(id) {
 }
 
 // Automate -> Expoler -> Select a class -> Copy -> Uncheck Copy to same path -> Namespace selection uses thath tree
-function miqOnClickAutomate(id) {
+window.miqOnClickAutomate = function(id) {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
 }
 
 // Services -> Catalogs -> Catalog Items -> add a new item -> select Generic -> three entry point fields open it.
-function miqOnClickAutomateCatalog(id) {
+window.miqOnClickAutomateCatalog = function(id) {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
 }
 
-function miqOnClickIncludeDomainPrefix() {
+window.miqOnClickIncludeDomainPrefix = function() {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
 
-function miqTreeExpandNode(treename, key) {
+window.miqTreeExpandNode = function(treename, key) {
   if (isReduxTree(treename)) {
     ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandNode', key: key});
   } else {
@@ -276,7 +276,7 @@ function miqTreeExpandNode(treename, key) {
   }
 }
 
-function miqTreeExpandRecursive(treeId, fullNodeId) {
+window.miqTreeExpandRecursive = function(treeId, fullNodeId) {
   var currId = '';
   var indexOfBox = treeId.indexOf('box');
   var splitNodeId = fullNodeId.split('_');
@@ -295,7 +295,7 @@ function miqTreeExpandRecursive(treeId, fullNodeId) {
   });
 }
 
-function miqMenuChangeRow(action, elem) {
+window.miqMenuChangeRow = function(action, elem) {
   var grid = $('#folder_grid .panel-group');
   var selected = grid.find('.panel-heading.active').parent();
 
@@ -380,7 +380,7 @@ function miqMenuChangeRow(action, elem) {
   return false;
 }
 
-function miqSquashToggle(treeName) {
+window.miqSquashToggle = function(treeName) {
   if (ManageIQ.tree.expandAll) {
     $('#squash_button i').attr('class', 'fa fa-minus-square-o fa-lg');
     $('#squash_button').prop('title', __('Collapse All'));
@@ -394,7 +394,7 @@ function miqSquashToggle(treeName) {
   }
 }
 
-function miqTreeClearState(tree) {
+window.miqTreeClearState = function(tree) {
   if (tree === undefined) {
     // Clear all tree state objects
     var to_remove = [];

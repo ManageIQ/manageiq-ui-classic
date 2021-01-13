@@ -11,7 +11,7 @@ angular.module( 'patternfly.charts' ).component('pfTrendsChart', {
 });
 trendsChartController.$inject = [];
 
-function trendsChartController() {
+window.trendsChartController = function() {
   'use strict';
   var vm = this;
   var prevChartData;

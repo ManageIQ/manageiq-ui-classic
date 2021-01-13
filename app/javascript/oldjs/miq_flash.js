@@ -72,7 +72,7 @@ window.clearFlash = function() {
   $('#flash_msg_div').empty();
 }
 
-function checkElipsis(element) {
+window.checkElipsis = function(element) {
   var found = false;
   var $c = element
     .clone()
@@ -87,7 +87,7 @@ function checkElipsis(element) {
   return found;
 }
 
-function expandAlert(params) {
+window.expandAlert = function(params) {
   var viewMoreTxt = __('View More');
   var viewLessTxt = __('View Less');
   if (!params.clicked) {
@@ -103,22 +103,22 @@ function expandAlert(params) {
   }
 }
 
-function _miqFlashLoad() {
+window._miqFlashLoad = function() {
   return JSON.parse(sessionStorage.getItem('flash_msgs') || '[]');
 }
-function _miqFlashSave(arr) {
+window._miqFlashSave = function(arr) {
   return sessionStorage.setItem('flash_msgs', JSON.stringify(arr));
 }
 
 // stores a flash message (keys: message, level) for later
-function miqFlashLater(object) {
+window.miqFlashLater = function(object) {
   var ary = _miqFlashLoad();
   ary.push(object);
   _miqFlashSave(ary);
 }
 
 // shows all stored flash messages
-function miqFlashSaved() {
+window.miqFlashSaved = function() {
   var ary = _miqFlashLoad();
   ary.forEach(function(obj) {
     add_flash(obj.message, obj.level);
@@ -128,6 +128,6 @@ function miqFlashSaved() {
 }
 
 // also called on login
-function miqFlashClearSaved() {
+window.miqFlashClearSaved = function() {
   _miqFlashSave([]);
 }

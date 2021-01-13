@@ -14,7 +14,7 @@ angular.module('patternfly.charts').component('pfUtilizationTrendChart', {
 });
 utilizationTrendChartController.$inject = ['pfUtils'];
 
-function utilizationTrendChartController() {
+window.utilizationTrendChartController = function() {
   'use strict';
   var vm = this;
   var prevChartData;

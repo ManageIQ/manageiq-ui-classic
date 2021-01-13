@@ -8,7 +8,7 @@ ManageIQ.angular.app.component('vmCloudEvacuateForm', {
 });
 
 vmCloudEvacuateFormController.$inject = ['$http', '$scope', 'miqService'];
-function vmCloudEvacuateFormController($http, $scope, miqService) {
+window.vmCloudEvacuateFormController = function($http, $scope, miqService) {
   var vm = this;
 
   var init = function() {

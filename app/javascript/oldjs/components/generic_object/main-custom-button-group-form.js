@@ -11,7 +11,7 @@ ManageIQ.angular.app.component('mainCustomButtonGroupForm', {
 
 mainCustomButtonGroupFormController.$inject = ['API', 'miqService', '$http'];
 
-function mainCustomButtonGroupFormController(API, miqService, $http) {
+window.mainCustomButtonGroupFormController = function(API, miqService, $http) {
   var vm = this;
 
   vm.$onInit = function() {

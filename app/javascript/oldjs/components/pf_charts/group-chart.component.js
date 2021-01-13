@@ -8,7 +8,7 @@ angular.module('patternfly.charts').component('pfGroupChart', {
   controller: groupChartController,
 });
 
-function groupChartController() {
+window.groupChartController = function() {
   'use strict';
   var vm = this;
   var prevChartData;

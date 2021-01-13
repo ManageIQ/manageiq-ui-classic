@@ -15,7 +15,7 @@ ManageIQ.angular.app.component('customImage', {
 
 customImageController.$inject = ['$timeout'];
 
-function customImageController($timeout) {
+window.customImageController = function($timeout) {
   var vm = this;
 
   vm.$onInit = function() {

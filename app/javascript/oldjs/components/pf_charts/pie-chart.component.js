@@ -9,7 +9,7 @@ angular.module('patternfly.charts').component('pfPieChart', {
 });
 pieChartController.$inject = ['pfUtils'];
 
-function pieChartController(pfUtils) {
+window.pieChartController = function(pfUtils) {
   'use strict';
   var vm = this;
   var prevData;

@@ -9,7 +9,7 @@ ManageIQ.angular.app.component('cloudSubnetForm', {
 
 cloudSubnetFormController.$inject = ['API', 'miqService', '$scope'];
 
-function cloudSubnetFormController(API, miqService, $scope) {
+window.cloudSubnetFormController = function(API, miqService, $scope) {
   var vm = this;
 
   this.$onInit = function() {

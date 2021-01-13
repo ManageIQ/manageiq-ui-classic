@@ -2,7 +2,7 @@ ManageIQ.angular.app.service('configurationManagerService', configurationManager
 
 configurationManagerService.$inject = ['miqService'];
 
-function configurationManagerService(miqService) {
+window.configurationManagerService = function(miqService) {
   this.managerModel = {
     name: '',
     url: '',

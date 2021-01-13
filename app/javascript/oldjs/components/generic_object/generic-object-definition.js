@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('genericObjectDefinition', {
 
 genericObjectDefinitionFormController.$inject = ['API', 'miqService', '$q', '$scope'];
 
-function genericObjectDefinitionFormController(API, miqService, $q, $scope) {
+window.genericObjectDefinitionFormController = function(API, miqService, $q, $scope) {
   var vm = this;
 
   vm.$onInit = function() {

@@ -12,7 +12,7 @@ ManageIQ.angular.app.component('mainCustomButtonForm', {
 
 mainCustomButtonFormController.$inject = ['API', 'miqService', '$q', '$http'];
 
-function mainCustomButtonFormController(API, miqService, $q, $http) {
+window.mainCustomButtonFormController = function(API, miqService, $q, $http) {
   var vm = this;
 
   vm.$onInit = function() {

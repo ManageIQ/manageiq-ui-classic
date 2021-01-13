@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('genericObjectDefinitionToolbar', {
 
 genericObjectDefinitionToolbarController.$inject = ['API', 'miqService', '$window'];
 
-function genericObjectDefinitionToolbarController(API, miqService, $window) {
+window.genericObjectDefinitionToolbarController = function(API, miqService, $window) {
   var toolbar = this;
   var subscription = null;
 
