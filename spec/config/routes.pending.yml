@@ -842,6 +842,8 @@ MiqPolicyController:
 - x_history
 - x_search_by_name
 - x_show
+MiqPolicyExportController:
+- report_data
 MiqPolicySetController:
 - form_field_changed
 - index

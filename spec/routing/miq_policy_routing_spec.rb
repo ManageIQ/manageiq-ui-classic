@@ -11,43 +11,9 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#export' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/export")).to route_to("#{controller_name}#export")
-    end
-  end
-
-  describe '#export_field_changed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/export_field_changed")).to route_to("#{controller_name}#export_field_changed")
-    end
-  end
-
   describe '#fetch_log' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/fetch_log")).to route_to("#{controller_name}#fetch_log")
-    end
-  end
-
-  describe '#fetch_yaml' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/fetch_yaml")).to route_to("#{controller_name}#fetch_yaml")
-    end
-  end
-
-  describe '#get_json' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/get_json")).to route_to("#{controller_name}#get_json")
-    end
-  end
-
-  describe '#import' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/import")).to route_to("#{controller_name}#import")
-    end
-
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/import")).to route_to("#{controller_name}#import")
     end
   end
 
@@ -112,12 +78,6 @@ describe 'routes for MiqPolicyController' do
   describe '#rsop_show_options' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/rsop_show_options")).to route_to("#{controller_name}#rsop_show_options")
-    end
-  end
-
-  describe '#upload' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/upload")).to route_to("#{controller_name}#upload")
     end
   end
 

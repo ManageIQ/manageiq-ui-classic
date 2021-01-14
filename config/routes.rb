@@ -2071,22 +2071,30 @@ Rails.application.routes.draw do
       )
     },
 
-    :miq_policy               => {
+    :miq_policy_export       => {
       :get  => %w(
-        explorer
         export
-        fetch_log
         fetch_yaml
         get_json
         import
+      ),
+      :post => %w(
+        export
+        export_field_changed
+        import
+        upload
+      )
+    },
+
+    :miq_policy               => {
+      :get  => %w(
+        explorer
+        fetch_log
         log
         rsop
       ),
       :post => %w(
         button
-        export
-        export_field_changed
-        import
         miq_event_edit
         miq_event_field_changed
         miq_policy_edit
@@ -2099,7 +2107,6 @@ Rails.application.routes.draw do
         rsop_toggle
         tree_autoload
         tree_select
-        upload
         wait_for_task
       ) +
          adv_search_post +
