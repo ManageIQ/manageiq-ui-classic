@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Host aggregate form component should render adding form variant 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "text-field",
+          "id": "name",
+          "isRequired": true,
+          "label": "Name",
+          "name": "name",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "select",
+          "id": "emd_id",
+          "isRequired": true,
+          "label": "Provider",
+          "loadOptions": [Function],
+          "name": "ems_id",
+          "onChange": [Function],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "select",
+          "condition": Object {
+            "isNotEmpty": true,
+            "when": "ems_id",
+          },
+          "id": "availability_zone",
+          "isClearable": true,
+          "key": "availability_zone-undefined",
+          "label": "Availability Zone",
+          "loadOptions": [Function],
+          "name": "availability_zone",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Host aggregate form component should render editing form variant 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <HostAggregateForm
+    recordId="1"
+  />
+</Provider>
+`;

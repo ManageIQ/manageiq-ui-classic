@@ -231,7 +231,6 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
-        host_aggregate_form_fields
         index
         new
         perf_top_chart
@@ -248,7 +247,6 @@ Rails.application.routes.draw do
         button
         delete_host_aggregates
         listnav_search_selected
-        create
         protect
         quick_search
         remove_host
@@ -258,7 +256,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tl_chooser
-        update
         wait_for_task
       ) +
         adv_search_post +
