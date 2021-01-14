@@ -453,7 +453,7 @@ module ApplicationController::Filter
       end
       if val2 && [:datetime, :date].include?(val2[:type])
         self.exp_cvalue = Array.wrap(exp_cvalue)              # Turn date/time cvalues into an array
-        val2[:date_format] = exp_cvalue.first.include?('/') ? 's' : 'r'
+        val2[:date_format] = exp_cvalue.first&.include?('/') ? 's' : 'r'
         if ckey == EXP_FROM && val2[:date_format] == 'r'
           val2[:through_choices] = Expression.through_choices(exp_cvalue[0])
         end
@@ -583,6 +583,8 @@ module ApplicationController::Filter
 
     # Return the through_choices pulldown array for FROM datetime/date operators
     def self.through_choices(from_choice)
+      return nil if from_choice.nil?
+
       tc = if ViewHelper::FROM_HOURS.include?(from_choice)
              ViewHelper::FROM_HOURS
            elsif ViewHelper::FROM_DAYS.include?(from_choice)

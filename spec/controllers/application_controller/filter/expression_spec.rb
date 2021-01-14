@@ -43,17 +43,18 @@ describe ApplicationController::Filter do
   describe '#update_from_exp_tree' do
     context "datetime with nil value" do
       let(:expression) { ApplicationController::Filter::Expression.new }
-      let(:expr) { {"FIND"=>{"search"=>{"INCLUDES"=>{"field"=>"Vm.filesystems-name", "value"=>"iptables"}}, "checkany"=>{"IS NOT EMPTY"=>{"field"=>"Vm.filesystems-ctime", "value"=>nil}}}, :token=>2} }
+      let(:expr) { {"FIND" => {"search" => {"INCLUDES" => {"field" => "Vm.filesystems-name", "value" => "iptables"}}, "checkany" => {"IS NOT EMPTY" => {"field" => "Vm.filesystems-ctime", "value" => nil}}}, :token => 2} }
+      let(:expr2) { {"FIND" => {"search" => {"INCLUDES" => {"field" => "Vm.filesystems-name", "value" => "iptables"}}, "checkany" => {"FROM" => {"field" => "Vm.filesystems-ctime", "value" => nil}}}, :token => 2} }
 
-      it 'should raise on the include' do
-        expect{expression.update_from_exp_tree(expr)}.to raise_error(NoMethodError)
+      it 'should not raise on the include' do
+        expect { expression.update_from_exp_tree(expr) }.not_to raise_error
       end
-    end
-  end
 
-  describe '#through_choices' do
-    it 'should raise with nil' do
-      expect{ApplicationController::Filter::Expression.through_choices(nil)}.to raise_error(NoMethodError)
+      it 'with check key FROM should set through_choices to nil' do
+        expect(ApplicationController::Filter::Expression).to receive(:through_choices).and_return(nil)
+
+        expression.update_from_exp_tree(expr2)
+      end
     end
   end
 
