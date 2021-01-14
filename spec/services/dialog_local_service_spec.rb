@@ -118,14 +118,14 @@ describe DialogLocalService do
     end
 
     context "when the object is an CinderManager" do
-      let(:obj) { double(:class => ManageIQ::Providers::StorageManager::CinderManager, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::StorageManager::CinderManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "ext_management_system", "ExtManagementSystem", "providers", "/ems_block_storage"
     end
 
     context "when the object is an SwiftManager" do
-      let(:obj) { double(:class => ManageIQ::Providers::StorageManager::SwiftManager, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::StorageManager::SwiftManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "ext_management_system", "ExtManagementSystem", "providers", "/ems_object_storage"

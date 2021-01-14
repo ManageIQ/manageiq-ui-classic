@@ -17,7 +17,7 @@
       = _("Required")
 
 .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}",
-            "ng-if"    => "(vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::StorageManager::CinderManager') || (vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Openstack::StorageManager::CinderManager')"}
+            "ng-if"    => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Openstack::StorageManager::CinderManager'"}
   %label.col-md-2.control-label
     = _('Cloud Tenant')
   .col-md-8
