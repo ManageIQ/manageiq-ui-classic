@@ -40,6 +40,23 @@ describe ApplicationController::Filter do
     end
   end
 
+  describe '#update_from_exp_tree' do
+    context "datetime with nil value" do
+      let(:expression) { ApplicationController::Filter::Expression.new }
+      let(:expr) { {"FIND"=>{"search"=>{"INCLUDES"=>{"field"=>"Vm.filesystems-name", "value"=>"iptables"}}, "checkany"=>{"IS NOT EMPTY"=>{"field"=>"Vm.filesystems-ctime", "value"=>nil}}}, :token=>2} }
+
+      it 'should raise on the include' do
+        expect{expression.update_from_exp_tree(expr)}.to raise_error(NoMethodError)
+      end
+    end
+  end
+
+  describe '#through_choices' do
+    it 'should raise with nil' do
+      expect{ApplicationController::Filter::Expression.through_choices(nil)}.to raise_error(NoMethodError)
+    end
+  end
+
   context 'selected and last loaded filter' do
     let(:expression) { ApplicationController::Filter::Expression.new }
     let(:search) { FactoryBot.create(:miq_search) }
