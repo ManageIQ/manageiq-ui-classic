@@ -2077,7 +2077,6 @@ Rails.application.routes.draw do
         fetch_yaml
         get_json
         import
-        log
       ),
       :post => %w(
         export
