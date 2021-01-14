@@ -1,9 +1,37 @@
-module MiqPolicyController::Rsop
-  extend ActiveSupport::Concern
+class MiqPolicyRsopController < ApplicationController
+  before_action :check_privileges
+  before_action :get_session_data
+  after_action :cleanup_action
+  after_action :set_session_data
+
+  include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
+
+  def title
+    @title = _("Simulation")
+  end
+
+  def self.table_name
+    @table_name = "miq_policy_rsop"
+  end
+
+  def index
+    assert_privileges('policy_simulation')
+    flash_to_session
+    @breadcrumbs = []
+    session[:changed] = false
+    @sb[:rsop] ||= {} # Leave exising values
+    rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)
+    rsop_put_objects_in_sb(find_filtered(EmsCluster), :clusters)
+    rsop_put_objects_in_sb(find_filtered(Host), :hosts)
+    rsop_put_objects_in_sb(find_filtered(Vm), :vms)
+    rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
+  end
 
   def rsop
     assert_privileges('policy_simulation')
-    @explorer = true
     if params[:button] == "submit"
       if params[:task_id]                         # First time thru, kick off the report generate task
         miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
@@ -45,19 +73,7 @@ module MiqPolicyController::Rsop
     elsif params[:button] == "reset"
       @sb[:rsop] = {} # Reset all RSOP stored values
       session[:changed] = nil
-      javascript_redirect(:action => 'rsop')
-    else # No params, first time in
-      @breadcrumbs = []
-      session[:changed] = false
-      @sb[:rsop] ||= {} # Leave exising values
-      rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)
-      rsop_put_objects_in_sb(find_filtered(EmsCluster), :clusters)
-      rsop_put_objects_in_sb(find_filtered(Host), :hosts)
-      rsop_put_objects_in_sb(find_filtered(Vm), :vms)
-      rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
-      @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-      @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
-      render :layout => "application"
+      javascript_redirect(:action => 'index')
     end
   end
 
@@ -156,4 +172,35 @@ module MiqPolicyController::Rsop
       page << javascript_reload_toolbars
     end
   end
+
+  def get_session_data
+    @title = _("Simulation")
+    @layout = "miq_policy_rsop"
+    @lastaction = session[:miq_policy_rsop_lastaction]
+    @display = session[:miq_policy_rsop_display]
+    @current_page = session[:miq_policy_rsop_current_page]
+  end
+
+  def set_session_data
+    super
+    session[:layout]                  = @layout
+    session[:miq_policy_rsop_current_page] = @current_page
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Control")},
+        menu_breadcrumb,
+      ].compact,
+      # :not_tree     => %w[rsop export log].include?(action_name),
+      # :record_title => :description,
+    }
+  end
+
+  def menu_breadcrumb
+    {:title => _('Simulation')}
+  end
+
+  menu_section :con
 end

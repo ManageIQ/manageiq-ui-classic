@@ -152,15 +152,14 @@ module ApplicationHelper::PageLayouts
       begin
         @explorer || params[:action] == "explorer" ||
           (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-          (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-          params[:controller] == "utilization"
+          params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
       end
   end
 
   def simulate?
     @simulate ||=
       begin
-        rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
+        rsop = controller.controller_name == 'miq_policy_rsop' && controller.action_name == 'rsop'
         resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
         rsop || resolve
       end
