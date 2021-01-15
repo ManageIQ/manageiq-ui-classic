@@ -16,13 +16,6 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           :confirm      => N_("Refresh relationships and power states for all items related to the selected Physical Infrastructure Providers?"),
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :ems_physical_infra_discover,
-          'fa fa-search fa-lg',
-          t = N_('Discover Physical Infrastructure Providers'),
-          t,
-          :url       => "/discover",
-          :url_parms => "?discover_type=ems"),
         separator,
         button(
           :ems_physical_infra_new,

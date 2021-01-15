@@ -51,11 +51,6 @@ Rails.application.routes.draw do
     open_url_after_dialog
   )
 
-  discover_get_post = %w(
-    discover
-    discover_field_changed
-  )
-
   drift_get = %w(
     drift
     drift_history
@@ -1083,7 +1078,6 @@ Rails.application.routes.draw do
     :ems_cloud                => {
       :get  => %w(
         dialog_load
-        discover
         download_data
         download_summary_pdf
         protect
@@ -1113,7 +1107,6 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                dialog_runner_post +
-               discover_get_post +
                exp_post +
                save_post
     },
@@ -1166,7 +1159,6 @@ Rails.application.routes.draw do
     :ems_infra                => {
       :get  => %w(
         dialog_load
-        discover
         download_data
         download_summary_pdf
         register_nodes
@@ -1200,7 +1192,6 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                dialog_runner_post +
-               discover_get_post +
                exp_post +
                save_post
     },
@@ -1218,7 +1209,6 @@ Rails.application.routes.draw do
 
     :ems_physical_infra                => {
       :get  => %w(
-        discover
         download_data
         download_summary_pdf
         protect
@@ -1243,7 +1233,6 @@ Rails.application.routes.draw do
       ) +
                adv_search_post +
                dialog_runner_post +
-               discover_get_post +
                exp_post +
                save_post
     },
@@ -1764,7 +1753,6 @@ Rails.application.routes.draw do
         users
       ) +
                compare_get +
-               discover_get_post +
                drift_get,
       :post => %w(
         advanced_settings
@@ -1797,7 +1785,6 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                dialog_runner_post +
-               discover_get_post +
                exp_post +
                perf_post +
                save_post

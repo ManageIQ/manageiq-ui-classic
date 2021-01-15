@@ -11,7 +11,6 @@ describe "routes for HostController" do
   it_behaves_like "A controller that has tagging routes"
   it_behaves_like "A controller that has timeline routes"
   it_behaves_like "A controller that has CRUD routes"
-  it_behaves_like "A controller that has discovery routes"
 
   describe "#advanced_settings" do
     it "routes with GET" do

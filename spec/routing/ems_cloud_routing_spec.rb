@@ -5,7 +5,6 @@ describe EmsCloudController do
 
   it_behaves_like "A controller that has advanced search routes", true
   it_behaves_like "A controller that has dialog runner routes"
-  it_behaves_like "A controller that has discovery routes"
   it_behaves_like "A controller that has download_data routes"
   it_behaves_like "A controller that has policy protect routes"
   it_behaves_like "A controller that has tagging routes"
