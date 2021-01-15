@@ -2391,6 +2391,24 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :host_initiator   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        index
+        show
+        show_list
+      ],
+      :post => %w[
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
     :storage_resource   => {
       :get  => %w[
         download_data

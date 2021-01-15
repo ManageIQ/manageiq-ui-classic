@@ -98,6 +98,7 @@ module Mixins
           flavors
           floating_ips
           host_aggregates
+          host_initiators
           hosts
           images
           instances

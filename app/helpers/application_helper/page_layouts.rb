@@ -236,6 +236,7 @@ module ApplicationHelper::PageLayouts
       security_policy_rule
       service
       storage_resource
+      host_initiator
       templates
       vm
     ]
