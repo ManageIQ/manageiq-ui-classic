@@ -187,7 +187,7 @@ module Menu
                                            {:feature => 'cloud_volume_type_show_list'},
                                            '/cloud_volume_type/show_list'),
                             Menu::Item.new('host_initiator',
-                                           N_('Host Initiator'),
+                                           N_('Host Initiators'),
                                            'host_initiator',
                                            {:feature => 'host_initiator_show_list'},
                                            '/host_initiator/show_list'),
