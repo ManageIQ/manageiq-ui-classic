@@ -7,7 +7,6 @@ class MiqPolicyController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
@@ -16,7 +15,6 @@ class MiqPolicyController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::PolicyMixin
 
-
   def title
     @title = _("Policies")
   end
@@ -24,31 +22,6 @@ class MiqPolicyController < ApplicationController
   def index
     flash_to_session
     redirect_to(:action => 'show_list')
-  end
-
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-
-    unless @refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
-  end
-
-  POLICY_X_BUTTON_ALLOWED_ACTIONS = {
-    'miq_policy_copy'            => :miq_policy_copy,
-    'miq_policy_edit'            => :miq_policy_edit,
-    'miq_policy_new'             => :miq_policy_edit,
-    'miq_policy_edit_conditions' => :miq_policy_edit,
-    'miq_policy_edit_events'     => :miq_policy_edit,
-    'miq_event_edit'             => :miq_event_edit,
-  }.freeze
-
-  def x_button
-    generic_x_button(POLICY_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   def new
@@ -86,13 +59,13 @@ class MiqPolicyController < ApplicationController
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,
-      :record_info    => @policy || @record,
+      :record_info  => @policy || @record,
       :record_title => :description,
     }
   end
 
   def menu_breadcrumb
-    return {:title => _("Policies"), :url => controller_url}
+    {:title => _("Policies"), :url => controller_url}
   end
 
   toolbar :miq_policy, :miq_policies
