@@ -129,7 +129,7 @@ describe MiqPolicyController do
     let(:lastaction) { 'lastaction' }
     let(:display) { 'display' }
     let(:current_page) { 'current_page' }
-    let(:layout) { 'layout' }
+    let(:layout) { 'miq_policy' }
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
