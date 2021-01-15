@@ -11,21 +11,9 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#fetch_log' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/fetch_log")).to route_to("#{controller_name}#fetch_log")
-    end
-  end
-
   describe '#index' do
     it 'routes with GET' do
       expect(get("/#{controller_name}")).to route_to("#{controller_name}#index")
-    end
-  end
-
-  describe '#log' do
-    it 'routes with GET' do
-      expect(get("/#{controller_name}/log")).to route_to("#{controller_name}#log")
     end
   end
 

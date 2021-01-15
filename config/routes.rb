@@ -2089,8 +2089,6 @@ Rails.application.routes.draw do
     :miq_policy               => {
       :get  => %w(
         explorer
-        fetch_log
-        log
       ),
       :post => %w(
         button
@@ -2102,11 +2100,19 @@ Rails.application.routes.draw do
         reload
         tree_autoload
         tree_select
-        wait_for_task
       ) +
          adv_search_post +
          exp_post +
          x_post
+    },
+
+    :miq_policy_log   => {
+      :get => %w(
+        fetch_log
+      ),
+      :post => %w(
+        button
+      )
     },
 
     :miq_policy_rsop         => {

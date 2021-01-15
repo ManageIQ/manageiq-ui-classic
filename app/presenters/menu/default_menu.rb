@@ -230,7 +230,7 @@ module Menu
           Menu::Item.new('miq_alert',         N_('Alerts'),          'miq_alert',            {:feature => 'miq_alert', :any => true},      '/miq_alert/explorer'),
           Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},            '/miq_policy_rsop'),
           Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},         '/miq_policy/export'),
-          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},                   '/miq_policy/log')
+          Menu::Item.new('miq_policy_logs',   N_('Log'),             'policy_log',           {:feature => 'policy_log'},                   '/miq_policy_log')
         ])
       end
 

@@ -847,6 +847,9 @@ MiqPolicyExportController:
 MiqPolicyRsopController:
 - report_data
 - wait_for_task
+MiqPolicyLogController:
+- report_data
+- wait_for_task
 MiqPolicySetController:
 - form_field_changed
 - index

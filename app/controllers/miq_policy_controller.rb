@@ -26,10 +26,6 @@ class MiqPolicyController < ApplicationController
   def button
     @edit = session[:edit] # Restore @edit for adv search box
     @refresh_div = "main_div" # Default div for button.rjs to refresh
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
 
     unless @refresh_partial # if no button handler ran, show not implemented msg
       add_flash(_("Button not yet implemented"), :error)
@@ -103,41 +99,6 @@ class MiqPolicyController < ApplicationController
     when "policy"
       replace_right_cell(:nodetype => "xx")
     end
-  end
-
-  def log
-    assert_privileges('policy_log')
-    @breadcrumbs = []
-    @log = $policy_log.contents(nil, 1000)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
-    @lastaction = "policy_logs"
-    @layout = "miq_policy_logs"
-    @msg_title = "Policy"
-    @download_action = "fetch_log"
-    @server_options ||= {}
-    @server_options[:server_id] ||= MiqServer.my_server.id
-    @server = MiqServer.my_server
-    drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_policy/log")
-    render :action => "show"
-  end
-
-  def refresh_log
-    assert_privileges('policy_log')
-    @log = $policy_log.contents(nil, 1000)
-    @server = MiqServer.my_server
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
-    replace_main_div(:partial => "layouts/log_viewer")
-  end
-
-  # Send the log in text format
-  def fetch_log
-    assert_privileges('policy_log')
-    disable_client_cache
-    send_data($policy_log.contents(nil, nil),
-              :filename => "policy.log")
-    AuditEvent.success(:userid  => session[:userid],
-                       :event   => "download_policy_log",
-                       :message => "Policy log downloaded")
   end
 
   private
@@ -398,14 +359,12 @@ class MiqPolicyController < ApplicationController
     @lastaction = session[:miq_policy_lastaction]
     @display = session[:miq_policy_display]
     @current_page = session[:miq_policy_current_page]
-    @server_options = session[:server_options] if session[:server_options]
   end
 
   def set_session_data
     super
     session[:layout]                  = @layout
     session[:miq_policy_current_page] = @current_page
-    session[:server_options]          = @server_options
   end
 
   def features
@@ -425,14 +384,11 @@ class MiqPolicyController < ApplicationController
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,
-      :not_tree     => %w[log].include?(action_name),
       :record_title => :description,
     }
   end
 
   def menu_breadcrumb
-    return nil if %w[log].include?(action_name)
-
     {:title => _('Explorer')}
   end
 

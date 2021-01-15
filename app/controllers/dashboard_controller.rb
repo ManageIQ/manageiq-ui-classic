@@ -626,7 +626,7 @@ class DashboardController < ApplicationController
 
     # Clear instance vars that end up in the session
     @sb = @edit = @view = @settings = @lastaction = @perf_options = @assign = nil
-    @server_options = @pp_choices = @panels = @breadcrumbs = nil
+    @pp_choices = @panels = @breadcrumbs = nil
   end
 
   # Initialize session hash variables for the logged in user
