@@ -2092,8 +2092,11 @@ Rails.application.routes.draw do
         policy_field_changed
         quick_search
         reload
+        show
+        show_list
       ) +
-         adv_search_post
+         adv_search_post +
+         exp_post
     },
 
     :miq_policy_log   => {

@@ -51,12 +51,6 @@ class MiqPolicyController < ApplicationController
     generic_x_button(POLICY_X_BUTTON_ALLOWED_ACTIONS)
   end
 
-  # Get information for a policy
-  def show
-    super
-    @center_toolbar = "miq_policy"
-  end
-
   def new
     miq_policy_edit
   end
@@ -101,5 +95,6 @@ class MiqPolicyController < ApplicationController
     return {:title => _("Policies"), :url => controller_url}
   end
 
+  toolbar :miq_policy, :miq_policies
   menu_section :con
 end

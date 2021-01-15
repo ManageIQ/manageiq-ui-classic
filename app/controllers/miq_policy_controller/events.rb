@@ -67,6 +67,7 @@ module MiqPolicyController::Events
   end
 
   def event_build_action_values
+    assert_privileges("miq_event_edit")
     # Reload @edit/vars for other buttons
     id = params[:id] || "new"
     return unless load_edit("event_edit__#{id}")

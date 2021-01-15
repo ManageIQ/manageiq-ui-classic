@@ -182,7 +182,7 @@ module MiqPolicyController::Policies
   end
 
   def miq_policy_edit_conditions
-    assert_privileges('miq_policy_edit_conditions') if params[:button] == "reset"
+    assert_privileges('miq_policy_edit_conditions')
     case params[:button]
     when "cancel"
       @sb[:action] = @edit = nil

@@ -76,7 +76,7 @@ describe MiqPolicyController do
       policy = FactoryBot.create(:miq_policy)
       get(:show, :params => {:id => policy.id})
       expect(response.status).to eq(200)
-      expect(controller.instance_variable_get(:@policy)).to eq(policy)
+      expect(controller.instance_variable_get(:@record)).to eq(policy)
     end
   end
 

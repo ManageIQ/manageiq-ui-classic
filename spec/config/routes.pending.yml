@@ -835,7 +835,6 @@ MiqPolicyController:
 - policy_field_changed
 - quick_search
 - reload
-- report_data
 - search_clear
 - tree_autoload
 - tree_select
