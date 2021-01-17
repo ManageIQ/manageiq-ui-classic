@@ -2196,7 +2196,6 @@ Rails.application.routes.draw do
     :condition => {
       :get  => %w(
         copy
-        download_data
         edit
         new
         show

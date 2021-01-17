@@ -258,16 +258,9 @@ ConditionController:
 - exp_button
 - exp_changed
 - exp_token_pressed
-- explorer
 - index
 - reload
-- report_data
 - search_clear
-- tree_autoload
-- tree_select
-- x_history
-- x_search_by_name
-- x_show
 ConfigurationController:
 - index
 - report_data

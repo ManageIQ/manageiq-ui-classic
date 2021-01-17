@@ -15,13 +15,9 @@ class ConditionController < ApplicationController
     @title = _("Conditions")
   end
 
-  def index
-    flash_to_session
-    redirect_to(:action => 'show_list')
-  end
-
   # Item clicked
   def show
+    assert_privileges("condition_show")
     super
     @condition = @record
     @expression_table = @condition.expression.kind_of?(MiqExpression) ? exp_build_table(@condition.expression.exp) : nil
