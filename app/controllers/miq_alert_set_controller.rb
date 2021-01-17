@@ -15,11 +15,6 @@ class MiqAlertSetController < ApplicationController
     @title = _("Policies")
   end
 
-  def index
-    flash_to_session
-    redirect_to(:action => 'show_list')
-  end
-
   def alert_profile_load
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by(:id => @edit[:alert_profile_id]) : MiqAlertSet.new
   end
