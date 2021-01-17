@@ -49,7 +49,7 @@ class HostInitiatorController < ApplicationController
 
   def specific_buttons(pressed)
     case pressed
-    when 'host_initiator_define'
+    when 'host_initiator_new'
       javascript_redirect(:action => 'new')
     else
       return false
