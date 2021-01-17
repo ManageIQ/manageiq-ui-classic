@@ -12,6 +12,8 @@ class HostInitiatorController < ApplicationController
   after_action :set_session_data
 
   def new
+    assert_privileges("host_initiator_new")
+
     @in_a_form = true
     drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
