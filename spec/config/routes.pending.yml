@@ -782,19 +782,8 @@ MiqAeToolsController:
 - wait_for_task
 MiqAlertController:
 - alert_field_changed
-- exp_button
-- exp_changed
-- exp_token_pressed
-- explorer
 - index
-- miq_alert_edit
 - reload
-- report_data
-- tree_autoload
-- tree_select
-- x_history
-- x_search_by_name
-- x_show
 MiqAlertSetController:
 - alert_profile_assign_changed
 - alert_profile_field_changed

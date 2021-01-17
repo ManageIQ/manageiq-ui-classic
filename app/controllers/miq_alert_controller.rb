@@ -15,11 +15,6 @@ class MiqAlertController < ApplicationController
     @title = _("Alerts")
   end
 
-  def index
-    flash_to_session
-    redirect_to(:action => 'show_list')
-  end
-
   SEVERITIES = {"info" => N_('Info'), "warning" => N_('Warning'), "error" => N_('Error')}.freeze
 
   def alert_edit_cancel
@@ -234,6 +229,7 @@ class MiqAlertController < ApplicationController
 
   # Get information for an alert
   def show
+    assert_privileges("miq_alert_show")
     super
     @alert = @record
     @email_to = []
