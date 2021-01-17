@@ -23,8 +23,8 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
             :host_initiator_define,
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Define a new host initiator'),
-            t,
-            ),
+            t
+          ),
         ]
       ),
     ]
