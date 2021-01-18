@@ -29,11 +29,11 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           :data  => {'function'      => 'sendDataWithRx',
                      'function-data' => {:api_url        => 'alert_definitions',
                                          :component_name => 'RemoveGenericItemModal',
+                                         :redirect_url   => '/miq_alert/show_list',
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert?"),
-                                         :modal_title    => N_("Delete Alert"),
-                                         :ajax_reload    => true}}),
+                                         :modal_title    => N_("Delete Alert")}}),
       ]
     ),
   ])
