@@ -15,7 +15,7 @@ title: Events
 name: Event
 
 # Main DB table report is based on
-db: MiqEvent
+db: MiqEventDefinition
 
 # Columns to fetch from the main table
 cols:
@@ -23,6 +23,8 @@ cols:
 - description
 - created_on
 - updated_on
+- event_type
+- event_group_name
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -30,10 +32,14 @@ include:
 # Order of columns (from all tables)
 col_order:
 - description
+- event_type
+- event_group_name
 
 # Column titles, in order
 headers:
 - Description
+- Type
+- Event Group
 
 # Condition(s) string for the SQL query
 conditions:

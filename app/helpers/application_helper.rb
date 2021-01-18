@@ -391,8 +391,7 @@ module ApplicationHelper
       controller = "ops"
       action = "ap_show"
     when "MiqEventDefinition"
-      controller = "event"
-      action = "_none_"
+      controller = "miq_event"
     when "User", "Group", "Patch", "GuestApplication"
       controller = "vm"
       action = @lastaction

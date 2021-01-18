@@ -6,12 +6,31 @@ class MiqEventController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
-  include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::PolicyMixin
 
   def title
     @title = _("Events")
+  end
+
+  def show_list
+    if params[:ppsetting]                                             # User selected new per page value
+      @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
+      @settings.store_path(:perpage, PERPAGE_TYPES['list'], @items_per_page) # Set the per page setting for this gtl type
+    end
+    @sortcol = session[:request_sortcol].nil? ? 0 : session[:request_sortcol].to_i
+    @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
+    @no_checkboxes = true # Don't show checkboxes, read_only
+    # @view, @pages = get_view(MiqEvent, {:filter => MiqPolicy.all_policy_events_filter}, true)
+    @view, @pages = get_view(MiqEvent, :filter => MiqPolicy.all_policy_events_filter)
+    @current_page = @pages[:current] unless @pages.nil? # save the current page number
+    session[:request_sortcol] = @sortcol
+    session[:request_sortdir] = @sortdir
+    {:view => @view, :pages => @pages}
+  end
+
+  def show
+    @record = MiqEventDefinition.find_by(:id => params[:id])
   end
 
   private
@@ -30,22 +49,11 @@ class MiqEventController < ApplicationController
     session[:miq_event_current_page] = @current_page
   end
 
-  def features
-    [
-      {
-        :name     => :event,
-        :title    => _("Events"),
-        :role     => "event",
-        :role_any => true
-      },
-    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
-  end
-
   def breadcrumbs_options
     {
       :breadcrumbs  => [
         {:title => _("Control")},
-        {:title => _('Explorer')},
+        {:title => _('Events')},
       ].compact,
       :record_title => :description,
     }
