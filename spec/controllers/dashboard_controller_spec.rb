@@ -498,7 +498,7 @@ describe DashboardController do
     end
 
     it "renders the print layout" do
-      user = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
+      user = create_user_with_group('User-2', "Group-1", MiqUserRole.find_by(:name => "EvmRole-operator"))
       report = create_and_generate_report_for_user("Vendor and Guest OS", user)
       report_result_id = report.miq_report_results.first.id
 
