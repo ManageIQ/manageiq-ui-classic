@@ -2161,7 +2161,8 @@ Rails.application.routes.draw do
         edit
         show
         show_list
-      )
+      ) +
+        exp_post
     },
 
     :miq_alert_set  => {

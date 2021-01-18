@@ -782,6 +782,9 @@ MiqAeToolsController:
 - wait_for_task
 MiqAlertController:
 - alert_field_changed
+- exp_button
+- exp_changed
+- exp_token_pressed
 - index
 - reload
 MiqAlertSetController:
