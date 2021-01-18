@@ -229,7 +229,6 @@ class MiqAlertController < ApplicationController
 
   # Get information for an alert
   def show
-    assert_privileges("miq_alert_show")
     super
     @alert = @record
     @email_to = []
