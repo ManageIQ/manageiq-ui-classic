@@ -30,7 +30,6 @@ require('./pf_charts/pie-chart.component.js');
 require('./pf_charts/sparkline-chart.component.js');
 require('./pf_charts/trends-chart.component.js');
 require('./pf_charts/utilization-trend-chart.component.js');
-require('./physical_infrastructures/change-password.js');
 require('./provider-option-field-input.js');
 require('./provier-option-section.js');
 require('./recent-resource.js');

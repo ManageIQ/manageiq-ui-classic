@@ -34,15 +34,6 @@ class EmsPhysicalInfraController < ApplicationController
     "/ems_physical_infra/change_password/#{id}"
   end
 
-  # This method handle view objects of page
-  # +/ems_physical_infra/change_password/<id>+
-  def change_password
-    assert_privileges('ems_physical_infra_edit')
-    @record = find_record_with_rbac(model, params[:id])
-    @title = _("Change Password for Physical Infrasctructure Provider '%{provider_name}'") % {:provider_name => @record.name}
-    @in_a_form = true # to show the page on all content frame
-  end
-
   def restful?
     true
   end
