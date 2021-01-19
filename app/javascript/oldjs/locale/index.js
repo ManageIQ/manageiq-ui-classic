@@ -1,10 +1,12 @@
-require('./de/app.js');
-require('./en/app.js');
-require('./es/app.js');
-require('./fr/app.js');
-require('./it/app.js');
-require('./ja/app.js');
-require('./ko/app.js');
-require('./pt_BR/app.js');
-require('./zh_CN/app.js');
-require('./zh_TW/app.js');
+window.locales = {
+  'de': require('./de.json'),
+  'en': require('./en.json'),
+  'es': require('./es.json'),
+  'fr': require('./fr.json'),
+  'it': require('./it.json'),
+  'ja': require('./ja.json'),
+  'ko': require('./ko.json'),
+  'pt_BR': require('./pt_BR.json'),
+  'zh_CN': require('./zh_CN.json'),
+  'zh_TW': require('./zh_TW.json'),
+};
