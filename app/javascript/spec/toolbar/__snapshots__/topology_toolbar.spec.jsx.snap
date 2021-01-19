@@ -80,20 +80,16 @@ exports[`<TopologyToolbar /> renders ok 1`] = `
                 className="pficon pficon-close"
               />
             </button>
+            <button
+              className="btn btn-default search-topology-button"
+              onClick={[Function]}
+              type="button"
+            >
+              <span
+                className="fa fa-search"
+              />
+            </button>
           </div>
-        </div>
-        <div
-          className="form-group search-button"
-        >
-          <button
-            className="btn btn-default search-topology-button"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              className="fa fa-search"
-            />
-          </button>
         </div>
       </form>
     </div>

@@ -178,13 +178,22 @@
   max-height: 610px !important;
 }
 
-.topology_refresh,.search-topology-button {
+.topology_refresh {
   background-color: inherit;
   border: none;
   background-image: none;
   box-shadow: none;
   bottom: 1px;
   position: relative;
+}
+
+.search-topology-button {
+    background-color: #f1f1f1;
+    position: absolute;
+    right: -29px;
+    top: 0px;
+    width: 25px;
+    height: 26px;
 }
 
 .topology_toolbar {
