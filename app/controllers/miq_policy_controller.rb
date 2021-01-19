@@ -35,6 +35,11 @@ class MiqPolicyController < ApplicationController
 
   private
 
+  def build_expression_table(expression)
+    expression.kind_of?(MiqExpression) ? exp_build_table(expression.exp) : nil
+  end
+  helper_method :build_expression_table
+
   def get_record_display_name(record)
     record.description
   end

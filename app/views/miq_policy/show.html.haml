@@ -1,7 +1,7 @@
 #policy_details_div
   -  policy_conditions = @record.conditions
   -  policy_events = @record.miq_event_definitions
-  -  expression_table = @record.expression.kind_of?(MiqExpression) ? exp_build_table(@record.expression.exp) : nil
+  -  expression_table = build_expression_table(@record.expression)
   -  policy_profiles = @record.memberof.sort_by { |pp| pp.description.downcase }
   #policy_info_div
     = render :partial => "layouts/flash_msg"
