@@ -553,7 +553,7 @@ module ApplicationController::Filter
       unless @edit[@expkey][:exp_key].include?("NULL") || @edit[@expkey][:exp_key].include?("EMPTY") # Check for "IS/IS NOT NULL/EMPTY"
         exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]                          #   else set the value
         unless exp[@edit[@expkey][:exp_key]]["value"] == :user_input
-          exp[@edit[@expkey][:exp_key]]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
+          exp[@edit[@expkey][:exp_key]]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix).to_s
         end
       end
       exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
@@ -647,7 +647,7 @@ module ApplicationController::Filter
       exp[@edit[@expkey][:exp_key]]["search"][skey]["field"] = @edit[@expkey][:exp_field]   # Set the search field
       unless skey.include?("NULL") || skey.include?("EMPTY")                                # Check for "IS/IS NOT NULL/EMPTY"
         exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] = @edit[@expkey][:exp_value] #   else set the value
-        exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
+        exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix).to_s
       end
       chk = @edit[@expkey][:exp_check]
       exp[@edit[@expkey][:exp_key]][chk] = {}                                               # Create the check hash
@@ -660,7 +660,7 @@ module ApplicationController::Filter
                                                           end
       unless ckey.include?("NULL") || ckey.include?("EMPTY")                                # Check for "IS/IS NOT NULL/EMPTY"
         exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] = @edit[@expkey][:exp_cvalue]     #   else set the value
-        exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val2_suffix)
+        exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val2_suffix).to_s
       end
       exp[@edit[@expkey][:exp_key]]["search"][skey]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
     end
