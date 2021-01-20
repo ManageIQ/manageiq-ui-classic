@@ -1,6 +1,6 @@
 describe ReportController do
   context "::Dashboards" do
-    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [], :col2 => [], :col3 => []}) }
+    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group) }
     let(:user)           { FactoryBot.create(:user, :features => "db_edit") }
 
     before do
@@ -102,9 +102,9 @@ describe ReportController do
         allow(controller).to receive(:db_fields_validation)
         allow(controller).to receive(:replace_right_cell)
         owner = miq_widget_set.owner
-        new_hash = {:name => "New Name", :description => "New Description", :col1 => [1], :col2 => [], :col3 => []}
-        current = {:name => "New Name", :description => "New Description", :col1 => [], :col2 => [], :col3 => []}
-        controller.instance_variable_set(:@edit, :new => new_hash, :db_id => miq_widget_set.id, :current => current)
+        new_widget = FactoryBot.create(:miq_widget)
+        new_hash = {:name => "New Name", :description => "New Description", :col1 => [new_widget.id], :col2 => [], :col3 => []}
+        controller.instance_variable_set(:@edit, :new => new_hash, :db_id => miq_widget_set.id, :current => miq_widget_set.set_data)
         controller.params = {:id => miq_widget_set.id, :button => "save"}
         controller.db_edit
         expect(miq_widget_set.owner.id).to eq(owner.id)
@@ -115,7 +115,7 @@ describe ReportController do
 
     describe "#db_save_members" do
       let(:set_data) do
-        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryBot.create(:miq_widget))] }.to_h
+        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryBot.create(:miq_widget).id)] }.to_h
       end
 
       before do
@@ -132,7 +132,7 @@ describe ReportController do
         controller.send(:db_save_members)
 
         miq_widget_set.reload
-        expect(miq_widget_set.members.uniq).to match_array((set_data[:col1] + set_data[:col2] + set_data[:col3]).uniq)
+        expect(miq_widget_set.members.uniq.map(&:id)).to match_array((set_data[:col1] + set_data[:col2] + set_data[:col3]).uniq)
       end
     end
 

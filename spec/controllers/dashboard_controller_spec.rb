@@ -209,26 +209,29 @@ describe DashboardController do
 
   context "Create Dashboard" do
     before do
+      EvmSpecHelper.local_miq_server
       @group = FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role, :features => %w[everything]))
       @user = FactoryBot.create(:user, :miq_groups => [@group])
       # create dashboard for a group
       @ws = FactoryBot.create(:miq_widget_set,
                               :name     => "group_default",
-                              :set_data => {:last_group_db_updated => Time.now.utc,
-                                            :col1 => [], :col2 => [], :col3 => []},
+                              :last_group_db_updated => Time.now.utc,
                               # :userid   => @user.userid,
-                              :group_id => @group.id)
+                              :owner => @group)
       @group.update(:settings => {:dashboard_order => [@ws.id]})
     end
 
     it "dashboard show" do
+      EvmSpecHelper.local_miq_server
       controller.instance_variable_set(:@sb, :active_db => @ws.name)
       controller.instance_variable_set(:@tabs, [])
       login_as @user
       # create a user's dashboard using group dashboard name.
       FactoryBot.create(:miq_widget_set,
-                        :name     => "#{@user.userid}|#{@group.id}|#{@ws.name}",
-                        :set_data => {:last_group_db_updated => Time.now.utc, :col1 => [1], :col2 => [], :col3 => []})
+                        :name                  => "#{@user.userid}",
+                        :owner                 => @user,
+                        :group_id              => @user.current_group_id,
+                        :last_group_db_updated => Time.now.utc)
       controller.show
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
@@ -259,7 +262,8 @@ describe DashboardController do
       controller.show
 
       # change original dashboard and set reset_upon_login flag to true
-      @ws.update(:set_data => {:last_group_db_updated => Time.now.utc, :reset_upon_login => true, :col1 => [], :col2 => [], :col3 => []})
+      @ws.set_data.merge(:last_group_db_updated => Time.now.utc, :reset_upon_login => true)
+      @ws.save!
 
       # get user's copy of dashboard and add widgets
       user_dashboard = MiqWidgetSet.find_by(:name => @ws.name, :userid => @user.userid)
@@ -329,27 +333,27 @@ describe DashboardController do
 
     let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
 
+    let(:widget) { FactoryBot.create(:miq_widget) }
     let(:wset) do
       FactoryBot.create(
         :miq_widget_set,
-        :name     => "Widgets",
-        :userid   => user.userid,
-        :group_id => group.id,
-        :set_data => {
-          :last_group_db_updated => Time.now.utc,
-          :col1 => [1], :col2 => [], :col3 => []
-        }
+        :name                  => "Widgets",
+        :userid                => user.userid,
+        :owner                 => group,
+        :widget_id             => widget.id,
+        :last_group_db_updated => Time.now.utc
       )
     end
 
     before do
+      EvmSpecHelper.local_miq_server
       login_as user
 
       controller.params = {:tab => wset.id}
       controller.instance_variable_set(
         :@sb,
         :active_db  => wset.name, :active_db_id => wset.id,
-        :dashboards => { wset.name => {:col1 => [1], :col2 => [], :col3 => []} }
+        :dashboards => { wset.name => {:col1 => [widget.id], :col2 => [], :col3 => []} }
       )
 
       controller.show
@@ -463,18 +467,17 @@ describe DashboardController do
       let(:user) { FactoryBot.create(:user_admin, :current_group => group, :miq_groups => [group]) }
       let(:ws1) do
         FactoryBot.create(:miq_widget_set,
-                          :name     => 'A',
-                          :owner_id => group.id,
-                          :set_data => {:col1 => [], :col2 => [], :col3 => []})
+                          :name  => 'A',
+                          :owner => group)
       end
       let(:ws2) do
         FactoryBot.create(:miq_widget_set,
-                          :name     => 'B',
-                          :owner_id => group.id,
-                          :set_data => {:col1 => [], :col2 => [], :col3 => []})
+                          :name  => 'B',
+                          :owner => group)
       end
 
       before do
+        EvmSpecHelper.local_miq_server
         login_as user
         controller.params = {'uib-tab' => ws2.id.to_s}
         controller.instance_variable_set(:@sb, {})
