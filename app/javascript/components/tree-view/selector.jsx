@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
-import { Modal, Button } from 'patternfly-react';
-import { useFieldApi, useFormApi, componentTypes } from '@data-driven-forms/react-form-renderer';
+import { Modal, FormGroup, TextInput, Button } from 'carbon-components-react';
+import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
+import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
+import { TreeViewAlt16, Close16 } from '@carbon/icons-react';
 
 import TreeViewBase from './base';
 
@@ -12,91 +14,102 @@ const TreeViewSelector = ({
   identifier,
   isClearable,
   modalLabel,
-  modalIcon,
   clearLabel,
-  clearIcon,
   closeLabel,
   selectLabel,
   ...props
 }) => {
   const [{ show, active }, setState] = useState({});
 
-  const { input: { value, name } } = useFieldApi(props);
+  // const { input: { value, name } } = useFieldApi(props);
+
+  const {
+    labelText, validateOnMount, input, meta, ...rest
+  } = useFieldApi(prepareProps(props));
+
+  // const { labelText, input, meta, validateOnMount, ...rest } = useFieldApi(prepareProps(props));
+  const invalid = (meta.touched || validateOnMount) && (meta.error || meta.submitError);
+  const warn = (meta.touched || validateOnMount) && meta.warning;
+
   const formOptions = useFormApi();
 
-  const closeModal = () => setState(state => ({ ...state, show: false, active: undefined }));
+  const closeModal = () => setState((state) => ({ ...state, show: false, active: undefined }));
 
   const changeValue = () => {
-    formOptions.change(name, active);
+    formOptions.change(input.name, active);
     closeModal();
   };
 
   const actionMapper = {
     [ActionTypes.SELECTED]: (node, values) => {
       if (values) {
-        setState(state => ({ ...state, active: identifier(node) }));
+        setState((state) => ({ ...state, active: identifier(node) }));
       }
       return Tree.nodeSelected(node, values);
     },
   };
 
-  const component = {
-    ...props,
-    component: componentTypes.TEXT_FIELD,
-    inputAddon: {
-      after: {
-        fields: [
-          {
-            component: componentTypes.INPUT_ADDON_BUTTON_GROUP,
-            name: `${name}-toggle-container`,
-            fields: [
-              {
-                component: componentTypes.BUTTON,
-                label: <i className={modalIcon} />,
-                title: modalLabel,
-                name: `${name}-toggle`,
-                onClick: () => setState(state => ({ ...state, show: true })),
-              },
-              ...(isClearable ? [{
-                component: componentTypes.BUTTON,
-                label: <i className={clearIcon} />,
-                title: clearLabel,
-                name: `${name}-clear`,
-                onClick: () => formOptions.change(name, undefined),
-              }] : []),
-            ],
-          },
-        ],
-      },
-    },
-  };
-
   return (
-    <>
-      { formOptions.renderForm([component]) }
-      <Modal show={show} onHide={closeModal}>
-        <Modal.Header>
-          { props.label }
-        </Modal.Header>
-        <Modal.Body>
-          <TreeViewBase
-            loadData={loadData}
-            lazyLoadData={lazyLoadData}
-            actionMapper={actionMapper}
-            select={node => identifier(node) === value}
-            {...props}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button bsStyle="primary" onClick={changeValue} disabled={!active}>
-            {selectLabel}
-          </Button>
-          <Button bsStyle="default" className="btn-cancel" onClick={closeModal}>
-            {closeLabel}
-          </Button>
-        </Modal.Footer>
+    <FormGroup legendText={labelText}>
+      <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
+        <div className="bx--row">
+          <div className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3">
+            <TextInput
+              {...input}
+              labelText=""
+              key={input.name}
+              id={input.name}
+              invalid={Boolean(invalid)}
+              invalidText={invalid || ''}
+              warn={Boolean(warn)}
+              warnText={warn || ''}
+              {...rest}
+            />
+          </div>
+          <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
+            <Button
+              className="tree-selector-toggle"
+              hasIconOnly
+              kind="primary"
+              size="field"
+              onClick={() => setState((state) => ({ ...state, show: true }))}
+              iconDescription={modalLabel}
+              renderIcon={TreeViewAlt16}
+            />
+            { isClearable && (
+              <Button
+                className="tree-selector-clear"
+                hasIconOnly
+                kind="danger"
+                size="field"
+                onClick={() => formOptions.change(input.name, undefined)}
+                iconDescription={clearLabel}
+                renderIcon={Close16}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+      <Modal
+        open={show}
+        onRequestClose={closeModal}
+        modalHeading={props.label}
+        primaryButtonText={selectLabel}
+        secondaryButtonText={closeLabel}
+        iconDescription={closeLabel}
+        primaryButtonDisabled={!active}
+        onRequestSubmit={changeValue}
+        onSecondarySubmit={closeModal}
+      >
+        <TreeViewBase
+          loadData={loadData}
+          lazyLoadData={lazyLoadData}
+          actionMapper={actionMapper}
+          select={(node) => identifier(node) === input.value}
+          {...props}
+        />
       </Modal>
-    </>
+    </FormGroup>
   );
 };
 
@@ -106,9 +119,7 @@ TreeViewSelector.propTypes = {
   identifier: PropTypes.func,
   isClearable: PropTypes.bool,
   label: PropTypes.string,
-  modalIcon: PropTypes.string,
   modalLabel: PropTypes.string,
-  clearIcon: PropTypes.string,
   clearLabel: PropTypes.string,
   selectLabel: PropTypes.string,
   closeLabel: PropTypes.string,
@@ -117,11 +128,9 @@ TreeViewSelector.propTypes = {
 TreeViewSelector.defaultProps = {
   lazyLoadData: () => undefined,
   isClearable: false,
-  identifier: node => node.attr.key,
+  identifier: (node) => node.attr.key,
   label: undefined,
-  modalIcon: 'ff ff-load-balancer',
   modalLabel: __('Toggle'),
-  clearIcon: 'fa fa-times',
   clearLabel: __('Clear'),
   selectLabel: __('Select'),
   closeLabel: __('Close'),
