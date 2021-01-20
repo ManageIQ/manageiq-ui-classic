@@ -102,15 +102,6 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
       :onwhen  => "1+",
       :items   => [
         button(
-          :ems_infra_change_password,
-          'pficon pficon-edit fa-lg',
-          N_('Select a single Infrastructure Provider to Change password'),
-          N_('Change Password'),
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1"
-        ),
-        button(
           :ems_physical_infra_recheck_auth_status,
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for the selected Physical Infrastructure Providers'),

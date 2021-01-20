@@ -105,12 +105,6 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
       t,
       :items => [
         button(
-          :ems_infra_change_password,
-          'pficon pficon-edit fa-lg',
-          t = N_('Change password'),
-          t
-        ),
-        button(
           :ems_physical_infra_recheck_auth_status,
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for this Physical Infrastructure Provider'),

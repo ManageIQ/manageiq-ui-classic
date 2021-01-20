@@ -1225,7 +1225,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        change_password
       ),
       :post => %w(
         new
