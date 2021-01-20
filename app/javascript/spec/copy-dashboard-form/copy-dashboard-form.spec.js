@@ -107,7 +107,7 @@ describe('Copy Dashboard form', () => {
     });
 
     wrapper.update();
-    wrapper.find('button').last().simulate('click'); // click on cancel
+    wrapper.find('button.bx--btn--secondary').last().simulate('click'); // click on cancel
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
     expect(spyMiqAjaxButton).toHaveBeenCalledWith('/report/db_copy/55?button=cancel');
     done();

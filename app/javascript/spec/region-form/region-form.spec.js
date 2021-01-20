@@ -59,7 +59,7 @@ describe('RegionForm', () => {
       wrapper = mount(<RegionForm {...initialProps} />);
     });
     wrapper.update();
-    wrapper.find('button').last().simulate('click');
+    wrapper.find('button.bx--btn--secondary').last().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Edit of Region was cancelled by the user', 'success', '/ops/explorer/?button=cancel'); // eslint-disable-line max-len
     done();
   });

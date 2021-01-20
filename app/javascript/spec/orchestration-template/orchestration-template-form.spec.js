@@ -68,7 +68,7 @@ describe('OrcherstrationTemplate form', () => {
     wrapper.update();
 
     await act(async() => {
-      wrapper.find('button').last().simulate('click');
+      wrapper.find('button.bx--btn--secondary').first().simulate('click');
     });
 
     expect(miqRedirectBack).toHaveBeenCalledWith(

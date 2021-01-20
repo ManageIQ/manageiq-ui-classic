@@ -69,7 +69,7 @@ describe('<ServiceDialogFromOt />', () => {
       wrapper.find('input').simulate('change', { target: { value: 'Bla' } });
       setTimeout(() => {
         wrapper.update();
-        expect(wrapper.find('button').first().props().disabled).toEqual(true);
+        expect(wrapper.find('button.bx--btn--primary').props().disabled).toEqual(true);
         done();
       }, 500);
     }, 500);
