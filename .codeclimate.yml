@@ -45,7 +45,7 @@ plugins:
       languages:
         ruby:
           mass_threshold: 30
-        javascript: 
+        javascript:
   eslint:
     enabled: true
     channel: eslint-5
@@ -77,18 +77,7 @@ prepare:
     path: ".rubocop_base.yml"
   - url: https://raw.githubusercontent.com/ManageIQ/manageiq-style/master/.rubocop_cc_base.yml
     path: ".rubocop_cc_base.yml"
-ratings:
-  paths:
-  - Gemfile.lock
-  - "**.erb"
-  - "**.haml"
-  - "**.rake"
-  - "**.rb"
-  - "**.rhtml"
-  - "**.slim"
-  - "**.css"
-  - "**.scss"
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
+  - url: https://raw.githubusercontent.com/ManageIQ/manageiq-style/master/styles/base.yml
+    path: styles/base.yml
+  - url: https://raw.githubusercontent.com/ManageIQ/manageiq-style/master/styles/cc_base.yml
+    path: styles/cc_base.yml
