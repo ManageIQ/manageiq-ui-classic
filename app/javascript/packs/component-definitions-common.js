@@ -30,6 +30,7 @@ import NotificationDrawer from '../components/notification-drawer/notification-d
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
+import PxeImageForm from '../components/pxe-image-type-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
 import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
@@ -90,6 +91,7 @@ ManageIQ.component.addReact('NotificationDrawer', NotificationDrawer);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
+ManageIQ.component.addReact('PxeImageForm', PxeImageForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('PerformanceChartWidget', PerformanceChartWidget);
 ManageIQ.component.addReact('Quadicon', Quadicon);
