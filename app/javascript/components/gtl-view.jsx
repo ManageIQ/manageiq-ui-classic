@@ -90,7 +90,7 @@ const TREES_WITHOUT_PARENT = ['pxe', 'ops'];
 const TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
 const USE_TREE_ID = ['automation_manager'];
 
-const isAllowedParent = activeTree =>
+const isAllowedParent = (activeTree) =>
   !TREES_WITHOUT_PARENT.includes(ManageIQ.controller)
     && !TREE_TABS_WITHOUT_PARENT.includes(activeTree);
 
@@ -119,7 +119,7 @@ const activateNodeSilently = (itemId) => {
 };
 
 const setRowActive = (rows, item) => {
-  const newRows = rows.map(row => ({
+  const newRows = rows.map((row) => ({
     ...row,
     selected: (row.id === item.id),
   }));
@@ -158,21 +158,22 @@ const reduceSelectedItem = (state, item, isSelected) => {
   broadcastSelectedItem(selectedItem);
   return {
     ...state,
-    rows: state.rows.map(i => (i.id !== selectedItem.id ? i : selectedItem)),
+    rows: state.rows.map((i) => (i.id !== selectedItem.id ? i : selectedItem)),
   };
 };
 
-const unSelectAll = (items) => {
+const unSelectAll = (state) => {
   ManageIQ.gridChecks = [];
-  const isSelected = false;
-
-  if (typeof items === 'undefined') {
-    return;
+  if (! state.rows) {
+    return state;
   }
-  items.map(item => (
-    dispatch({ type: 'itemSelected', item, isSelected })
-  ));
-  return false;
+
+  let newState = state;
+  state.rows.forEach((item) => {
+    newState = reduceSelectedItem(newState, item, false);
+  });
+
+  return newState;
 };
 
 const gtlReducer = (state, action) => {
@@ -209,10 +210,7 @@ const gtlReducer = (state, action) => {
         isLoading: action.isLoading,
       };
     case 'unSelectAll':
-      return {
-        ...state,
-        rows: unSelectAll(state.rows),
-      };
+      return unSelectAll(state);
     default:
       return state;
   }
@@ -220,7 +218,7 @@ const gtlReducer = (state, action) => {
 
 /* eslint no-unused-vars: 'off' */
 /* eslint no-undef: 'off' */
-const subscribeToSubject = dispatch =>
+const subscribeToSubject = (dispatch) =>
   listenToRx(
     (event) => {
       if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
@@ -240,7 +238,7 @@ const subscribeToSubject = dispatch =>
         dispatch({ type: 'setScope', namedScope: event.namedScope });
       }
     },
-    err => console.error('GTL RxJs Error: ', err),
+    (err) => console.error('GTL RxJs Error: ', err),
     () => console.debug('GTL RxJs subject completed, no more events to catch.'),
   );
 
@@ -266,7 +264,7 @@ const setPaging = (settings, start, perPage) => {
   };
 };
 
-const computePagination = settings => ({
+const computePagination = (settings) => ({
   page: settings.current,
   perPage: settings.perpage,
   perPageOptions: [10, 20, 50, 100, 200, 500, 1000],
@@ -335,7 +333,7 @@ const GtlView = ({
     if (typeof items === 'undefined') {
       return;
     }
-    items.map(item => (
+    items.map((item) => (
       dispatch({ type: 'itemSelected', item, isSelected })
     ));
     return false;
@@ -345,7 +343,7 @@ const GtlView = ({
     return <div className="spinner spinner-lg" />;
   }
 
-  const onPageSet = page => getData(
+  const onPageSet = (page) => getData(
     dispatch,
     modelName,
     activeTree,
@@ -356,7 +354,7 @@ const GtlView = ({
     additionalOptions,
   );
 
-  const onPerPageSelect = perPage => getData(
+  const onPerPageSelect = (perPage) => getData(
     dispatch,
     modelName,
     activeTree,
@@ -393,7 +391,7 @@ const GtlView = ({
   const inEditMode = () => additionalOptions.in_a_form;
   const noCheckboxes = () => additionalOptions.no_checkboxes;
 
-  const onItemButtonClick = item => ev => {
+  const onItemButtonClick = (item) => (ev) => {
     ev.stopPropagation();
     ev.preventDefault();
     miqOrderService(item.id);
