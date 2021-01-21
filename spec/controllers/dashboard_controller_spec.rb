@@ -217,12 +217,9 @@ describe DashboardController do
       # create dashboard for a group
       @ws = FactoryBot.create(:miq_widget_set,
                               :name     => "group_default",
-                              :set_data => {:col1 => [widget.id],
-                                            :col2 => [],
-                                            :col3 => [],
-                                            :last_group_db_updated => Time.now.utc},
+                              :set_data => {:col1 => [widget.id], :col2 => [], :col3 => [], :last_group_db_updated => Time.now.utc},
                               # :userid   => @user.userid,
-                              :owner => @group)
+                              :owner    => @group)
       @group.update(:settings => {:dashboard_order => [@ws.id]})
     end
 
@@ -233,13 +230,10 @@ describe DashboardController do
       login_as @user
       # create a user's dashboard using group dashboard name.
       FactoryBot.create(:miq_widget_set,
-                        :name                  => "#{@user.userid}",
-                        :owner                 => @user,
-                        :group_id              => @user.current_group_id,
-                        :set_data => {:col1 => [widget.id],
-                                      :col2 => [],
-                                      :col3 => [],
-                                      :last_group_db_updated => Time.now.utc})
+                        :name     => @user.userid.to_s,
+                        :owner    => @user,
+                        :group_id => @user.current_group_id,
+                        :set_data => {:col1 => [widget.id], :col2 => [], :col3 => [], :last_group_db_updated => Time.now.utc})
 
       controller.show
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -364,7 +358,7 @@ describe DashboardController do
       controller.instance_variable_set(
         :@sb,
         :active_db  => wset.name, :active_db_id => wset.id,
-        :dashboards => { wset.name => {:col1 => [widget.id], :col2 => [], :col3 => []} }
+        :dashboards => {wset.name => {:col1 => [widget.id], :col2 => [], :col3 => []}}
       )
 
       controller.show
@@ -479,19 +473,17 @@ describe DashboardController do
       let(:widget) { FactoryBot.create(:miq_widget) }
       let(:ws1) do
         FactoryBot.create(:miq_widget_set,
-                          :name  => 'A',
+                          :name     => 'A',
                           :set_data => {:col1 => [widget.id],
                                         :col2 => [],
                                         :col3 => []},
-                          :owner => group)
+                          :owner    => group)
       end
       let(:ws2) do
         FactoryBot.create(:miq_widget_set,
-                          :name  => 'B',
-                          :set_data => {:col1 => [widget.id],
-                                        :col2 => [],
-                                        :col3 => []},
-                          :owner => group)
+                          :name     => 'B',
+                          :set_data => {:col1 => [widget.id], :col2 => [], :col3 => []},
+                          :owner    => group)
       end
 
       before do
