@@ -21,7 +21,7 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def attributes_data
     attributes = if @ems.supports?(:block_storage)
-                   %i[physical_storages storage_resources cloud_volumes]
+                   %i[physical_storages storage_resources cloud_volumes host_initiators]
                  else
                    %i[cloud_object_store_containers cloud_object_store_objects]
                  end
@@ -30,6 +30,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :physical_storages             => 'pficon pficon-container-node',
       :storage_resources             => 'pficon pficon-resource-pool',
       :cloud_volumes                 => 'pficon pficon-volume',
+      :host_initiators               => 'pficon pficon-virtual-machine',
       :cloud_object_store_containers => 'ff ff-cloud-object-store',
       :cloud_object_store_objects    => 'fa fa-star',
     }
@@ -38,6 +39,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :storage_resources             => 'storage_resources',
       :cloud_volumes                 => 'cloud_volumes',
       :physical_storages             => 'physical_storages',
+      :host_initiators               => 'host_initiators',
       :cloud_object_store_containers => 'cloud_object_store_containers',
       :cloud_object_store_objects    => 'cloud_object_store_objects',
     }
@@ -46,6 +48,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :storage_resources             => _('Resources (Pools)'),
       :cloud_volumes                 => _('Volumes'),
       :physical_storages             => _('Physical Storages'),
+      :host_initiators               => _('Host Initiators'),
       :cloud_object_store_containers => _('Containers'),
       :cloud_object_store_objects    => _('Objects'),
     }
