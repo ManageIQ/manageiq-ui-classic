@@ -1,6 +1,7 @@
 describe ReportController do
   context "::Dashboards" do
-    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group) }
+    let(:miq_widget)     { FactoryBot.create(:miq_widget) }
+    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [miq_widget.id], :col2 => [], :col3 => []}) }
     let(:user)           { FactoryBot.create(:user, :features => "db_edit") }
 
     before do
