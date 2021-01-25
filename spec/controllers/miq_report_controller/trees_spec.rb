@@ -88,6 +88,8 @@ describe ReportController do
       end
 
       it 'renders list of Dashboards in Dashboards tree' do
+        MiqReport.seed
+        MiqWidget.seed
         MiqWidgetSet.seed
         post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_list')
@@ -107,11 +109,13 @@ describe ReportController do
         expect(response.body).not_to include(other_group.name)
       end
 
+      let(:miq_widget) { FactoryBot.create(:miq_widget) }
+
       it 'renders show of Dashboards in Dashboards tree' do
         ApplicationController.handle_exceptions = true
 
         MiqWidgetSet.seed
-        widget_set = FactoryBot.create(:miq_widget_set, :group_id => user.current_group.id)
+        widget_set = FactoryBot.create(:miq_widget_set, :set_data => {:col1 => [miq_widget.id]}, :owner_id => user.current_group.id, :group_id => user.current_group.id)
         post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_ws-#{widget_set.id}", :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_show')
       end

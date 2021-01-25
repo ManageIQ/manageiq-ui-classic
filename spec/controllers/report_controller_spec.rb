@@ -1191,8 +1191,10 @@ describe ReportController do
     end
 
     it "Can build all the trees" do
-      allow(User).to receive(:server_timezone).and_return("UTC")
+      EvmSpecHelper.local_miq_server
       sb[:rep_tree_build_time] = Time.now.utc
+      MiqReport.seed
+      MiqWidget.seed
       MiqWidgetSet.seed
       user2 = create_user_with_group('User-2', "Group-1", MiqUserRole.find_by(:name => "EvmRole-operator"))
       @rpt = create_and_generate_report_for_user("Vendor and Guest OS", user2)
