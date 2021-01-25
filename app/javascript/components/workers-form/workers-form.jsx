@@ -17,60 +17,54 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
   useEffect(() => {
     miqSparkleOn();
     API.get(`/api/servers/${id}/settings`)
-      .then(({ workers: { worker_base } }) => {
-        const wb = worker_base;
+      .then(({ workers }) => {
+        const baseCount = workers.worker_base.count;
+        const baseMem = toBytes(workers.worker_base.memory_threshold);
+        const queueMem = toBytes(workers.queue_worker_base.memory_threshold) || baseMem;
+        const eventCatcherMem = toBytes(workers.event_catcher.memory_threshold) || baseMem;
 
-        const countDefault = wb.defaults.count;
-        const memDefault = toBytes(wb.defaults.memory_threshold);
-        const baseMemDefault = toBytes(wb.queue_worker_base.defaults.memory_threshold);
-        const monitorDefault = toBytes(wb.event_catcher.defaults.memory_threshold);
-
-        const selectCount = value => (typeof value === 'number' ? value : countDefault);
+        const selectCount = value => (typeof value === 'number' ? value : baseCount);
 
         const parsedValues = {
           generic_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.generic_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.generic_worker.count),
+            memory_threshold: parseWorker(workers.generic_worker).bytes || queueMem,
+            count: selectCount(workers.generic_worker.count),
           },
           priority_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.priority_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.priority_worker.count),
+            memory_threshold: parseWorker(workers.priority_worker).bytes || queueMem,
+            count: selectCount(workers.priority_worker.count),
           },
           ems_metrics_collector_worker: {
-            defaults: {
-              memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_collector_worker.defaults).bytes || baseMemDefault,
-              count: selectCount(wb.queue_worker_base.ems_metrics_collector_worker.defaults.count),
-            },
+            memory_threshold: parseWorker(workers.ems_metrics_collector_worker).bytes || queueMem,
+            count: selectCount(workers.ems_metrics_collector_worker.count),
           },
           ems_metrics_processor_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_processor_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.ems_metrics_processor_worker.count),
+            memory_threshold: parseWorker(workers.ems_metrics_processor_worker).bytes || queueMem,
+            count: selectCount(workers.ems_metrics_processor_worker.count),
           },
           event_catcher: {
-            memory_threshold: parseWorker(wb.event_catcher).bytes || monitorDefault,
+            memory_threshold: parseWorker(workers.event_catcher).bytes || eventCatcherMem,
           },
           ems_refresh_worker: {
-            defaults: {
-              memory_threshold: parseWorker(wb.queue_worker_base.ems_refresh_worker.defaults).bytes || baseMemDefault,
-            },
+            memory_threshold: parseWorker(workers.ems_refresh_worker).bytes || queueMem,
           },
           smart_proxy_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.smart_proxy_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.smart_proxy_worker.count),
+            memory_threshold: parseWorker(workers.smart_proxy_worker).bytes || queueMem,
+            count: selectCount(workers.smart_proxy_worker.count),
           },
           ui_worker: {
-            count: selectCount(wb.ui_worker.count),
+            count: selectCount(workers.ui_worker.count),
           },
           reporting_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.reporting_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.reporting_worker.count),
+            memory_threshold: parseWorker(workers.reporting_worker).bytes || queueMem,
+            count: selectCount(workers.reporting_worker.count),
           },
           web_service_worker: {
-            memory_threshold: parseWorker(wb.web_service_worker).bytes || memDefault,
-            count: selectCount(wb.web_service_worker.count),
+            memory_threshold: parseWorker(workers.web_service_worker).bytes || baseMem,
+            count: selectCount(workers.web_service_worker.count),
           },
           remote_console_worker: {
-            count: selectCount(wb.remote_console_worker.count),
+            count: selectCount(workers.remote_console_worker.count),
           },
         };
 
@@ -96,38 +90,32 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
 
     miqSparkleOn();
     const result = {
-      queue_worker_base: {
-        generic_worker: {
-          memory_threshold: toRubyMethod(isDifferent('generic_worker.memory_threshold')),
-          count: isDifferent('generic_worker.count'),
-        },
-        priority_worker: {
-          memory_threshold: toRubyMethod(isDifferent('priority_worker.memory_threshold')),
-          count: isDifferent('priority_worker.count'),
-        },
-        ems_metrics_processor_worker: {
-          memory_threshold: toRubyMethod(isDifferent('ems_metrics_processor_worker.memory_threshold')),
-          count: isDifferent('ems_metrics_processor_worker.count'),
-        },
-        smart_proxy_worker: {
-          memory_threshold: toRubyMethod(isDifferent('smart_proxy_worker.memory_threshold')),
-          count: isDifferent('smart_proxy_worker.count'),
-        },
-        ems_metrics_collector_worker: {
-          defaults: {
-            memory_threshold: toRubyMethod(isDifferent('ems_metrics_collector_worker.defaults.memory_threshold')),
-            count: isDifferent('ems_metrics_collector_worker.defaults.count'),
-          },
-        },
-        ems_refresh_worker: {
-          defaults: {
-            memory_threshold: toRubyMethod(isDifferent('ems_refresh_worker.defaults.memory_threshold')),
-          },
-        },
-        reporting_worker: {
-          memory_threshold: toRubyMethod(isDifferent('reporting_worker.memory_threshold')),
-          count: isDifferent('reporting_worker.count'),
-        },
+      generic_worker: {
+        memory_threshold: toRubyMethod(isDifferent('generic_worker.memory_threshold')),
+        count: isDifferent('generic_worker.count'),
+      },
+      priority_worker: {
+        memory_threshold: toRubyMethod(isDifferent('priority_worker.memory_threshold')),
+        count: isDifferent('priority_worker.count'),
+      },
+      ems_metrics_processor_worker: {
+        memory_threshold: toRubyMethod(isDifferent('ems_metrics_processor_worker.memory_threshold')),
+        count: isDifferent('ems_metrics_processor_worker.count'),
+      },
+      smart_proxy_worker: {
+        memory_threshold: toRubyMethod(isDifferent('smart_proxy_worker.memory_threshold')),
+        count: isDifferent('smart_proxy_worker.count'),
+      },
+      ems_metrics_collector_worker: {
+        memory_threshold: toRubyMethod(isDifferent('ems_metrics_collector_worker.memory_threshold')),
+        count: isDifferent('ems_metrics_collector_worker.count'),
+      },
+      ems_refresh_worker: {
+        memory_threshold: toRubyMethod(isDifferent('ems_refresh_worker.memory_threshold')),
+      },
+      reporting_worker: {
+        memory_threshold: toRubyMethod(isDifferent('reporting_worker.memory_threshold')),
+        count: isDifferent('reporting_worker.count'),
       },
       remote_console_worker: {
         count: isDifferent('remote_console_worker.count'),
@@ -146,9 +134,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
 
     const patch = {
       workers: {
-        worker_base: {
-          ...buildPatch(result),
-        },
+        ...buildPatch(result),
       },
     };
 

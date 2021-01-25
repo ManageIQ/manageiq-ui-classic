@@ -30,61 +30,63 @@ describe('Workers form', () => {
 
     settingsData = {
       workers: {
+        ems_metrics_collector_worker: {
+          count: 8,
+          memory_threshold: 419430400,
+        },
+        ems_metrics_processor_worker: {
+          count: 2,
+          memory_threshold: 629145600,
+        },
+        ems_refresh_worker: {
+          memory_threshold: 2147483648,
+        },
+        event_catcher: {
+          memory_threshold: '2.gigabytes',
+        },
+        generic_worker: {
+          count: 2,
+          memory_threshold: 524288000
+        },
+        priority_worker: {
+          count: 2,
+          memory_threshold: 419430400,
+        },
+        queue_worker_base: {
+          memory_threshold: '500.megabytes',
+        },
+        remote_console_worker: {
+          memory_threshold: '1.gigabytes',
+        },
+        reporting_worker: {
+          count: 2,
+          memory_threshold: 524288000
+        },
+        smart_proxy_worker: {
+          count: 2,
+          memory_threshold: 576716800,
+        },
+        ui_worker: {
+          count: 1,
+          memory_threshold: '1.gigabytes',
+        },
+        web_service_worker: {
+          connection_pool_size: 8,
+          memory_threshold: 1073741824,
+        },
         worker_base: {
-          event_catcher: {
-            defaults: {
-              memory_threshold: '2.gigabytes',
-            },
-            memory_threshold: 2147483648,
-          },
-          queue_worker_base: {
-            ems_metrics_collector_worker: {
-              defaults: {
-                count: 8, memory_threshold: 419430400,
-              },
-            },
-            ems_refresh_worker: {
-              defaults: {
-                memory_threshold: 2147483648,
-              },
-            },
-            defaults: {
-              memory_threshold: '500.megabytes',
-            },
-            ems_metrics_processor_worker: {
-              count: 2, memory_threshold: 629145600,
-            },
-            generic_worker: { count: 2, memory_threshold: 524288000 },
-            priority_worker: {
-              memory_threshold: 419430400, count: 2,
-            },
-            reporting_worker: { count: 2, memory_threshold: 524288000 },
-            smart_proxy_worker: {
-              count: 2, memory_threshold: 576716800,
-            },
-          },
-          defaults: {
-            count: 1, memory_threshold: '400.megabytes',
-          },
-          ui_worker: {
-            memory_threshold: '1.gigabytes', count: 1,
-          },
-          web_service_worker: {
-            connection_pool_size: 8, memory_threshold: 1073741824,
-          },
-          remote_console_worker: {
-            memory_threshold: '1.gigabytes',
-          },
+          count: 1,
+          memory_threshold: '400.megabytes',
         },
       },
     };
 
     expectedValues = {
-      'ems_metrics_collector_worker.defaults.count': 8,
-      'ems_metrics_collector_worker.defaults.memory_threshold': 419430400,
+      'ems_metrics_collector_worker.count': 8,
+      'ems_metrics_collector_worker.memory_threshold': 419430400,
       'ems_metrics_processor_worker.count': 2,
       'ems_metrics_processor_worker.memory_threshold': 629145600,
-      'ems_refresh_worker.defaults.memory_threshold': 2147483648,
+      'ems_refresh_worker.memory_threshold': 2147483648,
       'event_catcher.memory_threshold': 2147483648,
       'generic_worker.count': 2,
       'generic_worker.memory_threshold': 524288000,
@@ -190,12 +192,8 @@ describe('Workers form', () => {
     expect(fetchMock.calls()).toHaveLength(2);
     expect(fetchMock.lastCall()[1].body).toEqual(JSON.stringify({
       workers: {
-        worker_base: {
-          queue_worker_base: {
-            smart_proxy_worker: {
-              count: 1,
-            },
-          },
+        smart_proxy_worker: {
+          count: 1,
         },
       },
     }));
