@@ -215,11 +215,9 @@ describe DashboardController do
       @group = FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role, :features => %w[everything]))
       @user = FactoryBot.create(:user, :miq_groups => [@group])
       # create dashboard for a group
-      @ws = FactoryBot.create(:miq_widget_set,
-                              :name     => "group_default",
-                              :set_data => {:col1 => [widget.id], :col2 => [], :col3 => [], :last_group_db_updated => Time.now.utc},
-                              # :userid   => @user.userid,
-                              :owner    => @group)
+      @ws = FactoryBot.create(:miq_widget_set, :name                  => "group_default",
+                                               :last_group_db_updated => Time.now.utc,
+                                               :owner                 => @group)
       @group.update(:settings => {:dashboard_order => [@ws.id]})
     end
 
@@ -229,11 +227,9 @@ describe DashboardController do
       controller.instance_variable_set(:@tabs, [])
       login_as @user
       # create a user's dashboard using group dashboard name.
-      FactoryBot.create(:miq_widget_set,
-                        :name     => @user.userid.to_s,
-                        :owner    => @user,
-                        :group_id => @user.current_group_id,
-                        :set_data => {:col1 => [widget.id], :col2 => [], :col3 => [], :last_group_db_updated => Time.now.utc})
+      FactoryBot.create(:miq_widget_set, :name                  => @user.userid.to_s,
+                                         :owner                 => @user.current_group,
+                                         :last_group_db_updated => Time.now.utc)
 
       controller.show
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -336,19 +332,18 @@ describe DashboardController do
 
     let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
 
-    let(:widget) { FactoryBot.create(:miq_widget) }
+
     let(:wset) do
       FactoryBot.create(
         :miq_widget_set,
         :name     => "Widgets",
         :userid   => user.userid,
         :owner    => group,
-        :set_data => {
-          :last_group_db_updated => Time.now.utc,
-          :col1 => [widget.id], :col2 => [], :col3 => []
-        }
+        :last_group_db_updated => Time.now.utc
       )
     end
+
+    let(:widget) { MiqWidget.find(wset.set_data[:col1].first) }
 
     before do
       EvmSpecHelper.local_miq_server
@@ -470,19 +465,15 @@ describe DashboardController do
     context 'changing tabs' do
       let(:group) { FactoryBot.create(:miq_group, :features => %w[everything]) }
       let(:user) { FactoryBot.create(:user_admin, :current_group => group, :miq_groups => [group]) }
-      let(:widget) { FactoryBot.create(:miq_widget) }
+
       let(:ws1) do
         FactoryBot.create(:miq_widget_set,
                           :name     => 'A',
-                          :set_data => {:col1 => [widget.id],
-                                        :col2 => [],
-                                        :col3 => []},
                           :owner    => group)
       end
       let(:ws2) do
         FactoryBot.create(:miq_widget_set,
                           :name     => 'B',
-                          :set_data => {:col1 => [widget.id], :col2 => [], :col3 => []},
                           :owner    => group)
       end
 
