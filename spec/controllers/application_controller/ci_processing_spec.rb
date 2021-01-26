@@ -595,17 +595,6 @@ describe ApplicationController do
     end.to raise_error ActionController::UrlGenerationError
   end
 
-  it "should set correct discovery title" do
-    res = controller.send(:set_discover_title, "hosts", "host")
-    expect(res).to eq("Hosts")
-
-    res = controller.send(:set_discover_title, "ems", "ems_infra")
-    expect(res).to eq("Infrastructure Providers")
-
-    res = controller.send(:set_discover_title, "ems", "ems_cloud")
-    expect(res).to eq("Cloud Providers")
-  end
-
   it "Certain actions should not be allowed for a MiqTemplate record" do
     template = FactoryBot.create(:template_vmware)
     controller.params = {:id => template.id}
@@ -694,29 +683,6 @@ describe ApplicationController do
         controller.instance_variable_set(:@reconfigitems, [vm, vm1])
         expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
       end
-    end
-  end
-
-  describe "#discover" do
-    it "checks that keys in @to remain set if there is an error after submit is pressed" do
-      from_first = "1"
-      from_second = "1"
-      from_third = "1"
-      controller.params = {:from_first                   => from_first,
-                           :from_second                  => from_second,
-                           :from_third                   => from_third,
-                           :from_fourth                  => "1",
-                           :to_fourth                    => "0",
-                           "discover_type_virtualcenter" => "1",
-                           "start"                       => "45"}
-      allow(controller).to receive(:drop_breadcrumb)
-      expect(controller).to receive(:render)
-      controller.send(:discover)
-      to = assigns(:to)
-      expect(to[:first]).to eq(from_first)
-      expect(to[:second]).to eq(from_second)
-      expect(to[:third]).to eq(from_third)
-      expect(controller.send(:flash_errors?)).to be_truthy
     end
   end
 

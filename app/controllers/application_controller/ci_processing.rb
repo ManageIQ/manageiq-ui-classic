@@ -21,7 +21,6 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::PolicySimulation
     include Mixins::Actions::VmActions::Transform
 
-    include Mixins::Actions::HostActions::Discover
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
 

@@ -16,14 +16,6 @@ class ApplicationHelper::Toolbar::EmsInfrasCenter < ApplicationHelper::Toolbar::
           :confirm      => N_("Refresh relationships and power states for all items related to the selected Infrastructure Providers?"),
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :ems_infra_discover,
-          'fa fa-search fa-lg',
-          t = N_('Discover Infrastructure Providers'),
-          t,
-          :url       => "/discover",
-          :url_parms => "?discover_type=ems",
-          :klass     => ApplicationHelper::Button::ButtonNewDiscover),
         separator,
         button(
           :ems_infra_new,
