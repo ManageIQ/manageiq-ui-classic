@@ -137,7 +137,7 @@ describe OpsController do
       end
 
       it "#does not allow duplicate names when adding" do
-        miq_server = EvmSpecHelper.local_miq_server
+        EvmSpecHelper.local_miq_server
         MiqRegion.seed
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)

@@ -2146,7 +2146,6 @@ class CatalogController < ApplicationController
     # Decide whether to show paging controls
     if @tagging
       presenter.hide(:toolbar).show(:paging_div)
-      action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
       presenter.show(:form_buttons_div).remove_paging
     elsif record_showing || @in_a_form || @sb[:buttons_node] ||
           (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))

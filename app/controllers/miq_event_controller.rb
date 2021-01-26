@@ -80,9 +80,7 @@ class MiqEventController < ApplicationController
 
   # replace_trees can be an array of tree symbols to be replaced
   def replace_right_cell(options = {})
-    nodetype, replace_trees, presenter = options.values_at(:nodetype, :replace_trees, :presenter)
-    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
-    replace_trees = Array(replace_trees)
+    nodetype, presenter = options.values_at(:nodetype, :presenter)
     @explorer = true
 
     c_tb = build_toolbar(center_toolbar_filename)
