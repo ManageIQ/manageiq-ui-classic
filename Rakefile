@@ -80,4 +80,7 @@ namespace :spec do
   end
 end
 
-task :default => :spec
+task :default do
+  test_suite = ENV["TEST_SUITE"] || "spec"
+  Rake::Task[test_suite].invoke
+end
