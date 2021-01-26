@@ -136,7 +136,7 @@ class CloudObjectStoreContainerController < ApplicationController
   def retrieve_provider_regions
     managers = ManageIQ::Providers::CloudManager.supported_subclasses.select(&:supports_regions?)
     managers.each_with_object({}) do |manager, provider_regions|
-      regions = manager.parent::Regions.all.sort_by { |r| r[:description] }
+      regions = manager.module_parent::Regions.all.sort_by { |r| r[:description] }
       provider_regions[manager.name] = regions.map { |region| [region[:description], region[:name]] }
     end
   end
