@@ -45,8 +45,8 @@ module ApplicationController::ReportDownloads
   def render_pdf_internal_rr(report, result)
     @options = report_print_options(report, result) # used by the layouts/print
     render(
-      :template => '/layouts/print/report',
-      :layout   => '/layouts/print',
+      :template => 'layouts/print/report',
+      :layout   => 'layouts/print',
       :locals   => {
         :report => report,
         :data   => result.html_rows.join
@@ -122,8 +122,8 @@ module ApplicationController::ReportDownloads
 
     @options = report_print_options(result.report, result) # used by the layouts/print
     render(
-      :template => '/layouts/print/report',
-      :layout   => '/layouts/print',
+      :template => 'layouts/print/report',
+      :layout   => 'layouts/print',
       :locals   => {
         :report => result.report,
         :data   => result.html_rows.join
@@ -231,7 +231,7 @@ module ApplicationController::ReportDownloads
       end
 
       disable_client_cache
-      render :template => '/layouts/print/textual_summary', :layout => '/layouts/print'
+      render :template => 'layouts/print/textual_summary', :layout => 'layouts/print'
     end
   end
 end

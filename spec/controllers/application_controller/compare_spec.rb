@@ -87,8 +87,8 @@ describe ApplicationController do
 
       expect(controller).to receive(:render).with(
         hash_including(
-          :template => '/layouts/print/report',
-          :layout   => '/layouts/print',
+          :template => 'layouts/print/report',
+          :layout   => 'layouts/print',
           :locals   => hash_including(
             :report # the report does not match due to a ".dup" call in the controller.
           )
