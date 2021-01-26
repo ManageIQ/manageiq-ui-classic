@@ -1053,7 +1053,6 @@ Rails.application.routes.draw do
         widget_report_data
       ),
       :post => %w(
-        dialog_definition
         external_authenticate
         kerberos_authenticate
         initiate_saml_login

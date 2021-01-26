@@ -20,26 +20,6 @@ class DashboardController < ApplicationController
     redirect_to(:action => 'show')
   end
 
-  def dialog_definition
-    name = params[:name].gsub(/[^a-z_]/, '')
-    definition = load_dialog_definition(name, params[:class])
-    if definition.present?
-      render :json => { :dialog => definition }
-    else
-      head :not_found
-    end
-  end
-
-  def load_dialog_definition(name, klass)
-    plugin = Vmdb::Plugins.find { |plug| plug.name.chomp('::Engine') == klass }
-    if plugin.present?
-      name = plugin.root.join('dialogs', "#{name}.json")
-      return File.read(name) if File.exist?(name)
-    end
-    nil
-  end
-  private :load_dialog_definition
-
   def current_hostname
     return URI.parse(request.env['HTTP_X_FORWARDED_FOR']).hostname if request.env['HTTP_X_FORWARDED_FOR']
 

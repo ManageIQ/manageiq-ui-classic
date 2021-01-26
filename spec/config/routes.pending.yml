@@ -409,7 +409,6 @@ DashboardController:
 - authenticate
 - change_group
 - csp_report
-- dialog_definition
 - external_authenticate
 - index
 - initiate_oidc_login
