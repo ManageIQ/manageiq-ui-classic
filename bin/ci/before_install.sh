@@ -1,4 +1,3 @@
-# not spec, and not cross repo
 if [ "$TEST_SUITE" = "spec:javascript" -o "$TEST_SUITE" = "spec:jest" -o "$TEST_SUITE" = "spec:compile" ]; then
   # Check if `nvm` is available as a command or bash function
   type nvm >/dev/null 2>&1
