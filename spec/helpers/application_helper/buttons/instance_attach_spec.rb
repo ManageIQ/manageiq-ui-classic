@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::InstanceAttach do
       view_context = setup_view_context_with_sandbox({})
 
       tenant = FactoryBot.create(:cloud_tenant_openstack)
-      volume = FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'available')
+      FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'available')
       record = FactoryBot.create(:vm_openstack, :cloud_tenant => tenant)
       button = described_class.new(view_context, {}, {"record" => record}, {})
       expect(button.disabled?).to be false
@@ -13,7 +13,7 @@ describe ApplicationHelper::Button::InstanceAttach do
     it "when there are no available volumes then the button is disabled" do
       view_context = setup_view_context_with_sandbox({})
       tenant = FactoryBot.create(:cloud_tenant_openstack)
-      volume = FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'in-use')
+      FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'in-use')
       record = FactoryBot.create(:vm_openstack, :cloud_tenant => tenant)
       button = described_class.new(view_context, {}, {"record" => record}, {})
       expect(button.disabled?).to be true
@@ -24,7 +24,7 @@ describe ApplicationHelper::Button::InstanceAttach do
     it "when there are no available volumes then the button has the error in the title" do
       view_context = setup_view_context_with_sandbox({})
       tenant = FactoryBot.create(:cloud_tenant_openstack)
-      volume = FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'in-use')
+      FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'in-use')
       record = FactoryBot.create(:vm_openstack, :cloud_tenant => tenant)
       button = described_class.new(view_context, {}, {"record" => record}, {})
       button.calculate_properties
@@ -34,7 +34,7 @@ describe ApplicationHelper::Button::InstanceAttach do
     it "when there are available volumes, the button has no error in the title" do
       view_context = setup_view_context_with_sandbox({})
       tenant = FactoryBot.create(:cloud_tenant_openstack)
-      volume = FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'available')
+      FactoryBot.create(:cloud_volume_openstack, :cloud_tenant => tenant, :status => 'available')
       record = FactoryBot.create(:vm_openstack, :cloud_tenant => tenant)
       button = described_class.new(view_context, {}, {"record" => record}, {})
       button.calculate_properties
