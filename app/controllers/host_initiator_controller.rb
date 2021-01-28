@@ -47,19 +47,11 @@ class HostInitiatorController < ApplicationController
     }
   end
 
-  def specific_buttons(pressed)
-    case pressed
-    when 'host_initiator_new'
-      javascript_redirect(:action => 'new')
-    else
-      return false
-    end
-    true
-  end
-
   menu_section " host_initiator"
 
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   feature_for_actions "#{controller_name}_show_list", :download_data
   feature_for_actions "#{controller_name}_show", :download_summary_pdf
+
+  toolbar :host_initiator, :host_initiators
 end
