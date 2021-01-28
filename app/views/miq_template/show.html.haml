@@ -5,8 +5,6 @@
     = render :partial => "vm_common/right_size"
   - elsif @reconfigure
     = render :partial => "vm_common/reconfigure"
-  - elsif request.parameters[:action] == "provision"
-    = render :partial => "vm_common/provision"
   - else
     - case @showtype
     - when "details"
