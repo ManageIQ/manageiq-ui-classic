@@ -24,8 +24,6 @@
                   = render :partial => "/shared/views/prov_dialog", :locals => partial_locals
                 - elsif wf.kind_of?(VmMigrateWorkflow)
                   = render :partial => "/miq_request/prov_vm_migrate_dialog", :locals => partial_locals
-                - else
-                  = render :partial => "/miq_request/prov_host_dialog", :locals => partial_locals
 
 :javascript
   miq_tabs_init('#prov_tabs', '/miq_request/prov_field_changed', {edit_mode: 'true'});

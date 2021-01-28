@@ -2,9 +2,7 @@
   - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
   - observe = {:url => url}.to_json
 #alert_details_div
-  - if @assign
-    = render :partial => 'alert_assign'
-  - elsif @alert
+  - if @alert
     #alert_info_div
       = render :partial => "layouts/flash_msg"
       %h3= _('Info')

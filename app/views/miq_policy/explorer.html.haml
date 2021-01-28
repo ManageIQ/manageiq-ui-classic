@@ -5,8 +5,6 @@
   - case @nodetype
   - when "root"
     - case x_active_tree
-    - when :policy_profile_tree
-      = render :partial => "profile_list"
     - when :policy_tree
       = render :partial => "policy_folders"
     - when :event_tree
@@ -22,9 +20,7 @@
   - when "pp"
     = render :partial => "profile_details"
   - when "xx"
-    - if @profiles
-      = render :partial => "profile_list"
-    - elsif @policies || (@view && @sb[:tree_typ] == "policies")
+    - if @policies || (@view && @sb[:tree_typ] == "policies")
       = render :partial => "policy_list"
     - elsif @conditions
       = render :partial => "condition_list"
