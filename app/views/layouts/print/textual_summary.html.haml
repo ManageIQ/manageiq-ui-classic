@@ -1,9 +1,6 @@
-- controller = %w(miq_template vm_infra vm_or_template vm).include?(controller_name) ? "vm_common" : controller_name
-- if @record.kind_of?(ConfigurationProfile)
-  = render :partial => "#{controller}/main_configuration_profile"
-- elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
-  = render :partial => "#{controller}/main_inventory_group"
+- if @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
+  = render :partial => "automation_manager/main_inventory_group"
 - elsif @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
-  = render :partial => "#{controller}/configuration_script"
+  = render :partial => "automation_manager/configuration_script"
 - else
   = render :partial => "layouts/textual_groups_generic"
