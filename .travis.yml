@@ -32,11 +32,10 @@ matrix:
   - rvm: 2.5.8
     env: TEST_SUITE=spec:debride
 bundler_args: "--no-deployment"
-before_install: source tools/ci/before_install.sh
+before_install: source bin/ci/before_install.sh
 install: bin/setup
-before_script: source tools/ci/before_script.sh
-script: bundle exec rake $TEST_SUITE
-after_script: source tools/ci/after_script.sh
+before_script: source bin/ci/before_script.sh
+after_script: source bin/ci/after_script.sh
 notifications:
   webhooks:
     urls:

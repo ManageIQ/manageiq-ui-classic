@@ -65,7 +65,7 @@ namespace :spec do
 
   desc "Run Debride"
   task :debride do
-    system('bash tools/ci/dead_method_check.sh')
+    system('bash bin/ci/dead_method_check.sh')
     exit 0
   end
 
@@ -80,4 +80,4 @@ namespace :spec do
   end
 end
 
-task :default => :spec
+task :default => ENV["TEST_SUITE"] || :spec
