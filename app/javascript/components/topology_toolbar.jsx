@@ -43,12 +43,10 @@ const TopologyToolbar = () => (
             <button type="button" className="clear" aria-hidden="true" onClick={resetSearchClick}>
               <span className="pficon pficon-close" />
             </button>
+            <button type="button" className="btn btn-default search-topology-button" onClick={searchClick}>
+              <span className="fa fa-search" />
+            </button>
           </div>
-        </div>
-        <div className="form-group search-button">
-          <button type="button" className="btn btn-default search-topology-button" onClick={searchClick}>
-            <span className="fa fa-search" />
-          </button>
         </div>
       </form>
     </div>
