@@ -2313,9 +2313,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         protect
         show
         show_list
@@ -2347,9 +2345,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         protect
         show
         show_list

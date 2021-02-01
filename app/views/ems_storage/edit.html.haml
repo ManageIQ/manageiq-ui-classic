@@ -1,7 +1,0 @@
-#main_div
-  -if @ems.supports?(:block_storage)
-    :javascript
-      window.location.href = "#{url_for_only_path(:controller => 'ems_block_storage', :action => 'edit', :id => params[:id])}"
-  -else
-    = render :partial => "edit_storage"
-
