@@ -956,7 +956,7 @@ module ReportController::Reports::Editor
         options[:tenant_id] = @edit[:new][:cb_tenant_id]
       elsif @edit[:new][:cb_show_typ] == "tag"
         if @edit[:new][:cb_tag_cat] && @edit[:new][:cb_tag_value]
-          options[:tag] = "/managed/#{@edit[:new][:cb_tag_cat]}/#{@edit[:new][:cb_tag_value]}"
+          options[:tag] = parse_tag_categories(@edit[:new][:cb_tag_cat], @edit[:new][:cb_tag_value])
         end
       elsif @edit[:new][:cb_show_typ] == "entity"
         options[:provider_id] = @edit[:new][:cb_provider_id]
@@ -1141,6 +1141,32 @@ module ReportController::Reports::Editor
     end
   end
 
+  def tag_category_from(tag_or_tags)
+    case tag_or_tags
+    when String
+      tag_or_tags
+    when Array
+      tag_or_tags.first
+    else
+      raise "Invalid tag category selected."
+    end.split("/")[-2]
+  end
+
+  def tag_values_from(tag_or_tags)
+    case tag_or_tags
+    when String
+      tag_or_tags.split("/")[-1]
+    when Array
+      tag_or_tags.map { |tag| tag.split("/")[-1] }
+    else
+      raise "Invalid tag value selected."
+    end
+  end
+
+  def parse_tag_categories(category, tag_values)
+    tag_values.split(",").map { |tag_value| "/managed/#{category}/#{tag_value}" }
+  end
+
   # Set form variables for edit
   def set_form_vars
     @edit = {}
@@ -1232,8 +1258,8 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_tenant_id] = options[:tenant_id]
       elsif options.key?(:tag) # Get the tag options
         @edit[:new][:cb_show_typ] = "tag"
-        @edit[:new][:cb_tag_cat] = options[:tag].split("/")[-2]
-        @edit[:new][:cb_tag_value] = options[:tag].split("/")[-1]
+        @edit[:new][:cb_tag_cat] = tag_category_from(options[:tag])
+        @edit[:new][:cb_tag_value] = tag_values_from(options[:tag])
         @edit[:cb_tags] = entries_hash(@edit[:new][:cb_tag_cat])
       elsif options.key?(:entity_id)
         @edit[:new][:cb_show_typ] = "entity"
