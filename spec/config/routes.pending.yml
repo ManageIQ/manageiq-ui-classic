@@ -817,7 +817,6 @@ MiqAlertSetController:
 - x_show
 MiqEventController:
 - index
-- report_data
 - tree_autoload
 - tree_select
 - x_history
