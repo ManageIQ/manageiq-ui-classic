@@ -109,7 +109,9 @@
             - opts = [["<#{_('Choose a Value')}>", nil]] + Array(@edit[:cb_tags].invert).sort_by { |a| a.first.downcase }
             = select_tag("cb_tag_value",
               options_for_select(opts, @edit[:new][:cb_tag_value]),
-              :class                 => "selectpicker")
+              :class                 => "selectpicker",
+              "multiple"             => true,
+              "data-live-search"     => true)
             :javascript
               miqInitSelectPicker();
               miqSelectPickerEvent('cb_tag_value', '#{url}', {beforeSend: true, complete: true});
