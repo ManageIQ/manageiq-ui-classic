@@ -30,6 +30,8 @@ class MiqEventController < ApplicationController
   end
 
   def show
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
+    @lastaction = "show"
     @record = MiqEventDefinition.find_by(:id => params[:id])
   end
 
@@ -53,7 +55,7 @@ class MiqEventController < ApplicationController
     {
       :breadcrumbs  => [
         {:title => _("Control")},
-        {:title => _('Events')},
+        {:title => _('Events'), :url => controller_url},
       ].compact,
       :record_title => :description,
     }
