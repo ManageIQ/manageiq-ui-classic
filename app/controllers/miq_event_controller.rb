@@ -5,6 +5,7 @@ class MiqEventController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::PolicyMixin
@@ -14,25 +15,21 @@ class MiqEventController < ApplicationController
   end
 
   def show_list
-    if params[:ppsetting]                                             # User selected new per page value
-      @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings.store_path(:perpage, PERPAGE_TYPES['list'], @items_per_page) # Set the per page setting for this gtl type
-    end
-    @sortcol = session[:request_sortcol].nil? ? 0 : session[:request_sortcol].to_i
-    @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @no_checkboxes = true # Don't show checkboxes, read_only
-    # @view, @pages = get_view(MiqEvent, {:filter => MiqPolicy.all_policy_events_filter}, true)
-    @view, @pages = get_view(MiqEvent, :filter => MiqPolicy.all_policy_events_filter)
-    @current_page = @pages[:current] unless @pages.nil? # save the current page number
-    session[:request_sortcol] = @sortcol
-    session[:request_sortdir] = @sortdir
-    {:view => @view, :pages => @pages}
+    process_show_list(:filter => MiqPolicy.all_policy_events_filter)
   end
 
-  def show
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-    @lastaction = "show"
-    @record = MiqEventDefinition.find_by(:id => params[:id])
+  def init_show
+    @record = identify_record(params[:id], MiqEventDefinition)
+    return false if record_no_longer_exists?(@record)
+
+    @lastaction = 'show'
+    @gtl_url = gtl_url
+
+    unless pagination_or_gtl_request?
+      @display = params[:display] || default_display
+    end
+    true
   end
 
   private
