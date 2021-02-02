@@ -238,17 +238,6 @@ class ConditionController < ApplicationController
     session[:condition_current_page] = @current_page
   end
 
-  def features
-    [
-      {
-        :name     => :condition,
-        :title    => _("Conditions"),
-        :role     => "condition",
-        :role_any => true
-      },
-    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
-  end
-
   def breadcrumbs_options
     {
       :breadcrumbs  => [
