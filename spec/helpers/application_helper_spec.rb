@@ -205,6 +205,9 @@ describe ApplicationHelper do
       VmCloud            => 'instances',
       Service            => 'services',
       OrchestrationStack => 'orchestration_stacks',
+      MiqServer          => 'servers',
+      Zone               => 'zones',
+      MiqRegion          => 'regions',
     }.each do |klass, path|
       context "collection is #{klass}" do
         it 'returns with a valid API endpoint' do
@@ -220,6 +223,9 @@ describe ApplicationHelper do
       :vm_cloud                  => 'instances',
       :service                   => 'services',
       :orchestration_stack_cloud => 'orchestration_stacks',
+      :miq_server                => 'servers',
+      :zone                      => 'zones',
+      :miq_region                => 'regions',
     }.each do |factory, path|
       context "resource is #{factory}" do
         it 'returns with a valida API endpoint' do
