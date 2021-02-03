@@ -131,10 +131,6 @@ module OpsController::Settings::Common
             page << javascript_show("amazon_verify_button_off")
           end
         end
-      when 'settings_workers'
-        if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
-          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        end
       end
 
       page << javascript_for_miq_button_visibility(@changed || @login_text_changed)
@@ -409,7 +405,7 @@ module OpsController::Settings::Common
       save_advanced_settings(resource)
       return
     end
-    if !%w[settings_advanced settings_workers].include?(@sb[:active_tab]) &&
+    if !%w[settings_advanced].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
@@ -461,47 +457,11 @@ module OpsController::Settings::Common
         get_node_info(x_node)
         replace_right_cell(:nodetype => @nodetype)
       end
-    elsif @sb[:active_tab] == "settings_workers" &&
-          x_node.split("-").first != "z"
-      unless @flash_array.nil?
-        session[:changed] = @changed = true
-        javascript_flash
-        return
-      end
-      @update.each_key do |category|
-        @update[category] = @edit[:new][category].dup
-      end
-      config_valid, config_errors = Vmdb::Settings.validate(@update)
-      if config_valid
-        server = MiqServer.find(@sb[:selected_server_id])
-        server.add_settings_for_resource(@update)
-
-        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
-        add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
-                    {:name => server.name, :server_id => @sb[:selected_server_id], :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
-
-        if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update[:server][:company]
-          session[:vmdb_name] = @update[:server][:name]
-        end
-        settings_set_form_vars_workers
-        @changed = false
-      else
-        config_errors.each do |field, msg|
-          add_flash("#{field.titleize}: #{msg}", :error)
-        end
-        @changed = true
-      end
-      replace_right_cell(:nodetype => @nodetype)
     else
       @changed = false
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
     end
-  end
-
-  private def set_worker_setting(config, klass, *path, value)
-    config.store_path(klass.config_settings_path + path, value)
   end
 
   def settings_update_reset
@@ -770,7 +730,7 @@ module OpsController::Settings::Common
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
 
       @prev_selected_svr = session[:edit][:new][:selected_server]
-    elsif %w[settings_server settings_authentication settings_workers
+    elsif %w[settings_server settings_authentication
              settings_custom_logos settings_advanced].include?(@sb[:active_tab])
       return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
@@ -819,16 +779,6 @@ module OpsController::Settings::Common
     @sb[:new_amazon_role] = @edit[:current][:authentication][:amazon_role]
     @sb[:new_httpd_role] = @edit[:current][:authentication][:httpd_role]
     @in_a_form = true
-  end
-
-  def settings_set_form_vars_workers
-    session[:log_depot_default_verify_status] = true
-    @in_a_form = true
-  end
-
-  private def get_worker_setting(config, klass, *setting)
-    settings = klass.worker_settings(:config => config, :raw => true)
-    setting.empty? ? settings : settings.fetch_path(setting).to_i_with_method
   end
 
   def settings_set_form_vars_logos
@@ -882,8 +832,6 @@ module OpsController::Settings::Common
       settings_set_form_vars_authentication
     when 'settings_smartproxy_affinity' # SmartProxy Affinity tab
       smartproxy_affinity_set_form_vars
-    when 'settings_workers' # Worker Settings tab
-      settings_set_form_vars_workers
     when 'settings_custom_logos' # Custom Logo tab
       settings_set_form_vars_logos
     when "settings_advanced" # Advanced yaml editor
