@@ -711,7 +711,7 @@ class MiqAlertController < ApplicationController
     {
       :breadcrumbs  => [
         {:title => _("Control")},
-        {:title => _('Alert'), :url => controller_url},
+        {:title => _('Alerts'), :url => controller_url},
       ].compact,
       :record_title => :description,
     }
