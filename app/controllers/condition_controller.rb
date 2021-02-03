@@ -431,7 +431,7 @@ class ConditionController < ApplicationController
   end
 
   def condition_get_all_folders
-    @folders = MiqPolicyController::UI_FOLDERS.collect(&:name)
+    @folders = ConditionController::UI_FOLDERS.collect(&:name)
     @right_cell_text = _("All Conditions")
     @right_cell_div = "condition_folders"
   end

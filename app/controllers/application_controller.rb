@@ -1216,7 +1216,7 @@ class ApplicationController < ActionController::Base
     view.sortby = [view.col_order[@sortcol]]      # Set sortby array in the view
     view.ascending = @sortdir.to_s.downcase != "desc"
 
-    @items_per_page = controller_name.downcase == "miq_policy" ? ONE_MILLION : get_view_pages_perpage(dbname)
+    @items_per_page = get_view_pages_perpage(dbname)
     @items_per_page = ONE_MILLION if db_sym.to_s == 'vm' && controller_name == 'service'
 
     @current_page = options[:page] || (params[:page].to_i < 1 ? 1 : params[:page].to_i)
