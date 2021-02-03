@@ -57,67 +57,71 @@ class ConditionController < ApplicationController
     when "reset", nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
       condition_build_edit_screen
-      add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @edit[:current][:expression] && @edit[:current][:expression].key?('RUBY')
-      session[:flash_msgs] = @flash_array
-      javascript_redirect(:action        => 'edit',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
-      return
-    end
-
-    # Load @edit/vars for other buttons
-    id = params[:id] || "new"
-    return unless load_edit("condition_edit__#{params[:button] == "add" ? "new" : id}")
-
-    @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
-
-    case params[:button]
-    when "save", "add"
-      assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
-      if @edit[:new][:towhat].blank?
-        add_flash(_("Applies to is required"), :error)
-      end
-      adding = @condition.id.blank?
-      condition = @condition # Get new or existing record
-      condition.description = @edit[:new][:description]
-      condition.notes = @edit[:new][:notes]
-      condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
-      exp_remove_tokens(@edit[:new][:expression])
-      condition.expression = MiqExpression.new(@edit[:new][:expression])
-      exp_remove_tokens(@edit[:new][:applies_to_exp])
-      condition.applies_to_exp = @edit[:new][:applies_to_exp]["???"] ? nil : MiqExpression.new(@edit[:new][:applies_to_exp])
-      if condition.expression.kind_of?(MiqExpression) && condition.expression.exp["???"]
-        add_flash(_("A valid expression must be present"), :error)
-      end
-      if condition.valid? && !@flash_array && condition.save
-        AuditEvent.success(build_saved_audit(condition, @edit))
-        if params[:button] == "save"
-          flash_msg = _("Condition \"%{name}\" was saved") % {:name => @edit[:new][:description]}
-        else
-          flash_msg = _("Condition \"%{name}\" was added") % {:name => @edit[:new][:description]}
-        end
-        @edit = session[:edit] = nil # clean out the saved info
-        session[:changed] = @changed = false
-        javascript_redirect(:action => params[:button] == "add" ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      if flash_errors?
+        flash_to_session
+        redirect_to(:action => 'show_list')
       else
-        condition.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
+        add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @edit[:current][:expression] && @edit[:current][:expression].key?('RUBY')
+        session[:flash_msgs] = @flash_array
+        javascript_redirect(:action        => 'edit',
+                            :id            => params[:id],
+                            :flash_msg     => _("All changes have been reset"),
+                            :flash_warning => true) if params[:button] == "reset"
       end
-    when "expression", "applies_to_exp"
-      session[:changed] = (@edit[:new] != @edit[:current])
-      @expkey = params[:button].to_sym
-      @edit[:expression_table] = exp_build_table_or_nil(@edit[:new][:expression])
-      @edit[:scope_table] = exp_build_table_or_nil(@edit[:new][:applies_to_exp])
-      @changed = (@edit[:new] != @edit[:current])
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("form_div", :partial => "form") unless @flash_errors
-        page << javascript_for_miq_button_visibility(@changed)
-        page << "miqSparkle(false);"
+    else
+      # Load @edit/vars for other buttons
+      id = params[:id] || "new"
+      return unless load_edit("condition_edit__#{params[:button] == "add" ? "new" : id}")
+
+      @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
+
+      case params[:button]
+      when "save", "add"
+        assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
+        if @edit[:new][:towhat].blank?
+          add_flash(_("Applies to is required"), :error)
+        end
+        adding = @condition.id.blank?
+        condition = @condition # Get new or existing record
+        condition.description = @edit[:new][:description]
+        condition.notes = @edit[:new][:notes]
+        condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
+        exp_remove_tokens(@edit[:new][:expression])
+        condition.expression = MiqExpression.new(@edit[:new][:expression])
+        exp_remove_tokens(@edit[:new][:applies_to_exp])
+        condition.applies_to_exp = @edit[:new][:applies_to_exp]["???"] ? nil : MiqExpression.new(@edit[:new][:applies_to_exp])
+        if condition.expression.kind_of?(MiqExpression) && condition.expression.exp["???"]
+          add_flash(_("A valid expression must be present"), :error)
+        end
+        if condition.valid? && !@flash_array && condition.save
+          AuditEvent.success(build_saved_audit(condition, @edit))
+          if params[:button] == "save"
+            flash_msg = _("Condition \"%{name}\" was saved") % {:name => @edit[:new][:description]}
+          else
+            flash_msg = _("Condition \"%{name}\" was added") % {:name => @edit[:new][:description]}
+          end
+          @edit = session[:edit] = nil # clean out the saved info
+          session[:changed] = @changed = false
+          javascript_redirect(:action => params[:button] == "add" ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
+        else
+          condition.errors.each do |field, msg|
+            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          end
+          javascript_flash
+        end
+      when "expression", "applies_to_exp"
+        session[:changed] = (@edit[:new] != @edit[:current])
+        @expkey = params[:button].to_sym
+        @edit[:expression_table] = exp_build_table_or_nil(@edit[:new][:expression])
+        @edit[:scope_table] = exp_build_table_or_nil(@edit[:new][:applies_to_exp])
+        @changed = (@edit[:new] != @edit[:current])
+        render :update do |page|
+          page << javascript_prologue
+          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page.replace_html("form_div", :partial => "form") unless @flash_errors
+          page << javascript_for_miq_button_visibility(@changed)
+          page << "miqSparkle(false);"
+        end
       end
     end
   end
@@ -169,6 +173,12 @@ class ConditionController < ApplicationController
     else
       @condition = params[:id] && params[:typ] != "new" ? Condition.find(params[:id]) : Condition.new # Get existing or new record
     end
+
+    if @condition.read_only
+      add_flash(_("Read only condition can not be edited"), :error)
+      return
+    end
+
     @edit[:key] = "condition_edit__#{@condition.id || "new"}"
     @edit[:rec_id] = @condition.id || nil
 
