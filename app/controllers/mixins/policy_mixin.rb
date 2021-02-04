@@ -9,6 +9,9 @@ module Mixins
       render :update do |page|
         page << javascript_prologue
         if @edit
+          if params[:towhat]
+            page.replace("exp_atom_editor_div", :partial => "layouts/exp_atom/editor")
+          end
           if @refresh_inventory
             page.replace("action_options_div", :partial => "action_options")
           end
@@ -154,7 +157,7 @@ module Mixins
         return
       end
 
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         params[members_chosen].each do |mc|
           idx = nil
@@ -183,7 +186,7 @@ module Mixins
       end
 
       mems = @edit[choices].invert
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         params[choices_chosen].each do |mc|
           # Add selection to chosen members array, default to synch = true
@@ -205,7 +208,7 @@ module Mixins
         return
       end
 
-      if @edit[:event_id]
+      if @edit[:new][:event_id]
         # Handle Actions for an Event
         @edit[:new][members].each do |m|
           # Put description/id of each chosen member back into choices hash

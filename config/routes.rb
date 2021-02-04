@@ -2073,22 +2073,30 @@ Rails.application.routes.draw do
 
     :miq_policy               => {
       :get  => %w(
-        explorer
+        copy
+        edit
+        miq_event_edit
+        miq_policy_edit_conditions
+        miq_policy_edit_events
+        new
+        show
+        show_list
       ),
       :post => %w(
-        button
+        edit
+        event_build_action_values
         miq_event_edit
-        miq_event_field_changed
         miq_policy_edit
+        miq_policy_edit_conditions
+        miq_policy_edit_events
         policy_field_changed
         quick_search
         reload
-        tree_autoload
-        tree_select
+        show
+        show_list
       ) +
          adv_search_post +
-         exp_post +
-         x_post
+         exp_post
     },
 
     :miq_policy_log   => {
@@ -2313,9 +2321,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         protect
         show
         show_list
@@ -2347,9 +2353,7 @@ Rails.application.routes.draw do
         dialog_load
         download_data
         download_summary_pdf
-        edit
         index
-        new
         protect
         show
         show_list

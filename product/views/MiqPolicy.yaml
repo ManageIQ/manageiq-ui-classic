@@ -21,6 +21,8 @@ db: MiqPolicy
 cols:
 - description
 - active
+- towhat
+- mode
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -29,11 +31,15 @@ include:
 col_order:
 - description
 - active
+- towhat
+- mode
 
 # Column titles, in order
 headers:
 - Description
 - Active
+- Type
+- Mode
 
 # Condition(s) string for the SQL query
 conditions:
