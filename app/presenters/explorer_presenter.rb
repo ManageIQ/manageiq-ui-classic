@@ -191,7 +191,7 @@ class ExplorerPresenter
     data = {:explorer => 'flash'}
     data[:replacePartials] = @options[:replace_partials]
     data[:spinnerOff] = true if @options[:spinner_off]
-    data[:scrollTop] = true if @options[:scroll_top]
+    data[:scrollTop] = true if @options[:scroll_top] || @flash_array.present?
     data[:focus] = @options[:focus] if @options[:focus]
     data[:activateNode] = @options[:activate_node] if @options[:activate_node]
     data
