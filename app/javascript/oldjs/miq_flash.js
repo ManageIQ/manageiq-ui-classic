@@ -66,6 +66,9 @@ window.add_flash = function(msg, level, options) {
   if ( options.long_alert && !checkElipsis(alertDiv) ) {
     detailsLink.hide();
   }
+
+  // any new flash message scrolls to top
+  miqScrollTop();
 }
 
 window.clearFlash = function() {
