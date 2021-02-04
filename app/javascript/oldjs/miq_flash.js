@@ -71,6 +71,10 @@ window.add_flash = function(msg, level, options) {
   miqScrollTop();
 }
 
+window.miqScrollTop = function() {
+  $('#main_div, #main-content').scrollTop(0);
+};
+
 window.clearFlash = function() {
   $('#flash_msg_div').empty();
 }
