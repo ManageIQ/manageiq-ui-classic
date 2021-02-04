@@ -800,12 +800,14 @@ class ReportController < ApplicationController
       session[:changed] = @sb[:menu_default] ? true : (@edit[:new] != @edit[:current])
     elsif nodetype == "menu_edit_reports"
       presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
+      presenter.scroll_top if @flash_array.present?
       presenter.show(:menu_div1)
       presenter[:element_updates][:menu_roles_treebox] = {:class => 'disabled', :add => true}
       presenter.replace(:menu_div2, r[:partial => "menu_form2"])
       presenter.hide(:menu_div1, :menu_div3).show(:menu_div2)
     elsif nodetype == "menu_commit_reports"
       presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
+      presenter.scroll_top if @flash_array.present?
       if @refresh_div
         presenter.hide(:flash_msg_div)
         presenter.replace(@refresh_div.to_s, r[:partial => @refresh_partial, :locals => {:action_url => "menu_update"}])
@@ -828,6 +830,7 @@ class ReportController < ApplicationController
       # Hide flash_msg if it's being shown from New folder add event
       if flash_errors?
         presenter.replace(:flash_msg_div, r[:partial => 'layouts/flash_msg'])
+        presenter.scroll_top if @flash_array.present?
       else
         presenter.hide(:flash_msg_div)
       end
@@ -842,6 +845,7 @@ class ReportController < ApplicationController
       @sb[:tree_err] = false
     elsif %w[menu_discard_folders menu_discard_reports].include?(nodetype)
       presenter.replace(:flash_msg_div, r[:partial => 'layouts/flash_msg'])
+      presenter.scroll_top if @flash_array.present?
       presenter.replace(:menu_div1, r[:partial => 'menu_form1', :locals => {:folders => @grid_folders}])
       presenter.hide(:menu_div1, :menu_div2).show(:menu_div3)
       presenter[:element_updates][:menu_roles_treebox] = {:class => 'disabled', :remove => true}

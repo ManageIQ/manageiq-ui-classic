@@ -28,6 +28,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html('settings_co_categories', :partial => 'settings_co_categories_tab')
       end
     else
@@ -168,6 +169,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => "new", :edit => true})
         page << javascript_focus('entry_name')
         page << "$('#entry_name').select();"
@@ -178,6 +180,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => entry, :edit => true})
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"

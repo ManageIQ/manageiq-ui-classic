@@ -217,6 +217,7 @@ module OpsController::Diagnostics
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace_html("diagnostics_cu_repair", :partial => "diagnostics_cu_repair_tab")
       page << "ManageIQ.calendar.calDateFrom = null;"
       page << "ManageIQ.calendar.calDateTo = new Date();"
@@ -256,6 +257,7 @@ module OpsController::Diagnostics
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace_html("diagnostics_cu_repair", :partial => "diagnostics_cu_repair_tab")
       page << "ManageIQ.calendar.calDateFrom = null;"
       page << "ManageIQ.calendar.calDateTo = new Date();"
@@ -322,6 +324,7 @@ module OpsController::Diagnostics
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("diagnostics_database", :partial => "diagnostics_database_tab")
         page << "miqSparkle(false);"
       end
@@ -656,6 +659,7 @@ module OpsController::Diagnostics
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("selected_#{@sb[:active_tab].split('_').last}_div", :partial => "selected")
       #   Replace tree
       if params[:pressed] == "delete_server"

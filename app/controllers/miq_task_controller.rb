@@ -214,6 +214,7 @@ class MiqTaskController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page << "miqSetButtons(0, 'center_tb');" # Reset the center toolbar
       page.replace("main_div", :partial => "layouts/tasks")
       page << "miqSparkle(false);"

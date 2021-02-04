@@ -550,6 +550,7 @@ class DashboardController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page << javascript_show("flash_div")
         page << "miqAjaxAuthFail();"
         page << "miqSparkle(false);"

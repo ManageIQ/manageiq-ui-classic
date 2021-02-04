@@ -52,6 +52,8 @@ module ApplicationController::Filter
         page << javascript_prologue
         # Don't need to replace flash div as it's included throught
         # exp_editor. That is rendered either throught adv_search_body or directly.
+        page << "miqScrollTop();" if @flash_array.present?
+
         if !@edit[:adv_search_open].nil?
           page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:force => true})
           page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:force => true})
@@ -100,6 +102,7 @@ module ApplicationController::Filter
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("exp_editor_div", :partial => "layouts/exp_editor")
         page << "$('#exp_#{token}').css({'text-decoration': 'underline'})"
         page << javascript_hide("exp_buttons_off")
@@ -139,6 +142,7 @@ module ApplicationController::Filter
       render :update do |page|
         page << javascript_prologue
         page.replace("exp_editor_flash", :partial => "layouts/flash_msg", :locals => {:flash_div_id => 'exp_editor_flash'})
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("exp_atom_editor_div", :partial => "layouts/exp_atom/editor")
 
         page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
@@ -315,6 +319,7 @@ module ApplicationController::Filter
         page << javascript_prologue
         page.replace(:listnav_div, :partial => "layouts/listnav")
         page.replace(:flash_msg_div, :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page << "miqSparkleOff();"
       end
     else

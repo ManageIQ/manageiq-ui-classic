@@ -521,6 +521,7 @@ module OpsController::OpsRbac
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("ldap_user_div", :partial => "ldap_auth_users")
       end
     else
@@ -786,6 +787,7 @@ module OpsController::OpsRbac
       if %w[up down].include?(params[:button])
         if @refresh_div
           page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
+          page << "miqScrollTop();" if @flash_array.present?
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
       else

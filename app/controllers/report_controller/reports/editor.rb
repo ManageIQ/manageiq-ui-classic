@@ -155,6 +155,7 @@ module ReportController::Reports::Editor
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
       page.replace("chart_sample_div", :partial => "form_chart_sample") if @refresh_div == "chart_div"
       page.replace_html("calc_#{@calc_div}_div", :text => @calc_val) if @calc_div

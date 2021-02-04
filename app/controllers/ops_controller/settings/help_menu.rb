@@ -31,6 +31,7 @@ module OpsController::Settings::HelpMenu
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(!success)
       page.replace(:flash_msg_div, :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
     end
   end
 
