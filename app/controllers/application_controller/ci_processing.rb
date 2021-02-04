@@ -393,8 +393,7 @@ module ApplicationController::CiProcessing
     if records.any? { |record| !record.has_compliance_policies? }
       javascript_flash(
         :text       => _('No Compliance Policies assigned to one or more of the selected items'),
-        :severity   => :error,
-        :scroll_top => true
+        :severity   => :error
       )
       return
     end
@@ -602,8 +601,7 @@ module ApplicationController::CiProcessing
     if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
-        :severity   => :error,
-        :scroll_top => true
+        :severity   => :error
       )
       return
     end

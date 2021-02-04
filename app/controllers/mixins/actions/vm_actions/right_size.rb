@@ -15,7 +15,7 @@ module Mixins
             return
           elsif record.template?
             add_flash(_("Right-Size Recommendations does not apply to selected VM Template"), :error)
-            javascript_flash(:scroll_top => true)
+            javascript_flash
             return
           end
           if @explorer
