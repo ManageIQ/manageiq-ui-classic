@@ -81,7 +81,7 @@ describe 'Application routes' do
                 raise
               rescue => ex
                 # NOP: we don't care if any other exception happens
-              end.to raise_error(MiqException::RbacPrivilegeException), !fp && error_message
+              end.to raise_error(MiqException::RbacPrivilegeException), -> { !fp && error_message }
             end
           end
         end
