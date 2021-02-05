@@ -392,8 +392,8 @@ module ApplicationController::CiProcessing
     # Check each record if there is any compliance policy assigned to it
     if records.any? { |record| !record.has_compliance_policies? }
       javascript_flash(
-        :text       => _('No Compliance Policies assigned to one or more of the selected items'),
-        :severity   => :error
+        :text     => _('No Compliance Policies assigned to one or more of the selected items'),
+        :severity => :error
       )
       return
     end
@@ -600,8 +600,8 @@ module ApplicationController::CiProcessing
     records = find_records_with_rbac(record_class, checked_or_params)
     if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
-        :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
-        :severity   => :error
+        :text     => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
+        :severity => :error
       )
       return
     end

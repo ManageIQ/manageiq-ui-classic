@@ -28,8 +28,9 @@ describe ApplicationController do
           :miq_grid_checks => "#{vm1.id}, #{vm3.id}, #{vm2.id}")
         # calling 'vm_button_action' creates a proc calling 'process_objects'
         expect(controller).to receive(:javascript_flash).with(
-          :text => "Smartstate Analysis action does not apply to selected items",
-          :severity => :error)
+          :text     => "Smartstate Analysis action does not apply to selected items",
+          :severity => :error
+        )
         process_proc = controller.send(:vm_button_action)
         controller.send(
           :generic_button_operation,
