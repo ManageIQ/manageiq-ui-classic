@@ -808,7 +808,7 @@ MiqAlertSetController:
 - x_history
 - x_search_by_name
 - x_show
-MiqEventController:
+MiqEventDefinitionController:
 - index
 MiqPolicyController:
 - adv_search_button

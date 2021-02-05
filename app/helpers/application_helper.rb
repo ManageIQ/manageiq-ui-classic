@@ -390,8 +390,6 @@ module ApplicationHelper
     when "ScanItemSet"
       controller = "ops"
       action = "ap_show"
-    when "MiqEventDefinition"
-      controller = "miq_event"
     when "User", "Group", "Patch", "GuestApplication"
       controller = "vm"
       action = @lastaction

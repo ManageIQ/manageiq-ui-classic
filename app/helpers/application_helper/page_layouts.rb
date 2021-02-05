@@ -28,7 +28,7 @@ module ApplicationHelper::PageLayouts
       miq_ae_export
       miq_ae_logs
       miq_ae_tools
-      miq_event
+      miq_event_definition
       miq_policy
       miq_policy_export
       miq_policy_logs

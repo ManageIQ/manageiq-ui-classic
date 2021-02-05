@@ -1,4 +1,4 @@
-class MiqEventController < ApplicationController
+class MiqEventDefinitionController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -36,7 +36,7 @@ class MiqEventController < ApplicationController
 
   def get_session_data
     @title = _("Events")
-    @layout = "miq_event"
+    @layout = "miq_event_definition"
     @lastaction = session[:miq_event_lastaction]
     @display = session[:miq_event_display]
     @current_page = session[:miq_event_current_page]

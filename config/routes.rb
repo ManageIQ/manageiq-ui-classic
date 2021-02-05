@@ -2181,14 +2181,11 @@ Rails.application.routes.draw do
         x_post
     },
 
-    :miq_event => {
+    :miq_event_definition => {
       :get  => %w(
         show
         show_list
       ),
-      :post => %w(
-
-      )
     },
 
     :condition => {
