@@ -261,7 +261,6 @@ ConditionController:
 - explorer
 - index
 - reload
-- report_data
 - search_clear
 - tree_autoload
 - tree_select
