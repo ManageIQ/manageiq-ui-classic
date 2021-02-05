@@ -229,7 +229,7 @@ module Menu
           Menu::Item.new('miq_policy_set',    N_('Policy Profiles'), 'miq_policy_set',       {:feature => 'miq_policy_set_show_list'},     '/miq_policy_set/show_list'),
           Menu::Item.new('miq_policy',        N_('Policies'),        'miq_policy',           {:feature => 'miq_policy_show_list'},         '/miq_policy/show_list'),
           Menu::Item.new('miq_event',         N_('Events'),          'miq_event',            {:feature => 'miq_event', :any => true},      '/miq_event/explorer'),
-          Menu::Item.new('condition',         N_('Conditions'),      'condition',            {:feature => 'condition', :any => true},      '/condition/explorer'),
+          Menu::Item.new('condition',         N_('Conditions'),      'condition',            {:feature => 'condition_show_list'},          '/condition/show_list'),
           Menu::Item.new('miq_action',        N_('Actions'),         'miq_action',           {:feature => 'miq_action', :any => true},     '/miq_action/explorer'),
           Menu::Item.new('miq_alert_set',     N_('Alert Profiles'),  'miq_alert_set',        {:feature => 'miq_alert_set', :any => true},  '/miq_alert_set/explorer'),
           Menu::Item.new('miq_alert',         N_('Alerts'),          'miq_alert',            {:feature => 'miq_alert', :any => true},      '/miq_alert/explorer'),

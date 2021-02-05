@@ -1,0 +1,86 @@
+- url = url_for_only_path(:action => 'condition_field_changed', :id => (@condition.id || 'new'))
+- observe_with_interval = {:interval => '.5', :url => url}.to_json
+#form_div
+  = render :partial => "layouts/flash_msg"
+  .form-horizontal
+    -# Don't show basic info box with description only unless in edit mode
+    %h3= _("Basic Information")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+          = _("Description")
+        .col-md-8
+          - if @edit
+            = text_field_tag("description", @edit[:new][:description],
+              :maxlength         => ViewHelper::MAX_DESC_LEN,
+              "data-miq_observe" => observe_with_interval,
+              :class             => "form-control")
+            = javascript_tag(javascript_focus('description'))
+      %hr
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+          = _("Applies To")
+        .col-md-8
+          - if @edit[:new][:copy]
+            = Condition::TOWHAT_APPLIES_TO_CLASSES[@edit[:new][:towhat]]
+          - else
+            = select_tag('towhat',
+                  options_for_select([[_("<Choose>"), nil]] + Array(Condition::TOWHAT_APPLIES_TO_CLASSES.invert), @edit[:new][:towhat]),
+                  :class => "selectpicker form-control")
+            :javascript
+              miqInitSelectPicker();
+              miqSelectPickerEvent("towhat", "#{url}");
+
+    - if @edit[:new][:towhat]
+      %h3= _("Scope")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            = render :partial => "form_scope"
+      %hr
+
+      %h3= _("Expression")
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            = render :partial => "form_expression"
+    %hr
+
+    -# Notes field
+    %h3= _("Notes")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+          (
+          %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
+          \/ 512)
+          = text_area_tag("notes", @edit[:new][:notes],
+            :rows                       => 4,
+            :maxlength                  => "512",
+            :counter                    => "notes_count",
+            "data-miq_check_max_length" => true,
+            "data-miq_observe"          => observe_with_interval)
+        %hr
+  - unless @edit[:rec_id]
+    %table{:width => "100%"}
+      %tr
+        %td{:align => 'right'}
+          = button_tag(t = _("Add"),
+                         :class   => 'btn btn-primary',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "add")}');")
+          = button_tag(t = _("Cancel"),
+                         :class   => 'btn btn-default',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "cancel")}');")
+  -	else
+    = render :partial => '/layouts/edit_form_buttons',
+             :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}

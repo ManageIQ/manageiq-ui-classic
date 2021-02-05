@@ -27,6 +27,8 @@ module Mixins
             page.replace("alert_snmp_div", :partial => "alert_snmp")
           elsif @alert_mgmt_event_refresh
             page.replace("alert_mgmt_event_div", :partial => "alert_mgmt_event")
+          elsif params[:towhat]
+            page.replace("form_div", :partial => "form")
           end
         elsif @assign
           if params.key?(:chosen_assign_to) || params.key?(:chosen_cat)

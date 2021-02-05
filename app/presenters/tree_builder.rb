@@ -389,8 +389,6 @@ class TreeBuilder
     :policy                          => "TreeBuilderPolicy",
     ### Events
     :event                           => "TreeBuilderEvent",
-    ### Conditions
-    :condition                       => "TreeBuilderCondition",
     ### Actions
     :action                          => "TreeBuilderAction",
     ### Alert Profiles

@@ -1,34 +1,26 @@
 describe ConditionController do
-  describe '#condition_edit' do
-    context 'adding new condition' do
-      let(:params) { {:button => 'add'} }
+  before { stub_user(:features => :all) }
 
-      before do
-        allow(subject).to receive(:add_flash)
-        allow(subject).to receive(:assert_privileges)
-        allow(subject).to receive(:build_saved_audit).and_return(:event        => 'condition_record_add',
-                                                                 :target_id    => 1,
-                                                                 :target_class => 'Condition',
-                                                                 :userid       => 'admin',
-                                                                 :message      => '')
-        allow(subject).to receive(:exp_build_table)
-        allow(subject).to receive(:exp_remove_tokens)
-        allow(subject).to receive(:load_edit).and_return(true)
-        allow(subject).to receive(:replace_right_cell)
-        allow(subject).to receive(:x_active_tree).and_return(:condition_tree)
-        subject.instance_variable_set(:@edit, :new => {:towhat         => 'ContainerReplicator',
-                                                       :description    => 'New_condition',
-                                                       :notes          => nil,
-                                                       :expression     => {},
-                                                       :applies_to_exp => {"???"=>"???"}})
-        subject.instance_variable_set(:@sb, :folder => 'containerReplicator')
-      end
+  describe "#show_list" do
+    render_views
 
-      it 'sets new node correctly' do
-        controller.params = {:button => 'add'}
-        subject.send(:condition_edit)
-        expect(subject.instance_variable_get(:@new_condition_node)).to include('xx-containerReplicator_co-')
-      end
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
+  end
+
+  describe "#show" do
+    before do
+      @condition = FactoryBot.create(:condition, :name => "Test_Condition")
+    end
+
+    it "render show" do
+      get(:show, :params => {:id => @condition.id})
+
+      expect(response.status).to eq(200)
+      expect(controller.instance_variable_get(:@expression_table)).to eq([["VM and Instance : Number of CPUs >= 2", 1]])
     end
   end
 end

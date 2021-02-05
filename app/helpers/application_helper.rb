@@ -1077,7 +1077,6 @@ module ApplicationHelper
                              cloud_volume_backup
                              cloud_volume_snapshot
                              cloud_volume_type
-                             condition
                              configuration_job
                              configuration_profile
                              configuration_script_source
