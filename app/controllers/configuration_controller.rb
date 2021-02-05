@@ -72,22 +72,6 @@ class ConfigurationController < ApplicationController
     render :action => "show"
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_field_changed
-    assert_privileges('my_settings_visuals')
-    # ui1 edit form
-    return unless load_edit("config_edit__ui1", "configuration")
-
-    get_form_vars
-    @assigned_filters = []
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      page << javascript_for_miq_button_visibility_changed(@changed)
-    end
-  end
-
   # AJAX driven routine to check for changes in ANY field on the user form
   def filters_field_changed
     assert_privileges('my_settings_default_filters')
@@ -143,22 +127,6 @@ class ConfigurationController < ApplicationController
     if params["save"]
       get_form_vars if @tabform != "ui_3"
       case @tabform
-      when "ui_1" # Visual tab
-        @settings.merge!(@edit[:new]) # Apply the new saved settings
-
-        if current_user
-          user_settings = merge_settings(current_user.settings, @settings)
-          current_user.update(:settings => user_settings)
-
-          set_user_time_zone
-          set_gettext_locale
-          add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
-        else
-          add_flash(_("User Interface settings saved for this session"))
-        end
-        edit
-        render :action => "show"
-        return # No config file for Visuals yet, just return
       when "ui_3" # User Filters tab
         @edit = session[:edit]
         @edit[:new].each do |filter|
