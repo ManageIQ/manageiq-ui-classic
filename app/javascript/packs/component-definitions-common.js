@@ -49,6 +49,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 import PhysicalStorageForm from '../components/physical-storage-form';
 import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
+import VolumeMappingForm from '../components/volume-mapping-form';
 
 /**
 * Add component definitions to this file.
@@ -107,3 +108,4 @@ ManageIQ.component.addReact('WorkersForm', WorkersForm);
 ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('HostInitiatorForm', HostInitiatorForm);
+ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
