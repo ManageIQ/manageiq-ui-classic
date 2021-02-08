@@ -388,14 +388,14 @@ describe ApplicationHelper do
 
       it "and @explorer" do
         @explorer = true
-        expect(subject[0]).to eq("event")
-        expect(subject[1]).to eq("_none_")
+        expect(subject[0]).to eq("miq_event_definition")
+        expect(subject[1]).to eq("x_show")
       end
 
       it "and not @explorer" do
         @explorer = nil
-        expect(subject[0]).to eq("event")
-        expect(subject[1]).to eq("_none_")
+        expect(subject[0]).to eq("miq_event_definition")
+        expect(subject[1]).to eq("show")
       end
     end
 

@@ -808,13 +808,8 @@ MiqAlertSetController:
 - x_history
 - x_search_by_name
 - x_show
-MiqEventController:
+MiqEventDefinitionController:
 - index
-- tree_autoload
-- tree_select
-- x_history
-- x_search_by_name
-- x_show
 MiqPolicyController:
 - adv_search_button
 - adv_search_clear

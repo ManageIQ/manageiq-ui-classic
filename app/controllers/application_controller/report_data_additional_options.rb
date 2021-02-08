@@ -6,6 +6,7 @@ class ApplicationController
     :match_via_descendants,
     :parent_id,
     :parent_class_name,
+    :filter,
     :parent_method,
     :association,
     :view_suffix,
@@ -37,6 +38,7 @@ class ApplicationController
       additional_options.association = options[:association]
       additional_options.view_suffix = options[:view_suffix]
       additional_options.parent_method = options[:parent_method]
+      additional_options.filter = options[:filter] if options[:filter]
       additional_options.supported_features_filter = options[:supported_features_filter]
       additional_options.clickable = options[:clickable]
       additional_options.report_name = options[:report_name]

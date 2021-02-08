@@ -1134,6 +1134,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def sanitize_filter(filter)
+    return filter  if filter.kind_of?(MiqExpression)
+    # when react list view is being rendered,
+    # that sends up filter as hash in params, need to convert that back to an expression
+    MiqExpression.new(filter["exp"].permit!.to_h.deep_stringify_keys)
+  end
+
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {}, fetch_data = false)
     if !fetch_data && @report_data_additional_options.nil?
@@ -1222,6 +1229,8 @@ class ApplicationController < ActionController::Base
     @current_page = options[:page] || (params[:page].to_i < 1 ? 1 : params[:page].to_i)
 
     view.conditions = options[:conditions] # Get passed in conditions (i.e. tasks date filters)
+
+    options[:filter] = sanitize_filter(options[:filter]) if options[:filter]
 
     # Save the paged_view_search_options for download buttons to use later
     session[:paged_view_search_options] = {
