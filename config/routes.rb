@@ -2727,8 +2727,6 @@ Rails.application.routes.draw do
         pxe_wimg_form_field_changed
         reload
         tagging_edit
-        template_create_update
-        template_form_field_changed
         template_list
         tree_autoload
         tree_select
