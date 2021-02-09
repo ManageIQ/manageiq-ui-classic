@@ -798,16 +798,9 @@ MiqAlertController:
 MiqAlertSetController:
 - alert_profile_assign_changed
 - alert_profile_field_changed
-- explorer
 - index
 - miq_alert_set_edit
 - reload
-- report_data
-- tree_autoload
-- tree_select
-- x_history
-- x_search_by_name
-- x_show
 MiqEventDefinitionController:
 - index
 MiqPolicyController:

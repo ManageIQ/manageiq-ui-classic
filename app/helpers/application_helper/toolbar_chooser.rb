@@ -35,7 +35,7 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !%w[all_tasks condition timeline diagnostics miq_policy my_tasks miq_server usage].include?(@layout) &&
+    elsif !%w[all_tasks condition miq_alert_set timeline diagnostics miq_policy my_tasks miq_server usage].include?(@layout) &&
       !@layout.starts_with?("miq_request") && @display == "main" &&
       @showtype == "main" && !@in_a_form
       'summary_view_tb'
@@ -102,7 +102,7 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-    elsif %w[miq_action miq_alert miq_alert_set miq_event].include?(@layout)
+    elsif %w[miq_action miq_alert miq_event].include?(@layout)
       center_toolbar_filename_miq_policy
     elsif @layout == "ops"
       center_toolbar_filename_ops
@@ -222,8 +222,6 @@ class ApplicationHelper::ToolbarChooser
         return "miq_policies_center_tb"
       elsif @conditions
         return "conditions_center_tb"
-      elsif @alert_profiles
-        return "miq_alert_sets_center_tb"
       end
     end
     case @nodetype
@@ -237,7 +235,6 @@ class ApplicationHelper::ToolbarChooser
     when "ev" then  "miq_event_center_tb"
     when "a" then   "miq_action_center_tb"
     when "al" then  "miq_alert_center_tb"
-    when "ap" then  "miq_alert_set_center_tb"
     end
   end
 

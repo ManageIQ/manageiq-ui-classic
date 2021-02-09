@@ -6,8 +6,8 @@ describe MiqAlertSetController do
   context "#miq_alert_set_assign" do
     before do
       @ap = FactoryBot.create(:miq_alert_set)
-      controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree)
-      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@lastaction, 'show')
     end
 
     it "first time in" do
@@ -17,58 +17,59 @@ describe MiqAlertSetController do
     end
 
     it "Test reset button" do
-      controller.params = {:id => @ap.id, :button => "reset"}
-      expect(controller).to receive(:alert_profile_build_assign_screen)
-      controller.miq_alert_set_assign
-      expect(assigns(:flash_array).first[:message]).to include("reset")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      controller.params = {:button => "reset", :id => @ap.id}
+      expect(controller).to receive(:javascript_redirect).with(:action       => 'edit_assignment',
+                                                               :id            => @ap.id,
+                                                               :flash_msg     => _("All changes have been reset"),
+                                                               :flash_warning => true)
+      controller.send(:edit_assignment)
     end
 
     it "Test cancel button" do
-      controller.params = {:id => @ap.id, :button => "cancel"}
-      controller.miq_alert_set_assign
-      expect(assigns(:flash_array).first[:message]).to include("cancelled")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      controller.params = {:button => "cancel", :id => @ap.id}
+      expect(controller).to receive(:javascript_redirect).with(:action    => "show",
+                                                               :flash_msg => _("Edit Alert Profile assignments cancelled by user"),
+                                                               :id        => @ap.id)
+      controller.send(:edit_assignment)
     end
 
     it "Test save button without selecting category" do
+      assign = {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :objects => ["10000000000001"]}}
+      controller.instance_variable_set(:@assign, assign)
+      controller.instance_variable_set(:@sb, {:assign => assign})
       controller.params = {:id => @ap.id, :button => "save"}
-      controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree,
-                                              :assign => {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :objects => ["10000000000001"]}})
-      controller.miq_alert_set_assign
-      expect(assigns(:flash_array).first[:message]).not_to include("saved")
-      expect(controller.send(:flash_errors?)).to be_truthy
+      expect(controller).to receive(:javascript_flash)
+      controller.edit_assignment
     end
 
     it "Test save button with no errors" do
+      assign = {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :cat => "10000000000001", :objects => ["10000000000001"]}}
+      controller.instance_variable_set(:@assign, assign)
+      controller.instance_variable_set(:@sb, {:assign => assign})
       controller.params = {:id => @ap.id, :button => "save"}
-      controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree,
-                                              :assign => {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :cat => "10000000000001", :objects => ["10000000000001"]}})
-      controller.miq_alert_set_assign
-      expect(assigns(:flash_array).first[:message]).to include("saved")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                               :controller=> "miq_alert_set",
+                                                               :flash_msg => _("Alert Profile \"%{name}\" assignments successfully saved") % {:name => @ap.description},
+                                                               :id        => @ap.id)
+      controller.edit_assignment
     end
   end
 
   context "#miq_alert_set_edit" do
     before do
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {
-                                         :alert_profile_tree => {:active_node => "xx-Vm"}
-                                       },
-                                       :active_tree => :alert_profile_tree)
-      allow(controller).to receive(:replace_right_cell)
       edit = {
         :key => "alert_profile_edit__new"
       }
       session[:edit] = edit
+      controller.instance_variable_set(:@lastaction, "show")
     end
 
     it "Test cancel button" do
-      controller.params = {:id => 'new', :button => "cancel"}
-      controller.miq_alert_set_edit
-      expect(assigns(:flash_array).first[:message]).to include("Add of new Alert Profile was cancelled by the user")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      controller.params = {:button => "cancel"}
+      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                               :flash_msg => _("Add of new Alert Profile was cancelled by the user"),
+                                                               :id        => nil)
+      controller.send(:edit)
     end
   end
 
