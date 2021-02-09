@@ -11,6 +11,14 @@ class HostInitiatorController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def new
+    assert_privileges("host_initiator_new")
+
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
+                    :url  => "/#{controller_name}/new")
+  end
+
   def show
     if params[:id].nil?
       @breadcrumbs.clear
@@ -44,4 +52,6 @@ class HostInitiatorController < ApplicationController
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   feature_for_actions "#{controller_name}_show_list", :download_data
   feature_for_actions "#{controller_name}_show", :download_summary_pdf
+
+  toolbar :host_initiator, :host_initiators
 end

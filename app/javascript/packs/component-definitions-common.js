@@ -48,6 +48,7 @@ import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
 import PhysicalStorageForm from '../components/physical-storage-form';
 import VisualSettingsForm from '../components/visual-settings-form';
+import HostInitiatorForm from '../components/host-initiator-form';
 
 /**
 * Add component definitions to this file.
@@ -105,3 +106,4 @@ ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
 ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
+ManageIQ.component.addReact('HostInitiatorForm', HostInitiatorForm);
