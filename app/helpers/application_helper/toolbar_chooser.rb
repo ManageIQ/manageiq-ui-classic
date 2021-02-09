@@ -35,7 +35,7 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !%w[all_tasks condition miq_alert miq_alert_set timeline diagnostics miq_policy my_tasks miq_server usage].include?(@layout) &&
+    elsif !%w[all_tasks condition miq_action miq_alert miq_alert_set timeline diagnostics miq_policy my_tasks miq_server usage].include?(@layout) &&
       !@layout.starts_with?("miq_request") && @display == "main" &&
       @showtype == "main" && !@in_a_form
       'summary_view_tb'
