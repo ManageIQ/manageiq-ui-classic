@@ -1,4 +1,4 @@
-describe "miq_alert/_alert_details.html.haml" do
+describe "miq_alert/show.html.haml" do
   before do
     @alert = FactoryBot.create(:miq_alert)
     ActionView::TestCase::TestController::SEVERITIES = MiqAlertController::SEVERITIES
@@ -10,7 +10,7 @@ describe "miq_alert/_alert_details.html.haml" do
   it "Trap Number is displayed correctly" do
     opts = {:notifications => {:snmp => {:host => ['test.test.org'], :snmp_version => 'v1', :trap_id => '42'}}}
     allow(@alert).to receive(:options).and_return(opts)
-    render :partial => "miq_alert/alert_details"
+    render
     expect(rendered).to include('Trap Number')
   end
 end
