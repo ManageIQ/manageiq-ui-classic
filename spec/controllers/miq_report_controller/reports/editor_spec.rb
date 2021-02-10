@@ -66,7 +66,7 @@ describe ReportController do
         ApplicationController.handle_exceptions = true
 
         report_edit_options[:new][:cb_groupby] = "tag"
-        report_edit_options[:new][:cb_groupby_tag] = "department"
+        report_edit_options[:new][:cb_groupby_tag] = "department,environment"
         report_edit_options[:cb_cats] = {'department' => 'Department'}
         report_edit_options[:new][:cb_tag_cat] = "department"
         report_edit_options[:new][:cb_tag_value] = "environment,accounting"
@@ -80,6 +80,7 @@ describe ReportController do
         expected_tag_categories = report_edit_options[:new][:cb_tag_value].split(",").map { |x| "/managed/#{report_edit_options[:new][:cb_tag_cat]}/#{x}" }
         tag_categories = chargeback_report.reload.db_options[:options][:tag]
         expect(tag_categories).to match_array(expected_tag_categories)
+        expect(chargeback_report.db_options[:options][:groupby_tag]).to match_array(%w[environment department])
       end
 
       describe '#reportable_models' do
