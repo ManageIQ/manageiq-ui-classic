@@ -171,7 +171,9 @@
         - opts = [["<#{_('Choose a Category')}>", nil]] + Array(@edit[:cb_cats].invert).sort_by { |a| a.first.downcase }
         = select_tag("cb_groupby_tag",
           options_for_select(opts, @edit[:new][:cb_groupby_tag]),
-          :class                 => "selectpicker")
+          :class             => "selectpicker",
+          "multiple"         => true,
+          "data-live-search" => true)
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('cb_groupby_tag', '#{url}', {beforeSend: true, complete: true});
