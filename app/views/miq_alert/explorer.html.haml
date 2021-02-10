@@ -1,9 +1,0 @@
-- content_for :search do
-  = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => true})
-
-#main_div
-  - case @nodetype
-  - when "root"
-    = render :partial => "alert_list"
-  - when "al"
-    = render :partial => "alert_details", :locals => {:read_only => true}

@@ -11,15 +11,15 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Alert'),
           t,
-          :url_parms    => "main_div",
+          :url          => "/edit",
           :send_checked => true),
         button(
           :miq_alert_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this Alert'),
           t,
-          :confirm   => N_("Are you sure you want to copy this Alert?"),
-          :url_parms => "?copy=true"),
+          :confirm => N_("Are you sure you want to copy this Alert?"),
+          :url     => "/copy"),
         button(
           :miq_alert_delete,
           'pficon pficon-delete fa-lg',
@@ -29,11 +29,11 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           :data  => {'function'      => 'sendDataWithRx',
                      'function-data' => {:api_url        => 'alert_definitions',
                                          :component_name => 'RemoveGenericItemModal',
+                                         :redirect_url   => '/miq_alert/show_list',
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Alert?"),
-                                         :modal_title    => N_("Delete Alert"),
-                                         :ajax_reload    => true}}),
+                                         :modal_title    => N_("Delete Alert")}}),
       ]
     ),
   ])

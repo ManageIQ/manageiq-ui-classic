@@ -1,0 +1,143 @@
+- url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.try(:id) || 'new'))
+- observe = {:url => url}.to_json
+#form_div
+  = render :partial => "layouts/flash_msg"
+  %h3= _('Info')
+  .form-horizontal
+    -# Description
+    .form-group
+      %label.control-label.col-md-2
+        = _("Description")
+      .col-md-8
+        = text_field_tag("description",
+          @edit[:new][:description],
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
+          :class             => "form-control",
+          "data-miq_focus"   => true,
+          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    -# Enabled
+    .form-group
+      %label.control-label.col-md-2
+        = _("Active")
+      .col-md-8
+        = check_box_tag("enabled_cb", "1", @edit[:new][:enabled], "data-miq_observe_checkbox" => observe)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Severity")
+      .col-md-8
+        - options = [[_("<Choose>"), nil]]
+        - controller.class::SEVERITIES.each { |key, value| options.push([_(value), key]) }
+        = select_tag('miq_alert_severity',
+          options_for_select(options, @edit[:new][:severity]),
+          :class => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('miq_alert_severity', '#{url}', {beforeSend: true, complete: true})
+    -# Based on (model)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Based On")
+      .col-md-8
+        - if @alert.memberof.empty?
+          = select_tag('miq_alert_db',
+            options_for_select(@edit[:dbs].invert.sort, @edit[:new][:db]),
+            :class => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent('miq_alert_db', '#{url}', {beforeSend: true, complete: true})
+        - else
+          = ui_lookup(:model => @edit[:new][:db])
+          &nbsp;&nbsp;&nbsp;
+          = _('* Cannot be changed while this Alert belongs to an Alert Profile.')
+    -# Eval Method
+    .form-group
+      %label.control-label.col-md-2
+        = _("What to Evaluate")
+      .col-md-8
+        - if @edit[:expression_types].blank?
+          = _('Expression (Custom)')
+        - else
+          - opts = @edit[:expression_types].each { |k, v | @edit[:expression_types][k] = _(v) }.invert.sort + [[_("Expression (Custom)"), nil]]
+          = select_tag('exp_name',
+            options_for_select(opts, @edit[:new][:expression][:eval_method].to_s),
+            :class => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent('exp_name', '#{url}', {beforeSend: true, complete: true})
+
+    -# Expression driving event
+    - unless display_driving_event?
+      .form-group
+        %label.control-label.col-md-2
+          = _("Driving Event")
+        .col-md-8
+          - opts = [["<#{_('Choose')}>", nil], [_("Hourly Timer"), "_hourly_timer_"]] + @edit[:events].invert.sort
+          = select_tag('exp_event',
+            options_for_select(opts, @edit[:new][:exp_event]),
+            :class => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent('exp_event', '#{url}', {beforeSend: true, complete: true})
+    -# Repeat Time
+    .form-group.notification-frequency
+      %label.control-label.col-md-2
+        = _("Notification Frequency")
+      - hide = false
+      .col-md-8
+        - if @edit[:new][:expression][:eval_method] == "hourly_performance"
+          - repeat = @sb[:alert][:hourly_repeat_times]
+        - elsif @edit[:new][:expression][:eval_method] == "dwh_generic"
+          - repeat = @sb[:alert][:repeat_times_dwh]
+          - hide = true
+        - else
+          - repeat = @sb[:alert][:repeat_times]
+        = select_tag('repeat_time',
+          options_for_select(repeat.invert.sort_by(&:last), @edit[:new][:repeat_time]),
+          :class => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('repeat_time', '#{url}', {beforeSend: true, complete: true})
+      %hr
+      - if hide
+        :javascript
+          $(".notification-frequency").hide();
+  -# Expression
+  - if !@edit[:new][:expression][:eval_method]
+    = render(:partial => 'layouts/exp_editor')
+  - else
+    - if @edit[:new][:expression][:eval_method] != "nothing"
+      %h3
+        = h(_(MiqAlert.expression_types(@edit[:new][:db])[@edit[:new][:expression][:eval_method]]))
+        = _('Parameters')
+      .form-horizontal
+        - @edit[:expression_options].each do |eo|
+          = render :partial => "alert_builtin_exp", :locals  => {:option => eo}
+  %hr
+
+  -# E-mail, SNMP, Timeline Event, Mgmt Event edit
+  = render :partial => "layouts/edit_email", :locals  => {:action_url => "alert_field_changed", :record => @alert}
+  = render :partial => "alert_snmp"
+  = render :partial => "alert_evm_event"
+  = render :partial => "alert_mgmt_event"
+
+  %hr
+
+  - unless @edit[:rec_id]
+    %table{:width => "100%"}
+      %tr
+        %td{:align => 'right'}
+          = button_tag(t = _("Add"),
+                         :class   => 'btn btn-primary',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "add")}');")
+          = button_tag(t = _("Cancel"),
+                         :class   => 'btn btn-default',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "cancel")}');")
+  -	else
+    = render :partial => '/layouts/edit_form_buttons',
+             :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}
