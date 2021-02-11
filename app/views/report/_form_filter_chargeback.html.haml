@@ -57,6 +57,8 @@
           - opts += [[_('Owner'), "owner"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"], [_('Tenant'), "tenant"]]
         - elsif @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
           - opts += [[ui_lookup(:model => @edit[:new][:cb_model]), "entity"]]
+        - elsif @edit[:new][:model] == "ChargebackConfiguredSystem"
+          - opts += [["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"]]
         - else
           - opts += [[_('Owner'), "owner"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"], [_(@edit[:new][:cb_model].to_s), "entity"]]
         = select_tag("cb_show_typ",

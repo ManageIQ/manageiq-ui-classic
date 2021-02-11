@@ -4,7 +4,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipmi_present ipaddress mac_address vendor zone]
+      %i[hostname ipmi_present ipaddress mac_address container zone]
     )
   end
 
@@ -28,10 +28,17 @@ module ConfiguredSystemHelper::TextualSummary
     {:label => _("Mac address"), :value => @record.mac_address}
   end
 
-  def textual_vendor
-    return nil if @record.vendor.blank?
-
-    {:label => _("Vendor"), :image => @record.decorate.fileicon, :value => @record.vendor}
+  def textual_container
+    h = {:label => _("Container")}
+    vendor = @record.vendor
+    if vendor.blank?
+      h[:value] = _("None")
+    else
+      h[:image] = @record.decorate.fileicon
+      cpus = n_("%{cpu} CPU", "%{cpu} CPUs", @record.cpu_total_cores) % {:cpu => @record.cpu_total_cores}
+      h[:value] = "#{vendor}: #{cpus}, #{@record.ram_size} MB"
+    end
+    h
   end
 
   def textual_zone
