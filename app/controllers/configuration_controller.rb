@@ -49,6 +49,7 @@ class ConfigurationController < ApplicationController
     if params[:pressed].ends_with?("_edit", "_copy")
       javascript_redirect(:action => @refresh_partial, :id => @redirect_id)
     else
+      build_tabs
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
