@@ -375,5 +375,9 @@ module Mixins
       @edit[:expression][:exp_table] = exp_build_table(@edit[:expression][:expression])
       @edit[:expression][:exp_model] = model
     end
+
+    def get_record_display_name(record)
+      record.description
+    end
   end
 end
