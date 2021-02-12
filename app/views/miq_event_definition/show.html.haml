@@ -20,8 +20,8 @@
     %table.table.table-striped.table-bordered.table-hover
       %tbody
         - record_policies.each do |p|
-          -#- id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
-          %tr
+          %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
+              :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
             %td.table-view-pf-select
               %i{:class => p.decorate.fonticon}
             %td

@@ -315,18 +315,14 @@ module ApplicationHelper
         elsif view.db == "MiqServer" &&
               %w[ops report].include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
-        elsif %w[MiqAction
-                 MiqAlert
-                 ScanItemSet
+        elsif %w[ScanItemSet
                  MiqSchedule
                  PxeServer
                  PxeImageType
                  IsoDatastore
                  CustomizationTemplate].include?(view.db) &&
-              %w[miq_action miq_policy ops pxe report].include?(params[:controller])
+              %w[ops pxe report].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
-        elsif %w[MiqPolicy].include?(view.db) && %w[miq_policy].include?(params[:controller])
-          return "/#{params[:controller]}/x_show/?id=#{x_node}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end

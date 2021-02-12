@@ -21,7 +21,7 @@
       %table.table.table-striped.table-bordered.table-hover
         %tbody
           - @alert_profile_alerts.each do |a|
-            %tr
+            %tr{:title => _("View this Alert"), :onclick => "DoNav('/miq_alert/show/#{a.id}');"}
               %td.table-view-pf-select
                 %i.pficon.pficon-warning-triangle-o
               %td

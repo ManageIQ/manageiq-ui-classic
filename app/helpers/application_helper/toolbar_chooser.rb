@@ -35,7 +35,7 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !%w[all_tasks condition miq_action miq_alert miq_alert_set timeline diagnostics miq_policy my_tasks miq_server usage].include?(@layout) &&
+    elsif !%w[all_tasks condition timeline diagnostics miq_action miq_alert miq_alert_set miq_event_definition miq_policy miq_policy_set my_tasks miq_server usage].include?(@layout) &&
       !@layout.starts_with?("miq_request") && @display == "main" &&
       @showtype == "main" && !@in_a_form
       'summary_view_tb'
@@ -102,8 +102,6 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-    elsif %w[miq_alert_set miq_event].include?(@layout)
-      center_toolbar_filename_miq_policy
     elsif @layout == "ops"
       center_toolbar_filename_ops
     elsif @layout == "pxe"
@@ -214,29 +212,6 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_chargeback_report
     return "chargeback_center_tb" if @report
     nil
-  end
-
-  def center_toolbar_filename_miq_policy
-    if @nodetype == "xx"
-      if @policies || (@view && @sb[:tree_typ] == "policies")
-        return "miq_policies_center_tb"
-      elsif @conditions
-        return "conditions_center_tb"
-      elsif @alert_profiles
-        return "miq_alert_sets_center_tb"
-      end
-    end
-    case @nodetype
-    when "root"
-      case x_active_tree
-      when :alert_tree then           "miq_alerts_center_tb"
-      end
-    when "p" then   "miq_policy_center_tb"
-    when "co" then  "condition_center_tb"
-    when "ev" then  "miq_event_center_tb"
-    when "al" then  "miq_alert_center_tb"
-    when "ap" then  "miq_alert_set_center_tb"
-    end
   end
 
   def center_toolbar_filename_ops
@@ -582,8 +557,6 @@ class ApplicationHelper::ToolbarChooser
                            miq_ae_customization
                            miq_ae_tools
                            miq_capacity_utilization
-                           miq_policy
-                           miq_policy_rsop
                            ops
                            pxe
                            report].to_set.freeze
