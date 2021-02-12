@@ -41,6 +41,7 @@ module TermOfServiceHelper
       "ext_management_system"  => N_("Selected Providers"),
       "ems_cluster"            => N_("Selected Clusters"),
       "vm-tags"                => N_("Tagged VMs and Instances"),
+      "configured_system-tags" => N_("Tagged Configured Systems"),
       "container_image-tags"   => N_("Tagged Container Images"),
       "container_image-labels" => N_("Labeled Container Images"),
       "tenant"                 => N_("Tenants")
