@@ -1425,3 +1425,5 @@ VmOrTemplateController:
 - x_history
 - x_search_by_name
 - x_show
+VolumeMappingController:
+- index
