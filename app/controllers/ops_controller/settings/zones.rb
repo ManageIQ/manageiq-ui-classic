@@ -112,11 +112,10 @@ module OpsController::Settings::Zones
   def zone_set_record_vars(zone, mode = nil)
     zone.name = @edit[:new][:name]
     zone.description = @edit[:new][:description]
+    zone.authentication_attributes = {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}
     zone.settings ||= {}
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-
-    zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, {:save => (mode != :validate)})
   end
 
   # Validate the zone record fields
@@ -163,10 +162,9 @@ module OpsController::Settings::Zones
     @edit[:new][:description] = @zone.description
     @edit[:new][:proxy_server_ip] = @zone.settings ? @zone.settings[:proxy_server_ip] : nil
     @edit[:new][:concurrent_vm_scans] = @zone.settings ? @zone.settings[:concurrent_vm_scans].to_i : 0
-
-    @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
-    @edit[:new][:password] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
+    @edit[:new][:userid] = @zone.authentication_userid
+    @edit[:new][:password] = @zone.authentication_password
+    @edit[:new][:verify] = @zone.authentication_password
 
     session[:verify_ems_status] = nil
     set_verify_status
