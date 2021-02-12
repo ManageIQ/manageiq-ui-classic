@@ -40,10 +40,6 @@ class MiqPolicyController < ApplicationController
   end
   helper_method :build_expression_table
 
-  def get_record_display_name(record)
-    record.description
-  end
-
   def get_session_data
     @title = _("Policies")
     @layout = "miq_policy"

@@ -1,112 +1,109 @@
 describe MiqActionController do
-  before do
-    login_as user_with_feature(%w[miq_action_edit miq_action_new])
+  before { stub_user(:features => :all) }
+
+  describe "#show_list" do
+    render_views
+
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
   end
 
   context "#action_edit" do
     before do
       @action = FactoryBot.create(:miq_action, :name => "Test_Action")
-      controller.instance_variable_set(:@sb, {})
-      allow(controller).to receive(:replace_right_cell)
-      allow(controller).to receive(:action_build_cat_tree)
-      allow(controller).to receive(:get_node_info)
-      allow(controller).to receive(:action_get_info)
+      controller.instance_variable_set(:@lastaction, "show")
     end
 
     it "first time in" do
-      controller.miq_action_edit
+      controller.edit
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "Test reset button" do
-      controller.params = {:id => @action.id, :button => "reset"}
-      controller.miq_action_edit
-      expect(assigns(:flash_array).first[:message]).to include("reset")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      controller.params = {:button => "reset", :id => @action.id}
+      expect(controller).to receive(:javascript_redirect).with(:action       => 'edit',
+                                                              :id            => @action.id,
+                                                              :flash_msg     => _("All changes have been reset"),
+                                                              :flash_warning => true)
+      controller.send(:edit)
     end
 
     it "Test cancel button" do
-      controller.instance_variable_set(:@sb, :trees => {:action_tree => {:active_node => "a-#{@action.id}"}}, :active_tree => :action_tree)
-      controller.params = {:id => @action.id, :button => "cancel"}
-      controller.miq_action_edit
-      expect(assigns(:flash_array).first[:message]).to include("cancelled")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      controller.params = {:button => "cancel", :id => @action.id}
+      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                               :flash_msg => _("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description},
+                                                               :id        => @action.id)
+      controller.send(:edit)
     end
 
     it "Test saving an action without selecting a Tag" do
-      controller.params = {:id => @action.id}
-      controller.miq_action_edit
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-      edit = controller.instance_variable_get(:@edit)
+      edit = {:key => "miq_action_edit__#{@action.id}", :new => {:description => @action.description, :options => {}, :attrs => {}} }
       edit[:new][:action_type] = "tag"
+      controller.instance_variable_set(:@edit, edit)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @action.id, :button => "save"}
-      expect(controller).to receive(:render)
-      controller.miq_action_edit
+      expect(controller).to receive(:javascript_flash)
+      controller.edit
       expect(assigns(:flash_array).first[:message]).to include("At least one Tag")
-      expect(assigns(:flash_array).first[:message]).not_to include("saved")
-      expect(controller.send(:flash_errors?)).to be_truthy
     end
 
     it "Test saving an action after selecting a Tag" do
-      controller.params = {:id => @action.id}
-      controller.miq_action_edit
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-      edit = controller.instance_variable_get(:@edit)
+      edit = {:key => "miq_action_edit__#{@action.id}", :new => {:description => "test", :options => {}, :attrs => {}} }
       edit[:new][:action_type] = "tag"
-      edit[:new][:options] = {}
       edit[:new][:options][:tags] = "Some Tag"
+      controller.instance_variable_set(:@edit, edit)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @action.id, :button => "save"}
-      controller.miq_action_edit
-      expect(assigns(:flash_array).first[:message]).not_to include("At least one Tag")
-      expect(assigns(:flash_array).first[:message]).to include("saved")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                               :controller=> "miq_action",
+                                                               :flash_msg => "Action \"test\" was saved",
+                                                               :id        => @action.id)
+      controller.edit
     end
 
     it "can edit an Ansible playbook action" do
-      controller.params = {:id => @action.id}
-      controller.miq_action_edit
-      edit = controller.instance_variable_get(:@edit)
+      edit = {:key => "miq_action_edit__#{@action.id}", :new => {:description => "test", :options => {}, :attrs => {}} }
       edit[:new][:action_type] = "run_ansible_playbook"
       edit[:new][:inventory_type] = 'manual'
       edit[:new][:options][:hosts] = 'host1, host2'
       edit[:new][:options][:service_template_id] = '01'
+      controller.instance_variable_set(:@edit, edit)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @action.id, :button => "save"}
-      controller.miq_action_edit
-      expect(assigns(:flash_array).first[:message]).not_to include("At least one Playbook")
-      expect(assigns(:flash_array).first[:message]).to include("saved")
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
+                                                               :controller=> "miq_action",
+                                                               :flash_msg => "Action \"test\" was saved",
+                                                               :id        => @action.id)
+      controller.edit
     end
 
     it "displays an error if no Ansible playbook is selected" do
-      allow(controller).to receive(:javascript_flash)
-      controller.params = {:id => @action.id}
-      controller.miq_action_edit
-      edit = controller.instance_variable_get(:@edit)
+      edit = {:key => "miq_action_edit__#{@action.id}", :new => {:description => "test", :options => {}, :attrs => {}} }
       edit[:new][:action_type] = "run_ansible_playbook"
       edit[:new][:inventory_type] = 'event_target'
       edit[:new][:options][:use_event_target] = true
       edit[:new][:options][:use_event_localhost] = false
+      controller.instance_variable_set(:@edit, edit)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @action.id, :button => "save"}
-      controller.miq_action_edit
+      expect(controller).to receive(:javascript_flash)
+      controller.edit
       expect(assigns(:flash_array).first[:message]).to include("An Ansible Playbook must be selected")
-      expect(controller.send(:flash_errors?)).to be_truthy
     end
 
     it "displays an error if no hosts are slected for an Ansible playbook with 'manual' inventory" do
-      allow(controller).to receive(:javascript_flash)
-      controller.params = {:id => @action.id}
-      controller.miq_action_edit
-      edit = controller.instance_variable_get(:@edit)
+      edit = {:key => "miq_action_edit__#{@action.id}", :new => {:description => "test", :options => {}, :attrs => {}} }
       edit[:new][:action_type] = "run_ansible_playbook"
       edit[:new][:inventory_type] = 'manual'
       edit[:new][:options][:service_template_id] = '01'
+      controller.instance_variable_set(:@edit, edit)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @action.id, :button => "save"}
-      controller.miq_action_edit
+      expect(controller).to receive(:javascript_flash)
+      controller.edit
       expect(assigns(:flash_array).first[:message]).to include("At least one host must be specified for manual mode")
       expect(controller.send(:flash_errors?)).to be_truthy
     end
@@ -119,7 +116,7 @@ describe MiqActionController do
       attrs   = [["a1", "v1"], ["a2", "v2"], ["a3", "v3"], ["a4", "v4"], ["a5", "v5"]]
       edit = {
         :rec_id => @action.id,
-        :key    => "action_edit__#{@action.id}",
+        :key    => "miq_action_edit__#{@action.id}",
         :new    => {:description => "foo", :options => options, :attrs => attrs}
       }
       edit[:current] = copy_hash(edit[:new])
@@ -154,13 +151,10 @@ describe MiqActionController do
     end
   end
 
-  describe "#action_get_info" do
+  describe "#show" do
     let(:cat1) { FactoryBot.create(:classification, :description => res.first) }
     let(:cat2) { FactoryBot.create(:classification, :description => res.second) }
 
-    before do
-      controller.instance_variable_set(:@sb, :active_tree => :action_tree)
-    end
 
     let(:res) { %w(test1 test2) }
     let(:action) do
@@ -169,8 +163,10 @@ describe MiqActionController do
                         :options     => {:cats => [cat1.name, cat2.name]})
     end
 
-    it "joins classification tags" do
-      controller.send(:action_get_info, action)
+    it "render show" do
+      get(:show, :params => {:id => action.id})
+
+      expect(response.status).to eq(200)
       expect(controller.instance_variable_get(:@cats)).to eq(res.join(' | '))
     end
   end

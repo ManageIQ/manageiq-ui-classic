@@ -4,7 +4,10 @@ class MiqActionController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericFormMixin
+  include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::PolicyMixin
 
@@ -12,143 +15,46 @@ class MiqActionController < ApplicationController
     @title = _("Actions")
   end
 
-  def index
-    flash_to_session
-    redirect_to(:action => 'explorer')
+  def new
+    miq_action_reset_or_set
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-
-    unless @refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+  def edit
+    @_params[:pressed] ||= 'miq_action_edit'
+    case params[:button]
+    when "cancel"
+      miq_action_cancel
+    when "save", "add"
+      miq_action_save_add
+    when "reset", nil # displaying edit from for actions: new, edit or copy
+      @_params[:id] ||= find_checked_items[0]
+      @redirect_id = params[:id] if params[:id]
+      @refresh_partial = "edit"
+      miq_action_reset_or_set
     end
-  end
-
-  ACTION_X_BUTTON_ALLOWED_ACTIONS = {
-    'miq_action_edit' => :miq_action_edit,
-    'miq_action_new'  => :miq_action_edit,
-  }.freeze
-
-  def x_button
-    generic_x_button(ACTION_X_BUTTON_ALLOWED_ACTIONS)
-  end
-
-  def explorer
-    @breadcrumbs = []
-    @explorer = true
-
-    self.x_active_tree ||= 'action_tree'
-    self.x_active_accord ||= 'action'
-
-    build_accordions_and_trees
-    get_node_info(x_node)
-
-    render :layout => "application"
-  end
-
-  # Item clicked on in the explorer right cell
-  def x_show
-    @explorer = true
-    tree_select
-  end
-
-  def accordion_select
-    self.x_active_accord = params[:id].sub(/_accord$/, '')
-    self.x_active_tree   = "#{self.x_active_accord}_tree"
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => @nodetype)
-  end
-
-  def tree_select
-    # set these when a link on one of the summary screen was pressed
-    self.x_active_accord = params[:accord]           if params[:accord]
-    self.x_active_tree   = "#{params[:accord]}_tree" if params[:accord]
-    self.x_active_tree   = params[:tree]             if params[:tree]
-    self.x_node          = params[:id]
-
-    @sb[:action] = nil
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => @nodetype)
-  end
-
-  def search
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node)
   end
 
   def miq_action_edit
     assert_privileges(params[:pressed]) if params[:pressed]
-    case params[:button]
-    when "cancel"
-      @sb[:action] = @edit = nil
-      @action = MiqAction.find(session[:edit][:action_id]) if session[:edit] && session[:edit][:action_id]
-      if @action.present?
-        add_flash(_("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description})
-      else
-        add_flash(_("Add of new Action was cancelled by the user"))
-      end
-      @sb[:action] = nil
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
-      return
-    when "reset", nil # Reset or first time in
-      action_build_edit_screen
-      @sb[:action] = "miq_action_edit"
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "a")
-      return
-    end
-
     # Load @edit/vars for other buttons
     id = params[:id] || "new"
-    return unless load_edit("action_edit__#{id}", "replace_cell__explorer")
+    return unless load_edit("miq_action_edit__#{id}")
 
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
     case params[:button]
-    when "save", "add"
-      action = @action.id.blank? ? MiqAction.new : MiqAction.find(@action.id) # Get new or existing record
-
-      # set email "from" to default value if it's not present
-      if @edit[:new][:action_type] == "email" && @edit[:new][:options][:from].nil?
-        @edit[:new][:options][:from] = "cfadmin@cfserver.com"
-      end
-
-      action_set_record_vars(action)
-      if action_valid_record?(action) && !@flash_array && action.save
-        AuditEvent.success(build_saved_audit(action, @edit))
-        if params[:button] == "save"
-          add_flash(_("Action \"%{name}\" was saved") % {:name => @edit[:new][:description]})
-        else
-          add_flash(_("Action \"%{name}\" was added") % {:name => @edit[:new][:description]})
-        end
-        action_get_info(MiqAction.find(action.id))
-        @sb[:action] = @edit = nil
-        @nodetype = "a"
-        @new_action_node = "a-#{action.id}"
-        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? %i[policy_profile policy action] : %i[action], :remove_form_buttons => true)
-        @sb[:action] = nil
-      else
-        action.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
-      end
     when "move_right", "move_left", "move_allleft"
       action_handle_selection_buttons(:alerts)
-      session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell(:nodetype => "a")
+      @changed = (@edit[:new] != @edit[:current])
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page.replace_html("form_div", :partial => "form") unless @flash_errors
+      end
     end
   end
 
   def action_field_changed
-    return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
+    return unless load_edit("miq_action_edit__#{params[:id]}")
 
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
@@ -232,11 +138,81 @@ class MiqActionController < ApplicationController
     @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
   end
 
-  def action_get_all
-    peca_get_all('action', -> { get_view(MiqAction) })
+  def show
+    super
+    # Get information for an action
+    @alert_guids = []
+    if @record.options && @record.options[:alert_guids]
+      @alert_guids = MiqAlert.where(:guid => @record.options[:alert_guids])
+    end
+
+    @action_policies = @record.miq_policies.sort_by { |p| p.description.downcase }
+
+    if %w[inherit_parent_tags remove_tags].include?(@record.action_type)
+      @cats = Classification.lookup_by_names(@record.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
+    end
   end
 
   private
+
+  def miq_action_reset_or_set
+    assert_privileges('miq_action_edit') if params[:button] == "reset"
+    @in_a_form = true
+    @action = params[:id] ? MiqAction.find(params[:id]) : MiqAction.new # Get existing or new record
+
+    if @action.try(:id) && @action.action_type == "default"
+      add_flash(_("Default Action \"%{name}\" cannot be edited.") % {:name => @action.description}, :error)
+      flash_to_session
+      redirect_to(:action => 'show_list')
+    end
+
+    action_build_edit_screen
+    javascript_redirect(:action        => 'edit',
+                        :id            => params[:id],
+                        :flash_msg     => _("All changes have been reset"),
+                        :flash_warning => true) if params[:button] == "reset"
+  end
+
+  def miq_action_cancel
+    @action = MiqAction.find_by(:id => params[:id])
+    if @action.present?
+      flash_msg = _("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description}
+    else
+      flash_msg = _("Add of new Action was cancelled by the user")
+    end
+    @edit = session[:edit] = nil # clean out the saved info
+    session[:changed] = false
+    javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+  end
+
+  def miq_action_save_add
+    assert_privileges("miq_action_#{params[:id] ? "edit" : "new"}")
+    return unless load_edit("miq_action_edit__#{params[:id] ? "#{params[:id]}" : "new"}")
+
+    action = @edit[:action_id].blank? ? MiqAction.new : MiqAction.find_by(:id => @edit[:action_id]) # Get new or existing record
+    # set email "from" to default value if it's not present
+    if @edit[:new][:action_type] == "email" && @edit[:new][:options][:from].nil?
+      @edit[:new][:options][:from] = "cfadmin@cfserver.com"
+    end
+
+    action_set_record_vars(action)
+    if action_valid_record?(action) && !@flash_array && action.save
+      AuditEvent.success(build_saved_audit(action, @edit))
+      if params[:button] == "save"
+        flash_msg = _("Action \"%{name}\" was saved") % {:name => @edit[:new][:description]}
+      else
+        flash_msg = _("Action \"%{name}\" was added") % {:name => @edit[:new][:description]}
+      end
+      @edit = session[:edit] = nil # clean out the saved info
+      session[:changed] = @changed = false
+      javascript_redirect(:controller => 'miq_action', :action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+    else
+      action.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      javascript_flash
+    end
+  end
 
   def action_build_snmp_variables
     @edit[:new][:options][:snmp_version] = "v1" if @edit[:new][:action_type] == "snmp_trap" && @edit[:new][:options][:snmp_version].blank?
@@ -296,8 +272,7 @@ class MiqActionController < ApplicationController
     @edit[:new] = {}
     @edit[:current] = {}
 
-    @action = params[:id] ? MiqAction.find(params[:id]) : MiqAction.new # Get existing or new record
-    @edit[:key] = "action_edit__#{@action.id || "new"}"
+    @edit[:key] = "miq_action_edit__#{@action.id || "new"}"
     @edit[:rec_id] = @action.id || nil
 
     @edit[:action_id] = @action.id
@@ -447,124 +422,6 @@ class MiqActionController < ApplicationController
     end
   end
 
-  # Get information for an action
-  def action_get_info(action)
-    @record = @action = action
-    @right_cell_text = _("Action \"%{name}\"") % {:name => action.description}
-    @right_cell_div = "action_details"
-    @alert_guids = []
-    if action.options && action.options[:alert_guids]
-      @alert_guids = MiqAlert.where(:guid => action.options[:alert_guids])
-    end
-
-    if x_active_tree == :action_tree
-      @action_policies = @action.miq_policies.sort_by { |p| p.description.downcase }
-    end
-
-    if %w[inherit_parent_tags remove_tags].include?(@action.action_type)
-      @cats = Classification.lookup_by_names(@action.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
-    end
-  end
-
-  # Get all info for the node about to be displayed
-  def get_node_info(treenodeid, show_list = true)
-    @show_list = show_list
-    _modelname, nodeid, @nodetype = TreeBuilder.extract_node_model_and_id(valid_active_node(treenodeid))
-    node_ids = {}
-    treenodeid.split("_").each do |p|
-      # Create a hash of all record ids represented by the selected tree node
-      node_ids[p.split("-").first] = p.split("-").last
-    end
-    @sb[:node_ids] ||= {}
-    @sb[:node_ids][x_active_tree] = node_ids
-    x_node == "root" ? action_get_all : action_get_info(MiqAction.find(nodeid))
-    @show_adv_search = @nodetype == "root"
-    {:view => @view, :pages => @pages}
-  end
-
-  # replace_trees can be an array of tree symbols to be replaced
-  def replace_right_cell(options = {})
-    nodetype, replace_trees, presenter = options.values_at(:nodetype, :replace_trees, :presenter)
-    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
-    replace_trees = Array(replace_trees)
-    @explorer = true
-
-    trees = build_replaced_trees(replace_trees, %i[action])
-
-    c_tb = build_toolbar(center_toolbar_filename)
-
-    # Build a presenter to render the JS
-    presenter ||= ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-      :open_accord => params[:accord]
-    )
-
-    # Simply replace the tree partials to reload the trees
-    replace_trees.each do |name|
-      case name
-      when :action
-        self.x_node = @new_action_node if @new_action_node
-      else
-        raise _("unknown tree in replace_trees: %{name}") % {name => name}
-      end
-    end
-    reload_trees_by_presenter(presenter, trees)
-
-    presenter[:osf_node] = x_node
-
-    @changed = session[:changed] if @edit # to get save/reset buttons to highlight when fields are moved left/right
-
-    # Replace right side with based on selected tree node type
-    case nodetype
-    when 'root'
-      partial_name, model = ['action_list', _('Actions')]
-      presenter.update(:main_div, r[:partial => partial_name])
-      right_cell_text = _("All %{models}") % {:models => model}
-      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present?
-    when 'a', 'ta', 'fa'
-      presenter.update(:main_div, r[:partial => 'action_details', :locals => {:read_only => true}])
-      right_cell_text = if @action.id.blank?
-                          _("Adding a new Action")
-                        else
-                          msg = @edit ? _("Editing Action \"%{name}\"") : _("Action \"%{name}\"")
-                          msg % {:name => @action.description}
-                        end
-    end
-    presenter[:right_cell_text] = @right_cell_text = right_cell_text
-
-    presenter.reload_toolbars(:center => c_tb)
-
-    if ((@edit && @edit[:new]) || @assign) && params[:action] != "x_search_by_name"
-      locals = {
-        :action_url => @sb[:action],
-        :record_id  => @edit ? @edit[:rec_id] : @assign[:rec_id],
-      }
-      presenter.hide(:toolbar)
-      # If was hidden for summary screen and there were no records on show_list
-      presenter.show(:paging_div, :form_buttons_div)
-      presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
-    else
-      # Added so buttons can be turned off even tho div is not being displayed it still pops up
-      # Abandon changes box when trying to change a node on tree after saving a record
-      presenter.hide(:buttons_on).show(:toolbar).hide(:paging_div)
-    end
-
-    presenter.hide(:form_buttons_div) if options[:remove_form_buttons]
-
-    replace_search_box(presenter, :nameonly => true)
-
-    # Hide/show searchbox depending on if a list is showing
-    presenter.set_visibility(@show_adv_search, :adv_searchbox_div)
-
-    presenter[:record_id] = @record.try(:id)
-
-    presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
-
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
-
-    render :json => presenter.for_render
-  end
-
   def get_session_data
     @title = _("Actions")
     @layout = "miq_action"
@@ -579,26 +436,16 @@ class MiqActionController < ApplicationController
     session[:miq_action_current_page] = @current_page
   end
 
-  def features
-    [
-      {
-        :name     => :action,
-        :title    => _("Actions"),
-        :role     => "action",
-        :role_any => true
-      },
-    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
-  end
-
   def breadcrumbs_options
     {
       :breadcrumbs  => [
         {:title => _("Control")},
-        {:title => _('Explorer')},
+        {:title => _('Actions'), :url => controller_url},
       ].compact,
       :record_title => :description,
     }
   end
 
+  toolbar :miq_action,:miq_actions
   menu_section :con
 end
