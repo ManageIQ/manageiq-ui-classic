@@ -431,6 +431,7 @@ class ApplicationHelper::ToolbarChooser
             cloud_volume_snapshot
             cloud_volume_type
             configuration_job
+            configuration_script
             configured_system
             container
             container_group

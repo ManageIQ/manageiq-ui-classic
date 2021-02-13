@@ -766,7 +766,7 @@ module ApplicationHelper
        cloud_volume_type
        configuration_job
        configuration_profile
-       configuration_scripts
+       configuration_script
        configured_system
        container
        container_build
