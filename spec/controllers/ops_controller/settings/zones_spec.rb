@@ -12,7 +12,8 @@ describe OpsController do
     it 'sets flash array according to the missing name, description and verify password' do
       controller.send(:zone_edit)
       expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => "Name can't be blank",                              :level => :error},
-                                                                     {:message => "Description can't be blank",                       :level => :error}])
+                                                                     {:message => "Description can't be blank",                       :level => :error},
+                                                                     {:message => "Password and Verify Password fields do not match", :level => :error}])
     end
   end
 
