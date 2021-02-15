@@ -9,11 +9,8 @@ import FormRender, {
   FieldArray,
   FormSpy,
 } from '@data-driven-forms/react-form-renderer';
-import { FormTemplate } from '@data-driven-forms/pf3-component-mapper';
-import { Form } from 'patternfly-react';
-import classNames from 'classnames';
+import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import defaultComponentMapper from './mappers/componentMapper';
 import SpyField from './spy-field';
@@ -52,19 +49,13 @@ const MiqFormRenderer = ({
   onSubmit,
   ...props
 }) => {
-  const { current: FormWrapper } = useRef(({ children, ...props }) => (
-    <Form className={classNames('ddorg__pf3-layout-components__form-wrapper', className)} {...props}>
-      { children }
-    </Form>
-  ));
-
   const { current: MiqFormTemplate } = useRef(props => (
     <FormTemplate
       {...props}
-      FormWrapper={FormWrapper}
       disableSubmit={disableSubmit}
       canReset={canReset}
       showFormControls={showFormControls}
+      formWrapperProps={{className}}
       {...defaultLabels}
       {...buttonsLabels}
     />

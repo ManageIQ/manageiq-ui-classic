@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-form.schema';
-import { filterOptions, filterValues } from '../dual-list-select/helpers';
 import { API } from '../../http_api';
+
+/* Returns array of options excluding value options */
+export const filterOptions = (options = [], item = []) => options.filter(({ value }) => !item.includes(value));
+
+/* Returns items from newValue which are not in value */
+export const filterValues = (newValue = [], values = []) => newValue.filter((item) => !values.includes(item));
 
 class CatalogForm extends Component {
   constructor(props) {
@@ -22,14 +27,14 @@ class CatalogForm extends Component {
         API.get('/api/service_templates?expand=resources&filter[]=service_template_catalog_id=null'),
         API.get(`/api/service_catalogs/${catalogId}?expand=service_templates`)])
         .then(([{ resources }, { name, description, service_templates }]) => {
-          const rightValues = service_templates.resources.map(({ href, name }) => ({ key: href, label: name }));
-          const options = resources.map(({ href, name }) => ({ key: href, label: name })).concat(rightValues);
+          const rightValues = service_templates.resources.map(({ href, name }) => ({ value: href, label: name }));
+          const options = resources.map(({ href, name }) => ({ value: href, label: name })).concat(rightValues);
           this.setState(() => ({
             schema: createSchema(options, catalogId),
             initialValues: {
               name,
               description: description === null ? undefined : description,
-              service_templates: rightValues.map(({ key }) => key),
+              service_templates: rightValues.map(({ value }) => value),
             },
             originalRightValues: rightValues,
             isLoaded: true,
@@ -39,7 +44,7 @@ class CatalogForm extends Component {
     } else {
       API.get('/api/service_templates?expand=resources&filter[]=service_template_catalog_id=null').then(
         ({ resources }) => this.setState({
-          schema: createSchema(resources.map(({ href, name }) => ({ key: href, label: name }))),
+          schema: createSchema(resources.map(({ href, name }) => ({ value: href, label: name }))),
           isLoaded: true,
         }, miqSparkleOff),
       )
@@ -63,7 +68,7 @@ class CatalogForm extends Component {
         action: 'create',
         resource: {
           ...values,
-          service_templates: service_templates.map(key => ({ href: `${key}` })),
+          service_templates: service_templates.map((value) => ({ href: `${value}` })),
         },
       }, {
         skipErrors: [400],
@@ -72,7 +77,7 @@ class CatalogForm extends Component {
         .catch(error => add_flash(this.handleError(error), 'error'));
     }
 
-    const unassignedRightValues = filterValues(values.service_templates, originalRightValues.map(({ key }) => key));
+    const unassignedRightValues = filterValues(values.service_templates, originalRightValues.map(({ value }) => value));
     const unassignedLeftValues = filterOptions(originalRightValues, values.service_templates);
     const promises = [
       API.post(apiBase, {
@@ -90,7 +95,7 @@ class CatalogForm extends Component {
       promises.push(
         API.post(`${apiBase}/service_templates`, {
           action: 'assign',
-          resources: unassignedRightValues.map(key => ({ href: key })),
+          resources: unassignedRightValues.map(value => ({ href: value })),
         }),
       );
     }
@@ -98,7 +103,7 @@ class CatalogForm extends Component {
       promises.push(
         API.post(`${apiBase}/service_templates`, {
           action: 'unassign',
-          resources: unassignedLeftValues.map(({ key }) => ({ href: key })),
+          resources: unassignedLeftValues.map(({ value }) => ({ href: value })),
         }),
       );
     }

@@ -91,7 +91,7 @@ describe('Set ownership form component', () => {
       wrapper = mount(<SetOwnershipForm {...initialProps} />);
     });
     const form = wrapper.find('form');
-    form.find('input[name="user"]').simulate('change', 'z');
+    form.find('select[name="user"]').simulate('change', 'z');
     wrapper.update();
     await act(async() => {
       wrapper.find('form').simulate('submit');
@@ -102,7 +102,7 @@ describe('Set ownership form component', () => {
 
   it('should send correct data on cancel', () => {
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    wrapper.find('button').last().simulate('click');
+    wrapper.find('button.bx--btn--secondary').last().simulate('click');
     expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel');
   });
 });

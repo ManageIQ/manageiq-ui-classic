@@ -29,7 +29,7 @@ describe('Vm server relationship form component', () => {
     wrapper.update();
 
     expect(fetchMock.called(url)).toBe(true);
-    expect(wrapper.find('input[name="serverId"]').prop('value')).toEqual('');
+    expect(wrapper.find('select[name="serverId"]').prop('value')).toEqual('');
     done();
   });
 
@@ -43,7 +43,7 @@ describe('Vm server relationship form component', () => {
     wrapper.update();
 
     expect(fetchMock.called(url)).toBe(true);
-    expect(wrapper.find('input[name="serverId"]').prop('value')).toEqual('1');
+    expect(wrapper.find('select[name="serverId"]').prop('value')).toEqual('1');
     done();
   });
 });

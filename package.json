@@ -33,8 +33,9 @@
   "dependencies": {
     "@carbon/icons-react": "^10.20.0",
     "@carbon/themes": "^10.23.0",
-    "@data-driven-forms/pf3-component-mapper": "~2.18.3",
-    "@data-driven-forms/react-form-renderer": "~2.18.3",
+    "@data-driven-forms/carbon-component-mapper": "~2.20.3",
+    "@data-driven-forms/pf3-component-mapper": "~2.20.3",
+    "@data-driven-forms/react-form-renderer": "~2.20.3",
     "@manageiq/react-ui-components": "~0.11.70",
     "@manageiq/ui-components": "1.4.4",
     "@novnc/novnc": "~1.2.0",

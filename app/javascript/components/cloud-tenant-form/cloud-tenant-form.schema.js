@@ -31,6 +31,7 @@ const createSchema = (edit, emsId, setState) => ({
         validate: [{ type: validatorTypes.REQUIRED }],
         onChange: (emsId) => setState((state) => ({ ...state, emsId })),
         isRequired: true,
+        includeEmpty: true,
         loadOptions: loadProviders,
       },
       {

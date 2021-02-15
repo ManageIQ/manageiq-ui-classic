@@ -97,7 +97,7 @@ describe('PxeServersForm', () => {
       wrapper = mount(<PxeServersForm {...initialProps} />);
     });
 
-    wrapper.find('button').last().simulate('click');
+    wrapper.find('button.bx--btn--secondary').first().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Add of new PXE Server was cancelled by the user', 'success', '/pxe/explorer');
     done();
   });
@@ -116,7 +116,7 @@ describe('PxeServersForm', () => {
     });
 
     wrapper.update();
-    wrapper.find('button').last().simulate('click');
+    wrapper.find('button.bx--btn--secondary').last().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Edit of PXE Server foo was cancelled by the user', 'success', '/pxe/explorer');
     done();
   });

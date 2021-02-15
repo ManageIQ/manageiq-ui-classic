@@ -84,7 +84,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       label: __('Provider'),
       component: componentTypes.SELECT,
       loadOptions: getManagers,
-      placeholder: `<${__('Choose')}>`,
+      includeEmpty: true,
       isRequired: true,
       validateOnMount: true,
       clearOnUnmount: true,
@@ -109,7 +109,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       mode: setFormat(initialValues),
       modes: ['yaml', 'json'],
       validateOnMount: true,
-      helperText: __('Select the format type below to apply syntax highlighting for better readability'),
+      helperText: __('Select the format type above to apply syntax highlighting for better readability'),
       isRequired: true,
       validate: [{
         type: validatorTypes.REQUIRED,

@@ -35,6 +35,7 @@ const commonFields = [
     id: 'zone_id',
     name: 'zone_id',
     label: __('Zone'),
+    includeEmpty: true,
     loadOptions: () =>
       API.get('/api/zones?expand=resources&attributes=id,name,visible&filter[]=visible!=false&sort_by=name')
         .then(({ resources }) => resources.map(({ id: value, name: label }) => ({ value, label }))),
@@ -64,6 +65,7 @@ const typeSelectField = (edit, filter, setState) => ({
   label: __('Type'),
   kind: filter,
   isDisabled: edit,
+  includeEmpty: true,
   loadOptions: () =>
     API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
       .filter(({ kind }) => kind === filter)

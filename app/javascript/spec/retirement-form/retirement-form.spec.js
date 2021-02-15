@@ -37,7 +37,7 @@ describe('Retirement Form Component', () => {
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('input[name="retirementWarning"]').instance().value).toEqual('');
+    expect(wrapper.find('select[name="retirementWarning"]').instance().value).toEqual('');
     done();
   });
 });

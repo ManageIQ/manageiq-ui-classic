@@ -107,7 +107,7 @@ describe('Copy Dashboard form', () => {
     });
 
     wrapper.update();
-    wrapper.find('button').last().simulate('click'); // click on cancel
+    wrapper.find('button.bx--btn--secondary').last().simulate('click'); // click on cancel
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
     expect(spyMiqAjaxButton).toHaveBeenCalledWith('/report/db_copy/55?button=cancel');
     done();
@@ -132,7 +132,7 @@ describe('Copy Dashboard form', () => {
 
     await act(async() => {
       wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
-      wrapper.find('Select[name="group_id"]').at(1).prop('onChange')('888');
+      wrapper.find('Select[name="group_id"]').prop('onChange')('888');
       wrapper.find('form').simulate('submit');
     });
 

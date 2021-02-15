@@ -35,6 +35,7 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
           Object {
             "component": "select",
             "id": "ems_id",
+            "includeEmpty": true,
             "isRequired": true,
             "label": "Cloud Provider",
             "loadOptions": [Function],

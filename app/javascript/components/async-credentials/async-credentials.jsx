@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual, flatMap, get, set } from 'lodash';
+import { Button, InlineLoading } from 'carbon-components-react';
+
 import { useFormApi, useFieldApi, validatorTypes, FormSpy } from '@@ddf';
-import { Button, FormGroup, HelpBlock } from 'patternfly-react';
-import ButtonSpinner from '../../forms/button-spinner';
+import HelperTextBlock from '../../forms/helper-text-block';
 
 const extractNames = (schema) => {
   const childFields = schema.fields ? flatMap(schema.fields, field => extractNames(field)) : [];
@@ -77,7 +78,7 @@ const AsyncCredentials = ({
         ...(field.component === 'password-field' ? { parent: name, edit } : undefined),
         isDisabled: field.isDisabled,
       })), formOptions)}
-      <FormGroup validationState={meta.error ? 'error' : null}>
+      <>
         <input type="hidden" {...input} />
 
         <FormSpy subscription={{ values: true, dirtyFields: true }}>
@@ -101,17 +102,20 @@ const AsyncCredentials = ({
 
             return (
               <>
-                <Button bsSize="small" bsStyle="primary" onClick={onClick} disabled={isValid || !depsValid || validating}>
+                <Button size="small" kind="tertiary" onClick={onClick} disabled={isValid || !depsValid || validating}>
+                  {validating && <InlineLoading /> }
                   {validating ? validationProgressLabel : validateLabel}
-                  {validating && <ButtonSpinner /> }
                 </Button>
-                { !meta.error && isEqual(currentValues, lastValid) && <HelpBlock>{ validationSuccessLabel }</HelpBlock> }
-                { meta.error && !validating && <HelpBlock>{ errorMessage || validateDefaultError }</HelpBlock> }
+
+                <HelperTextBlock
+                  helperText={!meta.error && isEqual(currentValues, lastValid) && validationSuccessLabel}
+                  errorText={meta.error && !validating && (errorMessage || validateDefaultError)}
+                />
               </>
             );
           }}
         </FormSpy>
-      </FormGroup>
+      </>
     </>
   );
 };

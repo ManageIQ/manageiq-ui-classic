@@ -35,7 +35,7 @@ describe('Copy catalog form', () => {
 
     setImmediate(() => {
       wrapper.update();
-      wrapper.find('button').last().simulate('click'); // click on cancel
+      wrapper.find('button.bx--btn--secondary').first().simulate('click');
       expect(spyMiqAjaxButton).toHaveBeenCalledWith(cancelUrl);
       done();
     });

@@ -2,7 +2,6 @@
 
 exports[`TreeSelector component should render correctly 1`] = `
 <TreeViewSelector
-  clearIcon="fa fa-times"
   clearLabel="Clear"
   closeLabel="Close"
   component="tree-selector"
@@ -11,554 +10,444 @@ exports[`TreeSelector component should render correctly 1`] = `
   label="tree-selector"
   lazyLoadData={[Function]}
   loadData={[Function]}
-  modalIcon="ff ff-load-balancer"
   modalLabel="Toggle"
   name="tree-selector"
   selectLabel="Select"
 >
-  <SingleField
-    component="text-field"
-    inputAddon={
-      Object {
-        "after": Object {
-          "fields": Array [
-            Object {
-              "component": "input-addon-button-group",
-              "fields": Array [
-                Object {
-                  "component": "button",
-                  "label": <i
-                    className="ff ff-load-balancer"
-                  />,
-                  "name": "tree-selector-toggle",
-                  "onClick": [Function],
-                  "title": "Toggle",
-                },
-                Object {
-                  "component": "button",
-                  "label": <i
-                    className="fa fa-times"
-                  />,
-                  "name": "tree-selector-clear",
-                  "onClick": [Function],
-                  "title": "Clear",
-                },
-              ],
-              "name": "tree-selector-toggle-container",
-            },
-          ],
-        },
-      }
-    }
-    key="tree-selector"
-    label="tree-selector"
-    name="tree-selector"
+  <FormGroup
+    invalid={false}
+    legendText="tree-selector"
+    message={false}
+    messageText=""
   >
-    <FormConditionWrapper
-      field={
-        Object {
-          "component": "text-field",
-          "initialValue": undefined,
-          "inputAddon": Object {
-            "after": Object {
-              "fields": Array [
-                Object {
-                  "component": "input-addon-button-group",
-                  "fields": Array [
-                    Object {
-                      "component": "button",
-                      "label": <i
-                        className="ff ff-load-balancer"
-                      />,
-                      "name": "tree-selector-toggle",
-                      "onClick": [Function],
-                      "title": "Toggle",
-                    },
-                    Object {
-                      "component": "button",
-                      "label": <i
-                        className="fa fa-times"
-                      />,
-                      "name": "tree-selector-clear",
-                      "onClick": [Function],
-                      "title": "Clear",
-                    },
-                  ],
-                  "name": "tree-selector-toggle-container",
-                },
-              ],
-            },
-          },
-          "label": "tree-selector",
-          "name": "tree-selector",
-        }
-      }
+    <fieldset
+      className="bx--fieldset"
     >
-      <FormFieldHideWrapper
-        hideField={false}
+      <legend
+        className="bx--label"
       >
-        <TextField
-          component="text-field"
-          inputAddon={
-            Object {
-              "after": Object {
-                "fields": Array [
-                  Object {
-                    "component": "input-addon-button-group",
-                    "fields": Array [
-                      Object {
-                        "component": "button",
-                        "label": <i
-                          className="ff ff-load-balancer"
-                        />,
-                        "name": "tree-selector-toggle",
-                        "onClick": [Function],
-                        "title": "Toggle",
-                      },
-                      Object {
-                        "component": "button",
-                        "label": <i
-                          className="fa fa-times"
-                        />,
-                        "name": "tree-selector-clear",
-                        "onClick": [Function],
-                        "title": "Clear",
-                      },
-                    ],
-                    "name": "tree-selector-toggle-container",
-                  },
-                ],
-              },
-            }
+        tree-selector
+      </legend>
+      <div
+        className="bx--grid"
+        style={
+          Object {
+            "marginLeft": 0,
+            "paddingLeft": 0,
           }
-          label="tree-selector"
-          name="tree-selector"
+        }
+      >
+        <div
+          className="bx--row"
         >
-          <Pf3FormGroup
-            inputAddon={
-              Object {
-                "after": Object {
-                  "fields": Array [
-                    Object {
-                      "component": "input-addon-button-group",
-                      "fields": Array [
-                        Object {
-                          "component": "button",
-                          "label": <i
-                            className="ff ff-load-balancer"
-                          />,
-                          "name": "tree-selector-toggle",
-                          "onClick": [Function],
-                          "title": "Toggle",
-                        },
-                        Object {
-                          "component": "button",
-                          "label": <i
-                            className="fa fa-times"
-                          />,
-                          "name": "tree-selector-clear",
-                          "onClick": [Function],
-                          "title": "Clear",
-                        },
-                      ],
-                      "name": "tree-selector-toggle-container",
-                    },
-                  ],
-                },
-              }
-            }
-            label="tree-selector"
-            meta={
-              Object {
-                "active": false,
-                "data": Object {},
-                "dirty": false,
-                "dirtySinceLastSubmit": false,
-                "error": undefined,
-                "initial": undefined,
-                "invalid": false,
-                "length": undefined,
-                "modified": false,
-                "modifiedSinceLastSubmit": false,
-                "pristine": true,
-                "submitError": undefined,
-                "submitFailed": false,
-                "submitSucceeded": false,
-                "submitting": false,
-                "touched": false,
-                "valid": true,
-                "validating": false,
-                "visited": false,
-              }
-            }
+          <div
+            className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3"
           >
-            <FormGroup
-              bsClass="form-group"
-              validationState={null}
+            <ForwardRef(TextInput)
+              disabled={false}
+              helperText=""
+              id="tree-selector"
+              inline={false}
+              invalid={false}
+              invalidText=""
+              key="tree-selector"
+              labelText=""
+              light={false}
+              name="tree-selector"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              type="text"
+              value=""
+              warn={false}
+              warnText=""
             >
               <div
-                className="form-group"
+                className="bx--form-item bx--text-input-wrapper"
               >
-                <ControlLabel
-                  bsClass="control-label"
-                  srOnly={false}
+                <div
+                  className="bx--text-input__field-outer-wrapper"
                 >
-                  <label
-                    className="control-label"
+                  <div
+                    className="bx--text-input__field-wrapper"
+                    data-invalid={null}
                   >
-                    tree-selector
-                  </label>
-                </ControlLabel>
-                <InputGroupWrapper
-                  inputAddon={
+                    <input
+                      className="bx--text-input bx--text__input"
+                      disabled={false}
+                      id="tree-selector"
+                      name="tree-selector"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </ForwardRef(TextInput)>
+          </div>
+          <div
+            className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1"
+          >
+            <Button
+              className="tree-selector-toggle"
+              disabled={false}
+              hasIconOnly={true}
+              iconDescription="Toggle"
+              kind="primary"
+              onClick={[Function]}
+              renderIcon={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                }
+              }
+              size="field"
+              tabIndex={0}
+              tooltipAlignment="center"
+              tooltipPosition="top"
+              type="button"
+            >
+              <button
+                className="tree-selector-toggle bx--btn bx--btn--field bx--btn--primary bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+                disabled={false}
+                onClick={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                <span
+                  className="bx--assistive-text"
+                >
+                  Toggle
+                </span>
+                <ForwardRef(TreeViewAlt16)
+                  aria-hidden="true"
+                  aria-label="Toggle"
+                  className="bx--btn__icon"
+                >
+                  <Icon
+                    aria-hidden="true"
+                    aria-label="Toggle"
+                    className="bx--btn__icon"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="Toggle"
+                      className="bx--btn__icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
+                        transform="translate(0 .005)"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(TreeViewAlt16)>
+              </button>
+            </Button>
+            <Button
+              className="tree-selector-clear"
+              disabled={false}
+              hasIconOnly={true}
+              iconDescription="Clear"
+              kind="danger"
+              onClick={[Function]}
+              renderIcon={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                }
+              }
+              size="field"
+              tabIndex={0}
+              tooltipAlignment="center"
+              tooltipPosition="top"
+              type="button"
+            >
+              <button
+                className="tree-selector-clear bx--btn bx--btn--field bx--btn--danger bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+                disabled={false}
+                onClick={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                <span
+                  className="bx--assistive-text"
+                >
+                  Clear
+                </span>
+                <ForwardRef(Close16)
+                  aria-hidden="true"
+                  aria-label="Clear"
+                  className="bx--btn__icon"
+                >
+                  <Icon
+                    aria-hidden="true"
+                    aria-label="Clear"
+                    className="bx--btn__icon"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="Clear"
+                      className="bx--btn__icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(Close16)>
+              </button>
+            </Button>
+          </div>
+        </div>
+      </div>
+      <Modal
+        hasScrollingContent={false}
+        iconDescription="Close"
+        modalHeading="tree-selector"
+        modalLabel=""
+        onKeyDown={[Function]}
+        onRequestClose={[Function]}
+        onRequestSubmit={[Function]}
+        onSecondarySubmit={[Function]}
+        passiveModal={false}
+        preventCloseOnClickOutside={false}
+        primaryButtonDisabled={true}
+        primaryButtonText="Select"
+        secondaryButtonText="Close"
+        selectorPrimaryFocus="[data-modal-primary-focus]"
+      >
+        <div
+          className="bx--modal bx--modal-tall"
+          onBlur={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="presentation"
+        >
+          <span
+            className="bx--visually-hidden"
+            role="link"
+            tabIndex="0"
+          >
+            Focus sentinel
+          </span>
+          <div
+            aria-label="tree-selector"
+            aria-modal="true"
+            className="bx--modal-container"
+            role="dialog"
+            tabIndex="-1"
+          >
+            <div
+              className="bx--modal-header"
+            >
+              <h3
+                className="bx--modal-header__heading"
+                id="bx--modal-header__heading--modal-1"
+              >
+                tree-selector
+              </h3>
+              <button
+                aria-label="Close"
+                className="bx--modal-close"
+                onClick={[Function]}
+                title="Close"
+                type="button"
+              >
+                <ForwardRef(Close20)
+                  aria-label="Close"
+                  className="bx--modal-close__icon"
+                >
+                  <Icon
+                    aria-label="Close"
+                    className="bx--modal-close__icon"
+                    fill="currentColor"
+                    height={20}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={20}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-label="Close"
+                      className="bx--modal-close__icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(Close20)>
+              </button>
+            </div>
+            <div
+              aria-labelledby="bx--modal-header__heading--modal-1"
+              className="bx--modal-content"
+              id="bx--modal-body--modal-1"
+            >
+              <TreeViewBase
+                actionMapper={
+                  Object {
+                    "state.selected": [Function],
+                  }
+                }
+                component="tree-selector"
+                isMulti={false}
+                label="tree-selector"
+                lazyLoadData={[Function]}
+                loadData={[Function]}
+                name="tree-selector"
+                select={[Function]}
+              >
+                <t
+                  actionPrefix=""
+                  allowReselect={false}
+                  callbacks={
                     Object {
-                      "after": Object {
-                        "fields": Array [
-                          Object {
-                            "component": "input-addon-button-group",
-                            "fields": Array [
-                              Object {
-                                "component": "button",
-                                "label": <i
-                                  className="ff ff-load-balancer"
-                                />,
-                                "name": "tree-selector-toggle",
-                                "onClick": [Function],
-                                "title": "Toggle",
-                              },
-                              Object {
-                                "component": "button",
-                                "label": <i
-                                  className="fa fa-times"
-                                />,
-                                "name": "tree-selector-clear",
-                                "onClick": [Function],
-                                "title": "Clear",
-                              },
-                            ],
-                            "name": "tree-selector-toggle-container",
-                          },
-                        ],
-                      },
+                      "lazyLoad": [Function],
+                      "onDataChange": [Function],
                     }
                   }
+                  changedCheckboxClass="changed-checkbox"
+                  checkboxFirst={true}
+                  checkedIcon="fa fa-fw fa-check-square-o"
+                  collapseIcon="fa fa-fw fa-angle-down"
+                  component="tree-selector"
+                  data={Array []}
+                  errorIcon="fa fa-exclamation"
+                  expandIcon="fa fa-fw fa-angle-right"
+                  hierarchicalCheck={false}
+                  label="tree-selector"
+                  loadingIcon="fa fa-fw fa-spinner fa-pulse"
+                  multiSelect={false}
+                  name="tree-selector"
+                  nodeIcon=""
+                  partiallyCheckedIcon="fa fa-fw fa-check-square"
+                  preventDeselect={true}
+                  selectedClass="selected"
+                  selectedIcon=""
+                  showCheckbox={false}
+                  showIcon={true}
+                  showImage={true}
+                  uncheckedIcon="fa fa-fw fa-square-o"
                 >
-                  <InputGroup
-                    bsClass="input-group"
+                  <div
+                    className="react-tree-view"
                   >
-                    <span
-                      className="input-group"
-                    >
-                      <FormControl
-                        bsClass="form-control"
-                        componentClass="input"
-                        name="tree-selector"
-                        onBlur={[Function]}
-                        onChange={[Function]}
-                        onFocus={[Function]}
-                        value=""
-                      >
-                        <input
-                          className="form-control"
-                          name="tree-selector"
-                          onBlur={[Function]}
-                          onChange={[Function]}
-                          onFocus={[Function]}
-                          value=""
-                        />
-                      </FormControl>
-                      <SingleField
-                        component="input-addon-button-group"
-                        fields={
-                          Array [
-                            Object {
-                              "component": "button",
-                              "label": <i
-                                className="ff ff-load-balancer"
-                              />,
-                              "name": "tree-selector-toggle",
-                              "onClick": [Function],
-                              "title": "Toggle",
-                            },
-                            Object {
-                              "component": "button",
-                              "label": <i
-                                className="fa fa-times"
-                              />,
-                              "name": "tree-selector-clear",
-                              "onClick": [Function],
-                              "title": "Clear",
-                            },
-                          ]
-                        }
-                        key="tree-selector-toggle-container"
-                        name="tree-selector-toggle-container"
-                      >
-                        <FormConditionWrapper
-                          field={
-                            Object {
-                              "component": "input-addon-button-group",
-                              "fields": Array [
-                                Object {
-                                  "component": "button",
-                                  "label": <i
-                                    className="ff ff-load-balancer"
-                                  />,
-                                  "name": "tree-selector-toggle",
-                                  "onClick": [Function],
-                                  "title": "Toggle",
-                                },
-                                Object {
-                                  "component": "button",
-                                  "label": <i
-                                    className="fa fa-times"
-                                  />,
-                                  "name": "tree-selector-clear",
-                                  "onClick": [Function],
-                                  "title": "Clear",
-                                },
-                              ],
-                              "name": "tree-selector-toggle-container",
-                            }
-                          }
-                        >
-                          <FormFieldHideWrapper
-                            hideField={false}
-                          >
-                            <InputAddonButtonGroup
-                              component="input-addon-button-group"
-                              fields={
-                                Array [
-                                  Object {
-                                    "component": "button",
-                                    "label": <i
-                                      className="ff ff-load-balancer"
-                                    />,
-                                    "name": "tree-selector-toggle",
-                                    "onClick": [Function],
-                                    "title": "Toggle",
-                                  },
-                                  Object {
-                                    "component": "button",
-                                    "label": <i
-                                      className="fa fa-times"
-                                    />,
-                                    "name": "tree-selector-clear",
-                                    "onClick": [Function],
-                                    "title": "Clear",
-                                  },
-                                ]
-                              }
-                              name="tree-selector-toggle-container"
-                            >
-                              <InputGroupButton
-                                bsClass="input-group-btn"
-                              >
-                                <span
-                                  className="input-group-btn"
-                                >
-                                  <SingleField
-                                    component="button"
-                                    key="tree-selector-toggle"
-                                    label={
-                                      <i
-                                        className="ff ff-load-balancer"
-                                      />
-                                    }
-                                    name="tree-selector-toggle"
-                                    onClick={[Function]}
-                                    title="Toggle"
-                                  >
-                                    <FormConditionWrapper
-                                      field={
-                                        Object {
-                                          "component": "button",
-                                          "label": <i
-                                            className="ff ff-load-balancer"
-                                          />,
-                                          "name": "tree-selector-toggle",
-                                          "onClick": [Function],
-                                          "title": "Toggle",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
-                                        <Button
-                                          component="button"
-                                          label={
-                                            <i
-                                              className="ff ff-load-balancer"
-                                            />
-                                          }
-                                          name="tree-selector-toggle"
-                                          onClick={[Function]}
-                                          title="Toggle"
-                                        >
-                                          <Button
-                                            active={false}
-                                            block={false}
-                                            bsClass="btn"
-                                            bsStyle="default"
-                                            disabled={false}
-                                            name="tree-selector-toggle"
-                                            onClick={[Function]}
-                                            title="Toggle"
-                                          >
-                                            <button
-                                              className="btn btn-default"
-                                              disabled={false}
-                                              name="tree-selector-toggle"
-                                              onClick={[Function]}
-                                              title="Toggle"
-                                              type="button"
-                                            >
-                                              <i
-                                                className="ff ff-load-balancer"
-                                              />
-                                            </button>
-                                          </Button>
-                                        </Button>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="button"
-                                    key="tree-selector-clear"
-                                    label={
-                                      <i
-                                        className="fa fa-times"
-                                      />
-                                    }
-                                    name="tree-selector-clear"
-                                    onClick={[Function]}
-                                    title="Clear"
-                                  >
-                                    <FormConditionWrapper
-                                      field={
-                                        Object {
-                                          "component": "button",
-                                          "label": <i
-                                            className="fa fa-times"
-                                          />,
-                                          "name": "tree-selector-clear",
-                                          "onClick": [Function],
-                                          "title": "Clear",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
-                                        <Button
-                                          component="button"
-                                          label={
-                                            <i
-                                              className="fa fa-times"
-                                            />
-                                          }
-                                          name="tree-selector-clear"
-                                          onClick={[Function]}
-                                          title="Clear"
-                                        >
-                                          <Button
-                                            active={false}
-                                            block={false}
-                                            bsClass="btn"
-                                            bsStyle="default"
-                                            disabled={false}
-                                            name="tree-selector-clear"
-                                            onClick={[Function]}
-                                            title="Clear"
-                                          >
-                                            <button
-                                              className="btn btn-default"
-                                              disabled={false}
-                                              name="tree-selector-clear"
-                                              onClick={[Function]}
-                                              title="Clear"
-                                              type="button"
-                                            >
-                                              <i
-                                                className="fa fa-times"
-                                              />
-                                            </button>
-                                          </Button>
-                                        </Button>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                </span>
-                              </InputGroupButton>
-                            </InputAddonButtonGroup>
-                          </FormFieldHideWrapper>
-                        </FormConditionWrapper>
-                      </SingleField>
-                    </span>
-                  </InputGroup>
-                </InputGroupWrapper>
+                    <ul />
+                    <style>
+                      
+            .react-tree-view .indent-0 {
+                padding-left: calc((1em) * 0);
+            }
+            .react-tree-view .indent-0.no-open-button {
+                padding-left: calc((1em) * 0 + (1em + 4px));
+            }
+            
+                    </style>
+                  </div>
+                </t>
+              </TreeViewBase>
+            </div>
+            <ButtonSet
+              className="bx--modal-footer"
+            >
+              <div
+                className="bx--modal-footer bx--btn-set"
+              >
+                <Button
+                  disabled={false}
+                  kind="secondary"
+                  onClick={[Function]}
+                  size="default"
+                  tabIndex={0}
+                  tooltipAlignment="center"
+                  tooltipPosition="top"
+                  type="button"
+                >
+                  <button
+                    className="bx--btn bx--btn--secondary"
+                    disabled={false}
+                    onClick={[Function]}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Close
+                  </button>
+                </Button>
+                <Button
+                  disabled={true}
+                  kind="primary"
+                  onClick={[Function]}
+                  size="default"
+                  tabIndex={0}
+                  tooltipAlignment="center"
+                  tooltipPosition="top"
+                  type="button"
+                >
+                  <button
+                    className="bx--btn bx--btn--primary bx--btn--disabled"
+                    disabled={true}
+                    onClick={[Function]}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Select
+                  </button>
+                </Button>
               </div>
-            </FormGroup>
-          </Pf3FormGroup>
-        </TextField>
-      </FormFieldHideWrapper>
-    </FormConditionWrapper>
-  </SingleField>
-  <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
-    }
-    onHide={[Function]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={false}
-  >
-    <Modal
-      autoFocus={true}
-      backdrop={true}
-      backdropClassName="modal-backdrop"
-      backdropTransition={[Function]}
-      containerClassName="modal-open"
-      enforceFocus={true}
-      keyboard={true}
-      manager={
-        ModalManager {
-          "add": [Function],
-          "containers": Array [],
-          "data": Array [],
-          "handleContainerOverflow": true,
-          "hideSiblingNodes": true,
-          "isTopModal": [Function],
-          "modals": Array [],
-          "remove": [Function],
-        }
-      }
-      onEntering={[Function]}
-      onExited={[Function]}
-      onHide={[Function]}
-      onMouseUp={[Function]}
-      renderBackdrop={[Function]}
-      restoreFocus={true}
-      show={false}
-      transition={[Function]}
-    />
-  </Modal>
+            </ButtonSet>
+          </div>
+          <span
+            className="bx--visually-hidden"
+            role="link"
+            tabIndex="0"
+          >
+            Focus sentinel
+          </span>
+        </div>
+      </Modal>
+    </fieldset>
+  </FormGroup>
 </TreeViewSelector>
 `;

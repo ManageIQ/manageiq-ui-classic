@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 
-import CodeEditor, { DataDrivenFormCodeEditor } from '../../components/code-editor';
+import CodeEditor from '../../components/code-editor';
 
 jest.mock('@@ddf', () => ({
   useFieldApi: props => ({ meta: {}, input: {}, ...props }),
@@ -13,6 +13,7 @@ describe('CodeEditor component', () => {
   beforeEach(() => {
     initialProps = {
       onChange: jest.fn(),
+      labelText: 'foo',
     };
   });
 
@@ -28,7 +29,7 @@ describe('CodeEditor component', () => {
 
   it('should mount and assign correct props to data driven variant', () => {
     const onChange = jest.fn();
-    const wrapper = mount(<DataDrivenFormCodeEditor {...initialProps} onChange={onChange} />);
+    const wrapper = mount(<CodeEditor {...initialProps} onChange={onChange} />);
     wrapper.find(CodeEditor).props().onChange('foo');
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith('foo');

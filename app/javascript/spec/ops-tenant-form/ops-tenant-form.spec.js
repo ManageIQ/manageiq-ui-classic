@@ -70,93 +70,6 @@ describe('OpstTenantForm', () => {
     done();
   });
 
-  it('should correctly check unique name', async(done) => {
-    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
-      resources: [],
-    });
-    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
-      resources: [{
-        id: 12345,
-        name: 'foo',
-      }],
-    });
-    fetchMock.getOnce('/api/tenants?filter[]=name=unique&expand=resources', {
-      resources: [{
-        id: 12345,
-        name: 'foo',
-      }],
-    });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} ancestry={1} />);
-    });
-    /**
-     * first empty validation
-     */
-    setTimeout(async() => {
-      wrapper.find('input').first().simulate('change', { target: { value: 'foo' } });
-      wrapper.update();
-      /**
-       * second validation with taken value
-       */
-      setTimeout(() => {
-        expect(wrapper.find('.form-group').first().instance().className).toEqual('form-group has-error');
-        wrapper.find('input').first().simulate('change', { target: { value: 'unique' } });
-        wrapper.update();
-        expect(wrapper.find('.form-group').first().instance().className).toEqual('form-group');
-        done();
-      }, 500);
-    }, 500);
-  });
-
-  it('should render configuration which and change name isDisabled property', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
-      name: 'foo',
-      description: 'bar',
-      ancestry: null,
-      use_config_for_attributes: true,
-    });
-    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
-      resources: [],
-    });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    });
-
-    wrapper.update();
-    const pfSwitch = wrapper.find('.pf3-switch');
-    expect(wrapper.find('input').first().props().disabled).toEqual(true);
-    expect(pfSwitch).toHaveLength(1);
-    pfSwitch.find('input').simulate('change', { target: { checked: false } });
-    wrapper.update();
-    expect(!!wrapper.find('input').first().props().disabled).toEqual(false);
-    done();
-  });
-
-  it('should call addFlash when reseting edit form', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
-      name: 'foo',
-      description: 'bar',
-      ancestry: null,
-      use_config_for_attributes: true,
-    });
-    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
-      resources: [],
-    });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    });
-
-    wrapper.update();
-    wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
-    wrapper.update();
-    wrapper.find('button').at(1).simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warn');
-    done();
-  });
-
   it('should call miqRedirectBack when canceling form', async(done) => {
     fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
       resources: [],
@@ -166,7 +79,7 @@ describe('OpstTenantForm', () => {
       wrapper = mount(<OpsTenantForm {...initialProps} />);
     });
 
-    wrapper.find('button').last().simulate('click');
+    wrapper.find('button.bx--btn--secondary').first().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Project was canceled by the user.', 'warning', '/foo/bar');
     done();
   });

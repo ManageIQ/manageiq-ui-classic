@@ -1,12 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CodeEditor component should render correctly 1`] = `
-<div>
+<FormGroup
+  invalid={false}
+  legendText="foo"
+  message={false}
+  messageText=""
+>
   <Controlled
     className="miq-codemirror "
     editorDidMount={[Function]}
     onBeforeChange={[Function]}
-    onChange={[Function]}
+    onChange={[MockFunction]}
     options={
       Object {
         "autoCloseBrackets": true,
@@ -27,48 +32,40 @@ exports[`CodeEditor component should render correctly 1`] = `
       }
     }
   />
-</div>
+  <HelperTextBlock />
+</FormGroup>
 `;
 
 exports[`CodeEditor component should render mode switches 1`] = `
-<div>
-  <FormGroup
-    bsClass="form-group"
-    controlId="radioGroup"
-    disabled={false}
+<FormGroup
+  invalid={false}
+  legendText="foo"
+  message={false}
+  messageText=""
+>
+  <RadioButtonGroup
+    labelPosition="right"
+    name="--undefined--mode"
+    onChange={[Function]}
+    orientation="horizontal"
+    valueSelected="yaml"
   >
-    <div>
-      <Radio
-        bsClass="radio"
-        checked={true}
-        disabled={false}
-        inline={true}
-        key="yaml"
-        name="yaml"
-        onChange={[Function]}
-        title=""
-      >
-        yaml
-      </Radio>
-      <Radio
-        bsClass="radio"
-        checked={false}
-        disabled={false}
-        inline={true}
-        key="json"
-        name="json"
-        onChange={[Function]}
-        title=""
-      >
-        json
-      </Radio>
-    </div>
-  </FormGroup>
+    <ForwardRef(RadioButton)
+      key="yaml"
+      labelText="yaml"
+      value="yaml"
+    />
+    <ForwardRef(RadioButton)
+      key="json"
+      labelText="json"
+      value="json"
+    />
+  </RadioButtonGroup>
   <Controlled
     className="miq-codemirror "
     editorDidMount={[Function]}
     onBeforeChange={[Function]}
-    onChange={[Function]}
+    onChange={[MockFunction]}
     options={
       Object {
         "autoCloseBrackets": true,
@@ -89,5 +86,6 @@ exports[`CodeEditor component should render mode switches 1`] = `
       }
     }
   />
-</div>
+  <HelperTextBlock />
+</FormGroup>
 `;

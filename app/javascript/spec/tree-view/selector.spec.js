@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import FormRenderer from '@data-driven-forms/react-form-renderer';
-import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
+import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import TreeViewSelector from '../../components/tree-view/selector';
 
 const RendererWrapper = ({ initialValue, onSubmit = () => {}, ...props }) => (
@@ -49,7 +49,7 @@ describe('TreeSelector component', () => {
     const wrapper = mount(<RendererWrapper />);
 
     await act(async() => {
-      wrapper.find('button[name="tree-selector-toggle"]').simulate('click');
+      wrapper.find('button.tree-selector-toggle').simulate('click');
     });
 
     await act(async() => {
@@ -59,7 +59,7 @@ describe('TreeSelector component', () => {
 
     await act(async() => {
       wrapper.update();
-      wrapper.find('Modal').find('button.btn-primary').simulate('click');
+      wrapper.find('Modal').find('.bx--modal-footer button.bx--btn--primary').simulate('click');
     });
 
     wrapper.update();
@@ -74,7 +74,7 @@ describe('TreeSelector component', () => {
     expect(wrapper.find(RendererWrapper).find('input').instance().value).toEqual('test');
 
     await act(async() => {
-      wrapper.find('button[name="tree-selector-clear"]').simulate('click');
+      wrapper.find('button.tree-selector-clear').simulate('click');
     });
 
     wrapper.update();

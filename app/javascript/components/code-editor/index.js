@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import {
-  FormGroup,
-  ControlLabel,
-  Radio,
-  HelpBlock,
-  FieldLevelHelp,
-} from 'patternfly-react';
+import { FormGroup, RadioButtonGroup, RadioButton } from 'carbon-components-react';
+import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 
+import { useFieldApi } from '@@ddf';
+import HelperTextBlock from '../../forms/helper-text-block';
 // editor modes
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/yaml/yaml';
@@ -16,39 +13,44 @@ import 'codemirror/mode/yaml/yaml';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 
-import { useFieldApi } from '@@ddf';
-
-import RequiredLabel from '../../forms/required-label';
-
-const getMode = mode => ({
+const getMode = (mode) => ({
   json: { name: 'javascript', json: true },
 })[mode] || mode;
 
-const CodeEditor = ({
-  mode,
-  modes,
-  hasError,
-  onChange,
-  ...props
-}) => {
+const CodeEditor = (props) => {
+  const {
+    labelText,
+    input: { value, onChange, name },
+    FormGroupProps,
+    helperText,
+    meta: { error, warning, touched },
+    validateOnMount,
+    mode,
+    modes,
+    ...rest
+  } = useFieldApi(prepareProps(props));
+
   const [codeMode, setCodeMode] = useState(mode);
   const [editor, setEditor] = useState();
+
   useEffect(() => {
     if (editor) {
       editor.refresh();
     }
   }, [editor]);
+
+  const invalid = (touched || validateOnMount) && error;
+  const warnText = (touched || validateOnMount) && warning;
+
   return (
-    <div>
+    <FormGroup legendText={labelText} {...FormGroupProps}>
       {modes.length > 0 && (
-        <FormGroup controlId="radioGroup" disabled={false}>
-          <div>
-            {modes.map(mode => <Radio checked={codeMode === mode} onChange={() => setCodeMode(mode)} inline key={mode} name={mode}>{mode}</Radio>)}
-          </div>
-        </FormGroup>
+        <RadioButtonGroup name={`--${name}--mode`} valueSelected={codeMode} onChange={(mode) => setCodeMode(mode)}>
+          { modes.map((mode) => <RadioButton value={mode} labelText={mode} key={mode} />) }
+        </RadioButtonGroup>
       )}
       <CodeMirror
-        className={`miq-codemirror ${hasError ? 'has-error' : ''}`}
+        className={`miq-codemirror ${error ? 'has-error' : ''}`}
         options={{
           mode: getMode(codeMode),
           theme: 'eclipse',
@@ -61,57 +63,30 @@ const CodeEditor = ({
         }}
         style={{ height: 'auto' }}
         onBeforeChange={(editor, _data, value) => {
-          onChange(editor, _data, value);
+          onChange(value);
         }}
         onChange={(editor, _data, value) => {
-          onChange(editor, _data, value);
+          onChange(value);
         }}
         editorDidMount={(editor) => {
           setEditor(editor);
         }}
-        {...props}
+        value={value}
+        {...rest}
       />
-    </div>
+      <HelperTextBlock helperText={helperText} errorText={invalid} warnText={warnText} />
+    </FormGroup>
   );
 };
 
 CodeEditor.propTypes = {
   mode: PropTypes.oneOf(['json', 'yaml']),
   modes: PropTypes.arrayOf(PropTypes.string),
-  onChange: PropTypes.func.isRequired,
 };
 
 CodeEditor.defaultProps = {
   mode: 'yaml',
   modes: [],
-};
-
-const CodeGroup = ({
-  input: { value, onChange, name },
-  meta: { error },
-  label,
-  isRequired,
-  helperText,
-  ...props
-}) => (
-  <FormGroup name={name} validationState={error && 'error'}>
-    <ControlLabel>
-      {isRequired ? <RequiredLabel label={label} /> : label }
-      {helperText && <FieldLevelHelp content={helperText} />}
-    </ControlLabel>
-    <CodeEditor
-      onChange={(_editor, _data, value) => onChange(value)}
-      value={value}
-      hasError={!!error}
-      {...props}
-    />
-    {error && <HelpBlock>{error}</HelpBlock>}
-  </FormGroup>
-);
-
-export const DataDrivenFormCodeEditor = (props) => {
-  const { input, meta, ...rest } = useFieldApi(props);
-  return <CodeGroup input={input} meta={meta} {...rest} />;
 };
 
 export default CodeEditor;

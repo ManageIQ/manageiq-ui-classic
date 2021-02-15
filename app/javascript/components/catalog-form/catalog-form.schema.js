@@ -16,53 +16,42 @@ export const asyncValidator = (value, catalogId) =>
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
-function createSchema(options, catalogId) {
-  const fields = [{
-    component: componentTypes.SUB_FORM,
-    title: __('Basic Info'),
-    id: 'basic-info',
-    name: 'basic-info',
-    fields: [{
+const createSchema = (options, catalogId) => ({
+  fields: [
+    {
       component: componentTypes.TEXT_FIELD,
       id: 'name',
       name: 'name',
       validate: [
-        value => asyncValidatorDebounced(value, catalogId),
+        (value) => asyncValidatorDebounced(value, catalogId),
       ],
       label: __('Name'),
       maxLength: 40,
       autoFocus: true,
       validateOnMount: true,
-    }, {
+    },
+    {
       component: componentTypes.TEXT_FIELD,
       id: 'description',
       name: 'description',
       label: __('Description'),
       maxLength: 60,
-    }],
-  }, {
-    component: componentTypes.SUB_FORM,
-    title: __('Assign Catalog Items'),
-    id: 'assign-catalog-items',
-    name: 'assign-catalog-items',
-    fields: [
-      {
-        component: 'dual-list-select',
-        leftTitle: __('Unassigned:'),
-        rightTitle: __('Selected:'),
-        leftId: 'available_fields',
-        rightId: 'selected_fields',
-        allToRight: false,
-        moveLeftTitle: __('Move Selected buttons left'),
-        moveRightTitle: __('Move Selected buttons right'),
-        size: 8,
-        options,
-        id: 'service_templates',
-        name: 'service_templates',
-      },
-    ],
-  }];
-  return { fields };
-}
+    },
+    {
+      component: componentTypes.DUAL_LIST_SELECT,
+      id: 'service_templates',
+      name: 'service_templates',
+      label: __('Assign Catalog Items'),
+      leftTitle: __('Unassigned:'),
+      rightTitle: __('Selected:'),
+      allToRight: false,
+      moveLeftTitle: __('Remove'),
+      moveAllLeftTitle: __('Remove All'),
+      moveRightTitle: __('Add'),
+      moveAllRightTitle: __('Add All'),
+      options,
+    },
+  ],
+});
 
 export default createSchema;

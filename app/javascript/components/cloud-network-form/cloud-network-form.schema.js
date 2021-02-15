@@ -11,10 +11,8 @@ export const providersNetworkTypes = [
   { label: __('VXLAN'), value: 'vxlan' },
 ];
 
-const getTenants = id => API.get(`/api/providers/${id}/cloud_tenants?expand=resources&attributes=id,name`).then(data => [
-  { label: `<${__('Choose')}>` },
-  ...data.resources.map(({ id, name }) => ({ value: id, label: name })),
-]);
+const getTenants = (id) => API.get(`/api/providers/${id}/cloud_tenants?expand=resources&attributes=id,name`).then((data) =>
+  data.resources.map(({ id, name }) => ({ value: id, label: name })));
 
 function createSchema(ems, cloudNetworkId) {
   const dynamicPlacement = ems.map((tenant => ({
@@ -31,6 +29,7 @@ function createSchema(ems, cloudNetworkId) {
     }],
     isDisabled: !!cloudNetworkId,
     loadOptions: () => getTenants(tenant.id),
+    includeEmpty: true,
     condition: {
       when: 'ems_id',
       is: tenant.id,
@@ -208,7 +207,6 @@ function createSchema(ems, cloudNetworkId) {
       id: 'cloud_network_external_facing',
       name: 'external_facing',
       label: __('External Router'),
-      bsSize: 'mini',
       onText: __('Yes'),
       offText: __('No'),
     }, {
@@ -216,7 +214,6 @@ function createSchema(ems, cloudNetworkId) {
       id: 'cloud_network_enabled',
       name: 'enabled',
       label: __('Administrative State'),
-      bsSize: 'mini',
       onText: __('Up'),
       offText: __('Down'),
     }, {
@@ -224,7 +221,6 @@ function createSchema(ems, cloudNetworkId) {
       id: 'cloud_network_shared',
       name: 'shared',
       label: __('Shared'),
-      bsSize: 'mini',
       onText: __('Yes'),
       offText: __('No'),
     }],

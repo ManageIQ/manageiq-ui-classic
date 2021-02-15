@@ -17,62 +17,46 @@ exports[`Catalog form component should render add variant form 1`] = `
       Object {
         "fields": Array [
           Object {
-            "component": "sub-form",
-            "fields": Array [
-              Object {
-                "autoFocus": true,
-                "component": "text-field",
-                "id": "name",
-                "label": "Name",
-                "maxLength": 40,
-                "name": "name",
-                "validate": Array [
-                  [Function],
-                ],
-                "validateOnMount": true,
-              },
-              Object {
-                "component": "text-field",
-                "id": "description",
-                "label": "Description",
-                "maxLength": 60,
-                "name": "description",
-              },
+            "autoFocus": true,
+            "component": "text-field",
+            "id": "name",
+            "label": "Name",
+            "maxLength": 40,
+            "name": "name",
+            "validate": Array [
+              [Function],
             ],
-            "id": "basic-info",
-            "name": "basic-info",
-            "title": "Basic Info",
+            "validateOnMount": true,
           },
           Object {
-            "component": "sub-form",
-            "fields": Array [
+            "component": "text-field",
+            "id": "description",
+            "label": "Description",
+            "maxLength": 60,
+            "name": "description",
+          },
+          Object {
+            "allToRight": false,
+            "component": "dual-list-select",
+            "id": "service_templates",
+            "label": "Assign Catalog Items",
+            "leftTitle": "Unassigned:",
+            "moveAllLeftTitle": "Remove All",
+            "moveAllRightTitle": "Add All",
+            "moveLeftTitle": "Remove",
+            "moveRightTitle": "Add",
+            "name": "service_templates",
+            "options": Array [
               Object {
-                "allToRight": false,
-                "component": "dual-list-select",
-                "id": "service_templates",
-                "leftId": "available_fields",
-                "leftTitle": "Unassigned:",
-                "moveLeftTitle": "Move Selected buttons left",
-                "moveRightTitle": "Move Selected buttons right",
-                "name": "service_templates",
-                "options": Array [
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/44",
-                    "label": "template 44",
-                  },
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/10",
-                    "label": "template 10",
-                  },
-                ],
-                "rightId": "selected_fields",
-                "rightTitle": "Selected:",
-                "size": 8,
+                "label": "template 44",
+                "value": "http://localhost:3000/api/service_templates/44",
+              },
+              Object {
+                "label": "template 10",
+                "value": "http://localhost:3000/api/service_templates/10",
               },
             ],
-            "id": "assign-catalog-items",
-            "name": "assign-catalog-items",
-            "title": "Assign Catalog Items",
+            "rightTitle": "Selected:",
           },
         ],
       }
@@ -108,70 +92,54 @@ exports[`Catalog form component should render edit variant form 1`] = `
       Object {
         "fields": Array [
           Object {
-            "component": "sub-form",
-            "fields": Array [
-              Object {
-                "autoFocus": true,
-                "component": "text-field",
-                "id": "name",
-                "label": "Name",
-                "maxLength": 40,
-                "name": "name",
-                "validate": Array [
-                  [Function],
-                ],
-                "validateOnMount": true,
-              },
-              Object {
-                "component": "text-field",
-                "id": "description",
-                "label": "Description",
-                "maxLength": 60,
-                "name": "description",
-              },
+            "autoFocus": true,
+            "component": "text-field",
+            "id": "name",
+            "label": "Name",
+            "maxLength": 40,
+            "name": "name",
+            "validate": Array [
+              [Function],
             ],
-            "id": "basic-info",
-            "name": "basic-info",
-            "title": "Basic Info",
+            "validateOnMount": true,
           },
           Object {
-            "component": "sub-form",
-            "fields": Array [
+            "component": "text-field",
+            "id": "description",
+            "label": "Description",
+            "maxLength": 60,
+            "name": "description",
+          },
+          Object {
+            "allToRight": false,
+            "component": "dual-list-select",
+            "id": "service_templates",
+            "label": "Assign Catalog Items",
+            "leftTitle": "Unassigned:",
+            "moveAllLeftTitle": "Remove All",
+            "moveAllRightTitle": "Add All",
+            "moveLeftTitle": "Remove",
+            "moveRightTitle": "Add",
+            "name": "service_templates",
+            "options": Array [
               Object {
-                "allToRight": false,
-                "component": "dual-list-select",
-                "id": "service_templates",
-                "leftId": "available_fields",
-                "leftTitle": "Unassigned:",
-                "moveLeftTitle": "Move Selected buttons left",
-                "moveRightTitle": "Move Selected buttons right",
-                "name": "service_templates",
-                "options": Array [
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/44",
-                    "label": "template 44",
-                  },
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/10",
-                    "label": "template 10",
-                  },
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/2",
-                    "label": "template 2",
-                  },
-                  Object {
-                    "key": "http://localhost:3000/api/service_templates/6",
-                    "label": "template 6",
-                  },
-                ],
-                "rightId": "selected_fields",
-                "rightTitle": "Selected:",
-                "size": 8,
+                "label": "template 44",
+                "value": "http://localhost:3000/api/service_templates/44",
+              },
+              Object {
+                "label": "template 10",
+                "value": "http://localhost:3000/api/service_templates/10",
+              },
+              Object {
+                "label": "template 2",
+                "value": "http://localhost:3000/api/service_templates/2",
+              },
+              Object {
+                "label": "template 6",
+                "value": "http://localhost:3000/api/service_templates/6",
               },
             ],
-            "id": "assign-catalog-items",
-            "name": "assign-catalog-items",
-            "title": "Assign Catalog Items",
+            "rightTitle": "Selected:",
           },
         ],
       }

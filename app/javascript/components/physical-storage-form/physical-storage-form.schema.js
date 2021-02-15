@@ -23,6 +23,7 @@ const createSchema = (emsId, setEmsId) => ({
       label: __('Provider:'),
       isRequired: true,
       loadOptions: loadProviders,
+      includeEmpty: true,
       onChange: value => setEmsId(value),
       validate: [{ type: validatorTypes.REQUIRED }],
     },
@@ -42,6 +43,7 @@ const createSchema = (emsId, setEmsId) => ({
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadFamilies(emsId) : Promise.resolve([])),
+      includeEmpty: true,
       key: emsId,
       condition: {
         when: 'ems_id',

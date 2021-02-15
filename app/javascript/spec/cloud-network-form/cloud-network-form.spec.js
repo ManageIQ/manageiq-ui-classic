@@ -145,7 +145,7 @@ describe('Cloud Network form component', () => {
       setImmediate(() => {
         wrapper.update();
         const button = wrapper.find('button').last();
-        button.simulate('click');
+        wrapper.find('button.bx--btn--secondary').first().simulate('click');
         expect(spyMiqAjaxButton).toHaveBeenCalledWith('/cloud_network/create/new?button=cancel');
         done();
       });

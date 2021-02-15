@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import FormRenderer from '@data-driven-forms/react-form-renderer';
-import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
+import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 
 const RendererWrapper = ({ asyncValidate, onSubmit = () => {}, ...props }) => (
@@ -78,7 +78,7 @@ describe('Async credentials component', () => {
 
     wrapper.update();
 
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation failed');
+    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation failed');
 
     done();
   });
@@ -94,10 +94,10 @@ describe('Async credentials component', () => {
 
     wrapper.update();
 
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
+    expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
+    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
 
     done();
   });
@@ -113,13 +113,13 @@ describe('Async credentials component', () => {
 
     wrapper.update();
 
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
+    expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation Required');
+    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
     wrapper.update();
-    expect(wrapper.find('span.help-block').text()).toEqual('Validation successful');
+    expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');
 
     done();
   });
