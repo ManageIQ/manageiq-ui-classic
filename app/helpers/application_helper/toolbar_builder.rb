@@ -417,7 +417,7 @@ class ApplicationHelper::ToolbarBuilder
 
     url_parm_hash = preprocess_url_param(url_parm)
     query_string.merge!(url_parm_hash)
-    URI.decode("?#{query_string.to_query}")
+    URI::DEFAULT_PARSER.unescape("?#{query_string.to_query}")
   end
 
   def preprocess_url_param(url_parm)
@@ -425,7 +425,7 @@ class ApplicationHelper::ToolbarBuilder
     parse_ampersand = /^&/.match(url_parm)
     url_parm = parse_questionmark.post_match if parse_questionmark.present?
     url_parm = parse_ampersand.post_match if parse_ampersand.present?
-    encoded_url = URI.encode(url_parm)
+    encoded_url = URI::DEFAULT_PARSER.escape(url_parm)
     Rack::Utils.parse_query(URI("?#{encoded_url}").query)
   end
 
