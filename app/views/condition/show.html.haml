@@ -69,23 +69,9 @@
         %table.table.table-striped.table-bordered.table-hover
           %tbody
             - @condition_policies.each do |p|
-              - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
-              %tr{:title => _("Click to view Policy")}
+              %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
+                  :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
                 %td.table-view-pf-select
                   %i{:class => p.decorate.fonticon}
                 %td
                   = p.description
-        - if !@edit
-          %h3= _("Assigned to Policies")
-          - if @condition_policies.empty?
-            = render :partial => 'layouts/info_msg', :locals => {:message => _("This Condition is not assigned to any Policies.")}
-          - else
-            %table.table.table-striped.table-bordered.table-hover
-              %tbody
-                - @condition_policies.each do |p|
-                  - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
-                  %tr{:title => _("Click to view Policy")}
-                    %td.table-view-pf-select
-                      %i{:class => p.decorate.fonticon}
-                    %td
-                      = p.description

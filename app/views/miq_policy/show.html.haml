@@ -57,7 +57,8 @@
             %th= _("Scopes / Expressions")
         %tbody
           - policy_conditions.each do |c|
-            %tr
+            %tr{:title => _("View this Condition"),
+              :onclick => "DoNav('/condition/show/#{c.id}');"}
               %td.table-view-pf-select
                 %i{:class => c.decorate.fonticon}
               %td
@@ -90,9 +91,11 @@
         %tbody
           - policy_events.each do |e|
             %tr
-              %td.table-view-pf-select
+              %td.table-view-pf-select{:title => _("View this Event"),
+              :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"}
                 %i{:class => e.decorate.try(:fonticon)}
-              %td
+              %td{:title => _("View this Event"),
+              :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"}
                 = h(e.description)
               %td
                 - ta = @record.actions_for_event(e, :success)
@@ -105,7 +108,7 @@
                       %tbody
                         - ta.each do |a|
                           %tr
-                            %td
+                            %td{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{a.id}');"}
                               %span.pficon.pficon-ok
                               = h(a.description)
                   - unless fa.empty?
@@ -113,7 +116,7 @@
                       %tbody
                         - fa.each do |a|
                           %tr
-                            %td
+                            %td{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{a.id}');"}
                               %span.pficon.pficon-close
                               = h(a.description)
       %hr
@@ -133,8 +136,8 @@
       %table.table.table-striped.table-bordered.table-hover
         %tbody
           - policy_profiles.each do |pp|
-            - id = "pp-#{pp.id}"
-            %tr
+            %tr{:title => _("View this Policy Profile"),
+              :onclick => "DoNav('/miq_policy_set/show/#{pp.id}');"}
               %td.table-view-pf-select
                 %i{:class => pp.decorate.fonticon}
               %td

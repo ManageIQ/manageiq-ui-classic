@@ -58,9 +58,9 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Automation")
     end
 
-    it "when layout likes 'miq_policy*'" do
-      @layout = "miq_policy_some_thing"
-      expect(subject).to eq(title + ": Control")
+    it "when layout = 'miq_policy'" do
+      @layout = "miq_policy"
+      expect(subject).to eq(title + ": Policies")
     end
 
     it "when layout = 'miq_capacity_utilization'" do

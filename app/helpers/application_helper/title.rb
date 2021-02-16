@@ -97,8 +97,6 @@ module ApplicationHelper
       # Specific titles for groups of layouts
       when /^miq_ae_/
         _("Automation")
-      when /^miq_policy/
-        _("Control")
       when /^miq_capacity_utilization/
         _("Utilization")
       when /^miq_request/

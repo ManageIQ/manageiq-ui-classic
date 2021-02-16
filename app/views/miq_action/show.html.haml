@@ -225,17 +225,17 @@
           = h(@cats)
     %hr
 
-    %h3= _("Assigned to Policies")
-    - if @action_policies
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          - @action_policies.each do |p|
-            %tr
-              %td.table-view-pf-select
-                %i{:class => p.decorate.fonticon}
-              %td
-                = p.description
-    - else
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("This Action is not assigned to any Policies.")}
+  %h3= _("Assigned to Policies")
+  - if @action_policies
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        - @action_policies.each do |p|
+          %tr{:title => _("View this %{model} Policy"), :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
+            %td.table-view-pf-select
+              %i{:class => p.decorate.fonticon}
+            %td
+              = p.description
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("This Action is not assigned to any Policies.")}
 
-    %hr
+  %hr

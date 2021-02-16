@@ -183,20 +183,20 @@
             = h(@alert.options[:notifications][:automate][:event_name])
     %hr
   -# Alert Profiles alert is assigned to
-  %tr
-    %td
-      %h3= _('Belongs to Alert Profiles')
-      - if @alert_profiles.blank?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not assigned to any Alert Profiles.")}
-      - else
-        %table
-          %tbody
-            - @alert_profiles.each do |ap|
-              %tr
-                %td
-                  %i.pficon.pficon-warning-triangle-o
-                %td
-                  = ap.description
+  %h3= _('Belongs to Alert Profiles')
+  - if @alert_profiles.blank?
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not assigned to any Alert Profiles.")}
+  - else
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        - @alert_profiles.each do |ap|
+          %tr{:title => _("View this Alert Profile"), :onclick => "DoNav('/miq_alert_set/show/#{ap.id}');"}
+            %td.table-view-pf-select
+              %i.pficon.pficon-warning-triangle-o
+            %td
+              = h(ap.description)
+  %hr
+
   -# Show any owning actions
   - unless @alert.owning_miq_actions.empty?
     %tr
@@ -208,8 +208,7 @@
           %table.table.table-striped.table-bordered.table-hover
             %tbody
               - @alert.owning_miq_actions.each do |oa|
-                - id = "a-#{oa.id}"
-                %tr
+                %tr{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{oa.id}');"}
                   %td.table-view-pf-select
                     %i{:class => oa.decorate.fonticon}
                   %td.table-view-pf-select
