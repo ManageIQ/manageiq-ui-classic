@@ -7,6 +7,7 @@ import { useFieldApi } from '@@ddf';
 const SelectWithOnChange = ({
   includeEmpty,
   loadOptions: _loadOptions,
+  options: _options,
   onChange,
   placeholder,
   ...props
@@ -19,6 +20,19 @@ const SelectWithOnChange = ({
         onChange(value);
       }
     }, [value]);
+  }
+
+  // Add a dummy placeholder field to the list of the static options
+  if (!_loadOptions) {
+    const options = includeEmpty !== true ? _options : [
+      {
+        label: placeholder,
+        value: undefined,
+      },
+      ..._options,
+    ];
+
+    return <components.Select placeholder={placeholder} options={options} {...props} />;
   }
 
   // Add a dummy placeholder field to the list of the dynamically loaded options
@@ -37,6 +51,10 @@ SelectWithOnChange.propTypes = {
   includeEmpty: PropTypes.bool,
   isDisabled: PropTypes.bool,
   loadOptions: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  })),
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
 };
@@ -46,6 +64,7 @@ SelectWithOnChange.defaultProps = {
   isDisabled: undefined,
   loadOptions: undefined,
   onChange: undefined,
+  options: undefined,
   placeholder: `<${__('Choose')}>`,
 };
 
