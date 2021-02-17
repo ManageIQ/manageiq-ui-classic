@@ -37,7 +37,7 @@
     "@data-driven-forms/pf3-component-mapper": "~2.20.3",
     "@data-driven-forms/react-form-renderer": "~2.20.3",
     "@manageiq/react-ui-components": "~0.11.70",
-    "@manageiq/ui-components": "1.4.4",
+    "@manageiq/ui-components": "~1.5.0",
     "@novnc/novnc": "~1.2.0",
     "@pf3/select": "~1.12.6",
     "@pf3/timeline": "~1.0.8",
