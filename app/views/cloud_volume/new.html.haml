@@ -1,16 +1,6 @@
-%form#form_div{:name           => "angularForm",
-               'ng-controller' => "cloudVolumeFormController as vm",
-               "ng-show"       => "vm.afterGet",
-               "ng-cloak"      => "",
-               "miq-form"      => true,
-               "model"         => "vm.cloudVolumeModel",
-               "model-copy"    => "vm.modelCopy"}
-  = render :partial => "layouts/flash_msg"
-  .form-horizontal
-    = render :partial => "common_new_edit"
+= render :partial => "layouts/flash_msg"
 
-:javascript
-  ManageIQ.angular.app.value('cloudVolumeFormId', 'new');
-  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id).to_s || "undefined"}');
-  ManageIQ.angular.app.value('cloudVolumeFormOperation', 'NEW');
-  miq_bootstrap('#form_div');
+- if @storage_manager
+    = react 'CloudVolumeForm', :storageManagerId => @storage_manager.id.to_s
+- else
+    = react 'CloudVolumeForm'
