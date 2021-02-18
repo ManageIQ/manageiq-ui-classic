@@ -193,6 +193,7 @@ Rails.application.routes.draw do
 
     :configuration_script => {
       :get  => %w(
+        configuration_script_service_dialog
         download_summary_pdf
         show
         show_list
