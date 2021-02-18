@@ -399,8 +399,6 @@ class TreeBuilder
     :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
     ### Configured Systems
     :automation_manager_cs_filter    => "TreeBuilderAutomationManagerConfiguredSystems",
-    ### Job Templates
-    :configuration_scripts           => "TreeBuilderAutomationManagerConfigurationScripts",
 
     ## Automate
     ### Explorer
@@ -441,7 +439,6 @@ class TreeBuilder
     "azs"  => "ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate",
     "at"   => "ManageIQ::Providers::AnsibleTower::AutomationManager",
     "cl"   => "Classification",
-    "cf"   => "ConfigurationScript",
     "cfp"  => "ConfigurationScriptPayload",
     "cw"   => "ConfigurationWorkflow",
     "cnt"  => "Container",

@@ -945,8 +945,6 @@ module ApplicationHelper
     case tree
     when :automation_manager_cs_filter_tree, :automation_manager_providers_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
-    when :configuration_scripts_tree
-      "ConfigurationScript"
     end
   end
 
