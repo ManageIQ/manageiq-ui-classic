@@ -11,7 +11,8 @@
             :onclick => "miqSparkle(false);$('#lightbox-panel').fadeOut(300);"}
           %i.fa.fa-close.pull-right
     .card-pf-body
-      = chart_remote('dashboard', :id => 'my_chart', :zoomed => true)
+      - chart_data = render_chart
+      = react('DashboardWidget',:data => chart_data, :id => "1")
     %widget-footer{:id => "zoomed_chart_footer_#{widget.id}", 'widget-last-run' => last_run, 'widget-next-run' => next_run}
 :javascript
   miq_bootstrap("#zoomed_chart_footer_#{widget.id}");

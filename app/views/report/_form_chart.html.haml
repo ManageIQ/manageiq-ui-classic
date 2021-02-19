@@ -62,5 +62,8 @@
           "data-miq_sparkle_off"      => true,
           "data-miq_observe_checkbox" => {:url => url}.to_json)
   - unless @edit[:new][:graph_type].blank?
-    = _('* Some charts my not produce desired results with a single sort field')
+    = _('* Some charts may not produce desired results with a single sort field')
+  %br
+  - if %w[Donut Pie].include?(@edit[:new][:graph_type])
+    = _('* Pie and Donut charts are not recommended for small percentages because the labels may overlap.')
   %hr
