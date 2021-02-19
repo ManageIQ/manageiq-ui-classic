@@ -1,6 +1,7 @@
 -# locals: chart, html, report
 - if chart
-  = chart_remote('report', :id => 'my_chart', :zoomed => false)
+  - chart_data = render_chart
+  = react('DashboardWidget',:data => chart_data, :id => "1")
 
   - if !html && report.filter_summary
     = report.filter_summary

@@ -31,6 +31,8 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
+    "@carbon/charts": "^0.41.27",
+    "@carbon/charts-react": "^0.41.27",
     "@carbon/icons-react": "^10.20.0",
     "@carbon/themes": "^10.23.0",
     "@data-driven-forms/pf3-component-mapper": "~2.18.3",

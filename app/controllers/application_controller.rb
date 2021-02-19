@@ -270,9 +270,9 @@ class ApplicationController < ActionController::Base
     end
 
     rpt.to_chart(settings(:display, :reporttheme), true, MiqReport.graph_options)
-    render ManageIQ::Reporting::Charting.render_format => rpt.chart
+    rpt.chart
   end
-
+  helper_method :render_chart
   # Private method for processing params.
   # params can contain these options:
   # @param params parameters object.

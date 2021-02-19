@@ -1,4 +1,4 @@
 #chart_sample_div
   - unless @edit[:new][:graph_type].blank?
     %fieldset
-      = chart_remote('report', :action => 'sample_chart', :id => "my_chart", :zoomed => false)
+      = react('ReportChartWidget',:data => ManageIQ::Reporting::Charting.sample_chart(@edit[:new], settings(:display, :reporttheme)), :id => "my_chart")
