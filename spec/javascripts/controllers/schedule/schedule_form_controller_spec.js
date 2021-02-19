@@ -1,9 +1,9 @@
 describe('scheduleFormController', function() {
-  var $scope, $controller, $httpBackend, miqService, timerOptionService, oneMonthAgo;
+  var $scope, $controller, $httpBackend, miqService, timerOptionService, oneMonthAgo, uriPrefixes;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _miqService_, _timerOptionService_) {
+  beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _miqService_, _timerOptionService_,) {
     miqService = _miqService_;
     timerOptionService = _timerOptionService_;
     spyOn(miqService, 'showButtons');
@@ -20,6 +20,7 @@ describe('scheduleFormController', function() {
       month: 5,
       date: 7
     };
+    uriPrefixes = {FileDepotSmb: "smb", FileDepotNfs: "nfs", FileDepotS3: "s3", FileDepotSwift: "swift"};
 
     // For the initialization scheduleDate test. This freezes time to 1/2/2014.
     var fakeToday = new Date(2014, 0, 2);
@@ -30,6 +31,7 @@ describe('scheduleFormController', function() {
       $scope: $scope,
       scheduleFormId: 'new',
       oneMonthAgo: oneMonthAgo,
+      uriPrefixes: uriPrefixes,
       miqService: miqService,
       timerOptionService: timerOptionService
     });
@@ -200,7 +202,7 @@ describe('scheduleFormController', function() {
 
           $scope.filterValuesEmpty = false;
 
-          $controller = _$controller_('scheduleFormController', {$scope: $scope, storageTable: 'Potatostore', scheduleFormId: '12345', oneMonthAgo: oneMonthAgo});
+          $controller = _$controller_('scheduleFormController', {$scope: $scope, storageTable: 'Potatostore', scheduleFormId: '12345', oneMonthAgo: oneMonthAgo, uriPrefixes: uriPrefixes});
           $httpBackend.flush();
         }));
 
@@ -221,7 +223,7 @@ describe('scheduleFormController', function() {
 
           $httpBackend.whenGET('/ops/schedule_form_fields/12345').respond(scheduleFormResponse);
 
-          $controller = _$controller_('scheduleFormController', {$scope: $scope, storageTable: 'Potatostore', scheduleFormId: '12345', oneMonthAgo: oneMonthAgo});
+          $controller = _$controller_('scheduleFormController', {$scope: $scope, storageTable: 'Potatostore', scheduleFormId: '12345', oneMonthAgo: oneMonthAgo, uriPrefixes: uriPrefixes});
           $httpBackend.flush();
         }));
 
@@ -243,7 +245,7 @@ describe('scheduleFormController', function() {
 
           $httpBackend.whenGET('/ops/schedule_form_fields/12345').respond(scheduleFormResponse);
 
-          $controller = _$controller_('scheduleFormController', {$scope: $scope, scheduleFormId: '12345', oneMonthAgo: oneMonthAgo});
+          $controller = _$controller_('scheduleFormController', {$scope: $scope, scheduleFormId: '12345', oneMonthAgo: oneMonthAgo, uriPrefixes: uriPrefixes});
           $httpBackend.flush();
         }));
 
@@ -553,7 +555,7 @@ describe('scheduleFormController', function() {
   describe('#logProtocolChanged', function() {
     describe('when the log protocol is samba', function() {
       beforeEach(function() {
-        $scope.scheduleModel.log_protocol = 'Samba';
+        $scope.scheduleModel.log_protocol = 'FileDepotSmb';
       });
 
       it('sets the uriPrefix to smb', function() {
@@ -564,7 +566,7 @@ describe('scheduleFormController', function() {
 
     describe('when the log protocol is network file system', function() {
       beforeEach(function() {
-        $scope.scheduleModel.log_protocol = 'Network File System';
+        $scope.scheduleModel.log_protocol = 'FileDepotNfs';
       });
 
       it('sets the uriPrefix to nfs', function() {
@@ -582,7 +584,7 @@ describe('scheduleFormController', function() {
       });
 
       it('sets the log protocol to network file system', function() {
-        expect($scope.scheduleModel.log_protocol).toEqual('Network File System');
+        expect($scope.scheduleModel.log_protocol).toEqual('FileDepotNfs');
       });
 
       it('sets filter values empty to true', function() {
@@ -648,7 +650,7 @@ describe('scheduleFormController', function() {
 
       describe('when the log protocol is Samba', function() {
         beforeEach(function() {
-          $scope.scheduleModel.log_protocol = 'Samba';
+          $scope.scheduleModel.log_protocol = 'FileDepotSmb';
         });
 
         it('returns true', function() {
@@ -658,7 +660,7 @@ describe('scheduleFormController', function() {
 
       describe('when the log protocol is S3', function() {
         beforeEach(function() {
-          $scope.scheduleModel.log_protocol = 'AWS S3';
+          $scope.scheduleModel.log_protocol = 'FileDepotS3';
         });
 
         it('returns true', function() {

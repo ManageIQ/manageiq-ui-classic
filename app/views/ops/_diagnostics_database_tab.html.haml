@@ -74,7 +74,7 @@
       = _("Type")
     .col-md-8
       - default_option = [_("<No Depot>"), nil]
-      = select_tag('log_protocol', options_for_select([default_option] + @database_backup_options_for_select),
+      = select_tag('log_protocol', options_for_select([default_option].to_h.merge(@database_backup_options_for_select.invert)),
                   "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
@@ -86,7 +86,7 @@
                               :ng_reqd_uri         => true,
                               :ng_model_uri        => "vm.diagnosticsDatabaseModel.uri",
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
-                              :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
+                              :uri_prefix_display  => "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
   %apiversion{'ng-if' => 'vm.swiftSecurityProtocolSelect()'}
     .form-group{"ng-class" => "{'has-error': angularForm.keystone_api_version.$invalid}"}
@@ -199,4 +199,5 @@
                     :primary         => 'true'}
 
 :javascript
+  ManageIQ.angular.app.value('uriPrefixes', #{ @database_backup_uri_prefixes.to_json });
   miq_bootstrap('#form_div');

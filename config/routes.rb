@@ -2445,7 +2445,6 @@ Rails.application.routes.draw do
         fetch_log
         fetch_production_log
         log_collection_form_fields
-        log_protocol_changed
         pglogical_subscriptions_form_fields
         schedule_form_fields
         tenant_quotas_form_fields

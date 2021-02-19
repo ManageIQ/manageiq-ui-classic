@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, $attrs, miqService, miqDBBackupService) {
+ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'uriPrefixes', function($http, $scope, $attrs, miqService, miqDBBackupService, uriPrefixes) {
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
@@ -79,7 +79,8 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     if (vm.logProtocolSelected()) {
       $scope.$broadcast('setNewRecord');
       $scope.$broadcast('reactiveFocus');
-      miqDBBackupService.logProtocolChanged(vm.diagnosticsDatabaseModel);
+      miqDBBackupService.resetAll(vm.diagnosticsDatabaseModel);
+      vm.diagnosticsDatabaseModel.uri_prefix = uriPrefixes[vm.diagnosticsDatabaseModel.log_protocol];
     }
   };
 
@@ -100,16 +101,16 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
   };
 
   vm.regionSelect = function() {
-    return vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3';
+    return vm.diagnosticsDatabaseModel.log_protocol === 'FileDepotS3';
   };
 
   vm.regionRequired = function() {
-    return (vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3' &&
+    return (vm.diagnosticsDatabaseModel.log_protocol === 'FileDepotS3' &&
       (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
   };
 
   vm.swiftSecurityProtocolSelect = function() {
-    return vm.diagnosticsDatabaseModel.action_typ === 'db_backup' && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
+    return vm.diagnosticsDatabaseModel.action_typ === 'db_backup' && vm.diagnosticsDatabaseModel.log_protocol === 'FileDepotSwift';
   };
 
   vm.swiftSecurityProtocolRequired = function() {
@@ -163,10 +164,10 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
 
   function diagnosticsLogProtocol(prefix) {
     return {
-      nfs: 'Network File System',
-      smb: 'Samba',
-      s3: 'AWS S3',
-      swift: 'OpenStack Swift',
+      nfs: 'FileDepotNfs',
+      smb: 'FileDepotSmb',
+      s3: 'FileDepotS3',
+      swift: 'FileDepotSwift',
     }[prefix] || '';
   }
 

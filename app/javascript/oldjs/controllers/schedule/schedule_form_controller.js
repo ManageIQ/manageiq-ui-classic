@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', 'API', '$q', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService, API, $q) {
+ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'uriPrefixes', 'miqService', 'timerOptionService', 'API', '$q', function($http, $scope, scheduleFormId, oneMonthAgo, uriPrefixes, miqService, timerOptionService, API, $q) {
   var init = function() {
     $scope.scheduleModel = {
       action_typ: '',
@@ -226,20 +226,20 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.credsProtocol = function() {
-    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3' || $scope.scheduleModel.log_protocol === 'OpenStack Swift');
+    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'FileDepotSmb' || $scope.scheduleModel.log_protocol === 'FileDepotS3' || $scope.scheduleModel.log_protocol === 'FileDepotSwift');
   };
 
   $scope.s3Backup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'AWS S3';
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'FileDepotS3';
   };
 
   $scope.swiftBackup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'FileDepotSwift';
   };
 
   $scope.actionTypeChanged = function() {
     if ($scope.dbBackup()) {
-      $scope.scheduleModel.log_protocol = 'Network File System';
+      $scope.scheduleModel.log_protocol = 'FileDepotNfs';
       $scope.scheduleModel.uri_prefix = 'nfs';
       $scope.scheduleModel.filter_typ = null;
     } else if ($scope.automateRequest()) {
@@ -322,24 +322,14 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.logProtocolChanged = function() {
-    if ($scope.scheduleModel.log_protocol === 'Samba') {
-      $scope.scheduleModel.uri_prefix = 'smb';
-    }
+    $scope.scheduleModel.uri_prefix = uriPrefixes[$scope.scheduleModel.log_protocol];
 
-    if ($scope.scheduleModel.log_protocol === 'Network File System') {
-      $scope.updateLogProtocol('nfs');
-    }
-
-    if ($scope.scheduleModel.log_protocol === 'AWS S3') {
-      $scope.updateLogProtocol('s3');
-    }
-    if ($scope.scheduleModel.log_protocol === 'OpenStack Swift') {
-      $scope.updateLogProtocol('swift');
+    if (['FileDepotNfs', 'FileDepotSwift', 'FileDepotS3'].includes($scope.scheduleModel.log_protocol)) {
+      $scope.updateLogProtocol();
     }
   };
 
-  $scope.updateLogProtocol = function(prefix) {
-    $scope.scheduleModel.uri_prefix = prefix;
+  $scope.updateLogProtocol = function() {
     $scope.$broadcast('resetClicked');
     $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
     $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
@@ -417,7 +407,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.regionSelect = function() {
-    return $scope.scheduleModel.log_protocol === 'AWS S3';
+    return $scope.scheduleModel.log_protocol === 'FileDepotS3';
   };
 
   $scope.regionRequired = function() {
@@ -425,7 +415,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.swiftSecurityProtocolSelect = function() {
-    return $scope.scheduleModel.action_typ === 'db_backup' && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+    return $scope.scheduleModel.action_typ === 'db_backup' && $scope.scheduleModel.log_protocol === 'FileDepotSwift';
   };
 
   $scope.swiftSecurityProtocolRequired = function() {

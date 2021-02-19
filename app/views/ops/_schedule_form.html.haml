@@ -64,4 +64,5 @@
                               {year: '#{@one_month_ago[:year]}',
                                month: '#{@one_month_ago[:month]}',
                                date: '#{@one_month_ago[:date]}'});
+  ManageIQ.angular.app.value('uriPrefixes', #{ @database_backup_uri_prefixes.to_json });
   miq_bootstrap('#form_div');
