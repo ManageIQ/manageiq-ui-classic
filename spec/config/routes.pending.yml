@@ -278,6 +278,9 @@ ConfigurationProfileController:
 - index
 - quick_search
 - reload
+ConfigurationScriptController:
+- index
+- reload
 ConfiguredSystemController:
 - dialog_field_changed
 - dialog_form_button_pressed

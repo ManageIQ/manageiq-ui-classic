@@ -26,12 +26,12 @@ class ConfigurationScriptController < ApplicationController
   end
 
   def download_data
-    assert_privileges('configuration_script_view')
+    assert_privileges('configuration_script_show_list')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('configuration_script_view')
+    assert_privileges('configuration_script_show')
     super
   end
 
@@ -48,17 +48,6 @@ class ConfigurationScriptController < ApplicationController
     [%i[properties tags]]
   end
   helper_method :textual_group_list
-
-  def locals_for_service_dialog
-    {:action_url => 'service_dialog',
-     :no_reset   => true,
-     :record_id  => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]}
-  end
-
-  def update_service_dialog_partials(presenter)
-    presenter.update(:main_div, r[:partial => 'configscript_service_dialog',
-                                  :locals  => locals_for_service_dialog])
-  end
 
   def get_session_data
     @title = _("Templates")

@@ -31,10 +31,6 @@ describe AutomationManagerController do
     [@ans_configured_system, @ans_configured_system2a, @ans_configured_system2b].each do |cs|
       cs.tag_with(tags, :namespace => '')
     end
-
-    @ans_job_template1 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager1.id)
-    @ans_job_template2 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager2.id)
-    @ans_job_template3 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager1.id)
   end
 
   it "renders index" do
@@ -45,11 +41,11 @@ describe AutomationManagerController do
   end
 
   it "renders explorer" do
-    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
 
     get :explorer
     accords = controller.instance_variable_get(:@accords)
-    expect(accords.size).to eq(3)
+    expect(accords.size).to eq(2)
     breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
     expect(breadcrumbs[0]).to include(:url => '/automation_manager/show_list')
     expect(response.status).to eq(200)
@@ -57,7 +53,7 @@ describe AutomationManagerController do
   end
 
   it "renders explorer sorted by url" do
-    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
     FactoryBot.create(:provider_ansible_tower, :zone => zone)
     FactoryBot.create(:provider_ansible_tower, :zone => zone)
 
@@ -188,7 +184,7 @@ describe AutomationManagerController do
   context "renders right cell text" do
     before do
       right_cell_text = nil
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_pages)
       allow(controller).to receive(:build_listnav_search_list)
@@ -224,7 +220,7 @@ describe AutomationManagerController do
     automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
     automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
-    login_as user_with_feature(%w[automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
+    login_as user_with_feature(%w[automation_manager_providers providers_accord automation_manager_configured_system])
     TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", {})
     objects = tree_builder.send(:x_get_tree_roots)
@@ -240,29 +236,11 @@ describe AutomationManagerController do
     expect(objects).to match_array(expected_objects)
   end
 
-  it "builds ansible tower job templates tree" do
-    login_as user_with_feature(%w[automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
-    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, controller.instance_variable_get(:@sb))
-    tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", {})
-    objects = tree_builder.send(:x_get_tree_roots)
-    expect(objects).to include(@automation_manager1)
-    expect(objects).to include(@automation_manager2)
-  end
-
-  it "constructs the ansible tower job templates tree node" do
-    login_as user_with_feature(%w[providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
-    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, controller.instance_variable_get(:@sb))
-    tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", {})
-    objects = tree_builder.send(:x_get_tree_cmat_kids, @automation_manager1, false)
-    expect(objects).to include(@ans_job_template1)
-    expect(objects).to include(@ans_job_template3)
-  end
-
   context "renders tree_select" do
     before do
       get :explorer
       right_cell_text = nil
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_pages)
       allow(controller).to receive(:build_listnav_search_list)
@@ -274,39 +252,6 @@ describe AutomationManagerController do
       allow(controller).to receive(:items_per_page).and_return(20)
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
-    end
-
-    it "renders tree_select for ansible tower job templates tree node" do
-      allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.params = {:id => "configuration_scripts"}
-      controller.send(:accordion_select)
-      controller.params = {:id => "at-#{@automation_manager1.id}"}
-      controller.send(:tree_select)
-      # view = controller.instance_variable_get(:@view)
-      show_adv_search = controller.instance_variable_get(:@show_adv_search)
-      expect(show_adv_search).to eq(true)
-      # expect(view.table.data.size).to eq(2)
-      expect(show_adv_search).to eq(true)
-
-      # expect(view.table.data[0].name).to eq("ConfigScript1")
-      # expect(view.table.data[1].name).to eq("ConfigScript3")
-    end
-
-    it 'renders tree_select for one job template' do
-      record = FactoryBot.create(:ansible_configuration_script,
-                                  :name        => "ConfigScriptTest1",
-                                  :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
-                                                               'type' => 'text'}]})
-      stub_user(:features => :all)
-      allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      controller.params = {:id => "cf-#{record.id}"}
-      controller.send(:tree_select)
-      show_adv_search = controller.instance_variable_get(:@show_adv_search)
-      title = controller.instance_variable_get(:@right_cell_text)
-      expect(show_adv_search).to eq(false)
-      expect(title).to eq('Job Template (Ansible Tower) "ConfigScriptTest1"')
     end
 
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do
@@ -326,15 +271,6 @@ describe AutomationManagerController do
       controller.params = {:id => "automation_manager_cs_filter"}
       expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :gtl_dbname => "automation_manager_configured_systems").and_call_original
       allow(controller).to receive(:build_listnav_search_list)
-      controller.send(:accordion_select)
-    end
-
-    it "calls get_view with the associated dbname for the Configuration Scripts accordion" do
-      stub_user(:features => :all)
-      allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      controller.params = {:id => "configuration_scripts"}
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript", :gtl_dbname => "automation_manager_configuration_scripts").and_call_original
       controller.send(:accordion_select)
     end
   end
@@ -411,34 +347,6 @@ describe AutomationManagerController do
     end
   end
 
-  context "ansible tower job template accordion " do
-    before do
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
-      controller.instance_variable_set(:@right_cell_text, nil)
-    end
-
-    render_views
-
-    it 'can render details for a job template' do
-      @record = FactoryBot.create(:ansible_configuration_script,
-                                   :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
-                                                                'min' => nil, 'default' => nil, 'max' => nil,
-                                                                'question_name' => 'Survey', 'required' => false,
-                                                                'variable' => 'test', 'choices' => nil,
-                                                                'type' => 'text'}]})
-      tree_node_id = "cf-#{@record.id}"
-      allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      allow(controller).to receive(:x_node).and_return(tree_node_id)
-      get :explorer
-      show_adv_search = controller.instance_variable_get(:@show_adv_search)
-      expect(show_adv_search).to eq(false)
-      expect(response.status).to eq(200)
-      expect(response.body).to include("Question Name")
-      expect(response.body).to include("Question Description")
-    end
-  end
-
   context "fetches the list for selected accordion" do
     before do
       login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
@@ -495,39 +403,6 @@ describe AutomationManagerController do
       tree_objects = TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb)).tree_nodes
       first_child = find_treenode_for_provider(automation_provider1, tree_objects)
       expect(first_child).to eq(nil)
-    end
-  end
-
-  describe "#configscript_service_dialog" do
-    before do
-      stub_user(:features => :all)
-      @cs = FactoryBot.create(:ansible_configuration_script)
-      @dialog_label = "New Dialog 01"
-      session[:edit] = {
-        :new    => {:dialog_name => @dialog_label},
-        :key    => "cs_edit__#{@cs.id}",
-        :rec_id => @cs.id
-      }
-      controller.instance_variable_set(:@sb, :trees => {:configuration_scripts_tree => {:open_nodes => []}}, :active_tree => :configuration_scripts_tree)
-      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-    end
-
-    after(:each) do
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-      expect(response.status).to eq(200)
-    end
-
-    it "renders tagging editor for a job template system" do
-      session[:tag_items] = [@cs.id]
-      session[:assigned_filters] = []
-      allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      allow(controller).to receive(:tagging_explorer_controller?).and_return(true)
-      parent = FactoryBot.create(:classification)
-      FactoryBot.create(:classification_tag, :parent => parent)
-      FactoryBot.create(:classification_tag, :parent => parent)
-      post :tagging, :params => {:id => @cs.id, :format => :js}
-      expect(response.status).to eq(200)
-      expect(response.body).to include('Template (Ansible Tower) Being Tagged')
     end
   end
 
