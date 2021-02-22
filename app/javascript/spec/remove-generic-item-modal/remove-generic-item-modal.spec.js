@@ -15,8 +15,8 @@ describe('RemoveGenericItemModal', () => {
   const item2 = 456;
   const url1 = `/api/authentications/${item1}`;
   const url2 = `/api/authentications/${item2}`;
-  const apiResponse1 = {id: item1, name: 'name123'};
-  const apiResponse2 = {id: item2, name: 'name456'};
+  const apiResponse1 = {id: item1, name: 'name123', supports_safe_delete: false};
+  const apiResponse2 = {id: item2, name: 'name456', supports_safe_delete: false};
   const store = configureStore()({});
   const dispatchMock = jest.spyOn(store, 'dispatch');
   const modalData = {api_url: 'authentications', async_delete: true, redirect_url: '/go/home', modal_text: 'TEXT'};
@@ -42,7 +42,7 @@ describe('RemoveGenericItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1], loaded: true});
+      expect(component.childAt(0).state()).toEqual({data: [apiResponse1], loaded: true, force: true});
       done();
     });
   });
@@ -55,7 +55,7 @@ describe('RemoveGenericItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1, apiResponse2], loaded: true});
+      expect(component.childAt(0).state()).toEqual({data: [apiResponse1, apiResponse2], loaded: true, force: true});
       done();
     });
   });
@@ -102,7 +102,7 @@ describe('RemoveGenericItemModal', () => {
     const component = mount(<RemoveGenericItemModal store={store} recordId={item1} modalData={modalData} />);
 
     setImmediate(() => {
-      removeItems(component.childAt(0).state().data, {
+      removeItems(component.childAt(0).state().data, false,{
         apiUrl: modalData.api_url,
         asyncDelete: modalData.async_delete,
         redirectUrl: modalData.redirect_url,

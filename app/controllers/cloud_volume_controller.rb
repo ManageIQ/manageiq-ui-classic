@@ -17,10 +17,6 @@ class CloudVolumeController < ApplicationController
 
   def specific_buttons(pressed)
     case pressed
-    when 'cloud_volume_delete'
-      @refresh_div = 'main_div'
-      delete_volumes
-      return false
     when 'cloud_volume_attach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
       if !volume.is_available?(:attach_volume) || volume.status != "available"
@@ -342,44 +338,6 @@ class CloudVolumeController < ApplicationController
     javascript_redirect(:action => "show", :id => volume_id)
   end
 
-  # delete selected volumes
-  def delete_volumes
-    assert_privileges("cloud_volume_delete")
-    volumes = find_records_with_rbac(CloudVolume, checked_or_params)
-
-    volumes_to_delete = []
-    volumes.each do |volume|
-      if volume.nil?
-        add_flash(_("Cloud Volume no longer exists."), :error)
-      elsif !volume.attachments.empty?
-        add_flash(_("Cloud Volume \"%{name}\" cannot be removed because it is attached to one or more Instances") %
-          {:name => volume.name}, :warning)
-      else
-        valid_delete = volume.validate_delete_volume
-        if valid_delete[:available]
-          volumes_to_delete.push(volume)
-        else
-          add_flash(_("Couldn't initiate deletion of Cloud Volume \"%{name}\": %{details}") %
-            {:name    => volume.name,
-             :details => valid_delete[:message]}, :error)
-        end
-      end
-    end
-    delete_cloud_volumes(volumes_to_delete) unless volumes_to_delete.empty?
-
-    # refresh the list if applicable
-    if @lastaction == "show_list" && last_screen_url.include?(@lastaction)
-      show_list
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "cloud_volume"
-      @single_delete = true unless flash_errors? || flash_warnings?
-    else
-      drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      flash_to_session
-      redirect_to(previous_breadcrumb_url)
-    end
-  end
-
   def backup_new
     assert_privileges("cloud_volume_backup_create")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
@@ -638,23 +596,6 @@ class CloudVolumeController < ApplicationController
     storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
     options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
     options
-  end
-
-  def delete_cloud_volumes(volumes)
-    volumes.each do |volume|
-      audit = {
-        :event        => "cloud_volume_record_delete_initiateed",
-        :message      => "[#{volume.name}] Record delete initiated",
-        :target_id    => volume.id,
-        :target_class => "CloudVolume",
-        :userid       => session[:userid]
-      }
-      AuditEvent.success(audit)
-      volume.delete_volume_queue(session[:userid])
-    end
-    add_flash(n_("Delete initiated for %{number} Cloud Volume.",
-                 "Delete initiated for %{number} Cloud Volumes.",
-                 volumes.length) % {:number => volumes.length})
   end
 
   def breadcrumbs_options

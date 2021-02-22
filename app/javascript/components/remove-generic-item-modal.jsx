@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, Spinner } from 'patternfly-react';
 import { API } from '../http_api';
+import {Checkbox} from "react-bootstrap";
 
 const apiTransformFunctions = {
   buttonGroup: (item) => ({
@@ -12,6 +13,7 @@ const apiTransformFunctions = {
   default: (item, { display_field = 'name' }) => ({
     id: item.id,
     name: item[display_field],
+    supports_safe_delete: !!item["supports_safe_delete"]
   }),
 };
 
@@ -23,17 +25,26 @@ const parseApiError = (error) => {
   }
 };
 
-export const removeItems = (items, { ajaxReload, apiUrl, asyncDelete, redirectUrl, treeSelect }) => {
+export const removeItems = (items, force, { ajaxReload, apiUrl, asyncDelete, redirectUrl, treeSelect }) => {
   let apiPromises = [];
   let flashArray = [];
   const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfully initiated') : __('The item "%s" has been successfully deleted');
 
   miqSparkleOn();
-  items.forEach(item => {
-    apiPromises.push(API.post(`/api/${apiUrl}/${item.id}`, {action: 'delete'}, {skipErrors: [400, 500]})
-                       .then((apiResult) => ({result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name}))
-                       .catch((apiResult) => ({result: 'error', data: apiResult, name: item.name})))
-  });
+  if (force){
+    items.forEach(item => {
+      apiPromises.push(API.post(`/api/${apiUrl}/${item.id}`, {action: 'delete'}, {skipErrors: [400, 500]})
+        .then((apiResult) => ({result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name}))
+        .catch((apiResult) => ({result: 'error', data: apiResult, name: item.name})))
+    });
+  }else {
+    items.forEach(item => {
+      apiPromises.push(API.post(`/api/${apiUrl}/${item.id}`, {action: 'safe_delete'}, {skipErrors: [400, 500]})
+        .then((apiResult) => ({result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name}))
+        .catch((apiResult) => ({result: 'error', data: apiResult, name: item.name})))
+    });
+  }
+
   Promise.all(apiPromises)
     .then((apiData) => {
       if (items.length === 1 && apiData[0].result === 'error') {
@@ -92,10 +103,16 @@ class RemoveGenericItemModal extends React.Component {
       transformFn = apiTransformFunctions[this.props.modalData.transform_fn];
     }
     // Load modal data from API
-    Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}`)))
+    let extra_attributes = ""
+    if (this.props.modalData.try_safe_delete){
+      extra_attributes += "/?attributes=supports_safe_delete";
+    }
+
+    Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}` + extra_attributes)))
       .then(apiData => apiData.map((item) => transformFn(item, { display_field })))
       .then((data) => this.setState({
         data,
+        force: !this.isSafeDeleteSupported(data),
         loaded: true,
       }))
       .then(() => this.props.dispatch({
@@ -109,7 +126,7 @@ class RemoveGenericItemModal extends React.Component {
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeItems(this.state.data, {
+        addClicked: () => removeItems(this.state.data, this.state.force, {
           ajaxReload: ajax_reload,
           apiUrl: api_url,
           asyncDelete: async_delete,
@@ -122,6 +139,10 @@ class RemoveGenericItemModal extends React.Component {
       type: "FormButtons.customLabel",
       payload: __('Delete'),
     });
+  }
+
+  isSafeDeleteSupported(data){
+    return data.filter(i => !i.supports_safe_delete).length  === 0
   }
 
   render () {
@@ -143,6 +164,27 @@ class RemoveGenericItemModal extends React.Component {
                ))}
              </ul>
           </div>
+        }
+        {this.props.modalData.try_safe_delete &&
+        <label>
+          <input
+            name="force"
+            type="checkbox"
+            checked={this.state.force}
+            onChange={ev => {
+              this.setState({
+                force: !this.state.force
+              })
+            }}
+            disabled={!this.isSafeDeleteSupported(this.state.data)}
+            data-toggle="tooltip"
+            title={this.isSafeDeleteSupported(this.state.data) ?
+              "" :
+              "Some of the items only support force-delete: " +
+                this.state.data.filter(i => !i.supports_safe_delete).map(i=>i.name)}
+          />
+          &nbsp; Force Delete?
+        </label>
         }
       </Modal.Body>
     );

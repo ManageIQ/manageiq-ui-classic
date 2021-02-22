@@ -68,9 +68,18 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        'pficon pficon-delete fa-lg',
                        t = N_('Delete this Cloud Volume'),
                        t,
-                       :url_parms    => 'main_div',
-                       :send_checked => true,
-                       :confirm      => N_('Warning: This Cloud Volume and ALL of its components will be removed!')
+                       :url_parms => 'main_div',
+                       :klass     => ApplicationHelper::Button::CatalogItemButton,
+                       :data      => {'function'      => 'sendDataWithRx',
+                                      'function-data' => {:controller      => 'provider_dialogs',
+                                                          :modal_title     => N_('Delete Volume'),
+                                                          :modal_text      => N_('Are you sure you want to delete this volume?'),
+                                                          :api_url         => 'cloud_volumes',
+                                                          :async_delete    => false,
+                                                          :ajax_reload     => true,
+                                                          :redirect_url    => '/cloud_volume/show_list',
+                                                          :try_safe_delete => true,
+                                                          :component_name  => 'RemoveGenericItemModal'}}
                      ),
                    ]
                  )

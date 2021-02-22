@@ -500,7 +500,6 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
-        delete_volumes
         index
         new
         show
@@ -516,6 +515,7 @@ Rails.application.routes.draw do
         snapshot_create
         button
         create
+        reload
         dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
