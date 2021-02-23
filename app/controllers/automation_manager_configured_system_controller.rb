@@ -40,16 +40,16 @@ class AutomationManagerConfiguredSystemController < ApplicationController
   helper_method :textual_group_list
 
   def get_session_data
-    @title = _("Configured Systems")
-    @layout = "automation_manager_configured_system"
-    @lastaction = session[:automation_manager_configured_system_lastaction]
-    @display = session[:automation_manager_configured_system_display]
+    @title        = _("Configured Systems")
+    @layout       = "automation_manager_configured_system"
+    @lastaction   = session[:automation_manager_configured_system_lastaction]
+    @display      = session[:automation_manager_configured_system_display]
     @current_page = session[:automation_manager_configured_system_current_page]
   end
 
   def set_session_data
     super
-    session[:layout]                 = @layout
+    session[:layout]                                            = @layout
     session[:automation_manager_configured_system_current_page] = @current_page
   end
 
