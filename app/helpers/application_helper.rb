@@ -428,6 +428,7 @@ module ApplicationHelper
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::ConfigurationManager",
+        "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
       controller = request.parameters[:controller]
     when "ContainerVolume"

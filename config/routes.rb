@@ -191,6 +191,27 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :automation_manager_configured_system => {
+      :get => %w(
+        download_summary_pdf
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        button
+        listnav_search_selected
+        quick_search
+        reload
+        show
+        show_list
+        tagging_edit
+      )  +
+        adv_search_post +
+        exp_post +
+        x_post
+    },
+
     :configuration_script => {
       :get  => %w(
         configuration_script_service_dialog
@@ -522,6 +543,7 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
+        delete_volumes
         index
         new
         show
@@ -537,7 +559,6 @@ Rails.application.routes.draw do
         snapshot_create
         button
         create
-        reload
         dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
