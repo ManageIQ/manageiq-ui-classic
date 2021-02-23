@@ -4,6 +4,7 @@ module ApplicationHelper
       common_layouts = %w[
         physical_storage
         auth_key_pair_cloud
+        automation_manager_configured_system
         availability_zone
         cloud_network
         cloud_object_store_container

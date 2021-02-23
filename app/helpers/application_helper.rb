@@ -750,6 +750,7 @@ module ApplicationHelper
        storage_resource
        host_initiator
        physical_storage
+       automation_manager_configured_system
        availability_zone
        automation_manager
        cloud_network
@@ -1055,6 +1056,7 @@ module ApplicationHelper
 
   DOWNLOAD_VIEW_LAYOUTS = %w[action
                              auth_key_pair_cloud
+                             automation_manager_configured_system
                              availability_zone
                              alerts_overview
                              alerts_list
