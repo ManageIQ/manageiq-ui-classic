@@ -113,7 +113,6 @@ module Sandbox
     cb_reports
     configuration_scripts
     condition
-    configuration_manager_cs_filter
     configuration_manager_providers
     customization_templates
     db
