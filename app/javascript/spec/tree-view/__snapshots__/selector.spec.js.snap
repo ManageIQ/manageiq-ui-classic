@@ -395,26 +395,28 @@ exports[`TreeSelector component should render correctly 1`] = `
               <div
                 className="bx--modal-footer bx--btn-set"
               >
-                <Button
-                  disabled={false}
-                  kind="secondary"
-                  onClick={[Function]}
-                  size="default"
-                  tabIndex={0}
-                  tooltipAlignment="center"
-                  tooltipPosition="top"
-                  type="button"
-                >
-                  <button
-                    className="bx--btn bx--btn--secondary"
+                <SecondaryButtonSet>
+                  <Button
                     disabled={false}
+                    kind="secondary"
                     onClick={[Function]}
+                    size="default"
                     tabIndex={0}
+                    tooltipAlignment="center"
+                    tooltipPosition="top"
                     type="button"
                   >
-                    Close
-                  </button>
-                </Button>
+                    <button
+                      className="bx--btn bx--btn--secondary"
+                      disabled={false}
+                      onClick={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      Close
+                    </button>
+                  </Button>
+                </SecondaryButtonSet>
                 <Button
                   disabled={true}
                   kind="primary"
