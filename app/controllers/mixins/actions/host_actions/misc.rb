@@ -34,9 +34,8 @@ module Mixins
 
         def process_hosts_destroy(hosts, display_name)
           each_host(hosts, display_name) do |host|
-            validation = host.validate_destroy
-            if !validation[:available]
-              add_flash(validation[:message], :error)
+            if !host.supports?(:destroy)
+              add_flash(host.unsupported_reason(:destroy), :error)
             else
               audit = {:event        => "host_record_delete_initiated",
                        :message      => "[#{host.name}] Record delete initiated",
