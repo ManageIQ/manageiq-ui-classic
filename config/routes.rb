@@ -208,8 +208,7 @@ Rails.application.routes.draw do
         tagging_edit
       )  +
         adv_search_post +
-        exp_post +
-        x_post
+        exp_post
     },
 
     :configuration_script => {
