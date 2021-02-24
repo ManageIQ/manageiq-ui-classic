@@ -191,6 +191,28 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :configuration_script => {
+      :get  => %w(
+        configuration_script_service_dialog
+        download_summary_pdf
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        button
+        listnav_search_selected
+        quick_search
+        reload
+        show
+        show_list
+        tagging_edit
+      ) +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
     :availability_zone        => {
       :get  => %w(
         dialog_load
