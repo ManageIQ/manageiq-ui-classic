@@ -34,10 +34,7 @@ module Mixins
 
         def process_hosts_destroy(hosts, display_name)
           each_host(hosts, display_name) do |host|
-            validation = host.validate_destroy
-            if !validation[:available]
-              add_flash(validation[:message], :error)
-            else
+            if host.supports?(:destroy)
               audit = {:event        => "host_record_delete_initiated",
                        :message      => "[#{host.name}] Record delete initiated",
                        :target_id    => host.id,
@@ -45,6 +42,8 @@ module Mixins
                        :userid       => session[:userid]}
               AuditEvent.success(audit)
               host.destroy_queue
+            else
+              add_flash(host.unsupported_reason(:destroy), :error)
             end
           end
         end
