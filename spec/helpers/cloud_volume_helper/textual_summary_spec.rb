@@ -9,6 +9,7 @@ describe CloudVolumeHelper::TextualSummary do
     cloud_volume_snapshots
     attachments
     custom_button_events
+    host_initiators
   )
   include_examples "textual_group", "Properties", %i(name size bootable description status)
 end
