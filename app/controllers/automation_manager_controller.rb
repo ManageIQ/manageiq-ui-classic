@@ -204,12 +204,6 @@ class AutomationManagerController < ApplicationController
         :name     => :automation_manager_providers,
         :title    => _("Providers")
       },
-      {
-        :role     => "automation_manager_configured_system",
-        :role_any => true,
-        :name     => :automation_manager_cs_filter,
-        :title    => _("Configured Systems")
-      }
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
@@ -306,7 +300,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def rebuild_trees(replace_trees)
-    build_replaced_trees(replace_trees, %i[automation_manager_providers automation_manager_cs_filter])
+    build_replaced_trees(replace_trees, %i[automation_manager_providers])
   end
 
   def leaf_record
