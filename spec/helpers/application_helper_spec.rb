@@ -1018,7 +1018,7 @@ describe ApplicationHelper do
       let(:active) { true }
 
       it 'renders an active accordion' do
-        expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" class=\"panel-collapse collapse in\"><div class=\"panel-body\">content</div></div></div>")
+        expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\" role=\"tab\" id=\"control_identifier\"><h4 class=\"panel-title\"><a aria-controls=\"identifier\" data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"\" tabindex=\"0\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" aria-labelledby=\"control_identifier\" role=\"tabpanel\" class=\"panel-collapse collapse in\"><div class=\"panel-body\">content</div></div></div>")
       end
     end
 
@@ -1026,7 +1026,7 @@ describe ApplicationHelper do
       let(:active) { false }
 
       it 'renders an active accordion' do
-        expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"collapsed\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" class=\"panel-collapse collapse \"><div class=\"panel-body\">content</div></div></div>")
+        expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\" role=\"tab\" id=\"control_identifier\"><h4 class=\"panel-title\"><a aria-controls=\"identifier\" data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"collapsed\" tabindex=\"0\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" aria-labelledby=\"control_identifier\" role=\"tabpanel\" class=\"panel-collapse collapse \"><div class=\"panel-body\">content</div></div></div>")
       end
     end
   end

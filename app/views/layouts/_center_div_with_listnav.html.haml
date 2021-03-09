@@ -7,7 +7,11 @@
         - if @layout == "dashboard"
           = render :partial => "/layouts/tabs"
         = miq_toolbar toolbar_from_hash
-  .row.max-height
+  .row.max-height.content-focus-order
+    .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
+      -# listnav_div
+      = render :partial => "layouts/listnav"
+
     .col-sm-8.col-md-9.col-sm-push-4.col-md-push-3.max-height
       #main-content.row.miq-layout-center_div_with_listnav
         .col-md-12
@@ -22,7 +26,3 @@
             .col-md-12
               = yield
       .row#paging_div{:style => @in_a_form ? '' : 'display: none'}
-
-    .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
-      -# listnav_div
-      = render :partial => "layouts/listnav"

@@ -9,7 +9,18 @@
     .row.toolbar-pf#toolbar.miq-toolbar-menu
       .col-sm-12
         = miq_toolbar toolbar_from_hash
-    .row.max-height
+    .row.max-height.content-focus-order
+      - if simulate?
+        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-5.col-md-4.col-sm-pull-7.col-md-pull-8
+          #default_left_cell
+            = yield :left
+      - else
+        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9
+          #default_left_cell
+            - if @accords && @trees
+              = render :partial => "layouts/listnav"
+            = yield :left
+          #custom_left_cell
       .max-height{:class => simulate? ? 'col-sm-7 col-md-8 col-sm-push-5 col-md-push-4' : 'col-sm-8 col-md-9 col-sm-push-4 col-md-push-3'}
         #main-content.row.miq-layout-center_div_with_listnav
           .col-md-12
@@ -42,18 +53,6 @@
             - if saved_report_paging?
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
-
-      - if simulate?
-        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-5.col-md-4.col-sm-pull-7.col-md-pull-8
-          #default_left_cell
-            = yield :left
-      - else
-        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9
-          #default_left_cell
-            - if @accords && @trees
-              = render :partial => "layouts/listnav"
-            = yield :left
-          #custom_left_cell
 
 - elsif layout_full_center
   = render :partial => layout_full_center
