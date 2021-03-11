@@ -56,7 +56,7 @@
         - elsif @edit[:new][:model] == "ChargebackVm" || @edit[:new][:model] == "MeteringVm"
           - opts += [[_('Owner'), "owner"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"], [_('Tenant'), "tenant"]]
         - elsif @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
-          - opts += [[ui_lookup(:model => @edit[:new][:cb_model]), "entity"]]
+          - opts += [[ui_lookup(:model => @edit[:new][:cb_model]), "entity"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"]]
         - elsif @edit[:new][:model] == "ChargebackConfiguredSystem"
           - opts += [["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"]]
         - else
@@ -158,7 +158,7 @@
     .col-md-8
       - opts = [[(_("Date and %{chargeback_model}")  % {:chargeback_model => @edit[:new][:cb_model]} ), "date"], ["#{_('Date Only')}", "date-only"]]
       - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
-      - opts += [["#{_('Project')}", "project"], [_('Label'), 'label']] if @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
+      - opts += [["#{_('Project')}", "project"], [_('Label'), 'label'], ["#{_('Tag')}", "tag"]] if @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
       - opts += [["#{_('Tenant')}", "tenant"]] if %w(ChargebackVm MeteringVm).include?(@edit[:new][:model])
       - selected_group_by_option = @edit[:new][:cb_groupby] == 'vm' ? 'date' : @edit[:new][:cb_groupby] # legacy reports can have 'vm', TODO: remove after migration
       = select_tag("cb_groupby", options_for_select(opts, selected_group_by_option), :class => "selectpicker")
