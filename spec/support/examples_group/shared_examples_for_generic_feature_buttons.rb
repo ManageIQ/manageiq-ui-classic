@@ -39,12 +39,13 @@ shared_examples_for 'GenericFeatureButtonWithDisabled#calculate_properties' do
     before do
       allow(record).to receive(:is_available?).with(feature).and_return(available)
       allow(record).to receive(:is_available_now_error_message).and_return('unavailable')
-      allow(record).to receive(:supports?).with(feature).and_return(support) if defined? support
+      allow(record).to receive("supports_#{feature}?").and_return(support) if defined? support
+      allow(record).to receive(:unsupported_reason).with(feature).and_return("Feature not available/supported") if defined? support && !support
       button.calculate_properties
     end
 
     context 'when feature exists' do
-      let(:feature) { :evacuate }
+      let(:feature) { :existent_feature }
       context 'and feature is supported' do
         let(:support) { true }
         it_behaves_like 'an enabled button'
