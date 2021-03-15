@@ -1,0 +1,4 @@
+- if @display == "configured_systems"
+  = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+- else
+  = render :partial => "layouts/textual_groups_generic"

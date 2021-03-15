@@ -425,7 +425,7 @@ module ApplicationHelper
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
-    when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
@@ -438,7 +438,7 @@ module ApplicationHelper
     when /^ManageIQ::Providers::(\w+)Manager::(\w+)$/
       controller = "#{$2.underscore}_#{$1.underscore}"
     when "EmsAutomation"
-      controller = "automation_manager"
+      controller = "ems_automation"
     when "GenericObject" && request.parameters[:controller] == 'service'
       controller = request.parameters[:controller]
       action = 'generic_object'
@@ -752,7 +752,7 @@ module ApplicationHelper
        physical_storage
        automation_manager_configured_system
        availability_zone
-       automation_manager
+       ems_automation
        cloud_network
        cloud_object_store_container
        cloud_object_store_object
@@ -891,7 +891,7 @@ module ApplicationHelper
   end
 
   def pressed2model_action(pressed)
-    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
+    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider|ems_automation)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
   def model_for_vm(record)

@@ -2629,6 +2629,42 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
+    :ems_automation => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        explorer
+        form_fields
+        show
+        x_show
+        x_button
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        accordion_select
+        authentication_validate
+        change_tab
+        edit
+        explorer
+        new
+        quick_search
+        refresh
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tree_autoload
+        tree_select
+        cs_form_field_changed
+        wait_for_task
+      ) +
+        adv_search_post +
+        exp_post +
+        x_post
+    },
+
     :ems_configuration => {
       :get  => %w[
         button

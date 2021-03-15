@@ -9,55 +9,57 @@
 #
 
 # Report title
-title: ConfiguredSystem
+title: Ansible Tower Providers
 
 # Menu name
-name: ConfiguredSystems
+name: Ansible Tower Providers
 
 # Main DB table report is based on
-db: ConfiguredSystem
+db: EmsAutomation
 
 # Columns to fetch from the main table
 cols:
-- hostname
+- name
+- url
 - type
-- inventory_root_group_name
-- last_checkin
-- build_state
-- my_zone
-- configuration_environment_name
-- vendor
+- last_refresh_date
+- region_description
+- authentication_status
+- total_configured_systems
 
 # Included tables (joined, has_one, has_many) and columns
 include:
-  manager:
+  zone:
     columns:
     - name
+  endpoints:
+    columns:
+    - url
+
+# Included tables and columns for query performance
+include_for_find:
 
 # Order of columns (from all tables)
 col_order:
-- hostname
-- manager.name
+- name
+- url
 - type
-- vendor
-- inventory_root_group_name
-- last_checkin
-- build_state
-- my_zone
-- configuration_environment_name
-- configuration_profile_name
+- zone.name
+- last_refresh_date
+- region_description
+- authentication_status
+- total_configured_systems
 
 # Column titles, in order
 headers:
-- Hostname
-- Provider
+- Provider Name
+- URL
 - Type
-- Vendor
-- Folder
-- Last Checkin
-- Build State
 - Zone
-- Environment
+- Last Refresh Date
+- Region Description
+- Status
+- Total Configured Systems
 
 col_formats:
 -
@@ -74,7 +76,7 @@ order: Ascending
 
 # Columns to sort the report on, in order
 sortby:
-- hostname
+- name
 
 # Group rows (y=yes,n=no,c=count)
 group: n
