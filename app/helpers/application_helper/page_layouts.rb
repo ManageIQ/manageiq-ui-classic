@@ -82,7 +82,7 @@ module ApplicationHelper::PageLayouts
 
   def show_list_with_no_provider?
     %w[
-      automation_manager
+      ems_automation
       ems_cloud
       ems_container
       ems_infra
@@ -187,7 +187,6 @@ module ApplicationHelper::PageLayouts
     show_search = %w[
       auth_key_pair_cloud
       availability_zone
-      automation_manager
       automation_manager_configured_system
       cloud_network
       cloud_object_store_container
@@ -211,6 +210,7 @@ module ApplicationHelper::PageLayouts
       container_route
       container_service
       container_template
+      ems_automation
       ems_cloud
       ems_cluster
       ems_configuration

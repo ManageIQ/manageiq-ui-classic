@@ -19,8 +19,6 @@ class ApplicationHelper::ToolbarChooser
       @report ? "report_view_tb" : nil
     elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
-    elsif @layout == 'automation_manager'
-      @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "download_view_tb"
     end
   end
 
@@ -88,8 +86,6 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_explorer
     if %w[vm_cloud vm_infra vm_or_template].include?(@layout)
       center_toolbar_name_vm_or_template
-    elsif @layout == "automation_manager"
-      center_toolbar_filename_automation_manager
     elsif x_active_tree == :ae_tree
       center_toolbar_filename_automate
     elsif x_active_tree == :infra_networking_tree
@@ -483,17 +479,6 @@ class ApplicationHelper::ToolbarChooser
     x_node.split('-')
   end
 
-  def center_toolbar_filename_automation_manager
-    case x_active_tree
-    when :automation_manager_providers_tree
-      automation_manager_providers_tree_center_tb(x_node_split)
-    when :automation_manager_cs_filter_tree
-      automation_manager_cs_filter_tree_center_tb(x_node_split)
-    when :configuration_scripts_tree
-      automation_manager_configuration_scripts_tree_center_tb(x_node_split)
-    end
-  end
-
   def cs_filter_tree_center_tb(nodes)
     case nodes.first
     when "root", "ms", "xx", "csa", "csf" then "configured_systems_center_tb"
@@ -501,29 +486,6 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def configuration_scripts_tree_center_tb(nodes)
-    if %w[root at].include?(nodes.first)
-      "configuration_scripts_center_tb"
-    else
-      "configuration_script_center_tb"
-    end
-  end
-
-  def automation_manager_providers_tree_center_tb(nodes)
-    case nodes.first
-    when "root"    then "automation_manager_providers_center_tb"
-    when "at", "e" then "automation_manager_provider_center_tb"
-    when "f"       then  inventory_group_center_tb
-    when "xx"      then  "configured_systems_ansible_center_tb"
-    end
-  end
-
-  def automation_manager_cs_filter_tree_center_tb(nodes)
-    case nodes.first
-    when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
-    end
-  end
-
-  def automation_manager_configuration_scripts_tree_center_tb(nodes)
     if %w[root at].include?(nodes.first)
       "configuration_scripts_center_tb"
     else

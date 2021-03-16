@@ -390,12 +390,6 @@ class TreeBuilder
     ### Alert Profiles
     :alert_profile                   => "TreeBuilderAlertProfile",
 
-
-    # Automation
-    ## Ansible Tower
-    ### Providers
-    :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
-
     ## Automate
     ### Explorer
     #### Datastore
