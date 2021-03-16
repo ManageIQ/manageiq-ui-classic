@@ -51,5 +51,9 @@ module EmsAutomationHelper
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[tags])
   end
+
+  def edit_redirect_path(lastaction, ems)
+    lastaction == 'show_list' ? ems_automation_path : ems_automation_path(ems)
+  end
 end
 #

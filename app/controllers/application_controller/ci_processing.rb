@@ -305,8 +305,8 @@ module ApplicationController::CiProcessing
   def process_managers(managers, task)
     controller_class = request.parameters[:controller]
     provider_class = case controller_class
+                     when 'ems_automation' then ManageIQ::Providers::AutomationManager
                      when 'ems_configuration'  then ManageIQ::Providers::ConfigurationManager
-                     when 'automation_manager' then ManageIQ::Providers::AutomationManager
                      end
 
     manager_ids, _services_out_region = filter_ids_in_region(managers, provider_class.to_s)

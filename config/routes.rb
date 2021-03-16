@@ -2633,20 +2633,18 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        explorer
+        edit
         form_fields
+        new
         show
-        x_show
-        x_button
         show_list
         tagging_edit
       ),
       :post => %w(
         accordion_select
         authentication_validate
-        change_tab
+        button
         edit
-        explorer
         new
         quick_search
         refresh
@@ -2661,8 +2659,7 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        exp_post +
-        x_post
+        exp_post
     },
 
     :ems_configuration => {

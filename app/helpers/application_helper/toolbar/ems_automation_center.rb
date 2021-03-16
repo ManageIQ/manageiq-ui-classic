@@ -12,7 +12,6 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to this Provider'),
           N_('Refresh Relationships and Power states'),
-          :url     => "refresh",
           :confirm => N_("Refresh relationships for all items related to this Provider?"),
           :klass   => ApplicationHelper::Button::EmsRefresh
         ),
@@ -22,7 +21,7 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Provider'),
           t,
-          :url => "edit"
+          :url => "/edit"
         ),
         button(
           :ems_automation_delete_provider,
@@ -35,7 +34,7 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
                                          :modal_text     => N_('Are you sure you want to delete the following Ansible Tower Provider?'),
                                          :api_url        => 'providers',
                                          :async_delete   => true,
-                                         :tree_select    => 'root',
+                                         :redirect_url   => '/ems_automation/show_list',
                                          :component_name => 'RemoveGenericItemModal'}}
         )
       ]

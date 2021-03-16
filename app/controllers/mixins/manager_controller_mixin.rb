@@ -91,11 +91,7 @@ module Mixins
       @ems = @provider_manager = concrete_model.new
       @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       @sb[:action] = params[:action]
-      if @explorer
-        render_form
-      else
-        set_redirect_vars
-      end
+      set_redirect_vars
     end
 
     def edit
@@ -113,11 +109,7 @@ module Mixins
         @ems = @provider_manager = find_record(concrete_model, manager_id)
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
         @sb[:action] = params[:action]
-        if @explorer
-          render_form
-        else
-          set_redirect_vars
-        end
+        set_redirect_vars
       end
     end
 
@@ -125,7 +117,6 @@ module Mixins
       @explorer = true if explorer_controller?
       assert_privileges("#{privilege_prefix}_refresh_provider")
       manager_button_operation('refresh_ems', _('Refresh'))
-      replace_right_cell if @explorer
     end
 
     def form_fields

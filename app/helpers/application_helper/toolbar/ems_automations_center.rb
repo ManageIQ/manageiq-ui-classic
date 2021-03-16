@@ -12,7 +12,6 @@ class ApplicationHelper::Toolbar::EmsAutomationsCenter < ApplicationHelper::Tool
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to the selected items'),
           N_('Refresh Relationships and Power states'),
-          :url          => "refresh",
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Refresh relationships for all items related to the selected items?"),
@@ -26,14 +25,14 @@ class ApplicationHelper::Toolbar::EmsAutomationsCenter < ApplicationHelper::Tool
           t = N_('Add a new Provider'),
           t,
           :enabled => true,
-          :url     => "new"
+          :url     => "/new"
         ),
         button(
           :ems_automation_edit_provider,
           'pficon pficon-edit fa-lg',
           N_('Select a single item to edit'),
           N_('Edit Selected item'),
-          :url          => "edit",
+          :url          => "/edit",
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
@@ -53,7 +52,7 @@ class ApplicationHelper::Toolbar::EmsAutomationsCenter < ApplicationHelper::Tool
                                          :modal_text     => N_('Are you sure you want to delete the following Ansible Tower Providers?'),
                                          :api_url        => 'providers',
                                          :async_delete   => true,
-                                         :tree_select    => 'root',
+                                         :redirect_url   => '/ems_automation/show_list',
                                          :component_name => 'RemoveGenericItemModal'}}
         ),
       ]
@@ -76,8 +75,8 @@ class ApplicationHelper::Toolbar::EmsAutomationsCenter < ApplicationHelper::Tool
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
-          :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-          :onwhen       => "1+"),
+          :onwhen       => "1+",
+          :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck),
       ]
     ),
   ])

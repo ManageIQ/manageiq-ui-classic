@@ -10,16 +10,19 @@ class EmsAutomationController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
+    case params[:pressed]
+    when "ems_automation_tag"
+      tag(self.class.model)
+    when "ems_automation_refresh_provider"
+      refresh
+    end
 
-    # Handle Toolbar Policy Tag Button
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    model = self.class.model
-    tag(model) if params[:pressed] == "ems_automation_tag"
-    provision if params[:pressed] == "ems_automation_provision"
-    render_flash unless performed?
+    if @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
+    else
+      render_flash unless performed?
+    end
   end
 
   def self.display_methods
@@ -40,7 +43,31 @@ class EmsAutomationController < ApplicationController
     super
   end
 
+  def refresh
+    assert_privileges("ems_automation_refresh_provider")
+    manager_button_operation('refresh_ems', _('Refresh'))
+  end
+
   private
+
+  def concrete_model
+    ManageIQ::Providers::AnsibleTower::AutomationManager
+  end
+
+  def self.model_to_name(_provmodel)
+    Dictionary.gettext('ems_automation', :type => :ui_title, :translate => false)
+  end
+
+  def privilege_prefix
+    "ems_automation"
+  end
+
+  def set_redirect_vars
+    @in_a_form = true
+    @redirect_controller = "ems_automation"
+    @redirect_id = @provider_manager.id if @provider_manager.try(:id)
+    @refresh_partial = @provider_manager.try(:id) ? "edit" : "new"
+  end
 
   def automation_manager_pause
     pause_or_resume_emss(:pause => true)
