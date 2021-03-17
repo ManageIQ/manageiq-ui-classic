@@ -1,0 +1,2597 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pxe Image Type Form Component should render adding a new pxe image type 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <PxeImageForm>
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
+      }
+      canReset={false}
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "label": "Name",
+              "maxLength": 255,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "select",
+              "id": "provision_type",
+              "includeEmpty": true,
+              "label": "Type",
+              "name": "provision_type",
+              "options": Array [
+                Object {
+                  "label": "Host",
+                  "value": "host",
+                },
+                Object {
+                  "label": "VM and Instance",
+                  "value": "vm",
+                },
+              ],
+              "placeholder": "<Choose>",
+            },
+          ],
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Add",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "id": "name",
+                "label": "Name",
+                "maxLength": 255,
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "id": "provision_type",
+                "includeEmpty": true,
+                "label": "Type",
+                "name": "provision_type",
+                "options": Array [
+                  Object {
+                    "label": "Host",
+                    "value": "host",
+                  },
+                  Object {
+                    "label": "VM and Instance",
+                    "value": "vm",
+                  },
+                ],
+                "placeholder": "<Choose>",
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "text-field",
+                  "id": "name",
+                  "label": "Name",
+                  "maxLength": 255,
+                  "name": "name",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "id": "provision_type",
+                  "includeEmpty": true,
+                  "label": "Type",
+                  "name": "provision_type",
+                  "options": Array [
+                    Object {
+                      "label": "Host",
+                      "value": "host",
+                    },
+                    Object {
+                      "label": "VM and Instance",
+                      "value": "vm",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="text-field"
+                    id="name"
+                    label="Name"
+                    maxLength={255}
+                    name="name"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="select"
+                    id="provision_type"
+                    includeEmpty={true}
+                    label="Type"
+                    name="provision_type"
+                    options={
+                      Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ]
+                    }
+                    placeholder="<Choose>"
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "text-field",
+                      "id": "name",
+                      "label": "Name",
+                      "maxLength": 255,
+                      "name": "name",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "id": "provision_type",
+                      "includeEmpty": true,
+                      "label": "Type",
+                      "name": "provision_type",
+                      "options": Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="text-field"
+                      id="name"
+                      label="Name"
+                      maxLength={255}
+                      name="name"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="select"
+                      id="provision_type"
+                      includeEmpty={true}
+                      label="Type"
+                      name="provision_type"
+                      options={
+                        Array [
+                          Object {
+                            "label": "Host",
+                            "value": "host",
+                          },
+                          Object {
+                            "label": "VM and Instance",
+                            "value": "vm",
+                          },
+                        ]
+                      }
+                      placeholder="<Choose>"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "text-field",
+                        "id": "name",
+                        "label": "Name",
+                        "maxLength": 255,
+                        "name": "name",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "select",
+                        "id": "provision_type",
+                        "includeEmpty": true,
+                        "label": "Type",
+                        "name": "provision_type",
+                        "options": Array [
+                          Object {
+                            "label": "Host",
+                            "value": "host",
+                          },
+                          Object {
+                            "label": "VM and Instance",
+                            "value": "vm",
+                          },
+                        ],
+                        "placeholder": "<Choose>",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Add"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="text-field"
+                        id="name"
+                        label="Name"
+                        maxLength={255}
+                        name="name"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="select"
+                        id="provision_type"
+                        includeEmpty={true}
+                        label="Type"
+                        name="provision_type"
+                        options={
+                          Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ]
+                        }
+                        placeholder="<Choose>"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Add"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="ddorg__carbon-form-template-form form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="text-field"
+                          id="name"
+                          key="name"
+                          label="Name"
+                          maxLength={255}
+                          name="name"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "name",
+                                "label": "Name",
+                                "maxLength": 255,
+                                "name": "name",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <TextField
+                                component="text-field"
+                                id="name"
+                                label="Name"
+                                maxLength={255}
+                                name="name"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <ForwardRef(TextInput)
+                                  disabled={false}
+                                  helperText=""
+                                  id="name"
+                                  inline={false}
+                                  invalid={false}
+                                  invalidText=""
+                                  key="name"
+                                  labelText="Name"
+                                  light={false}
+                                  maxLength={255}
+                                  name="name"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  type="text"
+                                  value=""
+                                  warn={false}
+                                  warnText=""
+                                >
+                                  <div
+                                    className="bx--form-item bx--text-input-wrapper"
+                                  >
+                                    <label
+                                      className="bx--label"
+                                      htmlFor="name"
+                                    >
+                                      Name
+                                    </label>
+                                    <div
+                                      className="bx--text-input__field-outer-wrapper"
+                                    >
+                                      <div
+                                        className="bx--text-input__field-wrapper"
+                                        data-invalid={null}
+                                      >
+                                        <input
+                                          className="bx--text-input bx--text__input"
+                                          disabled={false}
+                                          id="name"
+                                          maxLength={255}
+                                          name="name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          onFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ForwardRef(TextInput)>
+                              </TextField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="select"
+                          id="provision_type"
+                          includeEmpty={true}
+                          key="provision_type"
+                          label="Type"
+                          name="provision_type"
+                          options={
+                            Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ]
+                          }
+                          placeholder="<Choose>"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "provision_type",
+                                "includeEmpty": true,
+                                "label": "Type",
+                                "name": "provision_type",
+                                "options": Array [
+                                  Object {
+                                    "label": "Host",
+                                    "value": "host",
+                                  },
+                                  Object {
+                                    "label": "VM and Instance",
+                                    "value": "vm",
+                                  },
+                                ],
+                                "placeholder": "<Choose>",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="provision_type"
+                                includeEmpty={true}
+                                label="Type"
+                                name="provision_type"
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "Host",
+                                      "value": "host",
+                                    },
+                                    Object {
+                                      "label": "VM and Instance",
+                                      "value": "vm",
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                              >
+                                <Select$1
+                                  component="select"
+                                  id="provision_type"
+                                  label="Type"
+                                  loadingMessage="Loading..."
+                                  name="provision_type"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "<Choose>",
+                                        "value": undefined,
+                                      },
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="provision_type"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText="Type"
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="provision_type"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "<Choose>",
+                                          "value": undefined,
+                                        },
+                                        Object {
+                                          "label": "Host",
+                                          "value": "host",
+                                        },
+                                        Object {
+                                          "label": "VM and Instance",
+                                          "value": "vm",
+                                        },
+                                      ]
+                                    }
+                                    originalOnChange={[Function]}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      hideSelectedOptions={false}
+                                      id="provision_type"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isFetching={false}
+                                      isSearchable={false}
+                                      labelText="Type"
+                                      name="provision_type"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      onInputChange={[Function]}
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "<Choose>",
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ]
+                                      }
+                                      originalOnChange={[Function]}
+                                      placeholder="<Choose>"
+                                      value=""
+                                    >
+                                      <Select
+                                        className=""
+                                        disabled={false}
+                                        helperText=""
+                                        id="provision_type"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText="Type"
+                                        light={false}
+                                        name="provision_type"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        value=""
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="provision_type"
+                                            >
+                                              Type
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="provision_type"
+                                                name="provision_type"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                value=""
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="0"
+                                                  label="<Choose>"
+                                                  text="<Choose>"
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="<Choose>"
+                                                    value=""
+                                                  >
+                                                    &lt;Choose&gt;
+                                                  </option>
+                                                </SelectItem>
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="host"
+                                                  label="Host"
+                                                  text="Host"
+                                                  value="host"
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="Host"
+                                                    value="host"
+                                                  >
+                                                    Host
+                                                  </option>
+                                                </SelectItem>
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="vm"
+                                                  label="VM and Instance"
+                                                  text="VM and Instance"
+                                                  value="vm"
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="VM and Instance"
+                                                    value="vm"
+                                                  >
+                                                    VM and Instance
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select$1>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="text-field"
+                                  id="name"
+                                  label="Name"
+                                  maxLength={255}
+                                  name="name"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="select"
+                                  id="provision_type"
+                                  includeEmpty={true}
+                                  label="Type"
+                                  name="provision_type"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "name": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {},
+                                "invalid": true,
+                                "modified": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "label": "Name",
+                                    "maxLength": 255,
+                                    "name": "name",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "select",
+                                    "id": "provision_type",
+                                    "includeEmpty": true,
+                                    "label": "Type",
+                                    "name": "provision_type",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ],
+                                    "placeholder": "<Choose>",
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Add"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className="ddorg__carbon-form-template-buttons"
+                              >
+                                <div
+                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Add"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Add
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </PxeImageForm>
+</Provider>
+`;
+
+exports[`Pxe Image Type Form Component should render editing a pxe image type 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <PxeImageForm
+    recordId="1"
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Save",
+        }
+      }
+      canReset={true}
+      initialValues={
+        Object {
+          "name": "foo",
+          "provision_type": "host",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "label": "Name",
+              "maxLength": 255,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "select",
+              "id": "provision_type",
+              "includeEmpty": true,
+              "label": "Type",
+              "name": "provision_type",
+              "options": Array [
+                Object {
+                  "label": "Host",
+                  "value": "host",
+                },
+                Object {
+                  "label": "VM and Instance",
+                  "value": "vm",
+                },
+              ],
+              "placeholder": "<Choose>",
+            },
+          ],
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Save",
+          }
+        }
+        canReset={true}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        initialValues={
+          Object {
+            "name": "foo",
+            "provision_type": "host",
+          }
+        }
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "id": "name",
+                "label": "Name",
+                "maxLength": 255,
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "id": "provision_type",
+                "includeEmpty": true,
+                "label": "Type",
+                "name": "provision_type",
+                "options": Array [
+                  Object {
+                    "label": "Host",
+                    "value": "host",
+                  },
+                  Object {
+                    "label": "VM and Instance",
+                    "value": "vm",
+                  },
+                ],
+                "placeholder": "<Choose>",
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={
+            Object {
+              "name": "foo",
+              "provision_type": "host",
+            }
+          }
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "text-field",
+                  "id": "name",
+                  "label": "Name",
+                  "maxLength": 255,
+                  "name": "name",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "id": "provision_type",
+                  "includeEmpty": true,
+                  "label": "Type",
+                  "name": "provision_type",
+                  "options": Array [
+                    Object {
+                      "label": "Host",
+                      "value": "host",
+                    },
+                    Object {
+                      "label": "VM and Instance",
+                      "value": "vm",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={
+              Object {
+                "name": "foo",
+                "provision_type": "host",
+              }
+            }
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="text-field"
+                    id="name"
+                    label="Name"
+                    maxLength={255}
+                    name="name"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="select"
+                    id="provision_type"
+                    includeEmpty={true}
+                    label="Type"
+                    name="provision_type"
+                    options={
+                      Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ]
+                    }
+                    placeholder="<Choose>"
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "text-field",
+                      "id": "name",
+                      "label": "Name",
+                      "maxLength": 255,
+                      "name": "name",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "id": "provision_type",
+                      "includeEmpty": true,
+                      "label": "Type",
+                      "name": "provision_type",
+                      "options": Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={true}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="text-field"
+                      id="name"
+                      label="Name"
+                      maxLength={255}
+                      name="name"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="select"
+                      id="provision_type"
+                      includeEmpty={true}
+                      label="Type"
+                      name="provision_type"
+                      options={
+                        Array [
+                          Object {
+                            "label": "Host",
+                            "value": "host",
+                          },
+                          Object {
+                            "label": "VM and Instance",
+                            "value": "vm",
+                          },
+                        ]
+                      }
+                      placeholder="<Choose>"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "text-field",
+                        "id": "name",
+                        "label": "Name",
+                        "maxLength": 255,
+                        "name": "name",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "select",
+                        "id": "provision_type",
+                        "includeEmpty": true,
+                        "label": "Type",
+                        "name": "provision_type",
+                        "options": Array [
+                          Object {
+                            "label": "Host",
+                            "value": "host",
+                          },
+                          Object {
+                            "label": "VM and Instance",
+                            "value": "vm",
+                          },
+                        ],
+                        "placeholder": "<Choose>",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Save"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={true}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="text-field"
+                        id="name"
+                        label="Name"
+                        maxLength={255}
+                        name="name"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="select"
+                        id="provision_type"
+                        includeEmpty={true}
+                        label="Type"
+                        name="provision_type"
+                        options={
+                          Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ]
+                        }
+                        placeholder="<Choose>"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Save"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="ddorg__carbon-form-template-form form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="text-field"
+                          id="name"
+                          key="name"
+                          label="Name"
+                          maxLength={255}
+                          name="name"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "name",
+                                "label": "Name",
+                                "maxLength": 255,
+                                "name": "name",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <TextField
+                                component="text-field"
+                                id="name"
+                                label="Name"
+                                maxLength={255}
+                                name="name"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <ForwardRef(TextInput)
+                                  disabled={false}
+                                  helperText=""
+                                  id="name"
+                                  inline={false}
+                                  invalid={false}
+                                  invalidText=""
+                                  key="name"
+                                  labelText="Name"
+                                  light={false}
+                                  maxLength={255}
+                                  name="name"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  type="text"
+                                  value="foo"
+                                  warn={false}
+                                  warnText=""
+                                >
+                                  <div
+                                    className="bx--form-item bx--text-input-wrapper"
+                                  >
+                                    <label
+                                      className="bx--label"
+                                      htmlFor="name"
+                                    >
+                                      Name
+                                    </label>
+                                    <div
+                                      className="bx--text-input__field-outer-wrapper"
+                                    >
+                                      <div
+                                        className="bx--text-input__field-wrapper"
+                                        data-invalid={null}
+                                      >
+                                        <input
+                                          className="bx--text-input bx--text__input"
+                                          disabled={false}
+                                          id="name"
+                                          maxLength={255}
+                                          name="name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          onFocus={[Function]}
+                                          type="text"
+                                          value="foo"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ForwardRef(TextInput)>
+                              </TextField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="select"
+                          id="provision_type"
+                          includeEmpty={true}
+                          key="provision_type"
+                          label="Type"
+                          name="provision_type"
+                          options={
+                            Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ]
+                          }
+                          placeholder="<Choose>"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "provision_type",
+                                "includeEmpty": true,
+                                "label": "Type",
+                                "name": "provision_type",
+                                "options": Array [
+                                  Object {
+                                    "label": "Host",
+                                    "value": "host",
+                                  },
+                                  Object {
+                                    "label": "VM and Instance",
+                                    "value": "vm",
+                                  },
+                                ],
+                                "placeholder": "<Choose>",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="provision_type"
+                                includeEmpty={true}
+                                label="Type"
+                                name="provision_type"
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "Host",
+                                      "value": "host",
+                                    },
+                                    Object {
+                                      "label": "VM and Instance",
+                                      "value": "vm",
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                              >
+                                <Select$1
+                                  component="select"
+                                  id="provision_type"
+                                  label="Type"
+                                  loadingMessage="Loading..."
+                                  name="provision_type"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "<Choose>",
+                                        "value": undefined,
+                                      },
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="provision_type"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText="Type"
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="provision_type"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "<Choose>",
+                                          "value": undefined,
+                                        },
+                                        Object {
+                                          "label": "Host",
+                                          "value": "host",
+                                        },
+                                        Object {
+                                          "label": "VM and Instance",
+                                          "value": "vm",
+                                        },
+                                      ]
+                                    }
+                                    originalOnChange={[Function]}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value="host"
+                                  >
+                                    <ClearedSelect
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      hideSelectedOptions={false}
+                                      id="provision_type"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isFetching={false}
+                                      isSearchable={false}
+                                      labelText="Type"
+                                      name="provision_type"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      onInputChange={[Function]}
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "<Choose>",
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ]
+                                      }
+                                      originalOnChange={[Function]}
+                                      placeholder="<Choose>"
+                                      value="host"
+                                    >
+                                      <Select
+                                        className=""
+                                        disabled={false}
+                                        helperText=""
+                                        id="provision_type"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText="Type"
+                                        light={false}
+                                        name="provision_type"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        value="host"
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="provision_type"
+                                            >
+                                              Type
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="provision_type"
+                                                name="provision_type"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                value="host"
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="0"
+                                                  label="<Choose>"
+                                                  text="<Choose>"
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="<Choose>"
+                                                    value=""
+                                                  >
+                                                    &lt;Choose&gt;
+                                                  </option>
+                                                </SelectItem>
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="host"
+                                                  label="Host"
+                                                  text="Host"
+                                                  value="host"
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="Host"
+                                                    value="host"
+                                                  >
+                                                    Host
+                                                  </option>
+                                                </SelectItem>
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="vm"
+                                                  label="VM and Instance"
+                                                  text="VM and Instance"
+                                                  value="vm"
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="VM and Instance"
+                                                    value="vm"
+                                                  >
+                                                    VM and Instance
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select$1>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={true}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="text-field"
+                                  id="name"
+                                  label="Name"
+                                  maxLength={255}
+                                  name="name"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="select"
+                                  id="provision_type"
+                                  includeEmpty={true}
+                                  label="Type"
+                                  name="provision_type"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {
+                                  "name": true,
+                                  "provision_type": true,
+                                },
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {},
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": false,
+                                "initialValues": Object {
+                                  "name": "foo",
+                                  "provision_type": "host",
+                                },
+                                "invalid": false,
+                                "modified": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                                "valid": true,
+                                "validating": false,
+                                "values": Object {
+                                  "name": "foo",
+                                  "provision_type": "host",
+                                },
+                                "visited": Object {
+                                  "name": false,
+                                  "provision_type": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "label": "Name",
+                                    "maxLength": 255,
+                                    "name": "name",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "select",
+                                    "id": "provision_type",
+                                    "includeEmpty": true,
+                                    "label": "Type",
+                                    "name": "provision_type",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Host",
+                                        "value": "host",
+                                      },
+                                      Object {
+                                        "label": "VM and Instance",
+                                        "value": "vm",
+                                      },
+                                    ],
+                                    "placeholder": "<Choose>",
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Save"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className="ddorg__carbon-form-template-buttons"
+                              >
+                                <div
+                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Save"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Save
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="reset"
+                                    disabled={true}
+                                    key="form-reset"
+                                    label="Reset"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                        disabled={true}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Reset
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </PxeImageForm>
+</Provider>
+`;
