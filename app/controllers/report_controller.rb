@@ -936,6 +936,8 @@ class ReportController < ApplicationController
         {:title => _("Overview")},
         {:title => _("Reports")},
       ],
+      :expanded_node  => x_active_tree == :reports_tree,
+      :x_node         => x_node_right_cell
     }
   end
 
