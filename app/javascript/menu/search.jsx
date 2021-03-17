@@ -79,7 +79,7 @@ const MenuSearch = ({
     <SideNavItem className="padded menu-search">
       <Search
         size="sm"
-        placeHolderText={__('Find')}
+        placeholder={__('Find')}
         labelText={__('Find') /* hidden in css */}
         onChange={event => searchResults(event.target.value)}
       />
