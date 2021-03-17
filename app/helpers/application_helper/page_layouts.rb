@@ -82,7 +82,6 @@ module ApplicationHelper::PageLayouts
 
   def show_list_with_no_provider?
     %w[
-      ems_automation
       ems_cloud
       ems_container
       ems_infra
