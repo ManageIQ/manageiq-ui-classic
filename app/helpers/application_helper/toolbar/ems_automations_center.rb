@@ -30,8 +30,8 @@ class ApplicationHelper::Toolbar::EmsAutomationsCenter < ApplicationHelper::Tool
         button(
           :ems_automation_edit_provider,
           'pficon pficon-edit fa-lg',
-          N_('Select a single item to edit'),
-          N_('Edit Selected item'),
+          N_('Select a single Provider to edit'),
+          N_('Edit Selected Provider'),
           :url          => "/edit",
           :url_parms    => "main_div",
           :send_checked => true,

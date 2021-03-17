@@ -40,4 +40,19 @@ class ApplicationHelper::Toolbar::EmsAutomationCenter < ApplicationHelper::Toolb
       ]
     ),
   ])
+  button_group('ems_configuration_policy', [
+    select(
+      :ems_configuration_policy_choice,
+      nil,
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :ems_automation_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Ansible Tower Provider'),
+          N_('Edit Tags')),
+      ]
+    ),
+  ])
 end

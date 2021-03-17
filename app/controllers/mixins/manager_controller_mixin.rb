@@ -46,10 +46,9 @@ module Mixins
         else
           add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
         end
-        @explorer ? replace_right_cell(:replace_trees => [x_active_accord]) : javascript_redirect(:action => @lastaction, :id => params[:id])
+        javascript_redirect(:action => @lastaction, :id => params[:id])
       else
         @provider.errors.each do |field, msg|
-          @sb[:action] = nil
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         render_flash
@@ -64,7 +63,7 @@ module Mixins
       else
         flash_to_session(_("Edit of Provider was cancelled by the user"))
       end
-      @explorer ? replace_right_cell : javascript_redirect(:action => @lastaction, :id => params[:id])
+      javascript_redirect(:action => @lastaction, :id => params[:id])
     end
 
     def authentication_validate
@@ -87,16 +86,16 @@ module Mixins
 
     def new
       assert_privileges("#{privilege_prefix}_add_provider")
-      @explorer = true if explorer_controller?
       @ems = @provider_manager = concrete_model.new
       @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       @sb[:action] = params[:action]
       set_redirect_vars
+      drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},
+                      :url  => "/#{controller_name}/new")
     end
 
     def edit
       assert_privileges("#{privilege_prefix}_edit_provider")
-      @explorer = true if explorer_controller?
       @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       case params[:button]
       when "cancel"
@@ -110,11 +109,12 @@ module Mixins
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
         @sb[:action] = params[:action]
         set_redirect_vars
+        drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @ems.name},
+                        :url  => "/#{controller_name}/#{@ems.id}/edit")
       end
     end
 
     def refresh
-      @explorer = true if explorer_controller?
       assert_privileges("#{privilege_prefix}_refresh_provider")
       manager_button_operation('refresh_ems', _('Refresh'))
     end
@@ -156,7 +156,6 @@ module Mixins
 
       unless ConfiguredSystem.provisionable?(provisioning_ids)
         add_flash(_("Provisioning is not supported for at least one of the selected systems"), :error)
-        replace_right_cell if explorer_controller?
         return
       end
 

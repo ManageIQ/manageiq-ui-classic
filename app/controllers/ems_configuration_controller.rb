@@ -109,6 +109,7 @@ class EmsConfigurationController < ApplicationController
         {:title => _("Configuration Management")},
         {:title => _("Providers"), :url => controller_url},
       ],
+      :record_info => @ems,
     }
   end
 

@@ -1,4 +1,5 @@
 class EmsAutomationController < ApplicationController
+  include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
@@ -103,6 +104,7 @@ class EmsAutomationController < ApplicationController
         {:title => _("Ansible Tower")},
         {:title => _("Providers"), :url => controller_url},
       ],
+      :record_info => @ems,
     }
   end
 
