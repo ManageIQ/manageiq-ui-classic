@@ -38,7 +38,7 @@ describe TreeBuilderOpsRbacFeatures do
       expect(bs_tree).not_to be_nil
     end
 
-    %w(aut compute con conf net set sto svc vi).each do |i|
+    %w(aut compute con net set sto svc vi).each do |i|
       it "includes #{i}" do
         expect(main_keys).to include("100000002___tab_#{i}")
       end
