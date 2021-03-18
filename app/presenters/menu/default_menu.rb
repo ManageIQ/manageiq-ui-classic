@@ -254,8 +254,7 @@ module Menu
       end
 
       def automation_manager_menu_section
-        Menu::Section.new(:at, N_("Ansible Tower"), nil, [
-          Menu::Item.new('automation_manager_provider', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
+        Menu::Section.new(:at, N_("Automation"), nil, [
           Menu::Item.new('ems_automation', N_('Providers'), 'ems_automation', {:feature => 'ems_automation_show_list', :any => true}, '/ems_automation/show_list'),
           Menu::Item.new('automation_manager_configured_system', N_('Configured Systems'), 'automation_manager_configured_system', {:feature => 'automation_manager_configured_system_show_list'}, '/automation_manager_configured_system/show_list'),
           Menu::Item.new('configuration_script', N_('Templates'), 'configuration_script', {:feature => 'configuration_script_show_list'}, '/configuration_script/show_list'),
