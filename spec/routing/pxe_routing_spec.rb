@@ -63,12 +63,6 @@ describe PxeController do
     end
   end
 
-  describe "#pxe_image_type_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/pxe_image_type_form_field_changed")).to route_to("pxe#pxe_image_type_form_field_changed")
-    end
-  end
-
   describe "#pxe_image_type_list" do
     it "routes with POST" do
       expect(post("/pxe/pxe_image_type_list")).to route_to("pxe#pxe_image_type_list")

@@ -251,7 +251,7 @@ class PxeController < ApplicationController
         presenter.update(:form_buttons_div, r[
           :partial => "layouts/x_edit_buttons",
           :locals  => {
-            :record_id    => @edit[:rec_id],
+            :record_id    => @edit.try(:[], :rec_id),
             :action_url   => action_url,
             :multi_record => multi_record,
             :serialize    => true
@@ -265,8 +265,8 @@ class PxeController < ApplicationController
       presenter.hide(:form_buttons_div)
     end
 
-    # disable toolbar and buttons for react add/edit pxe server form
-    if @in_a_form && nodetype == 'ps'
+    # disable toolbar and buttons for react add/edit pxe server and pxe system image type forms
+    if @in_a_form && ['ps', 'pit'].include?(nodetype)
       presenter.hide(:form_buttons_div, :toolbar)
     end
 

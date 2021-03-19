@@ -28,6 +28,7 @@ module Mixins
       options[:not_tree] ||= false
       options[:hide_title] ||= false
       options[:disable_tree] ||= false
+      options[:expanded_node] ||= false
 
       breadcrumbs = options[:breadcrumbs] || []
 
@@ -82,7 +83,7 @@ module Mixins
           #          2. TreeNode.text
           #          3. Item from tree (if it's built)
           #          4. Fallbacks (sent text, title of the record, title_for_breadcrumbs)
-          key = node ? node.key : options[:x_node]
+          key = node && !options[:expanded_node] ? node.key : options[:x_node]
           title = if options[:x_node] == 'root' # After switching accordion, there is no way how to get root text
                     right_cell_text
                   elsif node                    # Use node's text and key

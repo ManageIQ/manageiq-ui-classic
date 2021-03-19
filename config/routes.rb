@@ -2719,7 +2719,6 @@ Rails.application.routes.draw do
         log_depot_validate
         pxe_image_edit
         pxe_image_type_edit
-        pxe_image_type_form_field_changed
         pxe_image_type_list
         pxe_img_form_field_changed
         pxe_server_async_cred_validation

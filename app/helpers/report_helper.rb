@@ -2,20 +2,20 @@ module ReportHelper
   include_concern 'Editor'
 
   STYLE_CLASSES = {
-    :miq_rpt_red_text    => _("Red Text"),
-    :miq_rpt_red_bg      => _("Red Background"),
-    :miq_rpt_yellow_text => _("Yellow Text"),
-    :miq_rpt_yellow_bg   => _("Yellow Background"),
-    :miq_rpt_green_text  => _("Green Text"),
-    :miq_rpt_green_bg    => _("Green Background"),
-    :miq_rpt_blue_text   => _("Blue Text"),
-    :miq_rpt_blue_bg     => _("Blue Background"),
-    :miq_rpt_maroon_text => _("Light Blue Text"),
-    :miq_rpt_maroon_bg   => _("Light Blue Background"),
-    :miq_rpt_purple_text => _("Purple Text"),
-    :miq_rpt_purple_bg   => _("Purple Background"),
-    :miq_rpt_gray_text   => _("Gray Text"),
-    :miq_rpt_gray_bg     => _("Gray Background")
+    :miq_rpt_red_text    => N_("Red Text"),
+    :miq_rpt_red_bg      => N_("Red Background"),
+    :miq_rpt_yellow_text => N_("Yellow Text"),
+    :miq_rpt_yellow_bg   => N_("Yellow Background"),
+    :miq_rpt_green_text  => N_("Green Text"),
+    :miq_rpt_green_bg    => N_("Green Background"),
+    :miq_rpt_blue_text   => N_("Blue Text"),
+    :miq_rpt_blue_bg     => N_("Blue Background"),
+    :miq_rpt_maroon_text => N_("Light Blue Text"),
+    :miq_rpt_maroon_bg   => N_("Light Blue Background"),
+    :miq_rpt_purple_text => N_("Purple Text"),
+    :miq_rpt_purple_bg   => N_("Purple Background"),
+    :miq_rpt_gray_text   => N_("Gray Text"),
+    :miq_rpt_gray_bg     => N_("Gray Background")
   }.freeze
 
   NOTHING_STRING = N_("<<<Nothing>>>").freeze
