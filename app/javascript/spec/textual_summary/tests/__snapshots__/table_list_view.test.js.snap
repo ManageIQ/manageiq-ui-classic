@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableListView renders just fine... 1`] = `
+<TableListView
+  colOrder={
+    Array [
+      "name",
+      "value",
+    ]
+  }
+  headers={
+    Array [
+      "Name",
+      "Rows",
+    ]
+  }
+  onClick={[Function]}
+  rowLabel="View the table"
+  title="Tables with the Most Rows"
+  values={
+    Array [
+      Object {
+        "explorer": true,
+        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+        "name": "vim_performance_states",
+        "title": "vim_performance_states",
+        "value": "676,150",
+      },
+      Object {
+        "explorer": true,
+        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+        "name": "miq_report_result_details",
+        "title": "miq_report_result_details",
+        "value": "280,848",
+      },
+    ]
+  }
+>
+  <table
+    className="table table-bordered table-hover table-striped table-summary-screen"
+  >
+    <thead>
+      <tr>
+        <th
+          align="left"
+          colSpan={2}
+        >
+          Tables with the Most Rows
+        </th>
+      </tr>
+      <tr>
+        <th
+          key="0"
+        >
+          Name
+        </th>
+        <th
+          key="1"
+        >
+          Rows
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <a
+        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+        onClick={[Function]}
+      >
+        <tr
+          key="0"
+        >
+          <td
+            key="0"
+            title="View the table"
+          >
+            vim_performance_states
+          </td>
+          <td
+            key="1"
+            title="View the table"
+          >
+            676,150
+          </td>
+        </tr>
+      </a>
+      <a
+        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+        onClick={[Function]}
+      >
+        <tr
+          key="1"
+        >
+          <td
+            key="0"
+            title="View the table"
+          >
+            miq_report_result_details
+          </td>
+          <td
+            key="1"
+            title="View the table"
+          >
+            280,848
+          </td>
+        </tr>
+      </a>
+    </tbody>
+  </table>
+</TableListView>
+`;

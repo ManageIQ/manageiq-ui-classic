@@ -1,0 +1,1137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MultilinkTable renders just fine 1`] = `
+<MultilinkTable
+  items={
+    Array [
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=1&status=running",
+            "title": "Show list of running Aodh",
+            "value": "Running (3)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Aodh",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=1&status=all",
+            "title": "Show list of all Aodh",
+            "value": "All (3)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Aodh",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Aodh",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=2&status=running",
+            "title": "Show list of running Ceilometer",
+            "value": "Running (3)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Ceilometer",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=2&status=all",
+            "title": "Show list of all Ceilometer",
+            "value": "All (3)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Ceilometer",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Ceilometer",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=3&status=running",
+            "title": "Show list of running Cinder",
+            "value": "Running (3)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Cinder",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=3&status=all",
+            "title": "Show list of all Cinder",
+            "value": "All (3)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Cinder",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Cinder",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=4&status=running",
+            "title": "Show list of running Glance",
+            "value": "Running (2)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Glance",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=4&status=all",
+            "title": "Show list of all Glance",
+            "value": "All (2)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Glance",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Glance",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=5&status=running",
+            "title": "Show list of running Gnocchi",
+            "value": "Running (2)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Gnocchi",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=5&status=all",
+            "title": "Show list of all Gnocchi",
+            "value": "All (2)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Gnocchi",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Gnocchi",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=6&status=running",
+            "title": "Show list of running Heat",
+            "value": "Running (4)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Heat",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=6&status=all",
+            "title": "Show list of all Heat",
+            "value": "All (4)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Heat",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Heat",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of running Keystone",
+            "value": "Running (0)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Keystone",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=7&status=all",
+            "title": "Show list of all Keystone",
+            "value": "All (1)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Keystone",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Keystone",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=8&status=running",
+            "title": "Show list of running Nova",
+            "value": "Running (5)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Nova",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=8&status=all",
+            "title": "Show list of all Nova",
+            "value": "All (10)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Nova",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Nova",
+      },
+      Object {
+        "sub_items": Array [
+          Object {
+            "icon": "pficon pficon-ok",
+            "link": "/host/host_services/18?db=host&host_service_group=9&status=running",
+            "title": "Show list of running Swift",
+            "value": "Running (14)",
+          },
+          Object {
+            "icon": null,
+            "link": null,
+            "title": "Show list of failed Swift",
+            "value": "Failed (0)",
+          },
+          Object {
+            "icon": "pficon pficon-service",
+            "link": "/host/host_services/18?db=host&host_service_group=9&status=all",
+            "title": "Show list of all Swift",
+            "value": "All (14)",
+          },
+          Object {
+            "icon": "fa fa-file-o",
+            "link": null,
+            "title": "Show list of configuration files of Swift",
+            "value": "Configuration (0)",
+          },
+        ],
+        "value": "Swift",
+      },
+    ]
+  }
+  onClick={[Function]}
+  title="Some OpenStack Stuff"
+>
+  <table
+    className="table table-bordered table-striped table-summary-screen"
+  >
+    <thead>
+      <tr>
+        <th
+          colSpan="100"
+        >
+          Some OpenStack Stuff
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="no-hover"
+        key="0"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Aodh
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Aodh"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=1&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Aodh"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Aodh"
+              />
+            </IconOrImage>
+            Running (3)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Aodh"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Aodh"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Aodh"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=1&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Aodh"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Aodh"
+              />
+            </IconOrImage>
+            All (3)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Aodh"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Aodh"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Aodh"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="1"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Ceilometer
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Ceilometer"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=2&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Ceilometer"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Ceilometer"
+              />
+            </IconOrImage>
+            Running (3)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Ceilometer"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Ceilometer"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Ceilometer"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=2&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Ceilometer"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Ceilometer"
+              />
+            </IconOrImage>
+            All (3)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Ceilometer"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Ceilometer"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Ceilometer"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="2"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Cinder
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Cinder"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=3&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Cinder"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Cinder"
+              />
+            </IconOrImage>
+            Running (3)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Cinder"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Cinder"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Cinder"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=3&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Cinder"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Cinder"
+              />
+            </IconOrImage>
+            All (3)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Cinder"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Cinder"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Cinder"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="3"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Glance
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Glance"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=4&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Glance"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Glance"
+              />
+            </IconOrImage>
+            Running (2)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Glance"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Glance"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Glance"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=4&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Glance"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Glance"
+              />
+            </IconOrImage>
+            All (2)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Glance"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Glance"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Glance"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="4"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Gnocchi
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Gnocchi"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=5&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Gnocchi"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Gnocchi"
+              />
+            </IconOrImage>
+            Running (2)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Gnocchi"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Gnocchi"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Gnocchi"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=5&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Gnocchi"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Gnocchi"
+              />
+            </IconOrImage>
+            All (2)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Gnocchi"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Gnocchi"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Gnocchi"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="5"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Heat
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Heat"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=6&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Heat"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Heat"
+              />
+            </IconOrImage>
+            Running (4)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Heat"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Heat"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Heat"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=6&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Heat"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Heat"
+              />
+            </IconOrImage>
+            All (4)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Heat"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Heat"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Heat"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="6"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Keystone
+        </td>
+        <td
+          key="0"
+          title="Show list of running Keystone"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of running Keystone"
+          />
+          Running (0)
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Keystone"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Keystone"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Keystone"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=7&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Keystone"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Keystone"
+              />
+            </IconOrImage>
+            All (1)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Keystone"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Keystone"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Keystone"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="7"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Nova
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Nova"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=8&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Nova"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Nova"
+              />
+            </IconOrImage>
+            Running (5)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Nova"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Nova"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Nova"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=8&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Nova"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Nova"
+              />
+            </IconOrImage>
+            All (10)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Nova"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Nova"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Nova"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+      <tr
+        className="no-hover"
+        key="8"
+      >
+        <td
+          className="hover"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title={null}
+          />
+          Swift
+        </td>
+        <td
+          className="hover"
+          key="0"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of running Swift"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=9&status=running"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-ok"
+              image={null}
+              title="Show list of running Swift"
+            >
+              <i
+                className="pficon pficon-ok"
+                title="Show list of running Swift"
+              />
+            </IconOrImage>
+            Running (14)
+          </a>
+        </td>
+        <td
+          key="1"
+          title="Show list of failed Swift"
+        >
+          <IconOrImage
+            icon={null}
+            image={null}
+            title="Show list of failed Swift"
+          />
+          Failed (0)
+        </td>
+        <td
+          className="hover"
+          key="2"
+          style={
+            Object {
+              "cursor": "pointer, hand",
+            }
+          }
+          title="Show list of all Swift"
+        >
+          <a
+            href="/host/host_services/18?db=host&host_service_group=9&status=all"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon="pficon pficon-service"
+              image={null}
+              title="Show list of all Swift"
+            >
+              <i
+                className="pficon pficon-service"
+                title="Show list of all Swift"
+              />
+            </IconOrImage>
+            All (14)
+          </a>
+        </td>
+        <td
+          key="3"
+          title="Show list of configuration files of Swift"
+        >
+          <IconOrImage
+            icon="fa fa-file-o"
+            image={null}
+            title="Show list of configuration files of Swift"
+          >
+            <i
+              className="fa fa-file-o"
+              title="Show list of configuration files of Swift"
+            />
+          </IconOrImage>
+          Configuration (0)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</MultilinkTable>
+`;

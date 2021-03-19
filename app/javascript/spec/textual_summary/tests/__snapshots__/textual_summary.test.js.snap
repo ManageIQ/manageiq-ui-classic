@@ -1,0 +1,1656 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextualSummary renders just fine 1`] = `
+<TextualSummary
+  onClick={[Function]}
+  summary={
+    Array [
+      Array [
+        Object {
+          "component": "GenericGroup",
+          "items": Array [
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Region",
+              "value": "US East (N. Virginia)",
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Type",
+              "value": "Amazon EC2 Network",
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Management Engine GUID",
+              "value": null,
+            },
+          ],
+          "title": "Properties",
+        },
+        Object {
+          "component": "GenericGroup",
+          "items": Array [
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Default Credentials",
+              "title": "Ok",
+              "value": "Valid",
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "label": "SmartState Docker Credentials",
+              "title": "Ok",
+              "value": "Valid",
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Last Refresh",
+              "title": null,
+              "value": Array [
+                Object {
+                  "value": "Success - 4 Months Ago",
+                },
+                Object {
+                  "value": null,
+                },
+              ],
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "label": "Last Refresh Date",
+              "value": "2018-01-20T23:35:50.908Z",
+            },
+          ],
+          "title": "Status",
+        },
+      ],
+      Array [
+        Object {
+          "component": "GenericGroup",
+          "items": Array [
+            Object {
+              "hoverClass": "no-hover",
+              "icon": "pficon pficon-cloud-tenant",
+              "image": null,
+              "label": "Cloud Tenants",
+              "value": "0",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "ff ff-cloud-network",
+              "image": null,
+              "label": "Cloud Networks",
+              "link": "/ems_network/39?display=cloud_networks",
+              "title": "Show all Cloud Networks",
+              "value": "1",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "pficon pficon-network",
+              "image": null,
+              "label": "Cloud Subnets",
+              "link": "/ems_network/39?display=cloud_subnets",
+              "title": "Show all Cloud Subnets",
+              "value": "6",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "pficon pficon-route",
+              "image": null,
+              "label": "Network Routers",
+              "link": "/ems_network/39?display=network_routers",
+              "title": "Show all Network Routers",
+              "value": "1",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "pficon pficon-cloud-security",
+              "image": null,
+              "label": "Security Groups",
+              "link": "/ems_network/39?display=security_groups",
+              "title": "Show all Security Groups",
+              "value": "18",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "ff ff-floating-ip",
+              "image": null,
+              "label": "Floating IPs",
+              "link": "/ems_network/39?display=floating_ips",
+              "title": "Show all Floating IPs",
+              "value": "14",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "ff ff-network-port",
+              "image": null,
+              "label": "Network Ports",
+              "link": "/ems_network/39?display=network_ports",
+              "title": "Show all Network Ports",
+              "value": "26",
+            },
+            Object {
+              "hoverClass": "",
+              "icon": "ff ff-load-balancer",
+              "image": null,
+              "label": "Load Balancers",
+              "link": "/ems_network/39?display=load_balancers",
+              "title": "Show all Load Balancers",
+              "value": "2",
+            },
+            Object {
+              "background": "green",
+              "hoverClass": "",
+              "icon": "fa fa-play",
+              "image": null,
+              "label": "Power State",
+              "value": "On",
+            },
+          ],
+          "title": "Relationships",
+        },
+        Object {
+          "component": "GenericGroup",
+          "items": Array [
+            Object {
+              "hoverClass": "",
+              "icon": "pficon pficon-topology",
+              "label": "Topology",
+              "link": "/network_topology/show/39",
+              "title": "Show topology",
+            },
+          ],
+          "title": "Overview",
+        },
+        Object {
+          "component": "TagGroup",
+          "items": Array [
+            Object {
+              "hoverClass": "no-hover",
+              "icon": "pficon pficon-zone",
+              "label": "Managed by Zone",
+              "value": "Amazon Zone",
+            },
+            Object {
+              "hoverClass": "no-hover",
+              "icon": "fa fa-tag",
+              "label": "My Company Tags",
+              "value": "No My Company Tags have been assigned",
+            },
+          ],
+          "title": "Smart Management",
+        },
+      ],
+    ]
+  }
+>
+  <div
+    className="row"
+  >
+    <TextualRow
+      groups={
+        Array [
+          Object {
+            "component": "GenericGroup",
+            "items": Array [
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Region",
+                "value": "US East (N. Virginia)",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Type",
+                "value": "Amazon EC2 Network",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Management Engine GUID",
+                "value": null,
+              },
+            ],
+            "title": "Properties",
+          },
+          Object {
+            "component": "GenericGroup",
+            "items": Array [
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Default Credentials",
+                "title": "Ok",
+                "value": "Valid",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "SmartState Docker Credentials",
+                "title": "Ok",
+                "value": "Valid",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Last Refresh",
+                "title": null,
+                "value": Array [
+                  Object {
+                    "value": "Success - 4 Months Ago",
+                  },
+                  Object {
+                    "value": null,
+                  },
+                ],
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "Last Refresh Date",
+                "value": "2018-01-20T23:35:50.908Z",
+              },
+            ],
+            "title": "Status",
+          },
+        ]
+      }
+      key="0"
+      onClick={[Function]}
+    >
+      <div
+        className="col-md-12 col-lg-6"
+      >
+        <TextualGroup
+          group={
+            Object {
+              "component": "GenericGroup",
+              "items": Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Region",
+                  "value": "US East (N. Virginia)",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Type",
+                  "value": "Amazon EC2 Network",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Management Engine GUID",
+                  "value": null,
+                },
+              ],
+              "title": "Properties",
+            }
+          }
+          key="Properties"
+          onClick={[Function]}
+        >
+          <GenericGroup
+            items={
+              Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Region",
+                  "value": "US East (N. Virginia)",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Type",
+                  "value": "Amazon EC2 Network",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Management Engine GUID",
+                  "value": null,
+                },
+              ]
+            }
+            onClick={[Function]}
+            title="Properties"
+          >
+            <table
+              className="table table-bordered table-hover table-striped table-summary-screen"
+            >
+              <thead>
+                <tr>
+                  <th
+                    align="left"
+                    colSpan="2"
+                  >
+                    Properties
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Region",
+                      "value": "US East (N. Virginia)",
+                    }
+                  }
+                  key="0"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Region
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title={null}
+                      />
+                      <span>
+                         
+                        US East (N. Virginia)
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Type",
+                      "value": "Amazon EC2 Network",
+                    }
+                  }
+                  key="1"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Type
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title={null}
+                      />
+                      <span>
+                         
+                        Amazon EC2 Network
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Management Engine GUID",
+                      "value": null,
+                    }
+                  }
+                  key="2"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Management Engine GUID
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title={null}
+                      />
+                      <span>
+                         
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+              </tbody>
+            </table>
+          </GenericGroup>
+        </TextualGroup>
+        <TextualGroup
+          group={
+            Object {
+              "component": "GenericGroup",
+              "items": Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Default Credentials",
+                  "title": "Ok",
+                  "value": "Valid",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "SmartState Docker Credentials",
+                  "title": "Ok",
+                  "value": "Valid",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Last Refresh",
+                  "title": null,
+                  "value": Array [
+                    Object {
+                      "value": "Success - 4 Months Ago",
+                    },
+                    Object {
+                      "value": null,
+                    },
+                  ],
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Last Refresh Date",
+                  "value": "2018-01-20T23:35:50.908Z",
+                },
+              ],
+              "title": "Status",
+            }
+          }
+          key="Status"
+          onClick={[Function]}
+        >
+          <GenericGroup
+            items={
+              Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Default Credentials",
+                  "title": "Ok",
+                  "value": "Valid",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "SmartState Docker Credentials",
+                  "title": "Ok",
+                  "value": "Valid",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Last Refresh",
+                  "title": null,
+                  "value": Array [
+                    Object {
+                      "value": "Success - 4 Months Ago",
+                    },
+                    Object {
+                      "value": null,
+                    },
+                  ],
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "label": "Last Refresh Date",
+                  "value": "2018-01-20T23:35:50.908Z",
+                },
+              ]
+            }
+            onClick={[Function]}
+            title="Status"
+          >
+            <table
+              className="table table-bordered table-hover table-striped table-summary-screen"
+            >
+              <thead>
+                <tr>
+                  <th
+                    align="left"
+                    colSpan="2"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Default Credentials",
+                      "title": "Ok",
+                      "value": "Valid",
+                    }
+                  }
+                  key="0"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                    title="Ok"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Default Credentials
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title="Ok"
+                      />
+                      <span>
+                         
+                        Valid
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "SmartState Docker Credentials",
+                      "title": "Ok",
+                      "value": "Valid",
+                    }
+                  }
+                  key="1"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                    title="Ok"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      SmartState Docker Credentials
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title="Ok"
+                      />
+                      <span>
+                         
+                        Valid
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Last Refresh",
+                      "title": null,
+                      "value": Array [
+                        Object {
+                          "value": "Success - 4 Months Ago",
+                        },
+                        Object {
+                          "value": null,
+                        },
+                      ],
+                    }
+                  }
+                  key="2"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                    title={null}
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Last Refresh
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title={null}
+                      />
+                      <table
+                        cellPadding="0"
+                        cellSpacing="0"
+                      >
+                        <tbody>
+                          <tr
+                            className="no-hover"
+                            key="0"
+                            onClick={[Function]}
+                          >
+                            <td
+                              style={
+                                Object {
+                                  "border": 0,
+                                  "margin": 0,
+                                  "padding": 0,
+                                }
+                              }
+                            >
+                              <IconOrImage
+                                icon={null}
+                                image={null}
+                                title={null}
+                              />
+                              Success - 4 Months Ago
+                            </td>
+                          </tr>
+                          <tr
+                            className="no-hover"
+                            key="1"
+                            onClick={[Function]}
+                          >
+                            <td
+                              style={
+                                Object {
+                                  "border": 0,
+                                  "margin": 0,
+                                  "padding": 0,
+                                }
+                              }
+                            >
+                              <IconOrImage
+                                icon={null}
+                                image={null}
+                                title={null}
+                              />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "label": "Last Refresh Date",
+                      "value": "2018-01-20T23:35:50.908Z",
+                    }
+                  }
+                  key="3"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Last Refresh Date
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon={null}
+                        image={null}
+                        title={null}
+                      />
+                      <span>
+                         
+                        2018-01-20T23:35:50.908Z
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+              </tbody>
+            </table>
+          </GenericGroup>
+        </TextualGroup>
+      </div>
+    </TextualRow>
+    <TextualRow
+      groups={
+        Array [
+          Object {
+            "component": "GenericGroup",
+            "items": Array [
+              Object {
+                "hoverClass": "no-hover",
+                "icon": "pficon pficon-cloud-tenant",
+                "image": null,
+                "label": "Cloud Tenants",
+                "value": "0",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "ff ff-cloud-network",
+                "image": null,
+                "label": "Cloud Networks",
+                "link": "/ems_network/39?display=cloud_networks",
+                "title": "Show all Cloud Networks",
+                "value": "1",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "pficon pficon-network",
+                "image": null,
+                "label": "Cloud Subnets",
+                "link": "/ems_network/39?display=cloud_subnets",
+                "title": "Show all Cloud Subnets",
+                "value": "6",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "pficon pficon-route",
+                "image": null,
+                "label": "Network Routers",
+                "link": "/ems_network/39?display=network_routers",
+                "title": "Show all Network Routers",
+                "value": "1",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "pficon pficon-cloud-security",
+                "image": null,
+                "label": "Security Groups",
+                "link": "/ems_network/39?display=security_groups",
+                "title": "Show all Security Groups",
+                "value": "18",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "ff ff-floating-ip",
+                "image": null,
+                "label": "Floating IPs",
+                "link": "/ems_network/39?display=floating_ips",
+                "title": "Show all Floating IPs",
+                "value": "14",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "ff ff-network-port",
+                "image": null,
+                "label": "Network Ports",
+                "link": "/ems_network/39?display=network_ports",
+                "title": "Show all Network Ports",
+                "value": "26",
+              },
+              Object {
+                "hoverClass": "",
+                "icon": "ff ff-load-balancer",
+                "image": null,
+                "label": "Load Balancers",
+                "link": "/ems_network/39?display=load_balancers",
+                "title": "Show all Load Balancers",
+                "value": "2",
+              },
+              Object {
+                "background": "green",
+                "hoverClass": "",
+                "icon": "fa fa-play",
+                "image": null,
+                "label": "Power State",
+                "value": "On",
+              },
+            ],
+            "title": "Relationships",
+          },
+          Object {
+            "component": "GenericGroup",
+            "items": Array [
+              Object {
+                "hoverClass": "",
+                "icon": "pficon pficon-topology",
+                "label": "Topology",
+                "link": "/network_topology/show/39",
+                "title": "Show topology",
+              },
+            ],
+            "title": "Overview",
+          },
+          Object {
+            "component": "TagGroup",
+            "items": Array [
+              Object {
+                "hoverClass": "no-hover",
+                "icon": "pficon pficon-zone",
+                "label": "Managed by Zone",
+                "value": "Amazon Zone",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "icon": "fa fa-tag",
+                "label": "My Company Tags",
+                "value": "No My Company Tags have been assigned",
+              },
+            ],
+            "title": "Smart Management",
+          },
+        ]
+      }
+      key="1"
+      onClick={[Function]}
+    >
+      <div
+        className="col-md-12 col-lg-6"
+      >
+        <TextualGroup
+          group={
+            Object {
+              "component": "GenericGroup",
+              "items": Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "pficon pficon-cloud-tenant",
+                  "image": null,
+                  "label": "Cloud Tenants",
+                  "value": "0",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-cloud-network",
+                  "image": null,
+                  "label": "Cloud Networks",
+                  "link": "/ems_network/39?display=cloud_networks",
+                  "title": "Show all Cloud Networks",
+                  "value": "1",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-network",
+                  "image": null,
+                  "label": "Cloud Subnets",
+                  "link": "/ems_network/39?display=cloud_subnets",
+                  "title": "Show all Cloud Subnets",
+                  "value": "6",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-route",
+                  "image": null,
+                  "label": "Network Routers",
+                  "link": "/ems_network/39?display=network_routers",
+                  "title": "Show all Network Routers",
+                  "value": "1",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-cloud-security",
+                  "image": null,
+                  "label": "Security Groups",
+                  "link": "/ems_network/39?display=security_groups",
+                  "title": "Show all Security Groups",
+                  "value": "18",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-floating-ip",
+                  "image": null,
+                  "label": "Floating IPs",
+                  "link": "/ems_network/39?display=floating_ips",
+                  "title": "Show all Floating IPs",
+                  "value": "14",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-network-port",
+                  "image": null,
+                  "label": "Network Ports",
+                  "link": "/ems_network/39?display=network_ports",
+                  "title": "Show all Network Ports",
+                  "value": "26",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-load-balancer",
+                  "image": null,
+                  "label": "Load Balancers",
+                  "link": "/ems_network/39?display=load_balancers",
+                  "title": "Show all Load Balancers",
+                  "value": "2",
+                },
+                Object {
+                  "background": "green",
+                  "hoverClass": "",
+                  "icon": "fa fa-play",
+                  "image": null,
+                  "label": "Power State",
+                  "value": "On",
+                },
+              ],
+              "title": "Relationships",
+            }
+          }
+          key="Relationships"
+          onClick={[Function]}
+        >
+          <GenericGroup
+            items={
+              Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "pficon pficon-cloud-tenant",
+                  "image": null,
+                  "label": "Cloud Tenants",
+                  "value": "0",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-cloud-network",
+                  "image": null,
+                  "label": "Cloud Networks",
+                  "link": "/ems_network/39?display=cloud_networks",
+                  "title": "Show all Cloud Networks",
+                  "value": "1",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-network",
+                  "image": null,
+                  "label": "Cloud Subnets",
+                  "link": "/ems_network/39?display=cloud_subnets",
+                  "title": "Show all Cloud Subnets",
+                  "value": "6",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-route",
+                  "image": null,
+                  "label": "Network Routers",
+                  "link": "/ems_network/39?display=network_routers",
+                  "title": "Show all Network Routers",
+                  "value": "1",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-cloud-security",
+                  "image": null,
+                  "label": "Security Groups",
+                  "link": "/ems_network/39?display=security_groups",
+                  "title": "Show all Security Groups",
+                  "value": "18",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-floating-ip",
+                  "image": null,
+                  "label": "Floating IPs",
+                  "link": "/ems_network/39?display=floating_ips",
+                  "title": "Show all Floating IPs",
+                  "value": "14",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-network-port",
+                  "image": null,
+                  "label": "Network Ports",
+                  "link": "/ems_network/39?display=network_ports",
+                  "title": "Show all Network Ports",
+                  "value": "26",
+                },
+                Object {
+                  "hoverClass": "",
+                  "icon": "ff ff-load-balancer",
+                  "image": null,
+                  "label": "Load Balancers",
+                  "link": "/ems_network/39?display=load_balancers",
+                  "title": "Show all Load Balancers",
+                  "value": "2",
+                },
+                Object {
+                  "background": "green",
+                  "hoverClass": "",
+                  "icon": "fa fa-play",
+                  "image": null,
+                  "label": "Power State",
+                  "value": "On",
+                },
+              ]
+            }
+            onClick={[Function]}
+            title="Relationships"
+          >
+            <table
+              className="table table-bordered table-hover table-striped table-summary-screen"
+            >
+              <thead>
+                <tr>
+                  <th
+                    align="left"
+                    colSpan="2"
+                  >
+                    Relationships
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "no-hover",
+                      "icon": "pficon pficon-cloud-tenant",
+                      "image": null,
+                      "label": "Cloud Tenants",
+                      "value": "0",
+                    }
+                  }
+                  key="0"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className="no-hover"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Cloud Tenants
+                    </td>
+                    <td>
+                      <IconOrImage
+                        icon="pficon pficon-cloud-tenant"
+                        image={null}
+                        title={null}
+                      >
+                        <i
+                          className="pficon pficon-cloud-tenant"
+                          title={null}
+                        />
+                      </IconOrImage>
+                      <span>
+                         
+                        0
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "ff ff-cloud-network",
+                      "image": null,
+                      "label": "Cloud Networks",
+                      "link": "/ems_network/39?display=cloud_networks",
+                      "title": "Show all Cloud Networks",
+                      "value": "1",
+                    }
+                  }
+                  key="1"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Cloud Networks"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Cloud Networks
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=cloud_networks"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="ff ff-cloud-network"
+                          image={null}
+                          title="Show all Cloud Networks"
+                        >
+                          <i
+                            className="ff ff-cloud-network"
+                            title="Show all Cloud Networks"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          1
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "pficon pficon-network",
+                      "image": null,
+                      "label": "Cloud Subnets",
+                      "link": "/ems_network/39?display=cloud_subnets",
+                      "title": "Show all Cloud Subnets",
+                      "value": "6",
+                    }
+                  }
+                  key="2"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Cloud Subnets"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Cloud Subnets
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=cloud_subnets"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="pficon pficon-network"
+                          image={null}
+                          title="Show all Cloud Subnets"
+                        >
+                          <i
+                            className="pficon pficon-network"
+                            title="Show all Cloud Subnets"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          6
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "pficon pficon-route",
+                      "image": null,
+                      "label": "Network Routers",
+                      "link": "/ems_network/39?display=network_routers",
+                      "title": "Show all Network Routers",
+                      "value": "1",
+                    }
+                  }
+                  key="3"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Network Routers"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Network Routers
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=network_routers"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="pficon pficon-route"
+                          image={null}
+                          title="Show all Network Routers"
+                        >
+                          <i
+                            className="pficon pficon-route"
+                            title="Show all Network Routers"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          1
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "pficon pficon-cloud-security",
+                      "image": null,
+                      "label": "Security Groups",
+                      "link": "/ems_network/39?display=security_groups",
+                      "title": "Show all Security Groups",
+                      "value": "18",
+                    }
+                  }
+                  key="4"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Security Groups"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Security Groups
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=security_groups"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="pficon pficon-cloud-security"
+                          image={null}
+                          title="Show all Security Groups"
+                        >
+                          <i
+                            className="pficon pficon-cloud-security"
+                            title="Show all Security Groups"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          18
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "ff ff-floating-ip",
+                      "image": null,
+                      "label": "Floating IPs",
+                      "link": "/ems_network/39?display=floating_ips",
+                      "title": "Show all Floating IPs",
+                      "value": "14",
+                    }
+                  }
+                  key="5"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Floating IPs"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Floating IPs
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=floating_ips"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="ff ff-floating-ip"
+                          image={null}
+                          title="Show all Floating IPs"
+                        >
+                          <i
+                            className="ff ff-floating-ip"
+                            title="Show all Floating IPs"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          14
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "ff ff-network-port",
+                      "image": null,
+                      "label": "Network Ports",
+                      "link": "/ems_network/39?display=network_ports",
+                      "title": "Show all Network Ports",
+                      "value": "26",
+                    }
+                  }
+                  key="6"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Network Ports"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Network Ports
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=network_ports"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="ff ff-network-port"
+                          image={null}
+                          title="Show all Network Ports"
+                        >
+                          <i
+                            className="ff ff-network-port"
+                            title="Show all Network Ports"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          26
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "ff ff-load-balancer",
+                      "image": null,
+                      "label": "Load Balancers",
+                      "link": "/ems_network/39?display=load_balancers",
+                      "title": "Show all Load Balancers",
+                      "value": "2",
+                    }
+                  }
+                  key="7"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show all Load Balancers"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Load Balancers
+                    </td>
+                    <td>
+                      <a
+                        href="/ems_network/39?display=load_balancers"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="ff ff-load-balancer"
+                          image={null}
+                          title="Show all Load Balancers"
+                        >
+                          <i
+                            className="ff ff-load-balancer"
+                            title="Show all Load Balancers"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                          2
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "background": "green",
+                      "hoverClass": "",
+                      "icon": "fa fa-play",
+                      "image": null,
+                      "label": "Power State",
+                      "value": "On",
+                    }
+                  }
+                  key="8"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Power State
+                    </td>
+                    <td>
+                      <IconOrImage
+                        background="green"
+                        icon="fa fa-play"
+                        image={null}
+                        title={null}
+                      >
+                        <div
+                          className="backgrounded-icon"
+                          style={
+                            Object {
+                              "background": "green",
+                            }
+                          }
+                        >
+                          <i
+                            className="fa fa-play"
+                            title={null}
+                          />
+                        </div>
+                      </IconOrImage>
+                      <span>
+                         
+                        On
+                      </span>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+              </tbody>
+            </table>
+          </GenericGroup>
+        </TextualGroup>
+        <TextualGroup
+          group={
+            Object {
+              "component": "GenericGroup",
+              "items": Array [
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-topology",
+                  "label": "Topology",
+                  "link": "/network_topology/show/39",
+                  "title": "Show topology",
+                },
+              ],
+              "title": "Overview",
+            }
+          }
+          key="Overview"
+          onClick={[Function]}
+        >
+          <GenericGroup
+            items={
+              Array [
+                Object {
+                  "hoverClass": "",
+                  "icon": "pficon pficon-topology",
+                  "label": "Topology",
+                  "link": "/network_topology/show/39",
+                  "title": "Show topology",
+                },
+              ]
+            }
+            onClick={[Function]}
+            title="Overview"
+          >
+            <table
+              className="table table-bordered table-hover table-striped table-summary-screen"
+            >
+              <thead>
+                <tr>
+                  <th
+                    align="left"
+                    colSpan="2"
+                  >
+                    Overview
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <GenericTableRow
+                  item={
+                    Object {
+                      "hoverClass": "",
+                      "icon": "pficon pficon-topology",
+                      "label": "Topology",
+                      "link": "/network_topology/show/39",
+                      "title": "Show topology",
+                    }
+                  }
+                  key="0"
+                  onClick={[Function]}
+                >
+                  <tr
+                    className=""
+                    title="Show topology"
+                  >
+                    <td
+                      className="label generic-row-label"
+                    >
+                      Topology
+                    </td>
+                    <td>
+                      <a
+                        href="/network_topology/show/39"
+                        onClick={[Function]}
+                      >
+                        <IconOrImage
+                          icon="pficon pficon-topology"
+                          image={null}
+                          title="Show topology"
+                        >
+                          <i
+                            className="pficon pficon-topology"
+                            title="Show topology"
+                          />
+                        </IconOrImage>
+                        <span>
+                           
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </GenericTableRow>
+              </tbody>
+            </table>
+          </GenericGroup>
+        </TextualGroup>
+        <TextualGroup
+          group={
+            Object {
+              "component": "TagGroup",
+              "items": Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "pficon pficon-zone",
+                  "label": "Managed by Zone",
+                  "value": "Amazon Zone",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "fa fa-tag",
+                  "label": "My Company Tags",
+                  "value": "No My Company Tags have been assigned",
+                },
+              ],
+              "title": "Smart Management",
+            }
+          }
+          key="Smart Management"
+          onClick={[Function]}
+        >
+          <TagGroup
+            items={
+              Array [
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "pficon pficon-zone",
+                  "label": "Managed by Zone",
+                  "value": "Amazon Zone",
+                },
+                Object {
+                  "hoverClass": "no-hover",
+                  "icon": "fa fa-tag",
+                  "label": "My Company Tags",
+                  "value": "No My Company Tags have been assigned",
+                },
+              ]
+            }
+            onClick={[Function]}
+            title="Smart Management"
+          >
+            <table
+              className="table table-bordered table-hover table-striped table-summary-screen"
+            >
+              <thead>
+                <tr>
+                  <th
+                    align="left"
+                    colSpan="2"
+                  >
+                    Smart Management
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  className="no-hover"
+                  key="0"
+                >
+                  <td
+                    className="label"
+                  >
+                    Managed by Zone
+                  </td>
+                  <td>
+                    <IconOrImage
+                      icon="pficon pficon-zone"
+                      image={null}
+                      title={null}
+                    >
+                      <i
+                        className="pficon pficon-zone"
+                        title={null}
+                      />
+                    </IconOrImage>
+                     
+                    Amazon Zone
+                  </td>
+                </tr>
+                <tr
+                  className="no-hover"
+                  key="1"
+                >
+                  <td
+                    className="label"
+                  >
+                    My Company Tags
+                  </td>
+                  <td>
+                    <IconOrImage
+                      icon="fa fa-tag"
+                      image={null}
+                      title={null}
+                    >
+                      <i
+                        className="fa fa-tag"
+                        title={null}
+                      />
+                    </IconOrImage>
+                     
+                    No My Company Tags have been assigned
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </TagGroup>
+        </TextualGroup>
+      </div>
+    </TextualRow>
+  </div>
+</TextualSummary>
+`;

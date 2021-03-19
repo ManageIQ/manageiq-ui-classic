@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple Table renders just fine... 1`] = `
+<SimpleTable
+  labels={
+    Array [
+      "Network Protocol",
+      "Host Protocol",
+      "Direction",
+      "Port",
+      "End Port",
+      "Source",
+    ]
+  }
+  onClick={[Function]}
+  rows={
+    Array [
+      Array [
+        null,
+        "-1",
+        "outbound",
+        0,
+        0,
+        "0.0.0.0/0",
+      ],
+      Array [
+        null,
+        "TCP",
+        "inbound",
+        22,
+        22,
+        "0.0.0.0/0",
+      ],
+      Array [
+        null,
+        Object {
+          "link": "some_link",
+          "value": Array [
+            "TCP",
+          ],
+        },
+        "inbound",
+        80,
+        80,
+        "0.0.0.0/0",
+      ],
+    ]
+  }
+  title="Firewall Rules"
+>
+  <table
+    className="table table-bordered table-hover table-striped table-summary-screen"
+  >
+    <thead>
+      <tr>
+        <th
+          align="left"
+          colSpan={6}
+        >
+          Firewall Rules
+        </th>
+      </tr>
+      <tr>
+        <td
+          key="0"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            Network Protocol
+          </strong>
+        </td>
+        <td
+          key="1"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            Host Protocol
+          </strong>
+        </td>
+        <td
+          key="2"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            Direction
+          </strong>
+        </td>
+        <td
+          key="3"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            Port
+          </strong>
+        </td>
+        <td
+          key="4"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            End Port
+          </strong>
+        </td>
+        <td
+          key="5"
+          style={
+            Object {
+              "wordBreak": "initial",
+            }
+          }
+        >
+          <strong>
+            Source
+          </strong>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        key="0"
+      >
+        <td
+          className="no-hover"
+          key="0"
+        />
+        <td
+          className="no-hover"
+          key="1"
+        >
+          -1
+        </td>
+        <td
+          className="no-hover"
+          key="2"
+        >
+          outbound
+        </td>
+        <td
+          className="no-hover"
+          key="3"
+        >
+          0
+        </td>
+        <td
+          className="no-hover"
+          key="4"
+        >
+          0
+        </td>
+        <td
+          className="no-hover"
+          key="5"
+        >
+          0.0.0.0/0
+        </td>
+      </tr>
+      <tr
+        key="1"
+      >
+        <td
+          className="no-hover"
+          key="0"
+        />
+        <td
+          className="no-hover"
+          key="1"
+        >
+          TCP
+        </td>
+        <td
+          className="no-hover"
+          key="2"
+        >
+          inbound
+        </td>
+        <td
+          className="no-hover"
+          key="3"
+        >
+          22
+        </td>
+        <td
+          className="no-hover"
+          key="4"
+        >
+          22
+        </td>
+        <td
+          className="no-hover"
+          key="5"
+        >
+          0.0.0.0/0
+        </td>
+      </tr>
+      <tr
+        key="2"
+      >
+        <td
+          className="no-hover"
+          key="0"
+        />
+        <td
+          className="btn-link"
+          key="1"
+        >
+          <a
+            href="some_link"
+            onClick={[Function]}
+          >
+            TCP
+          </a>
+        </td>
+        <td
+          className="no-hover"
+          key="2"
+        >
+          inbound
+        </td>
+        <td
+          className="no-hover"
+          key="3"
+        >
+          80
+        </td>
+        <td
+          className="no-hover"
+          key="4"
+        >
+          80
+        </td>
+        <td
+          className="no-hover"
+          key="5"
+        >
+          0.0.0.0/0
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</SimpleTable>
+`;

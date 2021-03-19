@@ -1,0 +1,5097 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quadicon renders just fine... 1`] = `
+Array [
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": "42",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fileicon": "/assets/manageiq.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "color": "#0099cc",
+          "fonticon": "fa fa-cog",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="1166149194"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          color="#0099cc"
+          fonticon="fa fa-cog"
+          key="topLeft"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={
+                  Object {
+                    "color": "#0099cc",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text="42"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fileicon="/assets/manageiq.svg"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/manageiq.svg",
+        },
+        "bottomRight": Object {
+          "text": "42",
+        },
+        "topLeft": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+        },
+        "topRight": Object {
+          "fonticon": "fa fa-cog",
+        },
+      }
+    }
+    key="3482974513"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          background="#3F9C35"
+          className="top-left"
+          fonticon="fa fa-play"
+          key="topLeft"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          fonticon="fa fa-cog"
+          key="topRight"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/manageiq.svg"
+          key="bottomLeft"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="42"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+        },
+        "bottomRight": Object {
+          "fonticon": "fa fa-cog",
+        },
+        "topLeft": Object {
+          "fileicon": "/assets/manageiq.svg",
+        },
+        "topRight": Object {
+          "text": "42",
+        },
+      }
+    }
+    key="3406401514"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fileicon="/assets/manageiq.svg"
+          key="topLeft"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text="42"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="bottom-left"
+          fonticon="fa fa-play"
+          key="bottomLeft"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="fa fa-cog"
+          key="bottomRight"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fonticon": "fa fa-cog",
+        },
+        "bottomRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+        },
+        "topLeft": Object {
+          "text": "42",
+        },
+        "topRight": Object {
+          "fileicon": "/assets/manageiq.svg",
+        },
+      }
+    }
+    key="571311870"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="42"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          fileicon="/assets/manageiq.svg"
+          key="topRight"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fonticon="fa fa-cog"
+          key="bottomLeft"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="bottom-right"
+          fonticon="fa fa-play"
+          key="bottomRight"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "color": "#0099cc",
+        "fonticon": "pficon pficon-server",
+        "tooltip": "Hello, I am a very useful tooltip!",
+      }
+    }
+    key="3197816039"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          color="#0099cc"
+          fonticon="pficon pficon-server"
+          tooltip="Hello, I am a very useful tooltip!"
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="pficon pficon-server"
+                style={
+                  Object {
+                    "color": "#0099cc",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "fileicon": "/assets/manageiq.svg",
+      }
+    }
+    key="3782716569"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          fileicon="/assets/manageiq.svg"
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": "42",
+      }
+    }
+    key="253637662"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text="42"
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": "42",
+        },
+        "bottomRight": Object {
+          "fileicon": "/assets/manageiq.svg",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "fonticon": "fa fa-cog",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+        },
+      }
+    }
+    key="2390809052"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fonticon="fa fa-cog"
+          key="topLeft"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text="42"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fileicon="/assets/manageiq.svg"
+          key="bottomRight"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/manageiq.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": "42",
+        },
+        "bottomRight": Object {
+          "fonticon": "fa fa-shield",
+        },
+        "middle": Object {
+          "color": "#ffcc33",
+          "fonticon": "fa fa-shield",
+        },
+        "topLeft": Object {
+          "fonticon": "fa fa-cog",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+        },
+      }
+    }
+    key="1304430811"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fonticon="fa fa-cog"
+          key="topLeft"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-cog"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text="42"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="fa fa-shield"
+          key="bottomRight"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-shield"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          color="#ffcc33"
+          fonticon="fa fa-shield"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-shield"
+                style={
+                  Object {
+                    "color": "#ffcc33",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 42,
+      }
+    }
+    key="178750299"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={42}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 420,
+      }
+    }
+    key="3522491755"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={420}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              420
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 4200,
+      }
+    }
+    key="4238998306"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={4200}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 42000,
+      }
+    }
+    key="4279592102"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={42000}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 112081,
+      }
+    }
+    key="887322087"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={112081}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              112K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 420000,
+      }
+    }
+    key="726508710"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={420000}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 4200000,
+      }
+    }
+    key="472235923"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={4200000}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 42000000,
+      }
+    }
+    key="1349081831"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={42000000}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": 420000000,
+      }
+    }
+    key="4139291367"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text={420000000}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": "small",
+      }
+    }
+    key="1388556317"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text="small"
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              small
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "text": "tiny",
+      }
+    }
+    key="4115837958"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          text="tiny"
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              tiny
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 42,
+        },
+        "bottomRight": Object {
+          "text": 42,
+        },
+        "topLeft": Object {
+          "text": 42,
+        },
+        "topRight": Object {
+          "text": 42,
+        },
+      }
+    }
+    key="1936860511"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={42}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={42}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={42}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={42}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              42
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 420,
+        },
+        "bottomRight": Object {
+          "text": 420,
+        },
+        "topLeft": Object {
+          "text": 420,
+        },
+        "topRight": Object {
+          "text": 420,
+        },
+      }
+    }
+    key="431875249"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={420}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              420
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={420}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              420
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={420}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              420
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={420}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              420
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 4200,
+        },
+        "bottomRight": Object {
+          "text": 4200,
+        },
+        "topLeft": Object {
+          "text": 4200,
+        },
+        "topRight": Object {
+          "text": 4200,
+        },
+      }
+    }
+    key="4290593678"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={4200}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={4200}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={4200}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={4200}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 42000,
+        },
+        "bottomRight": Object {
+          "text": 42000,
+        },
+        "topLeft": Object {
+          "text": 42000,
+        },
+        "topRight": Object {
+          "text": 42000,
+        },
+      }
+    }
+    key="2250091758"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={42000}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={42000}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={42000}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={42000}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 112081,
+        },
+        "bottomRight": Object {
+          "text": 112081,
+        },
+        "topLeft": Object {
+          "text": 112081,
+        },
+        "topRight": Object {
+          "text": 112081,
+        },
+      }
+    }
+    key="700312364"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={112081}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              112K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={112081}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              112K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={112081}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              112K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={112081}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              112K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 420000,
+        },
+        "bottomRight": Object {
+          "text": 420000,
+        },
+        "topLeft": Object {
+          "text": 420000,
+        },
+        "topRight": Object {
+          "text": 420000,
+        },
+      }
+    }
+    key="2525358328"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={420000}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={420000}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={420000}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={420000}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420K
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 4200000,
+        },
+        "bottomRight": Object {
+          "text": 4200000,
+        },
+        "topLeft": Object {
+          "text": 4200000,
+        },
+        "topRight": Object {
+          "text": 4200000,
+        },
+      }
+    }
+    key="2108989821"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={4200000}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={4200000}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={4200000}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={4200000}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              4.2M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 42000000,
+        },
+        "bottomRight": Object {
+          "text": 42000000,
+        },
+        "topLeft": Object {
+          "text": 42000000,
+        },
+        "topRight": Object {
+          "text": 42000000,
+        },
+      }
+    }
+    key="1241145464"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={42000000}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={42000000}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={42000000}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={42000000}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              42M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": 420000000,
+        },
+        "bottomRight": Object {
+          "text": 420000000,
+        },
+        "topLeft": Object {
+          "text": 420000000,
+        },
+        "topRight": Object {
+          "text": 420000000,
+        },
+      }
+    }
+    key="3978541254"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text={420000000}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text={420000000}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text={420000000}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420M
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text={420000000}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              420M
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": "small",
+        },
+        "bottomRight": Object {
+          "text": "small",
+        },
+        "topLeft": Object {
+          "text": "small",
+        },
+        "topRight": Object {
+          "text": "small",
+        },
+      }
+    }
+    key="3103811487"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="small"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              small
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text="small"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              small
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text="small"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              small
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="small"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              small
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "text": "tiny",
+        },
+        "bottomRight": Object {
+          "text": "tiny",
+        },
+        "topLeft": Object {
+          "text": "tiny",
+        },
+        "topRight": Object {
+          "text": "tiny",
+        },
+      }
+    }
+    key="3652282035"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="tiny"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              tiny
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          text="tiny"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              tiny
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          text="tiny"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              tiny
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="tiny"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              tiny
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "piechart": 0,
+      }
+    }
+    key="1784351792"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          piechart={0}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-0"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "piechart": 10,
+      }
+    }
+    key="228690975"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          piechart={10}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-10"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "piechart": 20,
+      }
+    }
+    key="1208000161"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="single-wrapper"
+      >
+        <Quaditem
+          piechart={20}
+        >
+          <div
+            className="miq-quaditem"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-20"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "piechart": 2,
+        },
+        "bottomRight": Object {
+          "piechart": 3,
+        },
+        "topLeft": Object {
+          "piechart": 0,
+        },
+        "topRight": Object {
+          "piechart": 1,
+        },
+      }
+    }
+    key="3531410892"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          piechart={0}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-0"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          piechart={1}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-1"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          piechart={2}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-2"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          piechart={3}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-3"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "piechart": 6,
+        },
+        "bottomRight": Object {
+          "piechart": 7,
+        },
+        "topLeft": Object {
+          "piechart": 4,
+        },
+        "topRight": Object {
+          "piechart": 5,
+        },
+      }
+    }
+    key="1552047995"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          piechart={4}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-4"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          piechart={5}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-5"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          piechart={6}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-6"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          piechart={7}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-7"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "piechart": 10,
+        },
+        "bottomRight": Object {
+          "piechart": 11,
+        },
+        "topLeft": Object {
+          "piechart": 8,
+        },
+        "topRight": Object {
+          "piechart": 9,
+        },
+      }
+    }
+    key="2272489000"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          piechart={8}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-8"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          piechart={9}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-9"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          piechart={10}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-10"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          piechart={11}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-11"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "piechart": 14,
+        },
+        "bottomRight": Object {
+          "piechart": 15,
+        },
+        "topLeft": Object {
+          "piechart": 12,
+        },
+        "topRight": Object {
+          "piechart": 13,
+        },
+      }
+    }
+    key="3616904839"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          piechart={12}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-12"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          piechart={13}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-13"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          piechart={14}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-14"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          piechart={15}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-15"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "piechart": 18,
+        },
+        "bottomRight": Object {
+          "piechart": 19,
+        },
+        "topLeft": Object {
+          "piechart": 16,
+        },
+        "topRight": Object {
+          "piechart": 17,
+        },
+      }
+    }
+    key="4100941834"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          piechart={16}
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-16"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="top-right"
+          key="topRight"
+          piechart={17}
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-17"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          key="bottomLeft"
+          piechart={18}
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-18"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          piechart={19}
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="piechart fill-19"
+              key="piechart"
+            />
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-redhat.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "pficon pficon-ok",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "text": "17",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="1187087726"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="17"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              17
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-redhat.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-redhat.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="pficon pficon-ok"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="pficon pficon-ok"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-vmware.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "pficon pficon-ok",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "text": "120000",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="4168179917"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="120000"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              120K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-vmware.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-vmware.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="pficon pficon-ok"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="pficon pficon-ok"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-vmware.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "fa fa-exclamation",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "text": "1990",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#CC0000",
+          "fonticon": "fa fa-stop",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="3400751945"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="1990"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              2K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#CC0000"
+          className="top-right"
+          fonticon="fa fa-stop"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#CC0000",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-stop"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-vmware.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-vmware.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="fa fa-exclamation"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-exclamation"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-redhat.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "12",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "fileicon": "/assets/vendor-redhat.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="681133263"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fileicon="/assets/vendor-redhat.svg"
+          key="topLeft"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-redhat.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-redhat.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-redhat.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="12"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              12
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-vmware.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "0",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "fileicon": "/assets/vendor-chrome.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#336699",
+          "text": "R",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="3265321026"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fileicon="/assets/vendor-chrome.svg"
+          key="topLeft"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-chrome.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#336699"
+          className="top-right"
+          key="topRight"
+          text="R"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#336699",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              R
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-vmware.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-vmware.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="0"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              0
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-vmware.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "3",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "text": "?",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#CC0000",
+          "fonticon": "fa fa-stop",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="346751439"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="?"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              ?
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#CC0000"
+          className="top-right"
+          fonticon="fa fa-stop"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#CC0000",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-stop"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-vmware.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-vmware.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="3"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              3
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-vmware.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "0",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "fileicon": "/assets/vendor-centos.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#336699",
+          "text": "T",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="1757339600"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fileicon="/assets/vendor-centos.svg"
+          key="topLeft"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-centos.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#336699"
+          className="top-right"
+          key="topRight"
+          text="T"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#336699",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              T
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-vmware.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-vmware.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="0"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              0
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-redhat.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "0",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "fileicon": "/assets/vendor-ubuntu.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#336699",
+          "text": "A",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="1314230761"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          fileicon="/assets/vendor-ubuntu.svg"
+          key="topLeft"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-ubuntu.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#336699"
+          className="top-right"
+          key="topRight"
+          text="A"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#336699",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              A
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-redhat.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-redhat.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="0"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              0
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-openshift.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "text": "12",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "text": "9",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="1998299692"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="9"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              9
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-openshift.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-openshift.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          key="bottomRight"
+          text="12"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              12
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-openshift.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "pficon pficon-ok",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "text": "99",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="2460209401"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="99"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-normal"
+              key="text"
+            >
+              99
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-openshift.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-openshift.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="pficon pficon-ok"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="pficon pficon-ok"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-openshift.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "pficon pficon-ok",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "middle": Object {
+          "fileicon": "/assets/protected.svg",
+        },
+        "topLeft": Object {
+          "text": "999",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#3F9C35",
+          "fonticon": "fa fa-play",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="477339174"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="999"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              999
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#3F9C35"
+          className="top-right"
+          fonticon="fa fa-play"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#3F9C35",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-play"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-openshift.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-openshift.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="pficon pficon-ok"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="pficon pficon-ok"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="middle"
+          fileicon="/assets/protected.svg"
+          key="middle"
+        >
+          <div
+            className="miq-quaditem middle"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/protected.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-openshift.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "fa fa-exclamation",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "text": "9999",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#FF9900",
+          "fonticon": "fa fa-pause-circle-o",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="4039369087"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="9999"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-small"
+              key="text"
+            >
+              10K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#FF9900"
+          className="top-right"
+          fonticon="fa fa-pause-circle-o"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#FF9900",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-pause-circle-o"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-openshift.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-openshift.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="fa fa-exclamation"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-exclamation"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+  <Quadicon
+    data={
+      Object {
+        "bottomLeft": Object {
+          "fileicon": "/assets/vendor-openshift.svg",
+          "tooltip": "Hello, I am a very useful tooltip in the third quadrant!",
+        },
+        "bottomRight": Object {
+          "fonticon": "fa fa-exclamation",
+          "tooltip": "Hello, I am a very useful tooltip in the fourth quadrant!",
+        },
+        "topLeft": Object {
+          "text": "99999",
+          "tooltip": "Hello, I am a very useful tooltip in the first quadrant!",
+        },
+        "topRight": Object {
+          "background": "#FF9900",
+          "fonticon": "fa fa-pause-circle-o",
+          "tooltip": "Hello, I am a very useful tooltip in the second quadrant!",
+        },
+      }
+    }
+    key="3507776434"
+  >
+    <div
+      className="miq-quadicon"
+    >
+      <div
+        className="quad-wrapper"
+      >
+        <Quaditem
+          className="top-left"
+          key="topLeft"
+          text="99999"
+          tooltip="Hello, I am a very useful tooltip in the first quadrant!"
+        >
+          <div
+            className="miq-quaditem top-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the first quadrant!"
+          >
+            <div
+              className="text font-tiny"
+              key="text"
+            >
+              100K
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          background="#FF9900"
+          className="top-right"
+          fonticon="fa fa-pause-circle-o"
+          key="topRight"
+          tooltip="Hello, I am a very useful tooltip in the second quadrant!"
+        >
+          <div
+            className="miq-quaditem top-right"
+            style={
+              Object {
+                "background": "#FF9900",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the second quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-pause-circle-o"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-left"
+          fileicon="/assets/vendor-openshift.svg"
+          key="bottomLeft"
+          tooltip="Hello, I am a very useful tooltip in the third quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-left"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the third quadrant!"
+          >
+            <div
+              className="fileicon"
+              key="fileicon"
+            >
+              <img
+                alt="fileicon"
+                src="/assets/vendor-openshift.svg"
+              />
+            </div>
+          </div>
+        </Quaditem>
+        <Quaditem
+          className="bottom-right"
+          fonticon="fa fa-exclamation"
+          key="bottomRight"
+          tooltip="Hello, I am a very useful tooltip in the fourth quadrant!"
+        >
+          <div
+            className="miq-quaditem bottom-right"
+            style={
+              Object {
+                "background": "initial",
+              }
+            }
+            title="Hello, I am a very useful tooltip in the fourth quadrant!"
+          >
+            <div
+              className="fonticon"
+              key="fonticon"
+            >
+              <i
+                className="fa fa-exclamation"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </Quaditem>
+      </div>
+    </div>
+  </Quadicon>,
+]
+`;
