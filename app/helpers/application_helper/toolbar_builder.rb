@@ -33,14 +33,6 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  def eval(code)
-    @view_binding.eval(code)
-  end
-
-  def safer_eval(code)
-    code.to_s =~ /\#{/ ? eval("\"#{code}\"") : code
-  end
-
   # Parses the generic toolbars name and returns his class
   def predefined_toolbar_class(tb_name)
     class_name = 'ApplicationHelper::Toolbar::' + ActiveSupport::Inflector.camelize(tb_name.sub(/_tb$/, ''))
@@ -53,6 +45,10 @@ class ApplicationHelper::ToolbarBuilder
 
   def model_for_custom_toolbar
     controller.instance_eval { @tree_selected_model } || controller.class.model
+  end
+
+  def evaluate_url_parms(url_parms)
+    url_parms.kind_of?(Proc) ? @view_context.instance_eval(&url_parms) : url_parms
   end
 
   # According to toolbar name in parameter `toolbar_name` either returns class
@@ -126,7 +122,7 @@ class ApplicationHelper::ToolbarBuilder
         button[key] = button.localized(key, input[key])
       end
     end
-    button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) if input[:url_parms].present?
+    button[:url_parms] = update_url_parms(evaluate_url_parms(input[:url_parms])) if input[:url_parms].present?
     button[:keepSpinner] = input[:keepSpinner] if input.key?(:keepSpinner)
 
     if input[:popup] # special behavior: button opens window_url in a new window
@@ -392,7 +388,7 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def url_for_button(name, url_tpl, controller_restful)
-    url = safer_eval(url_tpl)
+    url = evaluate_url_parms(url_tpl)
 
     if %w[view_grid view_tile view_list].include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
       # handle restful routes - we want just / if the url is just an id
@@ -409,7 +405,7 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def update_url_parms(url_parm)
-    return url_parm unless url_parm =~ /=/
+    return url_parm unless url_parm.include?("=")
 
     keep_parms = %w[bc escape menu_click sb_controller]
     query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
