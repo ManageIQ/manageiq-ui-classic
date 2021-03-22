@@ -1,5 +1,5 @@
 export const newCountText = function(count) {
-  return sprintf(n__('%d New', '%d New', count), count);
+  return sprintf(n__('%d New', '%d New'), count);
 };
 
 export const getNotficationStatusIconName = notification => (
