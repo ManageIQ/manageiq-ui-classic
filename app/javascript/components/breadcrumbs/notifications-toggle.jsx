@@ -17,7 +17,7 @@ export const NotificationsToggle = () => {
   };
 
   const unreadCountText = function(count) {
-    return sprintf(n__('%d unread notification', '%d unread notifications', count), count);
+    return sprintf(n__('%d unread notification', '%d unread notifications'), count);
   };
 
   return (
