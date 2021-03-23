@@ -25,6 +25,7 @@ cols:
 - build_state
 - my_zone
 - configuration_environment_name
+- vendor
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -37,6 +38,7 @@ col_order:
 - hostname
 - manager.name
 - type
+- vendor
 - last_checkin
 - build_state
 - my_zone
@@ -48,6 +50,7 @@ headers:
 - Hostname
 - Provider
 - Type
+- Vendor
 - Last Checkin
 - Build State
 - Zone

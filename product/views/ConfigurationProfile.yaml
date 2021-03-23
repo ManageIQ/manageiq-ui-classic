@@ -21,6 +21,7 @@ db: ConfigurationProfile
 cols:
 - name
 - description
+- target_platform
 - total_configured_systems
 - configuration_environment_name
 - my_zone
@@ -34,6 +35,7 @@ cols:
 col_order:
 - name
 - description
+- target_platform
 - total_configured_systems
 - configuration_environment_name
 - my_zone
@@ -43,6 +45,7 @@ col_order:
 headers:
 - Name
 - Description
+- Target Platform
 - Total Configured Systems
 - Environment
 - Zone
