@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LineChart } from '@carbon/charts-react';
+import { AreaChart } from '@carbon/charts-react';
 
-const LineChartGraph = ({ data, format, size }) => {
+const AreaChartGraph = ({ data, format, size }) => {
   const getYAxisValue = (format, value) => {
     const tmp = /^([0-9\,\.]+)(.*)/.exec(ManageIQ.charts.formatters[format.function].c3(format.options)(value));
     return [`${numeral(tmp[1]).value()}${tmp[2]}`];
@@ -31,20 +31,20 @@ const LineChartGraph = ({ data, format, size }) => {
   };
 
   return (
-    <LineChart data={data} options={options} />
+    <AreaChart data={data} options={options} />
   );
 };
 
-LineChartGraph.propTypes = {
+AreaChartGraph.propTypes = {
   data: PropTypes.instanceOf(Array),
   format: PropTypes.instanceOf(Object),
   size: PropTypes.string,
 };
 
-LineChartGraph.defaultProps = {
+AreaChartGraph.defaultProps = {
   data: null,
   format: null,
   size: '400px',
 };
 
-export default LineChartGraph;
+export default AreaChartGraph;
