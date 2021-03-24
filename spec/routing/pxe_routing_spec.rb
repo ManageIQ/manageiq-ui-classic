@@ -99,18 +99,6 @@ describe PxeController do
     end
   end
 
-  describe "#template_create_update" do
-    it "routes with POST" do
-      expect(post("/pxe/template_create_update")).to route_to("pxe#template_create_update")
-    end
-  end
-
-  describe "#template_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/template_form_field_changed")).to route_to("pxe#template_form_field_changed")
-    end
-  end
-
   describe "#template_list" do
     it "routes with POST" do
       expect(post("/pxe/template_list")).to route_to("pxe#template_list")

@@ -244,8 +244,6 @@ class PxeController < ApplicationController
                                      end
                                    when :pxe_image_types_tree
                                      "pxe_image_type_edit"
-                                   else
-                                     "template_create_update"
                                    end
 
         presenter.update(:form_buttons_div, r[
@@ -265,8 +263,8 @@ class PxeController < ApplicationController
       presenter.hide(:form_buttons_div)
     end
 
-    # disable toolbar and buttons for react add/edit pxe server and pxe system image type forms
-    if @in_a_form && ['ps', 'pit'].include?(nodetype)
+    # disable toolbar and buttons for react add/edit/copy pxe server, customization template, and system image type forms
+    if @in_a_form && nodetype.start_with?('ps', 'ct-', 'pit')
       presenter.hide(:form_buttons_div, :toolbar)
     end
 

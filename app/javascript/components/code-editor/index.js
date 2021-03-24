@@ -9,6 +9,8 @@ import HelperTextBlock from '../../forms/helper-text-block';
 // editor modes
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/yaml/yaml';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/shell/shell';
 // editor help
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
@@ -80,7 +82,7 @@ const CodeEditor = (props) => {
 };
 
 CodeEditor.propTypes = {
-  mode: PropTypes.oneOf(['json', 'yaml']),
+  mode: PropTypes.oneOf(['json', 'yaml', 'xml', 'shell']),
   modes: PropTypes.arrayOf(PropTypes.string),
 };
 
