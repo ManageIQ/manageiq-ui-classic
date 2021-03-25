@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
+import { TagGroup, TableListView, GenericGroup } from '../components/textual_summary';
+import { Quadicon } from '../components/quadicon';
 import { Toolbar } from '../components/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
@@ -34,7 +35,6 @@ import PxeImageForm from '../components/pxe-image-type-form';
 import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
-import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RegionForm from '../components/region-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import RemoveGenericItemModal from '../components/remove-generic-item-modal';

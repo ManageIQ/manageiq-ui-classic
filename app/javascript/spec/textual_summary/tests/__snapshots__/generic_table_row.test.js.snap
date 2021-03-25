@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple Table renders multi-value just fine... 1`] = `
+<table>
+  <tbody>
+    <GenericTableRow
+      item={
+        Object {
+          "hoverClass": "",
+          "icon": null,
+          "image": "http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg",
+          "label": "Network Manager",
+          "link": "/ems_network/10000000000045",
+          "title": "Show Network Manager 'Amazon East Network Manager'",
+          "value": Array [
+            Object {
+              "icon": null,
+              "title": "Amazon East Network Manager",
+              "value": "foobar",
+            },
+            Object {
+              "icon": null,
+              "title": "Amazon West Network Manager",
+              "value": "boofar",
+            },
+          ],
+        }
+      }
+      onClick={[Function]}
+    >
+      <tr
+        className=""
+        title="Show Network Manager 'Amazon East Network Manager'"
+      >
+        <td
+          className="label generic-row-label"
+        >
+          Network Manager
+        </td>
+        <td>
+          <a
+            href="/ems_network/10000000000045"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon={null}
+              image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+              title="Show Network Manager 'Amazon East Network Manager'"
+            >
+              <img
+                alt="Show Network Manager 'Amazon East Network Manager'"
+                src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+                title="Show Network Manager 'Amazon East Network Manager'"
+              />
+            </IconOrImage>
+            <table
+              cellPadding="0"
+              cellSpacing="0"
+            >
+              <tbody>
+                <tr
+                  className="no-hover"
+                  key="0"
+                  onClick={[Function]}
+                  title="Amazon East Network Manager"
+                >
+                  <td
+                    style={
+                      Object {
+                        "border": 0,
+                        "margin": 0,
+                        "padding": 0,
+                      }
+                    }
+                  >
+                    <IconOrImage
+                      icon={null}
+                      image={null}
+                      title="Amazon East Network Manager"
+                    />
+                    foobar
+                  </td>
+                </tr>
+                <tr
+                  className="no-hover"
+                  key="1"
+                  onClick={[Function]}
+                  title="Amazon West Network Manager"
+                >
+                  <td
+                    style={
+                      Object {
+                        "border": 0,
+                        "margin": 0,
+                        "padding": 0,
+                      }
+                    }
+                  >
+                    <IconOrImage
+                      icon={null}
+                      image={null}
+                      title="Amazon West Network Manager"
+                    />
+                    boofar
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </a>
+        </td>
+      </tr>
+    </GenericTableRow>
+  </tbody>
+</table>
+`;
+
+exports[`Simple Table renders simple value just fine... 1`] = `
+<table>
+  <tbody>
+    <GenericTableRow
+      item={
+        Object {
+          "hoverClass": "",
+          "icon": null,
+          "image": "http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg",
+          "label": "Network Manager",
+          "link": "/ems_network/10000000000045",
+          "title": "Show Network Manager 'Amazon East Network Manager'",
+          "value": "Amazon East Network Manager",
+        }
+      }
+      onClick={[Function]}
+    >
+      <tr
+        className=""
+        title="Show Network Manager 'Amazon East Network Manager'"
+      >
+        <td
+          className="label generic-row-label"
+        >
+          Network Manager
+        </td>
+        <td>
+          <a
+            href="/ems_network/10000000000045"
+            onClick={[Function]}
+          >
+            <IconOrImage
+              icon={null}
+              image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+              title="Show Network Manager 'Amazon East Network Manager'"
+            >
+              <img
+                alt="Show Network Manager 'Amazon East Network Manager'"
+                src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+                title="Show Network Manager 'Amazon East Network Manager'"
+              />
+            </IconOrImage>
+            <span>
+               
+              Amazon East Network Manager
+            </span>
+          </a>
+        </td>
+      </tr>
+    </GenericTableRow>
+  </tbody>
+</table>
+`;

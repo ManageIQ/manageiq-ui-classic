@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Ranges renders just fine... 1`] = `
+<OperationRanges
+  items={
+    Array [
+      Object {
+        "hoverClass": "no-hover",
+        "label": "CPU",
+        "value": Array [
+          Object {
+            "label": "Max",
+            "value": "Not Available",
+          },
+          Object {
+            "label": "High",
+            "value": "0 MHz",
+          },
+          Object {
+            "label": "Average",
+            "value": "0 MHz",
+          },
+          Object {
+            "label": "Low",
+            "value": "0 MHz",
+          },
+        ],
+      },
+      Object {
+        "hoverClass": "no-hover",
+        "label": "CPU Usage",
+        "value": Array [
+          Object {
+            "label": "Max",
+            "value": "Not Available",
+          },
+          Object {
+            "label": "High",
+            "value": "0.00%",
+          },
+          Object {
+            "label": "Average",
+            "value": "0.00%",
+          },
+          Object {
+            "label": "Low",
+            "value": "0.00%",
+          },
+        ],
+      },
+    ]
+  }
+  title="Operation Ranges"
+>
+  <table
+    className="table table-bordered table-striped table-summary-screen"
+  >
+    <thead>
+      <tr>
+        <th
+          align="left"
+          colSpan="3"
+        >
+          Operation Ranges
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          rowSpan={5}
+        >
+          CPU
+        </td>
+        <th>
+           
+        </th>
+        <th>
+           
+        </th>
+      </tr>
+      <tr
+        key="0"
+      >
+        <td>
+          Max
+        </td>
+        <td>
+          Not Available
+        </td>
+      </tr>
+      <tr
+        key="1"
+      >
+        <td>
+          High
+        </td>
+        <td>
+          0 MHz
+        </td>
+      </tr>
+      <tr
+        key="2"
+      >
+        <td>
+          Average
+        </td>
+        <td>
+          0 MHz
+        </td>
+      </tr>
+      <tr
+        key="3"
+      >
+        <td>
+          Low
+        </td>
+        <td>
+          0 MHz
+        </td>
+      </tr>
+      <tr>
+        <td
+          rowSpan={5}
+        >
+          CPU Usage
+        </td>
+        <th>
+           
+        </th>
+        <th>
+           
+        </th>
+      </tr>
+      <tr
+        key="0"
+      >
+        <td>
+          Max
+        </td>
+        <td>
+          Not Available
+        </td>
+      </tr>
+      <tr
+        key="1"
+      >
+        <td>
+          High
+        </td>
+        <td>
+          0.00%
+        </td>
+      </tr>
+      <tr
+        key="2"
+      >
+        <td>
+          Average
+        </td>
+        <td>
+          0.00%
+        </td>
+      </tr>
+      <tr
+        key="3"
+      >
+        <td>
+          Low
+        </td>
+        <td>
+          0.00%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</OperationRanges>
+`;
