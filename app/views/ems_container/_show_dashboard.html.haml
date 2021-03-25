@@ -4,15 +4,25 @@
     = render :partial => "ems_container/aggregate-status-card"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "ems_container/utilization-trend-chart"
+      - if @record
+        = react 'UtilizationChartGraph', {:providerId => @record.id.to_s, :title => _('Aggregated Node Utilization'), :cpuConfig =>'cpuUsageConfig' , :memoryConfig => 'memoryUsageConfig', :dashboard => 'container_dashboard' }
+      - else
+        = react 'UtilizationChartGraph', {:providerId => '', :title => _('Aggregated Node Utilization'), :cpuConfig =>'cpuUsageConfig' , :memoryConfig => 'memoryUsageConfig', :dashboard => 'container_dashboard' }
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "ems_container/trends-chart"
-      = render :partial => "ems_container/recent-images-line-chart"
+      - if @record
+        = react 'UsageTrendChart', {:providerId => @record.id.to_s, :config => 'NetworkUsageConfig', :apiUrl => 'container_dashboard/network_metrics_data', :dataPoint => 'network_metrics'}
+        = react 'UsageTrendChart', {:providerId => @record.id.to_s, :config => 'ImageUsageConfig', :apiUrl => 'container_dashboard/image_metrics_data', :dataPoint => 'image_metrics'}
+      - else
+        = react 'UsageTrendChart', {:providerId => '', :config => 'NetworkUsageConfig', :apiUrl => 'container_dashboard/network_metrics_data', :dataPoint => 'network_metrics'}
+        = react 'UsageTrendChart', {:providerId => '', :config => 'ImageUsageConfig', :apiUrl => 'container_dashboard/image_metrics_data', :dataPoint => 'image_metrics'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       = render :partial => "ems_container/heatmap"
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "ems_container/recent-pods-line-chart"
+      - if @record
+        = react 'PodsTrendChart', {:providerId => @record.id.to_s, :config => 'PodUsageConfig', :apiUrl => 'container_dashboard/pod_metrics_data', :dataPoint => 'pod_metrics'}
+      - else
+        = react 'PodsTrendChart', {:providerId => '', :config => 'PodUsageConfig', :apiUrl => 'container_dashboard/pod_metrics_data', :dataPoint => 'pod_metrics'}
 
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record ? @record.id : ''}');

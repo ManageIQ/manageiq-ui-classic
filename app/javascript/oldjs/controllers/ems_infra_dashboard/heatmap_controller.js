@@ -12,7 +12,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
         vm.heatmapData = response.data.data;
       })
       .catch(miqService.handleFailure);
-
+      
     $q.all([heatmapPromise]).then(function() {
       vm.title = vm.heatmapData.heatmaps.title;
       vm.data = processHeatmapData(vm.data, vm.heatmapData.heatmaps);

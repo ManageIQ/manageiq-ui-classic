@@ -4,10 +4,10 @@
     = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_physical_infra'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      %server-health-pie-chart{:provider_id => @record.id}
+      = react 'ServersDataChart', {:providerId => @record.id.to_s, :title => _('Servers Data'),:serversAvailableConfig => 'availableServersUsageConfig', :serversHealthConfig => 'serversHealthUsageConfig',:apiUrl => 'ems_physical_infra_dashboard/servers_group_data'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      %recent-servers-line-chart{:provider_id => @record.id}
+      = react 'RecentVmGraph', {:providerId => @record.id.to_s, :title => _('Recent Servers'), :config => 'recentServersConfig', :apiUrl => 'ems_physical_infra_dashboard/recent_servers_data', :dataPoint => 'recentServers'}
 
   :javascript
     miq_bootstrap('.ems-physical-infra-dashboard');
