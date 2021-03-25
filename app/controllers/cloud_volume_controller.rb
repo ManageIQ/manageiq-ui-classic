@@ -12,7 +12,7 @@ class CloudVolumeController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w[cloud_volume_snapshots cloud_volume_backups instances custom_button_events]
+    %w[cloud_volume_snapshots cloud_volume_backups instances custom_button_events host_initiators]
   end
 
   def specific_buttons(pressed)

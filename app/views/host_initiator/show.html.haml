@@ -1,4 +1,4 @@
-- if %w(host_initiator).include?(@display)
+- if %w(host_initiator cloud_volumes).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
   - if @showtype == "item"

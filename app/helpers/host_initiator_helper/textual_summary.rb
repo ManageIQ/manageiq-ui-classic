@@ -12,6 +12,7 @@ module HostInitiatorHelper::TextualSummary
         name
         ems
         physical_storage
+        cloud_volumes
       ]
     )
   end
@@ -42,5 +43,15 @@ module HostInitiatorHelper::TextualSummary
 
   def textual_physical_storage
     textual_link(@record.physical_storage)
+  end
+
+  def textual_cloud_volumes
+    num   = @record.number_of(:cloud_volumes)
+    h     = {:label => _('Cloud Volumes'), :value => num, :icon => "pficon pficon-volume"}
+    if num > 0 && role_allows?(:feature => "cloud_volumes_show_list")
+      h[:title] = _("Show volumes mapped to this host initiator")
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volumes')
+    end
+    h
   end
 end
