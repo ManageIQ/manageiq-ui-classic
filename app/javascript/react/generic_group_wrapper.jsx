@@ -1,5 +1,5 @@
 import React from 'react';
-import { GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
+import { GenericGroup } from '../components/textual_summary';
 import textualSummaryGenericClick from './textual_summary_click';
 
 export default (props) => {
