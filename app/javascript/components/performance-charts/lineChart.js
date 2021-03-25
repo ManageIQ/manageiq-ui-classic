@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { LineChart } from '@carbon/charts-react';
 
-const LineChartGraph = ({ data, format }) => {
+const LineChartGraph = ({ data, format, size }) => {
   const getYAxisValue = (format, value) => {
     const tmp = /^([0-9\,\.]+)(.*)/.exec(ManageIQ.charts.formatters[format.function].c3(format.options)(value));
     return [`${numeral(tmp[1]).value()}${tmp[2]}`];
@@ -22,7 +22,7 @@ const LineChartGraph = ({ data, format }) => {
         },
       },
     },
-    height: '400px',
+    height: size,
     tooltip: {
       truncation: {
         type: 'none',
@@ -36,13 +36,15 @@ const LineChartGraph = ({ data, format }) => {
 };
 
 LineChartGraph.propTypes = {
-  data: PropTypes.array,
-  format: PropTypes.object,
+  data: PropTypes.instanceOf(Array),
+  format: PropTypes.instanceOf(Object),
+  size: PropTypes.string,
 };
 
 LineChartGraph.defaultProps = {
   data: null,
   format: null,
+  size: '400px',
 };
 
 export default LineChartGraph;

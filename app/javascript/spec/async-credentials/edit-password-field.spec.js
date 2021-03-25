@@ -6,6 +6,9 @@ import EditPasswordField from '../../components/async-credentials/edit-password-
 
 jest.mock('@@ddf', () => ({
   useFieldApi: props => ({ meta: {}, input: {}, ...props }),
+  componentTypes: {
+    TEXT_FIELD: 'text-field',
+  },
 }));
 
 describe('Edit secret field form component', () => {

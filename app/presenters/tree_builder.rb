@@ -380,8 +380,6 @@ class TreeBuilder
     ## Management
     ### Providers
     :configuration_manager_providers => "TreeBuilderConfigurationManager",
-    ### Configured Systems
-    :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
     # Control
     ## Explorer
@@ -397,8 +395,6 @@ class TreeBuilder
     ## Ansible Tower
     ### Providers
     :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
-    ### Configured Systems
-    :automation_manager_cs_filter    => "TreeBuilderAutomationManagerConfiguredSystems",
 
     ## Automate
     ### Explorer

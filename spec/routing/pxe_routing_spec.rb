@@ -63,12 +63,6 @@ describe PxeController do
     end
   end
 
-  describe "#pxe_image_type_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/pxe_image_type_form_field_changed")).to route_to("pxe#pxe_image_type_form_field_changed")
-    end
-  end
-
   describe "#pxe_image_type_list" do
     it "routes with POST" do
       expect(post("/pxe/pxe_image_type_list")).to route_to("pxe#pxe_image_type_list")
@@ -102,18 +96,6 @@ describe PxeController do
   describe "#reload" do
     it "routes with POST" do
       expect(post("/pxe/reload")).to route_to("pxe#reload")
-    end
-  end
-
-  describe "#template_create_update" do
-    it "routes with POST" do
-      expect(post("/pxe/template_create_update")).to route_to("pxe#template_create_update")
-    end
-  end
-
-  describe "#template_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/template_form_field_changed")).to route_to("pxe#template_form_field_changed")
     end
   end
 

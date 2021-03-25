@@ -191,6 +191,26 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :automation_manager_configured_system => {
+      :get => %w(
+        download_summary_pdf
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        button
+        listnav_search_selected
+        quick_search
+        reload
+        show
+        show_list
+        tagging_edit
+      )  +
+        adv_search_post +
+        exp_post
+    },
+
     :configuration_script => {
       :get  => %w(
         configuration_script_service_dialog
@@ -537,10 +557,10 @@ Rails.application.routes.draw do
         snapshot_create
         button
         create
-        reload
         dynamic_checkbox_refresh
         listnav_search_selected
         quick_search
+        reload
         sections_field_changed
         show
         show_list
@@ -2699,7 +2719,6 @@ Rails.application.routes.draw do
         log_depot_validate
         pxe_image_edit
         pxe_image_type_edit
-        pxe_image_type_form_field_changed
         pxe_image_type_list
         pxe_img_form_field_changed
         pxe_server_async_cred_validation
@@ -2708,8 +2727,6 @@ Rails.application.routes.draw do
         pxe_wimg_form_field_changed
         reload
         tagging_edit
-        template_create_update
-        template_form_field_changed
         template_list
         tree_autoload
         tree_select

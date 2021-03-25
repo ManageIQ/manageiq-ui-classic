@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenericGroup renders just fine 1`] = `
+<GenericGroup
+  items={
+    Array [
+      Object {
+        "hoverClass": "bar",
+        "label": "foo",
+        "value": "bar",
+      },
+      Object {
+        "hoverClass": "bar",
+        "label": "mrkef?",
+        "value": "v zime!",
+      },
+    ]
+  }
+  onClick={[Function]}
+  title="Foo Bar"
+>
+  <table
+    className="table table-bordered table-hover table-striped table-summary-screen"
+  >
+    <thead>
+      <tr>
+        <th
+          align="left"
+          colSpan="2"
+        >
+          Foo Bar
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <GenericTableRow
+        item={
+          Object {
+            "hoverClass": "bar",
+            "label": "foo",
+            "value": "bar",
+          }
+        }
+        key="0"
+        onClick={[Function]}
+      >
+        <tr
+          className="bar"
+        >
+          <td
+            className="label generic-row-label"
+          >
+            foo
+          </td>
+          <td>
+            <IconOrImage
+              icon={null}
+              image={null}
+              title={null}
+            />
+            <span>
+               
+              bar
+            </span>
+          </td>
+        </tr>
+      </GenericTableRow>
+      <GenericTableRow
+        item={
+          Object {
+            "hoverClass": "bar",
+            "label": "mrkef?",
+            "value": "v zime!",
+          }
+        }
+        key="1"
+        onClick={[Function]}
+      >
+        <tr
+          className="bar"
+        >
+          <td
+            className="label generic-row-label"
+          >
+            mrkef?
+          </td>
+          <td>
+            <IconOrImage
+              icon={null}
+              image={null}
+              title={null}
+            />
+            <span>
+               
+              v zime!
+            </span>
+          </td>
+        </tr>
+      </GenericTableRow>
+    </tbody>
+  </table>
+</GenericGroup>
+`;

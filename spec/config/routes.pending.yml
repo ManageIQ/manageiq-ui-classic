@@ -55,6 +55,9 @@ AutomationManagerController:
 - wait_for_task
 - x_history
 - x_search_by_name
+AutomationManagerConfiguredSystemController:
+- index
+- reload
 AvailabilityZoneController:
 - compare_cancel
 - compare_choose_base

@@ -2,23 +2,6 @@
 module PxeController::PxeCustomizationTemplates
   extend ActiveSupport::Concern
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def template_form_field_changed
-    assert_privileges(params[:id] == "new" ? "customization_template_new" : "customization_template_edit")
-    return unless load_edit("ct_edit__#{params[:id]}", "replace_cell__explorer")
-    @prev_typ = @edit[:new][:typ]
-    template_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      if params[:typ] && @prev_typ != @edit[:new][:typ]
-        @edit[:new][:script] = ""
-        page.replace_html("script_div", :partial => "template_script_data")
-      end
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
   def customization_template_delete
     assert_privileges("customization_template_delete")
     template_button_operation('destroy', 'Delete')
@@ -51,7 +34,6 @@ module PxeController::PxeCustomizationTemplates
   def customization_template_new
     assert_privileges("customization_template_new")
     @ct = CustomizationTemplate.new
-    template_set_form_vars
     @in_a_form = true
     replace_right_cell(:nodetype => "ct-")
   end
@@ -70,77 +52,10 @@ module PxeController::PxeCustomizationTemplates
     end
     @ct = @record = identify_record(params[:id], CustomizationTemplate) if params[:id]
     if params[:typ] && params[:typ] == "copy"
-      options = {
-        :name        => "Copy of #{@record.name}",
-        :description => @record.description,
-        :script      => @record.script,
-        :type        => @record.type
-      }
-      options[:pxe_image_type_id] = @record.pxe_image_type_id.to_s if @record.pxe_image_type_id
-      @ct = CustomizationTemplate.new(options)
+      @ct = CustomizationTemplate.new
     end
-    template_set_form_vars
     @in_a_form = true
-    session[:changed] = false
     replace_right_cell(:nodetype => "ct-#{params[:id]}")
-  end
-
-  def template_create_update
-    assert_privileges(params[:id].present? ? "customization_template_edit" : "customization_template_new")
-    id = params[:id] || "new"
-    return unless load_edit("ct_edit__#{id}")
-    template_get_form_vars
-    if params[:button] == "cancel"
-      @edit = session[:edit] = nil # clean out the saved info
-      if @ct.id
-        add_flash(_("Edit of Customization Template \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@ct)})
-      else
-        add_flash(_("Add of new Customization Template was cancelled by the user"))
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
-    elsif %w[add save].include?(params[:button])
-      ct = if params[:id]
-             find_record_with_rbac(CustomizationTemplate, params[:id])
-           else
-             @edit[:new][:typ] == "CustomizationTemplateKickstart" ? CustomizationTemplateKickstart.new : CustomizationTemplateSysprep.new
-           end
-      if @edit[:new][:name].blank?
-        add_flash(_("Name is required"), :error)
-      end
-      if @edit[:new][:typ].blank?
-        add_flash(_("Type is required"), :error)
-      end
-      if @flash_array
-        javascript_flash
-        return
-      end
-
-      template_set_record_vars(ct)
-
-      if !flash_errors? && ct.valid? && ct.save
-        if ct.id
-          add_flash(_("Customization Template \"%{name}\" was saved") % {:name => get_record_display_name(ct)})
-        else
-          add_flash(_("Customization Template \"%{name}\" was added") % {:name => get_record_display_name(ct)})
-        end
-        AuditEvent.success(build_created_audit(ct, @edit))
-        @edit = session[:edit] = nil # clean out the saved info
-        self.x_node = "xx-xx-#{ct.pxe_image_type.id}"
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
-      else
-        @in_a_form = true
-        ct.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
-      end
-    elsif params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-      @in_a_form = true
-      customization_template_edit
-    end
   end
 
   private #######################
@@ -152,32 +67,6 @@ module PxeController::PxeCustomizationTemplates
     @edit[:new][:img_type] = params[:img_typ] if params[:img_typ]
     @edit[:new][:script] = params[:script_data] if params[:script_data]
     @edit[:new][:script] = @edit[:new][:script] + "..." if !params[:name] && !params[:description] && !params[:img_typ] && !params[:script_data] && !params[:typ]
-  end
-
-  # Set form variables for edit
-  def template_set_form_vars
-    @edit = {}
-    @edit[:ct_id] = @ct.id
-
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "ct_edit__#{@ct.id || "new"}"
-    @edit[:rec_id] = @ct.id || nil
-    @edit[:pxe_image_types] = PxeImageType.order(:name).collect { |img| [img.name, img.id] }
-    @edit[:new][:name] = @ct.name
-    @edit[:new][:description] = @ct.description
-    @edit[:new][:typ] = @ct.type
-    # in case record is being copied
-    @edit[:new][:img_type] = if @ct.id || @ct.pxe_image_type_id
-                               @ct.pxe_image_type.id
-                             else
-                               # if new customization template, check if add button was pressed form folder level, to auto select image type
-                               x_node == "T" ? @ct.pxe_image_type : x_node.split('_')[1]
-                             end
-
-    @edit[:new][:script] = @ct.script || ""
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit] = @edit
   end
 
   def template_set_record_vars(ct)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
+import { Quadicon } from './quadicon';
 
 import PfAggregateStatusCard from './pf_aggregate_status_card';
 import { http } from '../http_api/';

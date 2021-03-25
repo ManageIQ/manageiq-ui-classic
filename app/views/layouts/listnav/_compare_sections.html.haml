@@ -1,26 +1,6 @@
 - if @explorer
   - style = "width:auto"
 .panel-group{:style => style}
-  - if @lastaction == "drift"
-    = miq_accordion_panel(h(@drift_obj.name), true, "icon") do
-      - if @sb[:compare_db] != "EmsCluster"
-        - if @drift_obj.product_name != "" && @drift_obj.service_pack != ""
-          - height = "100px"
-        - elsif @drift_obj.product_name != "" || @drift_obj.service_pack != ""
-          - height = "105px"
-        - else
-          - height = "110px"
-      - else
-        - height = "100px"
-      %div{:style => "position: relative; width: 152px; height: #{height}; z-index: 0; margin: 0px auto;"}
-        = render :partial => 'shared/quadicon', :locals => {:record => @drift_obj}
-      - if @sb[:compare_db] != "EmsCluster"
-        %div{:style => "margin-top: -25px;"}
-          %center{:style => "color:#000;"}
-            = @drift_obj.product_name
-            %br
-            = @drift_obj.service_pack
-
   = miq_accordion_panel(@lastaction == "drift" ? _("Drift Sections") : _("Comparison Sections"), true, "sections") do
     :javascript
       miqTreeResetState('#{j_str @sections_tree.name}');

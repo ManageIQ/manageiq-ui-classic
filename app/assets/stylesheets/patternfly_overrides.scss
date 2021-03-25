@@ -530,6 +530,10 @@ tr.rdetail > td {
 .sidebar-pf-left {
   .panel-group {
     margin-bottom: 0;
+    .panel-title > a:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+      outline-offset: -2px;
+    }
   }
 }
 
@@ -722,4 +726,18 @@ table.c3-tooltip td {
 
 .table-summary-screen > tbody > tr:hover > td, .table-summary-screen > tbody > tr:hover > th {
   background-color: transparent;
+}
+
+.content-focus-order {
+  @media (min-width: 992px) {
+    .col-md-push-3 {
+      left: 0%;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .col-md-pull-9 {
+      right: 0%;
+    }
+  }
 }

@@ -12,6 +12,7 @@ const PasswordField = ({
   helperText,
   edit,
   parent,
+  componentClass,
   ...rest
 }) => {
   const formOptions = useFormApi();
@@ -22,7 +23,8 @@ const PasswordField = ({
     validateOnMount: rest.validateOnMount,
     helperText,
     ...rest,
-    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
+    component: edit ? 'edit-password-field' : componentClass, 
+    componentClass: componentClass,
   };
 
   return (
@@ -80,6 +82,7 @@ PasswordField.propTypes = {
   helperText: PropTypes.string,
   edit: PropTypes.bool,
   parent: PropTypes.string,
+  componentClass: PropTypes.string,
 };
 
 PasswordField.defaultProps = {
@@ -88,6 +91,7 @@ PasswordField.defaultProps = {
   helperText: undefined,
   edit: false,
   parent: undefined,
+  componentClass: componentTypes.TEXT_FIELD,
 };
 
 export default PasswordField;

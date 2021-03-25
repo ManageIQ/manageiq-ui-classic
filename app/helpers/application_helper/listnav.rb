@@ -4,6 +4,7 @@ module ApplicationHelper
       common_layouts = %w[
         physical_storage
         auth_key_pair_cloud
+        automation_manager_configured_system
         availability_zone
         cloud_network
         cloud_object_store_container
@@ -215,16 +216,19 @@ module ApplicationHelper
     # Create a collapsed panel based on a condition
     def miq_accordion_panel(title, condition, id, &block)
       id = valid_html_id(id)
+      control_id = "control_#{id}"
       content_tag(:div, :class => "panel panel-default") do
-        out = content_tag(:div, :class => "panel-heading") do
+        out = content_tag(:div, :class => "panel-heading", 'role' => 'tab', :id => control_id) do
           content_tag(:h4, :class => "panel-title") do
             link_to(title, "##{id}",
-                    'data-parent' => '#accordion',
-                    'data-toggle' => 'collapse',
-                    :class        => condition ? '' : 'collapsed')
+                    'aria-controls' => id,
+                    'data-parent'   => '#accordion',
+                    'data-toggle'   => 'collapse',
+                    :class          => condition ? '' : 'collapsed',
+                    'tabindex'      => 0)
           end
         end
-        out << content_tag(:div, :id => id, :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
+        out << content_tag(:div, :id => id, 'aria-labelledby' => control_id, 'role' => 'tabpanel', :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
           content_tag(:div, :class => "panel-body", &block)
         end
       end

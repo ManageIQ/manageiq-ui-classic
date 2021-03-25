@@ -45,7 +45,7 @@ describe AutomationManagerController do
 
     get :explorer
     accords = controller.instance_variable_get(:@accords)
-    expect(accords.size).to eq(2)
+    expect(accords.size).to eq(1)
     breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
     expect(breadcrumbs[0]).to include(:url => '/automation_manager/show_list')
     expect(response.status).to eq(200)
@@ -66,13 +66,13 @@ describe AutomationManagerController do
   end
 
   context "renders the explorer based on RBAC" do
-    it "renders explorer based on RBAC access to feature 'automation_manager_configured_system_tag'" do
-      login_as user_with_feature %w(automation_manager_configured_system_tag)
+    it "renders explorer based on RBAC access to feature 'automation_manager_refresh_provider'" do
+      login_as user_with_feature %w(automation_manager_refresh_provider)
 
       get :explorer
       accords = controller.instance_variable_get(:@accords)
       expect(accords.size).to eq(1)
-      expect(accords[0][:name]).to eq("automation_manager_cs_filter")
+      expect(accords[0][:name]).to eq("automation_manager_providers")
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -364,12 +364,6 @@ describe AutomationManagerController do
     it "fetches list for Providers accordion" do
       key = ems_key_for_provider(automation_provider1)
       allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
-      controller.send(:get_node_info, key)
-    end
-
-    it "fetches list for Configured Systems accordion" do
-      key = ems_key_for_provider(automation_provider1)
-      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_cs_filter_tree)
       controller.send(:get_node_info, key)
     end
   end
