@@ -52,8 +52,8 @@ col_formats:
 - :model_name
 - :boolean_yes_no
 -
-- :datetime_local
-- :datetime_local
+-
+-
 
 # Condition(s) string for the SQL query
 conditions:

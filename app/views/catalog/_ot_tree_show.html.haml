@@ -24,12 +24,12 @@
     %label.col-md-2.control-label
       = _('Created On')
     .col-md-8
-      =  h(format_timezone(@record.created_at, Time.zone, "gtl"))
+      =  @record.created_at
   .form-group
     %label.col-md-2.control-label
       = _('Updated On')
     .col-md-8
-      =  h(format_timezone(@record.updated_at, Time.zone, "gtl"))
+      =  @record.updated_at
   .form-group
     .col-md-10
       #tag_group
