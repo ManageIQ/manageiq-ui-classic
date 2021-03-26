@@ -37,7 +37,7 @@ import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
 import PodsTrendChart from '../components/provider-dashboard-charts/pod-trend-charts';
 import RecentHostGraph from '../components/provider-dashboard-charts/recent-host-chart';
-import RecentVmGraph from '../components/provider-dashboard-charts/recent-vm-chart'
+import RecentVmGraph from '../components/provider-dashboard-charts/recent-vm-chart';
 import RegionForm from '../components/region-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import RemoveGenericItemModal from '../components/remove-generic-item-modal';
