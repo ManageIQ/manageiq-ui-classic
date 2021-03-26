@@ -11,6 +11,10 @@ class HostInitiatorController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def self.display_methods
+    %w[cloud_volumes]
+  end
+
   def new
     assert_privileges("host_initiator_new")
 

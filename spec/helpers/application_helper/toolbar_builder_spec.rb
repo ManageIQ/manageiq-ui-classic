@@ -505,6 +505,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text  => "Configuration"
         )
       end
+
       it "includes the correct button items in the show screen" do
         items = _toolbar_builder.build_toolbar(toolbar_to_build).first[:items]
 
@@ -531,6 +532,28 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text    => "Remove selected Generic Object Definitions from Inventory",
           :onwhen  => "1+",
           :enabled => false,
+        )
+      end
+    end
+
+    context "when the toolbar has dynamic url_parms" do
+      let(:toolbar_to_build) { 'drift_center_tb' }
+      let(:request) { double("ActionDispatch::Request", :query_string => "") }
+
+      let(:compare_db) { "VmOrTemplate" }
+      let(:drift_obj)  { FactoryBot.create(:vm_vmware) }
+
+      before do
+        # instance variables are set since the toolbar will build using the current
+        #   example as the @view_context
+        @compare_db = compare_db
+        @drift_obj  = drift_obj
+      end
+
+      it "evaluates the url_parms in the view context" do
+        expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
+          :id        => "drift_all",
+          :url_parms => "?compare_task=all&db=#{@compare_db}&id=#{@drift_obj.id}"
         )
       end
     end

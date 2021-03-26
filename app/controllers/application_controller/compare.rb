@@ -837,14 +837,17 @@ module ApplicationController::Compare
                records.length
              end
     cell_text += " (#{length})"
+    section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => cell_text,
-      :id         => "id_#{@rows.length}",
-      :indent     => 0,
-      :parent     => nil,
-      :section    => true,
-      :exp_id     => section[:name].to_s,
-      :_collapsed => collapsed_state(section[:name].to_s)
+      :col0           => length > 0 ? "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"fa fa-fw fa-angle-right exp-icon \"></i></a>#{cell_text}</div>" : cell_text,
+      :id             => "id_#{@rows.length}",
+      :indent         => 0,
+      :node_parent    => nil,
+      :parent         => nil,
+      :parent_section => nil,
+      :section        => true,
+      :exp_id         => section[:name].to_s,
+      :_collapsed     => collapsed_state(section[:name].to_s)
     }
     row.merge!(drift_section_data_cols(view, section))
     @section_parent_id = @rows.length
@@ -879,14 +882,17 @@ module ApplicationController::Compare
   # Build a record row for the compare grid xml
   def drift_add_record(view, section, record, ridx)
     @same = true
+    section_class = "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => record,
-      :id         => "id_#{@rows.length}",
-      :indent     => 1,
-      :parent     => @section_parent_id,
-      :record     => true,
-      :exp_id     => "#{section[:name]}_#{ridx}",
-      :_collapsed => collapsed_state("#{section[:name]}_#{ridx}")
+      :col0           => @rows.blank? ? record : "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"fa fa-fw fa-angle-right exp-icon \"></i></a>#{record}</div>",
+      :id             => "id_#{@rows.length}",
+      :indent         => 1,
+      :node_parent    => nil,
+      :parent         => @section_parent_id,
+      :parent_section => section[:name].to_s.gsub(/[\.]/, '_'),
+      :record         => true,
+      :exp_id         => "#{section[:name]}_#{ridx}",
+      :_collapsed     => collapsed_state("#{section[:name]}_#{ridx}")
     }
     row.merge!(drift_record_data_cols(view, section, record))
 
@@ -970,16 +976,19 @@ module ApplicationController::Compare
   end
 
   # Build a field row under a record row
-  def drift_add_record_field(view, section, record, field)
+  def drift_add_record_field(view, section, record, field, ridx)
     row = if @compressed # Compressed
             drift_record_field_compressed(view, section, record, field)
           else # Expanded
             drift_record_field_expanded(view, section, record, field)
           end
-    row.merge!(:id           => "id_#{@rows.length}",
-               :indent       => 2,
-               :parent       => @record_parent_id,
-               :record_field => true)
+    row.merge!(:col0           => _(field[:header]),
+               :id             => "id_#{@rows.length}",
+               :indent         => 2,
+               :node_parent    => section[:name].to_s.gsub(/[\.]/, '_'),
+               :parent_section => "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_'),
+               :parent         => @record_parent_id,
+               :record_field   => true)
     @rows << row
   end
 
@@ -1063,11 +1072,13 @@ module ApplicationController::Compare
   def drift_add_section_field(view, section, field)
     @same = true
     row = {
-      :col0          => field[:header].to_s,
-      :id            => "id_#{@rows.length}",
-      :indent        => 1,
-      :parent        => @section_parent_id,
-      :section_field => true
+      :col0           => field[:header].to_s,
+      :id             => "id_#{@rows.length}",
+      :indent         => 1,
+      :node_parent    => nil,
+      :parent         => @section_parent_id,
+      :parent_section => section[:name].to_s.gsub(/[\.]/, '_'),
+      :section_field  => true
     }
 
     if @compressed  # Compressed
@@ -1190,7 +1201,7 @@ module ApplicationController::Compare
       next if fields.nil? # Build field rows under records
 
       fields.each_with_index do |field, _fidx| # If we have fields, build field rows per record
-        comp_add_record_field(view, section, record, field)
+        comp_add_record_field(view, section, record, field, ridx)
       end
     end
   end
@@ -1360,14 +1371,17 @@ module ApplicationController::Compare
                records.length
              end
     cell_text += " (#{length})"
+    section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => cell_text,
-      :id         => "id_#{@rows.length}",
-      :indent     => 0,
-      :parent     => nil,
-      :section    => true,
-      :exp_id     => section[:name].to_s,
-      :_collapsed => collapsed_state(section[:name].to_s)
+      :col0           => length > 0 ? "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"fa fa-fw fa-angle-right exp-icon \"></i></a>#{cell_text}</div>" : cell_text,
+      :id             => "id_#{@rows.length}",
+      :indent         => 0,
+      :node_parent    => nil,
+      :parent         => nil,
+      :parent_section => nil,
+      :section        => true,
+      :exp_id         => section[:name].to_s,
+      :_collapsed     => collapsed_state(section[:name].to_s)
     }
     row.merge!(compare_section_data_cols(view, section, records))
 
@@ -1403,14 +1417,17 @@ module ApplicationController::Compare
   # Build a record row for the compare grid xml
   def comp_add_record(view, section, record, ridx)
     @same = true
+    section_class = "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => _(record),
-      :id         => "id_#{@rows.length}",
-      :indent     => 1,
-      :parent     => @section_parent_id,
-      :record     => true,
-      :exp_id     => "#{section[:name]}_#{ridx}",
-      :_collapsed => collapsed_state("#{section[:name]}_#{ridx}")
+      :col0           => @rows.blank? ? record : "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"fa fa-fw fa-angle-right exp-icon\"></i></a>#{record}</div>",
+      :id             => "id_#{@rows.length}",
+      :indent         => 1,
+      :node_parent    => nil,
+      :parent         => @section_parent_id,
+      :parent_section => section[:name].to_s.gsub(/[\.]/, '_'),
+      :record         => true,
+      :exp_id         => "#{section[:name]}_#{ridx}",
+      :_collapsed     => collapsed_state("#{section[:name]}_#{ridx}")
     }
     row.merge!(comp_record_data_cols(view, section, record))
 
@@ -1529,13 +1546,15 @@ module ApplicationController::Compare
   end
 
   # Build a field row under a record row
-  def comp_add_record_field(view, section, record, field)
+  def comp_add_record_field(view, section, record, field, ridx)
     row = {
-      :col0         => _(field[:header]),
-      :id           => "id_#{@rows.length}",
-      :indent       => 2,
-      :parent       => @record_parent_id,
-      :record_field => true
+      :col0           => _(field[:header]),
+      :id             => "id_#{@rows.length}",
+      :indent         => 2,
+      :parent         => @record_parent_id,
+      :node_parent    => section[:name].to_s.gsub(/[\.]/, '_'),
+      :parent_section => "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_'),
+      :record_field   => true
     }
 
     if @compressed # Compressed
@@ -1662,11 +1681,13 @@ module ApplicationController::Compare
     @same = true
 
     row = {
-      :col0          => _(field[:header]),
-      :id            => "id_#{@rows.length}",
-      :indent        => 1,
-      :parent        => @section_parent_id,
-      :section_field => true
+      :col0           => _(field[:header]),
+      :id             => "id_#{@rows.length}",
+      :indent         => 1,
+      :node_parent    => nil,
+      :parent         => @section_parent_id,
+      :parent_section => section[:name].to_s.gsub(/[\.]/, '_'),
+      :section_field  => true
     }
 
     if @compressed  # Compressed
@@ -1758,8 +1779,9 @@ module ApplicationController::Compare
         end
       end
     end
-
+    
     @lastaction = "drift"
+    @explorer = true if request.xml_http_request? && explorer_controller?
   end
 
   def drift_build_record_rows(view, section, records, fields)
@@ -1772,7 +1794,7 @@ module ApplicationController::Compare
       next if fields.nil? || @exists_mode # Build field rows under records
 
       fields.each_with_index do |field, _fidx| # If we have fields, build field rows per record
-        drift_add_record_field(view, section, record, field)
+        drift_add_record_field(view, section, record, field, ridx)
       end
     end
   end

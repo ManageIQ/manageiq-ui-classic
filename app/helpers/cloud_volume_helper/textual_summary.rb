@@ -13,7 +13,7 @@ module CloudVolumeHelper::TextualSummary
       _("Relationships"),
       %i[
         parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
-        cloud_volume_snapshots attachments custom_button_events
+        cloud_volume_snapshots attachments custom_button_events host_initiators
       ]
     )
   end
@@ -102,6 +102,16 @@ module CloudVolumeHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all attached Instances")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
+    end
+    h
+  end
+
+  def textual_host_initiators
+    num   = @record.number_of(:host_initiators)
+    h     = {:label => _('Host Initiators'), :value => num, :icon => "pficon pficon-volume"}
+    if num > 0 && role_allows?(:feature => "host_initiators_show_list")
+      h[:title] = _("Show host initiators mapped to this volume")
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'host_initiators')
     end
     h
   end

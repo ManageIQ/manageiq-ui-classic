@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::MiqPoliciesCenter < ApplicationHelper::Toolbar
         button(
           :miq_policy_new,
           'pficon pficon-add-circle-o fa-lg',
-          t = _('Add a New Policy'),
+          t = N_('Add a New Policy'),
           t,
           :url   => "/new",
           :klass     => ApplicationHelper::Button::ButtonNewDiscover),

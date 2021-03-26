@@ -2,8 +2,8 @@
 language: ruby
 python: '2.7'
 rvm:
-- 2.5.8
 - 2.6.6
+- 2.7.2
 cache:
   bundler: true
   yarn: true
@@ -21,15 +21,15 @@ env:
   - TEST_SUITE=spec:debride
 matrix:
   exclude:
-  - rvm: 2.5.8
+  - rvm: 2.6.6
     env: TEST_SUITE=spec:routes
-  - rvm: 2.5.8
+  - rvm: 2.6.6
     env: TEST_SUITE=spec:javascript
-  - rvm: 2.5.8
+  - rvm: 2.6.6
     env: TEST_SUITE=spec:compile
-  - rvm: 2.5.8
+  - rvm: 2.6.6
     env: TEST_SUITE=spec:jest
-  - rvm: 2.5.8
+  - rvm: 2.6.6
     env: TEST_SUITE=spec:debride
 bundler_args: "--no-deployment"
 before_install: source bin/ci/before_install.sh

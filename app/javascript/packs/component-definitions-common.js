@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
+import { TagGroup, TableListView, GenericGroup } from '../components/textual_summary';
+import { Quadicon } from '../components/quadicon';
 import { Toolbar } from '../components/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
@@ -30,12 +31,13 @@ import NotificationDrawer from '../components/notification-drawer/notification-d
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
+import PxeImageForm from '../components/pxe-image-type-form';
+import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
 import PodsTrendChart from '../components/provider-dashboard-charts/pod-trend-charts';
-import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RecentHostGraph from '../components/provider-dashboard-charts/recent-host-chart';
-import RecentVmGraph from '../components/provider-dashboard-charts/recent-vm-chart';
+import RecentVmGraph from '../components/provider-dashboard-charts/recent-vm-chart'
 import RegionForm from '../components/region-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import RemoveGenericItemModal from '../components/remove-generic-item-modal';
@@ -96,6 +98,8 @@ ManageIQ.component.addReact('NotificationDrawer', NotificationDrawer);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
+ManageIQ.component.addReact('PxeImageForm', PxeImageForm);
+ManageIQ.component.addReact('PxeCustomizationTemplateForm', PxeCustomizationTemplateForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('PerformanceChartWidget', PerformanceChartWidget);
 ManageIQ.component.addReact('PodsTrendChart', PodsTrendChart);

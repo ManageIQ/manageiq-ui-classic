@@ -2,8 +2,8 @@
   -# if Customization template is selected
   - if @ct
     #template_info_div
-      - if @edit
-        = render :partial => "template_form"
+      - if @in_a_form
+        = react 'PxeCustomizationTemplateForm', :recordId => @ct.try(:id).try(:to_s), :copy => @record.try(:id).try(:to_s)
       - else
         = render :partial => "layouts/flash_msg"
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_template_basicinfo), @record)

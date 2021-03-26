@@ -36,7 +36,7 @@
               - break if s_idx > 0 && (styles[s_idx - 1].blank? || styles[s_idx - 1][:operator] == "DEFAULT")
               - if s_idx > 0
                 %br
-              - opts = [[styles[s_idx] ? "<#{_('Remove')}>" : "<#{_('Normal')}>", nil]] + ReportHelper::STYLE_CLASSES.invert.to_a.sort_by { |a| a.first.downcase }
+              - opts = [[styles[s_idx] ? "<#{_('Remove')}>" : "<#{_('Normal')}>", nil]] + ReportHelper::STYLE_CLASSES.invert.map { |x| [_(x[0]), x[1]] }.sort_by { |a| a.first.downcase }
               = select_tag("style_#{f_idx}_#{s_idx}",
                 options_for_select(opts, styles[s_idx] ? styles[s_idx][:class] : nil),
                 "data-miq_sparkle_on" => true,
