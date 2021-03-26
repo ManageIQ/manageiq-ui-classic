@@ -36,7 +36,8 @@ class ApplicationHelper::Toolbar::MiqPolicySetsCenter < ApplicationHelper::Toolb
                                                 :controller     => 'provider_dialogs',
                                                 :display_field  => 'description',
                                                 :modal_text     => N_("Are you sure you want to delete this Policy Profiles?"),
-                                                :modal_title    => N_("Delete Policy Profiles")}}
+                                                :modal_title    => N_("Delete Policy Profiles"),
+                                                :redirect_url   => '/miq_policy_set/show_list'}}
         ),
       ]
     ),
