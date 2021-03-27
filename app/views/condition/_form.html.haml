@@ -26,7 +26,7 @@
             = Condition::TOWHAT_APPLIES_TO_CLASSES[@edit[:new][:towhat]]
           - else
             = select_tag('towhat',
-                  options_for_select([[_("<Choose>"), nil]] + Array(Condition::TOWHAT_APPLIES_TO_CLASSES.invert), @edit[:new][:towhat]),
+                  options_for_select([[_("<Choose>"), nil]] + Condition::TOWHAT_APPLIES_TO_CLASSES.invert.map { |x| [_(x[0]), x[1]] }, @edit[:new][:towhat]),
                   :class => "selectpicker form-control")
             :javascript
               miqInitSelectPicker();
