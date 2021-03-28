@@ -185,7 +185,7 @@ module ApplicationController::AdvancedSearch
   end
 
   def adv_search_redraw_left_div
-    if @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree svcs_tree].include?(x_active_tree.to_s)
+    if @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree].include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, @sb)
@@ -210,7 +210,6 @@ module ApplicationController::AdvancedSearch
        configuration_scripts_tree
        images_filter_tree
        instances_filter_tree
-       svcs_tree
        storage_tree
        templates_filter_tree
        templates_images_filter_tree
@@ -313,7 +312,7 @@ module ApplicationController::AdvancedSearch
     respond_to do |format|
       format.js do
         @explorer = true
-        if (x_active_tree.to_s =~ /_filter_tree$/ || x_active_tree.to_s == "svcs_tree") &&
+        if x_active_tree.to_s =~ /_filter_tree$/ &&
            !%w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
           adv_search_build(model_from_active_tree(x_active_tree))
@@ -321,7 +320,7 @@ module ApplicationController::AdvancedSearch
         end
         listnav_search_selected(search_id) # Clear or set the adv search filter
         # no root node for My Services
-        self.x_node = x_active_tree.to_s == "svcs_tree" ? "xx-asrv" : "root"
+        self.x_node = "root"
         replace_right_cell
       end
       format.html do

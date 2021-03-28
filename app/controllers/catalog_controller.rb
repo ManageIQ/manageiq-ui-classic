@@ -1672,7 +1672,6 @@ class CatalogController < ApplicationController
   end
 
   def get_node_info_handle_root_node
-    @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
       service_template_list(%i[displayed with_existent_service_template_catalog_id public_service_templates], :no_checkboxes => true)
     else

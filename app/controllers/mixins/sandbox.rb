@@ -90,7 +90,6 @@ module Sandbox
     storage_tree
     storage_pod_tree
     svccat_tree
-    svcs_tree
     templates_filter_tree
     templates_images_filter_tree
     utilization_tree
@@ -146,7 +145,6 @@ module Sandbox
     storage
     storage_pod
     svccat
-    svcs
     templates_filter
     templates_images_filter
     templates_images_filter

@@ -2837,16 +2837,15 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_load
         download_data
-        explorer
         reconfigure_form_fields
         retire
         service_form_fields
         show
+        show_list
         tagging_edit
       ),
       :post => %w(
         button
-        explorer
         listnav_search_selected
         ownership_update
         quick_search
@@ -2856,18 +2855,13 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tree_autoload
-        tree_select
-        x_button
-        x_history
-        x_show
+        show
         wait_for_task
       ) +
                dialog_runner_post +
                adv_search_post +
                exp_post +
-               save_post +
-               x_post
+               save_post
     },
 
     :storage                  => {
