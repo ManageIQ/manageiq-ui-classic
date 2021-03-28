@@ -1,3 +1,4 @@
+require 'byebug'
 module Mixins
   module Actions
     module VmActions
@@ -51,6 +52,8 @@ module Mixins
 
           if @explorer
             @sb[:explorer] = true
+            ownership(@origin_ownership_items)
+          elsif params[:pressed].starts_with?("service_")
             ownership(@origin_ownership_items)
           elsif role_allows?(:feature => "vm_ownership")
             drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
@@ -167,7 +170,7 @@ module Mixins
             replace_right_cell
           else
             session[:flash_msgs] = @flash_array
-            javascript_redirect(previous_breadcrumb_url)
+            ownership_handle_redirect
           end
         end
 
@@ -182,8 +185,16 @@ module Mixins
             replace_right_cell
           else
             session[:flash_msgs] = @flash_array
-            javascript_redirect(previous_breadcrumb_url)
+            ownership_handle_redirect
           end
+        end
+
+        # Passing the selected item id to the previous_breadcrumb_url if its a show page.
+        def ownership_handle_redirect
+          object_ids = params[:objectIds].instance_of?(Array) ? params[:objectIds] : params[:objectIds].split(',')
+          show_url = "/#{params[:controller]}/show"
+          redirect_url = previous_breadcrumb_url == show_url ? "#{show_url}/#{object_ids.first}" : previous_breadcrumb_url
+          javascript_redirect(redirect_url)
         end
 
         def filter_ownership_items(klass, ownership_ids)

@@ -2722,37 +2722,34 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_load
         download_data
-        explorer
         reconfigure_form_fields
         retire
+        button
         service_form_fields
         show
+        show_list
+        edit
+        ownership
         tagging_edit
       ),
       :post => %w(
-        button
-        explorer
         listnav_search_selected
         ownership_update
         quick_search
         reload
-        service_edit
-        service_tag
+        edit
         show
+        button
         show_list
         tagging_edit
-        tree_autoload
-        tree_select
-        x_button
-        x_history
-        x_show
+        show
+        ownership
         wait_for_task
       ) +
                dialog_runner_post +
                adv_search_post +
                exp_post +
-               save_post +
-               x_post
+               save_post
     },
 
     :storage                  => {

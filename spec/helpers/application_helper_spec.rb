@@ -833,9 +833,6 @@ describe ApplicationHelper do
     it "#x_active_tree=" do
       helper.x_active_tree = 'vms_filter_tree'
       expect(@sb[:active_tree]).to eq(:vms_filter_tree)
-
-      helper.x_active_tree = 'svcs_tree'
-      expect(@sb[:active_tree]).to eq(:svcs_tree)
     end
 
     it "#x_active_tree" do

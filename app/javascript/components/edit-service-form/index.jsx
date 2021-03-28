@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from 'carbon-components-react';
 import createSchema from './edit-service-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
   const [{ isLoading, initialValues }, setState] = useState({ isLoading: true });
@@ -16,8 +17,17 @@ const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
   const onSubmit = ({ name, description }) => {
     miqSparkleOn();
     API.patch(`/api/services/${recordId}`, { name, description }).then(() => {
-      miqAjaxButton(`/service/service_edit/${recordId}?button=save`);
+      const message = sprintf(__('Service "%s"  was saved"'), name);
+      miqRedirectBack(message, 'success', '/service/show_list');
     }).catch(miqSparkleOff);
+
+    miqSparkleOn();
+  };
+
+  const onCancel = () => {
+    miqSparkleOn();
+    const message = sprintf(__('Edit of Service "%s" was cancelled by the user'), initialValues && initialValues.name);
+    miqRedirectBack(message, 'warning', '/service/show_list');
   };
 
   return !isLoading && (
@@ -26,7 +36,7 @@ const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
         initialValues={initialValues}
         schema={createSchema(maxNameLen, maxDescLen)}
         onSubmit={onSubmit}
-        onCancel={() => miqAjaxButton(`/service/service_edit/${recordId}?button=cancel`)}
+        onCancel={onCancel}
         canReset
         buttonsLabels={{
           submitLabel: __('Save'),

@@ -28,27 +28,31 @@ describe('Set ownership form component', () => {
     global.ManageIQ.controller = null;
   });
 
-  it('should correctly map group and owner options ', () => {
-    const groupOptions = [{ label: 'Foo', value: '1' }, { label: 'Bar', value: '2' }];
-    const ownerOptions = [{ label: 'Baz', value: '3' }, { label: 'Qux', value: '4' }];
+  it('should correctly map group and owner options', () => {
+    const groupOptions = [{ label: 'Foo', value: '1', key: 'key_1' }, { label: 'Bar', value: '2', key: 'key_2' }];
+    const ownerOptions = [{ label: 'Baz', value: '3', key: 'key_1' }, { label: 'Qux', value: '4', key: 'key_2' }];
 
     const expectedResult = [
       expect.objectContaining({
         options: [{
           value: '3',
           label: 'Baz',
+          key: 'key_1',
         }, {
           value: '4',
           label: 'Qux',
+          key: 'key_2',
         }],
       }),
       expect.objectContaining({
         options: [{
           value: '1',
           label: 'Foo',
+          key: 'key_1',
         }, {
           value: '2',
           label: 'Bar',
+          key: 'key_2',
         }],
       }),
     ];
@@ -103,6 +107,6 @@ describe('Set ownership form component', () => {
   it('should send correct data on cancel', () => {
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
     wrapper.find('button.bx--btn--secondary').last().simulate('click');
-    expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel');
+    expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel&objectIds=123456');
   });
 });
