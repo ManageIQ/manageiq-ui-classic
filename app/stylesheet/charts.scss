@@ -1,0 +1,22 @@
+.utilization-trend-chart-pf {
+  margin-bottom: 50px;
+  .available-text {
+    width: 50px;
+    .available-text-total {
+      padding-left: 5px;
+    }
+  }
+} 
+
+.sparkline-chart {
+  margin-top: 10px;
+}
+
+.empty-chart-content {
+  height: 231px;
+  padding-top: 20px;
+  .pficon {
+    font-size: 24px;
+    margin-top: 48px;
+  }
+}

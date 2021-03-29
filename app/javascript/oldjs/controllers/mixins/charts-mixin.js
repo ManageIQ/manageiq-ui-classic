@@ -1,49 +1,47 @@
 angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', function($document, pfUtils) {
-  'use strict';
-
-  var dailyTimeTooltip = function(data) {
-    var theMoment = moment(data[0].x);
+  const dailyTimeTooltip = function(data) {
+    const theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %>  <%- col2 %></div>')({
       col1: theMoment.format('MM/DD/YYYY'),
-      col2: data[0].value + ' ' + data[0].name,
+      col2: `${data[0].value} ${data[0].name}`,
     });
   };
 
-  var dailyPodTimeTooltip = function(data) {
-    var theMoment = moment(data[0].x);
+  const dailyPodTimeTooltip = function(data) {
+    const theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %></br>  <%- col2 %></div>')({
       col1: theMoment.format('MM/DD/YYYY'),
-      col2: data[0].value + ' ' + data[0].name + ', ' + data[1].value + ' ' + data[1].name,
+      col2: `${data[0].value} ${data[0].name}, ${data[1].value} ${data[1].name}`,
     });
   };
 
-  var hourlyPodTimeTooltip = function(data) {
-    var theMoment = moment(data[0].x);
+  const hourlyPodTimeTooltip = function(data) {
+    const theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
       col1: theMoment.format('h:mm A'),
-      col2: data[0].value + ' ' + data[0].name + ', ' + data[1].value + ' ' + data[1].name,
+      col2: `${data[0].value} ${data[0].name}, ${data[1].value} ${data[1].name}`,
     });
   };
 
-  var hourlyTimeTooltip = function(data) {
-    var theMoment = moment(data[0].x);
+  const hourlyTimeTooltip = function(data) {
+    const theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
       col1: theMoment.format('h:mm A'),
-      col2: data[0].value + ' ' + data[0].name,
+      col2: `${data[0].value} ${data[0].name}`,
     });
   };
 
-  var lineChartTooltipPositionFactory = function(chartId) {
-    var elementQuery = '#' + chartId + 'lineChart';
+  const lineChartTooltipPositionFactory = function(chartId) {
+    const elementQuery = `#${chartId}lineChart`;
 
     return function(_data, width, height, element) {
       try {
-        var center = parseInt(element.getAttribute('x'), 10);
-        var top = parseInt(element.getAttribute('y'), 10);
-        var chartBox = $document[0].querySelector(elementQuery).getBoundingClientRect();
-        var graphOffsetX = $document[0].querySelector(elementQuery + ' g.c3-axis-y').getBoundingClientRect().right;
+        const center = parseInt(element.getAttribute('x'), 10);
+        const top = parseInt(element.getAttribute('y'), 10);
+        const chartBox = $document[0].querySelector(elementQuery).getBoundingClientRect();
+        const graphOffsetX = $document[0].querySelector(`${elementQuery} g.c3-axis-y`).getBoundingClientRect().right;
 
-        var x = Math.max(0, center + graphOffsetX - chartBox.left - Math.floor(width / 2));
+        const x = Math.max(0, center + graphOffsetX - chartBox.left - Math.floor(width / 2));
 
         return {
           top: top - height,
@@ -55,7 +53,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     };
   };
 
-  var chartConfig = {
+  const chartConfig = {
     cpuUsageConfig: {
       chartId: 'cpuUsageChart',
       title: __('CPU'),
@@ -72,7 +70,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     },
     cpuUsageDonutConfig: {
       chartId: 'cpuDonutChart',
-      thresholds: { 'warning': '60', 'error': '90' },
+      thresholds: { warning: '60', error: '90' },
     },
     memoryUsageConfig: {
       chartId: 'memUsageChart',
@@ -90,7 +88,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     },
     memoryUsageDonutConfig: {
       chartId: 'memoryDonutChart',
-      thresholds: { 'warning': '60', 'error': '90' },
+      thresholds: { warning: '60', error: '90' },
     },
     recentResourcesConfig: {
       chartId: 'recentResourcesChart',
@@ -98,9 +96,9 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory,
       },
-      point: {r: 1},
-      size: {height: 145},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 145 },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     recentVmsConfig: {
@@ -111,9 +109,9 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('recentVmsChart'),
       },
-      point: {r: 1},
-      size: {height: 145},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 145 },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     dailyNetworkUsageConfig: {
@@ -142,10 +140,10 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: dailyPodTimeTooltip,
         position: lineChartTooltipPositionFactory('podUsageDailyChart'),
       },
-      point: {r: 1},
-      size: {height: 145},
-      color: {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 145 },
+      color: { pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green] },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     hourlyPodUsageConfig: {
@@ -158,10 +156,10 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: hourlyPodTimeTooltip,
         position: lineChartTooltipPositionFactory('podUsageHourlyChart'),
       },
-      point: {r: 1},
-      size: {height: 145},
-      color: {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 145 },
+      color: { pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green] },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     dailyImageUsageConfig: {
@@ -173,9 +171,9 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageDailyChart'),
       },
-      point: {r: 1},
-      size: {height: 93},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 93 },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     hourlyImageUsageConfig: {
@@ -187,9 +185,9 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: hourlyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageHourlyChart'),
       },
-      point: {r: 1},
-      size: {height: 93},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 93 },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
     availableServersUsageConfig: {
@@ -227,19 +225,19 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('recentServersChart'),
       },
-      point: {r: 1},
-      size: {height: 145},
-      grid: {y: {show: false}},
+      point: { r: 1 },
+      size: { height: 145 },
+      grid: { y: { show: false } },
       setAreaChart: true,
     },
   };
 
-  var parseDate = function(date) {
-    var myDate = Date.parse(date);
+  const parseDate = function(date) {
+    const myDate = Date.parse(date);
     return isNaN(myDate) ? date : myDate;
   };
 
-  var processData = function(data, xDataLabel, yDataLabel) {
+  const processData = function(data, xDataLabel, yDataLabel) {
     if (!data) {
       return { dataAvailable: false };
     }
@@ -250,7 +248,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     return data;
   };
 
-  var processPodUtilizationData = function(data, xDataLabel, yCreatedLabel, yDeletedLabel) {
+  const processPodUtilizationData = function(data, xDataLabel, yCreatedLabel, yDeletedLabel) {
     if (!data) {
       return { dataAvailable: false };
     }
@@ -264,11 +262,11 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
   return {
     dashboardHeatmapChartHeight: 90,
     nodeHeatMapUsageLegendLabels: ['< 70%', '70-80%', '80-90%', '> 90%'],
-    chartConfig: chartConfig,
-    parseDate: parseDate,
-    processPodUtilizationData: processPodUtilizationData,
-    processData: processData,
-    dailyTimeTooltip: dailyTimeTooltip,
-    hourlyTimeTooltip: hourlyTimeTooltip,
+    chartConfig,
+    parseDate,
+    processPodUtilizationData,
+    processData,
+    dailyTimeTooltip,
+    hourlyTimeTooltip,
   };
 }]);

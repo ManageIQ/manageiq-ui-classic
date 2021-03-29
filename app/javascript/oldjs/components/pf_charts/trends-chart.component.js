@@ -23,7 +23,6 @@ function trendsChartController() {
     // Need to deep watch changes
     prevChartData = angular.copy(vm.chartData);
     prevConfig = angular.copy(vm.config);
-
     vm.showLargeCardLayout = (!vm.config.layout || vm.config.layout === 'large');
     vm.showSmallCardLayout = (vm.config.layout === 'small');
     vm.showActualValue = (!vm.config.valueType || vm.config.valueType === 'actual');

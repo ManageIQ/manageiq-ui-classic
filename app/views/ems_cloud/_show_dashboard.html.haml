@@ -1,12 +1,14 @@
 = render :partial => "layouts/flash_msg"
 .container-fluid.container-tiles-pf.ems-cloud-dashboard
   .row.row-tile-pf
-    = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_cloud'}
+    = react('AggregateStatusCard', :providerId => @record.id.to_s, :providerType => 'ems_cloud')
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "recent-instances-line-chart"
+      = react('RecentVmGraph', :providerId => @record.id.to_s, :title => _('Recent Instances'),
+       :config => 'recentInstancesConfig', :apiUrl => 'ems_cloud_dashboard/recent_instances_data', :dataPoint => 'recentResources')
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "recent-images-line-chart"
+      = react('RecentVmGraph', :providerId => @record.id.to_s, :title => _('Recent Images'),
+       :config => 'recentImagesConfig', :apiUrl => 'ems_cloud_dashboard/recent_images_data', :dataPoint => 'recentResources')
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record.id}');
     miq_bootstrap('.ems-cloud-dashboard');
