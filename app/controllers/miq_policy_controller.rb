@@ -26,11 +26,14 @@ class MiqPolicyController < ApplicationController
 
   def new
     miq_policy_edit
+    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")
   end
 
   def edit
     @_params[:id] ||= find_checked_items[0]
     miq_policy_edit
+    drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @policy.name},
+    :url  => "/#{controller_name}/#{@policy.id}/edit")
   end
 
   private
