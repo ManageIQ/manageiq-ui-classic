@@ -17,6 +17,7 @@ class MiqPolicySetController < ApplicationController
 
   def new
     profile_reset_or_set
+    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")
   end
 
   def edit
@@ -32,6 +33,8 @@ class MiqPolicySetController < ApplicationController
       @refresh_partial = "edit"
       profile_reset_or_set
     end
+    drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @profile.name},
+    :url  => "/#{controller_name}/#{@profile.id}/edit")
   end
 
   def form_field_changed
