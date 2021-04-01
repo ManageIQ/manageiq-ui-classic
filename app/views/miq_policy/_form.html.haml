@@ -41,10 +41,10 @@
             = _("Mode")
           .col-md-8
             - if @policy.id
-              = MiqPolicy::POLICY_MODES[@edit[:new][:mode]]
+              = _(MiqPolicy::POLICY_MODES[@edit[:new][:mode]])
             - else
               = select_tag('mode',
-                options_for_select(MiqPolicy::POLICY_MODES.invert, MiqPolicy::POLICY_MODES[@edit[:new][:mode]]),
+                options_for_select(MiqPolicy::POLICY_MODES.invert.map { |x| [_(x[0]), x[1]] }, MiqPolicy::POLICY_MODES[@edit[:new][:mode]]),
                 :class => "selectpicker form-control")
 
               :javascript
