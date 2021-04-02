@@ -100,6 +100,12 @@ export const DataTable = ({
     ev.stopPropagation();
   };
 
+  const classNameRow = (row) => {
+    if (row.clickable === false) return 'simple-row';
+    if (row.clickable === null) return 'clickable-row';
+    return '';
+  };
+
   const localOnClickItem = row => ev => {
     if (ev.target.classList.contains('is-checkbox-cell') ||
        ev.target.parentElement.classList.contains('is-checkbox-cell')) {
@@ -115,11 +121,11 @@ export const DataTable = ({
     <tbody>
       {rows.map(row => (
         <tr
-          className={row.selected ? 'active' : ''}
+          className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
           key={`check_${row.id}`}
           onClick={localOnClickItem(row)}
           onKeyPress={localOnClickItem(row)}
-          tabIndex="0"
+          tabIndex={(row.clickable === false) ? '' : '0'}
         >
           {columns.map((column, columnKey) => (
             <td
@@ -225,4 +231,3 @@ DataTable.propTypes = {
 };
 
 export default DataTable;
-

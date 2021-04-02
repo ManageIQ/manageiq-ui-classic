@@ -83,7 +83,7 @@ class MiqTaskController < ApplicationController
     when "tasks_2", "alltasks_2" then @layout = "all_tasks"
     end
 
-    @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]))
+    @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]), :clickable => false)
     @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
   end
 
