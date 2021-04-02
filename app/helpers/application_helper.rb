@@ -271,11 +271,6 @@ module ApplicationHelper
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
-      if %w[MiqTask].include?(view.db) && %w[miq_task].include?(params[:controller])
-
-        # This disables the click-through in GTL unless parent_path & parent_id are set on a row.
-        return true
-      end
       if @explorer
         # showing a list view of another CI inside vmx
         if %w[SecurityGroup
