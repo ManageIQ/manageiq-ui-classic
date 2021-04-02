@@ -782,9 +782,10 @@ class ApplicationController < ActionController::Base
       target = @targets_hash[row.id] unless row['id'].nil?
 
       new_row = {
-        :id      => list_row_id(row),
-        :long_id => row['id'].to_s,
-        :cells   => []
+        :id        => list_row_id(row),
+        :long_id   => row['id'].to_s,
+        :cells     => [],
+        :clickable => params.fetch_path(:additional_options, :clickable)
       }
 
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
