@@ -20,6 +20,7 @@ describe MiqPolicySetController do
       @policy2 = FactoryBot.create(:miq_policy, :towhat => "ContainerGroup", :mode => "compliance")
       @policy_profile.add_member(@policy1)
       @policy_profile.add_member(@policy2)
+      allow(controller).to receive(:drop_breadcrumb)
     end
 
     it "Successfully removes a Policy from a Policy Profile" do

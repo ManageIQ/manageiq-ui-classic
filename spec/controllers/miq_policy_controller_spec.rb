@@ -102,6 +102,7 @@ describe MiqPolicyController do
 
     it "Test cancel button" do
       controller.params = {:button => "cancel", :id => @policy.id}
+      allow(controller).to receive(:drop_breadcrumb)
       edit = {:key => "miq_policy_edit__#{@policy.id}", :new => {:description => @policy.description} }
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
@@ -116,6 +117,7 @@ describe MiqPolicyController do
                                                                  :towhat      => "Host",
                                                                  :expression  => {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}}}
       controller.instance_variable_set(:@edit, edit)
+      allow(controller).to receive(:drop_breadcrumb)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @policy.id, :button => "save"}
       expect(controller).to receive(:javascript_flash)
@@ -128,6 +130,7 @@ describe MiqPolicyController do
                                                                  :mode        => "control",
                                                                  :expression  => {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}}}
       controller.instance_variable_set(:@edit, edit)
+      allow(controller).to receive(:drop_breadcrumb)
       session[:edit] = assigns(:edit)
       controller.params = {:id => @policy.id, :button => "save"}
       expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
