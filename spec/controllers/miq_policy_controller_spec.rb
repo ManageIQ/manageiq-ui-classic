@@ -93,6 +93,7 @@ describe MiqPolicyController do
 
     it "Test reset button" do
       controller.params = {:button => "reset", :id => @policy.id}
+      allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:javascript_redirect).with(:action       => 'edit',
                                                                :id            => @policy.id,
                                                                :flash_msg     => _("All changes have been reset"),
