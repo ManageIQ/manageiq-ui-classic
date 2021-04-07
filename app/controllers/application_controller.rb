@@ -1104,7 +1104,7 @@ class ApplicationController < ActionController::Base
       id = @search_text if /^\d+$/.match?(@search_text)
       condition = [[]]
       if id
-        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id)
+        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id.to_i)
       end
 
       if ::Settings.server.case_sensitive_name_search
