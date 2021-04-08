@@ -4,7 +4,7 @@
     = _('Group Records by up to 3 Columns')
   .form-horizontal
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2.report-col
         = _('Column 1')
       .col-md-8
         = select_tag('chosen_pivot1',
@@ -16,7 +16,7 @@
           miqSelectPickerEvent('chosen_pivot1', '#{url}', {beforeSend: true, complete: true});
     - if @pivot.by1 != ReportHelper::NOTHING_STRING
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
           = _('Column 2')
         .col-md-8
           = select_tag('chosen_pivot2',
@@ -28,7 +28,7 @@
             miqSelectPickerEvent('chosen_pivot2', '#{url}', {beforeSend: true});
       - if @pivot.by2 != ReportHelper::NOTHING_STRING
         .form-group
-          %label.control-label.col-md-2
+          %label.control-label.col-md-2.report-col
             = _('Column 3')
           .col-md-8
             = select_tag('chosen_pivot3',

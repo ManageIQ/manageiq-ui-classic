@@ -12,7 +12,7 @@
     %h3= _("Primary (Record) Filter - Filters the %{model} table records") % {:model => @edit[:new][:model]}
     .form-horizontal
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
         .col-md-8
           - if @expkey == :record_filter
             = render :partial => 'layouts/exp_editor'
@@ -27,7 +27,7 @@
       -# Expression editor for the display filter
       %h3= _('Secondary (Display) Filter - Filters the rows based on child table fields')
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
         .col-md-8
           - if @expkey == :display_filter
             = render :partial => 'layouts/exp_editor'
