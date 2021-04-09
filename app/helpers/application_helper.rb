@@ -288,13 +288,10 @@ module ApplicationHelper
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
-        elsif %w[ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder].include?(view.db) &&
-              request.parameters[:controller] == "automation_manager"
-          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w[MiqWidget
                  ConfigurationScript
                  MiqReportResult].include?(view.db) &&
-              %w[report automation_manager].include?(request.parameters[:controller])
+              %w[report].include?(request.parameters[:controller])
           suffix = ''
           if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run" || params[:action] == "reload"
             suffix = x_node
@@ -420,7 +417,7 @@ module ApplicationHelper
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
-    when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
@@ -433,7 +430,7 @@ module ApplicationHelper
     when /^ManageIQ::Providers::(\w+)Manager::(\w+)$/
       controller = "#{$2.underscore}_#{$1.underscore}"
     when "EmsAutomation"
-      controller = "automation_manager"
+      controller = "ems_automation"
     when "GenericObject" && request.parameters[:controller] == 'service'
       controller = request.parameters[:controller]
       action = 'generic_object'
@@ -747,7 +744,7 @@ module ApplicationHelper
        physical_storage
        automation_manager_configured_system
        availability_zone
-       automation_manager
+       ems_automation
        cloud_network
        cloud_object_store_container
        cloud_object_store_object
@@ -886,7 +883,7 @@ module ApplicationHelper
   end
 
   def pressed2model_action(pressed)
-    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
+    pressed =~ /^(ems_cluster|miq_template|infra_networking|ems_automation)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
   def model_for_vm(record)
@@ -915,8 +912,6 @@ module ApplicationHelper
 
   def model_from_active_tree(tree)
     case tree
-    when :automation_manager_cs_filter_tree
-      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
@@ -931,13 +926,6 @@ module ApplicationHelper
       "MiqTemplate"
     when :vms_instances_filter_tree
       "Vm"
-    end
-  end
-
-  def configuration_manager_scripts_tree(tree)
-    case tree
-    when :automation_manager_cs_filter_tree, :automation_manager_providers_tree
-      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
     end
   end
 
@@ -1183,9 +1171,6 @@ module ApplicationHelper
 
   def tree_with_advanced_search?
     %i[
-      automation_manager_providers_tree
-      automation_manager_cs_filter_tree
-      configuration_scripts_tree
       images_tree
       images_filter_tree
       instances_tree

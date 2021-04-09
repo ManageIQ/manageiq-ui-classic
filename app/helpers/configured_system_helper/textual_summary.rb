@@ -69,7 +69,8 @@ module ConfiguredSystemHelper::TextualSummary
 
   def textual_configuration_profile
     configuration_profile = @record.configuration_profile
-    h = {:label => "Configuration Profile", :value => (configuration_profile.nil? ? _("None") : configuration_profile.name)}.merge(textual_object_icon(configuration_profile))
+    h = {:label => "Configuration Profile", :value => (configuration_profile.nil? ? _("None") : configuration_profile.name)}
+    h.merge(textual_object_icon(configuration_profile)) if configuration_profile
     if configuration_profile && role_allows?(:feature => "configuration_profile_show")
       h[:title] = _("Show this Configured System's Configuration Profile")
       h[:link]  = url_for_only_path(:controller => 'configuration_profile', :action => 'show', :id => configuration_profile)

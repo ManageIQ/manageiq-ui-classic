@@ -155,42 +155,6 @@ Rails.application.routes.draw do
         save_post
     },
 
-    :automation_manager => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        explorer
-        form_fields
-        show
-        x_show
-        x_button
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        accordion_select
-        authentication_validate
-        change_tab
-        edit
-        explorer
-        new
-        quick_search
-        refresh
-        reload
-        show
-        show_list
-        tagging
-        tagging_edit
-        tree_autoload
-        tree_select
-        cs_form_field_changed
-        wait_for_task
-      ) +
-        adv_search_post +
-        exp_post +
-        x_post
-    },
-
     :automation_manager_configured_system => {
       :get => %w(
         download_summary_pdf
@@ -2627,6 +2591,33 @@ Rails.application.routes.draw do
                exp_post +
                save_post +
                dialog_runner_post
+    },
+
+    :ems_automation => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        edit
+        form_fields
+        new
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        authentication_validate
+        button
+        edit
+        new
+        quick_search
+        reload
+        show
+        show_list
+        tagging_edit
+        wait_for_task
+      ) +
+        adv_search_post +
+        exp_post
     },
 
     :ems_configuration => {

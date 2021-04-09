@@ -8,7 +8,7 @@ describe ConfigurationJobHelper::TextualSummary do
     manager = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider.id)
     @record = FactoryBot.create(:ansible_tower_job, :ext_management_system => manager)
     expect(textual_provider[:image]).to eq("svg/vendor-ansible.svg")
-    expect(textual_provider[:link]).to eq("/automation_manager/explorer/at-#{manager.id}?accordion=automation_manager_providers")
+    expect(textual_provider[:link]).to eq("/ems_automation/show/#{manager.id}")
   end
 
   include_examples "textual_group", "Relationships", %i(provider service parameters status)

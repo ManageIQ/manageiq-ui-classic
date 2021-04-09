@@ -44,17 +44,13 @@ AuthKeyPairCloudController:
 - protect
 - sections_field_changed
 - wait_for_task
-AutomationManagerController:
-- accordion_select
+EmsAutomationController:
 - index
 - reload
 - report_data
-- tagging
-- tree_autoload
-- tree_select
+- show
+- show_list
 - wait_for_task
-- x_history
-- x_search_by_name
 AutomationManagerConfiguredSystemController:
 - index
 - reload

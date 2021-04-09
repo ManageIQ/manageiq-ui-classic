@@ -1,8 +1,0 @@
-#form_div
-  #basic_info_div
-    = render :partial => "layouts/flash_msg"
-    = react('ServiceDialogFromForm', 
-            :templateId            => @edit[:rec_id],
-            :dialogClass           => "Dialog::AnsibleTowerJobTemplateDialogService",
-            :templateClass         => "ConfigurationScript",
-            :miqRedirectBackAdress => "/automation_manager/explorer")
