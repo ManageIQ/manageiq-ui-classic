@@ -17,7 +17,7 @@ module ReportController::Reports::Editor
   }.freeze
 
   def chargeback_allocated_methods
-    Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
+    CHAREGEBACK_ALLOCATED_METHODS.map { |k, v| [k, _(v)] }.to_h
   end
 
   def default_chargeback_allocated_method
