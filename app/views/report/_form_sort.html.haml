@@ -4,7 +4,7 @@
     = _('Sort Criteria')
   .form-horizontal
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2.report-col
         = _('Sort the Report By')
       .col-md-8
         - if @sortby1.include?("__") && MiqReport.is_break_suffix?(@sortby1.split("__")[1])
@@ -29,7 +29,7 @@
             miqSelectPickerEvent('sort1_suffix', '#{url}', {beforeSend: true, complete: true});
     - if @sortby1 != ReportHelper::NOTHING_STRING
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
           = _('Sort Order')
         .col-md-8
           - opts = [[_("Ascending"), "Ascending"], [_("Descending"), "Descending"]]
@@ -41,7 +41,7 @@
             miqInitSelectPicker();
             miqSelectPickerEvent('sort_order', '#{url}', {beforeSend: true, complete: true});
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
           = _('Show Sort Breaks')
         .col-md-8
           - opts = [[_("No"), "No"], [_("Yes"), "Yes"], [_("Counts"), "Counts"]]
@@ -54,7 +54,7 @@
             miqSelectPickerEvent('sort_group', '#{url}', {beforeSend: true, complete: true});
       - unless @edit[:new][:group] == "No"
         .form-group
-          %label.control-label.col-md-2
+          %label.control-label.col-md-2.report-col
             = _('Hide Detail Rows')
           .col-md-8
             = check_box_tag("hide_details", "1", @edit[:new][:hide_details],
@@ -64,7 +64,7 @@
         - ci = MiqReport.get_col_info(@sortby1)
         - unless ci[:available_formats].empty?
           .form-group
-            %label.control-label.col-md-2
+            %label.control-label.col-md-2.report-col
               = _('Format on Summary Row')
             .col-md-8
               - opts = [["<#{_('None')}>", "_none_"], ["<#{_('Reset to Default')}>", nil]] + Array(ci[:available_formats].invert).sort_by(&:first)
@@ -79,7 +79,7 @@
     %br
     .form-horizontal
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
           = _('Within Above Field, Sort By')
         .col-md-8
           - if @sortby2.include?("__") && MiqReport.is_break_suffix?(@sortby2.split("__")[1])
@@ -103,7 +103,7 @@
               miqInitSelectPicker();
               miqSelectPickerEvent('sort2_suffix', '#{url}', {beforeSend: true, complete: true});
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2.report-col
           = _('Number of Rows to Show')
         .col-md-8
           - if @edit[:new][:group] == "No"

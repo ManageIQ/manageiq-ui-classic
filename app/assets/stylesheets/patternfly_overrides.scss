@@ -734,10 +734,15 @@ table.c3-tooltip td {
       left: 0%;
     }
   }
-  
+
   @media (min-width: 992px) {
     .col-md-pull-9 {
       right: 0%;
     }
   }
+}
+
+/* overrides col-md-2 from patternfly (width: 16.6666666667%) */
+.report-col {
+  width: 17.6666666667%;
 }

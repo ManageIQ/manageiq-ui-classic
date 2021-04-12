@@ -6,14 +6,14 @@
     %h3
       = _('Configure Report Columns')
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2.report-col
         = _('* Base the report on')
       .col-md-8
         = select_tag('chosen_model',
           options_for_select(@edit[:models].sort, @edit[:new][:model]),
           :multiple              => false,
           "data-live-search"     => "true",
-          :class                 => "selectpicker")
+          :class                 => "selectpicker form-control")
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('chosen_model', '#{url}', {beforeSend: true, complete: true});
@@ -36,7 +36,7 @@
         = _('Report Creation Timeout')
       .form-horizontal
         .form-group
-          %label.control-label.col-md-2
+          %label.control-label.col-md-2.report-col
             = _('Cancel after')
           .col-md-8
             - opts = [["<#{_('System Default')} (#{distance_of_time_in_words(MiqReport.default_queue_timeout)})>", nil]] + (1..6).map { |i| [n_('%{number} Hour', '%{number} Hours', i) % {:number => i}, i.hours] }
