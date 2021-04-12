@@ -24,6 +24,7 @@ class ApplicationController
     :supported_features_filter,
     :clickable,
     :no_checkboxes,
+    :show_pagination,
     :report_name,
     :custom_action
   ) do
@@ -77,6 +78,10 @@ class ApplicationController
 
     def in_a_form(in_a_form)
       self.in_a_form = in_a_form
+    end
+
+    def show_pagination(show_pagination)
+      self.show_pagination = show_pagination
     end
   end
 end

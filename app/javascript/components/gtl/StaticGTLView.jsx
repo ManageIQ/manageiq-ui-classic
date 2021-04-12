@@ -20,6 +20,7 @@ export const StaticGTLView = ({
   onSelectAll,
   onPerPageSelect,
   onPageSet,
+  showPagination,
 }) => {
   const miqDataTable = () => (
     <DataTable
@@ -38,6 +39,7 @@ export const StaticGTLView = ({
       onItemButtonClick={onItemButtonClick}
       onPageSet={onPageSet}
       onPerPageSelect={onPerPageSelect}
+      showPagination={showPagination}
     />
   );
   return miqDataTable();
