@@ -8,7 +8,7 @@
     %h3
       = _('Basic Report Info')
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2.report-col
         = _('Menu Name')
       .col-md-8
         #name_div
@@ -18,7 +18,7 @@
             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
     = javascript_tag(javascript_focus('name'))
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2.report-col
         = _('Title')
       .col-md-8
         #title_div

@@ -4,7 +4,7 @@
     = _('Chart Settings')
   .form-horizontal
     .form-group
-      %label.col-md-2.control-label
+      %label.col-md-2.control-label.report-col
         = _('Choose a chart type')
       .col-md-8
         = select_tag('chosen_graph',
@@ -16,7 +16,7 @@
           miqSelectPickerEvent('chosen_graph', '#{url}', {beforeSend: true, complete: true});
     - unless @edit[:new][:graph_type].blank?
       .form-group
-        %label.col-md-2.control-label
+        %label.col-md-2.control-label.report-col
           = _('Chart mode')
         .col-md-8
           - if chart_mode_values_allowed?
@@ -32,7 +32,7 @@
             = hidden_field_tag('chart_mode', 'counts')
       .form-group
         - if @edit[:new][:chart_mode] == 'values'
-          %label.col-md-2.control-label
+          %label.col-md-2.control-label.report-col
             = _('Data column')
           .col-md-8
             = select_tag('chart_column',
@@ -43,7 +43,7 @@
               miqInitSelectPicker();
               miqSelectPickerEvent('chart_column', '#{url}', {beforeSend: true, complete: true});
       .form-group
-        %label.col-md-2.control-label
+        %label.col-md-2.control-label.report-col
           = _('Top values to show')
         .col-md-8
           = select_tag('chosen_count',
@@ -54,7 +54,7 @@
             miqInitSelectPicker();
             miqSelectPickerEvent('chosen_count', '#{url}', {beforeSend: true, complete: true});
       .form-group
-        %label.col-md-2.control-label
+        %label.col-md-2.control-label.report-col
           = _("Sum 'Other' values")
         .col-md-8
           = check_box_tag("chosen_other", "1", @edit[:new][:graph_other],

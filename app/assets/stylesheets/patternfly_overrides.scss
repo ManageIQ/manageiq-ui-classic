@@ -723,3 +723,8 @@ table.c3-tooltip td {
 .table-summary-screen > tbody > tr:hover > td, .table-summary-screen > tbody > tr:hover > th {
   background-color: transparent;
 }
+
+/* overrides col-md-2 from patternfly (width: 16.6666666667%) */
+.report-col {
+  width: 17.6666666667%;
+}
