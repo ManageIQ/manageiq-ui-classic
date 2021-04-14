@@ -189,6 +189,7 @@ module ApplicationController::MiqRequestMethods
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
       @report_data_additional_options.with_no_checkboxes(true)
       @report_data_additional_options.in_a_form(true)
+      @report_data_additional_options.show_pagination(true)
 
       @edit[:template_kls] = get_template_kls
     end
