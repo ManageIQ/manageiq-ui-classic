@@ -29,6 +29,7 @@ export const DataTable = ({
   onItemButtonClick,
   onPerPageSelect,
   onPageSet,
+  showPagination,
 }) => {
 
   const selectAll = () => {
@@ -202,8 +203,8 @@ export const DataTable = ({
     <div className="miq-data-table">
       { isLoading && <div className="spinner spinner-lg" /> }
       { renderDataTableToolbar() }
-      { !inEditMode() && isVisible &&
-      renderPagination({
+      { (!inEditMode() || showPagination()) && isVisible
+      && renderPagination({
         pagination, total, onPerPageSelect, onPageSet,
       })
       }

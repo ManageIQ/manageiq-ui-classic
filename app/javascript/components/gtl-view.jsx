@@ -390,6 +390,7 @@ const GtlView = ({
 
   const inEditMode = () => additionalOptions.in_a_form;
   const noCheckboxes = () => additionalOptions.no_checkboxes;
+  const showPagination = () => additionalOptions.show_pagination;
 
   const onItemButtonClick = (item) => (ev) => {
     ev.stopPropagation();
@@ -399,13 +400,6 @@ const GtlView = ({
   };
 
   const onItemClick = (item, event) => {
-    // no need to set targetUrl if custom_action is set i.e. for pre prov screen
-    let targetUrl = (additionalOptions && additionalOptions.custom_action) ? undefined : showUrl;
-    // Empty showUrl disables onRowClick action. Nothing to do.
-    if (!showUrl) {
-      return false;
-    }
-
     // If custom_action is specified, send and RxJS message with actionType set
     // to custom_action value.
     if (additionalOptions && additionalOptions.custom_action) {
@@ -417,6 +411,12 @@ const GtlView = ({
           action: additionalOptions.custom_action,
         },
       });
+    }
+    // no need to set targetUrl if custom_action is set i.e. for pre prov screen
+    let targetUrl = (additionalOptions && additionalOptions.custom_action) ? undefined : showUrl;
+    // Empty showUrl disables onRowClick action. Nothing to do.
+    if (!showUrl) {
+      return false;
     }
 
     // Handling of click-through on request/tasks/jobs (navigate to VM/Host/etc...)
@@ -481,6 +481,7 @@ const GtlView = ({
           onItemClick={onItemClick}
           onSort={onSort}
           onSelectAll={onSelectAll}
+          showPagination={showPagination}
         />
       )}
     </div>
