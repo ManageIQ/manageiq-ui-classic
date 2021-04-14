@@ -35,6 +35,7 @@ describe('Notification drawer tests', () => {
       unreadCount: 2,
       isDrawerVisible: true,
       notifications,
+      isDrawerExpanded: false,
       totalNotificationsCount: 2,
       toastNotifications: [],
       maxNotifications: 100,
@@ -70,7 +71,7 @@ describe('Notification drawer tests', () => {
         <NotificationDrawer />
       </Provider>,
     );
-    wrapper.find('.drawer-pf-close').simulate('click');
+    wrapper.find('Button[iconDescription="Close"]').simulate('click');
     const expectedPayload = { type: TOGGLE_DRAWER_VISIBILITY };
     expect(store.getActions()).toEqual([expectedPayload]);
   });
@@ -82,73 +83,9 @@ describe('Notification drawer tests', () => {
         <NotificationDrawer />
       </Provider>,
     );
-    expect(wrapper.find('.drawer-pf-notifications.drawer-pf-expanded')).toHaveLength(0);
-    wrapper.find('.drawer-pf-toggle-expand').simulate('click');
-    expect(wrapper.find('.drawer-pf-notifications.drawer-pf-expanded')).toHaveLength(1);
-  });
-
-  it('should collapse events group after click on expand button', () => {
-    const store = mockStore({ ...initialState });
-    const wrapper = mount(
-      <Provider store={store}>
-        <NotificationDrawer />
-      </Provider>,
-    );
-    expect(wrapper.find('.panel-collapse')).toHaveLength(1);
-    wrapper.find('#eventsExpander').simulate('click');
-    expect(wrapper.find('.panel-collapse')).toHaveLength(0);
-  });
-
-  it('should dispatch markNotificationRead after click on Mark read dropdown item', async(done) => {
-    fetchMock.postOnce('/api/notifications/', {
-      action: 'mark_all_seen',
-      resources: [{ id: '10000000003624' }],
-    });
-    const store = mockStore({ ...initialState });
-    const wrapper = mount(
-      <Provider store={store}>
-        <NotificationDrawer />
-      </Provider>,
-    );
-    await act(async() => {
-      wrapper.find('a#dropdownMarkRead-10000000003624').simulate('click');
-    });
-    const expectedPayload = {
-      payload: '10000000003624',
-      type: MARK_NOTIFICATION_READ,
-    };
-    expect(store.getActions()).toEqual([expectedPayload]);
-    done();
-  });
-
-  it('should dispatch clearNotification after click on Remove dropdown item', async(done) => {
-    const store = mockStore({ ...initialState });
-    fetchMock.postOnce('/api/notifications/', {
-      action: 'delete',
-      resources: [{ id: '10000000003624' }],
-    });
-    const { maxNotifications } = store.getState().notificationReducer;
-    const limitFragment = !!maxNotifications ? `&limit=${maxNotifications}` : '';
-    fetchMock.getOnce(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`, resources);
-    fetchMock.getOnce('/api/notifications', {});
-    const wrapper = mount(
-      <Provider store={store}>
-        <NotificationDrawer />
-      </Provider>,
-    );
-    await act(async() => {
-      wrapper.find('a#dropdownRemove-10000000003624').simulate('click');
-    });
-    const expectedPayload = [
-      expect.objectContaining({
-        type: CLEAR_NOTIFICATION,
-      }),
-      expect.objectContaining({
-        type: INIT_NOTIFICATIONS,
-      }),
-    ];
-    expect(store.getActions()).toEqual(expectedPayload);
-    done();
+    expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(0);
+    wrapper.find('Button[iconDescription="collapsed"]').simulate('click');
+    expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(1);
   });
 
   it('should dispatch markNotificationRead after click on notification content', async(done) => {
@@ -163,18 +100,13 @@ describe('Notification drawer tests', () => {
       </Provider>,
     );
     await act(async() => {
-      wrapper.find('span.pull-left').first().simulate('click');
-      wrapper.find('span.drawer-pf-notification-message').first().simulate('click');
+      wrapper.find('Button#markAllReadBtn').first().simulate('click');
     });
     const expectedPayload = [
       {
-        payload: '10000000003625',
-        type: MARK_NOTIFICATION_READ,
+        type: '@@notifications/markAllRead',
       },
-      {
-        payload: '10000000003625',
-        type: MARK_NOTIFICATION_READ,
-      }];
+    ];
     expect(store.getActions()).toEqual(expectedPayload);
     done();
   });
@@ -192,7 +124,7 @@ describe('Notification drawer tests', () => {
         <NotificationDrawer />
       </Provider>,
     );
-    expect(wrapper.find('div#notificationLimitBar')).toHaveLength(1);
+    expect(wrapper.find('div.maxnotifications-text')).toHaveLength(1);
   });
 
   it('should dispatch toogleMaxNotifications after click on Show all', async(done) => {
@@ -205,7 +137,7 @@ describe('Notification drawer tests', () => {
       </Provider>,
     );
     await act(async() => {
-      wrapper.find('#toggleMaxNotifications').simulate('click');
+      wrapper.find('#toggleMaxNotifications').first().simulate('click');
     });
     const expectedPayload = [
       expect.objectContaining({

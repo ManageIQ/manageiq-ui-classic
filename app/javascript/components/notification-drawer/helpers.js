@@ -5,11 +5,11 @@ export const newCountText = function(count) {
 export const getNotficationStatusIconName = notification => (
   {
     info: 'info',
-    error: 'error-circle-o',
-    danger: 'error-circle-o',
-    warning: 'warning-triangle-o',
-    success: 'ok',
-    ok: 'ok',
+    error: 'error',
+    danger: 'error',
+    warning: 'warning',
+    success: 'success',
+    ok: 'success',
   }[notification.type] || '');
 
 export const viewDetails = function(notification) {
