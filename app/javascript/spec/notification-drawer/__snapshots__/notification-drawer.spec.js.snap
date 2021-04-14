@@ -17,862 +17,1031 @@ exports[`Notification drawer tests should render correctly 1`] = `
     <div
       id="miq-notifications-drawer-container"
     >
-      <NotificationDrawer
-        className=""
-        expanded={false}
-        hide={false}
+      <div
+        className="notification-drawer "
       >
         <div
-          className="drawer-pf drawer-alt-pf drawer-pf-notifications"
+          className="panel-header"
         >
-          <NotificationDrawerTitle
-            className=""
-            expandable={true}
-            onCloseClick={[Function]}
-            onExpandClick={[Function]}
-            title="Notifications"
+          <Button
+            className="collapsed heading-icon"
+            disabled={false}
+            hasIconOnly={true}
+            iconDescription="collapsed"
+            kind="primary"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            renderIcon={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            size="default"
+            tabIndex={0}
+            tooltipAlignment="center"
+            tooltipPosition="top"
+            type="button"
           >
-            <div
-              className="drawer-pf-title"
+            <button
+              className="collapsed heading-icon bx--btn bx--btn--primary bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+              disabled={false}
+              onClick={[Function]}
+              onKeyPress={[Function]}
+              tabIndex={0}
+              type="button"
             >
-              <a
-                className="drawer-pf-toggle-expand"
-                onClick={[Function]}
-              />
-              <a
-                className="drawer-pf-close"
-                onClick={[Function]}
+              <span
+                className="bx--assistive-text"
+              >
+                collapsed
+              </span>
+              <ForwardRef(ChevronLeft16)
+                aria-hidden="true"
+                aria-label="collapsed"
+                className="bx--btn__icon"
               >
                 <Icon
-                  name="close"
-                  type="fa"
+                  aria-hidden="true"
+                  aria-label="collapsed"
+                  className="bx--btn__icon"
+                  fill="currentColor"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <FontAwesome
-                    name="close"
+                  <svg
+                    aria-hidden="true"
+                    aria-label="collapsed"
+                    className="bx--btn__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <span
-                      aria-hidden={true}
-                      className="fa fa-close"
+                    <path
+                      d="M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
                     />
-                  </FontAwesome>
+                  </svg>
                 </Icon>
-              </a>
-              <h3
-                className="text-center"
-              >
-                Notifications
-              </h3>
-            </div>
-          </NotificationDrawerTitle>
-          <NotificationDrawerAccordion
-            className=""
+              </ForwardRef(ChevronLeft16)>
+            </button>
+          </Button>
+          <Button
+            className="heading-icon closeIcon"
+            description="Close"
+            disabled={false}
+            hasIconOnly={true}
+            iconDescription="Close"
+            kind="primary"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            renderIcon={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            size="default"
+            tabIndex={0}
+            tooltipAlignment="center"
+            tooltipPosition="top"
+            type="button"
           >
-            <div
-              className="panel-group"
-              id="notification-drawer-accordion"
+            <button
+              className="heading-icon closeIcon bx--btn bx--btn--primary bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+              description="Close"
+              disabled={false}
+              onClick={[Function]}
+              onKeyPress={[Function]}
+              tabIndex={0}
+              type="button"
             >
-              <NotificationDrawerPanel
-                className=""
-                expanded={true}
+              <span
+                className="bx--assistive-text"
               >
-                <div
-                  className="panel panel-default expanded"
+                Close
+              </span>
+              <ForwardRef(Close16)
+                aria-hidden="true"
+                aria-label="Close"
+                className="bx--btn__icon"
+              >
+                <Icon
+                  aria-hidden="true"
+                  aria-label="Close"
+                  className="bx--btn__icon"
+                  fill="currentColor"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <NotificationDrawerPanelHeading
-                    className=""
+                  <svg
+                    aria-hidden="true"
+                    aria-label="Close"
+                    className="bx--btn__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
                   >
+                    <path
+                      d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                    />
+                  </svg>
+                </Icon>
+              </ForwardRef(Close16)>
+            </button>
+          </Button>
+          <h3
+            className="notification-title"
+          >
+            Notifications
+          </h3>
+        </div>
+        <div
+          className="notification-content"
+        >
+          <div>
+             
+            <Accordion
+              align="start"
+              className="Notification-accordion"
+            >
+              <ul
+                className="bx--accordion Notification-accordion bx--accordion--start"
+              >
+                <AccordionItem
+                  title={
                     <div
-                      className="panel-heading"
+                      className="events-count"
                     >
-                      <NotificationDrawerPanelTitle
-                        className=""
-                      >
-                        <h4
-                          className="panel-title"
-                        >
-                          <a
-                            className=""
-                            id="eventsExpander"
-                            onClick={[Function]}
-                          >
-                            Events
-                          </a>
-                        </h4>
-                      </NotificationDrawerPanelTitle>
-                      <NotificationDrawerPanelCounter
-                        className=""
-                        text="2 New"
-                      >
-                        <span
-                          className="panel-counter"
-                        >
-                          2 New
-                        </span>
-                      </NotificationDrawerPanelCounter>
+                      <span>
+                        Events
+                      </span>
+                      <span>
+                        2 New
+                      </span>
                     </div>
-                  </NotificationDrawerPanelHeading>
-                  <NotificationDrawerPanelCollapse
-                    className=""
-                    collapseIn={false}
+                  }
+                >
+                  <li
+                    className="bx--accordion__item"
+                    onAnimationEnd={[Function]}
                   >
-                    <div
-                      className="panel-collapse"
+                    <defaultRenderExpando
+                      aria-controls="accordion-item-1"
+                      aria-expanded={false}
+                      className="bx--accordion__heading"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      type="button"
                     >
-                      <NotificationDrawerPanelBody
-                        className=""
-                        maxHeight={null}
+                      <button
+                        aria-controls="accordion-item-1"
+                        aria-expanded={false}
+                        className="bx--accordion__heading"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
+                      >
+                        <ForwardRef(ChevronRight16)
+                          className="bx--accordion__arrow"
+                        >
+                          <Icon
+                            className="bx--accordion__arrow"
+                            fill="currentColor"
+                            height={16}
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 16 16"
+                            width={16}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <svg
+                              aria-hidden={true}
+                              className="bx--accordion__arrow"
+                              fill="currentColor"
+                              focusable="false"
+                              height={16}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width={16}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                              />
+                            </svg>
+                          </Icon>
+                        </ForwardRef(ChevronRight16)>
+                        <div
+                          className="bx--accordion__title"
+                        >
+                          <div
+                            className="events-count"
+                          >
+                            <span>
+                              Events
+                            </span>
+                            <span>
+                              2 New
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </defaultRenderExpando>
+                    <div
+                      className="bx--accordion__content"
+                      id="accordion-item-1"
+                    >
+                      <div
+                        className="notification-accordion-content"
                       >
                         <div
-                          className="panel-body"
-                          style={
-                            Object {
-                              "maxHeight": null,
-                            }
-                          }
+                          className="notification-content-messages"
                         >
-                          <Notification
-                            className=""
+                          <InlineNotification
+                            className="unread"
+                            hideCloseButton={true}
+                            iconDescription="closes notification"
                             key="10000000003625"
-                            seen={false}
-                            type="notification"
-                          >
-                            <div
-                              className="drawer-pf-notification unread"
-                            >
-                              <NotificationDrawerDropDown
-                                className=""
-                                id="dropdownKebabRight 10000000003625"
-                                pullRight={true}
-                              >
-                                <ForwardRef
-                                  className="dropdown pull-right dropdown-kebab-pf"
-                                  id="dropdownKebabRight 10000000003625"
-                                >
-                                  <Uncontrolled(Dropdown)
-                                    className="dropdown pull-right dropdown-kebab-pf"
-                                    id="dropdownKebabRight 10000000003625"
-                                    innerRef={null}
-                                  >
-                                    <Dropdown
-                                      bsClass="dropdown"
-                                      className="dropdown pull-right dropdown-kebab-pf"
-                                      componentClass={[Function]}
-                                      id="dropdownKebabRight 10000000003625"
-                                      onToggle={[Function]}
-                                    >
-                                      <ButtonGroup
-                                        block={false}
-                                        bsClass="btn-group"
-                                        className="dropdown pull-right dropdown-kebab-pf dropdown"
-                                        justified={false}
-                                        vertical={false}
-                                      >
-                                        <div
-                                          className="dropdown pull-right dropdown-kebab-pf dropdown btn-group"
-                                        >
-                                          <DropdownToggle
-                                            bsClass="dropdown-toggle"
-                                            bsRole="toggle"
-                                            bsStyle="link"
-                                            id="dropdownKebabRight 10000000003625"
-                                            key=".0"
-                                            noCaret={true}
-                                            onClick={[Function]}
-                                            onKeyDown={[Function]}
-                                            open={false}
-                                            useAnchor={false}
-                                          >
-                                            <Button
-                                              active={false}
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              block={false}
-                                              bsClass="btn"
-                                              bsStyle="link"
-                                              className="dropdown-toggle"
-                                              disabled={false}
-                                              id="dropdownKebabRight 10000000003625"
-                                              onClick={[Function]}
-                                              onKeyDown={[Function]}
-                                              role="button"
-                                            >
-                                              <button
-                                                aria-expanded={false}
-                                                aria-haspopup={true}
-                                                className="dropdown-toggle btn btn-link"
-                                                disabled={false}
-                                                id="dropdownKebabRight 10000000003625"
-                                                onClick={[Function]}
-                                                onKeyDown={[Function]}
-                                                role="button"
-                                                type="button"
-                                              >
-                                                <Icon
-                                                  name="ellipsis-v"
-                                                  type="fa"
-                                                >
-                                                  <FontAwesome
-                                                    name="ellipsis-v"
-                                                  >
-                                                    <span
-                                                      aria-hidden={true}
-                                                      className="fa fa-ellipsis-v"
-                                                    />
-                                                  </FontAwesome>
-                                                </Icon>
-                                              </button>
-                                            </Button>
-                                          </DropdownToggle>
-                                          <DropdownMenu
-                                            bsClass="dropdown-menu"
-                                            bsRole="menu"
-                                            className="dropdown-menu-right"
-                                            key=".1"
-                                            labelledBy="dropdownKebabRight 10000000003625"
-                                            onClose={[Function]}
-                                            onSelect={[Function]}
-                                            pullRight={false}
-                                          >
-                                            <RootCloseWrapper
-                                              disabled={true}
-                                              event="click"
-                                              onRootClose={[Function]}
-                                            >
-                                              <ul
-                                                aria-labelledby="dropdownKebabRight 10000000003625"
-                                                className="dropdown-menu-right dropdown-menu"
-                                                role="menu"
-                                              >
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={false}
-                                                  eventKey="1"
-                                                  header={false}
-                                                  key=".0"
-                                                  onClick={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className=""
-                                                    role="presentation"
-                                                  >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                    >
-                                                      <a
-                                                        href="#"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                      >
-                                                        View details
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={true}
-                                                  header={false}
-                                                  key=".1"
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className="divider"
-                                                    onKeyDown={[Function]}
-                                                    role="separator"
-                                                  />
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={false}
-                                                  eventKey="2"
-                                                  header={false}
-                                                  id="dropdownMarkRead-10000000003625"
-                                                  key=".2"
-                                                  onClick={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className=""
-                                                    role="presentation"
-                                                  >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      id="dropdownMarkRead-10000000003625"
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                    >
-                                                      <a
-                                                        href="#"
-                                                        id="dropdownMarkRead-10000000003625"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                      >
-                                                        Mark as read
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={false}
-                                                  eventKey="3"
-                                                  header={false}
-                                                  id="dropdownRemove-10000000003625"
-                                                  key=".3"
-                                                  onClick={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className=""
-                                                    role="presentation"
-                                                  >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      id="dropdownRemove-10000000003625"
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                    >
-                                                      <a
-                                                        href="#"
-                                                        id="dropdownRemove-10000000003625"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                      >
-                                                        Remove
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                              </ul>
-                                            </RootCloseWrapper>
-                                          </DropdownMenu>
-                                        </div>
-                                      </ButtonGroup>
-                                    </Dropdown>
-                                  </Uncontrolled(Dropdown)>
-                                </ForwardRef>
-                              </NotificationDrawerDropDown>
-                              <Icon
-                                className="pull-left"
-                                name="error-circle-o"
-                                onClick={[Function]}
-                                type="pf"
-                              >
-                                <PatternflyIcon
-                                  className="pull-left"
-                                  name="error-circle-o"
-                                  onClick={[Function]}
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className="pficon pficon-error-circle-o pull-left"
-                                    onClick={[Function]}
-                                  />
-                                </PatternflyIcon>
-                              </Icon>
-                              <NotificationContent
-                                className=""
+                            kind="error"
+                            lowContrast={true}
+                            notificationType="inline"
+                            onCloseButtonClick={[Function]}
+                            role="alert"
+                            statusIconDescription="error"
+                            subtitle={
+                              <div
+                                className="subtitle-div"
                               >
                                 <div
-                                  className="drawer-pf-notification-content"
+                                  className="subtitle-div-notification-menu"
                                 >
-                                  <NotificationMessage
-                                    className=""
-                                    onClick={[Function]}
-                                    title="Plan has completed with errors"
+                                  <ForwardRef(OverflowMenu)
+                                    ariaLabel="open and close options"
+                                    flipped={true}
+                                    floatingmenu="true"
+                                    id="10000000003625"
+                                    title="open and close options"
                                   >
-                                    <span
-                                      className="drawer-pf-notification-message"
+                                    <OverflowMenuItem
+                                      aria-label="View details"
+                                      className="overflow-options details-10000000003625"
+                                      disabled={false}
+                                      hasDivider={false}
+                                      isDelete={false}
+                                      itemText="View details"
                                       onClick={[Function]}
-                                      title="Plan has completed with errors"
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                    <OverflowMenuItem
+                                      aria-label="Mark as read"
+                                      className="overflow-options markasread-10000000003625"
+                                      disabled={false}
+                                      hasDivider={true}
+                                      isDelete={false}
+                                      itemText="Mark as read"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                    <OverflowMenuItem
+                                      aria-label="Remove"
+                                      className="overflow-options remove-10000000003625"
+                                      disabled={false}
+                                      hasDivider={false}
+                                      isDelete={true}
+                                      itemText="Remove"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                  </ForwardRef(OverflowMenu)>
+                                </div>
+                                <div
+                                  className="subtitle-div-notification-time"
+                                >
+                                  <span
+                                    className="notification-time"
+                                  >
+                                    Invalid date
+                                     
+                                    |
+                                     
+                                    Invalid date
+                                  </span>
+                                </div>
+                              </div>
+                            }
+                            title="Plan has completed with errors"
+                          >
+                            <div
+                              className="unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--error bx--inline-notification--hide-close-button"
+                              kind="error"
+                              role="alert"
+                            >
+                              <div
+                                className="bx--inline-notification__details"
+                              >
+                                <NotificationIcon
+                                  iconDescription="error"
+                                  kind="error"
+                                  notificationType="inline"
+                                >
+                                  <ForwardRef(ErrorFilled20)
+                                    className="bx--inline-notification__icon"
+                                  >
+                                    <Icon
+                                      className="bx--inline-notification__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 20 20"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--inline-notification__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 20 20"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                                        />
+                                        <path
+                                          d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                                          data-icon-path="inner-path"
+                                          opacity="0"
+                                        />
+                                        <title>
+                                          error
+                                        </title>
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ErrorFilled20)>
+                                </NotificationIcon>
+                                <NotificationTextDetails
+                                  caption="caption"
+                                  notificationType="inline"
+                                  subtitle={
+                                    <div
+                                      className="subtitle-div"
+                                    >
+                                      <div
+                                        className="subtitle-div-notification-menu"
+                                      >
+                                        <ForwardRef(OverflowMenu)
+                                          ariaLabel="open and close options"
+                                          flipped={true}
+                                          floatingmenu="true"
+                                          id="10000000003625"
+                                          title="open and close options"
+                                        >
+                                          <OverflowMenuItem
+                                            aria-label="View details"
+                                            className="overflow-options details-10000000003625"
+                                            disabled={false}
+                                            hasDivider={false}
+                                            isDelete={false}
+                                            itemText="View details"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                          <OverflowMenuItem
+                                            aria-label="Mark as read"
+                                            className="overflow-options markasread-10000000003625"
+                                            disabled={false}
+                                            hasDivider={true}
+                                            isDelete={false}
+                                            itemText="Mark as read"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                          <OverflowMenuItem
+                                            aria-label="Remove"
+                                            className="overflow-options remove-10000000003625"
+                                            disabled={false}
+                                            hasDivider={false}
+                                            isDelete={true}
+                                            itemText="Remove"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                        </ForwardRef(OverflowMenu)>
+                                      </div>
+                                      <div
+                                        className="subtitle-div-notification-time"
+                                      >
+                                        <span
+                                          className="notification-time"
+                                        >
+                                          Invalid date
+                                           
+                                          |
+                                           
+                                          Invalid date
+                                        </span>
+                                      </div>
+                                    </div>
+                                  }
+                                  title="Plan has completed with errors"
+                                >
+                                  <div
+                                    className="bx--inline-notification__text-wrapper"
+                                  >
+                                    <p
+                                      className="bx--inline-notification__title"
                                     >
                                       Plan has completed with errors
-                                    </span>
-                                  </NotificationMessage>
-                                  <NotificationInfo
-                                    className=""
-                                    leftText="Invalid date"
-                                    rightText="Invalid date"
-                                  >
+                                    </p>
                                     <div
-                                      className="drawer-pf-notification-info"
+                                      className="bx--inline-notification__subtitle"
                                     >
-                                      <NotificationInfoLeft
-                                        text="Invalid date"
-                                      >
-                                        <span
-                                          className="date"
-                                        >
-                                          Invalid date
-                                        </span>
-                                      </NotificationInfoLeft>
-                                      <NotificationInfoRight
-                                        text="Invalid date"
-                                      >
-                                        <span
-                                          className="time"
-                                        >
-                                          Invalid date
-                                        </span>
-                                      </NotificationInfoRight>
-                                    </div>
-                                  </NotificationInfo>
-                                </div>
-                              </NotificationContent>
-                            </div>
-                          </Notification>
-                          <Notification
-                            className=""
-                            key="10000000003624"
-                            seen={false}
-                            type="notification"
-                          >
-                            <div
-                              className="drawer-pf-notification unread"
-                            >
-                              <NotificationDrawerDropDown
-                                className=""
-                                id="dropdownKebabRight 10000000003624"
-                                pullRight={true}
-                              >
-                                <ForwardRef
-                                  className="dropdown pull-right dropdown-kebab-pf"
-                                  id="dropdownKebabRight 10000000003624"
-                                >
-                                  <Uncontrolled(Dropdown)
-                                    className="dropdown pull-right dropdown-kebab-pf"
-                                    id="dropdownKebabRight 10000000003624"
-                                    innerRef={null}
-                                  >
-                                    <Dropdown
-                                      bsClass="dropdown"
-                                      className="dropdown pull-right dropdown-kebab-pf"
-                                      componentClass={[Function]}
-                                      id="dropdownKebabRight 10000000003624"
-                                      onToggle={[Function]}
-                                    >
-                                      <ButtonGroup
-                                        block={false}
-                                        bsClass="btn-group"
-                                        className="dropdown pull-right dropdown-kebab-pf dropdown"
-                                        justified={false}
-                                        vertical={false}
+                                      <div
+                                        className="subtitle-div"
                                       >
                                         <div
-                                          className="dropdown pull-right dropdown-kebab-pf dropdown btn-group"
+                                          className="subtitle-div-notification-menu"
                                         >
-                                          <DropdownToggle
-                                            bsClass="dropdown-toggle"
-                                            bsRole="toggle"
-                                            bsStyle="link"
-                                            id="dropdownKebabRight 10000000003624"
-                                            key=".0"
-                                            noCaret={true}
-                                            onClick={[Function]}
-                                            onKeyDown={[Function]}
-                                            open={false}
-                                            useAnchor={false}
+                                          <ForwardRef(OverflowMenu)
+                                            ariaLabel="open and close options"
+                                            flipped={true}
+                                            floatingmenu="true"
+                                            id="10000000003625"
+                                            title="open and close options"
                                           >
-                                            <Button
-                                              active={false}
-                                              aria-expanded={false}
-                                              aria-haspopup={true}
-                                              block={false}
-                                              bsClass="btn"
-                                              bsStyle="link"
-                                              className="dropdown-toggle"
-                                              disabled={false}
-                                              id="dropdownKebabRight 10000000003624"
+                                            <OverflowMenu
+                                              ariaLabel="open and close options"
+                                              direction="bottom"
+                                              flipped={true}
+                                              floatingmenu="true"
+                                              iconDescription="open and close list of options"
+                                              id="10000000003625"
+                                              innerRef={null}
+                                              light={false}
+                                              menuOffset={[Function]}
+                                              menuOffsetFlip={[Function]}
                                               onClick={[Function]}
+                                              onClose={[Function]}
                                               onKeyDown={[Function]}
-                                              role="button"
+                                              onOpen={[Function]}
+                                              open={false}
+                                              renderIcon={
+                                                Object {
+                                                  "$$typeof": Symbol(react.forward_ref),
+                                                  "render": [Function],
+                                                }
+                                              }
+                                              selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+                                              title="open and close options"
                                             >
-                                              <button
-                                                aria-expanded={false}
-                                                aria-haspopup={true}
-                                                className="dropdown-toggle btn btn-link"
-                                                disabled={false}
-                                                id="dropdownKebabRight 10000000003624"
-                                                onClick={[Function]}
-                                                onKeyDown={[Function]}
-                                                role="button"
-                                                type="button"
+                                              <ClickListener
+                                                onClickOutside={[Function]}
                                               >
-                                                <Icon
-                                                  name="ellipsis-v"
-                                                  type="fa"
-                                                >
-                                                  <FontAwesome
-                                                    name="ellipsis-v"
-                                                  >
-                                                    <span
-                                                      aria-hidden={true}
-                                                      className="fa fa-ellipsis-v"
-                                                    />
-                                                  </FontAwesome>
-                                                </Icon>
-                                              </button>
-                                            </Button>
-                                          </DropdownToggle>
-                                          <DropdownMenu
-                                            bsClass="dropdown-menu"
-                                            bsRole="menu"
-                                            className="dropdown-menu-right"
-                                            key=".1"
-                                            labelledBy="dropdownKebabRight 10000000003624"
-                                            onClose={[Function]}
-                                            onSelect={[Function]}
-                                            pullRight={false}
-                                          >
-                                            <RootCloseWrapper
-                                              disabled={true}
-                                              event="click"
-                                              onRootClose={[Function]}
-                                            >
-                                              <ul
-                                                aria-labelledby="dropdownKebabRight 10000000003624"
-                                                className="dropdown-menu-right dropdown-menu"
-                                                role="menu"
-                                              >
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={true}
-                                                  divider={false}
-                                                  eventKey="1"
-                                                  header={false}
-                                                  key=".0"
+                                                <button
+                                                  aria-expanded={false}
+                                                  aria-haspopup={true}
+                                                  aria-label="open and close options"
+                                                  className="bx--overflow-menu"
+                                                  floatingmenu="true"
+                                                  id="10000000003625"
                                                   onClick={[Function]}
+                                                  onClose={[Function]}
                                                   onKeyDown={[Function]}
-                                                  onSelect={[Function]}
+                                                  open={false}
+                                                  title="open and close options"
+                                                  type="button"
                                                 >
-                                                  <li
-                                                    className="disabled"
-                                                    role="presentation"
-                                                  >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                    >
-                                                      <a
-                                                        href="#"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                      >
-                                                        View details
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={true}
-                                                  header={false}
-                                                  key=".1"
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className="divider"
+                                                  <ForwardRef(OverflowMenuVertical16)
+                                                    aria-label="open and close list of options"
+                                                    className="bx--overflow-menu__icon"
+                                                    onClick={[Function]}
                                                     onKeyDown={[Function]}
-                                                    role="separator"
-                                                  />
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={false}
-                                                  eventKey="2"
-                                                  header={false}
-                                                  id="dropdownMarkRead-10000000003624"
-                                                  key=".2"
-                                                  onClick={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className=""
-                                                    role="presentation"
                                                   >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      id="dropdownMarkRead-10000000003624"
+                                                    <Icon
+                                                      aria-label="open and close list of options"
+                                                      className="bx--overflow-menu__icon"
+                                                      fill="currentColor"
+                                                      height={16}
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
+                                                      preserveAspectRatio="xMidYMid meet"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
                                                     >
-                                                      <a
-                                                        href="#"
-                                                        id="dropdownMarkRead-10000000003624"
+                                                      <svg
+                                                        aria-label="open and close list of options"
+                                                        className="bx--overflow-menu__icon"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
                                                         onClick={[Function]}
                                                         onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
                                                       >
-                                                        Mark as read
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                                <MenuItem
-                                                  bsClass="dropdown"
-                                                  disabled={false}
-                                                  divider={false}
-                                                  eventKey="3"
-                                                  header={false}
-                                                  id="dropdownRemove-10000000003624"
-                                                  key=".3"
-                                                  onClick={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  onSelect={[Function]}
-                                                >
-                                                  <li
-                                                    className=""
-                                                    role="presentation"
-                                                  >
-                                                    <SafeAnchor
-                                                      componentClass="a"
-                                                      id="dropdownRemove-10000000003624"
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      role="menuitem"
-                                                      tabIndex="-1"
-                                                    >
-                                                      <a
-                                                        href="#"
-                                                        id="dropdownRemove-10000000003624"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                      >
-                                                        Remove
-                                                      </a>
-                                                    </SafeAnchor>
-                                                  </li>
-                                                </MenuItem>
-                                              </ul>
-                                            </RootCloseWrapper>
-                                          </DropdownMenu>
+                                                        <circle
+                                                          cx="16"
+                                                          cy="8"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="16"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="24"
+                                                          r="2"
+                                                        />
+                                                        <title>
+                                                          open and close list of options
+                                                        </title>
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(OverflowMenuVertical16)>
+                                                </button>
+                                              </ClickListener>
+                                            </OverflowMenu>
+                                          </ForwardRef(OverflowMenu)>
                                         </div>
-                                      </ButtonGroup>
-                                    </Dropdown>
-                                  </Uncontrolled(Dropdown)>
-                                </ForwardRef>
-                              </NotificationDrawerDropDown>
-                              <Icon
-                                className="pull-left"
-                                name="ok"
-                                onClick={[Function]}
-                                type="pf"
+                                        <div
+                                          className="subtitle-div-notification-time"
+                                        >
+                                          <span
+                                            className="notification-time"
+                                          >
+                                            Invalid date
+                                             
+                                            |
+                                             
+                                            Invalid date
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </NotificationTextDetails>
+                              </div>
+                            </div>
+                          </InlineNotification>
+                          <InlineNotification
+                            className="unread"
+                            hideCloseButton={true}
+                            iconDescription="closes notification"
+                            key="10000000003624"
+                            kind="success"
+                            lowContrast={true}
+                            notificationType="inline"
+                            onCloseButtonClick={[Function]}
+                            role="alert"
+                            statusIconDescription="success"
+                            subtitle={
+                              <div
+                                className="subtitle-div"
                               >
-                                <PatternflyIcon
-                                  className="pull-left"
-                                  name="ok"
-                                  onClick={[Function]}
+                                <div
+                                  className="subtitle-div-notification-menu"
+                                >
+                                  <ForwardRef(OverflowMenu)
+                                    ariaLabel="open and close options"
+                                    flipped={true}
+                                    floatingmenu="true"
+                                    id="10000000003624"
+                                    title="open and close options"
+                                  >
+                                    <OverflowMenuItem
+                                      aria-label="View details"
+                                      className="overflow-options details-10000000003624"
+                                      disabled={true}
+                                      hasDivider={false}
+                                      isDelete={false}
+                                      itemText="View details"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                    <OverflowMenuItem
+                                      aria-label="Mark as read"
+                                      className="overflow-options markasread-10000000003624"
+                                      disabled={false}
+                                      hasDivider={true}
+                                      isDelete={false}
+                                      itemText="Mark as read"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                    <OverflowMenuItem
+                                      aria-label="Remove"
+                                      className="overflow-options remove-10000000003624"
+                                      disabled={false}
+                                      hasDivider={false}
+                                      isDelete={true}
+                                      itemText="Remove"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      requireTitle={true}
+                                    />
+                                  </ForwardRef(OverflowMenu)>
+                                </div>
+                                <div
+                                  className="subtitle-div-notification-time"
                                 >
                                   <span
-                                    aria-hidden="true"
-                                    className="pficon pficon-ok pull-left"
-                                    onClick={[Function]}
-                                  />
-                                </PatternflyIcon>
-                              </Icon>
-                              <NotificationContent
-                                className=""
-                              >
-                                <div
-                                  className="drawer-pf-notification-content"
-                                >
-                                  <NotificationMessage
-                                    className=""
-                                    onClick={[Function]}
-                                    title="Plan has completed successfully"
+                                    className="notification-time"
                                   >
-                                    <span
-                                      className="drawer-pf-notification-message"
-                                      onClick={[Function]}
-                                      title="Plan has completed successfully"
+                                    Invalid date
+                                     
+                                    |
+                                     
+                                    Invalid date
+                                  </span>
+                                </div>
+                              </div>
+                            }
+                            title="Plan has completed successfully"
+                          >
+                            <div
+                              className="unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--success bx--inline-notification--hide-close-button"
+                              kind="success"
+                              role="alert"
+                            >
+                              <div
+                                className="bx--inline-notification__details"
+                              >
+                                <NotificationIcon
+                                  iconDescription="success"
+                                  kind="success"
+                                  notificationType="inline"
+                                >
+                                  <ForwardRef(CheckmarkFilled20)
+                                    className="bx--inline-notification__icon"
+                                  >
+                                    <Icon
+                                      className="bx--inline-notification__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 20 20"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--inline-notification__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 20 20"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M10,1c-4.9,0-9,4.1-9,9s4.1,9,9,9s9-4,9-9S15,1,10,1z M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                                        />
+                                        <path
+                                          d="M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                                          data-icon-path="inner-path"
+                                          fill="none"
+                                          opacity="0"
+                                        />
+                                        <title>
+                                          success
+                                        </title>
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(CheckmarkFilled20)>
+                                </NotificationIcon>
+                                <NotificationTextDetails
+                                  caption="caption"
+                                  notificationType="inline"
+                                  subtitle={
+                                    <div
+                                      className="subtitle-div"
+                                    >
+                                      <div
+                                        className="subtitle-div-notification-menu"
+                                      >
+                                        <ForwardRef(OverflowMenu)
+                                          ariaLabel="open and close options"
+                                          flipped={true}
+                                          floatingmenu="true"
+                                          id="10000000003624"
+                                          title="open and close options"
+                                        >
+                                          <OverflowMenuItem
+                                            aria-label="View details"
+                                            className="overflow-options details-10000000003624"
+                                            disabled={true}
+                                            hasDivider={false}
+                                            isDelete={false}
+                                            itemText="View details"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                          <OverflowMenuItem
+                                            aria-label="Mark as read"
+                                            className="overflow-options markasread-10000000003624"
+                                            disabled={false}
+                                            hasDivider={true}
+                                            isDelete={false}
+                                            itemText="Mark as read"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                          <OverflowMenuItem
+                                            aria-label="Remove"
+                                            className="overflow-options remove-10000000003624"
+                                            disabled={false}
+                                            hasDivider={false}
+                                            isDelete={true}
+                                            itemText="Remove"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            requireTitle={true}
+                                          />
+                                        </ForwardRef(OverflowMenu)>
+                                      </div>
+                                      <div
+                                        className="subtitle-div-notification-time"
+                                      >
+                                        <span
+                                          className="notification-time"
+                                        >
+                                          Invalid date
+                                           
+                                          |
+                                           
+                                          Invalid date
+                                        </span>
+                                      </div>
+                                    </div>
+                                  }
+                                  title="Plan has completed successfully"
+                                >
+                                  <div
+                                    className="bx--inline-notification__text-wrapper"
+                                  >
+                                    <p
+                                      className="bx--inline-notification__title"
                                     >
                                       Plan has completed successfully
-                                    </span>
-                                  </NotificationMessage>
-                                  <NotificationInfo
-                                    className=""
-                                    leftText="Invalid date"
-                                    rightText="Invalid date"
-                                  >
+                                    </p>
                                     <div
-                                      className="drawer-pf-notification-info"
+                                      className="bx--inline-notification__subtitle"
                                     >
-                                      <NotificationInfoLeft
-                                        text="Invalid date"
+                                      <div
+                                        className="subtitle-div"
                                       >
-                                        <span
-                                          className="date"
+                                        <div
+                                          className="subtitle-div-notification-menu"
                                         >
-                                          Invalid date
-                                        </span>
-                                      </NotificationInfoLeft>
-                                      <NotificationInfoRight
-                                        text="Invalid date"
-                                      >
-                                        <span
-                                          className="time"
+                                          <ForwardRef(OverflowMenu)
+                                            ariaLabel="open and close options"
+                                            flipped={true}
+                                            floatingmenu="true"
+                                            id="10000000003624"
+                                            title="open and close options"
+                                          >
+                                            <OverflowMenu
+                                              ariaLabel="open and close options"
+                                              direction="bottom"
+                                              flipped={true}
+                                              floatingmenu="true"
+                                              iconDescription="open and close list of options"
+                                              id="10000000003624"
+                                              innerRef={null}
+                                              light={false}
+                                              menuOffset={[Function]}
+                                              menuOffsetFlip={[Function]}
+                                              onClick={[Function]}
+                                              onClose={[Function]}
+                                              onKeyDown={[Function]}
+                                              onOpen={[Function]}
+                                              open={false}
+                                              renderIcon={
+                                                Object {
+                                                  "$$typeof": Symbol(react.forward_ref),
+                                                  "render": [Function],
+                                                }
+                                              }
+                                              selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+                                              title="open and close options"
+                                            >
+                                              <ClickListener
+                                                onClickOutside={[Function]}
+                                              >
+                                                <button
+                                                  aria-expanded={false}
+                                                  aria-haspopup={true}
+                                                  aria-label="open and close options"
+                                                  className="bx--overflow-menu"
+                                                  floatingmenu="true"
+                                                  id="10000000003624"
+                                                  onClick={[Function]}
+                                                  onClose={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  open={false}
+                                                  title="open and close options"
+                                                  type="button"
+                                                >
+                                                  <ForwardRef(OverflowMenuVertical16)
+                                                    aria-label="open and close list of options"
+                                                    className="bx--overflow-menu__icon"
+                                                    onClick={[Function]}
+                                                    onKeyDown={[Function]}
+                                                  >
+                                                    <Icon
+                                                      aria-label="open and close list of options"
+                                                      className="bx--overflow-menu__icon"
+                                                      fill="currentColor"
+                                                      height={16}
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      preserveAspectRatio="xMidYMid meet"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <svg
+                                                        aria-label="open and close list of options"
+                                                        className="bx--overflow-menu__icon"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <circle
+                                                          cx="16"
+                                                          cy="8"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="16"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="24"
+                                                          r="2"
+                                                        />
+                                                        <title>
+                                                          open and close list of options
+                                                        </title>
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(OverflowMenuVertical16)>
+                                                </button>
+                                              </ClickListener>
+                                            </OverflowMenu>
+                                          </ForwardRef(OverflowMenu)>
+                                        </div>
+                                        <div
+                                          className="subtitle-div-notification-time"
                                         >
-                                          Invalid date
-                                        </span>
-                                      </NotificationInfoRight>
+                                          <span
+                                            className="notification-time"
+                                          >
+                                            Invalid date
+                                             
+                                            |
+                                             
+                                            Invalid date
+                                          </span>
+                                        </div>
+                                      </div>
                                     </div>
-                                  </NotificationInfo>
-                                </div>
-                              </NotificationContent>
+                                  </div>
+                                </NotificationTextDetails>
+                              </div>
                             </div>
-                          </Notification>
-                          <Notification
-                            className="text-center"
-                            id="notificationLimitBar"
-                            key="notificationLimit"
-                            seen={true}
-                            type="notification"
+                          </InlineNotification>
+                          <div
+                            className="maxnotifications-text"
                           >
-                            <div
-                              className="drawer-pf-notification text-center"
-                              id="notificationLimitBar"
+                            <span>
+                              Showing 100 items out of 2 total.
+                            </span>
+                            <Button
+                              disabled={false}
+                              id="toggleMaxNotifications"
+                              kind="ghost"
+                              onClick={[Function]}
+                              size="default"
+                              tabIndex={0}
+                              tooltipAlignment="center"
+                              tooltipPosition="top"
+                              type="button"
                             >
-                              <NotificationContent
-                                className=""
+                              <button
+                                className="bx--btn bx--btn--ghost"
+                                disabled={false}
+                                id="toggleMaxNotifications"
+                                onClick={[Function]}
+                                tabIndex={0}
+                                type="button"
                               >
-                                <div
-                                  className="drawer-pf-notification-content"
-                                >
-                                  <NotificationMessage
-                                    className=""
-                                    title="title"
-                                  >
-                                    <span
-                                      className="drawer-pf-notification-message"
-                                      title="title"
-                                    >
-                                      Showing 100 items out of 2 total.
-                                    </span>
-                                  </NotificationMessage>
-                                  <a
-                                    className="btn btn-link"
-                                    id="toggleMaxNotifications"
-                                    onClick={[Function]}
-                                  >
-                                    Show all (may take a while)
-                                  </a>
-                                </div>
-                              </NotificationContent>
-                            </div>
-                          </Notification>
+                                Show all (may take a while)
+                              </button>
+                            </Button>
+                          </div>
                         </div>
-                      </NotificationDrawerPanelBody>
-                      <NotificationDrawerPanelAction
-                        className=""
-                      >
                         <div
-                          className="drawer-pf-action"
+                          className="notification-footer"
                         >
-                          <NotificationDrawerPanelActionLink
-                            className="footer-button-left"
-                            data-toggle="mark-all-read"
+                          <Button
+                            disabled={false}
+                            id="markAllReadBtn"
+                            kind="ghost"
+                            onClick={[Function]}
+                            size="default"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
                           >
-                            <div
-                              className="drawer-pf-action-link footer-button-left"
-                              data-toggle="mark-all-read"
+                            <button
+                              className="bx--btn bx--btn--ghost"
+                              disabled={false}
+                              id="markAllReadBtn"
+                              onClick={[Function]}
+                              tabIndex={0}
+                              type="button"
                             >
-                              <Button
-                                active={false}
-                                block={false}
-                                bsClass="btn"
-                                bsStyle="link"
-                                disabled={false}
-                                id="markAllReadBtn"
-                                onClick={[Function]}
-                              >
-                                <button
-                                  className="btn btn-link"
-                                  disabled={false}
-                                  id="markAllReadBtn"
-                                  onClick={[Function]}
-                                  type="button"
-                                >
-                                  Mark All Read
-                                </button>
-                              </Button>
-                            </div>
-                          </NotificationDrawerPanelActionLink>
-                          <NotificationDrawerPanelActionLink
-                            className="footer-button-right"
-                            data-toggle="clear-all"
+                              Mark All Read
+                            </button>
+                          </Button>
+                          <Button
+                            disabled={false}
+                            id="clearAllBtn"
+                            kind="ghost"
+                            onClick={[Function]}
+                            size="default"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
                           >
-                            <div
-                              className="drawer-pf-action-link footer-button-right"
-                              data-toggle="clear-all"
+                            <button
+                              className="bx--btn bx--btn--ghost"
+                              disabled={false}
+                              id="clearAllBtn"
+                              onClick={[Function]}
+                              tabIndex={0}
+                              type="button"
                             >
-                              <Button
-                                active={false}
-                                block={false}
-                                bsClass="btn"
-                                bsStyle="link"
-                                disabled={false}
-                                id="clearAllBtn"
-                                onClick={[Function]}
-                              >
-                                <button
-                                  className="btn btn-link"
-                                  disabled={false}
-                                  id="clearAllBtn"
-                                  onClick={[Function]}
-                                  type="button"
-                                >
-                                  Clear All
-                                </button>
-                              </Button>
-                            </div>
-                          </NotificationDrawerPanelActionLink>
+                              Clear All
+                            </button>
+                          </Button>
                         </div>
-                      </NotificationDrawerPanelAction>
+                      </div>
                     </div>
-                  </NotificationDrawerPanelCollapse>
-                </div>
-              </NotificationDrawerPanel>
-            </div>
-          </NotificationDrawerAccordion>
+                  </li>
+                </AccordionItem>
+              </ul>
+            </Accordion>
+          </div>
         </div>
-      </NotificationDrawer>
+      </div>
     </div>
   </NotificationDrawer>
 </Provider>

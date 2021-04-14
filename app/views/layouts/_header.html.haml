@@ -14,7 +14,6 @@
                           :menu => menu_to_json,
                           :miqGroups => groups}, :id => 'main-menu')
 
-= react('NotificationDrawer')
 = react('ToastList')
 = react('MiqAboutModal', {:dialogClassName => ::Settings.server.custom_login_logo ? 'whitelabel' : ''})
 
