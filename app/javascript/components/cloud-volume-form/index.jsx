@@ -31,7 +31,7 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   const onSubmit = ({ edit: _edit, ...values }) => {
     miqSparkleOn();
 
-    const request = recordId ? API.patch(`/api/cloud_volumes`, values) : API.post('/api/cloud_volumes', values);
+    const request = recordId ? API.patch(`/api/cloud_volumes/${recordId}`, values) : API.post('/api/cloud_volumes', values);
     request.then(() => {
       const message = sprintf(
         recordId
