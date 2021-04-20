@@ -290,8 +290,7 @@ class CloudVolumeController < ApplicationController
 
     when "save"
       options = form_params
-      validate_results = @volume.validate_update_volume
-      if validate_results[:available]
+      if @volume.supports?(:update)
         task_id = @volume.update_volume_queue(session[:userid], options)
 
         if task_id.kind_of?(Integer)
@@ -301,17 +300,16 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(_(@volume.unsupported_reason(:update)), :error) unless validate_results[:message].nil?
         javascript_flash
       end
 
     when "validate"
       @in_a_form = true
-      validate_results = @volume.validate_update_volume
-      if validate_results[:available]
+      if @volume.supports?(:update)
         add_flash(_("Validation successful"))
       else
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(_(@volume.unsupported_reason(:update)), :error)
       end
     end
   end
