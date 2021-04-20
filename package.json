@@ -35,7 +35,7 @@
     "@carbon/charts-react": "~0.41.38",
     "@carbon/icons-react": "~10.26.0",
     "@carbon/themes": "~10.28.0",
-    "@data-driven-forms/carbon-component-mapper": "~2.24.0",
+    "@data-driven-forms/carbon-component-mapper": "~2.24.3",
     "@data-driven-forms/pf3-component-mapper": "~2.20.3",
     "@data-driven-forms/react-form-renderer": "~2.24.1",
     "@manageiq/ui-components": "1.4.4",
