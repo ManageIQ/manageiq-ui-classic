@@ -101,24 +101,38 @@ describe DashboardController do
         expect(controller).to receive(:render).with(:update).and_yield(page)
         controller.send("initiate_#{protocol}_login")
       end
-    end
 
-    %i(saml oidc).each do |protocol|
       it "#{protocol.upcase} protected page should redirect to #{protocol}_logout without a valid user" do
         get "#{protocol}_login".to_sym
         expect(response).to redirect_to(:action => "logout")
       end
-    end
 
-    %i(saml oidc).each do |protocol|
       it "#{protocol.upcase} protected page should render the #{protocol}_login page with the proper validation_url and api token" do
         user           = FactoryBot.create(:user, :userid => "johndoe", :role => "test")
         validation_url = "/user_validation_url"
 
-        request.env["HTTP_X_REMOTE_USER"] = user.userid
+        request.env["HTTP_X_REMOTE_USER"] = user.userid.dup.force_encoding("ASCII-8BIT")
         skip_data_checks(validation_url)
 
-        allow(User).to receive(:authenticate).and_return(user)
+        expect(User).to receive(:authenticate).and_return(user)
+
+        expect(controller).to receive(:render)
+          .with(:template => "dashboard/#{protocol}_login",
+                :layout   => false,
+                :locals   => {:validation_url => validation_url})
+          .exactly(1).times
+
+        controller.send("#{protocol}_login")
+      end
+
+      it "#{protocol.upcase} protected page should render the #{protocol}_login page with the proper validation_url and api token when the user has Unicode characters" do
+        user           = FactoryBot.create(:user, :userid => "häåğēn.däzş", :role => "test")
+        validation_url = "/user_validation_url"
+
+        request.env["HTTP_X_REMOTE_USER"] = user.userid.dup.force_encoding("ASCII-8BIT")
+        skip_data_checks(validation_url)
+
+        expect(User).to receive(:authenticate).and_return(user)
 
         expect(controller).to receive(:render)
           .with(:template => "dashboard/#{protocol}_login",
@@ -451,9 +465,16 @@ describe DashboardController do
   describe '#authenticate_external_user' do
     it 'sets the user name based on the header' do
       allow(controller).to receive(:authenticate)
-      request.headers['X-Remote-User'] = 'foo@bar'
+      request.headers['X-Remote-User'] = 'foo@bar'.force_encoding("ASCII-8BIT")
       controller.send(:authenticate_external_user)
       expect(assigns(:user_name)).to eq('foo')
+    end
+
+    it 'sets the user name based on the header when the user has Unicode characters' do
+      allow(controller).to receive(:authenticate)
+      request.headers['X-Remote-User'] = 'häåğēn.däzş'.force_encoding("ASCII-8BIT")
+      controller.send(:authenticate_external_user)
+      expect(assigns(:user_name)).to eq('häåğēn.däzş')
     end
   end
 
