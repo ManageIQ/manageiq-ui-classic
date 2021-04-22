@@ -641,7 +641,8 @@ class DashboardController < ApplicationController
 
   def authenticate_external_user
     if @user_name.blank? && request.headers["X-Remote-User"].present?
-      @user_name = params[:user_name] = request.headers["X-Remote-User"].split("@").first
+      user_header = request.headers["X-Remote-User"].force_encoding("UTF-8")
+      @user_name = params[:user_name] = user_header.split("@").first
     end
 
     authenticate
@@ -689,8 +690,9 @@ class DashboardController < ApplicationController
   end
 
   def identity_provider_login(identity_type)
-    if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
-      @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
+    if @user_name.blank? && request.env["HTTP_X_REMOTE_USER"].present?
+      user_env = request.env["HTTP_X_REMOTE_USER"].force_encoding("UTF-8")
+      @user_name = params[:user_name] = user_env.split("@").first
     else
       redirect_to(:action => 'logout')
       return
