@@ -15,19 +15,38 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :send_checked => true,
                        :confirm      => N_("Refresh relationships and power states for all items related to the selected Object Storage Managers?"),
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                      separator,
                      button(
-                       :ems_object_storage_delete,
-                       'pficon pficon-delete fa-lg',
-                       N_('Remove selected Object Storage Managers from Inventory'),
-                       N_('Remove Object Storage Managers from Inventory'),
-                       :url_parms    => "main_div",
-                       :send_checked => true,
-                       :confirm      => N_("Warning: The selected Object Storage Managers and ALL of their components will be permanently removed!"),
-                       :enabled      => false,
-                       :onwhen       => "1+"),
-                   ]
+                        :ems_object_storage_new,
+                        'pficon pficon-add-circle-o fa-lg',
+                        t = N_('Add a New Object Storage Manager'),
+                        t,
+                        :url => "/new"
+                      ),
+                      button(
+                        :ems_object_storage_edit,
+                        'pficon pficon-edit fa-lg',
+                        N_('Select a single Storage Manager to edit'),
+                        N_('Edit Selected Storage Manager'),
+                        :url_parms    => "main_div",
+                        :send_checked => true,
+                        :enabled      => false,
+                        :onwhen       => "1"
+                      ),
+                      button(
+                        :ems_object_storage_delete,
+                        'pficon pficon-delete fa-lg',
+                        N_('Remove selected Object Storage Managers from Inventory'),
+                        N_('Remove Object Storage Managers from Inventory'),
+                        :url_parms    => "main_div",
+                        :send_checked => true,
+                        :confirm      => N_("Warning: The selected Block Storage Managers and ALL of their components will be permanently removed!"),
+                        :enabled      => false,
+                        :onwhen       => "1+"
+                      ),
+                    ]
                  ),
                ])
   button_group('ems_storage_policy', [
@@ -47,7 +66,8 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :url_parms    => "main_div",
                        :send_checked => true,
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                      button(
                        :ems_object_storage_tag,
                        'pficon pficon-edit fa-lg',
@@ -56,7 +76,30 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :url_parms    => "main_div",
                        :send_checked => true,
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
+                   ]
+                 ),
+               ])
+  button_group('ems_storage_authentication', [
+                 select(
+                   :ems_storage_authentication_choice,
+                   nil,
+                   t = N_('Authentication'),
+                   t,
+                   :enabled => false,
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :ems_storage_recheck_auth_status,
+                       'fa fa-search fa-lg',
+                       N_('Re-check Authentication Status for the selected object storage manager'),
+                       N_('Re-check Authentication Status'),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1+"
+                     ),
                    ]
                  ),
                ])

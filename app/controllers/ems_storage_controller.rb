@@ -31,7 +31,6 @@ class EmsStorageController < ApplicationController
 
   def type_feature_role_check
     return true unless TYPE_CHECK_SHOW_IDENTIFIERS.include?("#{controller_name}_#{action_name}") && respond_to?(:feature_role)
-
     handle_generic_rbac(role_allows?(:feature => feature_role(@record)))
   end
 

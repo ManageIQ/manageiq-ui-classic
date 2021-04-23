@@ -1,0 +1,2 @@
+= react('ProviderForm', :providerId => @ems.id.to_s, :redirect => @lastaction == 'show_list' ? ems_object_storage_path : ems_object_storage_path(@ems),
+ :kind => 'object', :title => ui_lookup(:model => 'ManageIQ::Providers::StorageManager'))

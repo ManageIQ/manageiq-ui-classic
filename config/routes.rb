@@ -2336,6 +2336,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        new
         button
         dynamic_checkbox_refresh
         dynamic_radio_button_refresh
@@ -3361,7 +3362,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage ems_object_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
   # rubocop:enable Layout/HashAlignment
