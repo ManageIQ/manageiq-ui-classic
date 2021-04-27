@@ -1,6 +1,7 @@
 class ContainerDashboardService < DashboardService
   include ContainerServiceMixin
   include Mixins::CheckedIdMixin
+  include TextualMixins::TextualRefreshStatus
 
   CPU_USAGE_PRECISION = 2 # 2 decimal points
 
@@ -46,6 +47,13 @@ class ContainerDashboardService < DashboardService
   def image_metrics_data
     {
       :image_metrics => image_metrics
+    }.compact
+  end
+
+  def refresh_status_data
+    {
+      :default_cred => @ems.present? && @ems.enabled ? 'Valid' : 'Invalid',
+      :last_refresh => @ems.present? ? refresh_status(@ems) : []
     }.compact
   end
 

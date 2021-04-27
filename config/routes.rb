@@ -1011,6 +1011,7 @@ Rails.application.routes.draw do
         pod_metrics_data
         project_data
         show
+        refresh_status_data
       )
     },
 

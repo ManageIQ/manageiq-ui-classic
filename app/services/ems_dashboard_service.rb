@@ -1,6 +1,8 @@
 class EmsDashboardService < DashboardService
   attr_reader :ems
+  include TextualSummaryHelper
   include Mixins::CheckedIdMixin
+  include TextualMixins::TextualRefreshStatus
 
   def initialize(ems_id, controller, klass)
     @ems_id = ems_id
@@ -76,6 +78,13 @@ class EmsDashboardService < DashboardService
     {
       :iconImage => get_icon(@ems),
       :largeIcon => true,
+    }
+  end
+
+  def refresh_data
+    {
+      :default_cred => textual_authentications(@ems.authentication_for_summary),
+      :last_refresh => refresh_status(@ems)
     }
   end
 

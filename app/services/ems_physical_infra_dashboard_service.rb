@@ -1,5 +1,8 @@
 class EmsPhysicalInfraDashboardService < DashboardService
   include Mixins::CheckedIdMixin
+  include ActionView::Helpers::DateHelper
+  include TextualMixins::TextualRefreshStatus
+  include TextualSummaryHelper
 
   def initialize(ems_id, controller)
     @ems_id = ems_id
@@ -27,6 +30,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
         :showTopBorder   => false,
         :aggregateClass  => 'aggregate-object-card',
         :aggregateLayout => '',
+        :refreshStatus   => refresh_data,
       }
     else
       {
@@ -37,6 +41,13 @@ class EmsPhysicalInfraDashboardService < DashboardService
         :aggregateLayout => 'tall',
       }
     end
+  end
+
+  def refresh_data
+    {
+      :default_cred => textual_authentications(@resource.first.authentication_for_summary),
+      :last_refresh => refresh_status(@resource.first)
+    }
   end
 
   def servers_group_data
