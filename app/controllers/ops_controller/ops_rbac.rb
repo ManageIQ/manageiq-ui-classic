@@ -278,7 +278,7 @@ module OpsController::OpsRbac
   def rbac_role_delete
     assert_privileges("rbac_role_delete")
     roles = []
-    if !params[:id] # showing a role list
+    if params[:id].nil? # showing a role list
       ids = find_checked_items.collect { |r| r.to_s.split("-").last }
       roles = MiqUserRole.where(:id => ids)
       process_roles(roles, "destroy") unless roles.empty?
@@ -342,7 +342,7 @@ module OpsController::OpsRbac
   def rbac_group_delete
     assert_privileges("rbac_group_delete")
     groups = []
-    if !params[:id] # showing a list
+    if params[:id].nil? # showing a list
       ids = find_checked_items.collect { |r| r.to_s.split("-").last }
       groups = MiqGroup.where(:id => ids)
       process_groups(groups, "destroy") unless groups.empty?
