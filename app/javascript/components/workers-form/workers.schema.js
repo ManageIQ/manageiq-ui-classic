@@ -62,15 +62,15 @@ const addSchema = (formValues) => {
       fields: [
         {
           component: componentTypes.SELECT,
-          id: 'ems_metrics_collector_worker.defaults.count',
-          name: 'ems_metrics_collector_worker.defaults.count',
-          options: injectOption(rangeNine, formValues.ems_metrics_collector_worker.defaults.count, true),
+          id: 'ems_metrics_collector_worker.count',
+          name: 'ems_metrics_collector_worker.count',
+          options: injectOption(rangeNine, formValues.ems_metrics_collector_worker.count, true),
           label: __('Count'),
         }, {
           component: componentTypes.SELECT,
-          id: 'ems_metrics_collector_worker.defaults.memory_threshold',
-          name: 'ems_metrics_collector_worker.defaults.memory_threshold',
-          options: injectOption(basicOptions, formValues.ems_metrics_collector_worker.defaults.memory_threshold),
+          id: 'ems_metrics_collector_worker.memory_threshold',
+          name: 'ems_metrics_collector_worker.memory_threshold',
+          options: injectOption(basicOptions, formValues.ems_metrics_collector_worker.memory_threshold),
           label: __('Memory threshold'),
         },
       ],
@@ -120,9 +120,9 @@ const addSchema = (formValues) => {
       fields: [
         {
           component: componentTypes.SELECT,
-          id: 'ems_refresh_worker.defaults.memory_threshold',
-          name: 'ems_refresh_worker.defaults.memory_threshold',
-          options: injectOption(generateRefreshOptions(), formValues.ems_refresh_worker.defaults.memory_threshold),
+          id: 'ems_refresh_worker.memory_threshold',
+          name: 'ems_refresh_worker.memory_threshold',
+          options: injectOption(generateRefreshOptions(), formValues.ems_refresh_worker.memory_threshold),
           label: __('Memory threshold'),
         },
       ],
