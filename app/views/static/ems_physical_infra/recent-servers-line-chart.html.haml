@@ -1,9 +1,0 @@
-%div
-  .card-pf
-    .card-pf-heading
-      %h2.card-pf-title
-        {{$ctrl.data.config.title}}
-    .card-pf-body
-      %pf-line-chart{'ng-if' => "$ctrl.loadingDone", 'ng-attr-id' => "{{$ctrl.id}}", 'config' => "$ctrl.config", 'chart-data' => "$ctrl.data", 'set-area-chart' => "$ctrl.custAreaChart", 'show-x-axis' => "$ctrl.custShowXAxis", 'show-y-axis' => "$ctrl.custShowYAxis"}
-      %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': $ctrl.data.dataAvailable === false }"}
-        {{$ctrl.timeframeLabel}}
