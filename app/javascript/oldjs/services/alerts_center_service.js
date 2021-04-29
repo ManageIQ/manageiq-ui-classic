@@ -512,18 +512,13 @@ angular.module('ManageIQ').service('alertsCenterService', ['API', '$q', '$timeou
     } else {
       newAlert.severityInfo = _this.severities.info;
     }
-    
-    // when user click the Monitor > all alert menu, prevent to bug. - type error : name property is null
-    if (alertData.assignee === null) {
-      alertData.assignee = undefined;   
-    }
-    
+
     newAlert.age = moment.duration(retrievalTime - newAlert.evaluated_on).format('dd[d] hh[h] mm[m] ss[s]');
     newAlert.rowClass = 'alert ' + newAlert.severityInfo.severityClass;
     newAlert.lastUpdate = newAlert.evaluated_on;
     newAlert.numComments = 0;
 
-    if (alertData.assignee !== undefined) {
+    if (alertData.assignee) {
       newAlert.assigned = true;
       newAlert.assignee_name = alertData.assignee.name;
       newAlert.assignee_id = alertData.assignee.id;
