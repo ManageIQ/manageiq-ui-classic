@@ -1010,8 +1010,8 @@ Rails.application.routes.draw do
         network_metrics_data
         pod_metrics_data
         project_data
-        show
         refresh_status_data
+        show
       )
     },
 

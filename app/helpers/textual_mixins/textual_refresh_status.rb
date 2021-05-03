@@ -12,7 +12,7 @@ module TextualMixins::TextualRefreshStatus
     last_refresh_status = record.last_refresh_status&.titleize
     refresh_time = record.last_refresh_date
     if refresh_time
-      last_refresh_date = refresh_time ? time_ago_in_words(refresh_time).titleize : _(Never)
+      last_refresh_date = refresh_time ? time_ago_in_words(refresh_time).titleize : _('Never')
       last_refresh_status << _(" - %{last_refresh_date} Ago") % {:last_refresh_date => last_refresh_date}
     end
     {
