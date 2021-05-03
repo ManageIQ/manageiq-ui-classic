@@ -1,6 +1,5 @@
 class EmsPhysicalInfraDashboardService < DashboardService
   include Mixins::CheckedIdMixin
-  include ActionView::Helpers::DateHelper
   include TextualMixins::TextualRefreshStatus
   include TextualSummaryHelper
 
