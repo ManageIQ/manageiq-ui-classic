@@ -518,7 +518,7 @@ angular.module('ManageIQ').service('alertsCenterService', ['API', '$q', '$timeou
     newAlert.lastUpdate = newAlert.evaluated_on;
     newAlert.numComments = 0;
 
-    if (alertData.assignee !== undefined) {
+    if (alertData.assignee) {
       newAlert.assigned = true;
       newAlert.assignee_name = alertData.assignee.name;
       newAlert.assignee_id = alertData.assignee.id;
