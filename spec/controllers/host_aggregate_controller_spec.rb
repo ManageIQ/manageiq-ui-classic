@@ -41,11 +41,6 @@ describe HostAggregateController do
       post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
       expect(assigns(:flash_array)).to be_nil
     end
-
-    it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
-    end
   end
 
   describe '#create_finished' do
@@ -55,23 +50,6 @@ describe HostAggregateController do
     before do
       allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
       allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => aggregate.name}})
-    end
-
-    it 'calls flash_and_redirect with appropriate arguments' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
-        :name    => aggregate.name,
-        :details => miq_task.message
-      }, :error)
-      controller.send(:create_finished)
-    end
-
-    context 'succesful creating of new Host Aggregate' do
-      let(:status) { 'ok' }
-
-      it 'calls flash_and_redirect with appropriate arguments' do
-        expect(controller).to receive(:flash_and_redirect).with(_("Host Aggregate \"%{name}\" created") % {:name => aggregate.name})
-        controller.send(:create_finished)
-      end
     end
   end
 
@@ -95,20 +73,6 @@ describe HostAggregateController do
       post :update, :params => { :button => "save", :format => :js, :id => aggregate.id, :name => "foo" }
       expect(assigns(:flash_array)).to be_nil
     end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :update, :params => { :button => "save", :format => :js, :id => aggregate.id, :name => "foo" }
-    end
-
-    context 'canceling the action' do
-      before { controller.params = {:button => 'cancel', :id => aggregate.id} }
-
-      it 'calls flash_and_redirect with appropriate arguments' do
-        expect(controller).to receive(:flash_and_redirect).with(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {:name => aggregate.name})
-        controller.send(:update)
-      end
-    end
   end
 
   describe '#update_finished' do
@@ -118,23 +82,6 @@ describe HostAggregateController do
     before do
       allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
       allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name}})
-    end
-
-    it 'calls flash_and_redirect with appropriate arguments' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
-        :name    => aggregate.name,
-        :details => miq_task.message
-      }, :error)
-      controller.send(:update_finished)
-    end
-
-    context 'succesful update of Host Aggregate' do
-      let(:status) { 'ok' }
-
-      it 'calls flash_and_redirect with appropriate arguments' do
-        expect(controller).to receive(:flash_and_redirect).with(_("Host Aggregate \"%{name}\" updated") % {:name => aggregate.name})
-        controller.send(:update_finished)
-      end
     end
   end
 
