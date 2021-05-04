@@ -197,7 +197,8 @@ class ChargebackRateController < ApplicationController
   end
 
   def rate_save_add
-    assert_privileges(params[:id] ? 'chargeback_rate_edit' : 'chargeback_rate_new')
+    # TODO: rename chargeback_rates_edit and chargeback_rates_new to chargeback_rate_edit and chargeback_rate_new
+    assert_privileges(params[:id] ? 'chargeback_rates_edit' : 'chargeback_rates_new')
     id = params[:button] == "save" ? params[:id] : "new"
     return unless load_edit("cbrate_edit__#{id}")
 
@@ -249,7 +250,8 @@ class ChargebackRateController < ApplicationController
   end
 
   def rate_reset_or_set
-    assert_privileges('chargeback_rate_edit') if params[:button] == "reset"
+    # TODO: rename chargeback_rates_edit to chargeback_rate_edit
+    assert_privileges('chargeback_rates_edit') if params[:button] == "reset"
     @rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
     if params[:pressed] == 'chargeback_rates_edit' && @rate.default?
       add_flash(_("Default Chargeback Rate \"%{name}\" cannot be edited.") % {:name => @rate.description}, :error)
