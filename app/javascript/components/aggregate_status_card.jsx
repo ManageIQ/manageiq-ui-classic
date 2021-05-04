@@ -49,7 +49,7 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
 
   return (
     <div className="aggregate_status">
-      {(data.refreshStatus && data.refreshStatus.default_cred && data.refreshStatus.default_cred[0].value !== 'Valid')
+      {data.refreshStatus
             && (
               <RefreshNotifications status={data.refreshStatus} />
             )}

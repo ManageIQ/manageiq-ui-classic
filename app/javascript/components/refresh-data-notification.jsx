@@ -19,7 +19,7 @@ const RefreshDataNotification = ({
       });
   }, []);
 
-  if (data.loading || data.status.default_cred === 'Valid') return null;
+  if (data.loading) return null;
   return (
     <RefreshNotifications status={data.status} />
   );
