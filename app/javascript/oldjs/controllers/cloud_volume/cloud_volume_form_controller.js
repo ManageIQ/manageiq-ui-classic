@@ -20,9 +20,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.newRecord = cloudVolumeFormId === 'new';
 
     miqService.sparkleOn();
-
-    // After all the API data is at hand we show the form.
-    $q.all(apiPromises).then(setForm).catch(miqService.handleFailure);
+    setForm();
   };
 
   vm.addClicked = function() {

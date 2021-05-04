@@ -1104,7 +1104,7 @@ class ApplicationController < ActionController::Base
       id = @search_text if /^\d+$/.match?(@search_text)
       condition = [[]]
       if id
-        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id)
+        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id.to_i)
       end
 
       if ::Settings.server.case_sensitive_name_search
@@ -1865,8 +1865,6 @@ class ApplicationController < ActionController::Base
     case controller_name
     when "vm_infra", "vm_or_template", "vm_cloud"
       "vm"
-    when 'automation_manager'
-      "automation_manager_provider"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"
     when "ansible_playbook"

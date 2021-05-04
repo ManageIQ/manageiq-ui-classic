@@ -28,6 +28,9 @@ cols:
 
 # Included tables (joined, has_one, has_many) and columns
 include:
+  inventory_root_group:
+    columns:
+      - name
 
 # Order of columns (from all tables)
 col_order:
@@ -37,6 +40,7 @@ col_order:
 - build_state
 - my_zone
 - configuration_environment_name
+- inventory_group.name
 
 # Column titles, in order
 headers:
@@ -46,6 +50,7 @@ headers:
 - Build State
 - Zone
 - Environment
+- Inventory Group
 
 
 col_formats:

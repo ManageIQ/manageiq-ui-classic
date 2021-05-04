@@ -15,6 +15,7 @@ const VisualSettingsForm = ({ recordId }) => {
   }, [recordId]);
 
   const onSubmit = (settings) => {
+    settings.display.timezone = settings.display.timezone.value ? settings.display.timezone.value : settings.display.timezone;
     miqSparkleOn();
     API.patch(`/api/users/${recordId}`, { settings }).then(() => {
       add_flash(__('User Interface settings saved'), 'success');

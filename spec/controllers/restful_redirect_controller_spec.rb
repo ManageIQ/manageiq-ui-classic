@@ -54,7 +54,7 @@ describe RestfulRedirectController do
       automation_provider = FactoryBot.create(:provider_ansible_tower)
       manager = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider.id)
       get :index, :params => {:model => "ExtManagementSystem/#{manager.id}"}
-      expect(response).to redirect_to(:controller => 'automation_manager', :action => 'show', :id => manager.id)
+      expect(response).to redirect_to(:controller => 'ems_automation', :action => 'show', :id => manager.id)
     end
 
     it 'redirects to ansible_playbook controller' do

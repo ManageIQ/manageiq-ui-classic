@@ -124,7 +124,7 @@ const createSchema = () => ({
           id: 'display.timezone',
           label: __('Timezone'),
           isSearchable: true,
-          loadOptions: () => API.get('/api').then(({ timezones }) => timezones.map(({ name, description }) => ({ label: description, value: name }))),
+          loadOptions: () => API.get('/api').then(({ timezones }) => timezones.map(({ name, description }) => ({ value: name, label: description }))),
         },
         {
           component: componentTypes.SELECT,

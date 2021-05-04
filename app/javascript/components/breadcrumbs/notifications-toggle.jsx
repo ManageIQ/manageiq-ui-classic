@@ -1,8 +1,10 @@
 import cx from 'classnames';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'carbon-components-react';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 import MiqIcon from '../../menu/icon';
+import NotificationDrawer from '../notification-drawer/notification-drawer';
 
 export const NotificationsToggle = () => {
   const dispatch = useDispatch();
@@ -21,18 +23,22 @@ export const NotificationsToggle = () => {
   };
 
   return (
-    <a
-      id="notifications-toggle"
-      className={cx('btn', 'btn-default', {
-        'active': isDrawerVisible,
-        'unread': unreadCount,
-      })}
-      title={unreadCountText(unreadCount)}
-      onClick={toggle}
-    >
-      {__("Notifications")}
-      {' '}
-      <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
-    </a>
+    <div className="notification-module">
+      <Button
+        id="notifications-toggle"
+        className={cx('btn', 'btn-default', {
+          active: isDrawerVisible,
+          unread: unreadCount,
+        })}
+        title={unreadCountText(unreadCount)}
+        onClick={toggle}
+        size="sm"
+      >
+        {__('Notifications')}
+        {' '}
+        <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
+      </Button>
+      <NotificationDrawer />
+    </div>
   );
 };

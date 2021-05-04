@@ -27,10 +27,10 @@
             = _("Applies To")
           .col-md-8
             - if @policy.id
-              = MiqPolicy::POLICY_TOWHAT_APPLIES_TO_CLASSES[@edit[:new][:towhat]]
+              = MiqPolicy.policy_towhat_applies_to_classes[@edit[:new][:towhat]]
             - else
               = select_tag('towhat',
-                options_for_select(MiqPolicy::POLICY_TOWHAT_APPLIES_TO_CLASSES.invert, @edit[:new][:towhat]),
+                options_for_select(MiqPolicy.policy_towhat_applies_to_classes.invert, @edit[:new][:towhat]),
                 :class => "selectpicker form-control")
 
               :javascript
@@ -41,10 +41,10 @@
             = _("Mode")
           .col-md-8
             - if @policy.id
-              = MiqPolicy::POLICY_MODES[@edit[:new][:mode]]
+              = MiqPolicy.policy_modes[@edit[:new][:mode]]
             - else
               = select_tag('mode',
-                options_for_select(MiqPolicy::POLICY_MODES.invert, MiqPolicy::POLICY_MODES[@edit[:new][:mode]]),
+                options_for_select(MiqPolicy.policy_modes.invert, @edit[:new][:mode]),
                 :class => "selectpicker form-control")
 
               :javascript

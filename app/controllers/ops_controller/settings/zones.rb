@@ -28,9 +28,6 @@ module OpsController::Settings::Zones
       unless @edit[:new][:description]
         add_flash(_("Description can't be blank"), :error)
       end
-      unless @edit[:new][:password] == @edit[:new][:verify]
-        add_flash(_('Password and Verify Password fields do not match'), :error)
-      end
 
       # This is needed for cases when more than one required field is missing or is not correct, to prevent rendering same flash messages
       if @flash_array
@@ -39,7 +36,8 @@ module OpsController::Settings::Zones
       end
 
       zone_set_record_vars(@zone)
-      if valid_record?(@zone) && @zone.save
+      @edit[:errors] = []
+      if @zone.save
         AuditEvent.success(build_created_audit(@zone, @edit))
         if params[:button] == "save"
           add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
@@ -115,30 +113,13 @@ module OpsController::Settings::Zones
     zone.settings ||= {}
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-
-    zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, {:save => (mode != :validate)})
-  end
-
-  # Validate the zone record fields
-  def valid_record?(zone)
-    valid = true
-    @edit[:errors] = []
-    if zone.authentication_password.present? && zone.authentication_userid.blank?
-      @edit[:errors].push(_("Username must be entered if Password is entered"))
-      valid = false
-    end
-    if @edit[:new][:password] != @edit[:new][:verify]
-      @edit[:errors].push(_("Password and Verify Password fields do not match"))
-      valid = false
-    end
-    valid
   end
 
   # Get variables from zone edit form
   def zone_get_form_vars
     @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
 
-    copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip userid password verify])
+    copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip])
     @edit[:new][:concurrent_vm_scans] = params[:max_scans].to_i if params[:max_scans]
 
     set_verify_status
@@ -163,10 +144,6 @@ module OpsController::Settings::Zones
     @edit[:new][:description] = @zone.description
     @edit[:new][:proxy_server_ip] = @zone.settings ? @zone.settings[:proxy_server_ip] : nil
     @edit[:new][:concurrent_vm_scans] = @zone.settings ? @zone.settings[:concurrent_vm_scans].to_i : 0
-
-    @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
-    @edit[:new][:password] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
 
     session[:verify_ems_status] = nil
     set_verify_status

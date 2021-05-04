@@ -30,6 +30,7 @@ module ApplicationHelper
         container_route
         container_service
         container_template
+        ems_automation
         ems_cloud
         ems_cluster
         ems_configuration

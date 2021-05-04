@@ -17,7 +17,7 @@ module ReportController::Reports::Editor
   }.freeze
 
   def chargeback_allocated_methods
-    Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
+    CHAREGEBACK_ALLOCATED_METHODS.map { |k, v| [k, _(v)] }.to_h
   end
 
   def default_chargeback_allocated_method
@@ -967,7 +967,7 @@ module ReportController::Reports::Editor
       options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:cumulative_rate_calculation] = @edit[:new][:cumulative_rate_calculation]
       options[:groupby] = @edit[:new][:cb_groupby]
-      options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag].split(",") : nil
+      options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? (@edit[:new][:cb_groupby_tag].kind_of?(String) ? @edit[:new][:cb_groupby_tag].split(',') : @edit[:new][:cb_groupby_tag]) : nil
       options[:groupby_label] = @edit[:new][:cb_groupby] == 'label' ? @edit[:new][:cb_groupby_label] : nil
 
       rpt.db_options[:options] = options
@@ -1164,7 +1164,8 @@ module ReportController::Reports::Editor
   end
 
   def parse_tag_categories(category, tag_values)
-    tag_values.split(",").map { |tag_value| "/managed/#{category}/#{tag_value}" }
+    tag_values = tag_values.split(",") if tag_values.kind_of?(String)
+    tag_values.map { |tag_value| "/managed/#{category}/#{tag_value}" }
   end
 
   # Set form variables for edit

@@ -78,7 +78,7 @@ class NetworkRouterController < ApplicationController
     router_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Network Router \"%{name}\" created") % {:name => router_name})
+      add_flash(_("Queued Network Router \"%{name}\" for creation") % {:name => router_name})
     else
       add_flash(_("Unable to create Network Router \"%{name}\": %{details}") %
                 {:name => router_name, :details => task.message}, :error)

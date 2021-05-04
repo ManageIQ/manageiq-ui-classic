@@ -304,7 +304,7 @@ describe ApplicationController do
   end
 
   describe "#get_view" do
-    before do
+    it "does not load default selected search on tagging screen" do
       search = FactoryBot.create(:miq_search, :name => 'sds')
       user = FactoryBot.create(:user_with_group, :settings => {:default_search => {:Host => search.id}})
       login_as user
@@ -312,12 +312,21 @@ describe ApplicationController do
                             :views          => {:persistentvolume => 'list'},
                             :perpage        => {:list => 10}}
       controller.instance_variable_set(:@settings, :default_search => {:Host => search.id})
-    end
 
-    it "does not load default selected search on tagging screen" do
       controller.instance_variable_set(:@edit, :tagging => "Host")
       expect(controller).to_not receive(:load_default_search)
       controller.send(:get_view, "Host", :gtl_dbname => :host)
+    end
+
+    it "handles oversized-integers via search text" do
+      EvmSpecHelper.local_miq_server
+
+      controller.instance_variable_set(:@explorer, true)
+      controller.params = {:search => {:text => (2**63).to_s}} # 1 higher than PG bigint max
+
+      expect do
+        controller.send(:get_view, "Host", {}, true)
+      end.to_not raise_error # should not raise a PG::NumericValueOutOfRange
     end
   end
 

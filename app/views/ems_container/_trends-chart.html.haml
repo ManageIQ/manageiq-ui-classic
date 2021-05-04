@@ -1,8 +1,0 @@
-.trend_chart{"ng-controller" => "trendsChartController as vm"}
-  .card-pf
-    .card-pf-heading
-      %h2.card-pf-title
-        {{vm.config.headTitle}}
-    .card-pf-body
-      .spinner.spinner-lg.loading{"ng-if" => "!vm.loadingDone"}
-      %pf-trends-chart{'ng-if' => "vm.loadingDone && vm.dataAvailable !== false", 'config' => "vm.config", 'chart-data' => "vm.data", 'show-x-axis' => "vm.custShowXAxis", 'show-y-axis' => "vm.custShowYAxis"}

@@ -1,3 +1,0 @@
-%span
-  %pf-c3-chart{'id' => "{{$ctrl.lineChartId}}", 'ng-if' => "$ctrl.chartData.dataAvailable !== false && $ctrl.loadingDone", 'config' => "$ctrl.chartConfig"}
-  %empty-chart{'ng-if' => "$ctrl.chartData.dataAvailable === false", 'chart-height' => "$ctrl.chartConfig.size.height"}
