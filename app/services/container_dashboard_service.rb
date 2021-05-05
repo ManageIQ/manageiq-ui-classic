@@ -52,6 +52,7 @@ class ContainerDashboardService < DashboardService
 
   def refresh_status_data
     {
+      :default_cred => @ems.present? && @ems.enabled ? 'Valid' : 'Invalid',
       :last_refresh => @ems.present? ? refresh_status(@ems) : []
     }.compact
   end

@@ -6,25 +6,23 @@ const RefreshNotifications = ({
   status,
 }) => (
   <div className="refresh-notifications">
-    {(!status.last_refresh.stale && status.last_refresh.status !== 'Success') && (
-      <InlineNotification
-        kind="error"
-        role="alert"
-        className="last-refresh-notification"
-        key="1"
-        title={status.last_refresh.label}
-        subtitle={(
-          <div>
-            {status.last_refresh.value.map((error) => (
-              <div key={error.value}><span>{error.value}</span></div>
-            ))}
+    <InlineNotification
+      kind="error"
+      role="alert"
+      className="last-refresh-notification"
+      key="1"
+      title={status.last_refresh.label}
+      subtitle={(
+        <div>
+          {status.last_refresh.value.map((error) => (
+            <div key={error.value}><span>{error.value}</span></div>
+          ))}
 
-          </div>
-        )}
-        lowContrast
-        hideCloseButton
-      />
-    )}
+        </div>
+      )}
+      lowContrast
+      hideCloseButton
+    />
   </div>
 
 );

@@ -44,6 +44,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
 
   def refresh_data
     {
+      :default_cred => textual_authentications(@resource.first.authentication_for_summary),
       :last_refresh => refresh_status(@resource.first)
     }
   end

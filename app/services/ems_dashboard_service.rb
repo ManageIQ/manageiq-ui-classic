@@ -83,6 +83,7 @@ class EmsDashboardService < DashboardService
 
   def refresh_data
     {
+      :default_cred => textual_authentications(@ems.authentication_for_summary),
       :last_refresh => refresh_status(@ems)
     }
   end
