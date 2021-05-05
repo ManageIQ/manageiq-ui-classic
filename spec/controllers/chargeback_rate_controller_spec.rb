@@ -1,5 +1,8 @@
 describe ChargebackRateController do
-  before { stub_user(:features => :all) }
+  before do
+    stub_user(:features => %w[chargeback_rates_show_list chargeback_rates_new chargeback_rates_copy chargeback_rates_delete chargeback_rates_edit])
+    EvmSpecHelper.local_miq_server
+  end
 
   describe "#show_list" do
     render_views
@@ -67,7 +70,6 @@ describe ChargebackRateController do
     let(:index_to_rate_type) { "0" }
 
     before do
-      EvmSpecHelper.local_miq_server
       allow_any_instance_of(described_class).to receive(:center_toolbar_filename).and_return("chargeback_center_tb")
       [ChargebackRateDetailMeasure, ChargeableField].each(&:seed)
     end
