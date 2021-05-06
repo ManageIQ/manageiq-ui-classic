@@ -20,7 +20,7 @@ module TextualMixins::TextualRefreshStatus
       :value  => [{:value => last_refresh_status},
                   {:value => record.last_refresh_error.try(:truncate, 120)}],
       :title  => record.last_refresh_error,
-      :status => record.last_refresh_status&.titleize,
+      :status => record.last_refresh_status,
       :stale  => refresh_time ? refresh_time.before?(2.days.ago) : true # checking if date is within last two days range.
     }
   end

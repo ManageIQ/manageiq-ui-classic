@@ -7,7 +7,7 @@ const RefreshNotifications = ({
 }) => (
   <div className="refresh-notifications">
     <InlineNotification
-      kind="error"
+      kind={status.last_refresh.status}
       role="alert"
       className="last-refresh-notification"
       key="1"
