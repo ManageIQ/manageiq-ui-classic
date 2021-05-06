@@ -45,9 +45,14 @@
     height: 48px;
   }
 
+  .bx--side-nav__submenu:hover {
+    background-color: #666666
+  }
+
   .bx--side-nav__hr {
     margin: 16px 0 0 0;
   }
+
   .bx--side-nav--expanded {
     .bx--side-nav__hr {
       margin: 16px 16px 0 16px;
