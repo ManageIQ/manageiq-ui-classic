@@ -33,6 +33,7 @@ import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
+import RefreshDataNotification from '../components/refresh-data-notification';
 import RegionForm from '../components/region-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import RemoveGenericItemModal from '../components/remove-generic-item-modal';
@@ -93,6 +94,7 @@ ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplate
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('PerformanceChartWidget', PerformanceChartWidget);
 ManageIQ.component.addReact('Quadicon', Quadicon);
+ManageIQ.component.addReact('RefreshDataNotification', RefreshDataNotification);
 ManageIQ.component.addReact('RegionForm', RegionForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('RemoveGenericItemModal', RemoveGenericItemModal);
