@@ -15,9 +15,10 @@ class EmsCloudDashboardService < EmsDashboardService
 
   def aggregate_status
     {
-      :quadicon => @controller.instance_exec(@ems, &EmsInfraDashboardService.quadicon_calc),
-      :status   => status_data,
-      :attrData => attributes_data,
+      :quadicon      => @controller.instance_exec(@ems, &EmsInfraDashboardService.quadicon_calc),
+      :status        => status_data,
+      :refreshStatus => refresh_data,
+      :attrData      => attributes_data,
     }
   end
 
