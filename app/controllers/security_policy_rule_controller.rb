@@ -31,12 +31,12 @@ class SecurityPolicyRuleController < ApplicationController
   end
 
   def download_summary_pdf
-    assert_privileges('security_policy_rules_view')
+    assert_privileges('security_policy_rule_view')
     super
   end
 
   def download_data
-    assert_privileges('security_policy_rules_view')
+    assert_privileges('security_policy_rule_view')
     super
   end
 
