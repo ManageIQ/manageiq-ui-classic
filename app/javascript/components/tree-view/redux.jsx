@@ -1,5 +1,5 @@
 /* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check", "silent_activate", "select_node"]}] */
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tree, Node } from 'react-wooden-tree';
@@ -11,6 +11,7 @@ import basicStore from './reducers/basicStore';
 import {
   convert, callBack, activateNode,
 } from './helpers';
+import { nodeCheckedWithDirty } from './reducers/helpers';
 
 const TreeView = (props) => {
   const {
@@ -30,16 +31,9 @@ const TreeView = (props) => {
 
   const namespace = tree_name;
   const ConnectedNode = connect((store, ownProps) => ({ ...store[namespace][ownProps.nodeId] }))(Node);
-  const ReduxTree = connect(store => ({ data: { ...store[namespace] } }))(Tree);
+  const ReduxTree = connect((store) => ({ data: { ...store[namespace] } }))(Tree);
 
-  /**
-   * After the component mounts adds a tree specific reducer to the store
-   */
-  useEffect(() => {
-    // Setting the URLs for the further actions:
-    ManageIQ.tree.checkUrl = check_url;
-    ManageIQ.tree.clickUrl = click_url;
-
+  const getData = useCallback(() => {
     // FIXME: This check if the reducer exists is not ideal, but it is needed
     // when the tree is rerendered without page change (Edit Report Menu's).
     // When fixed the useEffect should remove the created reducer on unmount.
@@ -54,18 +48,55 @@ const TreeView = (props) => {
   }, []);
 
   /**
+   * After the component mounts adds a tree specific reducer to the store
+   */
+  useEffect(() => {
+    // Setting the URLs for the further actions:
+    ManageIQ.tree.checkUrl = check_url;
+    ManageIQ.tree.clickUrl = click_url;
+    getData();
+  }, []);
+
+  /**
    * Populates the store from the prop by converting the supplied tree to
    * the correct format and then dispatching it to the store.
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = activateNode(convert(JSON.parse(bs_tree), node => node.state.checked, node => node.state.selected), silent_activate, select_node);
+    const tree = activateNode(convert(JSON.parse(bs_tree), (node) => node.state.checked, (node) => node.state.selected), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, tree, namespace);
   }, [bs_tree]);
 
-  const onDataChange = commands => commands.forEach(command => callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace));
+  const onDataChange = (commands) => {
+    ManageIQ.tree.checkUrl = check_url;
+    ManageIQ.tree.clickUrl = click_url;
+    const tree = activateNode(convert(JSON.parse(bs_tree), (node) => node.state.checked, (node) =>
+      node.state.selected), silent_activate, select_node);
+
+    commands.forEach((command) => {
+      let node;
+      if (command.type === 'state.checked') {
+        node = Tree.nodeSelector(tree, command.nodeId);
+        const selectedNode = nodeCheckedWithDirty(node, command.value);
+        if (selectedNode.classes === 'dirty') {
+          ManageIQ.redux.addReducer({
+            [namespace]: combineReducers([
+              basicStore,
+              reducers(oncheck, onclick),
+            ], namespace),
+          });
+          sendDataWithRx({ name: 'dirty' });
+        } else {
+          getData();
+          sendDataWithRx({ name: 'notdirty' });
+        }
+      }
+
+      callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace);
+    });
+  };
 
   /**
    * Lazy load function with a wrapper.
@@ -75,7 +106,7 @@ const TreeView = (props) => {
    *
    * FIXME: Remove wrapper after server returning flat trees.
    */
-  const lazyLoad = node => new Promise((resolve, reject) => {
+  const lazyLoad = (node) => new Promise((resolve, reject) => {
     http.post(`/${ManageIQ.controller}/tree_autoload`, {
       id: node.attr.key,
       tree: tree_name,
@@ -88,12 +119,12 @@ const TreeView = (props) => {
           // Creating the node id from the parent id.
           const nodeId = `${node.nodeId}.${key}`;
           // Updating the children ids, so it does not point to something else.
-          const element = { ...data[key], nodeId, nodes: data[key].nodes.map(child => `${node.nodeId}.${child}`) };
+          const element = { ...data[key], nodeId, nodes: data[key].nodes.map((child) => `${node.nodeId}.${child}`) };
           subtree = { ...subtree, [nodeId]: element };
         }
       });
       resolve(subtree);
-    }).catch(error => reject(error));
+    }).catch((error) => reject(error));
   });
 
   return (

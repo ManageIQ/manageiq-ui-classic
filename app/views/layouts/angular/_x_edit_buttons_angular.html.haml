@@ -11,7 +11,7 @@
               :title     => t,
               :alt       => t,
               'ng-if'    => '!newRecord',
-              :enabled   => "saveable(angularForm)",
+              :enabled   => "saveable(angularForm) || reactFormDirty",
               'on-click' => "saveClicked({target: '.edit_buttons'}, true)",
               :primary   => 'true'}
   %miq-button{:name      => t = _("Reset"),
