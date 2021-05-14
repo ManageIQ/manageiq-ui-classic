@@ -1,0 +1,3326 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zone Form Component should render a new Zone form 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "label": "Name",
+              "maxLength": 128,
+              "name": "name",
+            },
+            Object {
+              "component": "text-field",
+              "id": "description",
+              "label": "Description",
+              "maxLength": 128,
+              "name": "description",
+            },
+            Object {
+              "component": "text-field",
+              "id": "settings.proxy_server_ip",
+              "label": "SmartProxy Server IP",
+              "maxLength": 128,
+              "name": "settings.proxy_server_ip",
+            },
+          ],
+          "name": "zone-information-subform",
+          "title": "Zone Information",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "settings.concurrent_vm_scans",
+              "label": "Max Active VM Scans",
+              "maxLength": 128,
+              "name": "settings.concurrent_vm_scans",
+              "options": Array [
+                Object {
+                  "label": "Unlimited",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "10",
+                  "value": 10,
+                },
+                Object {
+                  "label": "15",
+                  "value": 15,
+                },
+                Object {
+                  "label": "20",
+                  "value": 20,
+                },
+                Object {
+                  "label": "25",
+                  "value": 25,
+                },
+                Object {
+                  "label": "30",
+                  "value": 30,
+                },
+                Object {
+                  "label": "35",
+                  "value": 35,
+                },
+                Object {
+                  "label": "40",
+                  "value": 40,
+                },
+                Object {
+                  "label": "45",
+                  "value": 45,
+                },
+                Object {
+                  "label": "50",
+                  "value": 50,
+                },
+              ],
+            },
+          ],
+          "name": "settings",
+          "title": "Settings",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`zone Form Component should render editing a zone form 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <ZoneForm
+    authentications={Array []}
+    created_on="2021-05-13T19:47:24Z"
+    description="test add zone"
+    href="http://localhost:3000/api/zones/68"
+    id="68"
+    name="test add zone name"
+    recordId={68}
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Save",
+        }
+      }
+      canReset={true}
+      initialValues={
+        Object {
+          "authentications": undefined,
+          "created_on": "2021-05-13T19:47:24Z",
+          "description": "test add zone",
+          "href": "http://localhost:3000/api/zones/68",
+          "id": "68",
+          "name": "test add zone name",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "component": "text-field",
+                  "id": "name",
+                  "label": "Name",
+                  "maxLength": 128,
+                  "name": "name",
+                },
+                Object {
+                  "component": "text-field",
+                  "id": "description",
+                  "label": "Description",
+                  "maxLength": 128,
+                  "name": "description",
+                },
+                Object {
+                  "component": "text-field",
+                  "id": "settings.proxy_server_ip",
+                  "label": "SmartProxy Server IP",
+                  "maxLength": 128,
+                  "name": "settings.proxy_server_ip",
+                },
+              ],
+              "name": "zone-information-subform",
+              "title": "Zone Information",
+            },
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "settings.concurrent_vm_scans",
+                  "label": "Max Active VM Scans",
+                  "maxLength": 128,
+                  "name": "settings.concurrent_vm_scans",
+                  "options": Array [
+                    Object {
+                      "label": "Unlimited",
+                      "value": 0,
+                    },
+                    Object {
+                      "label": "1",
+                      "value": 1,
+                    },
+                    Object {
+                      "label": "2",
+                      "value": 2,
+                    },
+                    Object {
+                      "label": "3",
+                      "value": 3,
+                    },
+                    Object {
+                      "label": "4",
+                      "value": 4,
+                    },
+                    Object {
+                      "label": "5",
+                      "value": 5,
+                    },
+                    Object {
+                      "label": "10",
+                      "value": 10,
+                    },
+                    Object {
+                      "label": "15",
+                      "value": 15,
+                    },
+                    Object {
+                      "label": "20",
+                      "value": 20,
+                    },
+                    Object {
+                      "label": "25",
+                      "value": 25,
+                    },
+                    Object {
+                      "label": "30",
+                      "value": 30,
+                    },
+                    Object {
+                      "label": "35",
+                      "value": 35,
+                    },
+                    Object {
+                      "label": "40",
+                      "value": 40,
+                    },
+                    Object {
+                      "label": "45",
+                      "value": 45,
+                    },
+                    Object {
+                      "label": "50",
+                      "value": 50,
+                    },
+                  ],
+                },
+              ],
+              "name": "settings",
+              "title": "Settings",
+            },
+          ],
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Save",
+          }
+        }
+        canReset={true}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        initialValues={
+          Object {
+            "authentications": undefined,
+            "created_on": "2021-05-13T19:47:24Z",
+            "description": "test add zone",
+            "href": "http://localhost:3000/api/zones/68",
+            "id": "68",
+            "name": "test add zone name",
+          }
+        }
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "id": "name",
+                    "label": "Name",
+                    "maxLength": 128,
+                    "name": "name",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "id": "description",
+                    "label": "Description",
+                    "maxLength": 128,
+                    "name": "description",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "id": "settings.proxy_server_ip",
+                    "label": "SmartProxy Server IP",
+                    "maxLength": 128,
+                    "name": "settings.proxy_server_ip",
+                  },
+                ],
+                "name": "zone-information-subform",
+                "title": "Zone Information",
+              },
+              Object {
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "component": "select",
+                    "id": "settings.concurrent_vm_scans",
+                    "label": "Max Active VM Scans",
+                    "maxLength": 128,
+                    "name": "settings.concurrent_vm_scans",
+                    "options": Array [
+                      Object {
+                        "label": "Unlimited",
+                        "value": 0,
+                      },
+                      Object {
+                        "label": "1",
+                        "value": 1,
+                      },
+                      Object {
+                        "label": "2",
+                        "value": 2,
+                      },
+                      Object {
+                        "label": "3",
+                        "value": 3,
+                      },
+                      Object {
+                        "label": "4",
+                        "value": 4,
+                      },
+                      Object {
+                        "label": "5",
+                        "value": 5,
+                      },
+                      Object {
+                        "label": "10",
+                        "value": 10,
+                      },
+                      Object {
+                        "label": "15",
+                        "value": 15,
+                      },
+                      Object {
+                        "label": "20",
+                        "value": 20,
+                      },
+                      Object {
+                        "label": "25",
+                        "value": 25,
+                      },
+                      Object {
+                        "label": "30",
+                        "value": 30,
+                      },
+                      Object {
+                        "label": "35",
+                        "value": 35,
+                      },
+                      Object {
+                        "label": "40",
+                        "value": 40,
+                      },
+                      Object {
+                        "label": "45",
+                        "value": 45,
+                      },
+                      Object {
+                        "label": "50",
+                        "value": 50,
+                      },
+                    ],
+                  },
+                ],
+                "name": "settings",
+                "title": "Settings",
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={
+            Object {
+              "authentications": undefined,
+              "created_on": "2021-05-13T19:47:24Z",
+              "description": "test add zone",
+              "href": "http://localhost:3000/api/zones/68",
+              "id": "68",
+              "name": "test add zone name",
+            }
+          }
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "component": "text-field",
+                      "id": "name",
+                      "label": "Name",
+                      "maxLength": 128,
+                      "name": "name",
+                    },
+                    Object {
+                      "component": "text-field",
+                      "id": "description",
+                      "label": "Description",
+                      "maxLength": 128,
+                      "name": "description",
+                    },
+                    Object {
+                      "component": "text-field",
+                      "id": "settings.proxy_server_ip",
+                      "label": "SmartProxy Server IP",
+                      "maxLength": 128,
+                      "name": "settings.proxy_server_ip",
+                    },
+                  ],
+                  "name": "zone-information-subform",
+                  "title": "Zone Information",
+                },
+                Object {
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "settings.concurrent_vm_scans",
+                      "label": "Max Active VM Scans",
+                      "maxLength": 128,
+                      "name": "settings.concurrent_vm_scans",
+                      "options": Array [
+                        Object {
+                          "label": "Unlimited",
+                          "value": 0,
+                        },
+                        Object {
+                          "label": "1",
+                          "value": 1,
+                        },
+                        Object {
+                          "label": "2",
+                          "value": 2,
+                        },
+                        Object {
+                          "label": "3",
+                          "value": 3,
+                        },
+                        Object {
+                          "label": "4",
+                          "value": 4,
+                        },
+                        Object {
+                          "label": "5",
+                          "value": 5,
+                        },
+                        Object {
+                          "label": "10",
+                          "value": 10,
+                        },
+                        Object {
+                          "label": "15",
+                          "value": 15,
+                        },
+                        Object {
+                          "label": "20",
+                          "value": 20,
+                        },
+                        Object {
+                          "label": "25",
+                          "value": 25,
+                        },
+                        Object {
+                          "label": "30",
+                          "value": 30,
+                        },
+                        Object {
+                          "label": "35",
+                          "value": 35,
+                        },
+                        Object {
+                          "label": "40",
+                          "value": 40,
+                        },
+                        Object {
+                          "label": "45",
+                          "value": 45,
+                        },
+                        Object {
+                          "label": "50",
+                          "value": 50,
+                        },
+                      ],
+                    },
+                  ],
+                  "name": "settings",
+                  "title": "Settings",
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={
+              Object {
+                "authentications": undefined,
+                "created_on": "2021-05-13T19:47:24Z",
+                "description": "test add zone",
+                "href": "http://localhost:3000/api/zones/68",
+                "id": "68",
+                "name": "test add zone name",
+              }
+            }
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="sub-form"
+                    fields={
+                      Array [
+                        Object {
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 128,
+                          "name": "name",
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "description",
+                          "label": "Description",
+                          "maxLength": 128,
+                          "name": "description",
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "settings.proxy_server_ip",
+                          "label": "SmartProxy Server IP",
+                          "maxLength": 128,
+                          "name": "settings.proxy_server_ip",
+                        },
+                      ]
+                    }
+                    name="zone-information-subform"
+                    title="Zone Information"
+                  />,
+                  <SingleField
+                    component="sub-form"
+                    fields={
+                      Array [
+                        Object {
+                          "component": "select",
+                          "id": "settings.concurrent_vm_scans",
+                          "label": "Max Active VM Scans",
+                          "maxLength": 128,
+                          "name": "settings.concurrent_vm_scans",
+                          "options": Array [
+                            Object {
+                              "label": "Unlimited",
+                              "value": 0,
+                            },
+                            Object {
+                              "label": "1",
+                              "value": 1,
+                            },
+                            Object {
+                              "label": "2",
+                              "value": 2,
+                            },
+                            Object {
+                              "label": "3",
+                              "value": 3,
+                            },
+                            Object {
+                              "label": "4",
+                              "value": 4,
+                            },
+                            Object {
+                              "label": "5",
+                              "value": 5,
+                            },
+                            Object {
+                              "label": "10",
+                              "value": 10,
+                            },
+                            Object {
+                              "label": "15",
+                              "value": 15,
+                            },
+                            Object {
+                              "label": "20",
+                              "value": 20,
+                            },
+                            Object {
+                              "label": "25",
+                              "value": 25,
+                            },
+                            Object {
+                              "label": "30",
+                              "value": 30,
+                            },
+                            Object {
+                              "label": "35",
+                              "value": 35,
+                            },
+                            Object {
+                              "label": "40",
+                              "value": 40,
+                            },
+                            Object {
+                              "label": "45",
+                              "value": 45,
+                            },
+                            Object {
+                              "label": "50",
+                              "value": 50,
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                    name="settings"
+                    title="Settings"
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "sub-form",
+                      "fields": Array [
+                        Object {
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 128,
+                          "name": "name",
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "description",
+                          "label": "Description",
+                          "maxLength": 128,
+                          "name": "description",
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "settings.proxy_server_ip",
+                          "label": "SmartProxy Server IP",
+                          "maxLength": 128,
+                          "name": "settings.proxy_server_ip",
+                        },
+                      ],
+                      "name": "zone-information-subform",
+                      "title": "Zone Information",
+                    },
+                    Object {
+                      "component": "sub-form",
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "settings.concurrent_vm_scans",
+                          "label": "Max Active VM Scans",
+                          "maxLength": 128,
+                          "name": "settings.concurrent_vm_scans",
+                          "options": Array [
+                            Object {
+                              "label": "Unlimited",
+                              "value": 0,
+                            },
+                            Object {
+                              "label": "1",
+                              "value": 1,
+                            },
+                            Object {
+                              "label": "2",
+                              "value": 2,
+                            },
+                            Object {
+                              "label": "3",
+                              "value": 3,
+                            },
+                            Object {
+                              "label": "4",
+                              "value": 4,
+                            },
+                            Object {
+                              "label": "5",
+                              "value": 5,
+                            },
+                            Object {
+                              "label": "10",
+                              "value": 10,
+                            },
+                            Object {
+                              "label": "15",
+                              "value": 15,
+                            },
+                            Object {
+                              "label": "20",
+                              "value": 20,
+                            },
+                            Object {
+                              "label": "25",
+                              "value": 25,
+                            },
+                            Object {
+                              "label": "30",
+                              "value": 30,
+                            },
+                            Object {
+                              "label": "35",
+                              "value": 35,
+                            },
+                            Object {
+                              "label": "40",
+                              "value": 40,
+                            },
+                            Object {
+                              "label": "45",
+                              "value": 45,
+                            },
+                            Object {
+                              "label": "50",
+                              "value": 50,
+                            },
+                          ],
+                        },
+                      ],
+                      "name": "settings",
+                      "title": "Settings",
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={true}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="sub-form"
+                      fields={
+                        Array [
+                          Object {
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 128,
+                            "name": "name",
+                          },
+                          Object {
+                            "component": "text-field",
+                            "id": "description",
+                            "label": "Description",
+                            "maxLength": 128,
+                            "name": "description",
+                          },
+                          Object {
+                            "component": "text-field",
+                            "id": "settings.proxy_server_ip",
+                            "label": "SmartProxy Server IP",
+                            "maxLength": 128,
+                            "name": "settings.proxy_server_ip",
+                          },
+                        ]
+                      }
+                      name="zone-information-subform"
+                      title="Zone Information"
+                    />,
+                    <SingleField
+                      component="sub-form"
+                      fields={
+                        Array [
+                          Object {
+                            "component": "select",
+                            "id": "settings.concurrent_vm_scans",
+                            "label": "Max Active VM Scans",
+                            "maxLength": 128,
+                            "name": "settings.concurrent_vm_scans",
+                            "options": Array [
+                              Object {
+                                "label": "Unlimited",
+                                "value": 0,
+                              },
+                              Object {
+                                "label": "1",
+                                "value": 1,
+                              },
+                              Object {
+                                "label": "2",
+                                "value": 2,
+                              },
+                              Object {
+                                "label": "3",
+                                "value": 3,
+                              },
+                              Object {
+                                "label": "4",
+                                "value": 4,
+                              },
+                              Object {
+                                "label": "5",
+                                "value": 5,
+                              },
+                              Object {
+                                "label": "10",
+                                "value": 10,
+                              },
+                              Object {
+                                "label": "15",
+                                "value": 15,
+                              },
+                              Object {
+                                "label": "20",
+                                "value": 20,
+                              },
+                              Object {
+                                "label": "25",
+                                "value": 25,
+                              },
+                              Object {
+                                "label": "30",
+                                "value": 30,
+                              },
+                              Object {
+                                "label": "35",
+                                "value": 35,
+                              },
+                              Object {
+                                "label": "40",
+                                "value": 40,
+                              },
+                              Object {
+                                "label": "45",
+                                "value": 45,
+                              },
+                              Object {
+                                "label": "50",
+                                "value": 50,
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                      name="settings"
+                      title="Settings"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "sub-form",
+                        "fields": Array [
+                          Object {
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 128,
+                            "name": "name",
+                          },
+                          Object {
+                            "component": "text-field",
+                            "id": "description",
+                            "label": "Description",
+                            "maxLength": 128,
+                            "name": "description",
+                          },
+                          Object {
+                            "component": "text-field",
+                            "id": "settings.proxy_server_ip",
+                            "label": "SmartProxy Server IP",
+                            "maxLength": 128,
+                            "name": "settings.proxy_server_ip",
+                          },
+                        ],
+                        "name": "zone-information-subform",
+                        "title": "Zone Information",
+                      },
+                      Object {
+                        "component": "sub-form",
+                        "fields": Array [
+                          Object {
+                            "component": "select",
+                            "id": "settings.concurrent_vm_scans",
+                            "label": "Max Active VM Scans",
+                            "maxLength": 128,
+                            "name": "settings.concurrent_vm_scans",
+                            "options": Array [
+                              Object {
+                                "label": "Unlimited",
+                                "value": 0,
+                              },
+                              Object {
+                                "label": "1",
+                                "value": 1,
+                              },
+                              Object {
+                                "label": "2",
+                                "value": 2,
+                              },
+                              Object {
+                                "label": "3",
+                                "value": 3,
+                              },
+                              Object {
+                                "label": "4",
+                                "value": 4,
+                              },
+                              Object {
+                                "label": "5",
+                                "value": 5,
+                              },
+                              Object {
+                                "label": "10",
+                                "value": 10,
+                              },
+                              Object {
+                                "label": "15",
+                                "value": 15,
+                              },
+                              Object {
+                                "label": "20",
+                                "value": 20,
+                              },
+                              Object {
+                                "label": "25",
+                                "value": 25,
+                              },
+                              Object {
+                                "label": "30",
+                                "value": 30,
+                              },
+                              Object {
+                                "label": "35",
+                                "value": 35,
+                              },
+                              Object {
+                                "label": "40",
+                                "value": 40,
+                              },
+                              Object {
+                                "label": "45",
+                                "value": 45,
+                              },
+                              Object {
+                                "label": "50",
+                                "value": 50,
+                              },
+                            ],
+                          },
+                        ],
+                        "name": "settings",
+                        "title": "Settings",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Save"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={true}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="sub-form"
+                        fields={
+                          Array [
+                            Object {
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 128,
+                              "name": "name",
+                            },
+                            Object {
+                              "component": "text-field",
+                              "id": "description",
+                              "label": "Description",
+                              "maxLength": 128,
+                              "name": "description",
+                            },
+                            Object {
+                              "component": "text-field",
+                              "id": "settings.proxy_server_ip",
+                              "label": "SmartProxy Server IP",
+                              "maxLength": 128,
+                              "name": "settings.proxy_server_ip",
+                            },
+                          ]
+                        }
+                        name="zone-information-subform"
+                        title="Zone Information"
+                      />,
+                      <SingleField
+                        component="sub-form"
+                        fields={
+                          Array [
+                            Object {
+                              "component": "select",
+                              "id": "settings.concurrent_vm_scans",
+                              "label": "Max Active VM Scans",
+                              "maxLength": 128,
+                              "name": "settings.concurrent_vm_scans",
+                              "options": Array [
+                                Object {
+                                  "label": "Unlimited",
+                                  "value": 0,
+                                },
+                                Object {
+                                  "label": "1",
+                                  "value": 1,
+                                },
+                                Object {
+                                  "label": "2",
+                                  "value": 2,
+                                },
+                                Object {
+                                  "label": "3",
+                                  "value": 3,
+                                },
+                                Object {
+                                  "label": "4",
+                                  "value": 4,
+                                },
+                                Object {
+                                  "label": "5",
+                                  "value": 5,
+                                },
+                                Object {
+                                  "label": "10",
+                                  "value": 10,
+                                },
+                                Object {
+                                  "label": "15",
+                                  "value": 15,
+                                },
+                                Object {
+                                  "label": "20",
+                                  "value": 20,
+                                },
+                                Object {
+                                  "label": "25",
+                                  "value": 25,
+                                },
+                                Object {
+                                  "label": "30",
+                                  "value": 30,
+                                },
+                                Object {
+                                  "label": "35",
+                                  "value": 35,
+                                },
+                                Object {
+                                  "label": "40",
+                                  "value": 40,
+                                },
+                                Object {
+                                  "label": "45",
+                                  "value": 45,
+                                },
+                                Object {
+                                  "label": "50",
+                                  "value": 50,
+                                },
+                              ],
+                            },
+                          ]
+                        }
+                        name="settings"
+                        title="Settings"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "sub-form",
+                          "fields": Array [
+                            Object {
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 128,
+                              "name": "name",
+                            },
+                            Object {
+                              "component": "text-field",
+                              "id": "description",
+                              "label": "Description",
+                              "maxLength": 128,
+                              "name": "description",
+                            },
+                            Object {
+                              "component": "text-field",
+                              "id": "settings.proxy_server_ip",
+                              "label": "SmartProxy Server IP",
+                              "maxLength": 128,
+                              "name": "settings.proxy_server_ip",
+                            },
+                          ],
+                          "name": "zone-information-subform",
+                          "title": "Zone Information",
+                        },
+                        Object {
+                          "component": "sub-form",
+                          "fields": Array [
+                            Object {
+                              "component": "select",
+                              "id": "settings.concurrent_vm_scans",
+                              "label": "Max Active VM Scans",
+                              "maxLength": 128,
+                              "name": "settings.concurrent_vm_scans",
+                              "options": Array [
+                                Object {
+                                  "label": "Unlimited",
+                                  "value": 0,
+                                },
+                                Object {
+                                  "label": "1",
+                                  "value": 1,
+                                },
+                                Object {
+                                  "label": "2",
+                                  "value": 2,
+                                },
+                                Object {
+                                  "label": "3",
+                                  "value": 3,
+                                },
+                                Object {
+                                  "label": "4",
+                                  "value": 4,
+                                },
+                                Object {
+                                  "label": "5",
+                                  "value": 5,
+                                },
+                                Object {
+                                  "label": "10",
+                                  "value": 10,
+                                },
+                                Object {
+                                  "label": "15",
+                                  "value": 15,
+                                },
+                                Object {
+                                  "label": "20",
+                                  "value": 20,
+                                },
+                                Object {
+                                  "label": "25",
+                                  "value": 25,
+                                },
+                                Object {
+                                  "label": "30",
+                                  "value": 30,
+                                },
+                                Object {
+                                  "label": "35",
+                                  "value": 35,
+                                },
+                                Object {
+                                  "label": "40",
+                                  "value": 40,
+                                },
+                                Object {
+                                  "label": "45",
+                                  "value": 45,
+                                },
+                                Object {
+                                  "label": "50",
+                                  "value": 50,
+                                },
+                              ],
+                            },
+                          ],
+                          "name": "settings",
+                          "title": "Settings",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Save"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="ddorg__carbon-form-template-form form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="sub-form"
+                          fields={
+                            Array [
+                              Object {
+                                "component": "text-field",
+                                "id": "name",
+                                "label": "Name",
+                                "maxLength": 128,
+                                "name": "name",
+                              },
+                              Object {
+                                "component": "text-field",
+                                "id": "description",
+                                "label": "Description",
+                                "maxLength": 128,
+                                "name": "description",
+                              },
+                              Object {
+                                "component": "text-field",
+                                "id": "settings.proxy_server_ip",
+                                "label": "SmartProxy Server IP",
+                                "maxLength": 128,
+                                "name": "settings.proxy_server_ip",
+                              },
+                            ]
+                          }
+                          key="zone-information-subform"
+                          name="zone-information-subform"
+                          title="Zone Information"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "sub-form",
+                                "fields": Array [
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "label": "Name",
+                                    "maxLength": 128,
+                                    "name": "name",
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "description",
+                                    "label": "Description",
+                                    "maxLength": 128,
+                                    "name": "description",
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "settings.proxy_server_ip",
+                                    "label": "SmartProxy Server IP",
+                                    "maxLength": 128,
+                                    "name": "settings.proxy_server_ip",
+                                  },
+                                ],
+                                "name": "zone-information-subform",
+                                "title": "Zone Information",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SubForm
+                                DescriptionElement="p"
+                                TitleElement="h3"
+                                component="sub-form"
+                                fields={
+                                  Array [
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "name",
+                                      "label": "Name",
+                                      "maxLength": 128,
+                                      "name": "name",
+                                    },
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "description",
+                                      "label": "Description",
+                                      "maxLength": 128,
+                                      "name": "description",
+                                    },
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "settings.proxy_server_ip",
+                                      "label": "SmartProxy Server IP",
+                                      "maxLength": 128,
+                                      "name": "settings.proxy_server_ip",
+                                    },
+                                  ]
+                                }
+                                name="zone-information-subform"
+                                title="Zone Information"
+                              >
+                                <div
+                                  className="ddorg__carbon-sub-form"
+                                  name="zone-information-subform"
+                                >
+                                  <div>
+                                    <h3>
+                                      Zone Information
+                                    </h3>
+                                  </div>
+                                  <SingleField
+                                    component="text-field"
+                                    id="name"
+                                    key="name"
+                                    label="Name"
+                                    maxLength={128}
+                                    name="name"
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "name",
+                                          "label": "Name",
+                                          "maxLength": 128,
+                                          "name": "name",
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <TextField
+                                          component="text-field"
+                                          id="name"
+                                          label="Name"
+                                          maxLength={128}
+                                          name="name"
+                                        >
+                                          <ForwardRef(TextInput)
+                                            disabled={false}
+                                            helperText=""
+                                            id="name"
+                                            inline={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            key="name"
+                                            labelText="Name"
+                                            light={false}
+                                            maxLength={128}
+                                            name="name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value="test add zone name"
+                                            warn={false}
+                                            warnText=""
+                                          >
+                                            <div
+                                              className="bx--form-item bx--text-input-wrapper"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                htmlFor="name"
+                                              >
+                                                Name
+                                              </label>
+                                              <div
+                                                className="bx--text-input__field-outer-wrapper"
+                                              >
+                                                <div
+                                                  className="bx--text-input__field-wrapper"
+                                                  data-invalid={null}
+                                                >
+                                                  <input
+                                                    className="bx--text-input bx--text__input"
+                                                    disabled={false}
+                                                    id="name"
+                                                    maxLength={128}
+                                                    name="name"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="text"
+                                                    value="test add zone name"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </ForwardRef(TextInput)>
+                                        </TextField>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                  <SingleField
+                                    component="text-field"
+                                    id="description"
+                                    key="description"
+                                    label="Description"
+                                    maxLength={128}
+                                    name="description"
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "description",
+                                          "label": "Description",
+                                          "maxLength": 128,
+                                          "name": "description",
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <TextField
+                                          component="text-field"
+                                          id="description"
+                                          label="Description"
+                                          maxLength={128}
+                                          name="description"
+                                        >
+                                          <ForwardRef(TextInput)
+                                            disabled={false}
+                                            helperText=""
+                                            id="description"
+                                            inline={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            key="description"
+                                            labelText="Description"
+                                            light={false}
+                                            maxLength={128}
+                                            name="description"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value="test add zone"
+                                            warn={false}
+                                            warnText=""
+                                          >
+                                            <div
+                                              className="bx--form-item bx--text-input-wrapper"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                htmlFor="description"
+                                              >
+                                                Description
+                                              </label>
+                                              <div
+                                                className="bx--text-input__field-outer-wrapper"
+                                              >
+                                                <div
+                                                  className="bx--text-input__field-wrapper"
+                                                  data-invalid={null}
+                                                >
+                                                  <input
+                                                    className="bx--text-input bx--text__input"
+                                                    disabled={false}
+                                                    id="description"
+                                                    maxLength={128}
+                                                    name="description"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="text"
+                                                    value="test add zone"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </ForwardRef(TextInput)>
+                                        </TextField>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                  <SingleField
+                                    component="text-field"
+                                    id="settings.proxy_server_ip"
+                                    key="settings.proxy_server_ip"
+                                    label="SmartProxy Server IP"
+                                    maxLength={128}
+                                    name="settings.proxy_server_ip"
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "settings.proxy_server_ip",
+                                          "label": "SmartProxy Server IP",
+                                          "maxLength": 128,
+                                          "name": "settings.proxy_server_ip",
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <TextField
+                                          component="text-field"
+                                          id="settings.proxy_server_ip"
+                                          label="SmartProxy Server IP"
+                                          maxLength={128}
+                                          name="settings.proxy_server_ip"
+                                        >
+                                          <ForwardRef(TextInput)
+                                            disabled={false}
+                                            helperText=""
+                                            id="settings.proxy_server_ip"
+                                            inline={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            key="settings.proxy_server_ip"
+                                            labelText="SmartProxy Server IP"
+                                            light={false}
+                                            maxLength={128}
+                                            name="settings.proxy_server_ip"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                            warn={false}
+                                            warnText=""
+                                          >
+                                            <div
+                                              className="bx--form-item bx--text-input-wrapper"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                htmlFor="settings.proxy_server_ip"
+                                              >
+                                                SmartProxy Server IP
+                                              </label>
+                                              <div
+                                                className="bx--text-input__field-outer-wrapper"
+                                              >
+                                                <div
+                                                  className="bx--text-input__field-wrapper"
+                                                  data-invalid={null}
+                                                >
+                                                  <input
+                                                    className="bx--text-input bx--text__input"
+                                                    disabled={false}
+                                                    id="settings.proxy_server_ip"
+                                                    maxLength={128}
+                                                    name="settings.proxy_server_ip"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="text"
+                                                    value=""
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </ForwardRef(TextInput)>
+                                        </TextField>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                </div>
+                              </SubForm>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="sub-form"
+                          fields={
+                            Array [
+                              Object {
+                                "component": "select",
+                                "id": "settings.concurrent_vm_scans",
+                                "label": "Max Active VM Scans",
+                                "maxLength": 128,
+                                "name": "settings.concurrent_vm_scans",
+                                "options": Array [
+                                  Object {
+                                    "label": "Unlimited",
+                                    "value": 0,
+                                  },
+                                  Object {
+                                    "label": "1",
+                                    "value": 1,
+                                  },
+                                  Object {
+                                    "label": "2",
+                                    "value": 2,
+                                  },
+                                  Object {
+                                    "label": "3",
+                                    "value": 3,
+                                  },
+                                  Object {
+                                    "label": "4",
+                                    "value": 4,
+                                  },
+                                  Object {
+                                    "label": "5",
+                                    "value": 5,
+                                  },
+                                  Object {
+                                    "label": "10",
+                                    "value": 10,
+                                  },
+                                  Object {
+                                    "label": "15",
+                                    "value": 15,
+                                  },
+                                  Object {
+                                    "label": "20",
+                                    "value": 20,
+                                  },
+                                  Object {
+                                    "label": "25",
+                                    "value": 25,
+                                  },
+                                  Object {
+                                    "label": "30",
+                                    "value": 30,
+                                  },
+                                  Object {
+                                    "label": "35",
+                                    "value": 35,
+                                  },
+                                  Object {
+                                    "label": "40",
+                                    "value": 40,
+                                  },
+                                  Object {
+                                    "label": "45",
+                                    "value": 45,
+                                  },
+                                  Object {
+                                    "label": "50",
+                                    "value": 50,
+                                  },
+                                ],
+                              },
+                            ]
+                          }
+                          key="settings"
+                          name="settings"
+                          title="Settings"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "sub-form",
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "settings.concurrent_vm_scans",
+                                    "label": "Max Active VM Scans",
+                                    "maxLength": 128,
+                                    "name": "settings.concurrent_vm_scans",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Unlimited",
+                                        "value": 0,
+                                      },
+                                      Object {
+                                        "label": "1",
+                                        "value": 1,
+                                      },
+                                      Object {
+                                        "label": "2",
+                                        "value": 2,
+                                      },
+                                      Object {
+                                        "label": "3",
+                                        "value": 3,
+                                      },
+                                      Object {
+                                        "label": "4",
+                                        "value": 4,
+                                      },
+                                      Object {
+                                        "label": "5",
+                                        "value": 5,
+                                      },
+                                      Object {
+                                        "label": "10",
+                                        "value": 10,
+                                      },
+                                      Object {
+                                        "label": "15",
+                                        "value": 15,
+                                      },
+                                      Object {
+                                        "label": "20",
+                                        "value": 20,
+                                      },
+                                      Object {
+                                        "label": "25",
+                                        "value": 25,
+                                      },
+                                      Object {
+                                        "label": "30",
+                                        "value": 30,
+                                      },
+                                      Object {
+                                        "label": "35",
+                                        "value": 35,
+                                      },
+                                      Object {
+                                        "label": "40",
+                                        "value": 40,
+                                      },
+                                      Object {
+                                        "label": "45",
+                                        "value": 45,
+                                      },
+                                      Object {
+                                        "label": "50",
+                                        "value": 50,
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "name": "settings",
+                                "title": "Settings",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SubForm
+                                DescriptionElement="p"
+                                TitleElement="h3"
+                                component="sub-form"
+                                fields={
+                                  Array [
+                                    Object {
+                                      "component": "select",
+                                      "id": "settings.concurrent_vm_scans",
+                                      "label": "Max Active VM Scans",
+                                      "maxLength": 128,
+                                      "name": "settings.concurrent_vm_scans",
+                                      "options": Array [
+                                        Object {
+                                          "label": "Unlimited",
+                                          "value": 0,
+                                        },
+                                        Object {
+                                          "label": "1",
+                                          "value": 1,
+                                        },
+                                        Object {
+                                          "label": "2",
+                                          "value": 2,
+                                        },
+                                        Object {
+                                          "label": "3",
+                                          "value": 3,
+                                        },
+                                        Object {
+                                          "label": "4",
+                                          "value": 4,
+                                        },
+                                        Object {
+                                          "label": "5",
+                                          "value": 5,
+                                        },
+                                        Object {
+                                          "label": "10",
+                                          "value": 10,
+                                        },
+                                        Object {
+                                          "label": "15",
+                                          "value": 15,
+                                        },
+                                        Object {
+                                          "label": "20",
+                                          "value": 20,
+                                        },
+                                        Object {
+                                          "label": "25",
+                                          "value": 25,
+                                        },
+                                        Object {
+                                          "label": "30",
+                                          "value": 30,
+                                        },
+                                        Object {
+                                          "label": "35",
+                                          "value": 35,
+                                        },
+                                        Object {
+                                          "label": "40",
+                                          "value": 40,
+                                        },
+                                        Object {
+                                          "label": "45",
+                                          "value": 45,
+                                        },
+                                        Object {
+                                          "label": "50",
+                                          "value": 50,
+                                        },
+                                      ],
+                                    },
+                                  ]
+                                }
+                                name="settings"
+                                title="Settings"
+                              >
+                                <div
+                                  className="ddorg__carbon-sub-form"
+                                  name="settings"
+                                >
+                                  <div>
+                                    <h3>
+                                      Settings
+                                    </h3>
+                                  </div>
+                                  <SingleField
+                                    component="select"
+                                    id="settings.concurrent_vm_scans"
+                                    key="settings.concurrent_vm_scans"
+                                    label="Max Active VM Scans"
+                                    maxLength={128}
+                                    name="settings.concurrent_vm_scans"
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Unlimited",
+                                          "value": 0,
+                                        },
+                                        Object {
+                                          "label": "1",
+                                          "value": 1,
+                                        },
+                                        Object {
+                                          "label": "2",
+                                          "value": 2,
+                                        },
+                                        Object {
+                                          "label": "3",
+                                          "value": 3,
+                                        },
+                                        Object {
+                                          "label": "4",
+                                          "value": 4,
+                                        },
+                                        Object {
+                                          "label": "5",
+                                          "value": 5,
+                                        },
+                                        Object {
+                                          "label": "10",
+                                          "value": 10,
+                                        },
+                                        Object {
+                                          "label": "15",
+                                          "value": 15,
+                                        },
+                                        Object {
+                                          "label": "20",
+                                          "value": 20,
+                                        },
+                                        Object {
+                                          "label": "25",
+                                          "value": 25,
+                                        },
+                                        Object {
+                                          "label": "30",
+                                          "value": 30,
+                                        },
+                                        Object {
+                                          "label": "35",
+                                          "value": 35,
+                                        },
+                                        Object {
+                                          "label": "40",
+                                          "value": 40,
+                                        },
+                                        Object {
+                                          "label": "45",
+                                          "value": 45,
+                                        },
+                                        Object {
+                                          "label": "50",
+                                          "value": 50,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "select",
+                                          "id": "settings.concurrent_vm_scans",
+                                          "label": "Max Active VM Scans",
+                                          "maxLength": 128,
+                                          "name": "settings.concurrent_vm_scans",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Unlimited",
+                                              "value": 0,
+                                            },
+                                            Object {
+                                              "label": "1",
+                                              "value": 1,
+                                            },
+                                            Object {
+                                              "label": "2",
+                                              "value": 2,
+                                            },
+                                            Object {
+                                              "label": "3",
+                                              "value": 3,
+                                            },
+                                            Object {
+                                              "label": "4",
+                                              "value": 4,
+                                            },
+                                            Object {
+                                              "label": "5",
+                                              "value": 5,
+                                            },
+                                            Object {
+                                              "label": "10",
+                                              "value": 10,
+                                            },
+                                            Object {
+                                              "label": "15",
+                                              "value": 15,
+                                            },
+                                            Object {
+                                              "label": "20",
+                                              "value": 20,
+                                            },
+                                            Object {
+                                              "label": "25",
+                                              "value": 25,
+                                            },
+                                            Object {
+                                              "label": "30",
+                                              "value": 30,
+                                            },
+                                            Object {
+                                              "label": "35",
+                                              "value": 35,
+                                            },
+                                            Object {
+                                              "label": "40",
+                                              "value": 40,
+                                            },
+                                            Object {
+                                              "label": "45",
+                                              "value": 45,
+                                            },
+                                            Object {
+                                              "label": "50",
+                                              "value": 50,
+                                            },
+                                          ],
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <SelectWithOnChange
+                                          component="select"
+                                          id="settings.concurrent_vm_scans"
+                                          label="Max Active VM Scans"
+                                          maxLength={128}
+                                          name="settings.concurrent_vm_scans"
+                                          options={
+                                            Array [
+                                              Object {
+                                                "label": "Unlimited",
+                                                "value": 0,
+                                              },
+                                              Object {
+                                                "label": "1",
+                                                "value": 1,
+                                              },
+                                              Object {
+                                                "label": "2",
+                                                "value": 2,
+                                              },
+                                              Object {
+                                                "label": "3",
+                                                "value": 3,
+                                              },
+                                              Object {
+                                                "label": "4",
+                                                "value": 4,
+                                              },
+                                              Object {
+                                                "label": "5",
+                                                "value": 5,
+                                              },
+                                              Object {
+                                                "label": "10",
+                                                "value": 10,
+                                              },
+                                              Object {
+                                                "label": "15",
+                                                "value": 15,
+                                              },
+                                              Object {
+                                                "label": "20",
+                                                "value": 20,
+                                              },
+                                              Object {
+                                                "label": "25",
+                                                "value": 25,
+                                              },
+                                              Object {
+                                                "label": "30",
+                                                "value": 30,
+                                              },
+                                              Object {
+                                                "label": "35",
+                                                "value": 35,
+                                              },
+                                              Object {
+                                                "label": "40",
+                                                "value": 40,
+                                              },
+                                              Object {
+                                                "label": "45",
+                                                "value": 45,
+                                              },
+                                              Object {
+                                                "label": "50",
+                                                "value": 50,
+                                              },
+                                            ]
+                                          }
+                                          placeholder="<Choose>"
+                                        >
+                                          <Select$1
+                                            component="select"
+                                            id="settings.concurrent_vm_scans"
+                                            label="Max Active VM Scans"
+                                            loadingMessage="Loading..."
+                                            maxLength={128}
+                                            name="settings.concurrent_vm_scans"
+                                            options={
+                                              Array [
+                                                Object {
+                                                  "label": "Unlimited",
+                                                  "value": 0,
+                                                },
+                                                Object {
+                                                  "label": "1",
+                                                  "value": 1,
+                                                },
+                                                Object {
+                                                  "label": "2",
+                                                  "value": 2,
+                                                },
+                                                Object {
+                                                  "label": "3",
+                                                  "value": 3,
+                                                },
+                                                Object {
+                                                  "label": "4",
+                                                  "value": 4,
+                                                },
+                                                Object {
+                                                  "label": "5",
+                                                  "value": 5,
+                                                },
+                                                Object {
+                                                  "label": "10",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "15",
+                                                  "value": 15,
+                                                },
+                                                Object {
+                                                  "label": "20",
+                                                  "value": 20,
+                                                },
+                                                Object {
+                                                  "label": "25",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "30",
+                                                  "value": 30,
+                                                },
+                                                Object {
+                                                  "label": "35",
+                                                  "value": 35,
+                                                },
+                                                Object {
+                                                  "label": "40",
+                                                  "value": 40,
+                                                },
+                                                Object {
+                                                  "label": "45",
+                                                  "value": 45,
+                                                },
+                                                Object {
+                                                  "label": "50",
+                                                  "value": 50,
+                                                },
+                                              ]
+                                            }
+                                            placeholder="<Choose>"
+                                          >
+                                            <Select
+                                              SelectComponent={[Function]}
+                                              id="settings.concurrent_vm_scans"
+                                              invalid={false}
+                                              invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
+                                              labelText="Max Active VM Scans"
+                                              loadOptionsChangeCounter={1}
+                                              loadingMessage="Loading..."
+                                              maxLength={128}
+                                              name="settings.concurrent_vm_scans"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "Unlimited",
+                                                    "value": 0,
+                                                  },
+                                                  Object {
+                                                    "label": "1",
+                                                    "value": 1,
+                                                  },
+                                                  Object {
+                                                    "label": "2",
+                                                    "value": 2,
+                                                  },
+                                                  Object {
+                                                    "label": "3",
+                                                    "value": 3,
+                                                  },
+                                                  Object {
+                                                    "label": "4",
+                                                    "value": 4,
+                                                  },
+                                                  Object {
+                                                    "label": "5",
+                                                    "value": 5,
+                                                  },
+                                                  Object {
+                                                    "label": "10",
+                                                    "value": 10,
+                                                  },
+                                                  Object {
+                                                    "label": "15",
+                                                    "value": 15,
+                                                  },
+                                                  Object {
+                                                    "label": "20",
+                                                    "value": 20,
+                                                  },
+                                                  Object {
+                                                    "label": "25",
+                                                    "value": 25,
+                                                  },
+                                                  Object {
+                                                    "label": "30",
+                                                    "value": 30,
+                                                  },
+                                                  Object {
+                                                    "label": "35",
+                                                    "value": 35,
+                                                  },
+                                                  Object {
+                                                    "label": "40",
+                                                    "value": 40,
+                                                  },
+                                                  Object {
+                                                    "label": "45",
+                                                    "value": 45,
+                                                  },
+                                                  Object {
+                                                    "label": "50",
+                                                    "value": 50,
+                                                  },
+                                                ]
+                                              }
+                                              originalOnChange={[Function]}
+                                              placeholder="<Choose>"
+                                              pluckSingleValue={true}
+                                              simpleValue={false}
+                                              value=""
+                                            >
+                                              <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
+                                                id="settings.concurrent_vm_scans"
+                                                invalidText=""
+                                                isClearable={false}
+                                                isFetching={false}
+                                                isSearchable={false}
+                                                labelText="Max Active VM Scans"
+                                                maxLength={128}
+                                                name="settings.concurrent_vm_scans"
+                                                noOptionsMessage={[Function]}
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onInputChange={[Function]}
+                                                options={
+                                                  Array [
+                                                    Object {
+                                                      "label": "Unlimited",
+                                                      "value": 0,
+                                                    },
+                                                    Object {
+                                                      "label": "1",
+                                                      "value": 1,
+                                                    },
+                                                    Object {
+                                                      "label": "2",
+                                                      "value": 2,
+                                                    },
+                                                    Object {
+                                                      "label": "3",
+                                                      "value": 3,
+                                                    },
+                                                    Object {
+                                                      "label": "4",
+                                                      "value": 4,
+                                                    },
+                                                    Object {
+                                                      "label": "5",
+                                                      "value": 5,
+                                                    },
+                                                    Object {
+                                                      "label": "10",
+                                                      "value": 10,
+                                                    },
+                                                    Object {
+                                                      "label": "15",
+                                                      "value": 15,
+                                                    },
+                                                    Object {
+                                                      "label": "20",
+                                                      "value": 20,
+                                                    },
+                                                    Object {
+                                                      "label": "25",
+                                                      "value": 25,
+                                                    },
+                                                    Object {
+                                                      "label": "30",
+                                                      "value": 30,
+                                                    },
+                                                    Object {
+                                                      "label": "35",
+                                                      "value": 35,
+                                                    },
+                                                    Object {
+                                                      "label": "40",
+                                                      "value": 40,
+                                                    },
+                                                    Object {
+                                                      "label": "45",
+                                                      "value": 45,
+                                                    },
+                                                    Object {
+                                                      "label": "50",
+                                                      "value": 50,
+                                                    },
+                                                  ]
+                                                }
+                                                originalOnChange={[Function]}
+                                                placeholder="<Choose>"
+                                                value=""
+                                              >
+                                                <Select
+                                                  className=""
+                                                  disabled={false}
+                                                  helperText=""
+                                                  id="settings.concurrent_vm_scans"
+                                                  inline={false}
+                                                  invalid={false}
+                                                  invalidText=""
+                                                  labelText="Max Active VM Scans"
+                                                  light={false}
+                                                  maxLength={128}
+                                                  name="settings.concurrent_vm_scans"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  value=""
+                                                >
+                                                  <div
+                                                    className="bx--form-item"
+                                                  >
+                                                    <div
+                                                      className="bx--select"
+                                                    >
+                                                      <label
+                                                        className="bx--label"
+                                                        htmlFor="settings.concurrent_vm_scans"
+                                                      >
+                                                        Max Active VM Scans
+                                                      </label>
+                                                      <div
+                                                        className="bx--select-input__wrapper"
+                                                        data-invalid={null}
+                                                      >
+                                                        <select
+                                                          className="bx--select-input"
+                                                          id="settings.concurrent_vm_scans"
+                                                          maxLength={128}
+                                                          name="settings.concurrent_vm_scans"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          value=""
+                                                        >
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="0"
+                                                            label="Unlimited"
+                                                            text="Unlimited"
+                                                            value={0}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="Unlimited"
+                                                              value={0}
+                                                            >
+                                                              Unlimited
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="1"
+                                                            label="1"
+                                                            text="1"
+                                                            value={1}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="1"
+                                                              value={1}
+                                                            >
+                                                              1
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="2"
+                                                            label="2"
+                                                            text="2"
+                                                            value={2}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="2"
+                                                              value={2}
+                                                            >
+                                                              2
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="3"
+                                                            label="3"
+                                                            text="3"
+                                                            value={3}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="3"
+                                                              value={3}
+                                                            >
+                                                              3
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="4"
+                                                            label="4"
+                                                            text="4"
+                                                            value={4}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="4"
+                                                              value={4}
+                                                            >
+                                                              4
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="5"
+                                                            label="5"
+                                                            text="5"
+                                                            value={5}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="5"
+                                                              value={5}
+                                                            >
+                                                              5
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="10"
+                                                            label="10"
+                                                            text="10"
+                                                            value={10}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="10"
+                                                              value={10}
+                                                            >
+                                                              10
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="15"
+                                                            label="15"
+                                                            text="15"
+                                                            value={15}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="15"
+                                                              value={15}
+                                                            >
+                                                              15
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="20"
+                                                            label="20"
+                                                            text="20"
+                                                            value={20}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="20"
+                                                              value={20}
+                                                            >
+                                                              20
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="25"
+                                                            label="25"
+                                                            text="25"
+                                                            value={25}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="25"
+                                                              value={25}
+                                                            >
+                                                              25
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="30"
+                                                            label="30"
+                                                            text="30"
+                                                            value={30}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="30"
+                                                              value={30}
+                                                            >
+                                                              30
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="35"
+                                                            label="35"
+                                                            text="35"
+                                                            value={35}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="35"
+                                                              value={35}
+                                                            >
+                                                              35
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="40"
+                                                            label="40"
+                                                            text="40"
+                                                            value={40}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="40"
+                                                              value={40}
+                                                            >
+                                                              40
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="45"
+                                                            label="45"
+                                                            text="45"
+                                                            value={45}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="45"
+                                                              value={45}
+                                                            >
+                                                              45
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="50"
+                                                            label="50"
+                                                            text="50"
+                                                            value={50}
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="50"
+                                                              value={50}
+                                                            >
+                                                              50
+                                                            </option>
+                                                          </SelectItem>
+                                                        </select>
+                                                        <ForwardRef(ChevronDown16)
+                                                          className="bx--select__arrow"
+                                                        >
+                                                          <Icon
+                                                            className="bx--select__arrow"
+                                                            fill="currentColor"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <svg
+                                                              aria-hidden={true}
+                                                              className="bx--select__arrow"
+                                                              fill="currentColor"
+                                                              focusable="false"
+                                                              height={16}
+                                                              preserveAspectRatio="xMidYMid meet"
+                                                              viewBox="0 0 16 16"
+                                                              width={16}
+                                                              xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                              <path
+                                                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                              />
+                                                            </svg>
+                                                          </Icon>
+                                                        </ForwardRef(ChevronDown16)>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </Select>
+                                              </ClearedSelect>
+                                            </Select>
+                                          </Select$1>
+                                        </SelectWithOnChange>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                </div>
+                              </SubForm>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={true}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="sub-form"
+                                  fields={
+                                    Array [
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 128,
+                                        "name": "name",
+                                      },
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "description",
+                                        "label": "Description",
+                                        "maxLength": 128,
+                                        "name": "description",
+                                      },
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "settings.proxy_server_ip",
+                                        "label": "SmartProxy Server IP",
+                                        "maxLength": 128,
+                                        "name": "settings.proxy_server_ip",
+                                      },
+                                    ]
+                                  }
+                                  name="zone-information-subform"
+                                  title="Zone Information"
+                                />,
+                                <SingleField
+                                  component="sub-form"
+                                  fields={
+                                    Array [
+                                      Object {
+                                        "component": "select",
+                                        "id": "settings.concurrent_vm_scans",
+                                        "label": "Max Active VM Scans",
+                                        "maxLength": 128,
+                                        "name": "settings.concurrent_vm_scans",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Unlimited",
+                                            "value": 0,
+                                          },
+                                          Object {
+                                            "label": "1",
+                                            "value": 1,
+                                          },
+                                          Object {
+                                            "label": "2",
+                                            "value": 2,
+                                          },
+                                          Object {
+                                            "label": "3",
+                                            "value": 3,
+                                          },
+                                          Object {
+                                            "label": "4",
+                                            "value": 4,
+                                          },
+                                          Object {
+                                            "label": "5",
+                                            "value": 5,
+                                          },
+                                          Object {
+                                            "label": "10",
+                                            "value": 10,
+                                          },
+                                          Object {
+                                            "label": "15",
+                                            "value": 15,
+                                          },
+                                          Object {
+                                            "label": "20",
+                                            "value": 20,
+                                          },
+                                          Object {
+                                            "label": "25",
+                                            "value": 25,
+                                          },
+                                          Object {
+                                            "label": "30",
+                                            "value": 30,
+                                          },
+                                          Object {
+                                            "label": "35",
+                                            "value": 35,
+                                          },
+                                          Object {
+                                            "label": "40",
+                                            "value": 40,
+                                          },
+                                          Object {
+                                            "label": "45",
+                                            "value": 45,
+                                          },
+                                          Object {
+                                            "label": "50",
+                                            "value": 50,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                  name="settings"
+                                  title="Settings"
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {},
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": false,
+                                "initialValues": Object {
+                                  "authentications": undefined,
+                                  "created_on": "2021-05-13T19:47:24Z",
+                                  "description": "test add zone",
+                                  "href": "http://localhost:3000/api/zones/68",
+                                  "id": "68",
+                                  "name": "test add zone name",
+                                },
+                                "invalid": false,
+                                "modified": Object {},
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {},
+                                "valid": true,
+                                "validating": false,
+                                "values": Object {
+                                  "authentications": undefined,
+                                  "created_on": "2021-05-13T19:47:24Z",
+                                  "description": "test add zone",
+                                  "href": "http://localhost:3000/api/zones/68",
+                                  "id": "68",
+                                  "name": "test add zone name",
+                                },
+                                "visited": Object {},
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "sub-form",
+                                    "fields": Array [
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 128,
+                                        "name": "name",
+                                      },
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "description",
+                                        "label": "Description",
+                                        "maxLength": 128,
+                                        "name": "description",
+                                      },
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "settings.proxy_server_ip",
+                                        "label": "SmartProxy Server IP",
+                                        "maxLength": 128,
+                                        "name": "settings.proxy_server_ip",
+                                      },
+                                    ],
+                                    "name": "zone-information-subform",
+                                    "title": "Zone Information",
+                                  },
+                                  Object {
+                                    "component": "sub-form",
+                                    "fields": Array [
+                                      Object {
+                                        "component": "select",
+                                        "id": "settings.concurrent_vm_scans",
+                                        "label": "Max Active VM Scans",
+                                        "maxLength": 128,
+                                        "name": "settings.concurrent_vm_scans",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Unlimited",
+                                            "value": 0,
+                                          },
+                                          Object {
+                                            "label": "1",
+                                            "value": 1,
+                                          },
+                                          Object {
+                                            "label": "2",
+                                            "value": 2,
+                                          },
+                                          Object {
+                                            "label": "3",
+                                            "value": 3,
+                                          },
+                                          Object {
+                                            "label": "4",
+                                            "value": 4,
+                                          },
+                                          Object {
+                                            "label": "5",
+                                            "value": 5,
+                                          },
+                                          Object {
+                                            "label": "10",
+                                            "value": 10,
+                                          },
+                                          Object {
+                                            "label": "15",
+                                            "value": 15,
+                                          },
+                                          Object {
+                                            "label": "20",
+                                            "value": 20,
+                                          },
+                                          Object {
+                                            "label": "25",
+                                            "value": 25,
+                                          },
+                                          Object {
+                                            "label": "30",
+                                            "value": 30,
+                                          },
+                                          Object {
+                                            "label": "35",
+                                            "value": 35,
+                                          },
+                                          Object {
+                                            "label": "40",
+                                            "value": 40,
+                                          },
+                                          Object {
+                                            "label": "45",
+                                            "value": 45,
+                                          },
+                                          Object {
+                                            "label": "50",
+                                            "value": 50,
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                    "name": "settings",
+                                    "title": "Settings",
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Save"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className="ddorg__carbon-form-template-buttons"
+                              >
+                                <div
+                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Save"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Save
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="reset"
+                                    disabled={true}
+                                    key="form-reset"
+                                    label="Reset"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                        disabled={true}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Reset
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </ZoneForm>
+</Provider>
+`;
