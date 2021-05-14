@@ -63,6 +63,7 @@ import PhysicalStorageForm from '../components/physical-storage-form';
 import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
+import ZoneForm from '../components/zone-form';
 
 /**
 * Add component definitions to this file.
@@ -135,3 +136,4 @@ ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('HostInitiatorForm', HostInitiatorForm);
 ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
+ManageIQ.component.addReact('ZoneForm', ZoneForm);
