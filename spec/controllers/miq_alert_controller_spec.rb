@@ -91,7 +91,7 @@ describe MiqAlertController do
   context 'test click on toolbar button' do
     before do
       EvmSpecHelper.local_miq_server
-      login_as FactoryBot.create(:user, :features => %w[alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
+      login_as FactoryBot.create(:user, :features => %w[miq_alert miq_alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
       # login_as FactoryBot.create(:user, :features => "alert_admin")
       @miq_alert = FactoryBot.create(:miq_alert)
     end

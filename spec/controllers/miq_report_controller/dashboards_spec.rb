@@ -5,7 +5,9 @@ describe ReportController do
     let(:user)           { FactoryBot.create(:user, :features => "db_edit") }
 
     before do
-      stub_user(:features => :all)
+      EvmSpecHelper.seed_specific_product_features(%w(db_edit db_copy))
+      EvmSpecHelper.local_miq_server
+      login_as user
     end
 
     describe "#db_copy" do
