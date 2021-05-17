@@ -14,12 +14,7 @@ module Mixins
           end
           if @explorer
             @changed = session[:changed] = false
-          else
-            @redirect_controller = 'vm'
-            @redirect_id = @record.id
           end
-          rename_set_form_vars
-          build_rename_screen
           @refresh_partial = 'rename_vm'
         end
 

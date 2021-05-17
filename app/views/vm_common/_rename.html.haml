@@ -1,20 +1,3 @@
 - url = url_for_only_path(:action => 'name_changed', :id => @record.id)
 = render :partial => 'layouts/flash_msg'
-
-%h3
-  = _('Basic Information')
-.form-horizontal
-  .form-group
-    %label.col-md-2.control-label
-      = _('Name')
-    .col-md-8
-      = text_field_tag('name',
-                        @edit[:new][:name],
-                        :class             => 'form-control',
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-
-- if @changed.nil?
-  = render(:partial => '/layouts/edit_form_buttons',
-           :locals  => {:action_url   => 'rename_vm',
-                        :ajax_buttons => true,
-                        :record_id    => @record.id})
+= react('VmCommonRenameForm', :vmId => @record.id.to_s)
