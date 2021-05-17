@@ -74,14 +74,18 @@ describe 'Application routes' do
               allow(subject).to receive(:redirect_to).with(:controller => 'dashboard', :action => 'auth_error').and_raise(MiqException::RbacPrivilegeException)
               allow(subject).to receive(:add_flash).with("The user is not authorized for this task or item.", :error).and_raise(MiqException::RbacPrivilegeException)
 
-              expect do
-                subject.send(:check_privileges)
-                subject.send(action)
-              rescue MiqException::RbacPrivilegeException
+              begin
+                expect do
+                  subject.send(:check_privileges)
+                  subject.send(action)
+                rescue MiqException::RbacPrivilegeException
+                  raise
+                end.to raise_error(MiqException::RbacPrivilegeException)
+              rescue RSpec::Expectations::ExpectationNotMetError
+                # Append a custom error message
+                $!.message << "\n\n" + error_message unless fp
                 raise
-              rescue => ex
-                # NOP: we don't care if any other exception happens
-              end.to raise_error(MiqException::RbacPrivilegeException), -> { !fp && error_message }
+              end
             end
           end
         end
