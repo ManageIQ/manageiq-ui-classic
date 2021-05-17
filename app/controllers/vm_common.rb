@@ -1143,7 +1143,7 @@ module VmCommon
             presenter.remove_paging.hide(:form_buttons_div)
           end
         elsif @sb[:action] == 'rename'
-          presenter.hide(:form_buttons_div, '')
+          presenter.hide(:form_buttons_div)
         elsif %w[chargeback reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
