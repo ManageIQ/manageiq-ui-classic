@@ -97,9 +97,15 @@ module ApplicationHelper
 
   # Check role based authorization for a UI task
   def role_allows?(**options)
-    if options[:feature].nil?
-      $log.debug("Auth failed - no feature was specified (required)")
-      return false
+    features = Array(options[:feature])
+
+    if features.blank?
+       $log.debug("Auth failed - no feature was specified (required)")
+       return false
+     end
+
+    if !Rails.env.production? && MiqProductFeature.where(:identifier => features).count != features.length
+      raise("#{__method__} with non-existing product feature identifier: #{features.inspect} is not supported.  Create it or use an existing one.")
     end
 
     Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
