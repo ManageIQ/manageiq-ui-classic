@@ -985,7 +985,7 @@ module VmCommon
       options = list_child_vms(model, node_id, title, show_list)
 
       # After adding to history, add name filter suffix if showing a list
-      if @search_text.present?
+      if @search_text.present? && !@in_a_form
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
     end

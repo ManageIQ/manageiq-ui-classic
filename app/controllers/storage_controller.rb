@@ -502,7 +502,7 @@ class StorageController < ApplicationController
   end
 
   def set_right_cell_text
-    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 'ds'
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 'ds' && !@in_a_form
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:tree] == :storage_tree && @edit && @edit[:adv_search_applied]
   end
 

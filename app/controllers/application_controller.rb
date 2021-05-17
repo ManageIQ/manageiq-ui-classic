@@ -889,7 +889,7 @@ class ApplicationController < ActionController::Base
              end
 
     # add @search_text to title for gtl screens only
-    if @search_text.present? && @display.nil?
+    if @search_text.present? && @display.nil? && !@in_a_form
       @title += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
     end
   end
