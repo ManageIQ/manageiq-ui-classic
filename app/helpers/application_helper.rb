@@ -107,13 +107,14 @@ module ApplicationHelper
     if !Rails.env.production?
       # Detect if queried features are missing from the database and possibly invalid
       if MiqProductFeature.where(:identifier => features).count != features.length
-        message = "#{__method__} with non-existing product feature identifier: #{features.inspect} is not supported.  Create it or use an existing one."
-        feature_identifiers = MiqProductFeature.all.pluck(:identifier)
-        if feature_identifiers.length <= 5
-          # TODO: Handle these in a followup. Allow tests that seed "everything" or a few features to get by.
-          # warn "#{message} Note: some features were seeded: #{feature_identifiers.inspect}.  Seed the missing feature(s)."
-        else
-          raise("#{message} Note: detected features: #{feature_identifiers.inspect}")
+        message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
+        identifiers = MiqProductFeature.all.pluck(:identifier)
+        features.each do |feature|
+          if Rails.env.development?
+            raise message
+          elsif Rails.env.test? && identifiers.length >= 5
+            raise("#{message} Note: detected features: #{identifiers.inspect}")
+          end
         end
       end
     end
