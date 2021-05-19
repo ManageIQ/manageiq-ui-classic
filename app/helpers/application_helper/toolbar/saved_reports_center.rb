@@ -1,7 +1,7 @@
 class ApplicationHelper::Toolbar::SavedReportsCenter < ApplicationHelper::Toolbar::Basic
   button_group('saved_report_reloading', [
     button(
-      :reload,
+      :miq_report_saved_reports_reload,
       'fa fa-refresh fa-lg',
       N_('Refresh selected Reports'),
       nil,
