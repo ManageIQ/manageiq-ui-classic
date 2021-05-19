@@ -1,9 +1,13 @@
+test_specific_controller = ENV['TEST_CONTROLLER']
+warn "Running with routes test for #{test_specific_controller.inspect}" if test_specific_controller.present?
+
 routes = Rails.application.routes.routes.each_with_object({}) do |route, obj|
   controller, action = route.defaults.values_at(:controller, :action)
 
   next if controller.nil? || controller.starts_with?('api/') || controller.starts_with?('rails/')
 
   klass = "#{controller}_controller".camelize.constantize
+  next if test_specific_controller.present? && !controller.starts_with?(test_specific_controller)
 
   obj[klass] ||= []
   obj[klass] << action
