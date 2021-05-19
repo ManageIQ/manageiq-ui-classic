@@ -85,10 +85,11 @@ describe 'Application routes' do
                 rescue MiqException::RbacPrivilegeException
                   raise
                 end.to raise_error(MiqException::RbacPrivilegeException)
-              rescue RSpec::Expectations::ExpectationNotMetError
-                # Append a custom error message
-                $!.message << "\n\n" + error_message unless fp
-                raise
+              rescue RSpec::Expectations::ExpectationNotMetError => err
+                raise if fp
+
+                # Reraise but with a custom error message
+                raise err.class, "#{err.message} \n\n#{error_message}"
               end
             end
           end
