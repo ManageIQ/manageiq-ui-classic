@@ -100,22 +100,18 @@ module ApplicationHelper
     features = Array(options[:feature])
 
     if features.blank?
-       $log.debug("Auth failed - no feature was specified (required)")
-       return false
-     end
+      $log.debug("Auth failed - no feature was specified (required)")
+      return false
+    end
 
-    if !Rails.env.production?
-      # Detect if queried features are missing from the database and possibly invalid
-      if MiqProductFeature.where(:identifier => features).count != features.length
-        message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
-        identifiers = MiqProductFeature.all.pluck(:identifier)
-        features.each do |feature|
-          if Rails.env.development?
-            raise message
-          elsif Rails.env.test? && identifiers.length >= 5
-            raise("#{message} Note: detected features: #{identifiers.inspect}")
-          end
-        end
+    # Detect if queried features are missing from the database and possibly invalid
+    if !Rails.env.production? && MiqProductFeature.where(:identifier => features).count != features.length
+      message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
+      identifiers = MiqProductFeature.all.pluck(:identifier)
+      if Rails.env.development?
+        raise message
+      elsif Rails.env.test? && identifiers.length >= 5
+        raise("#{message} Note: detected features: #{identifiers.inspect}")
       end
     end
 
