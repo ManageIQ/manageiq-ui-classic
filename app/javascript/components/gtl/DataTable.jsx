@@ -1,17 +1,43 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { renderDataTableToolbar } from './utils';
-import { renderPagination } from './utils';
+import { renderDataTableToolbar, renderPagination } from './utils';
 
 const classNames = require('classnames');
 
 const getNodeIconType = (row, columnKey) =>
   row && row.cells && ['image', 'icon']
-    .find(item => Object.prototype.hasOwnProperty.call(row.cells[columnKey], item)
+    .find((item) => Object.prototype.hasOwnProperty.call(row.cells[columnKey], item)
       && !!row.cells[columnKey][item]);
 
 const isFilteredBy = (settings, column) => settings.sort_col === column.col_idx;
+
+var selectedRows =  [];
+
+const arrayUnique = (array) => {
+  var a = array.concat();
+  var startLength = selectedRows.length; 
+  for (var i=0; i<array.length; i++) {
+    var found = false
+    for (var j=0; j<startLength; j++) {
+      if (array[i].id == selectedRows[j].id) {
+        found = true
+      } 
+    }
+    if(!found) {
+      selectedRows.push(array[i])
+    }
+  }
+  return selectedRows;
+}
+
+const arrayRemove = (array) => {
+  for (var i=0; i<array.length; i++) {
+    var idx = selectedRows.indexOf(array[i]);
+    selectedRows.splice(idx, 1);
+  }
+  return selectedRows;
+}
 
 export const DataTable = ({
   rows,
@@ -36,11 +62,19 @@ export const DataTable = ({
     const [checkedItems, setCheckedItems] = useState({}); //plain object as state
 
     const localOnSelectAll = (ev) => {
-      if (ev.target.classList.contains('is-checkbox-cell') ||
-        ev.target.parentElement.classList.contains('is-checkbox-cell')) {
+      if (ev.target.classList.contains('is-checkbox-cell')
+        || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
         return;
       }
 
+      if (ev.target.checked) {
+        var array3 = arrayUnique(selectedRows.concat(rows))
+        // console.log("adding all")
+      } else {
+        var array3 = arrayRemove(rows)
+        // console.log("removing all")
+      }
+      
       onSelectAll(rows, ev.target);
       setCheckedItems({...checkedItems, [ev.target.name]: ev.target.checked});
       ev.stopPropagation();
@@ -48,55 +82,74 @@ export const DataTable = ({
 
     return (
       <input type="checkbox"
-             name={'selectAll'}
-             key={'selectAll'}
-             checked={!!checkedItems['selectAll']}
+             name="selectAll"
+             key="selectAll"
+             checked={!!checkedItems.selectAll}
              onChange={localOnSelectAll}
              onKeyPress={localOnSelectAll}
              role="checkbox"
              aria-checked="false"
              tabIndex="0"
              aria-labelledby="selectAll"
-             title="Check All"/>
+             title="Check All"
+      />
     );
   };
 
-  const renderTableHeader = () => (
+  const renderTableHeader = () => { 
+    return(
     <thead className="miq-thead">
       <tr>
-        {!inEditMode() && !noCheckboxes() &&
-        <th className="narrow table-view-pf-select">
-          <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
-          {selectAll()}
-        </th>
-        }
+        {!inEditMode() && !noCheckboxes()
+        && (
+          <th className="narrow table-view-pf-select">
+            <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
+            {selectAll()}
+          </th>
+        )}
         {columns.map((column, index) =>
-          (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes())) &&
-            <th
-              onClick={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
-              onKeyPress={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
-              tabIndex="0"
-              className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
-              key={`header_${index}`}
-            >
-              {column.header_text}
-              {isFilteredBy(settings, column) &&
-                <div className="pull-right">
-                  <i className={
-                    classNames('fa', {
-                      'fa-sort-asc': !(settings.sort_dir == "ASC"),
-                      'fa-sort-desc': !(!!settings.sort_dir == "ASC"),
-                    })}
-                  />
-                </div>
-              }
-            </th>)
-        }
+          (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes()))
+            && (
+              <th
+                onClick={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
+                onKeyPress={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
+                tabIndex="0"
+                className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
+                key={`header_${index}`}
+              >
+                {column.header_text}
+                {isFilteredBy(settings, column)
+                && (
+                  <div className="pull-right">
+                    <i
+                      className={
+                        classNames('fa', {
+                          'fa-sort-asc': !(settings.sort_dir == 'ASC'),
+                          'fa-sort-desc': !(!!settings.sort_dir == 'ASC'),
+                        })
+                      }
+                    />
+                  </div>
+                )}
+              </th>
+            ))}
       </tr>
     </thead>
-  );
+  )};
 
-  const localOnItemSelected = row => ev => {
+  const localOnItemSelected = (row) => (ev) => { // specific to checkmark clicks
+    // this is what is trigered by the checkmark click
+    console.log("localOnItemSelected")
+    console.log(row)
+    console.log(ev)
+    console.log(ev.target)
+    if (ev.target.checked) { // true
+      selectedRows.push(row)
+    } else { // false
+      var idx = selectedRows.indexOf(row);
+      selectedRows.splice(idx, 1)
+    }
+    
     onItemSelect(row, ev.target.checked);
     ev.stopPropagation();
   };
@@ -107,7 +160,7 @@ export const DataTable = ({
     return '';
   };
 
-  const localOnClickItem = row => ev => {
+  const localOnClickItem = (row) => (ev) => { // this is triggered by *any* click
     if (ev.target.classList.contains('is-checkbox-cell') ||
        ev.target.parentElement.classList.contains('is-checkbox-cell')) {
       return;
@@ -118,9 +171,35 @@ export const DataTable = ({
     onItemClick(row);
   };
 
-  const renderTableBody = () => (
+  const renderTableBody = () => {
+    console.log("renderTableBody")
+    console.log(rows)
+    console.log(selectedRows)
+    console.log("renderTableBody outs")
+    for (var m = 0 ; m < rows.length; m++) {
+      for(var n = 0 ; n < selectedRows.length ; n++) {
+        if (rows[m].id == selectedRows[n].id) {
+          console.log("found match")
+          // localOnClickItem(rows[m]) // this isnt working
+          // localOnItemSelected(rows[m]) // this isnt getting called?
+
+          rows[m].selected = true
+          rows[m].checked = true
+          console.log("found match", rows[m])
+
+          // localOnItemSelected
+          // onItemSelect(rows[m], true); // just this alone blows it up
+          // ev.stopPropagation(); // ev doesnt exits here so we need to crack that
+        } else {
+          console.log("no match")
+          // rows[m].selected = false
+        }
+      }
+    }
+
+    return(
     <tbody>
-      {rows.map(row => (
+      {rows.map((row) => (
         <tr
           className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
           key={`check_${row.id}`}
@@ -136,9 +215,10 @@ export const DataTable = ({
                 'is-checkbox-cell': row.cells[columnKey].is_checkbox,
               })}
             >
-              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode() &&
-              <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label> &&
-              <input
+              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
+              && <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label>
+              && (
+                <input
                   onChange={localOnItemSelected(row)}
                   onKeyPress={localOnItemSelected(row)}
                   role="checkbox"
@@ -151,44 +231,51 @@ export const DataTable = ({
                   checked={row.checked || false}
                   className="list-grid-checkbox"
                 />
-              }
-              { getNodeIconType(row, columnKey) === 'icon' &&
-                <i
-                  className={row.cells[columnKey].icon}
-                  title={row.cells[columnKey].title}
-                >
-                  <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
-                </i>
-              }
-              { getNodeIconType(row, columnKey) === 'image' &&
-                <img
-                  src={row.cells[columnKey].picture || row.cells[columnKey].image}
-                  alt={row.cells[columnKey].title}
-                  title={row.cells[columnKey].title}
-                />
-              }
-              { row.cells[columnKey].text && !row.cells[columnKey].is_button &&
-                <span>
-                  {row.cells[columnKey].text}
-                </span>
-              }
-              { row.cells[columnKey].is_button && row.cells[columnKey].onclick &&
-                <button
-                  className="btn btn-primary"
-                  disabled={row.cells[columnKey].disabled}
-                  title={row.cells[columnKey].title}
-                  alt={row.cells[columnKey].title}
-                  onClick={onItemButtonClick(row)}
-                  onKeyPress={onItemButtonClick(row)}
-                  tabIndex="0"
-                >
-                  {row.cells[columnKey].text}
-                </button>
-              }
-            </td>))}
+              )}
+              { getNodeIconType(row, columnKey) === 'icon'
+                && (
+                  <i
+                    className={row.cells[columnKey].icon}
+                    title={row.cells[columnKey].title}
+                  >
+                    <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
+                  </i>
+                )}
+              { getNodeIconType(row, columnKey) === 'image'
+                && (
+                  <img
+                    src={row.cells[columnKey].picture || row.cells[columnKey].image}
+                    alt={row.cells[columnKey].title}
+                    title={row.cells[columnKey].title}
+                  />
+                )}
+              { row.cells[columnKey].text && !row.cells[columnKey].is_button
+                && (
+                  <span>
+                    {row.cells[columnKey].text}
+                  </span>
+                )}
+              { row.cells[columnKey].is_button && row.cells[columnKey].onclick
+                && (
+                  <button
+                    className="btn btn-primary"
+                    disabled={row.cells[columnKey].disabled}
+                    title={row.cells[columnKey].title}
+                    alt={row.cells[columnKey].title}
+                    onClick={onItemButtonClick(row)}
+                    onKeyPress={onItemButtonClick(row)}
+                    tabIndex="0"
+                  >
+                    {row.cells[columnKey].text}
+                  </button>
+                )}
+            </td>
+          ))}
         </tr>
-      ))}
-    </tbody>);
+      )
+      )}
+    </tbody>
+  )};
 
   const renderTable = () => (
     <table className="table table-bordered table-striped table-hover miq-table-with-footer miq-table">
@@ -206,8 +293,7 @@ export const DataTable = ({
       { (!inEditMode() || showPagination()) && isVisible
       && renderPagination({
         pagination, total, onPerPageSelect, onPageSet,
-      })
-      }
+      })}
       { rows.length !== 0 && renderTable() }
     </div>
   );
