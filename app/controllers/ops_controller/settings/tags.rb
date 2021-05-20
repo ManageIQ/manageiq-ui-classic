@@ -83,7 +83,7 @@ module OpsController::Settings::Tags
         else
           @category = Classification.find_by(:description => @edit[:new][:description])
           AuditEvent.success(build_created_audit(@category, @edit))
-          add_flash(_("Category \"%{name}\" was added") % {:name => @category.description})
+          add_flash(_("Category \"%{name}\" was added") % {:name => @category.name})
           get_node_info(x_node)
           @category = @edit = session[:edit] = nil # clean out the saved info
           replace_right_cell(:nodetype => "root")
