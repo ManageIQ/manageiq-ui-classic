@@ -17,6 +17,7 @@ pending_routes = YAML.safe_load(ManageIQ::UI::Classic.root.join('spec', 'config'
 
 describe 'Application routes' do
   before(:all) { MiqProductFeature.seed_features }
+  after(:all)  { MiqProductFeature.destroy_all }
 
   def error_message
     <<~ERROR
