@@ -82,8 +82,6 @@ describe 'Application routes' do
                 expect do
                   subject.send(:check_privileges)
                   subject.send(action)
-                rescue MiqException::RbacPrivilegeException
-                  raise
                 end.to raise_error(MiqException::RbacPrivilegeException)
               rescue RSpec::Expectations::ExpectationNotMetError => err
                 raise if fp
