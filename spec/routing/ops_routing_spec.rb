@@ -88,7 +88,6 @@ describe "routing for OpsController" do
     wait_for_task
     x_button
     zone_edit
-    zone_field_changed
   ).each do |task|
     describe "##{task}" do
       it 'routes with POST' do
