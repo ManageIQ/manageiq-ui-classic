@@ -67,7 +67,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           :options   => {:feature => 'miq_policy_edit_events'}
         ),
         button(
-          :miq_event_edit,
+          :miq_policy_event_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit Actions for this Policy\'s Event'),
           t,
