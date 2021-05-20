@@ -2954,7 +2954,6 @@ Rails.application.routes.draw do
       :post => %w(
         edit_vm
         form_field_changed
-        name_changed
         policy_sim
         policy_sim_add
         policy_sim_cancel
@@ -3117,7 +3116,6 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
-        name_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3205,7 +3203,6 @@ Rails.application.routes.draw do
         guest_applications
         kernel_drivers
         linux_initprocesses
-        name_changed
         ownership_update
         patches
         perf_chart_chooser

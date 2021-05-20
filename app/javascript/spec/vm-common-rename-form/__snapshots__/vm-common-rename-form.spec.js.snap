@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VM common form component should render editing form variant 1 1`] = `
+<Connect(MiqFormRenderer)
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "text-field",
+          "id": "name",
+          "isRequired": true,
+          "label": "Name",
+          "maxLength": 128,
+          "name": "name",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`VM common form component should render editing form variant 2 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <VmCommonRenameForm
+    vmId="4351"
+  />
+</Provider>
+`;
