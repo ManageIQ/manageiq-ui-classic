@@ -19,22 +19,30 @@ exports[`zone Form Component should render a new Zone form 1`] = `
             Object {
               "component": "text-field",
               "id": "name",
+              "isDisabled": false,
+              "isRequired": true,
               "label": "Name",
-              "maxLength": 128,
+              "maxLength": 50,
               "name": "name",
             },
             Object {
               "component": "text-field",
               "id": "description",
+              "isRequired": true,
               "label": "Description",
-              "maxLength": 128,
+              "maxLength": 50,
               "name": "description",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
             },
             Object {
               "component": "text-field",
               "id": "settings.proxy_server_ip",
               "label": "SmartProxy Server IP",
-              "maxLength": 128,
+              "maxLength": 50,
               "name": "settings.proxy_server_ip",
             },
           ],
@@ -48,7 +56,6 @@ exports[`zone Form Component should render a new Zone form 1`] = `
               "component": "select",
               "id": "settings.concurrent_vm_scans",
               "label": "Max Active VM Scans",
-              "maxLength": 128,
               "name": "settings.concurrent_vm_scans",
               "options": Array [
                 Object {
@@ -177,22 +184,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                 Object {
                   "component": "text-field",
                   "id": "name",
+                  "isDisabled": true,
+                  "isRequired": true,
                   "label": "Name",
-                  "maxLength": 128,
+                  "maxLength": 50,
                   "name": "name",
                 },
                 Object {
                   "component": "text-field",
                   "id": "description",
+                  "isRequired": true,
                   "label": "Description",
-                  "maxLength": 128,
+                  "maxLength": 50,
                   "name": "description",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
                 },
                 Object {
                   "component": "text-field",
                   "id": "settings.proxy_server_ip",
                   "label": "SmartProxy Server IP",
-                  "maxLength": 128,
+                  "maxLength": 50,
                   "name": "settings.proxy_server_ip",
                 },
               ],
@@ -206,7 +221,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                   "component": "select",
                   "id": "settings.concurrent_vm_scans",
                   "label": "Max Active VM Scans",
-                  "maxLength": 128,
                   "name": "settings.concurrent_vm_scans",
                   "options": Array [
                     Object {
@@ -340,22 +354,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                   Object {
                     "component": "text-field",
                     "id": "name",
+                    "isDisabled": true,
+                    "isRequired": true,
                     "label": "Name",
-                    "maxLength": 128,
+                    "maxLength": 50,
                     "name": "name",
                   },
                   Object {
                     "component": "text-field",
                     "id": "description",
+                    "isRequired": true,
                     "label": "Description",
-                    "maxLength": 128,
+                    "maxLength": 50,
                     "name": "description",
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
                   },
                   Object {
                     "component": "text-field",
                     "id": "settings.proxy_server_ip",
                     "label": "SmartProxy Server IP",
-                    "maxLength": 128,
+                    "maxLength": 50,
                     "name": "settings.proxy_server_ip",
                   },
                 ],
@@ -369,7 +391,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                     "component": "select",
                     "id": "settings.concurrent_vm_scans",
                     "label": "Max Active VM Scans",
-                    "maxLength": 128,
                     "name": "settings.concurrent_vm_scans",
                     "options": Array [
                       Object {
@@ -495,22 +516,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                     Object {
                       "component": "text-field",
                       "id": "name",
+                      "isDisabled": true,
+                      "isRequired": true,
                       "label": "Name",
-                      "maxLength": 128,
+                      "maxLength": 50,
                       "name": "name",
                     },
                     Object {
                       "component": "text-field",
                       "id": "description",
+                      "isRequired": true,
                       "label": "Description",
-                      "maxLength": 128,
+                      "maxLength": 50,
                       "name": "description",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
                     },
                     Object {
                       "component": "text-field",
                       "id": "settings.proxy_server_ip",
                       "label": "SmartProxy Server IP",
-                      "maxLength": 128,
+                      "maxLength": 50,
                       "name": "settings.proxy_server_ip",
                     },
                   ],
@@ -524,7 +553,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                       "component": "select",
                       "id": "settings.concurrent_vm_scans",
                       "label": "Max Active VM Scans",
-                      "maxLength": 128,
                       "name": "settings.concurrent_vm_scans",
                       "options": Array [
                         Object {
@@ -654,22 +682,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                         Object {
                           "component": "text-field",
                           "id": "name",
+                          "isDisabled": true,
+                          "isRequired": true,
                           "label": "Name",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "name",
                         },
                         Object {
                           "component": "text-field",
                           "id": "description",
+                          "isRequired": true,
                           "label": "Description",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "description",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
                         },
                         Object {
                           "component": "text-field",
                           "id": "settings.proxy_server_ip",
                           "label": "SmartProxy Server IP",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "settings.proxy_server_ip",
                         },
                       ]
@@ -685,7 +721,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                           "component": "select",
                           "id": "settings.concurrent_vm_scans",
                           "label": "Max Active VM Scans",
-                          "maxLength": 128,
                           "name": "settings.concurrent_vm_scans",
                           "options": Array [
                             Object {
@@ -770,22 +805,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                         Object {
                           "component": "text-field",
                           "id": "name",
+                          "isDisabled": true,
+                          "isRequired": true,
                           "label": "Name",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "name",
                         },
                         Object {
                           "component": "text-field",
                           "id": "description",
+                          "isRequired": true,
                           "label": "Description",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "description",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
                         },
                         Object {
                           "component": "text-field",
                           "id": "settings.proxy_server_ip",
                           "label": "SmartProxy Server IP",
-                          "maxLength": 128,
+                          "maxLength": 50,
                           "name": "settings.proxy_server_ip",
                         },
                       ],
@@ -799,7 +842,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                           "component": "select",
                           "id": "settings.concurrent_vm_scans",
                           "label": "Max Active VM Scans",
-                          "maxLength": 128,
                           "name": "settings.concurrent_vm_scans",
                           "options": Array [
                             Object {
@@ -895,22 +937,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                           Object {
                             "component": "text-field",
                             "id": "name",
+                            "isDisabled": true,
+                            "isRequired": true,
                             "label": "Name",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "name",
                           },
                           Object {
                             "component": "text-field",
                             "id": "description",
+                            "isRequired": true,
                             "label": "Description",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "description",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
                           },
                           Object {
                             "component": "text-field",
                             "id": "settings.proxy_server_ip",
                             "label": "SmartProxy Server IP",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "settings.proxy_server_ip",
                           },
                         ]
@@ -926,7 +976,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                             "component": "select",
                             "id": "settings.concurrent_vm_scans",
                             "label": "Max Active VM Scans",
-                            "maxLength": 128,
                             "name": "settings.concurrent_vm_scans",
                             "options": Array [
                               Object {
@@ -1017,22 +1066,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                           Object {
                             "component": "text-field",
                             "id": "name",
+                            "isDisabled": true,
+                            "isRequired": true,
                             "label": "Name",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "name",
                           },
                           Object {
                             "component": "text-field",
                             "id": "description",
+                            "isRequired": true,
                             "label": "Description",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "description",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
                           },
                           Object {
                             "component": "text-field",
                             "id": "settings.proxy_server_ip",
                             "label": "SmartProxy Server IP",
-                            "maxLength": 128,
+                            "maxLength": 50,
                             "name": "settings.proxy_server_ip",
                           },
                         ],
@@ -1046,7 +1103,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                             "component": "select",
                             "id": "settings.concurrent_vm_scans",
                             "label": "Max Active VM Scans",
-                            "maxLength": 128,
                             "name": "settings.concurrent_vm_scans",
                             "options": Array [
                               Object {
@@ -1157,22 +1213,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                             Object {
                               "component": "text-field",
                               "id": "name",
+                              "isDisabled": true,
+                              "isRequired": true,
                               "label": "Name",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "name",
                             },
                             Object {
                               "component": "text-field",
                               "id": "description",
+                              "isRequired": true,
                               "label": "Description",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "description",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
                             },
                             Object {
                               "component": "text-field",
                               "id": "settings.proxy_server_ip",
                               "label": "SmartProxy Server IP",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "settings.proxy_server_ip",
                             },
                           ]
@@ -1188,7 +1252,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                               "component": "select",
                               "id": "settings.concurrent_vm_scans",
                               "label": "Max Active VM Scans",
-                              "maxLength": 128,
                               "name": "settings.concurrent_vm_scans",
                               "options": Array [
                                 Object {
@@ -1279,22 +1342,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                             Object {
                               "component": "text-field",
                               "id": "name",
+                              "isDisabled": true,
+                              "isRequired": true,
                               "label": "Name",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "name",
                             },
                             Object {
                               "component": "text-field",
                               "id": "description",
+                              "isRequired": true,
                               "label": "Description",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "description",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
                             },
                             Object {
                               "component": "text-field",
                               "id": "settings.proxy_server_ip",
                               "label": "SmartProxy Server IP",
-                              "maxLength": 128,
+                              "maxLength": 50,
                               "name": "settings.proxy_server_ip",
                             },
                           ],
@@ -1308,7 +1379,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                               "component": "select",
                               "id": "settings.concurrent_vm_scans",
                               "label": "Max Active VM Scans",
-                              "maxLength": 128,
                               "name": "settings.concurrent_vm_scans",
                               "options": Array [
                                 Object {
@@ -1410,22 +1480,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                               Object {
                                 "component": "text-field",
                                 "id": "name",
+                                "isDisabled": true,
+                                "isRequired": true,
                                 "label": "Name",
-                                "maxLength": 128,
+                                "maxLength": 50,
                                 "name": "name",
                               },
                               Object {
                                 "component": "text-field",
                                 "id": "description",
+                                "isRequired": true,
                                 "label": "Description",
-                                "maxLength": 128,
+                                "maxLength": 50,
                                 "name": "description",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
                               },
                               Object {
                                 "component": "text-field",
                                 "id": "settings.proxy_server_ip",
                                 "label": "SmartProxy Server IP",
-                                "maxLength": 128,
+                                "maxLength": 50,
                                 "name": "settings.proxy_server_ip",
                               },
                             ]
@@ -1442,22 +1520,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                   Object {
                                     "component": "text-field",
                                     "id": "name",
+                                    "isDisabled": true,
+                                    "isRequired": true,
                                     "label": "Name",
-                                    "maxLength": 128,
+                                    "maxLength": 50,
                                     "name": "name",
                                   },
                                   Object {
                                     "component": "text-field",
                                     "id": "description",
+                                    "isRequired": true,
                                     "label": "Description",
-                                    "maxLength": 128,
+                                    "maxLength": 50,
                                     "name": "description",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
                                   },
                                   Object {
                                     "component": "text-field",
                                     "id": "settings.proxy_server_ip",
                                     "label": "SmartProxy Server IP",
-                                    "maxLength": 128,
+                                    "maxLength": 50,
                                     "name": "settings.proxy_server_ip",
                                   },
                                 ],
@@ -1478,22 +1564,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     Object {
                                       "component": "text-field",
                                       "id": "name",
+                                      "isDisabled": true,
+                                      "isRequired": true,
                                       "label": "Name",
-                                      "maxLength": 128,
+                                      "maxLength": 50,
                                       "name": "name",
                                     },
                                     Object {
                                       "component": "text-field",
                                       "id": "description",
+                                      "isRequired": true,
                                       "label": "Description",
-                                      "maxLength": 128,
+                                      "maxLength": 50,
                                       "name": "description",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
                                     },
                                     Object {
                                       "component": "text-field",
                                       "id": "settings.proxy_server_ip",
                                       "label": "SmartProxy Server IP",
-                                      "maxLength": 128,
+                                      "maxLength": 50,
                                       "name": "settings.proxy_server_ip",
                                     },
                                   ]
@@ -1513,9 +1607,11 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                   <SingleField
                                     component="text-field"
                                     id="name"
+                                    isDisabled={true}
+                                    isRequired={true}
                                     key="name"
                                     label="Name"
-                                    maxLength={128}
+                                    maxLength={50}
                                     name="name"
                                   >
                                     <FormConditionWrapper
@@ -1523,8 +1619,10 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         Object {
                                           "component": "text-field",
                                           "id": "name",
+                                          "isDisabled": true,
+                                          "isRequired": true,
                                           "label": "Name",
-                                          "maxLength": 128,
+                                          "maxLength": 50,
                                           "name": "name",
                                         }
                                       }
@@ -1535,21 +1633,27 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         <TextField
                                           component="text-field"
                                           id="name"
+                                          isDisabled={true}
+                                          isRequired={true}
                                           label="Name"
-                                          maxLength={128}
+                                          maxLength={50}
                                           name="name"
                                         >
                                           <ForwardRef(TextInput)
-                                            disabled={false}
+                                            disabled={true}
                                             helperText=""
                                             id="name"
                                             inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
-                                            labelText="Name"
+                                            labelText={
+                                              <IsRequired>
+                                                Name
+                                              </IsRequired>
+                                            }
                                             light={false}
-                                            maxLength={128}
+                                            maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
@@ -1564,10 +1668,18 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                               className="bx--form-item bx--text-input-wrapper"
                                             >
                                               <label
-                                                className="bx--label"
+                                                className="bx--label bx--label--disabled"
                                                 htmlFor="name"
                                               >
-                                                Name
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required"
+                                                  >
+                                                    *
+                                                  </span>
+                                                  Name
+                                                </IsRequired>
                                               </label>
                                               <div
                                                 className="bx--text-input__field-outer-wrapper"
@@ -1578,9 +1690,9 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 >
                                                   <input
                                                     className="bx--text-input bx--text__input"
-                                                    disabled={false}
+                                                    disabled={true}
                                                     id="name"
-                                                    maxLength={128}
+                                                    maxLength={50}
                                                     name="name"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
@@ -1600,19 +1712,33 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                   <SingleField
                                     component="text-field"
                                     id="description"
+                                    isRequired={true}
                                     key="description"
                                     label="Description"
-                                    maxLength={128}
+                                    maxLength={50}
                                     name="description"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
                                   >
                                     <FormConditionWrapper
                                       field={
                                         Object {
                                           "component": "text-field",
                                           "id": "description",
+                                          "isRequired": true,
                                           "label": "Description",
-                                          "maxLength": 128,
+                                          "maxLength": 50,
                                           "name": "description",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
                                         }
                                       }
                                     >
@@ -1622,9 +1748,17 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         <TextField
                                           component="text-field"
                                           id="description"
+                                          isRequired={true}
                                           label="Description"
-                                          maxLength={128}
+                                          maxLength={50}
                                           name="description"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
                                         >
                                           <ForwardRef(TextInput)
                                             disabled={false}
@@ -1634,9 +1768,13 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                             invalid={false}
                                             invalidText=""
                                             key="description"
-                                            labelText="Description"
+                                            labelText={
+                                              <IsRequired>
+                                                Description
+                                              </IsRequired>
+                                            }
                                             light={false}
-                                            maxLength={128}
+                                            maxLength={50}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
@@ -1654,7 +1792,15 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 className="bx--label"
                                                 htmlFor="description"
                                               >
-                                                Description
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required"
+                                                  >
+                                                    *
+                                                  </span>
+                                                  Description
+                                                </IsRequired>
                                               </label>
                                               <div
                                                 className="bx--text-input__field-outer-wrapper"
@@ -1667,7 +1813,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                     className="bx--text-input bx--text__input"
                                                     disabled={false}
                                                     id="description"
-                                                    maxLength={128}
+                                                    maxLength={50}
                                                     name="description"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
@@ -1689,7 +1835,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     id="settings.proxy_server_ip"
                                     key="settings.proxy_server_ip"
                                     label="SmartProxy Server IP"
-                                    maxLength={128}
+                                    maxLength={50}
                                     name="settings.proxy_server_ip"
                                   >
                                     <FormConditionWrapper
@@ -1698,7 +1844,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           "component": "text-field",
                                           "id": "settings.proxy_server_ip",
                                           "label": "SmartProxy Server IP",
-                                          "maxLength": 128,
+                                          "maxLength": 50,
                                           "name": "settings.proxy_server_ip",
                                         }
                                       }
@@ -1710,7 +1856,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           component="text-field"
                                           id="settings.proxy_server_ip"
                                           label="SmartProxy Server IP"
-                                          maxLength={128}
+                                          maxLength={50}
                                           name="settings.proxy_server_ip"
                                         >
                                           <ForwardRef(TextInput)
@@ -1723,7 +1869,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                             key="settings.proxy_server_ip"
                                             labelText="SmartProxy Server IP"
                                             light={false}
-                                            maxLength={128}
+                                            maxLength={50}
                                             name="settings.proxy_server_ip"
                                             onBlur={[Function]}
                                             onChange={[Function]}
@@ -1754,7 +1900,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                     className="bx--text-input bx--text__input"
                                                     disabled={false}
                                                     id="settings.proxy_server_ip"
-                                                    maxLength={128}
+                                                    maxLength={50}
                                                     name="settings.proxy_server_ip"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
@@ -1784,7 +1930,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 "component": "select",
                                 "id": "settings.concurrent_vm_scans",
                                 "label": "Max Active VM Scans",
-                                "maxLength": 128,
                                 "name": "settings.concurrent_vm_scans",
                                 "options": Array [
                                   Object {
@@ -1864,7 +2009,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     "component": "select",
                                     "id": "settings.concurrent_vm_scans",
                                     "label": "Max Active VM Scans",
-                                    "maxLength": 128,
                                     "name": "settings.concurrent_vm_scans",
                                     "options": Array [
                                       Object {
@@ -1948,7 +2092,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       "component": "select",
                                       "id": "settings.concurrent_vm_scans",
                                       "label": "Max Active VM Scans",
-                                      "maxLength": 128,
                                       "name": "settings.concurrent_vm_scans",
                                       "options": Array [
                                         Object {
@@ -2032,7 +2175,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     id="settings.concurrent_vm_scans"
                                     key="settings.concurrent_vm_scans"
                                     label="Max Active VM Scans"
-                                    maxLength={128}
                                     name="settings.concurrent_vm_scans"
                                     options={
                                       Array [
@@ -2105,7 +2247,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           "component": "select",
                                           "id": "settings.concurrent_vm_scans",
                                           "label": "Max Active VM Scans",
-                                          "maxLength": 128,
                                           "name": "settings.concurrent_vm_scans",
                                           "options": Array [
                                             Object {
@@ -2179,7 +2320,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           component="select"
                                           id="settings.concurrent_vm_scans"
                                           label="Max Active VM Scans"
-                                          maxLength={128}
                                           name="settings.concurrent_vm_scans"
                                           options={
                                             Array [
@@ -2252,7 +2392,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                             id="settings.concurrent_vm_scans"
                                             label="Max Active VM Scans"
                                             loadingMessage="Loading..."
-                                            maxLength={128}
                                             name="settings.concurrent_vm_scans"
                                             options={
                                               Array [
@@ -2330,7 +2469,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                               labelText="Max Active VM Scans"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
-                                              maxLength={128}
                                               name="settings.concurrent_vm_scans"
                                               onBlur={[Function]}
                                               onChange={[Function]}
@@ -2415,7 +2553,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 isFetching={false}
                                                 isSearchable={false}
                                                 labelText="Max Active VM Scans"
-                                                maxLength={128}
                                                 name="settings.concurrent_vm_scans"
                                                 noOptionsMessage={[Function]}
                                                 onBlur={[Function]}
@@ -2500,7 +2637,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   invalidText=""
                                                   labelText="Max Active VM Scans"
                                                   light={false}
-                                                  maxLength={128}
                                                   name="settings.concurrent_vm_scans"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
@@ -2526,7 +2662,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                         <select
                                                           className="bx--select-input"
                                                           id="settings.concurrent_vm_scans"
-                                                          maxLength={128}
                                                           name="settings.concurrent_vm_scans"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
@@ -2909,22 +3044,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       Object {
                                         "component": "text-field",
                                         "id": "name",
+                                        "isDisabled": true,
+                                        "isRequired": true,
                                         "label": "Name",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "name",
                                       },
                                       Object {
                                         "component": "text-field",
                                         "id": "description",
+                                        "isRequired": true,
                                         "label": "Description",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "description",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
                                       },
                                       Object {
                                         "component": "text-field",
                                         "id": "settings.proxy_server_ip",
                                         "label": "SmartProxy Server IP",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "settings.proxy_server_ip",
                                       },
                                     ]
@@ -2940,7 +3083,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         "component": "select",
                                         "id": "settings.concurrent_vm_scans",
                                         "label": "Max Active VM Scans",
-                                        "maxLength": 128,
                                         "name": "settings.concurrent_vm_scans",
                                         "options": Array [
                                           Object {
@@ -3021,7 +3163,10 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 "active": undefined,
                                 "dirty": false,
                                 "dirtyFields": Object {},
-                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {
+                                  "description": true,
+                                  "name": true,
+                                },
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
                                 "errors": Object {},
@@ -3070,7 +3215,12 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                   "name": "test add zone name",
                                 },
                                 "invalid": false,
-                                "modified": Object {},
+                                "modified": Object {
+                                  "description": false,
+                                  "name": false,
+                                  "settings.concurrent_vm_scans": false,
+                                  "settings.proxy_server_ip": false,
+                                },
                                 "modifiedSinceLastSubmit": false,
                                 "pristine": true,
                                 "submitError": undefined,
@@ -3078,7 +3228,12 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 "submitFailed": false,
                                 "submitSucceeded": false,
                                 "submitting": false,
-                                "touched": Object {},
+                                "touched": Object {
+                                  "description": false,
+                                  "name": false,
+                                  "settings.concurrent_vm_scans": false,
+                                  "settings.proxy_server_ip": false,
+                                },
                                 "valid": true,
                                 "validating": false,
                                 "values": Object {
@@ -3089,7 +3244,12 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                   "id": "68",
                                   "name": "test add zone name",
                                 },
-                                "visited": Object {},
+                                "visited": Object {
+                                  "description": false,
+                                  "name": false,
+                                  "settings.concurrent_vm_scans": false,
+                                  "settings.proxy_server_ip": false,
+                                },
                               }
                             }
                             onCancel={[Function]}
@@ -3104,22 +3264,30 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       Object {
                                         "component": "text-field",
                                         "id": "name",
+                                        "isDisabled": true,
+                                        "isRequired": true,
                                         "label": "Name",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "name",
                                       },
                                       Object {
                                         "component": "text-field",
                                         "id": "description",
+                                        "isRequired": true,
                                         "label": "Description",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "description",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
                                       },
                                       Object {
                                         "component": "text-field",
                                         "id": "settings.proxy_server_ip",
                                         "label": "SmartProxy Server IP",
-                                        "maxLength": 128,
+                                        "maxLength": 50,
                                         "name": "settings.proxy_server_ip",
                                       },
                                     ],
@@ -3133,7 +3301,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         "component": "select",
                                         "id": "settings.concurrent_vm_scans",
                                         "label": "Max Active VM Scans",
-                                        "maxLength": 128,
                                         "name": "settings.concurrent_vm_scans",
                                         "options": Array [
                                           Object {
