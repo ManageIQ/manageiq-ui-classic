@@ -157,6 +157,7 @@ Rails.application.routes.draw do
 
     :automation_manager_configured_system => {
       :get => %w(
+        download_data
         download_summary_pdf
         show
         show_list
