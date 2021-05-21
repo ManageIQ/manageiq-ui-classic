@@ -139,6 +139,9 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@settings, :display => {:locale => 'default'})
       controller.instance_variable_set(:@sb, :flash_msg => sandbox_flash_messages)
       bypass_rescue
+      EvmSpecHelper.seed_specific_product_features(
+        %w(dialog_accord old_dialogs_accord ab_buttons_accord miq_ae_class_import_export)
+      )
     end
 
     it "assigns the sandbox active tree" do

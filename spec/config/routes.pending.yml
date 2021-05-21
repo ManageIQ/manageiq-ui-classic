@@ -808,7 +808,6 @@ MiqPolicyController:
 - exp_token_pressed
 - index
 - miq_event_field_changed
-- miq_policy_edit
 - policy_field_changed
 - quick_search
 - reload
