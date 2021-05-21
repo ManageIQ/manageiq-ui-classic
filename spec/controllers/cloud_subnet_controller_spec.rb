@@ -74,26 +74,6 @@ describe CloudSubnetController do
       login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
-    it "raises exception wheh used have not privilege" do
-      expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
-    end
-
-    context "user don't have privilege for cloud tenants" do
-      let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_subnet_new ems_network_show_list)) }
-
-      it "raises exception" do
-        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
-      end
-    end
-
-    context "user don't have privilege for cloud networks" do
-      let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_subnet_new ems_network_show_list cloud_tenant_show_list)) }
-
-      it "raises exception" do
-        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
-      end
-    end
-
     it 'asserts privileges and calls drop_breadcrumb' do
       expect(controller).to receive(:assert_privileges).with('cloud_subnet_new')
       expect(controller).to receive(:assert_privileges).with('ems_network_show_list')
@@ -101,12 +81,6 @@ describe CloudSubnetController do
       expect(controller).to receive(:assert_privileges).with('cloud_network_show_list')
       expect(controller).to receive(:drop_breadcrumb).with(:name => 'Add New Subnet', :url => '/cloud_subnet/new')
       controller.send(:new)
-    end
-
-    it 'renders cloud_subnet/new partial for user with privileges' do
-      stub_user(:features => :all)
-      post :new, :params => { :button => "new", :format => :js }
-      expect(response.body).to include("<cloud-subnet-form cloud-subnet-form-id='new'>")
     end
   end
 
@@ -139,26 +113,6 @@ describe CloudSubnetController do
     end
 
     before { stub_user(:features => :all) }
-
-    it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-
-      post :create, :params => {
-        :button           => 'add',
-        :controller       => 'cloud_subnet',
-        :format           => :js,
-        :cloud_tenant     => {:id => cloud_tenant.id},
-        :dhcp_enabled     => true,
-        :ems_id           => ems.id,
-        :id               => 'new',
-        :name             => 'test',
-        :network_protocol => 'ipv4',
-        :network_id       => cloud_network.ems_ref,
-        :allocation_pools => "172.10.1.10,172.10.1.20",
-        :host_routes      => "172.12.1.0/24,172.12.1.1",
-        :dns_nameservers  => "172.11.1.1"
-      }
-    end
   end
 
   describe "#edit" do
@@ -189,58 +143,6 @@ describe CloudSubnetController do
       post :button, :params => { :pressed => "cloud_subnet_edit", :format => :js, :id => cloud_subnet.id }
 
       expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-
-      post :update, :params => {
-        :button           => 'save',
-        :format           => :js,
-        :id               => cloud_subnet.id,
-        :name             => 'test2',
-        :allocation_pools => "172.20.1.10,172.20.1.20",
-        :host_routes      => "172.22.1.0/24,172.22.1.1",
-        :dns_nameservers  => "172.21.1.1"
-      }
-    end
-  end
-
-  describe '#update' do
-    before do
-      allow(controller).to receive(:assert_privileges)
-      controller.params = {:button => 'cancel', :id => cloud_subnet.id}
-    end
-
-    it 'calls flash_and_redirect for canceling editing Cloud Subnet' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name => cloud_subnet.name})
-      controller.send(:update)
-    end
-  end
-
-  describe '#update_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'ok', :message => 'some message') }
-
-    before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => cloud_subnet.name}})
-    end
-
-    it 'calls flash_and_redirect with appropriate arguments for succesful updating of a Cloud Subnet' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Cloud Subnet \"%{name}\" updated") % {:name => cloud_subnet.name})
-      controller.send(:update_finished)
-    end
-
-    context 'unsuccesful updating of a Cloud Subnet' do
-      let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'Error', :message => 'some message') }
-
-      it 'calls flash_and_redirect with appropriate arguments' do
-        expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Cloud Subnet \"%{name}\": %{details}") % {
-          :name    => cloud_subnet.name,
-          :details => miq_task.message
-        }, :error)
-        controller.send(:update_finished)
-      end
     end
   end
 

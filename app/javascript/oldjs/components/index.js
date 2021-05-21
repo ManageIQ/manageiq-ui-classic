@@ -1,7 +1,6 @@
 require('./ae_resolve_options/ae-resolve-options.js');
 require('./ansible-raw-stdout.js');
 require('./auth-credentials.js');
-require('./cloud_subnet/cloud-subnet-form.js');
 require('./cloud_volume_backup/cloud-volume-backup-form.js');
 require('./datetime-delay-picker.js');
 require('./generic_object/assign-buttons.js');

@@ -1550,7 +1550,6 @@ Rails.application.routes.draw do
         compare_get,
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         listnav_search_selected
         protect
@@ -1559,7 +1558,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
