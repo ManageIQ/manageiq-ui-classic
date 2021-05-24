@@ -49,7 +49,7 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
 
   return (
     <div className="aggregate_status">
-      {(data.refreshStatus 
+      {(data.refreshStatus && data.refreshStatus.last_refresh.status !== 'never'
        && (data.refreshStatus.last_refresh.stale
          || data.refreshStatus.last_refresh.status !== 'success'))
             && (
