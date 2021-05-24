@@ -2537,7 +2537,6 @@ Rails.application.routes.draw do
         wait_for_task
         x_button
         zone_edit
-        zone_field_changed
       ) + exp_post + dialog_runner_post
     },
 

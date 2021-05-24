@@ -790,7 +790,7 @@ class OpsController < ApplicationController
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
-        if nodetype == "log_depot_edit"
+        if ["log_depot_edit", "ze"].include?(nodetype)
           presenter.hide(:form_buttons_div)
         else
           presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
