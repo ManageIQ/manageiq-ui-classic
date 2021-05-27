@@ -95,6 +95,8 @@ class MiqRequestController < ApplicationController
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @gtl_url = "/show"
 
+    @request_tab = params[:typ] || 'service'
+
     if @display == "main"
       prov_set_show_vars
     elsif @display == "miq_provisions"
