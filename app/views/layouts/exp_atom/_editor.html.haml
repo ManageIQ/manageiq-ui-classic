@@ -11,49 +11,7 @@
   -# Grab the model for this expression
   - exp_model = @edit[@expkey][:exp_model]
   #exp_atom_editor_div
-    .panel.panel-default
-      .panel-heading
-        %h3.panel-title
-          =_('Edit Selected Element')
-      .panel-body
-        - if @edit[@expkey][:exp_key] == "NOT"
-          %font{:color => "black"}
-            = _('Not')
-        - else
-          - opts = ["<#{_('Choose')}>"]
-          - if exp_model == "_display_filter_"
-            - opts += ExpAtomHelper.expression_types_for_secondary_filter(@edit[:new][:field_order], @edit[:new][:fields])
-          - else
-            - opts += ExpAtomHelper.expression_types_for_primary_filter(exp_model, only_tag = @expkey == :filter_expression )
-
-          - if only_tag && exp_model == "MiqGroup"
-            - @edit[@expkey][:exp_typ] = 'tags'
-            = _('Tag')
-          - else
-            = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
-              :multiple              => false,
-              :class                 => 'selectpicker',
-              'data-miq_sparkle_on'  => true,
-              'data-miq_sparkle_off' => true)
-
-        %br
-        - if @edit[@expkey][:exp_typ]
-          = render :partial => "layouts/exp_atom/edit_#{@edit[@expkey][:exp_typ]}", :locals => {:exp_model => exp_model}
-        - if qs_show_user_input_checkbox?
-          = check_box_tag("user_input", "1", @edit[@expkey][:exp_value] == :user_input,
-            :style                      => "width: 20px",
-            "data-miq_sparkle_on"       => true,
-            "data-miq_sparkle_off"      => true,
-            "data-miq_observe_checkbox" => {:url => url}.to_json)
-          = _('User will input the value')
-
-        .spacer
-        %button.btn.btn-primary{:onclick => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
-                                :title   => _('Commit expression element changes')}
-          = _("Commit")
-        %button.btn.btn-default{:onclick => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
-                                :title   => _("Discard expression element changes")}
-          = _("Discard")
+    = react('ExpressionEditorWrapper', {:model => exp_model})
 
   :javascript
     // Set the expression value prefill images and hover text

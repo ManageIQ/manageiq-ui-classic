@@ -20,7 +20,7 @@ import FlavorForm from '../components/flavor-form';
 import FirmwareRegistryForm from '../components/firmware-registry/firmware-registry-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
-import GtlView from  '../components/gtl-view';
+import GtlView from '../components/gtl-view';
 import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
 import HostAggregateForm from '../components/host-aggregate-form';
@@ -67,6 +67,7 @@ import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import ZoneForm from '../components/zone-form';
+import ExpressionEditorWrapper from '../components/expressionEditorWrapper';
 
 /**
 * Add component definitions to this file.
@@ -86,6 +87,7 @@ ManageIQ.component.addReact('ProviderForm', ProviderForm);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
 ManageIQ.component.addReact('DashboardWidget', DashboardWidget);
+ManageIQ.component.addReact('ExpressionEditorWrapper', ExpressionEditorWrapper);
 ManageIQ.component.addReact('FirmwareRegistryForm', FirmwareRegistryForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
