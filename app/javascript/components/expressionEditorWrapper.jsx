@@ -4,19 +4,19 @@ import { Spinner, Button } from 'patternfly-react';
 // import ExpressionEditor from '@manageiq/react-ui-components/dist/expression-editor';
 import ExpressionEditor from './expression-editor';
 
-// const autocomplete = {
-//   exp_type: ['FIELD:', 'TAGS:', 'COUNT OF:', 'FIND:', 'REGKEY:'],
-//   entity: ['host.'],
-//   field: ['name ', 'status ', 'system ', 'owner '],
-//   category: ['environment ', 'location '],
-//   operator: ['= ', 'CONTAINS ', '< ', '> ', '<= ', '>= ', 'INCLUDES ', 'IS NOT EMPTY ', 'IS ', 'STARTS WITH ', 'REGULAR EXPRESSION MATCHES '],
-//   tag_operator: ['= ', 'CONTAINS  ', ': '],
-//   exp_operator: ['AND ', 'OR '],
-//   value: ['value '],
-//   check: ['CHECK ALL:', 'CHECK ANY:', 'CHECK COUNT:'],
-// };
-// const getSuggestions = next => next.map(n => autocomplete[n]).flat();
-const renderInputComponent = inputProps => <textarea {...inputProps} />;
+const autocomplete = {
+  exp_type: ['FIELD:', 'TAGS:', 'COUNT OF:', 'FIND:', 'REGKEY:'],
+  entity: ['host.'],
+  field: ['name ', 'status ', 'system ', 'owner '],
+  category: ['environment ', 'location '],
+  operator: ['= ', 'CONTAINS ', '< ', '> ', '<= ', '>= ', 'INCLUDES ', 'IS NOT EMPTY ', 'IS ', 'STARTS WITH ', 'REGULAR EXPRESSION MATCHES '],
+  tag_operator: ['= ', 'CONTAINS  ', ': '],
+  exp_operator: ['AND ', 'OR '],
+  value: ['value '],
+  check: ['CHECK ALL:', 'CHECK ANY:', 'CHECK COUNT:'],
+};
+const getSuggestions = (next) => next.map((n) => autocomplete[n]).flat();
+const renderInputComponent = (inputProps) => <textarea {...inputProps} />;
 const renderSuggestionsContainer = ({ containerProps, children, query }) => (
   <div className="pf-c-select pf-m-expanded expression-options" {...containerProps}>
     {children}
@@ -35,16 +35,27 @@ const fun = (model, autocompleteActions, input) =>
     // return Object.values(data).reduce((i, acc) => [...acc, ...i], []);
   });
 
-const ExpressionEditorWrapper = props => (
-  <ExpressionEditor
-    // getSuggestions={getSuggestions}
-    reloadSuggestions={fun}
-    renderSuggestion={renderSuggestion}
-    renderInputComponent={renderInputComponent}
-    renderSuggestionsContainer={renderSuggestionsContainer}
-    style={style}
-    model={props.model}
-  />
-);
+const ExpressionEditorWrapper = (props) => {
+  const {
+    model,
+  } = props;
+  return (
+    <div>
+      <ExpressionEditor
+        getSuggestions={getSuggestions}
+        reloadSuggestions={fun}
+        renderSuggestion={renderSuggestion}
+        renderInputComponent={renderInputComponent}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+        style={style}
+        model={model}
+      />
+    </div>
+  );
+};
+
+ExpressionEditorWrapper.propTypes = {
+  model: PropTypes.string.isRequired,
+};
 
 export default ExpressionEditorWrapper;
