@@ -424,8 +424,8 @@ describe("count of expression", () => {
     const expectedOutput = {
       results: [
         { type: "entity", value: "vm" },
-        { type: "operator", value: ">" },
-        { value: "" },
+        { type: "count_operator", value: ">" },
+        { type: undefined, value: "" },
       ],
       next: ["value"],
       type: "count of",
@@ -439,9 +439,9 @@ describe("count of expression", () => {
     const expectedOutput = {
       results: [
         { type: "entity", value: "vm" },
-        { type: "operator", value: ">" },
+        { type: "count_operator", value: ">" },
         { type: "value", value: "10" },
-        { value: "" },
+        { type: undefined, value: "" },
       ],
       next: ["entity"],
       type: "count of",
@@ -455,11 +455,11 @@ describe("count of expression", () => {
     const expectedOutput = {
       results: [
         { type: "entity", value: "vm" },
-        { type: "operator", value: ">" },
+        { type: "count_operator", value: ">" },
         { type: "value", value: "10" },
-        { value: "" },
+        { type: undefined, value: "" },
       ],
-      next: ["exp_operator"],
+      next: ["expression_operator"],
       type: "count of",
     };
     parser.feed(input);
@@ -568,9 +568,9 @@ describe("find expression", () => {
         { type: "field", value: "owner" },
         { type: "operator", value: "INCLUDES" },
         { type: "value", value: "admin" },
-        { value: "" },
+        { type: undefined, value: "" },
       ],
-      next: ["check"],
+      next: ["check_operator"],
       type: "find",
     };
     parser.feed(input);
@@ -587,9 +587,9 @@ describe("find expression", () => {
         { type: "field", value: "owner" },
         { type: "operator", value: "INCLUDES" },
         { type: "value", value: "admin" },
-        { value: "CHECK" },
+        { type: undefined, value: "CHECK" },
       ],
-      next: ["check"],
+      next: ["check_operator"],
       type: "find",
     };
     parser.feed(input);
@@ -606,9 +606,9 @@ describe("find expression", () => {
         { type: "field", value: "owner" },
         { type: "operator", value: "INCLUDES" },
         { type: "value", value: "admin" },
-        { value: "CHECK" },
+        { type: undefined, value: "CHECK" },
       ],
-      next: ["check"],
+      next: ["check_operator"],
       type: "find",
     };
     parser.feed(input);
