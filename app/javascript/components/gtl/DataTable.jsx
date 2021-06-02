@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { renderDataTableToolbar } from './utils';
-import { renderPagination } from './utils';
+import { renderDataTableToolbar, renderPagination } from './utils';
 
 const classNames = require('classnames');
 
 const getNodeIconType = (row, columnKey) =>
   row && row.cells && ['image', 'icon']
-    .find(item => Object.prototype.hasOwnProperty.call(row.cells[columnKey], item)
+    .find((item) => Object.prototype.hasOwnProperty.call(row.cells[columnKey], item)
       && !!row.cells[columnKey][item]);
 
 const isFilteredBy = (settings, column) => settings.sort_col === column.col_idx;
@@ -31,72 +30,78 @@ export const DataTable = ({
   onPageSet,
   showPagination,
 }) => {
-
   const selectAll = () => {
-    const [checkedItems, setCheckedItems] = useState({}); //plain object as state
+    const [checkedItems, setCheckedItems] = useState({}); // plain object as state
 
     const localOnSelectAll = (ev) => {
-      if (ev.target.classList.contains('is-checkbox-cell') ||
-        ev.target.parentElement.classList.contains('is-checkbox-cell')) {
+      if (ev.target.classList.contains('is-checkbox-cell')
+        || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
         return;
       }
 
       onSelectAll(rows, ev.target);
-      setCheckedItems({...checkedItems, [ev.target.name]: ev.target.checked});
+      setCheckedItems({ ...checkedItems, [ev.target.name]: ev.target.checked });
       ev.stopPropagation();
     };
 
     return (
-      <input type="checkbox"
-             name={'selectAll'}
-             key={'selectAll'}
-             checked={!!checkedItems['selectAll']}
-             onChange={localOnSelectAll}
-             onKeyPress={localOnSelectAll}
-             role="checkbox"
-             aria-checked="false"
-             tabIndex="0"
-             aria-labelledby="selectAll"
-             title="Check All"/>
+      <input
+        type="checkbox"
+        name="selectAll"
+        key="selectAll"
+        checked={!!checkedItems.selectAll}
+        onChange={localOnSelectAll}
+        onKeyPress={localOnSelectAll}
+        role="checkbox"
+        aria-checked="false"
+        tabIndex="0"
+        aria-labelledby="selectAll"
+        title="Check All"
+      />
     );
   };
 
   const renderTableHeader = () => (
     <thead className="miq-thead">
       <tr>
-        {!inEditMode() && !noCheckboxes() &&
-        <th className="narrow table-view-pf-select">
-          <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
-          {selectAll()}
-        </th>
-        }
+        {!inEditMode() && !noCheckboxes()
+        && (
+          <th className="narrow table-view-pf-select">
+            <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
+            {selectAll()}
+          </th>
+        )}
         {columns.map((column, index) =>
-          (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes())) &&
-            <th
-              onClick={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
-              onKeyPress={onSort({headerId: column.col_idx, isAscending: settings.sort_dir == "ASC" })}
-              tabIndex="0"
-              className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
-              key={`header_${index}`}
-            >
-              {column.header_text}
-              {isFilteredBy(settings, column) &&
-                <div className="pull-right">
-                  <i className={
-                    classNames('fa', {
-                      'fa-sort-asc': !(settings.sort_dir == "ASC"),
-                      'fa-sort-desc': !(!!settings.sort_dir == "ASC"),
-                    })}
-                  />
-                </div>
-              }
-            </th>)
-        }
+          (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes()))
+            && (
+              <th
+                onClick={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
+                onKeyPress={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
+                tabIndex="0"
+                className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
+                key={`header_${index}`}
+              >
+                {column.header_text}
+                {isFilteredBy(settings, column)
+                && (
+                  <div className="pull-right">
+                    <i
+                      className={
+                        classNames('fa', {
+                          'fa-sort-asc': !(settings.sort_dir == 'ASC'),
+                          'fa-sort-desc': !(!!settings.sort_dir == 'ASC'),
+                        })
+                      }
+                    />
+                  </div>
+                )}
+              </th>
+            ))}
       </tr>
     </thead>
   );
 
-  const localOnItemSelected = row => ev => {
+  const localOnItemSelected = (row) => (ev) => {
     onItemSelect(row, ev.target.checked);
     ev.stopPropagation();
   };
@@ -107,9 +112,9 @@ export const DataTable = ({
     return '';
   };
 
-  const localOnClickItem = row => ev => {
-    if (ev.target.classList.contains('is-checkbox-cell') ||
-       ev.target.parentElement.classList.contains('is-checkbox-cell')) {
+  const localOnClickItem = (row) => (ev) => {
+    if (ev.target.classList.contains('is-checkbox-cell')
+       || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
       return;
     }
 
@@ -120,7 +125,7 @@ export const DataTable = ({
 
   const renderTableBody = () => (
     <tbody>
-      {rows.map(row => (
+      {rows.map((row) => (
         <tr
           className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
           key={`check_${row.id}`}
@@ -136,9 +141,10 @@ export const DataTable = ({
                 'is-checkbox-cell': row.cells[columnKey].is_checkbox,
               })}
             >
-              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode() &&
-              <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label> &&
-              <input
+              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
+              && <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label>
+              && (
+                <input
                   onChange={localOnItemSelected(row)}
                   onKeyPress={localOnItemSelected(row)}
                   role="checkbox"
@@ -151,44 +157,50 @@ export const DataTable = ({
                   checked={row.checked || false}
                   className="list-grid-checkbox"
                 />
-              }
-              { getNodeIconType(row, columnKey) === 'icon' &&
-                <i
-                  className={row.cells[columnKey].icon}
-                  title={row.cells[columnKey].title}
-                >
-                  <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
-                </i>
-              }
-              { getNodeIconType(row, columnKey) === 'image' &&
-                <img
-                  src={row.cells[columnKey].picture || row.cells[columnKey].image}
-                  alt={row.cells[columnKey].title}
-                  title={row.cells[columnKey].title}
-                />
-              }
-              { row.cells[columnKey].text && !row.cells[columnKey].is_button &&
-                <span>
-                  {row.cells[columnKey].text}
-                </span>
-              }
-              { row.cells[columnKey].is_button && row.cells[columnKey].onclick &&
-                <button
-                  className="btn btn-primary"
-                  disabled={row.cells[columnKey].disabled}
-                  title={row.cells[columnKey].title}
-                  alt={row.cells[columnKey].title}
-                  onClick={onItemButtonClick(row)}
-                  onKeyPress={onItemButtonClick(row)}
-                  tabIndex="0"
-                >
-                  {row.cells[columnKey].text}
-                </button>
-              }
-            </td>))}
+              )}
+              { getNodeIconType(row, columnKey) === 'icon'
+                && (
+                  <i
+                    className={row.cells[columnKey].icon}
+                    title={row.cells[columnKey].title}
+                  >
+                    <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
+                  </i>
+                )}
+              { getNodeIconType(row, columnKey) === 'image'
+                && (
+                  <img
+                    src={row.cells[columnKey].picture || row.cells[columnKey].image}
+                    alt={row.cells[columnKey].title}
+                    title={row.cells[columnKey].title}
+                  />
+                )}
+              { row.cells[columnKey].text && !row.cells[columnKey].is_button
+                && (
+                  <span>
+                    {row.cells[columnKey].text}
+                  </span>
+                )}
+              { row.cells[columnKey].is_button && row.cells[columnKey].onclick
+                && (
+                  <button
+                    className="btn btn-primary"
+                    disabled={row.cells[columnKey].disabled}
+                    title={row.cells[columnKey].title}
+                    alt={row.cells[columnKey].title}
+                    onClick={onItemButtonClick(row)}
+                    onKeyPress={onItemButtonClick(row)}
+                    tabIndex="0"
+                  >
+                    {row.cells[columnKey].text}
+                  </button>
+                )}
+            </td>
+          ))}
         </tr>
       ))}
-    </tbody>);
+    </tbody>
+  );
 
   const renderTable = () => (
     <table className="table table-bordered table-striped table-hover miq-table-with-footer miq-table">
@@ -206,8 +218,7 @@ export const DataTable = ({
       { (!inEditMode() || showPagination()) && isVisible
       && renderPagination({
         pagination, total, onPerPageSelect, onPageSet,
-      })
-      }
+      })}
       { rows.length !== 0 && renderTable() }
     </div>
   );
