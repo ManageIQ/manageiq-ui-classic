@@ -66,6 +66,7 @@ module Mixins
           availability_zones
           cloud_networks
           cloud_object_store_containers
+          cloud_object_store_objects
           cloud_subnets
           cloud_tenants
           cloud_volumes
