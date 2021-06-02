@@ -97,6 +97,7 @@ describe AutomationManagerController do
     before { login_as user_with_feature %w[automation_manager_provider_tag] }
 
     it "should raise an error for feature that user has no access to" do
+      EvmSpecHelper.seed_specific_product_features("automation_manager_add_provider")
       expect { controller.send(:assert_privileges, "automation_manager_add_provider") }
         .to raise_error(MiqException::RbacPrivilegeException)
     end
