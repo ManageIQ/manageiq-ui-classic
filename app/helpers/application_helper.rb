@@ -110,7 +110,7 @@ module ApplicationHelper
       identifiers = MiqProductFeature.all.pluck(:identifier)
       if Rails.env.development?
         raise message
-      elsif Rails.env.test? && identifiers.length >= 5
+      elsif Rails.env.test? && identifiers.length >= 10
         raise("#{message} Note: detected features: #{identifiers.inspect}")
       end
     end
