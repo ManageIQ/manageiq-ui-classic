@@ -68,7 +68,7 @@ describe VmOrTemplateController do
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
-      EvmSpecHelper.seed_specific_product_features("vandt_accord", "vms_instances_filter_accord")
+      EvmSpecHelper.seed_specific_product_features("vandt_accord", "vms_instances_filter_accord", "vms_filter_accord")
       @vm = FactoryBot.create(:vm_vmware)
     end
 

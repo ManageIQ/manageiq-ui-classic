@@ -83,7 +83,7 @@ class MiqPolicySetController < ApplicationController
   end
 
   def profile_save_add
-    assert_privileges("profile_#{params[:id] ? "edit" : "new"}")
+    assert_privileges("miq_policy_set_#{params[:id] ? "edit" : "new"}")
     return unless load_edit("profile_edit__#{params[:id] ? "#{params[:id]}" : "new"}")
     add_flash(_("Policy Profile must contain at least one Policy"), :error) if @edit[:new][:policies].length.zero? # At least one member is required
 

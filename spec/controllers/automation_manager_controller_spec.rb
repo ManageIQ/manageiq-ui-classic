@@ -97,6 +97,7 @@ describe AutomationManagerController do
     before { login_as user_with_feature %w[automation_manager_provider_tag] }
 
     it "should raise an error for feature that user has no access to" do
+      EvmSpecHelper.seed_specific_product_features("automation_manager_add_provider")
       expect { controller.send(:assert_privileges, "automation_manager_add_provider") }
         .to raise_error(MiqException::RbacPrivilegeException)
     end
@@ -224,7 +225,7 @@ describe AutomationManagerController do
     automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
     automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
-    login_as user_with_feature(%w[automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
+    login_as user_with_feature(%w[automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord])
     TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", {})
     objects = tree_builder.send(:x_get_tree_roots)
@@ -241,7 +242,7 @@ describe AutomationManagerController do
   end
 
   it "builds ansible tower job templates tree" do
-    login_as user_with_feature(%w[automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
+    login_as user_with_feature(%w[automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord])
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", {})
     objects = tree_builder.send(:x_get_tree_roots)
@@ -250,7 +251,7 @@ describe AutomationManagerController do
   end
 
   it "constructs the ansible tower job templates tree node" do
-    login_as user_with_feature(%w[providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord])
+    login_as user_with_feature(%w[automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord])
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", {})
     objects = tree_builder.send(:x_get_tree_cmat_kids, @automation_manager1, false)
@@ -413,7 +414,7 @@ describe AutomationManagerController do
 
   context "ansible tower job template accordion " do
     before do
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, nil)
     end
 
