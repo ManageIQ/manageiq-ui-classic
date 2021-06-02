@@ -349,30 +349,30 @@ describe OpsController do
     context "outdated belongsto filters" do
       let(:ems) { FactoryBot.create(:ems_vmware, :name => 'ems') }
       let(:root) do
-        datacenters = FactoryBot.create(:ems_folder, :name => "Datacenters")
+        datacenters = FactoryBot.create(:ems_folder, :name => "Datacenters", :ext_management_system => ems)
         datacenters.parent = ems
         datacenters
       end
 
       let(:dc) do
-        datacenter = FactoryBot.create(:ems_folder, :name => "Datacenter1")
+        datacenter = FactoryBot.create(:ems_folder, :name => "Datacenter1", :ext_management_system => ems)
         datacenter.parent = root
         datacenter
       end
 
       let(:hfolder) do
-        hfolder = FactoryBot.create(:ems_folder, :name => "host")
+        hfolder = FactoryBot.create(:ems_folder, :name => "host", :ext_management_system => ems)
         hfolder.parent = dc
         hfolder
       end
       let(:cluster_1) do
-        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 1")
+        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 1", :ext_management_system => ems)
         cluster.parent = hfolder
         cluster
       end
 
       let(:cluster_2) do
-        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 2")
+        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 2", :ext_management_system => ems)
         cluster.parent = hfolder
         cluster
       end
