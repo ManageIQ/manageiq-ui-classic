@@ -44,14 +44,6 @@ module Mixins
       drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
     end
 
-    def display_block_storage_managers
-      nested_list(ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers, :breadcrumb_title => _('Block Storage Managers'))
-    end
-
-    def display_object_storage_managers
-      nested_list(ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers, :breadcrumb_title => _('Object Storage Managers'))
-    end
-
     def display_storage_managers
       nested_list(ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
     end
@@ -72,7 +64,6 @@ module Mixins
       def display_methods
         %w[
           availability_zones
-          block_storage_managers
           cloud_networks
           cloud_object_store_containers
           cloud_subnets
@@ -108,7 +99,6 @@ module Mixins
           network_routers
           network_services
           network_service_entries
-          object_storage_managers
           orchestration_stacks
           persistent_volumes
           physical_servers

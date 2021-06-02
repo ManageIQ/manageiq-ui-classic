@@ -62,9 +62,9 @@ class DialogLocalService
         when "NetworkManager"
           "/ems_network"
         when "CinderManager"
-          "/ems_block_storage"
+          "/ems_storage"
         when "SwiftManager"
-          "/ems_object_storage"
+          "/ems_storage"
         when "ContainerManager"
           "/ems_container/#{obj.id}"
         else

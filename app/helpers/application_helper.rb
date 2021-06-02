@@ -280,6 +280,10 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
+      if controller == "ems_storage" && action == "show"
+        return ems_storages_path
+      end
+    
       if request[:controller] == 'service' && view.db == 'GenericObject'
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
@@ -1086,7 +1090,7 @@ module ApplicationHelper
                              storage_resource
                              host_initiator
                              container_topology
-                             ems_block_storage
+                             ems_storage
                              ems_cloud
                              ems_cluster
                              ems_configuration
@@ -1094,9 +1098,7 @@ module ApplicationHelper
                              ems_infra
                              ems_infra_dashboard
                              ems_network
-                             ems_object_storage
                              ems_physical_infra
-                             ems_storage
                              infra_topology
                              event
                              flavor

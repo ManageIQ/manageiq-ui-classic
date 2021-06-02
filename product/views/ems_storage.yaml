@@ -9,10 +9,10 @@
 #
 
 # Report title
-title: Object Storage Managers
+title: Storage Managers
 
 # Menu name
-name: EmsObjectStorage
+name: BlockStorage
 
 # Main DB table report is based on
 db: ManageIQ::Providers::StorageManager
