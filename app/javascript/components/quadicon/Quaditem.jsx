@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
@@ -25,7 +27,7 @@ const fontSize = (text) => {
 
   if (len < 3) {
     return 'font-normal';
-  } else if (len > 2 && len < 4) {
+  } if (len > 2 && len < 4) {
     return 'font-small';
   }
   return 'font-tiny';

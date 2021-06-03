@@ -6,6 +6,7 @@ import {
 } from '../carbon-charts';
 import { sampleData, pieData } from '../carbon-charts/helpers';
 
+// eslint-disable-next-line no-unused-vars
 const ReportChartWidget = ({ data, id }) => {
   if (data.miqChart === 'Area') {
     return (<AreaChartGraph data={sampleData} />);
@@ -38,6 +39,7 @@ const ReportChartWidget = ({ data, id }) => {
 };
 
 ReportChartWidget.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object,
   id: PropTypes.string,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { componentTypes, validatorTypes } from '@@ddf';
 
 export const portTypes = [
@@ -12,27 +13,28 @@ const loadProviders = () =>
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
-const loadStorages = id => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
+const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
   // eslint-disable-next-line camelcase
   .then(({ physical_storages }) => physical_storages.map(({ name, id }) => ({
     label: name,
     value: id,
   })));
 
-const loadCloudVolumes = storage_id => API.get(`/api/cloud_volumes/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
+const loadCloudVolumes = (storage_id) => API.get(`/api/cloud_volumes/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
   .then(({ resources }) => resources.map(({ name, id }) => ({
     label: name,
     value: id,
   })));
 
-const loadHostInitiators = storage_id => API.get(`/api/host_initiators/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
-  .then(({ resources }) => resources.map(({ name, id }) => ({
-    label: name,
-    value: id,
-  })));
+const loadHostInitiators = (storage_id) =>
+  API.get(`/api/host_initiators/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
+    .then(({ resources }) => resources.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    })));
 
 const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId,
-                      hostInitiatorId, setHostInitiatorId) => ({
+  hostInitiatorId, setHostInitiatorId) => ({
 
   fields: [
     {
@@ -44,7 +46,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       isRequired: true,
       includeEmpty: true,
       loadOptions: loadProviders,
-      onChange: value => setEmsId(value),
+      onChange: (value) => setEmsId(value),
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
@@ -56,7 +58,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
-      onChange: new_storage_id => setStorageId(new_storage_id),
+      onChange: (new_storage_id) => setStorageId(new_storage_id),
       key: emsId,
       condition: {
         when: 'ems_id',
@@ -72,7 +74,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadCloudVolumes(storageId) : Promise.resolve([])),
-      onChange: cloud_volume_id => setVolumeId(cloud_volume_id),
+      onChange: (cloud_volume_id) => setVolumeId(cloud_volume_id),
       key: storageId,
       condition: {
         when: 'physical_storage_id',
@@ -88,7 +90,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadHostInitiators(storageId) : Promise.resolve([])),
-      onChange: host_initiator_id => setHostInitiatorId(host_initiator_id),
+      onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
       key: storageId,
       condition: {
         when: 'physical_storage_id',

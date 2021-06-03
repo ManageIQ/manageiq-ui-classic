@@ -6,43 +6,40 @@ import { unescape } from 'lodash';
 import { onClickTree, onClick, onClickToExplorer } from './on-click-functions';
 
 // FIXME: don't parse html here
-const parsedText = text => unescape(text).replace(/<[/]{0,1}strong>/g, '');
+const parsedText = (text) => unescape(text).replace(/<[/]{0,1}strong>/g, '');
 
-const renderItems = ({ items, controllerName }) => {
-  return items
-    .filter((_item, index) => index !== (items.length - 1))
-    .map((item, index) => {
-      const text = parsedText(item.title);
-      if (item.action || (!item.url && !item.key && !item.to_explorer)) {
-        return <li key={index}>{text}</li>; // eslint-disable-line react/no-array-index-key
-      }
+const renderItems = ({ items, controllerName }) => items
+  .filter((_item, index) => index !== (items.length - 1))
+  .map((item, index) => {
+    const text = parsedText(item.title);
+    if (item.action || (!item.url && !item.key && !item.to_explorer)) {
+      return <li key={index}>{text}</li>; // eslint-disable-line react/no-array-index-key
+    }
 
-      if (item.key || item.to_explorer) {
-        return (
-          <Breadcrumb.Item
-            key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
-            onClick={e =>
-              (item.to_explorer
-                ? onClickToExplorer(e, controllerName, item.to_explorer)
-                : onClickTree(e, controllerName, item))
-              }
-          >
-            {text}
-          </Breadcrumb.Item>
-        );
-      }
-
+    if (item.key || item.to_explorer) {
       return (
         <Breadcrumb.Item
-          key={item.url || index}
-          href={item.url}
-          onClick={e => onClick(e, item.url)}
+          key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
+          onClick={(e) =>
+            (item.to_explorer
+              ? onClickToExplorer(e, controllerName, item.to_explorer)
+              : onClickTree(e, controllerName, item))}
         >
           {text}
         </Breadcrumb.Item>
       );
-    });
-};
+    }
+
+    return (
+      <Breadcrumb.Item
+        key={item.url || index}
+        href={item.url}
+        onClick={(e) => onClick(e, item.url)}
+      >
+        {text}
+      </Breadcrumb.Item>
+    );
+  });
 
 export const Breadcrumbs = ({ items, title, controllerName }) => (
   <Breadcrumb>
@@ -56,12 +53,15 @@ export const Breadcrumbs = ({ items, title, controllerName }) => (
 );
 
 Breadcrumbs.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   controllerName: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   items: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.string,
     key: PropTypes.string,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,
   })),
+  // eslint-disable-next-line react/require-default-props
   title: PropTypes.string,
 };

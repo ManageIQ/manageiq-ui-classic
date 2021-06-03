@@ -23,8 +23,8 @@ const PasswordField = ({
     validateOnMount: rest.validateOnMount,
     helperText,
     ...rest,
-    component: edit ? 'edit-password-field' : componentClass, 
-    componentClass: componentClass,
+    component: edit ? 'edit-password-field' : componentClass,
+    componentClass,
   };
 
   return (

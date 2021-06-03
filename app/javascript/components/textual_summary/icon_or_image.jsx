@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -32,6 +33,7 @@ IconOrImage.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
   icon: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   background: PropTypes.string,
 };
 

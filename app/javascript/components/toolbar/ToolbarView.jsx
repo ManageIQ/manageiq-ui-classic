@@ -7,7 +7,8 @@ const classNames = require('classnames');
 export const ToolbarView = ({ views, onClick }) => (
   <div className="toolbar-pf-action-right">
     <div className="form-group toolbar-pf-view-selector">
-      {views.map(view => (
+      {views.map((view) => (
+        // eslint-disable-next-line react/button-has-type
         <button
           key={view.id}
           id={view.id}
@@ -24,14 +25,13 @@ export const ToolbarView = ({ views, onClick }) => (
         >
           <i className={view.icon} style={{ color: adjustColor(view.color, view.enabled) }} />
         </button>
-        ))
-      }
+      ))}
     </div>
   </div>
 );
 
 ToolbarView.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   views: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func.isRequired,
 };
-

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,7 +10,13 @@ export default function OperationRanges(props) {
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
-      {item.value.map((subitem, j) => <tr key={j}><td>{subitem.label}</td><td>{subitem.value}</td></tr>)}
+      {item.value.map((subitem, j) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <tr key={j}>
+          <td>{subitem.label}</td>
+          <td>{subitem.value}</td>
+        </tr>
+      ))}
     </React.Fragment>
   );
 

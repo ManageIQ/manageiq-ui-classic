@@ -14,16 +14,17 @@ class CopyCatalogForm extends Component {
   }
 
   componentDidMount() {
-    add_flash(__("The copied item will not be displayed in the catalog by default"), 'info');
+    add_flash(__('The copied item will not be displayed in the catalog by default'), 'info');
     this.setState(() => ({
       schema: createSchema(),
       initialValues: {
-        name: 'Copy of ' + this.props.originName,
-        copy_tags: false
+        // eslint-disable-next-line react/destructuring-assignment
+        name: `Copy of ${this.props.originName}`,
+        copy_tags: false,
       },
       isLoaded: true,
     }));
-  };
+  }
 
   handleError = (error) => {
     const { data: { error: { message } } } = error;
@@ -31,19 +32,24 @@ class CopyCatalogForm extends Component {
   };
 
   submitValues = (values) => {
+    // eslint-disable-next-line react/destructuring-assignment
     http.post('/catalog/save_copy_catalog', { id: this.props.catalogId, name: values.name, copy_tags: values.copy_tags }, { skipErrors: [400] })
       .then(() => miqAjaxButton('/catalog/servicetemplate_copy_saved'))
       .catch((error) => add_flash(this.handleError(error), 'error'));
   };
 
   render() {
+    // eslint-disable-next-line react/destructuring-assignment
     if (!this.state.isLoaded) return null;
+    // eslint-disable-next-line react/destructuring-assignment
     const cancelUrl = `/catalog/servicetemplate_copy_cancel/${this.props.catalogId}`;
 
     return (
       <Grid fluid>
         <MiqFormRenderer
+          // eslint-disable-next-line react/destructuring-assignment
           initialValues={this.state.initialValues}
+          // eslint-disable-next-line react/destructuring-assignment
           schema={this.state.schema}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}

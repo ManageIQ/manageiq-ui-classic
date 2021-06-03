@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,6 +25,7 @@ ButtonIcon.propTypes = {
   img_url: PropTypes.string,
   icon: PropTypes.string,
   color: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   enabled: PropTypes.bool,
 };
 
@@ -58,7 +60,9 @@ ToolbarButton.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   text: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   selected: PropTypes.bool,
+  // eslint-disable-next-line react/require-default-props
   enabled: PropTypes.bool,
   onwhen: PropTypes.string,
   onClick: PropTypes.func.isRequired,

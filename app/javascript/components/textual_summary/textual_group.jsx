@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import GenericGroup from './generic_group';
@@ -61,8 +62,11 @@ renderComponent.propTypes = {
   group: PropTypes.shape({
     title: PropTypes.string.isRequired,
     component: PropTypes.string.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
     items: PropTypes.any,
+    // eslint-disable-next-line react/forbid-prop-types
     labels: PropTypes.any,
+    // eslint-disable-next-line react/forbid-prop-types
     rows: PropTypes.any,
     rowLabel: PropTypes.string,
     headers: PropTypes.arrayOf(PropTypes.any),
@@ -72,4 +76,3 @@ renderComponent.propTypes = {
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
-

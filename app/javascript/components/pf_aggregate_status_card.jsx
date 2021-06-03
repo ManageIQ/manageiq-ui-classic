@@ -33,14 +33,15 @@ const PfAggregateStatusCard = ({
       <div className="card-pf-body">
         <p className="card-pf-aggregate-status-notifications">
           { notifications.map((notification, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <span key={i} className="card-pf-aggregate-status-notification">
               <a href={notification.href}>
                 { notification.iconImage && (
-                  <React.Fragment>
+                  <>
                     <img src={notification.iconImage} alt="" className="card-pf-icon-image" />
                     <span className={notification.iconClass} />
                     <span> { notification.count }</span>
-                  </React.Fragment>
+                  </>
                 )}
               </a>
             </span>
@@ -75,15 +76,15 @@ const PfAggregateStatusCard = ({
                     { data.notification.iconImage && <img src={data.notification.iconImage} alt="" className="card-pf-icon-image" /> }
                     { data.notification.iconClass && <span className={data.notification.iconClass} /> }
                     { data.notification.count && <span> {data.notification.count}</span> }
-                  </a>)
+                  </a>
+                )
                 : (
                   <span>
                     { data.notification.iconImage && <img src={data.notification.iconImage} alt="" className="card-pf-icon-image" /> }
                     { data.notification.iconClass && <span className={data.notification.iconClass} /> }
                     { data.notification.count && <span> {data.notification.count}</span> }
                   </span>
-                )
-              }
+                )}
             </span>
           </p>
         )}

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,8 +10,8 @@ const simpleRow = (row, i, colOrder) => (
 );
 
 const clickableRow = (row, i, colOrder, rowLabel, onClick) => (
-  <a href={row.link} onClick={e => onClick(row, e)}>
-    <tr key={i} >
+  <a href={row.link} onClick={(e) => onClick(row, e)}>
+    <tr key={i}>
       {colOrder.map((col, j) => <td key={j} title={rowLabel}>{`${row[col]}`}</td>)}
     </tr>
   </a>

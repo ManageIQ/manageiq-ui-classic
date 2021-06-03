@@ -12,7 +12,7 @@ const loadProviders = () =>
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
-const loadStorages = id => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
+const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
   // eslint-disable-next-line camelcase
   .then(({ physical_storages }) => physical_storages.map(({ name, id }) => ({
     label: name,
@@ -29,7 +29,7 @@ const createSchema = (emsId, setEmsId) => ({
       label: __('Provider:'),
       isRequired: true,
       loadOptions: loadProviders,
-      onChange: value => setEmsId(value),
+      onChange: (value) => setEmsId(value),
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
@@ -62,7 +62,7 @@ const createSchema = (emsId, setEmsId) => ({
       placeholder: __('Nothing selected'),
       options: portTypes,
       isRequired: true,
-      validate: [{type: validatorTypes.REQUIRED}],
+      validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -70,7 +70,7 @@ const createSchema = (emsId, setEmsId) => ({
       id: 'iqn',
       label: __('iqn:'),
       isRequired: true,
-      validate: [{type: validatorTypes.REQUIRED}],
+      validate: [{ type: validatorTypes.REQUIRED }],
       condition: {
         when: 'port_type',
         is: 'ISCSI',

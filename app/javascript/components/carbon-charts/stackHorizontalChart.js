@@ -26,6 +26,7 @@ const StackHorizontalChart = ({ data }) => {
 };
 
 StackHorizontalChart.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.array,
 };
 

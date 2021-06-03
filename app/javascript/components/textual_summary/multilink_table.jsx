@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconOrImage from './icon_or_image';
@@ -10,7 +11,7 @@ export default function MultilinkTable(props) {
       className="hover"
       style={{ cursor: 'pointer, hand' }}
     >
-      <a href={sub.link} onClick={e => onClick(sub, e)}>
+      <a href={sub.link} onClick={(e) => onClick(sub, e)}>
         <IconOrImage icon={sub.icon} image={sub.image} title={sub.title} />
         {sub.value}
       </a>

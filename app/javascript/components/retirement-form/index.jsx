@@ -6,6 +6,7 @@ import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
+// eslint-disable-next-line react/prop-types
 const RetirementForm = ({ retirementID, redirect, url }) => {
   const retireItems = JSON.parse(retirementID);
 
@@ -42,11 +43,14 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
 
   useEffect(() => {
     if (retireItems.length === 1) {
+      // eslint-disable-next-line camelcase
       API.get(`${url}/${retireItems[0]}?attributes=retires_on,retirement_warn`).then(({ retires_on, retirement_warn }) => {
         setState({
           isLoading: false,
+          // eslint-disable-next-line camelcase
           initialValues: retires_on && {
             retirementDate: retires_on,
+            // eslint-disable-next-line camelcase
             retirementWarning: retirement_warn || '',
           },
         });

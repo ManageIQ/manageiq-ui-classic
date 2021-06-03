@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,9 +20,9 @@ const showModal = () => (dispatch, getState) => {
   }
 
   // Request the modal data from the API
-  return API.get('/api').then(root =>
-    API.get(root.server_info.region_href).then(region =>
-      API.get(root.server_info.zone_href).then(zone => ({ ...root, region, zone })).then(data =>
+  return API.get('/api').then((root) =>
+    API.get(root.server_info.region_href).then((region) =>
+      API.get(root.server_info.zone_href).then((zone) => ({ ...root, region, zone })).then((data) =>
         dispatch({ type: LOAD_ABOUT_MODAL, data })).then(() =>
         dispatch({ type: SHOW_ABOUT_MODAL }))));
 };
@@ -99,6 +104,7 @@ class MiqAboutModal extends React.Component {
           <a
             style={{ color: 'white' }}
             onClick={(event) => {
+              // eslint-disable-next-line react/no-access-state-in-setstate
               this.setState({ expand: !this.state.expand });
               event.preventDefault();
             }}
@@ -142,7 +148,7 @@ MiqAboutModal.defaultProps = {
   data: undefined,
 };
 
-const mapStateToProps = state =>
+const mapStateToProps = (state) =>
   (state.AboutModal ? { show: state.AboutModal.show, data: state.AboutModal.data } : {});
-const mapDispatchToProps = dispatch => bindActionCreators({ showModal, hideModal }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ showModal, hideModal }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MiqAboutModal);

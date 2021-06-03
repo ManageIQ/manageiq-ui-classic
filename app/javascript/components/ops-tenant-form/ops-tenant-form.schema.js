@@ -23,7 +23,7 @@ const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
     name: 'name',
     label: 'Name',
     isRequired: true,
-    validate: [value => asyncValidatorDebounced(value, ancestry, itemId)],
+    validate: [(value) => asyncValidatorDebounced(value, ancestry, itemId)],
     validateOnMount: true,
     autoFocus: true,
   }, {

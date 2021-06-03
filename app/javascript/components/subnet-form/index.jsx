@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
+import { Loading } from 'carbon-components-react';
 import createSchema from './subnet-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
-import { Loading } from 'carbon-components-react';
 
 const SubnetForm = ({ recordId }) => {
   const [{ initialValues, isLoading, fields }, setState] = useState({ isLoading: !!recordId, fields: [] });
@@ -13,9 +13,9 @@ const SubnetForm = ({ recordId }) => {
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
     if (!!recordId && appendState.initialValues.type === 'ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet') {
-      Object.assign(fields[0], {isDisabled: true});
-      Object.assign(fields[1], {isDisabled: true});
-      Object.assign(fields[4], {isDisabled: true});
+      Object.assign(fields[0], { isDisabled: true });
+      Object.assign(fields[1], { isDisabled: true });
+      Object.assign(fields[4], { isDisabled: true });
     }
     setState((state) => ({
       ...state,
@@ -27,11 +27,11 @@ const SubnetForm = ({ recordId }) => {
   useEffect(() => {
     if (recordId) {
       API.get(`/api/cloud_subnets/${recordId}`).then((initialValues) => {
-        if(typeof initialValues.cloud_network_id ==="string") {
-          initialValues.cloud_network_id=Number(initialValues.cloud_network_id);
+        if (typeof initialValues.cloud_network_id === 'string') {
+          initialValues.cloud_network_id = Number(initialValues.cloud_network_id);
         }
-        if(typeof initialValues.cloud_tenant_id ==="string") {
-          initialValues.cloud_tenant_id=Number(initialValues.cloud_tenant_id);
+        if (typeof initialValues.cloud_tenant_id === 'string') {
+          initialValues.cloud_tenant_id = Number(initialValues.cloud_tenant_id);
         }
         API.options(`/api/cloud_subnets?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
       });
@@ -76,7 +76,7 @@ const SubnetForm = ({ recordId }) => {
     miqRedirectBack(message, 'warning', '/cloud_subnet/show_list');
   };
 
-  if (isLoading) return <Loading className='export-spinner' withOverlay={false} small />;
+  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
   return !isLoading && (
     <MiqFormRenderer
       schema={createSchema(!!recordId, fields, loadSchema)}

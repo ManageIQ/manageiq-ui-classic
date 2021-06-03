@@ -26,6 +26,7 @@ class CatalogForm extends Component {
       Promise.all([
         API.get('/api/service_templates?expand=resources&filter[]=service_template_catalog_id=null'),
         API.get(`/api/service_catalogs/${catalogId}?expand=service_templates`)])
+        // eslint-disable-next-line camelcase
         .then(([{ resources }, { name, description, service_templates }]) => {
           const rightValues = service_templates.resources.map(({ href, name }) => ({ value: href, label: name }));
           const options = resources.map(({ href, name }) => ({ value: href, label: name })).concat(rightValues);
@@ -60,6 +61,7 @@ class CatalogForm extends Component {
   submitValues = (values) => {
     const { catalogId } = this.props;
     const { originalRightValues } = this.state;
+    // eslint-disable-next-line camelcase
     const { service_templates = [] } = values;
     const apiBase = `/api/service_catalogs${catalogId ? `/${catalogId}` : ''}`;
 
@@ -74,7 +76,7 @@ class CatalogForm extends Component {
         skipErrors: [400],
       })
         .then(() => miqAjaxButton('/catalog/st_catalog_edit?button=add', { name: values.name }))
-        .catch(error => add_flash(this.handleError(error), 'error'));
+        .catch((error) => add_flash(this.handleError(error), 'error'));
     }
 
     const unassignedRightValues = filterValues(values.service_templates, originalRightValues.map(({ value }) => value));
@@ -95,7 +97,7 @@ class CatalogForm extends Component {
       promises.push(
         API.post(`${apiBase}/service_templates`, {
           action: 'assign',
-          resources: unassignedRightValues.map(value => ({ href: value })),
+          resources: unassignedRightValues.map((value) => ({ href: value })),
         }),
       );
     }
@@ -110,7 +112,7 @@ class CatalogForm extends Component {
 
     return Promise.all(promises)
       .then(([{ id }]) => miqAjaxButton(`/catalog/st_catalog_edit/${id}?button=save`, { name: values.name }))
-      .catch(error => add_flash(this.handleError(error), 'error'));
+      .catch((error) => add_flash(this.handleError(error), 'error'));
   };
 
   render() {

@@ -10,18 +10,19 @@ const ProviderCredentials = ({ fields }) => {
 
   // Pass down the required `edit` to the password component (if it exists)
   return (
-    <Fragment>
+    <>
       {
-        formOptions.renderForm(fields.map(field => ({
+        formOptions.renderForm(fields.map((field) => ({
           ...field,
           ...(field.component === 'password-field' ? { edit: !!providerId } : undefined),
         })), formOptions)
       }
-    </Fragment>
+    </>
   );
 };
 
 ProviderCredentials.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   fields: PropTypes.array.isRequired,
 };
 

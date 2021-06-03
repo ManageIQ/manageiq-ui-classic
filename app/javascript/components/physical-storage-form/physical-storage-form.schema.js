@@ -6,7 +6,7 @@ const loadProviders = () =>
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
-const loadFamilies = id => API.get(`/api/providers/${id}?attributes=type,physical_storage_families`)
+const loadFamilies = (id) => API.get(`/api/providers/${id}?attributes=type,physical_storage_families`)
   // eslint-disable-next-line camelcase
   .then(({ physical_storage_families }) => physical_storage_families.map(({ name, id }) => ({
     label: name,
@@ -24,7 +24,7 @@ const createSchema = (emsId, setEmsId) => ({
       isRequired: true,
       loadOptions: loadProviders,
       includeEmpty: true,
-      onChange: value => setEmsId(value),
+      onChange: (value) => setEmsId(value),
       validate: [{ type: validatorTypes.REQUIRED }],
     },
     {

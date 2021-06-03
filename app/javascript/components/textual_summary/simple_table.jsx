@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,12 +8,12 @@ export default function SimpleTable(props) {
     if ((typeof label === 'object') && label.sortable) {
       const sortClass = label.sortable === 'asc' ? 'fa fa-sort-asc' : 'fa fa-sort-desc';
       return (
-        <React.Fragment>
+        <>
           <div className="pull-left">{label.value}</div>
           <div className="pull-right">
             <i className={sortClass} />
           </div>
-        </React.Fragment>
+        </>
       );
     }
     return label;
@@ -26,9 +28,9 @@ export default function SimpleTable(props) {
           <div className="pull-right" />
         </td>
       );
-    } else if ((value != null) && (typeof value === 'object') && value.link) {
+    } if ((value != null) && (typeof value === 'object') && value.link) {
       // value with a link
-      return <td key={j} className="btn-link" ><a href={value.link} onClick={e => onClick(value, e)}>{value.value}</a></td>;
+      return <td key={j} className="btn-link"><a href={value.link} onClick={(e) => onClick(value, e)}>{value.value}</a></td>;
     }
     // simple value
     return <td className="no-hover" key={j}>{value}</td>;

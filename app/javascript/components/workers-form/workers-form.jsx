@@ -17,7 +17,9 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
   useEffect(() => {
     miqSparkleOn();
     API.get(`/api/servers/${id}/settings`)
+      // eslint-disable-next-line camelcase
       .then(({ workers: { worker_base } }) => {
+        // eslint-disable-next-line camelcase
         const wb = worker_base;
 
         const baseCount = wb.defaults.count;
@@ -90,7 +92,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
 
   const onSubmit = (values) => {
     // Compares initialValues and values and returns the value only if it's different
-    const isDifferent = name => (get(initialValues, name) !== get(values, name) ? get(values, name) : undefined);
+    const isDifferent = (name) => (get(initialValues, name) !== get(values, name) ? get(values, name) : undefined);
 
     miqSparkleOn();
     const result = {

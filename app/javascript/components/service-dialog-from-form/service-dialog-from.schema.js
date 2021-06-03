@@ -2,7 +2,7 @@ import { componentTypes } from '@@ddf';
 import { API } from '../../http_api';
 import debouncePromise from '../../helpers/promise-debounce';
 
-const asyncValidator = label => API.get(`/api/service_dialogs?filter[]=label=${label}`)
+const asyncValidator = (label) => API.get(`/api/service_dialogs?filter[]=label=${label}`)
   .then(({ subcount }) => {
     if (!label) {
       throw __('Required');

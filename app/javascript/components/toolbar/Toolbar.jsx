@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -91,6 +92,7 @@ export const ToolbarGroup = ({ group, onClick }) => {
 };
 
 ToolbarGroup.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   group: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func.isRequired,
 };
@@ -111,7 +113,9 @@ export const Toolbar = (props) => (
 Toolbar.propTypes = {
   count: PropTypes.number,
   kebabLimit: PropTypes.number,
+  // eslint-disable-next-line react/require-default-props
   groups: PropTypes.arrayOf(PropTypes.any), // array of arrays of buttons
+  // eslint-disable-next-line react/require-default-props
   views: PropTypes.arrayOf(PropTypes.any), // array of view buttons
   onClick: PropTypes.func.isRequired,
   onViewClick: PropTypes.func.isRequired,

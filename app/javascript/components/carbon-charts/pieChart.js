@@ -19,6 +19,7 @@ const PieChartGraph = ({ data }) => {
 };
 
 PieChartGraph.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.array,
 };
 

@@ -51,7 +51,7 @@ const imageMenusSubForm = [{
   }],
 }];
 
-const createSchema = isEditing => ({
+const createSchema = (isEditing) => ({
   fields: [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Information'),
@@ -73,6 +73,7 @@ const createSchema = isEditing => ({
         name: 'uri',
         isRequired: true,
         placeholder: 'schema://host:port/path',
+        // eslint-disable-next-line max-len
         helperText: __('URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba'),
         validate: [
           {
@@ -100,7 +101,7 @@ const createSchema = isEditing => ({
           edit: isEditing,
           validationDependencies: ['uri'],
           isRequired: true,
-          asyncValidate: formValues => new Promise((resolve, reject) => http.post('/pxe/pxe_server_async_cred_validation', {
+          asyncValidate: (formValues) => new Promise((resolve, reject) => http.post('/pxe/pxe_server_async_cred_validation', {
             uri: formValues.uri,
             ...formValues.authentication,
           }).then(({ status, message }) => (status === 'error' ? reject(message) : resolve()))),

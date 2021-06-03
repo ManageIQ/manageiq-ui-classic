@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import GenericTableRow from './generic_table_row';
@@ -13,6 +14,7 @@ export default function GenericGroup(props) {
       <tbody>
         {
           props.items.map((item, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <GenericTableRow onClick={props.onClick} key={i} item={item} />
           ))
         }

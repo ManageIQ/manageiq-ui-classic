@@ -28,6 +28,7 @@ const LineChartGraph = ({ data }) => {
 };
 
 LineChartGraph.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.array,
 };
 

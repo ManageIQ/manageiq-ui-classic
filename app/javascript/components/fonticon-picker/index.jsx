@@ -28,11 +28,11 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
   const onModalApply = () => {
     // This is required to connect the old session-backed form with the component
     window.miqObserveRequest(onChangeURL, { data: { button_icon: activeIcon } });
-    setState(state => ({ ...state, showModal: false, selectedIcon: activeIcon }));
+    setState((state) => ({ ...state, showModal: false, selectedIcon: activeIcon }));
   };
 
-  const hide = () => setState(state => ({ ...state, showModal: false }));
-  const show = () => setState(state => ({ ...state, showModal: true }));
+  const hide = () => setState((state) => ({ ...state, showModal: false }));
+  const show = () => setState((state) => ({ ...state, showModal: true }));
 
   return (
     <div className="fonticon-picker">
@@ -59,15 +59,22 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
         </Modal.Header>
         <Modal.Body>
           <div className="fonticon-picker-modal">
-            <Tabs id="font-icon-tabs" activeKey={activeTab} animation={false} onSelect={activeTab => setState(state => ({ ...state, activeTab }))}>
-              { Object.keys(iconTypes).map(type => (
+            <Tabs
+              id="font-icon-tabs"
+              activeKey={activeTab}
+              animation={false}
+              onSelect={(activeTab) => setState((state) => ({ ...state, activeTab }))}
+            >
+              { Object.keys(iconTypes).map((type) => (
                 <Tab eventKey={type} key={type} title={iconTypes[type]}>
-                  <IconList {...{
-                    type,
-                    activeIcon,
-                    activeTab,
-                    setState,
-                  }} />
+                  <IconList
+                    {...{
+                      type,
+                      activeIcon,
+                      activeTab,
+                      setState,
+                    }}
+                  />
                 </Tab>
               )) }
             </Tabs>
@@ -92,6 +99,7 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
 };
 
 FontIconPicker.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   iconTypes: PropTypes.any,
   selected: PropTypes.string,
   onChangeURL: PropTypes.string.isRequired,

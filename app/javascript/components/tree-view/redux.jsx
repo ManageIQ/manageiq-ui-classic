@@ -25,7 +25,9 @@ const TreeView = (props) => {
     allow_reselect,
     hierarchical_check,
     callBack,
+    // eslint-disable-next-line react/prop-types
     silent_activate,
+    // eslint-disable-next-line react/prop-types
     select_node,
   } = props;
 
@@ -63,7 +65,8 @@ const TreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = activateNode(convert(JSON.parse(bs_tree), (node) => node.state.checked, (node) => node.state.selected), silent_activate, select_node);
+    const tree = activateNode(convert(JSON.parse(bs_tree), (node) => node.state.checked,
+      (node) => node.state.selected), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, tree, namespace);

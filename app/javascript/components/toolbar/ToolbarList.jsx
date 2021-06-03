@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
@@ -9,7 +10,7 @@ import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
-  //set this true for overflowmenu keydown event
+  // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
 
   // Filter out invisible items.
@@ -34,16 +35,16 @@ export const ToolbarList = (props) => {
 
   const keydownFunc = (event) => {
     if (event.keyCode === 9 || event.keyCode === 27) {
-      setOverflowTab(true);  
+      setOverflowTab(true);
     }
-  }; 
+  };
 
   const closeFunc = () => {
     if (overflowTab === true) {
       document.getElementById(props.id).focus();
       setOverflowTab(false);
     }
-  };	  
+  };
 
   return (
     <OverflowMenu

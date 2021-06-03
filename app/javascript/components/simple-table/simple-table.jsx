@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -30,7 +32,7 @@ export const DataDrivenTable = ({
 }) => {
   const generatedRows = rows.map(transform).map((row, index) => {
     const handleClick = (e) => {
-      if (! row.$onClick) {
+      if (!row.$onClick) {
         return;
       }
 
@@ -43,7 +45,7 @@ export const DataDrivenTable = ({
       <TableRow key={`row-${index}`} onClick={handleClick}>
         {columns.map(([key, _content, props = {}], index) => <TableCell {...props} key={`${index}-${key}`}>{row[key]}</TableCell>)}
       </TableRow>
-    )
+    );
   });
 
   return (
@@ -63,8 +65,10 @@ export const DataDrivenTable = ({
 };
 
 DataDrivenTable.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   columns: PropTypes.array.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // eslint-disable-next-line react/require-default-props
   id: PropTypes.string,
   transform: PropTypes.func,
 };
