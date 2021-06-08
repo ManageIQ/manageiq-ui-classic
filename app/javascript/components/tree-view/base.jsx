@@ -87,8 +87,7 @@ const TreeViewBase = ({
 };
 
 TreeViewBase.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  actionMapper: PropTypes.any,
+  actionMapper: PropTypes.objectOf(PropTypes.any),
   loadData: PropTypes.func.isRequired,
   lazyLoadData: PropTypes.func,
   isMulti: PropTypes.bool,

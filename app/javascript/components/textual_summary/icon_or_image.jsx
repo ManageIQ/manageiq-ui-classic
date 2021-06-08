@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,23 +6,27 @@ import PropTypes from 'prop-types';
  */
 export default class IconOrImage extends React.Component {
   renderIcon = () => {
-    if (this.props.background) {
+    const { background, icon, title } = this.props;
+
+    if (background) {
       return (
-        <div style={{ background: this.props.background }} className="backgrounded-icon">
-          <i className={this.props.icon} title={this.props.title} />
+        <div style={{ background }} className="backgrounded-icon">
+          <i className={icon} title={title} />
         </div>
       );
     }
 
-    return <i className={this.props.icon} title={this.props.title} />;
+    return <i className={icon} title={title} />;
   };
 
   // FIXME: preprocess and test in-lined images
+  // eslint-disable-next-line react/destructuring-assignment
   renderImage = () => <img src={this.props.image} alt={this.props.title} title={this.props.title} />;
 
   render() {
-    if (!this.props.image) {
-      return this.props.icon ? this.renderIcon() : '';
+    const { image, icon } = this.props;
+    if (!image) {
+      return icon ? this.renderIcon() : '';
     }
     return this.renderImage();
   }
@@ -33,7 +36,6 @@ IconOrImage.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
   icon: PropTypes.string,
-  // eslint-disable-next-line react/require-default-props
   background: PropTypes.string,
 };
 
@@ -41,4 +43,5 @@ IconOrImage.defaultProps = {
   title: null,
   image: null,
   icon: null,
+  background: null,
 };

@@ -33,9 +33,8 @@ const Quadicon = (props) => (<div className="miq-quadicon">{isQuad(props.data) ?
 export default Quadicon;
 
 Quadicon.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape(Quaditem.propTypes)).isRequired,
     PropTypes.shape(Quaditem.propTypes).isRequired,
-  ]),
+  ]).isRequired,
 };

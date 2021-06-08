@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -51,9 +50,10 @@ class MiqAboutModal extends React.Component {
   }
 
   componentDidMount() {
+    const { showModal } = this.props;
     this.subscribe = window.listenToRx((event) => {
       if (event.type === 'showAboutModal') {
-        this.props.showModal();
+        showModal();
       }
     });
   }
@@ -63,11 +63,14 @@ class MiqAboutModal extends React.Component {
   }
 
   render() {
-    if (!this.props.data) {
+    const {
+      data, dialogClassName, show, hideModal,
+    } = this.props;
+    const { expand } = this.state;
+    if (!data) {
       return null;
     }
 
-    const { data } = this.props;
     const browser = window.miqBrowserDetect();
     const plugins = Object.keys(data.server_info.plugins).map((key) => {
       const val = data.server_info.plugins[key];
@@ -82,9 +85,9 @@ class MiqAboutModal extends React.Component {
 
     return (
       <AboutModal
-        dialogClassName={this.props.dialogClassName}
-        show={this.props.show}
-        onHide={this.props.hideModal}
+        dialogClassName={dialogClassName}
+        show={show}
+        onHide={hideModal}
         productTitle={`${data.product_info.name_full} ${data.server_info.release}`}
         logo={data.product_info.branding_info.logo}
         altLogo={data.product_info.name_full}
@@ -104,17 +107,16 @@ class MiqAboutModal extends React.Component {
           <a
             style={{ color: 'white' }}
             onClick={(event) => {
-              // eslint-disable-next-line react/no-access-state-in-setstate
-              this.setState({ expand: !this.state.expand });
+              this.setState({ expand: !expand });
               event.preventDefault();
             }}
           >
             <strong>
-              <i className={this.state.expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
+              <i className={expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
               Plugins
             </strong>
           </a>
-          <div className={this.state.expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
+          <div className={expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
             {plugins}
           </div>
         </AboutModal.Versions>

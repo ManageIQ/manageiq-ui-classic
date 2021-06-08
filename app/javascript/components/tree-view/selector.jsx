@@ -50,7 +50,7 @@ const TreeViewSelector = ({
       return Tree.nodeSelected(node, values);
     },
   };
-
+  const { label } = props;
   return (
     <FormGroup legendText={labelText}>
       <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
@@ -95,8 +95,7 @@ const TreeViewSelector = ({
       <Modal
         open={show}
         onRequestClose={closeModal}
-        // eslint-disable-next-line react/destructuring-assignment
-        modalHeading={props.label}
+        modalHeading={label}
         primaryButtonText={selectLabel}
         secondaryButtonText={closeLabel}
         iconDescription={closeLabel}

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DonutChart, AreaChart } from '@carbon/charts-react';
@@ -85,7 +84,6 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
               {config.availableof}
               {''}
               <span className="available-text-total">{memoryData.total}</span>
-              {''}
               <span className="available-text-total">{config.units}</span>
             </span>
           </div>

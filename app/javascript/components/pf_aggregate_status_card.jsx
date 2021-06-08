@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/* eslint react/jsx-one-expression-per-line: "off" */
 /* need to keep the spaces before { count } */
 const PfAggregateStatusCard = ({
   showTopBorder, altLayout, layout, data,
@@ -40,7 +39,10 @@ const PfAggregateStatusCard = ({
                   <>
                     <img src={notification.iconImage} alt="" className="card-pf-icon-image" />
                     <span className={notification.iconClass} />
-                    <span> { notification.count }</span>
+                    <span>
+                      {' '}
+                      { notification.count }
+                    </span>
                   </>
                 )}
               </a>
@@ -62,7 +64,10 @@ const PfAggregateStatusCard = ({
         <a href={data.href}>
           { data.iconImage && <img src={data.iconImage} alt="" className="card-pf-icon-image" /> }
           { data.iconClass && <span className={data.iconClass} /> }
-          <span className="card-pf-aggregate-status-count"> {data.count}</span>
+          <span className="card-pf-aggregate-status-count">
+            {' '}
+            {data.count}
+          </span>
           {data.title}
         </a>
       </h2>
@@ -75,14 +80,24 @@ const PfAggregateStatusCard = ({
                   <a href={data.notification.href}>
                     { data.notification.iconImage && <img src={data.notification.iconImage} alt="" className="card-pf-icon-image" /> }
                     { data.notification.iconClass && <span className={data.notification.iconClass} /> }
-                    { data.notification.count && <span> {data.notification.count}</span> }
+                    { data.notification.count && (
+                      <span>
+                        {' '}
+                        {data.notification.count}
+                      </span>
+                    ) }
                   </a>
                 )
                 : (
                   <span>
                     { data.notification.iconImage && <img src={data.notification.iconImage} alt="" className="card-pf-icon-image" /> }
                     { data.notification.iconClass && <span className={data.notification.iconClass} /> }
-                    { data.notification.count && <span> {data.notification.count}</span> }
+                    { data.notification.count && (
+                      <span>
+                        {' '}
+                        {data.notification.count}
+                      </span>
+                    ) }
                   </span>
                 )}
             </span>

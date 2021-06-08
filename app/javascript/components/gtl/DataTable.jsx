@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -29,7 +28,6 @@ export const DataTable = ({
   onItemButtonClick,
   onPerPageSelect,
   onPageSet,
-  // eslint-disable-next-line react/prop-types
   showPagination,
 }) => {
   const selectAll = () => {
@@ -47,15 +45,14 @@ export const DataTable = ({
     };
 
     return (
-      // eslint-disable-next-line jsx-a11y/no-redundant-roles
       <input
         type="checkbox"
         name="selectAll"
         key="selectAll"
+        id="selectAllCheckbox"
         checked={!!checkedItems.selectAll}
         onChange={localOnSelectAll}
         onKeyPress={localOnSelectAll}
-        role="checkbox"
         aria-checked="false"
         tabIndex="0"
         aria-labelledby="selectAll"
@@ -70,7 +67,7 @@ export const DataTable = ({
         {!inEditMode() && !noCheckboxes()
         && (
           <th className="narrow table-view-pf-select">
-            <label className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
+            <label htmlFor="selectAllCheckbox" className="hiddenCheckboxLabel" id="selectAll" aria-hidden="true">{__('Select All')}</label>
             {selectAll()}
           </th>
         )}
@@ -78,10 +75,8 @@ export const DataTable = ({
           (noCheckboxes() || inEditMode() || (index !== 0 && !noCheckboxes()))
             && (
               <th
-                // eslint-disable-next-line eqeqeq
-                onClick={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
-                // eslint-disable-next-line eqeqeq
-                onKeyPress={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir == 'ASC' })}
+                onClick={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir === 'ASC' })}
+                onKeyPress={onSort({ headerId: column.col_idx, isAscending: settings.sort_dir === 'ASC' })}
                 tabIndex="0"
                 className={classNames({ narrow: column.is_narrow, 'table-view-pf-select': column.is_narrow })}
                 // eslint-disable-next-line react/no-array-index-key
@@ -94,10 +89,8 @@ export const DataTable = ({
                     <i
                       className={
                         classNames('fa', {
-                          // eslint-disable-next-line eqeqeq
-                          'fa-sort-asc': !(settings.sort_dir == 'ASC'),
-                          // eslint-disable-next-line eqeqeq
-                          'fa-sort-desc': !(!!settings.sort_dir == 'ASC'),
+                          'fa-sort-asc': !(settings.sort_dir === 'ASC'),
+                          'fa-sort-desc': !(!!settings.sort_dir === 'ASC'),
                         })
                       }
                     />
@@ -151,16 +144,23 @@ export const DataTable = ({
               })}
             >
               { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
-              // eslint-disable-next-line jsx-a11y/label-has-associated-control
-              && <label className="hiddenCheckboxLabel" id={`check_${row.id}`} aria-hidden="true">{`check_${row.id}`}</label>
               && (
-                // eslint-disable-next-line jsx-a11y/no-redundant-roles
+                <label
+                  htmlFor={`checkbox_${row.id}`}
+                  className="hiddenCheckboxLabel"
+                  id={`check_${row.id}`}
+                  aria-hidden="true"
+                >
+                  {`check_${row.id}`}
+                </label>
+              )
+              && (
                 <input
                   onChange={localOnItemSelected(row)}
                   onKeyPress={localOnItemSelected(row)}
-                  role="checkbox"
                   aria-checked="false"
                   tabIndex="0"
+                  id={`checkbox_${row.id}`}
                   aria-labelledby={`check_${row.id}`}
                   type="checkbox"
                   name={`check_${row.id}`}
@@ -194,9 +194,9 @@ export const DataTable = ({
                 )}
               { row.cells[columnKey].is_button && row.cells[columnKey].onclick
                 && (
-                  // eslint-disable-next-line react/button-has-type
                   <button
                     className="btn btn-primary"
+                    type="button"
                     disabled={row.cells[columnKey].disabled}
                     title={row.cells[columnKey].title}
                     alt={row.cells[columnKey].title}
@@ -239,14 +239,11 @@ export const DataTable = ({
 DataTable.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
   columns: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  settings: PropTypes.any.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  pagination: PropTypes.any.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  pagination: PropTypes.objectOf(PropTypes.any).isRequired,
   total: PropTypes.number.isRequired,
   inEditMode: PropTypes.func.isRequired,
   noCheckboxes: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/require-default-props
   isLoading: PropTypes.bool,
   onSelectAll: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
@@ -255,6 +252,11 @@ DataTable.propTypes = {
   onItemButtonClick: PropTypes.func.isRequired,
   onPerPageSelect: PropTypes.func.isRequired,
   onPageSet: PropTypes.func.isRequired,
+  showPagination: PropTypes.func.isRequired,
+};
+
+DataTable.defaultProps = {
+  isLoading: undefined,
 };
 
 export default DataTable;

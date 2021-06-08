@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconOrImage from './icon_or_image';
@@ -39,15 +38,17 @@ export default function MultilinkTable(props) {
     </tr>
   );
 
+  const { title, items } = props;
+
   return (
     <table className="table table-bordered table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan="100">{props.title}</th>
+          <th colSpan="100">{title}</th>
         </tr>
       </thead>
       <tbody>
-        {props.items.map((item, i) => renderLine(item, i))}
+        {items.map((item, i) => renderLine(item, i))}
       </tbody>
     </table>
   );

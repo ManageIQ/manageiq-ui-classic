@@ -8,9 +8,9 @@ export const ToolbarView = ({ views, onClick }) => (
   <div className="toolbar-pf-action-right">
     <div className="form-group toolbar-pf-view-selector">
       {views.map((view) => (
-        // eslint-disable-next-line react/button-has-type
         <button
           key={view.id}
+          type="button"
           id={view.id}
           name={view.name}
           title={view.title}
@@ -31,7 +31,6 @@ export const ToolbarView = ({ views, onClick }) => (
 );
 
 ToolbarView.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  views: PropTypes.arrayOf(PropTypes.any),
+  views: PropTypes.arrayOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };

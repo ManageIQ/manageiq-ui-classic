@@ -25,9 +25,7 @@ const TreeView = (props) => {
     allow_reselect,
     hierarchical_check,
     callBack,
-    // eslint-disable-next-line react/prop-types
     silent_activate,
-    // eslint-disable-next-line react/prop-types
     select_node,
   } = props;
 
@@ -162,6 +160,8 @@ TreeView.propTypes = {
   click_url: PropTypes.string,
   callBack: PropTypes.func.isRequired,
   hierarchical_check: PropTypes.bool,
+  silent_activate: PropTypes.objectOf(PropTypes.any),
+  select_node: PropTypes.string.isRequired,
 };
 
 TreeView.defaultProps = {
@@ -172,6 +172,7 @@ TreeView.defaultProps = {
   check_url: '',
   click_url: '',
   hierarchical_check: false,
+  silent_activate: undefined,
 };
 
 const TreeViewRedux = connect(null, { callBack })(TreeView);

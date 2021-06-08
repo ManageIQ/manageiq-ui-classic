@@ -89,6 +89,7 @@ exports[`TagGroup renders just fine 1`] = `
         </td>
         <td>
           <IconOrImage
+            background={null}
             icon="pficon pficon-zone"
             image={null}
             title={null}
@@ -114,6 +115,7 @@ exports[`TagGroup renders just fine 1`] = `
         </td>
         <td>
           <IconOrImage
+            background={null}
             icon="fa fa-tag"
             image={null}
             title={null}
@@ -136,6 +138,7 @@ exports[`TagGroup renders just fine 1`] = `
       >
         <td>
           <IconOrImage
+            background={null}
             icon="fa fa-tag"
             image={null}
             title={null}
@@ -169,6 +172,7 @@ exports[`TagGroup renders just fine 1`] = `
         </td>
         <td>
           <IconOrImage
+            background={null}
             icon="fa fa-tag"
             image={null}
             title={null}
@@ -191,6 +195,7 @@ exports[`TagGroup renders just fine 1`] = `
       >
         <td>
           <IconOrImage
+            background={null}
             icon="fa fa-tag"
             image={null}
             title={null}

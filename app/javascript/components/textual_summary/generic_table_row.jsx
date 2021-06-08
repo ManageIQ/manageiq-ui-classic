@@ -35,9 +35,8 @@ const renderValue = function renderValue(value, onClick) {
 };
 
 export default function GenericTableRow(props) {
-  const { item } = props;
-  // eslint-disable-next-line react/destructuring-assignment
-  const value = renderValue(item.value, props.onClick);
+  const { item, onClick } = props;
+  const value = renderValue(item.value, onClick);
 
   return (
     <tr className={item.hoverClass} title={item.title}>
@@ -69,8 +68,7 @@ GenericTableRow.propTypes = {
     title: PropTypes.string,
     image: PropTypes.string,
     icon: PropTypes.string,
-    // eslint-disable-next-line react/forbid-prop-types
-    label: PropTypes.any,
+    label: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number, PropTypes.bool]),
     background: PropTypes.string,
     button: PropTypes.bool,

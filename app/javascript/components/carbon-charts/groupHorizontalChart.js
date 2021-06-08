@@ -27,8 +27,7 @@ const GroupHorizontalBarChart = ({ data }) => {
 };
 
 GroupHorizontalBarChart.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 GroupHorizontalBarChart.defaultProps = {

@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,6 +6,8 @@ export const Table = ({ children, ...props }) => <table {...props}>{children}</t
 
 Table.propTypes = {
   className: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
 };
 
 Table.defaultProps = {
@@ -15,13 +16,38 @@ Table.defaultProps = {
 
 export const TableHead = ({ children, ...props }) => <thead {...props}>{children}</thead>;
 
+TableHead.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+};
+
 export const TableBody = ({ children, ...props }) => <tbody {...props}>{children}</tbody>;
+
+TableBody.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+};
 
 export const TableRow = ({ children, ...props }) => <tr {...props}>{children}</tr>;
 
+TableRow.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+};
+
 export const TableHeading = ({ children, ...props }) => <th {...props}>{children}</th>;
 
+TableHeading.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+};
+
 export const TableCell = ({ children, ...props }) => <td {...props}>{children}</td>;
+
+TableCell.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+};
 
 export const DataDrivenTable = ({
   columns,
@@ -65,14 +91,13 @@ export const DataDrivenTable = ({
 };
 
 DataDrivenTable.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  columns: PropTypes.array.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.any).isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // eslint-disable-next-line react/require-default-props
   id: PropTypes.string,
   transform: PropTypes.func,
 };
 
 DataDrivenTable.defaultProps = {
   transform: (row) => row,
+  id: undefined,
 };

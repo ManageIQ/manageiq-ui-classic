@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import GenericGroup from './generic_group';
@@ -10,45 +9,46 @@ import TableListView from './table_list_view';
 import EmptyGroup from './empty_group';
 
 const renderComponent = (props) => {
+  const { group, onClick } = props;
   switch (props.group.component) {
     case 'GenericGroup':
       return (
-        <GenericGroup onClick={props.onClick} items={props.group.items} title={props.group.title} />
+        <GenericGroup onClick={onClick} items={group.items} title={group.title} />
       );
     case 'TagGroup':
-      return <TagGroup onClick={props.onClick} items={props.group.items} title={props.group.title} />;
+      return <TagGroup onClick={onClick} items={group.items} title={group.title} />;
     case 'SimpleTable':
       return (
         <SimpleTable
-          labels={props.group.labels}
-          rows={props.group.rows}
-          title={props.group.title}
-          onClick={props.onClick}
+          labels={group.labels}
+          rows={group.rows}
+          title={group.title}
+          onClick={onClick}
         />
       );
     case 'OperationRanges':
-      return <OperationRanges items={props.group.items} title={props.group.title} />;
+      return <OperationRanges items={group.items} title={group.title} />;
     case 'MultilinkTable':
       return (
         <MultilinkTable
-          onClick={props.onClick}
-          items={props.group.items}
-          title={props.group.title}
+          onClick={onClick}
+          items={group.items}
+          title={group.title}
         />
       );
     case 'TableListView':
       return (
         <TableListView
-          rowLabel={props.group.rowLabel}
-          onClick={props.onClick}
-          title={props.group.title}
-          headers={props.group.headers}
-          values={props.group.values}
-          colOrder={props.group.colOrder}
+          rowLabel={group.rowLabel}
+          onClick={onClick}
+          title={group.title}
+          headers={group.headers}
+          values={group.values}
+          colOrder={group.colOrder}
         />
       );
     case 'EmptyGroup':
-      return <EmptyGroup title={props.group.title} text={props.group.text} />;
+      return <EmptyGroup title={group.title} text={group.text} />;
     default:
       return <span>Error: Unknown summary group type.</span>;
   }
@@ -62,12 +62,9 @@ renderComponent.propTypes = {
   group: PropTypes.shape({
     title: PropTypes.string.isRequired,
     component: PropTypes.string.isRequired,
-    // eslint-disable-next-line react/forbid-prop-types
-    items: PropTypes.any,
-    // eslint-disable-next-line react/forbid-prop-types
-    labels: PropTypes.any,
-    // eslint-disable-next-line react/forbid-prop-types
-    rows: PropTypes.any,
+    items: PropTypes.objectOf(PropTypes.any),
+    labels: PropTypes.objectOf(PropTypes.any),
+    rows: PropTypes.objectOf(PropTypes.any),
     rowLabel: PropTypes.string,
     headers: PropTypes.arrayOf(PropTypes.any),
     values: PropTypes.arrayOf(PropTypes.any),

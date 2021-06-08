@@ -1,12 +1,8 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
-// eslint-disable-next-line no-unused-vars
-import { http } from '../http_api';
 
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
@@ -37,21 +33,33 @@ class TaggingWrapper extends React.Component {
   }
 
   componentDidMount() {
-    this.loadState(this.props.tags);
+    const { tags } = this.props;
+    this.loadState(tags);
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    const { reset } = this.props;
+    reset();
   }
 
-  loadState = (state) => this.props.loadState(state);
+  loadState = (state) => {
+    const { loadState } = this.props;
+    loadState(state);
+  }
 
-  reset = () => this.props.reset();
+  reset = () => {
+    const { reset } = this.props;
+    reset();
+  }
 
-  isLoaded = () => this.props.isLoaded();
+  isLoaded = () => {
+    const { isLoaded } = this.props;
+    isLoaded();
+  }
 
   render() {
-    if (!this.props.isLoaded) return <Spinner loading size="lg" />;
+    const { isLoaded } = this.props;
+    if (!isLoaded) return <Spinner loading size="lg" />;
     const { urls, options, tagging } = this.props;
     // eslint-disable-next-line no-mixed-operators
     return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
@@ -93,7 +101,6 @@ TaggingWrapper.propTypes = {
   reset: PropTypes.func.isRequired,
   loadState: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/require-default-props
   urls: PropTypes.shape({
     cancel_url: PropTypes.string.isRequired,
     save_url: PropTypes.string.isRequired,
@@ -117,6 +124,14 @@ TaggingWrapper.propTypes = {
     })).isRequired,
     affectedItems: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  options: PropTypes.objectOf(PropTypes.any),
+  tagging: PropTypes.objectOf(PropTypes.any),
+};
+
+TaggingWrapper.defaultProps = {
+  urls: undefined,
+  options: undefined,
+  tagging: undefined,
 };
 
 const mapDispatchToProps = (dispatch) => ({

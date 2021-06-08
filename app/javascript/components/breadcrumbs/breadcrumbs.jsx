@@ -13,13 +13,15 @@ const renderItems = ({ items, controllerName }) => items
   .map((item, index) => {
     const text = parsedText(item.title);
     if (item.action || (!item.url && !item.key && !item.to_explorer)) {
-      return <li key={index}>{text}</li>; // eslint-disable-line react/no-array-index-key
+      // eslint-disable-next-line react/no-array-index-key
+      return <li key={index}>{text}</li>;
     }
 
     if (item.key || item.to_explorer) {
       return (
         <Breadcrumb.Item
-          key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${item.key}-${index}`}
           onClick={(e) =>
             (item.to_explorer
               ? onClickToExplorer(e, controllerName, item.to_explorer)
@@ -53,15 +55,16 @@ export const Breadcrumbs = ({ items, title, controllerName }) => (
 );
 
 Breadcrumbs.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  controllerName: PropTypes.string,
-  // eslint-disable-next-line react/require-default-props
+  controllerName: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.string,
     key: PropTypes.string,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,
   })),
-  // eslint-disable-next-line react/require-default-props
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
+};
+
+Breadcrumbs.defaultProps = {
+  items: null,
 };

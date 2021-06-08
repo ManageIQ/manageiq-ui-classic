@@ -19,11 +19,11 @@ const PxeImageForm = ({ recordId }) => {
     }
   }, [recordId]);
 
-  const onSubmit = (values) => {
+  const onSubmit = (valuesProp) => {
     // eslint-disable-next-line no-param-reassign
-    values = {
-      ...values,
-      provision_type: values.provision_type ? values.provision_type : null,
+    const values = {
+      ...valuesProp,
+      provision_type: valuesProp.provision_type ? valuesProp.provision_type : null,
     };
     miqSparkleOn();
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -132,6 +131,9 @@ AsyncCredentials.propTypes = {
   validateDefaultError: PropTypes.string,
   asyncValidate: PropTypes.func.isRequired,
   edit: PropTypes.bool,
+  fields: PropTypes.arrayOf(PropTypes.any).isRequired,
+  isRequired: PropTypes.bool,
+  name: PropTypes.string.isRequired,
   validationDependencies: PropTypes.arrayOf(PropTypes.string),
 };
 
@@ -142,6 +144,7 @@ AsyncCredentials.defaultProps = {
   validateDefaultError: __('Validation Required'),
   edit: false,
   validationDependencies: [],
+  isRequired: undefined,
 };
 
 export default AsyncCredentials;

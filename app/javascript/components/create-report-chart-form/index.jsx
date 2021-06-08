@@ -39,8 +39,7 @@ const ReportChartWidget = ({ data, id }) => {
 };
 
 ReportChartWidget.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.object,
+  data: PropTypes.objectOf(PropTypes.any),
   id: PropTypes.string,
 };
 

@@ -1,7 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-// eslint-disable-next-line eqeqeq
-const setFormat = (type) => (typeof type !== 'undefined' && type == 'CustomizationTemplateKickstart' ? 'shell' : 'xml');
+const setFormat = (type) => (typeof type !== 'undefined' && type === 'CustomizationTemplateKickstart' ? 'shell' : 'xml');
 
 const createSchema = ({ type } = {}) => ({
   fields: [

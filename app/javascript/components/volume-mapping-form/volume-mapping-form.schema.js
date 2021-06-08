@@ -14,7 +14,6 @@ const loadProviders = () =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
 const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
-  // eslint-disable-next-line camelcase
   .then(({ physical_storages }) => physical_storages.map(({ name, id }) => ({
     label: name,
     value: id,

@@ -372,8 +372,7 @@ const GtlView = ({
     sort_dir: isAscending ? 'DESC' : 'ASC',
     is_ascending: !(!!isAscending),
     sort_col: headerId,
-    // eslint-disable-next-line eqeqeq
-    sort_header_text: head.filter((column) => column.col_idx == headerId)[0].text,
+    sort_header_text: head.filter((column) => column.col_idx === headerId)[0].text,
   });
 
   const onSort = ({ headerId, isAscending }) => () => {
@@ -492,8 +491,7 @@ const GtlView = ({
 };
 
 GtlView.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  flashMessages: PropTypes.array,
+  flashMessages: PropTypes.arrayOf(PropTypes.any),
   additionalOptions: PropTypes.shape({}),
   modelName: PropTypes.string,
   activeTree: PropTypes.string,
@@ -504,6 +502,7 @@ GtlView.propTypes = {
   hideSelect: PropTypes.bool,
   showUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   pages: PropTypes.shape({}), // fixme
+  isAscending: PropTypes.bool,
 };
 
 GtlView.defaultProps = {
@@ -518,6 +517,7 @@ GtlView.defaultProps = {
   hideSelect: false,
   showUrl: null,
   pages: null,
+  isAscending: null,
 };
 
 export default GtlView;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-
+import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-// eslint-disable-next-line react/prop-types
 const RetirementForm = ({ retirementID, redirect, url }) => {
   const retireItems = JSON.parse(retirementID);
 
@@ -77,6 +76,12 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
       />
     )
   );
+};
+
+RetirementForm.propTypes = {
+  retirementID: PropTypes.string.isRequired,
+  redirect: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default RetirementForm;

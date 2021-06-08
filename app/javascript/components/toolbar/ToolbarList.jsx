@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
@@ -10,11 +9,12 @@ import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
+  const { items, title, id } = props;
   // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
 
   // Filter out invisible items.
-  const visibleItems = props.items.filter((i) => !i.hidden);
+  const visibleItems = items.filter((i) => !i.hidden);
 
   // Do not render at all if no child is visible.
   if (visibleItems.length === 0) {
@@ -48,10 +48,10 @@ export const ToolbarList = (props) => {
 
   return (
     <OverflowMenu
-      ariaLabel={props.title}
-      id={props.id}
+      ariaLabel={title}
+      id={id}
       floatingmenu="true"
-      title={props.title}
+      title={title}
       iconDescription=""
       className={!isToolbarEnabled ? 'overflow-menu-disabled' : ''}
       disabled={!isToolbarEnabled}

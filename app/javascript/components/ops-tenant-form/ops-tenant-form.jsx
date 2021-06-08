@@ -100,7 +100,7 @@ OpsTenantForm.propTypes = {
   },
   divisible: PropTypes.bool.isRequired,
   redirectUrl: PropTypes.string.isRequired,
-  ancestry: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  ancestry: PropTypes.objectOf(PropTypes.any),
 };
 
 OpsTenantForm.defaultProps = {

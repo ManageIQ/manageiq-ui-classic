@@ -8,8 +8,7 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 const PxeCustomizationTemplateForm = ({ recordId, copy }) => {
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!recordId });
   const submitLabel = !!recordId ? __('Save') : __('Add');
-  // eslint-disable-next-line eqeqeq
-  const disableSubmit = copy && copy != recordId ? ['invalid'] : ['pristine'];
+  const disableSubmit = copy && copy !== recordId ? ['invalid'] : ['pristine'];
 
   useEffect(() => {
     if (recordId) {

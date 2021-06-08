@@ -99,8 +99,7 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
 };
 
 FontIconPicker.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  iconTypes: PropTypes.any,
+  iconTypes: PropTypes.objectOf(PropTypes.any),
   selected: PropTypes.string,
   onChangeURL: PropTypes.string.isRequired,
 };

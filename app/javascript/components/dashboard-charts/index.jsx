@@ -38,8 +38,7 @@ const DashboardWidget = ({ data, id }) => {
 };
 
 DashboardWidget.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.object,
+  data: PropTypes.objectOf(PropTypes.any),
   id: PropTypes.string,
 };
 

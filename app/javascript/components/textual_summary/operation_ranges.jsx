@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -20,15 +19,17 @@ export default function OperationRanges(props) {
     </React.Fragment>
   );
 
+  const { title, items } = props;
+
   return (
     <table className="table table-bordered table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan="3" align="left">{props.title}</th>
+          <th colSpan="3" align="left">{title}</th>
         </tr>
       </thead>
       <tbody>
-        {props.items.map((item, i) => renderItem(item, i))}
+        {items.map((item, i) => renderItem(item, i))}
       </tbody>
     </table>
   );

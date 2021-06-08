@@ -30,8 +30,7 @@ const StackAreaChart = ({ data }) => {
 };
 
 StackAreaChart.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 StackAreaChart.defaultProps = {

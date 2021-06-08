@@ -59,8 +59,7 @@ StaticGTLView.defaultProps = {
 };
 
 StaticGTLView.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  settings: PropTypes.any.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
   head: PropTypes.arrayOf(PropTypes.any).isRequired,
   inEditMode: PropTypes.func.isRequired,

@@ -28,8 +28,7 @@ const StackBarChartGraph = ({ data }) => {
 };
 
 StackBarChartGraph.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 StackBarChartGraph.defaultProps = {

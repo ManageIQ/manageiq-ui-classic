@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -12,7 +10,6 @@ const apiTransformFunctions = {
     id: item.id,
     name: item.name.split('|')[0],
   }),
-  // eslint-disable-next-line camelcase
   default: (item, { display_field = 'name' }) => ({
     id: item.id,
     name: item[display_field],
@@ -98,7 +95,11 @@ class RemoveGenericItemModal extends React.Component {
   }
 
   componentDidMount() {
-    const itemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
+    const {
+      recordId, gridChecks, modalData, dispatch,
+    } = this.props;
+    const { data, force } = this.state;
+    const itemsIds = recordId ? [recordId] : _.uniq(gridChecks);
     const {
       ajax_reload,
       api_url,
@@ -106,16 +107,16 @@ class RemoveGenericItemModal extends React.Component {
       display_field = 'name',
       redirect_url,
       tree_select,
-    } = this.props.modalData;
+    } = modalData;
 
     let transformFn = apiTransformFunctions.default;
 
-    if (this.props.modalData.transform_fn) {
-      transformFn = apiTransformFunctions[this.props.modalData.transform_fn];
+    if (modalData.transform_fn) {
+      transformFn = apiTransformFunctions[modalData.transform_fn];
     }
     // Load modal data from API
     let extra_attributes = '';
-    if (this.props.modalData.try_safe_delete) {
+    if (modalData.try_safe_delete) {
       extra_attributes += '/?attributes=supports_safe_delete';
     }
 
@@ -126,18 +127,18 @@ class RemoveGenericItemModal extends React.Component {
         force: !this.isSafeDeleteSupported(data),
         loaded: true,
       }))
-      .then(() => this.props.dispatch({
+      .then(() => dispatch({
         type: 'FormButtons.saveable',
         payload: true,
       }));
 
     // Buttons setup
-    this.props.dispatch({
+    dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeItems(this.state.data, this.state.force, {
+        addClicked: () => removeItems(data, force, {
           ajaxReload: ajax_reload,
           apiUrl: api_url,
           asyncDelete: async_delete,
@@ -146,7 +147,7 @@ class RemoveGenericItemModal extends React.Component {
         }),
       },
     });
-    this.props.dispatch({
+    dispatch({
       type: 'FormButtons.customLabel',
       payload: __('Delete'),
     });
@@ -164,42 +165,42 @@ class RemoveGenericItemModal extends React.Component {
         return <Spinner loading size="lg" />;
       }
     };
-
+    const { modalData } = this.props;
+    const { loaded, data, force } = this.state;
     return (
       <Modal.Body className="warning-modal-body">
-        {renderSpinner(!this.state.loaded)}
-        {this.state.loaded
+        {renderSpinner(!loaded)}
+        {loaded
           && (
             <div>
-              <h4>{__(this.props.modalData.modal_text)}</h4>
+              <h4>{__(modalData.modal_text)}</h4>
               <ul>
-                {this.state.data.map((item) => (
+                {data.map((item) => (
                   <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
                 ))}
               </ul>
             </div>
           )}
-        {this.props.modalData.try_safe_delete
+        {modalData.try_safe_delete
         && (
-          // eslint-disable-next-line jsx-a11y/label-has-associated-control
-          <label>
+          <label htmlFor="forceCheckbox">
             <input
               name="force"
               type="checkbox"
-              checked={this.state.force}
+              id="forceCheckbox"
+              checked={force}
               // eslint-disable-next-line no-unused-vars
               onChange={(ev) => {
                 this.setState({
-                  // eslint-disable-next-line react/no-access-state-in-setstate
-                  force: !this.state.force,
+                  force: !force,
                 });
               }}
-              disabled={!this.isSafeDeleteSupported(this.state.data)}
+              disabled={!this.isSafeDeleteSupported(data)}
               data-toggle="tooltip"
-              title={this.isSafeDeleteSupported(this.state.data)
+              title={this.isSafeDeleteSupported(data)
                 ? ''
                 : `Some of the items only support force-delete: ${
-                  this.state.data.filter((i) => !i.supports_safe_delete).map((i) => i.name)}`}
+                  data.filter((i) => !i.supports_safe_delete).map((i) => i.name)}`}
             />
           &nbsp; Force Delete?
           </label>
@@ -211,6 +212,9 @@ class RemoveGenericItemModal extends React.Component {
 
 RemoveGenericItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  recordId: PropTypes.objectOf(PropTypes.any).isRequired,
+  gridChecks: PropTypes.objectOf(PropTypes.any).isRequired,
+  modalData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect()(RemoveGenericItemModal);

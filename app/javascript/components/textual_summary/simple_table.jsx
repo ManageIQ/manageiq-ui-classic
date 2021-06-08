@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -38,18 +37,20 @@ export default function SimpleTable(props) {
 
   const renderRow = (row, i, onClick) => <tr key={i}>{row.map((value, j) => renderValue(value, j, onClick))}</tr>;
 
+  const { rows, labels, title } = props;
+
   return (
     <table className="table table-bordered table-hover table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan={props.labels.length} align="left">{props.title}</th>
+          <th colSpan={labels.length} align="left">{title}</th>
         </tr>
         <tr>
-          {props.labels.map((label, i) => <td style={{ wordBreak: 'initial' }} key={i}><strong>{renderLabel(label)}</strong></td>)}
+          {labels.map((label, i) => <td style={{ wordBreak: 'initial' }} key={i}><strong>{renderLabel(label)}</strong></td>)}
         </tr>
       </thead>
       <tbody>
-        {props.rows.map((row, i) => renderRow(row, i, props.onClick))}
+        {rows.map((row, i) => renderRow(row, i, props.onClick))}
       </tbody>
     </table>
   );

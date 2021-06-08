@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -64,8 +63,8 @@ class RemoveCatalogItemModal extends React.Component {
 
   componentDidMount() {
     const apiPromises = [];
-    // eslint-disable-next-line react/prop-types
-    const catalogItemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
+    const { recordId, gridChecks, dispatch } = this.props;
+    const catalogItemsIds = recordId ? [recordId] : _.uniq(gridChecks);
 
     // Load modal data from API
     catalogItemsIds.forEach((item) => apiPromises.push(API.get(`/api/service_templates/${item}?attributes=services`)));
@@ -78,21 +77,22 @@ class RemoveCatalogItemModal extends React.Component {
           services: catalogItem.services,
         })))
       .then((data) => this.setState({ data, loaded: true }))
-      .then(() => this.props.dispatch({
+      .then(() => dispatch({
         type: 'FormButtons.saveable',
         payload: true,
       }));
 
     // Buttons setup
-    this.props.dispatch({
+    const { data } = this.state;
+    dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeCatalogItems(this.state.data),
+        addClicked: () => removeCatalogItems(data),
       },
     });
-    this.props.dispatch({
+    dispatch({
       type: 'FormButtons.customLabel',
       payload: __('Delete'),
     });
@@ -143,16 +143,18 @@ class RemoveCatalogItemModal extends React.Component {
       }
     };
 
+    const { loaded, data } = this.state;
+
     return (
       <Modal.Body className="warning-modal-body">
-        {renderSpinner(!this.state.loaded)}
-        {usedServicesMessage(this.state.data)}
-        {this.state.loaded
+        {renderSpinner(!loaded)}
+        {usedServicesMessage(data)}
+        {loaded
           && (
             <div>
-              <h4>{confirmationMessage(this.state.data)}</h4>
+              <h4>{confirmationMessage(data)}</h4>
               <ul>
-                {this.state.data.map((item) => (
+                {data.map((item) => (
                   <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
                 ))}
               </ul>
@@ -165,6 +167,8 @@ class RemoveCatalogItemModal extends React.Component {
 
 RemoveCatalogItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  recordId: PropTypes.objectOf(PropTypes.any).isRequired,
+  gridChecks: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect()(RemoveCatalogItemModal);

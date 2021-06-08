@@ -22,8 +22,7 @@ const ProviderCredentials = ({ fields }) => {
 };
 
 ProviderCredentials.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ProviderCredentials;

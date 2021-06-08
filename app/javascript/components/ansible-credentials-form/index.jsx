@@ -13,22 +13,24 @@ const AnsibleCredentialsForm = ({ recordId }) => {
 
   const loadSchema = (value, appendState = {}) => ({
     data: {
-      credential_types: { EmbeddedAnsibleCredentialTypes },
+      // eslint-disable-next-line camelcase
+      credential_types: { embedded_ansible_credential_types },
     },
   }) =>
     setState((state) => ({
       ...state,
       ...appendState,
-      fields: EmbeddedAnsibleCredentialTypes[value].attributes,
+      fields: embedded_ansible_credential_types[value].attributes,
     }));
 
   useEffect(() => {
-    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager').then(({ resources: [ManagerResource] }) => {
+    // eslint-disable-next-line camelcase
+    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager').then(({ resources: [manager_resource] }) => {
       if (!recordId) {
         setState((state) => ({
           ...state,
           initialValues: {
-            ManagerResource,
+            manager_resource,
           },
           isLoading: false,
         }));
