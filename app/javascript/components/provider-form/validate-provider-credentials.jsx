@@ -13,6 +13,7 @@ const ValidateProviderCredentials = ({ ...props }) => {
     const resource = pick(fields, fieldNames);
 
     API.post(url, { action: 'verify_credentials', resource }).then(({ results: [result] = [], ...single }) => {
+      // eslint-disable-next-line camelcase
       const { task_id, success } = result || single;
       // The request here can either create a background task or fail
       return success ? API.wait_for_task(task_id) : Promise.reject(result);
@@ -21,7 +22,7 @@ const ValidateProviderCredentials = ({ ...props }) => {
       // task_results we resolve() or reject() with an unknown error.
       // Any known errors are passed to the catch(), which will reject() with a
       // message describing what went wrong.
-    }).then(result => (result.task_results ? resolve() : reject(__('Validation failed: unknown error'))))
+    }).then((result) => (result.task_results ? resolve() : reject(__('Validation failed: unknown error'))))
       .catch(({ message }) => reject([__('Validation failed:'), message].join(' ')));
   });
 

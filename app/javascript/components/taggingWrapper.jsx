@@ -3,51 +3,68 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
-import { http } from '../http_api';
 
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
-    id: "new",
-    ids_checked: [state.tagging.appState.assignedTags.map(t => t.values.map(val => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
-    tree_typ: 'tags'
+    id: 'new',
+    ids_checked: [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
+    tree_typ: 'tags',
   },
   default: {
-    id: state.tagging.appState.affectedItems[0] || "new",
+    id: state.tagging.appState.affectedItems[0] || 'new',
     cat: tag.tagCategory.id,
     val: tag.tagValue.id || tag.tagValue[0].id,
     check: 1,
-    tree_typ: 'tags'
-  }
-})[type]
+    tree_typ: 'tags',
+  },
+})[type];
 
+// eslint-disable-next-line camelcase
 const onDelete = (type = 'default', params = [], deleted_element) => ({
-  provision: () => ({...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) }),
-  default: ()   => ({...params, check: "0"})
-})[type]
+  // eslint-disable-next-line camelcase
+  provision: () => ({ ...params, check: 0, ids_checked: params.ids_checked.filter((element) => element !== deleted_element) }),
+  default: () => ({ ...params, check: '0' }),
+})[type];
 
 class TaggingWrapper extends React.Component {
   constructor(props) {
     super(props);
-    ManageIQ.redux.addReducer({tagging: taggingApp});
+    ManageIQ.redux.addReducer({ tagging: taggingApp });
   }
 
   componentDidMount() {
-    this.loadState(this.props.tags);
+    const { tags } = this.props;
+    this.loadState(tags);
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    const { reset } = this.props;
+    reset();
   }
 
-  loadState = state => this.props.loadState(state);
-  reset = () => this.props.reset();
-  isLoaded = () => this.props.isLoaded();
+  loadState = (state) => {
+    const { loadState } = this.props;
+    loadState(state);
+  }
+
+  reset = () => {
+    const { reset } = this.props;
+    reset();
+  }
+
+  isLoaded = () => {
+    const { isLoaded } = this.props;
+    isLoaded();
+  }
 
   render() {
-    if (!this.props.isLoaded) return <Spinner loading size="lg" />;
+    const { isLoaded } = this.props;
+    if (!isLoaded) return <Spinner loading size="lg" />;
     const { urls, options, tagging } = this.props;
-    return (options && options.hideButtons && <TaggingConnected options={{...options, params, onDelete }}/> || <TaggingWithButtonsConnected
-      saveButton={{
+    // eslint-disable-next-line no-mixed-operators
+    return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
+      <TaggingWithButtonsConnected
+        saveButton={{
           // FIXME: jQuery is necessary here as it communicates with the old world
           // don't replace $.post with http.post
           onClick: (assignedTags) => {
@@ -55,30 +72,28 @@ class TaggingWrapper extends React.Component {
           },
           href: '',
           type: 'button',
-          disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
+          disabled: _.isEqual({ ...tagging.initialState, selected: undefined }, { ...tagging.appState, selected: undefined }),
           description: __('Save'),
-        }
-      }
-      cancelButton={{
+        }}
+        cancelButton={{
         // FIXME: jQuery is necessary here as it communicates with the old world
         // don't replace $.post with http.post
-        onClick: () => { this.reset(); $.post(urls.cancel_url); },
-        href: '',
-        type: 'button',
-        disabled: false,
-        description: __('Cancel'),
-        }
-      }
-      resetButton={{
-        onClick: () => this.reset(),
-        href: '',
-        type: 'button',
-        disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
-        description: __('Reset'),
-        }
-      }
-      options={{...options, params, onDelete }}
-    />);
+          onClick: () => { this.reset(); $.post(urls.cancel_url); },
+          href: '',
+          type: 'button',
+          disabled: false,
+          description: __('Cancel'),
+        }}
+        resetButton={{
+          onClick: () => this.reset(),
+          href: '',
+          type: 'button',
+          disabled: _.isEqual({ ...tagging.initialState, selected: undefined }, { ...tagging.appState, selected: undefined }),
+          description: __('Reset'),
+        }}
+        options={{ ...options, params, onDelete }}
+      />
+    ));
   }
 }
 
@@ -109,16 +124,24 @@ TaggingWrapper.propTypes = {
     })).isRequired,
     affectedItems: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  options: PropTypes.objectOf(PropTypes.any),
+  tagging: PropTypes.objectOf(PropTypes.any),
 };
 
-const mapDispatchToProps = dispatch => ({
-  loadState: state => dispatch({ initialState: state, type: 'UI-COMPONENTS_TAGGING_LOAD_STATE' }),
+TaggingWrapper.defaultProps = {
+  urls: undefined,
+  options: undefined,
+  tagging: undefined,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  loadState: (state) => dispatch({ initialState: state, type: 'UI-COMPONENTS_TAGGING_LOAD_STATE' }),
   reset: () => dispatch({ type: 'UI-COMPONENTS_TAGGING_RESET_STATE' }),
 });
 
 const mapStateToProps = ({ tagging }) => ({
   isLoaded: !!tagging,
-  tagging: tagging
+  tagging,
 });
 
 const TaggingWrapperConnected = connect(

@@ -80,7 +80,7 @@ export const toRubyMethod = (value) => {
 export const emptyChildren = (parent) => {
   if (typeof parent === 'number' || typeof parent === 'string') return false;
   if (!parent) return true;
-  return Object.keys(parent).map(key => emptyChildren(parent[key]))
+  return Object.keys(parent).map((key) => emptyChildren(parent[key]))
     .reduce((acc, curr) => acc && curr, [true]);
 };
 
@@ -107,6 +107,7 @@ export const buildPatch = (parent) => {
  * @param {object} parent Worker object obtained from API.
  * @return {object} Object with all values in different formats.
  */
+// eslint-disable-next-line camelcase
 export const parseWorker = ({ count, memory_threshold }) => ({
   count,
   memory_threshold,
@@ -121,7 +122,7 @@ export const parseWorker = ({ count, memory_threshold }) => ({
  * @param {number} length 0 .. lenght.
  * @return {array} Array of {value: 0, label: "0"}, {value: 1, label: "1"}, ... {value: lenght, label: 'length'}.
  */
-export const generateRange = length => [...Array(length)].map((_number, index) => ({
+export const generateRange = (length) => [...Array(length)].map((_number, index) => ({
   value: index,
   label: `${index}`,
 }));

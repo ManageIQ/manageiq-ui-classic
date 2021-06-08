@@ -15,7 +15,7 @@ const getTenants = (id) => API.get(`/api/providers/${id}/cloud_tenants?expand=re
   data.resources.map(({ id, name }) => ({ value: id, label: name })));
 
 function createSchema(ems, cloudNetworkId) {
-  const dynamicPlacement = ems.map((tenant => ({
+  const dynamicPlacement = ems.map(((tenant) => ({
     component: componentTypes.SELECT,
     id: 'cloud_tenant',
     name: 'cloud_tenant',

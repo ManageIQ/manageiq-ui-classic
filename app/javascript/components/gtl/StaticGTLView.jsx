@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DataTable } from './DataTable';
 
 // FIXME: will not need the text undefined check once the icon column is removed from list view, that's the left most column without text
-const translateHeaderText = heads => heads.map(h => ({ ...h, header_text: typeof h.text != 'undefined' ? __(h.text) : '' }));
+const translateHeaderText = (heads) => heads.map((h) => ({ ...h, header_text: typeof h.text !== 'undefined' ? __(h.text) : '' }));
 
 export const StaticGTLView = ({
   rows,
@@ -47,18 +48,18 @@ export const StaticGTLView = ({
 
 StaticGTLView.defaultProps = {
   pagination: { page: 1, perPage: 10, perPageOptions: [5, 10, 20, 50, 100, 200] },
-  inEditMode: foo => console.log('inEditMode', foo),
+  inEditMode: (foo) => console.log('inEditMode', foo),
   onSort: (headerId, isAscending) => console.log('onSort', headerId, isAscending),
-  onPerPageSelect: foo => console.log('onPerPageSelect', foo),
-  onPageSet: foo => console.log('onPageSet', foo),
-  onItemButtonClick: foo => console.log('onItemButtonClick', foo),
-  onItemClick: foo => console.log('onItemClick', foo),
-  onItemSelect: foo => console.log('onItemSelect', foo),
+  onPerPageSelect: (foo) => console.log('onPerPageSelect', foo),
+  onPageSet: (foo) => console.log('onPageSet', foo),
+  onItemButtonClick: (foo) => console.log('onItemButtonClick', foo),
+  onItemClick: (foo) => console.log('onItemClick', foo),
+  onItemSelect: (foo) => console.log('onItemSelect', foo),
   total: 128,
 };
 
 StaticGTLView.propTypes = {
-  settings: PropTypes.any.isRequired,
+  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
   head: PropTypes.arrayOf(PropTypes.any).isRequired,
   inEditMode: PropTypes.func.isRequired,

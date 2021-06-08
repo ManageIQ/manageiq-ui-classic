@@ -4,7 +4,7 @@ import { Grid } from 'patternfly-react';
 import createSchema from './region-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
-import miqRedirectBack from "../../helpers/miq-redirect-back";
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const RegionForm = ({ id, maxDescLen }) => {
   const [description, setDescription] = useState();
@@ -31,7 +31,7 @@ const RegionForm = ({ id, maxDescLen }) => {
       action: 'edit',
       resource: {
         description: values.description,
-      }
+      },
     })
       .then(() => miqRedirectBack(message, 'success', submitUrl))
       .catch(miqSparkleOff);
@@ -44,7 +44,7 @@ const RegionForm = ({ id, maxDescLen }) => {
   return (
     <Grid fluid style={{ paddingTop: 20 }}>
       <MiqFormRenderer
-        initialValues={{description}}
+        initialValues={{ description }}
         schema={createSchema(maxDescLen)}
         onSubmit={onSubmit}
         onCancel={onCancel}
@@ -57,7 +57,7 @@ const RegionForm = ({ id, maxDescLen }) => {
       />
     </Grid>
   );
-}
+};
 
 RegionForm.propTypes = {
   maxDescLen: PropTypes.number.isRequired,

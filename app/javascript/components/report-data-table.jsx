@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import * as resolve from 'table-resolver';
@@ -17,7 +18,7 @@ import {
 
 import { API } from '../http_api';
 
-const cellFormatter = value => (
+const cellFormatter = (value) => (
   <TableCell style={{ cursor: 'default' }} className={value.style_class}>
     {value.value}
   </TableCell>
@@ -55,7 +56,7 @@ const makeColumn = (name, label, index) => ({
 
 const makeFilterColumn = (name, title, _index) => ({
   id: name,
-  title: title,
+  title,
   placeholder: sprintf(__('Filter by %s'), title),
   filterType: 'text',
 });
@@ -70,13 +71,13 @@ const sortColumnAndDirection = (sortingColumns) => {
   };
 };
 
-const parseReportColumns = reportData => reportData
+const parseReportColumns = (reportData) => reportData
   .report.col_order.map((item, index) => ({
     name: item,
     title: reportData.report.headers[index],
   }));
 
-const parseReportRows = reportData => reportData
+const parseReportRows = (reportData) => reportData
   .result_set.map((item, index) => ({
     id: index,
     ...item,
@@ -101,7 +102,7 @@ const reduceLoadedData = (state, action) => {
     sortingColumns: action.sortingColumns,
     pagination: action.pagination,
     activeFilters: action.activeFilters,
-    filter
+    filter,
   };
 };
 
@@ -138,7 +139,7 @@ const initialState = {
   total: 0,
 };
 
-const filterToString = filter => (
+const filterToString = (filter) => (
   filter && filter.field && filter.string
     ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
     : ''
@@ -207,10 +208,10 @@ const ReportDataTable = (props) => {
   // Until the API is available for multi-field filtereing there's only one filter,
   // so removing a single filter removes all of them.
   const renderActiveFilters = () => (
-    <React.Fragment>
+    <>
       <Filter.ActiveLabel>{__('Active Filters:')}</Filter.ActiveLabel>
       <Filter.List>
-        {state.activeFilters.map(item => (
+        {state.activeFilters.map((item) => (
           <Filter.Item
             key={item.field}
             onRemove={fetchNoFilters}
@@ -229,11 +230,10 @@ const ReportDataTable = (props) => {
       >
         {__('Clear All Filters')}
       </a>
-    </React.Fragment>
+    </>
   );
 
-
-  const setPage = page => fetchReportPage(
+  const setPage = (page) => fetchReportPage(
     dispatch,
     props.reportResultId,
     state.sortingColumns,
@@ -272,13 +272,13 @@ const ReportDataTable = (props) => {
     state.activeFilters,
   );
 
-  const filterTypeSelected = field => dispatch({
+  const filterTypeSelected = (field) => dispatch({
     type: 'filterTypeSelected',
     field: field && field.id,
     title: field && field.title,
   });
 
-  const filterTextUpdate = event => dispatch({
+  const filterTextUpdate = (event) => dispatch({
     type: 'filterTextUpdate',
     string: event.target.value,
   });
@@ -301,10 +301,10 @@ const ReportDataTable = (props) => {
     }
   };
 
-  const filterColumn = filterColumns.find(c => c.id === (state.filter && state.filter.field)) || filterColumns[0];
+  const filterColumn = filterColumns.find((c) => c.id === (state.filter && state.filter.field)) || filterColumns[0];
 
   return (
-    <React.Fragment>
+    <>
       <div className="row toolbar-pf table-view-pf-toolbar report-toolbar">
         <form className="col-xs-12 col-md-6">
           <Form.InputGroup>
@@ -325,10 +325,11 @@ const ReportDataTable = (props) => {
         {state.activeFilters && state.activeFilters.length > 0 && (
           <div className="col-xs-12 toolbar-pf-results">
             {renderActiveFilters()}
-          </div>)}
+          </div>
+        )}
       </div>
       {state.total > 0 && (
-        <React.Fragment>
+        <>
           <Table.PfProvider
             striped
             bordered
@@ -338,7 +339,7 @@ const ReportDataTable = (props) => {
             components={{
               header: {
                 // Enables pf-react's custom header formatters extensions to reactabular.
-                cell: cellProps => customHeaderFormattersDefinition({
+                cell: (cellProps) => customHeaderFormattersDefinition({
                   cellProps,
                   columns,
                   sortingColumns: state.sortingColumns,
@@ -358,13 +359,15 @@ const ReportDataTable = (props) => {
             onPageSet={setPage}
             onPerPageSelect={perPageSelect}
           />
-        </React.Fragment>)}
+        </>
+      )}
       {state.total === 0 && (
         <EmptyState className="report-empty-state">
           <EmptyState.Icon type="fa" name="search" />
           <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
-        </EmptyState>)}
-    </React.Fragment>
+        </EmptyState>
+      )}
+    </>
   );
 };
 

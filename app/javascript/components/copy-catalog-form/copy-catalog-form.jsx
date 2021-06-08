@@ -14,16 +14,17 @@ class CopyCatalogForm extends Component {
   }
 
   componentDidMount() {
-    add_flash(__("The copied item will not be displayed in the catalog by default"), 'info');
+    add_flash(__('The copied item will not be displayed in the catalog by default'), 'info');
+    const { originName } = this.props;
     this.setState(() => ({
       schema: createSchema(),
       initialValues: {
-        name: 'Copy of ' + this.props.originName,
-        copy_tags: false
+        name: `Copy of ${originName}`,
+        copy_tags: false,
       },
       isLoaded: true,
     }));
-  };
+  }
 
   handleError = (error) => {
     const { data: { error: { message } } } = error;
@@ -31,20 +32,23 @@ class CopyCatalogForm extends Component {
   };
 
   submitValues = (values) => {
-    http.post('/catalog/save_copy_catalog', { id: this.props.catalogId, name: values.name, copy_tags: values.copy_tags }, { skipErrors: [400] })
+    const { catalogId } = this.props;
+    http.post('/catalog/save_copy_catalog', { id: catalogId, name: values.name, copy_tags: values.copy_tags }, { skipErrors: [400] })
       .then(() => miqAjaxButton('/catalog/servicetemplate_copy_saved'))
       .catch((error) => add_flash(this.handleError(error), 'error'));
   };
 
   render() {
-    if (!this.state.isLoaded) return null;
-    const cancelUrl = `/catalog/servicetemplate_copy_cancel/${this.props.catalogId}`;
+    const { isLoaded, initialValues, schema } = this.state;
+    if (!isLoaded) return null;
+    const { catalogId } = this.props;
+    const cancelUrl = `/catalog/servicetemplate_copy_cancel/${catalogId}`;
 
     return (
       <Grid fluid>
         <MiqFormRenderer
-          initialValues={this.state.initialValues}
-          schema={this.state.schema}
+          initialValues={initialValues}
+          schema={schema}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}
           buttonsLabels={{

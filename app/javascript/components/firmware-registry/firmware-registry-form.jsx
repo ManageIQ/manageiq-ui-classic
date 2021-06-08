@@ -26,7 +26,7 @@ const FirmwareRegistryForm = () => {
     });
   };
 
-  const submitValues = values => API.post('/api/firmware_registries', values).then((response) => {
+  const submitValues = (values) => API.post('/api/firmware_registries', values).then((response) => {
     if (response.results) {
       add_flash(__('Firmware Registry added sucessfully'), 'success');
     } else {

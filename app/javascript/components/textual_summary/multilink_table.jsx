@@ -10,7 +10,7 @@ export default function MultilinkTable(props) {
       className="hover"
       style={{ cursor: 'pointer, hand' }}
     >
-      <a href={sub.link} onClick={e => onClick(sub, e)}>
+      <a href={sub.link} onClick={(e) => onClick(sub, e)}>
         <IconOrImage icon={sub.icon} image={sub.image} title={sub.title} />
         {sub.value}
       </a>
@@ -38,15 +38,17 @@ export default function MultilinkTable(props) {
     </tr>
   );
 
+  const { title, items } = props;
+
   return (
     <table className="table table-bordered table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan="100">{props.title}</th>
+          <th colSpan="100">{title}</th>
         </tr>
       </thead>
       <tbody>
-        {props.items.map((item, i) => renderLine(item, i))}
+        {items.map((item, i) => renderLine(item, i))}
       </tbody>
     </table>
   );

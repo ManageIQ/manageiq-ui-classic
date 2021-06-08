@@ -2,7 +2,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 import { http } from '../../http_api';
 
 const getManagers = () => http.get('/catalog/ot_orchestration_managers?template_type=ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate')
-  .then(managers => managers.map(([label, value]) => ({ value: value.toString(), label })));
+  .then((managers) => managers.map(([label, value]) => ({ value: value.toString(), label })));
 
 const templateTypeOptions = [{
   label: 'Amazon CloudFormation',
@@ -36,9 +36,7 @@ const validateCopyContent = (value, { name, content }, copy) => {
   return undefined;
 };
 
-const setFormat = (values) => {
-  return typeof values.content !== 'undefined' && values.content[0] === '{' ? 'json' : 'yaml';
-};
+const setFormat = (values) => (typeof values.content !== 'undefined' && values.content[0] === '{' ? 'json' : 'yaml');
 
 const orchestrationFormSchema = (isEditing = false, isCopying = false, initialValues = {}) => ({
   fields: [{
@@ -113,7 +111,7 @@ const orchestrationFormSchema = (isEditing = false, isCopying = false, initialVa
       isRequired: true,
       validate: [{
         type: validatorTypes.REQUIRED,
-      }, value => validateCopyContent(value, initialValues, isCopying)],
+      }, (value) => validateCopyContent(value, initialValues, isCopying)],
     }],
   }],
 });

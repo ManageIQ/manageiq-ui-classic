@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -15,7 +16,7 @@ const ToastList = () => {
   return (
     toastNotifications.length > 0 ? (
       <ToastNotificationList>
-        {toastNotifications.map(toastNotification => (
+        {toastNotifications.map((toastNotification) => (
           <TimedToastNotification
             key={toastNotification.id}
             type={toastNotification.type}
@@ -34,7 +35,8 @@ const ToastList = () => {
               </div>
             )}
             <span>{toastNotification.message}</span>
-          </TimedToastNotification>))}
+          </TimedToastNotification>
+        ))}
       </ToastNotificationList>
     ) : null
   );

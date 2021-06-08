@@ -4,6 +4,7 @@ import LineChartGraph from './lineChart';
 import AreaChartGraph from './areaChart';
 import { getLineConvertedData } from '../carbon-charts/helpers';
 
+// eslint-disable-next-line no-unused-vars
 const PerformanceChartWidget = ({ data, id, size }) => {
   const convertedData = getLineConvertedData(data);
 

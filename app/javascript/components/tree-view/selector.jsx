@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
-import { Modal, FormGroup, TextInput, Button } from 'carbon-components-react';
+import {
+  Modal, FormGroup, TextInput, Button,
+} from 'carbon-components-react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
 import { TreeViewAlt16, Close16 } from '@carbon/icons-react';
@@ -48,7 +50,7 @@ const TreeViewSelector = ({
       return Tree.nodeSelected(node, values);
     },
   };
-
+  const { label } = props;
   return (
     <FormGroup legendText={labelText}>
       <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
@@ -93,7 +95,7 @@ const TreeViewSelector = ({
       <Modal
         open={show}
         onRequestClose={closeModal}
-        modalHeading={props.label}
+        modalHeading={label}
         primaryButtonText={selectLabel}
         secondaryButtonText={closeLabel}
         iconDescription={closeLabel}

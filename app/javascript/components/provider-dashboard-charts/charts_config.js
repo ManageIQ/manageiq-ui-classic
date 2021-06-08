@@ -218,4 +218,3 @@ export const chartConfig = {
     legendLeftText: __('Last 30 Days'),
   },
 };
-

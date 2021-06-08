@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import createSchema from './ops-tenant-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
-import { API, http } from '../../http_api';
+import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import handleFailure from '../../helpers/handle-failure';
 
@@ -100,7 +100,7 @@ OpsTenantForm.propTypes = {
   },
   divisible: PropTypes.bool.isRequired,
   redirectUrl: PropTypes.string.isRequired,
-  ancestry: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  ancestry: PropTypes.objectOf(PropTypes.any),
 };
 
 OpsTenantForm.defaultProps = {

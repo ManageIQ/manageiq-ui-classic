@@ -28,7 +28,7 @@ const LineChartGraph = ({ data }) => {
 };
 
 LineChartGraph.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 LineChartGraph.defaultProps = {

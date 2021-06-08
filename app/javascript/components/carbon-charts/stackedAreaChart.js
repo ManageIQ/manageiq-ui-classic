@@ -30,7 +30,7 @@ const StackAreaChart = ({ data }) => {
 };
 
 StackAreaChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 StackAreaChart.defaultProps = {

@@ -7,9 +7,10 @@ const classNames = require('classnames');
 export const ToolbarView = ({ views, onClick }) => (
   <div className="toolbar-pf-action-right">
     <div className="form-group toolbar-pf-view-selector">
-      {views.map(view => (
+      {views.map((view) => (
         <button
           key={view.id}
+          type="button"
           id={view.id}
           name={view.name}
           title={view.title}
@@ -24,14 +25,12 @@ export const ToolbarView = ({ views, onClick }) => (
         >
           <i className={view.icon} style={{ color: adjustColor(view.color, view.enabled) }} />
         </button>
-        ))
-      }
+      ))}
     </div>
   </div>
 );
 
 ToolbarView.propTypes = {
-  views: PropTypes.arrayOf(PropTypes.any),
+  views: PropTypes.arrayOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };
-

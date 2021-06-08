@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconOrImage from './icon_or_image';
@@ -9,35 +10,39 @@ export default class TagGroup extends React.Component {
   /**
    * Render a simple row. Label, icon, value.
    */
-  renderTagRowSimple = item => (
+  renderTagRowSimple = (item) => (
     <tr key={item.key} className={item.link ? '' : 'no-hover'}>
       <td className="label">{item.label}</td>
-      {(item.link && this.props.onClick) &&
-      <td title={item.title}>
-        <a href={item.link} onClick={e => this.props.onClick(item, e)}>
+      {(item.link && this.props.onClick)
+      && (
+        <td title={item.title}>
+          <a href={item.link} onClick={(e) => this.props.onClick(item, e)}>
+            <IconOrImage icon={item.icon} image={item.image} title={item.title} />
+            {' '}
+            {item.value}
+          </a>
+        </td>
+      )}
+      {(item.link === undefined)
+      && (
+        <td title={item.title}>
           <IconOrImage icon={item.icon} image={item.image} title={item.title} />
           {' '}
           {item.value}
-        </a>
-      </td>
-      }
-      {(item.link === undefined) &&
-      <td title={item.title}>
-        <IconOrImage icon={item.icon} image={item.image} title={item.title} />
-        {' '}
-        {item.value}
-      </td>
-      }
+        </td>
+      )}
     </tr>
   );
 
   /**
    * Render a list of values joined with "<b> | </b>", with or without label
    */
-  renderSubitemList = subitem => (
+  renderSubitemList = (subitem) => (
     <span>
       &nbsp;
-      {subitem.label && `${subitem.label}: `}{Array.isArray(subitem.value) && subitem.value.map((val, index) => (
+      {subitem.label && `${subitem.label}: `}
+      {Array.isArray(subitem.value) && subitem.value.map((val, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <React.Fragment key={index}>
           {val}
           {(index < subitem.value.length - 1) && <b>&nbsp;|&nbsp;</b>}
@@ -49,7 +54,7 @@ export default class TagGroup extends React.Component {
   /**
    * Render a single value, with or without label
    */
-  renderSubitem = subitem => (
+  renderSubitem = (subitem) => (
     <span>
       &nbsp;
       {subitem.label && `${subitem.label}: `}
@@ -60,34 +65,37 @@ export default class TagGroup extends React.Component {
   /**
    * Render a row. Rows can be simple or with multiple values.
    */
-  renderTagRow = item => (Array.isArray(item.value) ? this.renderTagRowMultivalue(item) : this.renderTagRowSimple(item));
+  renderTagRow = (item) => (Array.isArray(item.value) ? this.renderTagRowMultivalue(item) : this.renderTagRowSimple(item));
 
   /**
    * Render a multi-value row. This is done by using rowspan in the left column.
    */
-  renderTagRowMultivalue = item => (
+  renderTagRowMultivalue = (item) => (
     <React.Fragment key={item.key}>
       {item.value.map((subitem, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <tr key={index} className={item.link ? '' : 'no-hover'}>
           {(index === 0) && (
-          <td rowSpan={item.value.length} className="label" title={item.title}>{item.label}</td>
-            )}
-          {(subitem.link && this.props.onClick) &&
-          <td title={subitem.title}>
-            <a href={subitem.link} onClick={e => this.props.onClick(subitem, e)}>
+            <td rowSpan={item.value.length} className="label" title={item.title}>{item.label}</td>
+          )}
+          {(subitem.link && this.props.onClick)
+          && (
+            <td title={subitem.title}>
+              <a href={subitem.link} onClick={(e) => this.props.onClick(subitem, e)}>
+                <IconOrImage icon={subitem.icon} image={subitem.image} text={subitem.text} />
+                {Array.isArray(subitem.value) ? this.renderSubitemList(subitem) : this.renderSubitem(subitem)}
+              </a>
+            </td>
+          )}
+          {(subitem.link === undefined)
+          && (
+            <td title={subitem.title}>
               <IconOrImage icon={subitem.icon} image={subitem.image} text={subitem.text} />
               {Array.isArray(subitem.value) ? this.renderSubitemList(subitem) : this.renderSubitem(subitem)}
-            </a>
-          </td>
-      }
-          {(subitem.link === undefined) &&
-          <td title={subitem.title}>
-            <IconOrImage icon={subitem.icon} image={subitem.image} text={subitem.text} />
-            {Array.isArray(subitem.value) ? this.renderSubitemList(subitem) : this.renderSubitem(subitem)}
-          </td>
-      }
+            </td>
+          )}
         </tr>
-        ))}
+      ))}
     </React.Fragment>
   );
 
@@ -109,6 +117,8 @@ export default class TagGroup extends React.Component {
 
 TagGroup.propTypes = {
   title: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   items: PropTypes.any.isRequired,
+  // eslint-disable-next-line react/require-default-props
   onClick: PropTypes.func,
 };

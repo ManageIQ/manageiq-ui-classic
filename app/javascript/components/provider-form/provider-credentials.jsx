@@ -10,19 +10,19 @@ const ProviderCredentials = ({ fields }) => {
 
   // Pass down the required `edit` to the password component (if it exists)
   return (
-    <Fragment>
+    <>
       {
-        formOptions.renderForm(fields.map(field => ({
+        formOptions.renderForm(fields.map((field) => ({
           ...field,
           ...(field.component === 'password-field' ? { edit: !!providerId } : undefined),
         })), formOptions)
       }
-    </Fragment>
+    </>
   );
 };
 
 ProviderCredentials.propTypes = {
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ProviderCredentials;
