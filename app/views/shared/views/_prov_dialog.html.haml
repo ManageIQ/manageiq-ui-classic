@@ -144,7 +144,8 @@
   - when :hardware
     - keys = [:instance_type, :sys_type,  :cloud_volumes, :storage_type, :number_of_cpus, :entitled_processors, :number_of_sockets, :cores_per_socket,
               :vm_memory, :network_adapters, :disk_format, :disk_sparsity, :guest_access_key_pair, :monitoring,
-              :vm_dynamic_memory, :vm_minimum_memory, :vm_maximum_memory, :boot_disk_size, :is_preemptible]
+              :vm_dynamic_memory, :vm_minimum_memory, :vm_maximum_memory, :boot_disk_size, :is_preemptible,
+              :cpu_hot_add, :cpu_hot_remove, :memory_hot_add]
     - label = wf.kind_of?(ManageIQ::Providers::CloudManager::ProvisionWorkflow) ? _("Properties") : _("Hardware")
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,
