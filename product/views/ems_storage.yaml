@@ -12,7 +12,7 @@
 title: Storage Managers
 
 # Menu name
-name: BlockStorage
+name: StorageManager
 
 # Main DB table report is based on
 db: ManageIQ::Providers::StorageManager
