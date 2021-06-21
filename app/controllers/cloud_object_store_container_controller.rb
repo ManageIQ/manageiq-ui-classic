@@ -152,7 +152,6 @@ class CloudObjectStoreContainerController < ApplicationController
     {
       :breadcrumbs  => [
         {:title => _("Storage")},
-        {:title => _("Object Storage")},
         {:title => _("Object Store Containers"), :url => controller_url},
       ],
       :record_info  => @record,

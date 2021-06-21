@@ -2288,7 +2288,7 @@ Rails.application.routes.draw do
                ownership_post
     },
 
-    :ems_block_storage              => {
+    :ems_storage              => {
       :get  => %w(
         dialog_load
         download_data
@@ -2314,70 +2314,6 @@ Rails.application.routes.draw do
         show
         show_list
         quick_search
-        tagging_edit
-        tl_chooser
-        wait_for_task
-      ) +
-        adv_search_post +
-        dialog_runner_post +
-        exp_post +
-        save_post
-    },
-
-    :ems_object_storage              => {
-      :get  => %w(
-        dialog_load
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
-        listnav_search_selected
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tagging_edit
-        tl_chooser
-        wait_for_task
-      ) +
-        adv_search_post +
-        dialog_runner_post +
-        exp_post +
-        save_post
-    },
-
-    :ems_storage              => {
-      :get  => %w(
-        dialog_load
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
-        listnav_search_selected
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
         tagging_edit
         tl_chooser
         wait_for_task
@@ -3357,7 +3293,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
   # rubocop:enable Layout/HashAlignment

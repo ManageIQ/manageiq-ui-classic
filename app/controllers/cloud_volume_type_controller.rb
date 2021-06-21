@@ -26,7 +26,6 @@ class CloudVolumeTypeController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Storage")},
-        {:title => _("Block Storage")},
         {:title => _("Volume Types"), :url => controller_url},
       ],
     }

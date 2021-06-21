@@ -334,7 +334,7 @@ describe EmsNetworkController do
   end
 end
 
-describe EmsBlockStorageController do
+describe EmsStorageController do
   context "::EmsCommon" do
     describe "#button" do
       before do

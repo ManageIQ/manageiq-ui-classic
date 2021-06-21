@@ -153,80 +153,18 @@ module Menu
 
       def storage_menu_section
         Menu::Section.new(:sto, N_("Storage"), 'carbon--Table', [
-          block_storage_menu_section,
-          object_storage_menu_section,
+          Menu::Item.new('ems_storage',                  N_('Managers'),                'ems_storage',                  {:feature => 'ems_storage_show_list'},                  '/ems_storage/show_list'),
+          Menu::Item.new('cloud_volume',                 N_('Volumes'),                 'cloud_volume',                 {:feature => 'cloud_volume_show_list'},                 '/cloud_volume/show_list'),
+          Menu::Item.new('cloud_volume_snapshot',        N_('Volume Snapshots'),        'cloud_volume_snapshot',        {:feature => 'cloud_volume_snapshot_show_list'},        '/cloud_volume_snapshot/show_list'),
+          Menu::Item.new('cloud_volume_backup',          N_('Volume Backups'),          'cloud_volume_backup',          {:feature => 'cloud_volume_backup_show_list'},          '/cloud_volume_backup/show_list'),
+          Menu::Item.new('cloud_volume_type',            N_('Volume Types'),            'cloud_volume_type',            {:feature => 'cloud_volume_type_show_list'},            '/cloud_volume_type/show_list'),
+          Menu::Item.new('volume_mapping',               N_('Volume Mappings'),         'volume_mapping',               {:feature => 'volume_mapping_show_list'},               '/volume_mapping/show_list'),
+          Menu::Item.new('host_initiator',               N_('Host Initiators'),         'host_initiator',               {:feature => 'host_initiator_show_list'},               '/host_initiator/show_list'),
+          Menu::Item.new('physical_storage',             N_('Storages'),                'physical_storage',             {:feature => 'physical_storage_show_list'},             '/physical_storage/show_list'),
+          Menu::Item.new('storage_resource',             N_('Storage Resources'),       'storage_resource',             {:feature => 'storage_resource_show_list'},             '/storage_resource/show_list'),
+          Menu::Item.new('cloud_object_store_container', N_('Object Store Containers'), 'cloud_object_store_container', {:feature => 'cloud_object_store_container_show_list'}, '/cloud_object_store_container/show_list'),
+          Menu::Item.new('cloud_object_store_object',    N_('Object Store Objects'),    'cloud_object_store_object',    {:feature => 'cloud_object_store_object_show_list'},    '/cloud_object_store_object/show_list'),
         ])
-      end
-
-      def block_storage_menu_section
-        Menu::Section.new(:bst, N_("Block Storage"), nil, [
-                            Menu::Item.new('ems_block_storage',
-                                           N_('Managers'),
-                                           'ems_block_storage',
-                                           {:feature => 'ems_block_storage_show_list'},
-                                           '/ems_block_storage/show_list'),
-                            Menu::Item.new('cloud_volume',
-                                           N_('Volumes'),
-                                           'cloud_volume',
-                                           {:feature => 'cloud_volume_show_list'},
-                                           '/cloud_volume/show_list'),
-                            Menu::Item.new('cloud_volume_snapshot',
-                                           N_('Volume Snapshots'),
-                                           'cloud_volume_snapshot',
-                                           {:feature => 'cloud_volume_snapshot_show_list'},
-                                           '/cloud_volume_snapshot/show_list'),
-                            Menu::Item.new('cloud_volume_backup',
-                                           N_('Volume Backups'),
-                                           'cloud_volume_backup',
-                                           {:feature => 'cloud_volume_backup_show_list'},
-                                           '/cloud_volume_backup/show_list'),
-                            Menu::Item.new('cloud_volume_type',
-                                           N_('Volume Types'),
-                                           'cloud_volume_type',
-                                           {:feature => 'cloud_volume_type_show_list'},
-                                           '/cloud_volume_type/show_list'),
-                            Menu::Item.new('volume_mapping',
-                                           N_('Volume Mappings'),
-                                           'volume_mapping',
-                                           {:feature => 'volume_mapping_show_list'},
-                                           '/volume_mapping/show_list'),
-                            Menu::Item.new('host_initiator',
-                                           N_('Host Initiators'),
-                                           'host_initiator',
-                                           {:feature => 'host_initiator_show_list'},
-                                           '/host_initiator/show_list'),
-                            Menu::Item.new('physical_storage',
-                                           N_('Storages'),
-                                           'physical_storage',
-                                           {:feature => 'physical_storage_show_list'},
-                                           '/physical_storage/show_list'),
-                            Menu::Item.new('storage_resource',
-                                           N_('Storage Resources'),
-                                           'storage_resource',
-                                           {:feature => 'storage_resource_show_list'},
-                                           '/storage_resource/show_list'),
-
-                          ])
-      end
-
-      def object_storage_menu_section
-        Menu::Section.new(:ost, N_("Object Storage"), nil, [
-                            Menu::Item.new('ems_object_storage',
-                                           N_('Managers'),
-                                           'ems_object_storage',
-                                           {:feature => 'ems_object_storage_show_list'},
-                                           '/ems_object_storage/show_list'),
-                            Menu::Item.new('cloud_object_store_container',
-                                           N_('Object Store Containers'),
-                                           'cloud_object_store_container',
-                                           {:feature => 'cloud_object_store_container_show_list'},
-                                           '/cloud_object_store_container/show_list'),
-                            Menu::Item.new('cloud_object_store_object',
-                                           N_('Object Store Objects'),
-                                           'cloud_object_store_object',
-                                           {:feature => 'cloud_object_store_object_show_list'},
-                                           '/cloud_object_store_object/show_list'),
-                          ])
       end
 
       def control_menu_section

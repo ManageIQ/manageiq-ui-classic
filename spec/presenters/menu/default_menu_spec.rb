@@ -29,46 +29,12 @@ describe Menu::DefaultMenu do
     end
   end
 
-  describe "#storage_menu_section" do
+  context "storage_menu_section" do
     let(:menu) { Menu::DefaultMenu }
 
-    context "when the configuration storage product setting is set to true" do
-      it "still does not contain the NetApp item" do
-        stub_settings(:product => {:storage => true})
-        expect(menu.storage_menu_section.items.map(&:name)).to include(
-          "Block Storage",
-          "Object Storage",
-        )
-      end
-    end
-
-    context "when the configuration storage product setting is not true" do
-      it "does not contain the NetApp item" do
-        stub_settings(:product => {:storage => "juliet" })
-        expect(menu.storage_menu_section.items.map(&:name)).to include(
-          "Block Storage",
-          "Object Storage",
-        )
-      end
-    end
-  end
-
-  context "block_storage_menu_section" do
-    let(:menu) { Menu::DefaultMenu }
-
-    it "shows correct content for Block Storage submenu" do
-      menu = Menu::DefaultMenu.block_storage_menu_section.items.map(&:name)
-      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups", "Volume Types", "Volume Mappings", "Host Initiators", "Storages", "Storage Resources"]
-      expect(menu).to eq(result)
-    end
-  end
-
-  context "object_storage_menu_section" do
-    let(:menu) { Menu::DefaultMenu }
-
-    it "shows correct content for Object Storage submenu" do
-      menu = Menu::DefaultMenu.object_storage_menu_section.items.map(&:name)
-      result = ["Managers", "Object Store Containers", "Object Store Objects"]
+    it "shows correct content for Storage submenu" do
+      menu = Menu::DefaultMenu.storage_menu_section.items.map(&:name)
+      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups", "Volume Types", "Volume Mappings", "Host Initiators", "Storages", "Storage Resources", "Object Store Containers", "Object Store Objects"]
       expect(menu).to eq(result)
     end
   end

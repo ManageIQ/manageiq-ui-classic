@@ -121,14 +121,14 @@ describe DialogLocalService do
       let(:obj) { double(:class => ManageIQ::Providers::Openstack::StorageManager::CinderManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_block_storage"
+                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_storage"
     end
 
     context "when the object is an SwiftManager" do
       let(:obj) { double(:class => ManageIQ::Providers::Openstack::StorageManager::SwiftManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_object_storage"
+                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_storage"
     end
 
     context "when the object is a CloudTenant" do
