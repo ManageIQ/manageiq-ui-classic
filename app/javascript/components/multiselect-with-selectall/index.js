@@ -43,6 +43,10 @@ const MultiSelectWithSelectAll = (props) => {
     }
   };
 
+  // TODO: The select all is counted as one of the elements in the select list
+  // so the number of selected elements is always 1 more when select all is selected.
+  // Instead this should be fixed to display All when select all is selected.
+
   return (
     <MultiSelect.Filterable
       id={id}
