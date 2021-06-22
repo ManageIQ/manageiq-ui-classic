@@ -288,6 +288,7 @@ module VmCommon
       page << javascript_reload_toolbars
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("desc_content", :partial => "/vm_common/snapshots_desc",
                                    :locals  => {:selected => params[:id]})
     end

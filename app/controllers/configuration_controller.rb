@@ -53,6 +53,7 @@ class ConfigurationController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
         page << javascript_reload_toolbars
       end

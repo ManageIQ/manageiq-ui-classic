@@ -75,6 +75,7 @@ module ApplicationController::Buttons
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace(@refresh_div, :partial => "shared/buttons/#{@refresh_partial}") if @refresh_div
         page << "miqSparkle(false);"
         page << javascript_for_miq_button_visibility_changed(@changed)
@@ -196,6 +197,7 @@ module ApplicationController::Buttons
       page.replace(@refresh_div, :partial => "shared/buttons/#{@refresh_partial}") if @refresh_div
       if @flash_array
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
       else
         page << javascript_for_miq_button_visibility(@changed && valid)
       end
@@ -479,6 +481,7 @@ module ApplicationController::Buttons
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
           page << "document.querySelector(\"#ab_advanced_tab_tab > a\").click();"
         end
       else
@@ -556,6 +559,7 @@ module ApplicationController::Buttons
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
           page << "document.querySelector(\"#ab_advanced_tab_tab > a\").click();"
         end
       else

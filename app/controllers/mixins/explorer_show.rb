@@ -170,6 +170,7 @@ module Mixins
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
           page.replace_html("main_div", :partial => "shared/views/ems_common/show") # Replace the main div area contents
           page << javascript_reload_toolbars
         end
@@ -202,6 +203,7 @@ module Mixins
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
           page.replace_html("main_div", :partial => "shared/views/ems_common/show") # Replace main div area contents
           page << javascript_reload_toolbars
           page.replace_html("paging_div",

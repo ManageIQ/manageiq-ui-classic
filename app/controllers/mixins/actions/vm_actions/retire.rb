@@ -23,7 +23,7 @@ module Mixins
           if !%w[orchestration_stack service].include?(request.parameters["controller"]) && !%w[orchestration_stacks].include?(params[:display]) &&
              VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
             add_flash(_("Set Retirement Date does not apply to selected VM Template"), :error)
-            javascript_flash(:scroll_top => true)
+            javascript_flash
             return
           end
           session[:retire_items] = selected_items # Set the array of retire items

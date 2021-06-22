@@ -68,6 +68,7 @@ module OpsController::Settings
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => "new", :edit => true})
       end
       session[:entry] = "new"
@@ -79,6 +80,7 @@ module OpsController::Settings
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => entry, :edit => true})
       end
       session[:entry] = entry
@@ -99,6 +101,7 @@ module OpsController::Settings
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page << javascript_for_miq_button_visibility(@changed)
       page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false})
     end
@@ -139,6 +142,7 @@ module OpsController::Settings
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false}) if no_changes
     end
   end
