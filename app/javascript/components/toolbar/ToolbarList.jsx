@@ -8,7 +8,7 @@ import { ToolbarClick } from './ToolbarClick';
 import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
-  const count = useContext(CountContext);
+  const count = ManageIQ.gridChecks.length;
   const { items, title, id } = props;
   // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);

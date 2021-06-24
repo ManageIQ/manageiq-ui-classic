@@ -133,6 +133,14 @@ const setRowActive = (rows, item) => {
   return newRows;
 };
 
+
+const pushOneUnique = (array) => {
+  if (ManageIQ.gridChecks.indexOf(array) == -1) {
+    console.log("pushing0 " + array)
+    ManageIQ.gridChecks.push(array)
+  }
+};
+
 const broadcastSelectedItem = (item) => {
   sendDataWithRx({ rowSelect: item });
 
@@ -142,7 +150,7 @@ const broadcastSelectedItem = (item) => {
 
   const { ManageIQ } = window;
   if (item.checked) {
-    ManageIQ.gridChecks.push(item.id);
+    pushOneUnique(item.id);
   } else {
     const index = ManageIQ.gridChecks.indexOf(item.id);
     if (index !== -1) {
@@ -165,8 +173,14 @@ const reduceSelectedItem = (state, item, isSelected) => {
 };
 
 const unSelectAll = (state) => {
-  ManageIQ.gridChecks = [];
-  if (!state.rows) {
+  // ManageIQ.gridChecks = [];
+  // Investigate further: when does this get run?
+  // DANGER HERE this is unselecting ALL, full reset, that which are visible and not visible
+  // we're already runnning an unselect all in the data table
+  console.log("unSelectAll gtl-view")
+  console.log(state.rows)
+
+  if (! state.rows) {
     return state;
   }
 
@@ -181,7 +195,6 @@ const unSelectAll = (state) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
-      ManageIQ.gridChecks = [];
       return {
         ...state,
         isLoading: false,

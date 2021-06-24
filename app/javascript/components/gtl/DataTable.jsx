@@ -12,6 +12,14 @@ const getNodeIconType = (row, columnKey) =>
 
 const isFilteredBy = (settings, column) => settings.sort_col === column.col_idx;
 
+const arrayRemove = (array) => {
+  console.log("unSelectAll arrayRemove dataTable")
+  for (var i=0; i<array.length; i++) {
+    var idx = ManageIQ.gridChecks.indexOf(array[i].id);
+    ManageIQ.gridChecks.splice(idx, 1);
+  }
+}
+
 export const DataTable = ({
   rows,
   columns,
@@ -39,6 +47,13 @@ export const DataTable = ({
         return;
       }
 
+      if (ev.target.checked) {
+        // arrayUnique(rows)
+      } else {
+        console.log("localOnSelectAll")
+        arrayRemove(rows)
+      }
+      
       onSelectAll(rows, ev.target);
       setCheckedItems({ ...checkedItems, [ev.target.name]: ev.target.checked });
       ev.stopPropagation();
@@ -61,7 +76,8 @@ export const DataTable = ({
     );
   };
 
-  const renderTableHeader = () => (
+  const renderTableHeader = () => {
+    return(
     <thead className="miq-thead">
       <tr>
         {!inEditMode() && !noCheckboxes()
@@ -100,9 +116,16 @@ export const DataTable = ({
             ))}
       </tr>
     </thead>
-  );
+  )};
 
   const localOnItemSelected = (row) => (ev) => {
+
+    if (ev.target.checked) { // true
+
+    } else { // false
+      arrayRemove([row])
+    }
+
     onItemSelect(row, ev.target.checked);
     ev.stopPropagation();
   };
@@ -124,7 +147,26 @@ export const DataTable = ({
     onItemClick(row);
   };
 
-  const renderTableBody = () => (
+  const renderTableBody = () => {
+    console.log("renderTableBody")
+    console.log("ManageIQ.gridChecks")
+    console.log(ManageIQ.gridChecks) // when u switch paged this gets reset
+    // i can access this
+
+    for (var m = 0 ; m < rows.length; m++) {
+      for(var n = 0 ; n < ManageIQ.gridChecks.length ; n++) {
+        if (rows[m].id == ManageIQ.gridChecks[n]) {
+          rows[m].selected = true  // verify this is neeeded
+          rows[m].checked = true
+        } else {
+          // we'll test this further later
+          // rows[m].selected = undefined
+          // rows[m].checked = undefined
+        }
+      }
+    }
+
+    return(
     <tbody>
       {rows.map((row) => (
         <tr
@@ -210,9 +252,10 @@ export const DataTable = ({
             </td>
           ))}
         </tr>
-      ))}
+      )
+      )}
     </tbody>
-  );
+  )};
 
   const renderTable = () => (
     <table className="table table-bordered table-striped table-hover miq-table-with-footer miq-table">
