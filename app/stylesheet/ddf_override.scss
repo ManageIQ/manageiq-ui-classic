@@ -28,3 +28,17 @@
     margin-left: 10px;
   }
 }
+
+.ddorg__carbon-sub-form {
+  .bx--fieldset {
+    display: inline-flex;
+    .bx--checkbox-label-text {
+      padding-left: 2px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#hoursWarning {
+  color: red;
+}
