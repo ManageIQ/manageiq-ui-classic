@@ -20,7 +20,7 @@ exports[`VM common form component should render adding form variant add new time
   <SettingsTimeProfileForm
     action="timeprofile_add"
     timeProfileId=""
-    timezones=""
+    timezones={Array []}
     userid="admin"
   >
     <div>
@@ -12996,7 +12996,7 @@ exports[`VM common form component should render copying form variant new name on
   <SettingsTimeProfileForm
     action="timeprofile_copy"
     timeProfileId="1"
-    timezones=""
+    timezones={Array []}
     userid="admin"
   >
     <Loading
@@ -13064,7 +13064,7 @@ exports[`VM common form component should render copying form variant with new va
   <SettingsTimeProfileForm
     action="timeprofile_copy"
     timeProfileId="1"
-    timezones=""
+    timezones={Array []}
     userid="admin"
   >
     <Loading
@@ -13132,7 +13132,7 @@ exports[`VM common form component should render editing form variant all new val
   <SettingsTimeProfileForm
     action="timeprofile_edit"
     timeProfileId="1"
-    timezones=""
+    timezones={Array []}
     userid="user1"
   >
     <Loading
@@ -13200,7 +13200,7 @@ exports[`VM common form component should render editing form variant some new va
   <SettingsTimeProfileForm
     action="timeprofile_edit"
     timeProfileId="1"
-    timezones=""
+    timezones={Array []}
     userid="admin"
   >
     <Loading

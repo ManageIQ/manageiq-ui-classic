@@ -20,7 +20,7 @@ describe('VM common form component', () => {
     submitSpy.mockRestore();
   });
   it('should render adding form variant blank form', () => {
-    const wrapper = shallow(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" userid="admin" />);
+    const wrapper = shallow(<SettingsTimeProfileForm timeProfileId="" timezones={[]} action="timeprofile_add" userid="admin" />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('should render adding form variant add new time profile', async(done) => {
@@ -39,7 +39,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" userid="admin" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="" timezones={[]} action="timeprofile_add" userid="admin" />);
     });
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
@@ -71,7 +71,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles/1', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" userid="user1" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_edit" userid="user1" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -104,7 +104,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles/1', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" userid="admin" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_edit" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -138,7 +138,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" userid="admin" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_copy" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -172,7 +172,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" userid="admin" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_copy" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();

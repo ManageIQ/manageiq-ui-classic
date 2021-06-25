@@ -3,15 +3,14 @@ import { days, hoursAM, hoursPM } from './options-helper';
 
 const buildOptions = (timezones) => {
   const tzArray = [{ label: __('<Determine at Run Time>'), value: 'null' }];
-  for (let i = 0; i < timezones.length; i += 1) {
-    const tz = timezones[i];
+  timezones.forEach((tz) => {
     const tempObj = { label: tz[0], value: tz[1] };
     tzArray.push(tempObj);
-  }
+  });
   return tzArray;
 };
 
-const createSchema = (fields, tz, timeProfileId, timezones, show) => ({
+const createSchema = (fields, tz, timeProfileId, timezones, showHoursError) => ({
   fields: [
     {
       component: componentTypes.TEXT_FIELD,
@@ -165,7 +164,7 @@ const createSchema = (fields, tz, timeProfileId, timezones, show) => ({
         pattern: new RegExp('[^null]'),
       },
     },
-    ...(show ? [
+    ...(showHoursError ? [
       {
         id: 'hoursWarning',
         component: componentTypes.PLAIN_TEXT,

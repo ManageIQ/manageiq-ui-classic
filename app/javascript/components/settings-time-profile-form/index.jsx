@@ -16,7 +16,8 @@ const SettingsTimeProfileForm = ({
     fields: [],
   });
 
-  const [show, setShow] = useState(false);
+  // Used to determine if the error needs to be displayed if the user does not select any hours
+  const [showHoursError, setShowHoursError] = useState(false);
 
   const onCancel = () => {
     let message = '';
@@ -41,7 +42,7 @@ const SettingsTimeProfileForm = ({
     }
 
     if (values.profile.hoursAM.length === 0 && values.profile.hoursPM.length === 0 && values.HoursSelectAll === false) {
-      setShow(true);
+      setShowHoursError(true);
     } else {
       miqSparkleOn();
 
@@ -66,16 +67,17 @@ const SettingsTimeProfileForm = ({
       }
 
       let hours = [];
+
       if (values.profile.hoursAM !== undefined) {
-        for (let i = 0; i < values.profile.hoursAM.length; i += 1) {
-          hours.push(values.profile.hoursAM[i]);
-        }
+        values.profile.hoursAM.forEach((time) => {
+          hours.push(time);
+        });
       }
 
       if (values.profile.hoursPM !== undefined) {
-        for (let i = 0; i < values.profile.hoursPM.length; i += 1) {
-          hours.push(values.profile.hoursPM[i]);
-        }
+        values.profile.hoursPM.forEach((time) => {
+          hours.push(time);
+        });
       }
 
       if (values.DaysSelectAll) {
@@ -135,14 +137,13 @@ const SettingsTimeProfileForm = ({
       API.get(`/api/time_profiles/${timeProfileId}`).then((initialValues) => {
         initialValues.profile.hoursAM = [];
         initialValues.profile.hoursPM = [];
-        for (let i = 0; i < initialValues.profile.hours.length; i += 1) {
-          const hourID = initialValues.profile.hours[i];
-          if (hourID < 12) {
-            initialValues.profile.hoursAM.push(initialValues.profile.hours[i]);
+        initialValues.profile.hours.forEach((hour) => {
+          if (hour < 12) {
+            initialValues.profile.hoursAM.push(hour);
           } else {
-            initialValues.profile.hoursPM.push(initialValues.profile.hours[i]);
+            initialValues.profile.hoursPM.push(hour);
           }
-        }
+        });
         setState((state) => ({
           ...state,
           initialValues,
@@ -163,7 +164,7 @@ const SettingsTimeProfileForm = ({
   return !isLoading && (
     <div>
       <MiqFormRenderer
-        schema={createSchema(fields, tz, timeProfileId, timezones, show, setShow)}
+        schema={createSchema(fields, tz, timeProfileId, timezones, showHoursError, setShowHoursError)}
         initialValues={initialValues}
         onSubmit={onSubmit}
         onCancel={onCancel}
