@@ -1,3 +1,65 @@
+const dataHelper = (values, timeProfileId, action, userid) => {
+  let data = {};
+  let APIaction = 'edit';
+  let metrics = values.rollup_daily_metrics;
+  let profileType = values.profile_type;
+  let profile = {};
+  let { days } = values.profile;
+  const { tz } = values.profile;
+
+  if (timeProfileId === '' || action === 'timeprofile_copy') {
+    APIaction = 'create';
+  }
+
+  if (values.rollup_daily_metrics === undefined) {
+    metrics = false;
+  }
+
+  if (values.profile_type === undefined) {
+    profileType = 'user';
+  }
+
+  let hours = [];
+
+  if (values.profile.hoursAM !== undefined) {
+    values.profile.hoursAM.forEach((time) => {
+      hours.push(time);
+    });
+  }
+
+  if (values.profile.hoursPM !== undefined) {
+    values.profile.hoursPM.forEach((time) => {
+      hours.push(time);
+    });
+  }
+
+  if (values.DaysSelectAll) {
+    days = [0, 1, 2, 3, 4, 5, 6];
+  }
+
+  if (values.HoursSelectAll) {
+    hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  }
+  days.sort();
+  hours.sort((int1, int2) => int1 - int2);
+
+  profile = {
+    days,
+    hours,
+    tz,
+  };
+
+  data = {
+    action: APIaction,
+    description: values.description,
+    profile_type: profileType,
+    profile_key: userid,
+    profile,
+    rollup_daily_metrics: metrics,
+  };
+  return data;
+};
+
 const days = [
   {
     value: 0,
@@ -131,4 +193,6 @@ const hoursPM = [
   },
 ];
 
-export { days, hoursAM, hoursPM };
+export {
+  dataHelper, days, hoursAM, hoursPM,
+};

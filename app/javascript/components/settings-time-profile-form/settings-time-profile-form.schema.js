@@ -1,5 +1,5 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
-import { days, hoursAM, hoursPM } from './options-helper';
+import { days, hoursAM, hoursPM } from './helper';
 
 const buildOptions = (timezones) => {
   const tzArray = [{ label: __('<Determine at Run Time>'), value: 'null' }];
