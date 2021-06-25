@@ -20,12 +20,13 @@ describe('VM common form component', () => {
     submitSpy.mockRestore();
   });
   it('should render adding form variant blank form', () => {
-    const wrapper = shallow(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" />);
+    const wrapper = shallow(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" userid="admin" />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('should render adding form variant add new time profile', async(done) => {
     const data = {
       action: 'create',
+      profile_key: 'admin',
       description: 'TestAdd',
       profile_type: 'global',
       profile: {
@@ -38,7 +39,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="" timezones="" action="timeprofile_add" userid="admin" />);
     });
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
@@ -48,6 +49,7 @@ describe('VM common form component', () => {
       action: 'edit',
       description: 'UTC1',
       profile_type: 'global',
+      profile_key: 'user1',
       profile: {
         days: [0, 1],
         hours: [11, 12, 13, 14, 15, 19, 20, 21, 22, 23],
@@ -58,6 +60,7 @@ describe('VM common form component', () => {
     fetchMock.getOnce('api/time_profiles/1', {
       description: 'UTC',
       profile_type: 'user',
+      profile_key: 'user1',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
         hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
@@ -68,7 +71,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles/1', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" userid="user1" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -79,6 +82,7 @@ describe('VM common form component', () => {
       action: 'edit',
       description: 'UTC',
       profile_type: 'user',
+      profile_key: 'admin',
       profile: {
         days: [1, 2, 3, 4, 5],
         hours: [0, 1, 2, 3, 4, 5, 11, 12, 13, 14, 15, 19, 20, 21, 22, 23],
@@ -89,6 +93,7 @@ describe('VM common form component', () => {
     fetchMock.getOnce('api/time_profiles/1', {
       description: 'UTC',
       profile_type: 'user',
+      profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
         hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
@@ -99,7 +104,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles/1', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_edit" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -110,6 +115,7 @@ describe('VM common form component', () => {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'user',
+      profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
         hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
@@ -121,6 +127,7 @@ describe('VM common form component', () => {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'user',
+      profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
         hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
@@ -131,7 +138,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -142,6 +149,7 @@ describe('VM common form component', () => {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'global',
+      profile_key: 'admin',
       profile: {
         days: [1, 2, 3],
         hours: [0, 1, 2, 13, 14, 15],
@@ -153,6 +161,7 @@ describe('VM common form component', () => {
       action: 'create',
       description: 'UTC_Copy',
       profile_type: 'user',
+      profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
         hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
@@ -163,7 +172,7 @@ describe('VM common form component', () => {
     fetchMock.postOnce('/api/time_profiles', data);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" />);
+      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones="" action="timeprofile_copy" userid="admin" />);
     });
     expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();

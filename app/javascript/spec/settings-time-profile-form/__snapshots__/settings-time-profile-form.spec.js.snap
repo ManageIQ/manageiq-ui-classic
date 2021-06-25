@@ -21,7 +21,7 @@ exports[`VM common form component should render adding form variant add new time
     action="timeprofile_add"
     timeProfileId=""
     timezones=""
-    userid=""
+    userid="admin"
   >
     <div>
       <Connect(MiqFormRenderer)
@@ -12997,7 +12997,7 @@ exports[`VM common form component should render copying form variant new name on
     action="timeprofile_copy"
     timeProfileId="1"
     timezones=""
-    userid=""
+    userid="admin"
   >
     <Loading
       active={true}
@@ -13065,7 +13065,7 @@ exports[`VM common form component should render copying form variant with new va
     action="timeprofile_copy"
     timeProfileId="1"
     timezones=""
-    userid=""
+    userid="admin"
   >
     <Loading
       active={true}
@@ -13133,7 +13133,7 @@ exports[`VM common form component should render editing form variant all new val
     action="timeprofile_edit"
     timeProfileId="1"
     timezones=""
-    userid=""
+    userid="user1"
   >
     <Loading
       active={true}
@@ -13201,7 +13201,7 @@ exports[`VM common form component should render editing form variant some new va
     action="timeprofile_edit"
     timeProfileId="1"
     timezones=""
-    userid=""
+    userid="admin"
   >
     <Loading
       active={true}
