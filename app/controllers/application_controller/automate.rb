@@ -25,6 +25,7 @@ module ApplicationController::Automate
       page << javascript_prologue
       page.replace("left_cell_bottom", :partial => "resolve_form_buttons")
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace_html("main_div", :partial => "results_tabs")
       page << javascript_reload_toolbars
       page << "miqSparkle(false);"

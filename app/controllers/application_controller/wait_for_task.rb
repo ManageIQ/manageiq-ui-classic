@@ -31,6 +31,7 @@ module ApplicationController::WaitForTask
       ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id})
       page << "setTimeout(\"#{ajax_call}\", #{session[:async][:interval]});"
       page.replace("flash_msg_div", :partial => "layouts/flash_msg") if should_flash
+      page << "miqScrollTop();" if @flash_array.present?
     end
   end
   private :browser_refresh_task

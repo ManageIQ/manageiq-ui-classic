@@ -19,7 +19,7 @@ module ApplicationHelper
       ex = ExplorerPresenter.flash.replace(flash_div_id,
                                            render_to_string(:partial => "layouts/flash_msg",
                                                             :locals  => {:flash_div_id => flash_div_id}))
-      ex.scroll_top if args[:scroll_top]
+      ex.scroll_top if @flash_array.present?
       ex.spinner_off if args[:spinner_off]
       ex.focus(args[:focus]) if args[:focus]
       ex.activate_tree_node(args[:activate_node]) if args[:activate_node]

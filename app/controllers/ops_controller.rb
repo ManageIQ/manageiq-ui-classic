@@ -602,6 +602,7 @@ class OpsController < ApplicationController
     extra_js_commands(presenter)
 
     presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
+    presenter.scroll_top if @flash_array.present?
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs']) unless %w[change_tab].include?(action_name)
 
     render :json => presenter.for_render

@@ -28,6 +28,7 @@ class MiqAeClassController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page << javascript_reload_toolbars
       page << "miqSparkle(false);"
     end
@@ -324,6 +325,7 @@ class MiqAeClassController < ApplicationController
     end
 
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
+    presenter.scroll_top if @flash_array.present?
 
     if @in_a_form && !@angular_form
       action_url = create_action_url(nodes.first)
@@ -826,6 +828,7 @@ class MiqAeClassController < ApplicationController
       page << "var ta = document.getElementById('method_data');"
       page << "}"
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page << "var lineHeight = ta.clientHeight / ta.rows;"
       page << "ta.scrollTop = (#{line.to_i}-1) * lineHeight;"
       if line.positive?
@@ -1706,6 +1709,7 @@ class MiqAeClassController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("form_div", :partial => "copy_objects_form") if params[:domain] || params[:override_source]
       page << "$('#namespace_remove').attr('disabled', #{@edit[:new][:namespace].blank?});"
       page << javascript_for_miq_button_visibility(@changed)
@@ -1751,6 +1755,7 @@ class MiqAeClassController < ApplicationController
       page << javascript_show("flash_msg_div")
       page << javascript_for_miq_button_visibility(@changed)
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("embedded_methods_div", :partial => "embedded_methods")
     end
   end

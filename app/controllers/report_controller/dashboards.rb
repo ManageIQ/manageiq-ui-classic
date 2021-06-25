@@ -198,6 +198,7 @@ module ReportController::Dashboards
       end
       if %w[up down].include?(params[:button])
         page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace(@refresh_div, :partial => @refresh_partial, :locals => {:action => "db_seq_edit"}) if @refresh_div
       end
       page << javascript_for_miq_button_visibility(changed)

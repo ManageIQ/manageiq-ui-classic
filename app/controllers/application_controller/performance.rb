@@ -61,6 +61,7 @@ module ApplicationController::Performance
       page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})" if button_changes.present?
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("perf_options_div", :partial => "layouts/perf_options")
       page.replace("candu_charts_div", :partial => "layouts/perf_charts",
                                        :locals  => {:chart_data => @chart_data, :chart_set => "candu"})

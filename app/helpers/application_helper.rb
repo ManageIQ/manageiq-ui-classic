@@ -1017,6 +1017,7 @@ module ApplicationHelper
     ex = ExplorerPresenter.main_div.update('main_div', render_to_string(args))
 
     ex.replace("flash_msg_div", render_to_string(:partial => "layouts/flash_msg")) if options[:flash]
+    ex.scroll_top if @flash_array.present?
     ex.spinner_off if options[:spinner_off]
 
     render :json => ex.for_render
