@@ -36,27 +36,34 @@ exports[`Catalog form component should render add variant form 1`] = `
             "name": "description",
           },
           Object {
-            "allToRight": false,
-            "component": "dual-list-select",
-            "id": "service_templates",
-            "label": "Assign Catalog Items",
-            "leftTitle": "Unassigned:",
-            "moveAllLeftTitle": "Remove All",
-            "moveAllRightTitle": "Add All",
-            "moveLeftTitle": "Remove",
-            "moveRightTitle": "Add",
-            "name": "service_templates",
-            "options": Array [
+            "component": "sub-form",
+            "fields": Array [
               Object {
-                "label": "template 44",
-                "value": "http://localhost:3000/api/service_templates/44",
-              },
-              Object {
-                "label": "template 10",
-                "value": "http://localhost:3000/api/service_templates/10",
+                "allToRight": false,
+                "component": "dual-list-select",
+                "id": "service_templates",
+                "label": "Assign Catalog Items",
+                "leftTitle": "Unassigned:",
+                "moveAllLeftTitle": "Remove All",
+                "moveAllRightTitle": "Add All",
+                "moveLeftTitle": "Remove",
+                "moveRightTitle": "Add",
+                "name": "service_templates",
+                "options": Array [
+                  Object {
+                    "label": "template 44",
+                    "value": "http://localhost:3000/api/service_templates/44",
+                  },
+                  Object {
+                    "label": "template 10",
+                    "value": "http://localhost:3000/api/service_templates/10",
+                  },
+                ],
+                "rightTitle": "Selected:",
               },
             ],
-            "rightTitle": "Selected:",
+            "id": "dual-list-sub-form",
+            "name": "dual-list-sub-form",
           },
         ],
       }
@@ -111,35 +118,42 @@ exports[`Catalog form component should render edit variant form 1`] = `
             "name": "description",
           },
           Object {
-            "allToRight": false,
-            "component": "dual-list-select",
-            "id": "service_templates",
-            "label": "Assign Catalog Items",
-            "leftTitle": "Unassigned:",
-            "moveAllLeftTitle": "Remove All",
-            "moveAllRightTitle": "Add All",
-            "moveLeftTitle": "Remove",
-            "moveRightTitle": "Add",
-            "name": "service_templates",
-            "options": Array [
+            "component": "sub-form",
+            "fields": Array [
               Object {
-                "label": "template 44",
-                "value": "http://localhost:3000/api/service_templates/44",
-              },
-              Object {
-                "label": "template 10",
-                "value": "http://localhost:3000/api/service_templates/10",
-              },
-              Object {
-                "label": "template 2",
-                "value": "http://localhost:3000/api/service_templates/2",
-              },
-              Object {
-                "label": "template 6",
-                "value": "http://localhost:3000/api/service_templates/6",
+                "allToRight": false,
+                "component": "dual-list-select",
+                "id": "service_templates",
+                "label": "Assign Catalog Items",
+                "leftTitle": "Unassigned:",
+                "moveAllLeftTitle": "Remove All",
+                "moveAllRightTitle": "Add All",
+                "moveLeftTitle": "Remove",
+                "moveRightTitle": "Add",
+                "name": "service_templates",
+                "options": Array [
+                  Object {
+                    "label": "template 44",
+                    "value": "http://localhost:3000/api/service_templates/44",
+                  },
+                  Object {
+                    "label": "template 10",
+                    "value": "http://localhost:3000/api/service_templates/10",
+                  },
+                  Object {
+                    "label": "template 2",
+                    "value": "http://localhost:3000/api/service_templates/2",
+                  },
+                  Object {
+                    "label": "template 6",
+                    "value": "http://localhost:3000/api/service_templates/6",
+                  },
+                ],
+                "rightTitle": "Selected:",
               },
             ],
-            "rightTitle": "Selected:",
+            "id": "dual-list-sub-form",
+            "name": "dual-list-sub-form",
           },
         ],
       }

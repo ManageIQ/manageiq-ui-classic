@@ -41,7 +41,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
     }
     placeholder="<Choose>"
   >
-    <Select$1
+    <Select
       component="protocol-selector"
       label="Type"
       loadingMessage="Loading..."
@@ -89,7 +89,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
             },
           ]
         }
-        originalOnChange={[Function]}
         placeholder="<Choose>"
         pluckSingleValue={true}
         simpleValue={false}
@@ -124,7 +123,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
               },
             ]
           }
-          originalOnChange={[Function]}
           placeholder="<Choose>"
           value=""
         >
@@ -245,7 +243,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
           </Select>
         </ClearedSelect>
       </Select>
-    </Select$1>
+    </Select>
   </SelectWithOnChange>
 </ProtocolSelector>
 `;

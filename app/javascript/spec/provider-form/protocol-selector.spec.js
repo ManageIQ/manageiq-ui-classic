@@ -2,8 +2,8 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import FormRenderer, { useFormApi } from '@data-driven-forms/react-form-renderer';
-import { FormTemplate, componentMapper } from '@data-driven-forms/pf3-component-mapper';
+import { FormRenderer, useFormApi } from '@data-driven-forms/react-form-renderer';
+import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import ProtocolSelector from '../../components/provider-form/protocol-selector';
 import EditingContext from '../../components/provider-form/editing-context';
 
@@ -13,7 +13,7 @@ const FormApiComponent = () => {
   return <DummyComponent {...formOptions} />;
 };
 
-const RendererWrapper = props => (
+const RendererWrapper = (props) => (
   <EditingContext.Provider value={{ providerId: true }}>
     <FormRenderer
       onSubmit={() => {}}

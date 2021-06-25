@@ -1465,12 +1465,12 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                     onSubmit={[Function]}
                   >
                     <Form
-                      className="ddorg__carbon-form-template-form form-react"
+                      className="form-0-2-3 form-react"
                       noValidate={true}
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        className="bx--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
@@ -1598,7 +1598,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 title="Zone Information"
                               >
                                 <div
-                                  className="ddorg__carbon-sub-form"
+                                  className=""
                                   name="zone-information-subform"
                                 >
                                   <div>
@@ -1676,7 +1676,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 <IsRequired>
                                                   <span
                                                     aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
                                                   >
                                                     *
                                                   </span>
@@ -1797,7 +1797,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 <IsRequired>
                                                   <span
                                                     aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
                                                   >
                                                     *
                                                   </span>
@@ -2164,7 +2164,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 title="Settings"
                               >
                                 <div
-                                  className="ddorg__carbon-sub-form"
+                                  className=""
                                   name="settings"
                                 >
                                   <div>
@@ -2389,7 +2389,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           }
                                           placeholder="<Choose>"
                                         >
-                                          <Select$1
+                                          <Select
                                             component="select"
                                             id="settings.concurrent_vm_scans"
                                             label="Max Active VM Scans"
@@ -2539,7 +2539,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   },
                                                 ]
                                               }
-                                              originalOnChange={[Function]}
                                               placeholder="<Choose>"
                                               pluckSingleValue={true}
                                               simpleValue={false}
@@ -2625,7 +2624,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                     },
                                                   ]
                                                 }
-                                                originalOnChange={[Function]}
                                                 placeholder="<Choose>"
                                                 value=""
                                               >
@@ -2976,7 +2974,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 </Select>
                                               </ClearedSelect>
                                             </Select>
-                                          </Select$1>
+                                          </Select>
                                         </SelectWithOnChange>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -3383,10 +3381,10 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                           >
                             <ButtonGroup>
                               <ButtonSet
-                                className="ddorg__carbon-form-template-buttons"
+                                className=""
                               >
                                 <div
-                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                  className="bx--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
