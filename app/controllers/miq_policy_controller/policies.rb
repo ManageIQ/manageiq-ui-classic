@@ -145,10 +145,11 @@ module MiqPolicyController::Policies
       @edit[:new][:notes] = params[:notes].presence if params[:notes]
       @edit[:new][:active] = (params[:active] == "1") if params.key?(:active)
       @edit[:new][:mode] = params[:mode] if params[:mode]
+      params[:towhat] ||= 'Vm'
       if params[:towhat]
         @edit[:new][:towhat] = params[:towhat]
-        policy = @edit[:rec_id] ? MiqPolicy.find_by(:id => @edit[:rec_id]) : MiqPolicy.new
-        build_expression(policy, params[:towhat])
+        @policy = @edit[:rec_id] ? MiqPolicy.find_by(:id => @edit[:rec_id]) : MiqPolicy.new
+        build_expression(@policy, params[:towhat])
       end
     end
     send_button_changes
