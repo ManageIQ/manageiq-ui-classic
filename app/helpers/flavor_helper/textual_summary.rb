@@ -9,7 +9,7 @@ module FlavorHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i[
-        cpus cpu_cores memory enabled publicly_available supports_32_bit supports_64_bit supports_hvm supports_paravirtual
+        cpus cpu_sockets memory enabled publicly_available supports_32_bit supports_64_bit supports_hvm supports_paravirtual
         block_storage_based_only cloud_subnet_required
       ]
     )
@@ -28,11 +28,11 @@ module FlavorHelper::TextualSummary
   end
 
   def textual_cpus
-    {:label => _("CPUs"), :value => @record.cpus}
+    {:label => _("CPUs"), :value => @record.cpu_total_cores}
   end
 
-  def textual_cpu_cores
-    {:label => _("CPU Cores"), :value => @record.cpu_cores}
+  def textual_cpu_sockets
+    {:label => _("CPU Sockets"), :value => @record.cpu_sockets}
   end
 
   def textual_enabled
