@@ -30,7 +30,17 @@
   } 
 }
 
-.ddorg__carbon-sub-form {
+#CheckboxDays {
+  .bx--fieldset {
+    display: inline-flex;
+    .bx--checkbox-label-text {
+      padding-left: 2px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#CheckboxHours {
   .bx--fieldset {
     display: inline-flex;
     .bx--checkbox-label-text {
