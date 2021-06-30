@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 import { pick, keyBy } from 'lodash';
 
 import { API } from '../../http_api';

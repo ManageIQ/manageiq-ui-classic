@@ -394,7 +394,6 @@ module ApplicationController::CiProcessing
       javascript_flash(
         :text       => _('No Compliance Policies assigned to one or more of the selected items'),
         :severity   => :error,
-        :scroll_top => true
       )
       return
     end

@@ -69,6 +69,7 @@ module OpsController::Settings::AnalysisProfiles
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:edit_filename], :edit => true})
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"
@@ -80,6 +81,7 @@ module OpsController::Settings::AnalysisProfiles
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:reg_data], :edit => true})
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"
@@ -100,6 +102,7 @@ module OpsController::Settings::AnalysisProfiles
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:nteventlog_data], :edit => true})
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"
@@ -111,6 +114,7 @@ module OpsController::Settings::AnalysisProfiles
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => "new", :edit => true})
         page << javascript_focus('entry_name')
         page << "$('#entry_name').select();"
@@ -166,6 +170,7 @@ module OpsController::Settings::AnalysisProfiles
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => "new", :edit => false})
       page << javascript_for_miq_button_visibility(changed)
     end

@@ -335,6 +335,7 @@ module OpsController::Settings::LabelTagMapping
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html('settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab')
       end
     else

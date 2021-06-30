@@ -31,7 +31,7 @@ describe('Copy Dashboard form', () => {
     apiData = {
       resources: [
         { description: 'name1', id: '1' },
-        { description: '80s', id: '888' },
+        { description: '80s', id: '80s' },
         { description: 'current group', id: '12' },
       ],
     };
@@ -132,14 +132,14 @@ describe('Copy Dashboard form', () => {
 
     await act(async() => {
       wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
-      wrapper.find('Select[name="group_id"]').prop('onChange')('888');
+      wrapper.find('input[name="group_id"]').simulate('change', { target: { value: '80s' } });
       wrapper.find('form').simulate('submit');
     });
 
     setTimeout(() => {
       expect(spyMiqAjaxButton).toHaveBeenCalledWith(
         '/report/dashboard_render',
-        { group: '80s', name: 'new_name', original_name: 'original_name' },
+        { group: 'current group', name: 'new_name', original_name: 'original_name' },
       );
       expect(fetchMock.calls()).toHaveLength(4);
       done();

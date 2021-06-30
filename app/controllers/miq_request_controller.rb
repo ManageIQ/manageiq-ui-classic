@@ -227,6 +227,7 @@ class MiqRequestController < ApplicationController
         page << javascript_prologue
         if @error_div
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
         else
           page.replace("prov_wf_div", :partial => "prov_wf")
         end
@@ -277,6 +278,7 @@ class MiqRequestController < ApplicationController
         page.replace_html(:requester, :partial => "shared/views/prov_dialog",
                                       :locals  => {:wf => @edit[:wf], :dialog => :requester})
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
       end
     end
   end
