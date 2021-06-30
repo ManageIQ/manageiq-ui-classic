@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       scm_branch: '',
     };
 
-    vm.attributes = ['name', 'description', 'scm_url', 'authentication_id', 'scm_branch'];
+    vm.attributes = ['name', 'description', 'scm_url', 'verify_ssl', 'authentication_id', 'scm_branch'];
     vm.model = 'repositoryModel';
 
     ManageIQ.angular.scope = $scope;
@@ -77,6 +77,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
 
   var getRepositoryFormData = function(response) {
     var data = response;
+    data.verify_ssl = data.verify_ssl == 1;
     if ( data.hasOwnProperty( 'href' ) ) {
       delete data.href;
     }
