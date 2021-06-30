@@ -934,12 +934,12 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                     onSubmit={[Function]}
                   >
                     <Form
-                      className="ddorg__carbon-form-template-form form-react"
+                      className="form-0-2-3 form-react"
                       noValidate={true}
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        className="bx--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
@@ -1030,7 +1030,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                       <IsRequired>
                                         <span
                                           aria-hidden="true"
-                                          className="ddorg__carbon-component-mapper_is-required"
+                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                         >
                                           *
                                         </span>
@@ -1209,7 +1209,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="pxe_image_type_id"
                                   isRequired={true}
@@ -1246,7 +1246,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                     onChange={[Function]}
                                     onFocus={[Function]}
                                     options={Array []}
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -1288,7 +1287,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value=""
                                     >
@@ -1325,7 +1323,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -1435,7 +1433,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -1540,7 +1538,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="type"
                                   isRequired={true}
@@ -1614,7 +1612,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                         },
                                       ]
                                     }
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -1660,7 +1657,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value=""
                                     >
@@ -1697,7 +1693,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -1825,7 +1821,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -2221,10 +2217,10 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                           >
                             <ButtonGroup>
                               <ButtonSet
-                                className="ddorg__carbon-form-template-buttons"
+                                className=""
                               >
                                 <div
-                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                  className="bx--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -3273,12 +3269,12 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                     onSubmit={[Function]}
                   >
                     <Form
-                      className="ddorg__carbon-form-template-form form-react"
+                      className="form-0-2-3 form-react"
                       noValidate={true}
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        className="bx--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
@@ -3369,7 +3365,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                       <IsRequired>
                                         <span
                                           aria-hidden="true"
-                                          className="ddorg__carbon-component-mapper_is-required"
+                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                         >
                                           *
                                         </span>
@@ -3548,7 +3544,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="pxe_image_type_id"
                                   isRequired={true}
@@ -3585,7 +3581,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                     onChange={[Function]}
                                     onFocus={[Function]}
                                     options={Array []}
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -3627,7 +3622,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value="1"
                                     >
@@ -3664,7 +3658,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -3774,7 +3768,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -3879,7 +3873,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="type"
                                   isRequired={true}
@@ -3953,7 +3947,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                         },
                                       ]
                                     }
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -3999,7 +3992,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value="CustomizationTemplateKickstart"
                                     >
@@ -4036,7 +4028,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -4164,7 +4156,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -4573,10 +4565,10 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                           >
                             <ButtonGroup>
                               <ButtonSet
-                                className="ddorg__carbon-form-template-buttons"
+                                className=""
                               >
                                 <div
-                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                  className="bx--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -5624,12 +5616,12 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                     onSubmit={[Function]}
                   >
                     <Form
-                      className="ddorg__carbon-form-template-form form-react"
+                      className="form-0-2-3 form-react"
                       noValidate={true}
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form ddorg__carbon-form-template-form form-react"
+                        className="bx--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
@@ -5720,7 +5712,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       <IsRequired>
                                         <span
                                           aria-hidden="true"
-                                          className="ddorg__carbon-component-mapper_is-required"
+                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                         >
                                           *
                                         </span>
@@ -5899,7 +5891,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="pxe_image_type_id"
                                   isRequired={true}
@@ -5936,7 +5928,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     onChange={[Function]}
                                     onFocus={[Function]}
                                     options={Array []}
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -5978,7 +5969,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value="1"
                                     >
@@ -6015,7 +6005,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -6125,7 +6115,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -6230,7 +6220,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                   ]
                                 }
                               >
-                                <Select$1
+                                <Select
                                   component="select"
                                   id="type"
                                   isRequired={true}
@@ -6304,7 +6294,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                         },
                                       ]
                                     }
-                                    originalOnChange={[Function]}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -6350,7 +6339,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           },
                                         ]
                                       }
-                                      originalOnChange={[Function]}
                                       placeholder="<Choose>"
                                       value="CustomizationTemplateKickstart"
                                     >
@@ -6387,7 +6375,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                               <IsRequired>
                                                 <span
                                                   aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                 >
                                                   *
                                                 </span>
@@ -6515,7 +6503,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       </Select>
                                     </ClearedSelect>
                                   </Select>
-                                </Select$1>
+                                </Select>
                               </SelectWithOnChange>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -6925,10 +6913,10 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                           >
                             <ButtonGroup>
                               <ButtonSet
-                                className="ddorg__carbon-form-template-buttons"
+                                className=""
                               >
                                 <div
-                                  className="ddorg__carbon-form-template-buttons bx--btn-set"
+                                  className="bx--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"

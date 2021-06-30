@@ -1,30 +1,31 @@
-.ddorg__carbon-form-template-buttons {
-  margin-bottom: 48px;
-}
-
 #code-section {
   .bx--form-item {
     margin-bottom: 15px;
   }
 }
 
-.ddorg__carbon-dual-list-toolbar {
-  .ddorg__carbon-dual-list-tooltipbutton {
+#dual-list-sub-form {
+  .bx--row--condensed {
     svg {
       height: 48px;
     }
   }
 }
 
-.ddorg__carbon-form-template-form {
+.form-react {
   .bx--grid {
-  padding-left: 1rem;
-  padding-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-}
 
-.ddorg__carbon-form-template-buttons {
-  .bx--btn--secondary {
-    margin-left: 10px;
+  .bx--form-item {
+    margin-bottom: 2rem;
   }
+
+  .bx--btn-set {
+    margin-bottom: 48px;
+    .bx--btn--secondary {
+      margin-left: 10px;
+    }
+  } 
 }
