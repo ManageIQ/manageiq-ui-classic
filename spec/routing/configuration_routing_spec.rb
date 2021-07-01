@@ -59,18 +59,6 @@ describe 'routes for ConfigurationController' do
     end
   end
 
-  describe '#timeprofile_field_changed' do
-    it 'routes' do
-      expect(post('/configuration/timeprofile_field_changed')).to route_to('configuration#timeprofile_field_changed')
-    end
-  end
-
-  describe '#timeprofile_update' do
-    it 'routes' do
-      expect(post('/configuration/timeprofile_update')).to route_to('configuration#timeprofile_update')
-    end
-  end
-
   describe '#update' do
     it 'routes' do
       expect(post('/configuration/update')).to route_to('configuration#update')

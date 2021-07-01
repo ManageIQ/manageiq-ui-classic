@@ -1,1 +1,5 @@
+- if @timeprofile.id.nil?
+  = react('SettingsTimeProfileForm', :timeProfileId => "", :timezones => @all_timezones, :action => @timeprofile_action, :userid => @userid)
+- else
+  = react('SettingsTimeProfileForm', :timeProfileId => @timeprofile.id.to_s, :timezones => @all_timezones, :action => @timeprofile_action, :userid => @userid)
 = render :partial => 'timeprofile_form'

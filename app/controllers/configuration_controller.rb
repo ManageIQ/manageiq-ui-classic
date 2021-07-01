@@ -1,4 +1,5 @@
 require 'miq_bulk_import'
+
 class ConfigurationController < ApplicationController
   include StartUrl
   include Mixins::GenericSessionMixin
@@ -163,10 +164,12 @@ class ConfigurationController < ApplicationController
     @timeprofile_details = {}
     @timeprofiles.each do |timeprofile|
       @timeprofile_details[timeprofile.description] = {}
+      profile_key = timeprofile.profile[:days].nil? ? "days" : :days
       @timeprofile_details[timeprofile.description][:days] =
-        timeprofile.profile[:days].collect { |day| DateTime::ABBR_DAYNAMES[day.to_i] }
+        timeprofile.profile[profile_key].collect { |day| DateTime::ABBR_DAYNAMES[day.to_i] }
+      profile_key = timeprofile.profile[:hours].nil? ? "hours" : :hours
       @timeprofile_details[timeprofile.description][:hours] = []
-      temp_arr = timeprofile.profile[:hours].collect(&:to_i).sort
+      temp_arr = timeprofile.profile[profile_key].collect(&:to_i).sort
       st = ""
       temp_arr.each_with_index do |hr, i|
         if hr.to_i + 1 == temp_arr[i + 1]
@@ -186,7 +189,11 @@ class ConfigurationController < ApplicationController
           @timeprofile_details[timeprofile.description][:hours].first.split('-').last
         @timeprofile_details[timeprofile.description][:hours].delete_at(@timeprofile_details[timeprofile.description][:hours].length - 1)
       end
-      @timeprofile_details[timeprofile.description][:tz] = timeprofile.profile[:tz]
+      @timeprofile_details[timeprofile.description][:tz] = if timeprofile.profile[:tz].nil?
+                                                             timeprofile.profile["tz"]
+                                                           else
+                                                             timeprofile.profile[:tz]
+                                                           end
     end
   end
 
@@ -205,9 +212,10 @@ class ConfigurationController < ApplicationController
 
   def timeprofile_new
     assert_privileges("timeprofile_new")
+    @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.new
     @timeprofile_action = "timeprofile_new"
-    set_form_vars
+    @userid = session[:userid]
     @in_a_form = true
     @breadcrumbs = []
     drop_breadcrumb(:name => _("Add new Time Profile"), :url => "/configuration/timeprofile_edit")
@@ -216,9 +224,9 @@ class ConfigurationController < ApplicationController
 
   def timeprofile_edit
     assert_privileges("tp_edit")
+    @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.find(params[:id])
     @timeprofile_action = "timeprofile_edit"
-    set_form_vars
 
     if @timeprofile.profile_type == "global" && !report_admin_user?
       @tp_restricted = true
@@ -229,6 +237,7 @@ class ConfigurationController < ApplicationController
 
     add_flash(_("Global Time Profile cannot be edited")) if @timeprofile.profile_type == "global" && !report_admin_user?
     session[:changed] = false
+    @userid = session[:userid]
     @in_a_form = true
     drop_breadcrumb(:name => _("%{title} '%{description}'") % {:title       => title,
                                                                :description => @timeprofile.description},
@@ -265,39 +274,15 @@ class ConfigurationController < ApplicationController
     set_form_vars
   end
 
-  def timeprofile_field_changed
-    assert_privileges("tp_edit")
-    return unless load_edit("config_edit__ui4", "configuration")
-
-    timeprofile_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      if @redraw
-        page.replace('timeprofile_days_hours_div', :partial => "timeprofile_days_hours", :locals => {:disabled => false})
-      end
-      if params.key?(:profile_tz) && report_admin_user?
-        page << if params[:profile_tz].blank?
-                  javascript_hide("rollup_daily_tr")
-                else
-                  javascript_show("rollup_daily_tr")
-                end
-      end
-      if changed != session[:changed]
-        session[:changed] = changed
-        page << javascript_for_miq_button_visibility(changed)
-      end
-    end
-  end
-
   def timeprofile_copy
     assert_privileges("tp_copy")
     session[:set_copy] = "copy"
+    @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @in_a_form = true
     @timeprofile = TimeProfile.find(params[:id])
     @timeprofile_action = "timeprofile_copy"
-    set_form_vars
     session[:changed] = false
+    @userid = session[:userid]
     drop_breadcrumb(:name => _("Adding copy of '%{description}'") % {:description => @timeprofile.description},
                     :url  => "/configuration/timeprofile_edit")
     render :action => "timeprofile_edit"
@@ -305,74 +290,6 @@ class ConfigurationController < ApplicationController
 
   def show
     show_timeprofiles if params[:typ] == "timeprofiles"
-  end
-
-  def timeprofile_update
-    assert_privileges("tp_edit")
-    @timeprofile = params[:id] == "new" ? TimeProfile.new : TimeProfile.find(params[:id])
-    if params[:button] == "cancel"
-      params[:id] = @timeprofile.id.to_s
-      flash_to_session(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
-      javascript_redirect(:action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s)
-    elsif params[:button] == "save"
-      days = if params[:all_days] == 'true'
-               (0..6).to_a
-             else
-               params[:dayValues].each_with_index.map { |item, index| item == 'true' ? index : nil }.compact
-             end
-      hours = if params[:all_hours] == 'true'
-                (0..23).to_a
-              else
-                all_hours = params[:hourValuesAMFirstHalf] + params[:hourValuesAMSecondHalf] + params[:hourValuesPMFirstHalf] + params[:hourValuesPMSecondHalf]
-                all_hours.each_with_index.map { |item, index| item == 'true' ? index : nil }.compact
-              end
-      @timeprofile.description = params[:description]
-      @timeprofile.profile_key = params[:profile_type] == "user" ? session[:userid] : nil
-      @timeprofile.profile_type = params[:profile_type]
-      @timeprofile.profile = {
-        :days  => days,
-        :hours => hours,
-        :tz    => params[:profile_tz] == "" ? nil : params[:profile_tz]
-      }
-      @timeprofile.rollup_daily_metrics = params[:rollup_daily]
-      begin
-        @timeprofile.save!
-      rescue StandardError => bang
-        add_flash(_("TimeProfile \"%{name}\": Error during 'save': %{error_message}") %
-                      {:name => @timeprofile.description, :error_message => bang.message}, :error)
-        @in_a_form = true
-        drop_breadcrumb(:name => _("Edit '%{description}'") % {:description => @timeprofile.description},
-                        :url  => "/configuration/timeprofile_edit")
-        javascript_flash
-      else
-        construct_edit_for_audit(@timeprofile)
-        AuditEvent.success(build_created_audit(@timeprofile, @edit))
-        flash_to_session(_("Time Profile \"%{name}\" was saved") % {:name => @timeprofile.description})
-        javascript_redirect(:action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s)
-      end
-    end
-  end
-
-  def construct_edit_for_audit(timeprofile)
-    @edit ||= {}
-    @edit[:current] = {
-      :description          => timeprofile.description,
-      :profile_key          => timeprofile.profile_key,
-      :profile_type         => timeprofile.profile_type,
-      :profile              => timeprofile.profile,
-      :rollup_daily_metrics => timeprofile.rollup_daily_metrics
-    }
-    days = params[:days] ? params[:days].collect(&:to_i) : []
-    hours = params[:hours] ? params[:hours].collect(&:to_i) : []
-    @edit[:new] = {
-      :description          => params[:description],
-      :profile_key          => params[:profile_type] == "user" ? session[:userid] : nil,
-      :profile_type         => params[:profile_type],
-      :profile              => {:days  => days,
-                                :hours => hours,
-                                :tz    => params[:profile_tz] == "" ? nil : params[:profile_tz]},
-      :rollup_daily_metrics => params[:rollup_daily]
-    }
   end
 
   def time_profile_form_fields

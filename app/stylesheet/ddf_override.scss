@@ -29,3 +29,20 @@
     }
   } 
 }
+
+#CheckboxDays, #CheckboxHours {
+  margin-bottom: 0px;
+  .bx--fieldset {
+    display: inline-flex;
+    margin-bottom: 0px;
+    .bx--checkbox-label-text {
+      padding-left: 2px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#hoursWarning {
+  color: #DA1E28;
+  font-size: 14px;
+}

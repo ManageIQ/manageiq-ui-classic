@@ -620,8 +620,6 @@ Rails.application.routes.draw do
         filters_field_changed
         theme_changed
         timeprofile_delete
-        timeprofile_field_changed
-        timeprofile_update
         tree_autoload
         update
         view_selected
