@@ -30,19 +30,11 @@
   } 
 }
 
-#CheckboxDays {
+#CheckboxDays, #CheckboxHours {
+  margin-bottom: 0px;
   .bx--fieldset {
     display: inline-flex;
-    .bx--checkbox-label-text {
-      padding-left: 2px;
-      padding-right: 20px;
-    }
-  }
-}
-
-#CheckboxHours {
-  .bx--fieldset {
-    display: inline-flex;
+    margin-bottom: 0px;
     .bx--checkbox-label-text {
       padding-left: 2px;
       padding-right: 20px;
