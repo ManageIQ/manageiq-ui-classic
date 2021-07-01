@@ -3272,7 +3272,6 @@ Rails.application.routes.draw do
     ems_storage
     miq_ae_customization
     network_service
-    physical_storage
     pxe
     security_policy
     security_policy_rule

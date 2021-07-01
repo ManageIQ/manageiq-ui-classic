@@ -990,7 +990,8 @@ PhysicalServerController:
 - perf_top_chart
 - tl_chooser
 - wait_for_task
-PhysicalStorageController: []
+PhysicalStorageController:
+- index
 PhysicalSwitchController:
 - index
 PictureController:
