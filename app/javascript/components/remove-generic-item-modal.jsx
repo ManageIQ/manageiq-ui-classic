@@ -96,7 +96,6 @@ class RemoveGenericItemModal extends React.Component {
 
   componentDidMount() {
     const {
-      // eslint-disable-next-line react/prop-types
       recordId, gridChecks, modalData, dispatch,
     } = this.props;
     const itemsIds = recordId ? [recordId] : _.uniq(gridChecks);
@@ -213,7 +212,14 @@ class RemoveGenericItemModal extends React.Component {
 
 RemoveGenericItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  recordId: PropTypes.objectOf(PropTypes.any),
+  gridChecks: PropTypes.arrayOf(PropTypes.any),
   modalData: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+RemoveGenericItemModal.defaultProps = {
+  recordId: null,
+  gridChecks: null,
 };
 
 export default connect()(RemoveGenericItemModal);
