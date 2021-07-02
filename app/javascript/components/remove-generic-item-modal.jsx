@@ -96,9 +96,9 @@ class RemoveGenericItemModal extends React.Component {
 
   componentDidMount() {
     const {
+      // eslint-disable-next-line react/prop-types
       recordId, gridChecks, modalData, dispatch,
     } = this.props;
-    const { data, force } = this.state;
     const itemsIds = recordId ? [recordId] : _.uniq(gridChecks);
     const {
       ajax_reload,
@@ -138,7 +138,8 @@ class RemoveGenericItemModal extends React.Component {
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeItems(data, force, {
+        // eslint-disable-next-line react/destructuring-assignment
+        addClicked: () => removeItems(this.state.data, this.state.force, {
           ajaxReload: ajax_reload,
           apiUrl: api_url,
           asyncDelete: async_delete,
@@ -212,8 +213,6 @@ class RemoveGenericItemModal extends React.Component {
 
 RemoveGenericItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recordId: PropTypes.objectOf(PropTypes.any).isRequired,
-  gridChecks: PropTypes.objectOf(PropTypes.any).isRequired,
   modalData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
