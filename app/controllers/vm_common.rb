@@ -996,6 +996,11 @@ module VmCommon
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
+    if params[:action] == 'x_history'
+      # Making selected checkboxes array empty when compare cancel is clicked
+      params[:miq_grid_checks] = []
+    end
+
     action, presenter, refresh_breadcrumbs = options.values_at(:action, :presenter, :refresh_breadcrumbs)
     refresh_breadcrumbs = true unless options.key?(:refresh_breadcrumbs)
 

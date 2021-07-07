@@ -113,6 +113,12 @@ export const DataTable = ({
     return '';
   };
 
+  const getRowsSelected = (rows, checks) => {
+    rows.forEach((row) => {
+      if (checks.indexOf(row.id) !== -1) { row.selected = true; row.checked = true; }
+    });
+  };
+
   const localOnClickItem = (row) => (ev) => {
     if (ev.target.classList.contains('is-checkbox-cell')
        || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
@@ -124,18 +130,21 @@ export const DataTable = ({
     onItemClick(row);
   };
 
-  const renderTableBody = () => (
-    <tbody>
-      {rows.map((row) => (
-        <tr
-          className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
-          key={`check_${row.id}`}
-          onClick={localOnClickItem(row)}
-          onKeyPress={localOnClickItem(row)}
-          tabIndex={(row.clickable === false) ? '' : '0'}
-        >
-          {columns.map((column, columnKey) => (
-            <td
+  const renderTableBody = () => {
+    getRowsSelected(rows, ManageIQ.gridChecks);
+
+    return (
+      <tbody>
+        {rows.map((row) => (
+          <tr
+            className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
+            key={`check_${row.id}`}
+            onClick={localOnClickItem(row)}
+            onKeyPress={localOnClickItem(row)}
+            tabIndex={(row.clickable === false) ? '' : '0'}
+          >
+            {columns.map((column, columnKey) => (
+              <td
               // eslint-disable-next-line react/no-array-index-key
               key={`td_${columnKey}`}
               className={classNames({
@@ -207,12 +216,13 @@ export const DataTable = ({
                     {row.cells[columnKey].text}
                   </button>
                 )}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  );
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
 
   const renderTable = () => (
     <table className="table table-bordered table-striped table-hover miq-table-with-footer miq-table">

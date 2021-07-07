@@ -372,6 +372,7 @@ class ApplicationController < ActionController::Base
     end
 
     render :json => {
+      :checkboxes_clicked => params.fetch_path(:additional_options, :checkboxes_clicked),
       :settings => settings,
       :data     => view_to_hash(@view, true),
       :messages => @flash_array
@@ -491,6 +492,7 @@ class ApplicationController < ActionController::Base
   # Clear the Search and display original list of items
   def search_clear
     @search_text = @sb[:search_text] = nil
+    params[:miq_grid_checks] = []
     if params[:in_explorer] == "true"
       reload
     else # non-explorer screens
