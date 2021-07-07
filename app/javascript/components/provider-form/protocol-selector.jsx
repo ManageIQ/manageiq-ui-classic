@@ -18,6 +18,9 @@ const ProtocolSelector = ({ initialValue: defaultValue, options, ...props }) => 
   const formOptions = useFormApi();
   const { providerId } = useContext(EditingContext);
 
+  const newProps = props;
+  delete newProps.skipSubmit;
+
   // If editing an existing provider, we need to determine which endpoint protocol is being used.
   // This is done by checking against the pivot field for each option. If a related the pivot is
   // set, it means that the endpoint is used. If there is no pivot selected, we fall back to the
@@ -61,7 +64,7 @@ const ProtocolSelector = ({ initialValue: defaultValue, options, ...props }) => 
       onChange={onChange}
       options={options}
       initialValue={initialValue}
-      {...props}
+      {...newProps}
     />
   );
 };
