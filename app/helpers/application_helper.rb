@@ -1223,6 +1223,7 @@ module ApplicationHelper
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.with_no_checkboxes(@no_checkboxes || options[:no_checkboxes])
+    @report_data_additional_options.with_checkboxes_clicked(params[:miq_grid_checks]) if params[:miq_grid_checks]
     @report_data_additional_options.freeze
   end
 

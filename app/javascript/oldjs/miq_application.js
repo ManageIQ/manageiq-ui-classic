@@ -1352,6 +1352,7 @@ window.miqHideSearchClearButton = function(explorer) {
     $(this).hide();
     // Clear Search text values as well
     var url = '/' + ManageIQ.controller + '/search_clear' + '?in_explorer=' + explorer;
+    ManageIQ.gridChecks=[];
     miqJqueryRequest(url);
   });
 }

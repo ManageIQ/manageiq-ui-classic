@@ -289,6 +289,7 @@ module ApplicationController::CiProcessing
         :models  => ui_lookup(:models => klass.to_s)
       }
     )
+    params[:miq_grid_checks] = [] if task == 'destroy' # Making selected checkboxes array empty when those rows are  deleted in table
   end
 
   def manager_button_operation(method, display_name)
@@ -837,6 +838,7 @@ module ApplicationController::CiProcessing
     elements = find_records_with_rbac(model_class, checked_or_params)
     send(destroy_method, elements.ids, 'destroy')
     if params[:miq_grid_checks].present? || @lastaction == "show_list" || (@lastaction == "show" && @layout != model_name.singularize) # showing a list
+      params[:miq_grid_checks] = []
       unless flash_errors?
         add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                      "Delete initiated for %{count} %{models} from the %{product} Database", elements.length) %
