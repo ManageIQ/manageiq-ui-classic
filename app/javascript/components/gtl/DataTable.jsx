@@ -113,6 +113,29 @@ export const DataTable = ({
     return '';
   };
 
+  const renderIcon = (row, columnKey) => (
+    <i
+      className={row.cells[columnKey].icon}
+      title={row.cells[columnKey].title}
+    >
+      <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
+    </i>
+  );
+
+  const renderBackgroundIcon = (row, columnKey) => {
+    if (row.cells[columnKey].background) {
+      const { background } = row.cells[columnKey];
+      return (
+        <div style={{ background }} className="backgrounded-icon">
+          {renderIcon(row, columnKey)}
+        </div>
+      );
+    }
+    return (
+      renderIcon(row, columnKey)
+    );
+  };
+
   const localOnClickItem = (row) => (ev) => {
     if (ev.target.classList.contains('is-checkbox-cell')
        || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
@@ -171,12 +194,7 @@ export const DataTable = ({
               )}
               { getNodeIconType(row, columnKey) === 'icon'
                 && (
-                  <i
-                    className={row.cells[columnKey].icon}
-                    title={row.cells[columnKey].title}
-                  >
-                    <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
-                  </i>
+                  renderBackgroundIcon(row, columnKey)
                 )}
               { getNodeIconType(row, columnKey) === 'image'
                 && (
