@@ -96,7 +96,7 @@ class MiqActionController < ApplicationController
       update_playbook_variables(params)
     end
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
-
+    @edit[:new][:options][:service_template_name] = ServiceTemplateAnsiblePlaybook.order(:name).where(:id => @edit[:new][:options][:service_template_id]).pluck(:name)
     # Note that the params[:tag] here is intentionally singular
     @edit[:new][:options][:tags] = params[:tag].present? ? [Classification.find(params[:tag]).tag.name] : nil if params[:tag]
 
