@@ -24,6 +24,7 @@ class ApplicationController
     :supported_features_filter,
     :clickable,
     :no_checkboxes,
+    :checkboxes_clicked,
     :show_pagination,
     :report_name,
     :custom_action
@@ -74,6 +75,10 @@ class ApplicationController
 
     def with_no_checkboxes(no_checkboxes)
       self.no_checkboxes = no_checkboxes
+    end
+
+    def with_checkboxes_clicked(checkboxes_clicked)
+      self.checkboxes_clicked = checkboxes_clicked
     end
 
     def in_a_form(in_a_form)

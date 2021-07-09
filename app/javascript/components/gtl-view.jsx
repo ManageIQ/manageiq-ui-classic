@@ -181,7 +181,11 @@ const unSelectAll = (state) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
-      ManageIQ.gridChecks = [];
+      if (state && state.additionalOptions && state.additionalOptions.no_checkboxes_clicked
+        && state.additionalOptions.no_checkboxes_clicked.length === 0) {
+        // Making selected checkboxes array empty when those rows are  deleted or on compare/drift cancel
+        ManageIQ.gridChecks = [];
+      }
       return {
         ...state,
         isLoading: false,
@@ -287,6 +291,7 @@ const GtlView = ({
   // const { settings, data } = props;
   const initState = {
     ...initialState,
+    additionalOptions,
     // namedScope is taken from props to state and then used from state
     namedScope: additionalOptions.named_scope,
   };
@@ -307,8 +312,8 @@ const GtlView = ({
       isExplorer,
       {}, // settings, // FIXME
       records,
+      additionalOptions,
       {
-        ...additionalOptions,
         named_scope: state.namedScope,
       },
     );

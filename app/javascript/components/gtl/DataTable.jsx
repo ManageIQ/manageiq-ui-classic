@@ -136,6 +136,12 @@ export const DataTable = ({
     );
   };
 
+  const getRowsSelected = (rows, checks) => {
+    rows.forEach((row) => {
+      if (checks.indexOf(row.id) !== -1) { row.selected = true; row.checked = true; }
+    });
+  };
+
   const localOnClickItem = (row) => (ev) => {
     if (ev.target.classList.contains('is-checkbox-cell')
        || ev.target.parentElement.classList.contains('is-checkbox-cell')) {
@@ -147,26 +153,29 @@ export const DataTable = ({
     onItemClick(row);
   };
 
-  const renderTableBody = () => (
-    <tbody>
-      {rows.map((row) => (
-        <tr
-          className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
-          key={`check_${row.id}`}
-          onClick={localOnClickItem(row)}
-          onKeyPress={localOnClickItem(row)}
-          tabIndex={(row.clickable === false) ? '' : '0'}
-        >
-          {columns.map((column, columnKey) => (
-            <td
+  const renderTableBody = () => {
+    getRowsSelected(rows, ManageIQ.gridChecks);
+
+    return (
+      <tbody>
+        {rows.map((row) => (
+          <tr
+            className={row.selected ? `active ${classNameRow(row)}` : classNameRow(row)}
+            key={`check_${row.id}`}
+            onClick={localOnClickItem(row)}
+            onKeyPress={localOnClickItem(row)}
+            tabIndex={(row.clickable === false) ? '' : '0'}
+          >
+            {columns.map((column, columnKey) => (
+              <td
               // eslint-disable-next-line react/no-array-index-key
-              key={`td_${columnKey}`}
-              className={classNames({
-                narrow: row.cells[columnKey].is_checkbox || row.cells[columnKey].icon || row.cells[columnKey].is_button,
-                'is-checkbox-cell': row.cells[columnKey].is_checkbox,
-              })}
-            >
-              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
+                key={`td_${columnKey}`}
+                className={classNames({
+                  narrow: row.cells[columnKey].is_checkbox || row.cells[columnKey].icon || row.cells[columnKey].is_button,
+                  'is-checkbox-cell': row.cells[columnKey].is_checkbox,
+                })}
+              >
+                { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
               && (
                 <label
                   htmlFor={`checkbox_${row.id}`}
@@ -192,11 +201,11 @@ export const DataTable = ({
                   className="list-grid-checkbox"
                 />
               )}
-              { getNodeIconType(row, columnKey) === 'icon'
+                { getNodeIconType(row, columnKey) === 'icon'
                 && (
                   renderBackgroundIcon(row, columnKey)
                 )}
-              { getNodeIconType(row, columnKey) === 'image'
+                { getNodeIconType(row, columnKey) === 'image'
                 && (
                   <img
                     src={row.cells[columnKey].picture || row.cells[columnKey].image}
@@ -204,13 +213,13 @@ export const DataTable = ({
                     title={row.cells[columnKey].title}
                   />
                 )}
-              { row.cells[columnKey].text && !row.cells[columnKey].is_button
+                { row.cells[columnKey].text && !row.cells[columnKey].is_button
                 && (
                   <span>
                     {row.cells[columnKey].text}
                   </span>
                 )}
-              { row.cells[columnKey].is_button && row.cells[columnKey].onclick
+                { row.cells[columnKey].is_button && row.cells[columnKey].onclick
                 && (
                   <button
                     className="btn btn-primary"
@@ -225,12 +234,13 @@ export const DataTable = ({
                     {row.cells[columnKey].text}
                   </button>
                 )}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  );
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
 
   const renderTable = () => (
     <table className="table table-bordered table-striped table-hover miq-table-with-footer miq-table">
