@@ -161,7 +161,7 @@ TreeView.propTypes = {
   callBack: PropTypes.func.isRequired,
   hierarchical_check: PropTypes.bool,
   silent_activate: PropTypes.objectOf(PropTypes.any),
-  select_node: PropTypes.string.isRequired,
+  select_node: PropTypes.string,
 };
 
 TreeView.defaultProps = {
@@ -173,6 +173,7 @@ TreeView.defaultProps = {
   click_url: '',
   hierarchical_check: false,
   silent_activate: undefined,
+  select_node: undefined,
 };
 
 const TreeViewRedux = connect(null, { callBack })(TreeView);

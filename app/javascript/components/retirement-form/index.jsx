@@ -80,8 +80,12 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
 
 RetirementForm.propTypes = {
   retirementID: PropTypes.string.isRequired,
-  redirect: PropTypes.string.isRequired,
+  redirect: PropTypes.string,
   url: PropTypes.string.isRequired,
+};
+
+RetirementForm.defaultProps = {
+  redirect: undefined,
 };
 
 export default RetirementForm;

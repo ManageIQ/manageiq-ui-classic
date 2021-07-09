@@ -167,8 +167,13 @@ class RemoveCatalogItemModal extends React.Component {
 
 RemoveCatalogItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recordId: PropTypes.objectOf(PropTypes.any).isRequired,
-  gridChecks: PropTypes.objectOf(PropTypes.any).isRequired,
+  recordId: PropTypes.number,
+  gridChecks: PropTypes.arrayOf(PropTypes.any),
+};
+
+RemoveCatalogItemModal.defaultProps = {
+  recordId: undefined,
+  gridChecks: undefined,
 };
 
 export default connect()(RemoveCatalogItemModal);

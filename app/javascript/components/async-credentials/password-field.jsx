@@ -31,6 +31,9 @@ const PasswordField = ({
 
   const newProps = { ...secretField };
   delete newProps.componentType;
+  if (rest.label === undefined) {
+    rest.label = '';
+  }
 
   return (
     <>

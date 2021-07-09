@@ -212,7 +212,7 @@ class RemoveGenericItemModal extends React.Component {
 
 RemoveGenericItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recordId: PropTypes.objectOf(PropTypes.any),
+  recordId: PropTypes.number,
   gridChecks: PropTypes.arrayOf(PropTypes.any),
   modalData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
