@@ -78,7 +78,7 @@ export default Quaditem;
  */
 
 Quaditem.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   fonticon: PropTypes.string,
   fileicon: PropTypes.string,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -96,4 +96,5 @@ Quaditem.defaultProps = {
   color: undefined,
   piechart: undefined,
   tooltip: undefined,
+  className: undefined,
 };

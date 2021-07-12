@@ -16,7 +16,9 @@ const createSchema = (fields, promise, edit, loadSchema) => ({
     {
       component: componentTypes.TEXT_FIELD,
       name: 'manager_resource',
-      type: 'hidden',
+      hideField: true,
+      label: 'manager_resource',
+      value: '',
     },
     {
       component: componentTypes.TEXT_FIELD,

@@ -14,10 +14,10 @@ describe('Cloud tenant form component', () => {
   let submitSpy;
   beforeEach(() => {
     emsChoices = {
-      'Label 1': 1,
-      'Label 2': 2,
-      'Label 3': 3,
-      'Label 4': 4,
+      'Label 1': '1',
+      'Label 2': '2',
+      'Label 3': '3',
+      'Label 4': '4',
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
   });

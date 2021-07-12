@@ -33,10 +33,9 @@ const createSchema = (fields, edit, ems, loadSchema) => {
         component: componentTypes.TEXT_FIELD,
         name: 'edit',
         id: 'edit',
-        label: '',
-        type: 'hidden',
+        label: 'edit',
         hideField: true,
-        initialValue: edit,
+        initialValue: edit || '',
       },
       ...(idx === -1 ? fields : [
         ...fields.slice(0, idx),

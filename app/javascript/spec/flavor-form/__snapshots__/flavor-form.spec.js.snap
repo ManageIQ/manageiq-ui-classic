@@ -22,7 +22,7 @@ exports[`Flavor form component matches the snapshot 1`] = `
             "id": "emsId",
             "isRequired": true,
             "isSearchable": true,
-            "label": "Provider",
+            "labelText": "Provider",
             "loadOptions": [Function],
             "name": "emsId",
             "onChange": [Function],

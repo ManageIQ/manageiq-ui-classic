@@ -18,7 +18,7 @@ const createSchema = (emsId, setEmsId) => ({
     {
       component: componentTypes.SELECT,
       name: 'ems_id',
-      key: 'ems_id',
+      key: `${emsId}`,
       id: 'ems_id',
       label: __('Provider:'),
       isRequired: true,
@@ -44,7 +44,7 @@ const createSchema = (emsId, setEmsId) => ({
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadFamilies(emsId) : Promise.resolve([])),
       includeEmpty: true,
-      key: emsId,
+      key: `physical_storage_family_id-${emsId}`,
       condition: {
         when: 'ems_id',
         isNotEmpty: true,

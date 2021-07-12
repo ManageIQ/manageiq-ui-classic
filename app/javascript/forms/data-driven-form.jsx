@@ -50,13 +50,13 @@ const MiqFormRenderer = ({
   onSubmit,
   ...props
 }) => {
-  const { current: MiqFormTemplate } = useRef(props => (
+  const { current: MiqFormTemplate } = useRef((props) => (
     <FormTemplate
       {...props}
       disableSubmit={disableSubmit}
       canReset={canReset}
       showFormControls={showFormControls}
-      formWrapperProps={{className}}
+      formWrapperProps={{ className }}
       {...defaultLabels}
       {...buttonsLabels}
     />
