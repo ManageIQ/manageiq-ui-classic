@@ -5,7 +5,7 @@ ManageIQ.angular.app.controller('buttonGroupController', ['$scope', 'miqService'
   };
   init();
 
-  listenToRx((event) => {
+  listenToRx(function(event) {
     if (event.name === 'dirty') {
       $scope.reactFormDirty = true;
       $scope.$apply();
@@ -14,4 +14,5 @@ ManageIQ.angular.app.controller('buttonGroupController', ['$scope', 'miqService'
       $scope.$apply();
     }
   });
+
 }]);
