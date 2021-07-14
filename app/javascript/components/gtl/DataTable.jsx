@@ -113,6 +113,29 @@ export const DataTable = ({
     return '';
   };
 
+  const renderIcon = (row, columnKey) => (
+    <i
+      className={row.cells[columnKey].icon}
+      title={row.cells[columnKey].title}
+    >
+      <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
+    </i>
+  );
+
+  const renderBackgroundIcon = (row, columnKey) => {
+    if (row.cells[columnKey].background) {
+      const { background } = row.cells[columnKey];
+      return (
+        <div style={{ background }} className="backgrounded-icon">
+          {renderIcon(row, columnKey)}
+        </div>
+      );
+    }
+    return (
+      renderIcon(row, columnKey)
+    );
+  };
+
   const getRowsSelected = (rows, checks) => {
     rows.forEach((row) => {
       if (checks.indexOf(row.id) !== -1) { row.selected = true; row.checked = true; }
@@ -146,13 +169,13 @@ export const DataTable = ({
             {columns.map((column, columnKey) => (
               <td
               // eslint-disable-next-line react/no-array-index-key
-              key={`td_${columnKey}`}
-              className={classNames({
-                narrow: row.cells[columnKey].is_checkbox || row.cells[columnKey].icon || row.cells[columnKey].is_button,
-                'is-checkbox-cell': row.cells[columnKey].is_checkbox,
-              })}
-            >
-              { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
+                key={`td_${columnKey}`}
+                className={classNames({
+                  narrow: row.cells[columnKey].is_checkbox || row.cells[columnKey].icon || row.cells[columnKey].is_button,
+                  'is-checkbox-cell': row.cells[columnKey].is_checkbox,
+                })}
+              >
+                { row.cells[columnKey].is_checkbox && !settings.hideSelect && !inEditMode()
               && (
                 <label
                   htmlFor={`checkbox_${row.id}`}
@@ -178,16 +201,11 @@ export const DataTable = ({
                   className="list-grid-checkbox"
                 />
               )}
-              { getNodeIconType(row, columnKey) === 'icon'
+                { getNodeIconType(row, columnKey) === 'icon'
                 && (
-                  <i
-                    className={row.cells[columnKey].icon}
-                    title={row.cells[columnKey].title}
-                  >
-                    <i ng-if="row.cells[columnKey].icon2" className={row.cells[columnKey].icon2} />
-                  </i>
+                  renderBackgroundIcon(row, columnKey)
                 )}
-              { getNodeIconType(row, columnKey) === 'image'
+                { getNodeIconType(row, columnKey) === 'image'
                 && (
                   <img
                     src={row.cells[columnKey].picture || row.cells[columnKey].image}
@@ -195,13 +213,13 @@ export const DataTable = ({
                     title={row.cells[columnKey].title}
                   />
                 )}
-              { row.cells[columnKey].text && !row.cells[columnKey].is_button
+                { row.cells[columnKey].text && !row.cells[columnKey].is_button
                 && (
                   <span>
                     {row.cells[columnKey].text}
                   </span>
                 )}
-              { row.cells[columnKey].is_button && row.cells[columnKey].onclick
+                { row.cells[columnKey].is_button && row.cells[columnKey].onclick
                 && (
                   <button
                     className="btn btn-primary"

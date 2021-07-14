@@ -1,5 +1,6 @@
 class GtlFormatter
   extend ActionView::Helpers::DateHelper
+  include QuadiconHelper
 
   VIEW_WITH_CUSTOM_ICON = %w[
     Service
@@ -9,8 +10,19 @@ class GtlFormatter
   COLUMN_WITH_ICON = {
     'authentication_status'  => 'authentication_status_image',
     'last_compliance_status' => 'last_compliance_status_image',
-    'normalized_state'       => 'normalized_state_image'
   }.freeze
+
+  COLUMN_WITH_BACKGROUND_ICON = {
+    'normalized_state' => 'normalized_state_image'
+  }.freeze
+
+  COLUMN_WITH_OS_ICON = {
+    'os_image_name' => 'os_info_details'
+  }.freeze
+
+  COLUMN_WITH_OS_TEXT = %w[
+    product_name
+  ].freeze
 
   COLUMN_WITH_IMAGE = {
     'ext_management_system.name' => 'fonticon_or_fileicon'
@@ -87,7 +99,7 @@ class GtlFormatter
         celltext = send(special_cases[view.extras[:filename]], view, row, col)
       elsif special_cases[view.extras[:filename]].kind_of?(Hash) && special_cases[view.extras[:filename]][view.col_order[col_idx]].present?
         celltext, span = send(special_cases[view.extras[:filename]][view.col_order[col_idx]], row[col])
-      elsif COLUMN_WITH_IMAGE.keys.include?(col)
+      elsif COLUMN_WITH_IMAGE.key?(col)
         # Generate html for the list icon
         icon, icon2, image = send(COLUMN_WITH_IMAGE[col], record)
         text = format_col_for_display(view, row, col)
@@ -96,15 +108,33 @@ class GtlFormatter
                 :icon  => icon,
                 :icon2 => icon2,
                 :text  => text}.compact
-      elsif COLUMN_WITH_ICON.keys.include?(col)
+      elsif COLUMN_WITH_BACKGROUND_ICON.key?(col)
+        # Generate html for the list icon with background
+        icon = send(COLUMN_WITH_BACKGROUND_ICON[col], record)
+        text = format_col_for_display(view, row, col)
+        item = {:title      => text,
+                :icon       => icon,
+                :background => textual_power_state_whitelisted(record[col]),
+                :text       => text}.compact
+      elsif COLUMN_WITH_ICON.key?(col)
         # Generate html for the list icon
         icon = send(COLUMN_WITH_ICON[col], record)
         text = format_col_for_display(view, row, col)
         item = {:title => text,
                 :icon  => icon,
-                :text => text}.compact
+                :text  => text}.compact
       elsif COLUMN_WITH_TIME.include?(col)
         celltext = format_time_for_display(row, col)
+      elsif COLUMN_WITH_OS_ICON.key?(col)
+        @osicon = send(COLUMN_WITH_OS_ICON[col], record)
+        @ostext = format_col_for_display(view, row, col).presence || _("Unknown")
+      elsif COLUMN_WITH_OS_TEXT.include?(col)
+        name = format_col_for_display(view, row, col)
+        text = name.presence || @ostext
+        image = @osicon || ''
+        item = {:title => text,
+                :image => ActionController::Base.helpers.image_path(image.to_s),
+                :text  => text}.compact
       else
         celltext = format_col_for_display(view, row, col)
       end
@@ -121,6 +151,12 @@ class GtlFormatter
     cols
   end
 
+  def self.textual_power_state_whitelisted(state)
+    state = state.blank? ? 'unknown' : state.downcase
+    quad_icon = QuadiconHelper.machine_state(state)
+    quad_icon[:background]
+  end
+
   def self.format_icon_column(view, row, controller, clickable)
     item = controller.listicon_item(view, row['id'])
     icon, icon2, image = fonticon_or_fileicon(item)
@@ -130,6 +166,10 @@ class GtlFormatter
      :image => ActionController::Base.helpers.image_path(image.to_s),
      :icon  => icon,
      :icon2 => icon2}.compact
+  end
+
+  def self.os_info_details(item)
+    "svg/os-#{item.os_image_name}.svg"
   end
 
   def self.fonticon_or_fileicon(item)
