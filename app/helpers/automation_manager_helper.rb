@@ -116,11 +116,10 @@ module AutomationManagerHelper
   end
 
   def textual_variables(vars)
-    return unless vars
     h = {:title     => _("Variables"),
          :headers   => [_('Name'), _('Value')],
          :col_order => %w[name value]}
-    h[:value] = vars.collect do |item|
+    h[:value] = Array(vars).collect do |item|
       {
         :name  => item[0].to_s,
         :value => item[1].to_s
