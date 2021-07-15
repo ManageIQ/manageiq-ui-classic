@@ -32,6 +32,18 @@
           = check_box_tag("accept_all_eula", "1", @edit[:new][:accept_all_eula],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
 
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_datacenters]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Datacenter')
+      .col-md-8
+        = select_tag('datacenter_id',
+                          options_for_select(opts, @edit[:new][:datacenter_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+        :javascript
+              miqSelectPickerEvent('datacenter_id', '#{url}')
+
     - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_resource_pools]
     .form-group
       %label.col-md-2.control-label
