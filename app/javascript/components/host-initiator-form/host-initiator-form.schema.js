@@ -82,11 +82,10 @@ const createSchema = (emsId, setEmsId) => ({
       },
     },
     {
-      component: componentTypes.TEXT_FIELD,
-      name: 'chap_name',
-      id: 'chap_name',
-      label: __('CHAP Username:'),
-      isRequired: false,
+      component: componentTypes.CHECKBOX,
+      id: 'chap_authentication',
+      name: 'chap_authentication',
+      label: __('CHAP Authentication'),
       condition: {
         when: 'port_type',
         is: 'ISCSI',
@@ -94,14 +93,27 @@ const createSchema = (emsId, setEmsId) => ({
     },
     {
       component: componentTypes.TEXT_FIELD,
-      name: 'chap_secret',
-      id: 'chap_secret',
-      label: __('CHAP Secret:'),
-      isRequired: false,
-      condition: {
+      name: 'chap_name',
+      id: 'chap_name',
+      label: __('CHAP Username:'),
+      isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      condition: {and: [{
         when: 'port_type',
         is: 'ISCSI',
-      },
+      }, {when: 'chap_authentication', is:true}]},
+    },
+    {
+      component: componentTypes.TEXT_FIELD,
+      name: 'chap_secret',
+      id: 'chap_secret',
+      validate: [{ type: validatorTypes.REQUIRED }],
+      label: __('CHAP Secret:'),
+      isRequired: true,
+      condition: {and: [{
+        when: 'port_type',
+        is: 'ISCSI',
+      }, {when: 'chap_authentication', is:true}]},
     },
     {
       component: componentTypes.TEXT_FIELD,
