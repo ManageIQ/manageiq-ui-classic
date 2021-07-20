@@ -27,10 +27,11 @@
     .bx--btn--secondary {
       margin-left: 10px;
     }
-  } 
+  }
 }
 
-#CheckboxDays, #CheckboxHours {
+#CheckboxDays,
+#CheckboxHours {
   margin-bottom: 0px;
   .bx--fieldset {
     display: inline-flex;
@@ -43,6 +44,94 @@
 }
 
 #hoursWarning {
-  color: #DA1E28;
+  color: #da1e28;
   font-size: 14px;
+}
+
+.bx--fieldset {
+  legend.bx--label {
+    font-size: 16px;
+  }
+}
+
+#file_section {
+  .file-upload {
+    .file-upload-input {
+      display: none;
+    }
+    .file-upload-label {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+      width: 90%;
+      height: 2.5rem;
+      padding: 0 1rem;
+      color: #161616;
+      background-color: #f4f4f4;
+      border: 10px solid #f4f4f4;
+      border-bottom: 1px solid #8d8d8d;
+    }
+    .file-button {
+      color: #ffffff;
+      background-color: #0f62fe;
+      font-size: 0.875rem;
+      display: inline-block;
+      position: absolute;
+      height: 2.5rem;
+      width: 10%;
+      min-width: fit-content;
+      text-align: center;
+      border: 10px solid #0f62fe;
+      .file-button-label {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: #ffffff;
+        background-color: #0f62fe;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 1px;
+        padding: 0px;
+        border: 0px;
+        background-image: none;
+      }
+    }
+    .file-button:hover {
+      background-color: $hover-primary;
+      border-color: $hover-primary;
+      .file-button-label {
+        background-color: $hover-primary;
+      }
+    }
+    .file-button:active {
+      background-color: $active-primary;
+      border-color: $active-primary;
+      .file-button-label {
+        background-color: $active-primary;
+      }
+    }
+    .file-button:focus {
+      outline: 1px solid #ffffff;
+      outline-offset: -3px;
+    }
+  }
+}
+
+#edit_section {
+  .edit-div {
+    position: relative;
+    .edit-image {
+      margin-right: 2px;
+      max-width: 125px;
+      max-height: 125px;
+      object-fit: contain;
+    }
+    .edit-button {
+      position: absolute;
+      bottom: 0;
+    }
+  }
 }
