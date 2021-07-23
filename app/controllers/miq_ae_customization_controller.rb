@@ -147,6 +147,7 @@ class MiqAeCustomizationController < ApplicationController
       @record = Dialog.new
     end
     assert_privileges(feature)
+    @sb[:flash_msg] = nil
     @title = @record.id ? _("Editing %{name} Service Dialog") % {:name => @record.name} : _("Add a new Dialog")
   end
 
