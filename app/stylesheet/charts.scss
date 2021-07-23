@@ -24,3 +24,22 @@
 .bx--cc--pie {
   overflow: visible !important;
 }
+
+.bx--cc--toolbar {
+  .bx--overflow-menu-options {
+    top : 10%;
+  }
+}
+.spacer {
+  margin-top: 10px;
+  height: 0px;
+}
+
+
+.bx--cc--legend {
+  .legend-item {
+    height: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+}
