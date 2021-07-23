@@ -122,7 +122,10 @@ class MiqAeCustomizationController < ApplicationController
 
   def explorer
     @trees = []
-    @flash_array = @sb[:flash_msg] if @sb[:flash_msg].present?
+    if @sb[:flash_msg].present?
+      @flash_array = @sb[:flash_msg]
+      @sb[:flash_msg] = []
+    end
     @explorer = true
 
     build_resolve_screen
@@ -147,7 +150,6 @@ class MiqAeCustomizationController < ApplicationController
       @record = Dialog.new
     end
     assert_privileges(feature)
-    @sb[:flash_msg] = nil
     @title = @record.id ? _("Editing %{name} Service Dialog") % {:name => @record.name} : _("Add a new Dialog")
   end
 
