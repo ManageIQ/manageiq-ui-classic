@@ -122,7 +122,10 @@ class MiqAeCustomizationController < ApplicationController
 
   def explorer
     @trees = []
-    @flash_array = @sb[:flash_msg] if @sb[:flash_msg].present?
+    if @sb[:flash_msg].present?
+      @flash_array = @sb[:flash_msg]
+      @sb[:flash_msg] = []
+    end
     @explorer = true
 
     build_resolve_screen
