@@ -758,7 +758,7 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location
     if @edit[:new][:location] == "expression"
-      expr_hash = YAML.load(@ae_method.data)
+      expr_hash = @ae_method.data_for_expression
       if expr_hash[:db] && expr_hash[:expression]
         @edit[:new][:expression] = expr_hash[:expression]
         expression_setup(expr_hash[:db])
@@ -2778,8 +2778,8 @@ class MiqAeClassController < ApplicationController
     @sb[:squash_state] = true
     @sb[:active_tab] = "methods"
     if @record.location == 'expression'
-      hash = YAML.load(@record.data)
-      @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+      expression = @record.data_for_expression[:expression]
+      @expression = expression ? MiqExpression.new(expression).to_human : ""
     elsif playbook_style_location?(@record.location)
       @playbook_details = fetch_playbook_details(@record)
     end
