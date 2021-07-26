@@ -235,7 +235,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_user_delete")
     users = []
     if params[:id] # showing a list
-      if params[:id].nil? || !User.exists?(params[:id])
+      if params[:id].nil? || !User.exists?(:id => params[:id])
         add_flash(_("User no longer exists"), :error)
       else
         user = User.find(params[:id])
@@ -285,7 +285,7 @@ module OpsController::OpsRbac
     else # showing 1 role, delete it
       roles.push(params[:id])
       process_roles(roles, "destroy") unless roles.empty?
-      self.x_node = "xx-ur" unless MiqUserRole.exists?(params[:id]) # reset node to show list
+      self.x_node = "xx-ur" unless MiqUserRole.exists?(:id => params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -350,7 +350,7 @@ module OpsController::OpsRbac
     else # showing 1 group, delete it
       groups.push(params[:id])
       process_groups(groups, "destroy") unless groups.empty?
-      self.x_node = "xx-g" unless MiqGroup.exists?(params[:id]) # reset node to show list
+      self.x_node = "xx-g" unless MiqGroup.exists?(:id => params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
