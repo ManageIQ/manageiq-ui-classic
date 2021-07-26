@@ -150,11 +150,7 @@ module OpsController::OpsRbac
   def rbac_tenant_manage_quotas_save_add
     tenant = Tenant.find(params[:id])
     begin
-      if !params[:quotas]
-        tenant.set_quotas({})
-      else
-        tenant.set_quotas(params.require(:quotas).permit!.to_h.deep_symbolize_keys)
-      end
+      tenant.set_quotas(rbac_tenant_manage_quotas_params.to_h.deep_symbolize_keys)
     rescue => bang
       add_flash(_("Error when saving tenant quota: %{message}") % {:message => bang.message}, :error)
       javascript_flash
@@ -163,6 +159,15 @@ module OpsController::OpsRbac
                     {:model => tenant_type_title_string(tenant.divisible), :name => tenant.name})
       get_node_info(x_node)
       replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
+    end
+  end
+
+  private def rbac_tenant_manage_quotas_params
+    if params[:quotas]
+      permitted_attrs = TenantQuota::NAMES.index_with { %i[unit value warn_value] }
+      params.require(:quotas).permit(permitted_attrs)
+    else
+      {}
     end
   end
 
