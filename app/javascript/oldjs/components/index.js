@@ -7,8 +7,6 @@ require('./generic_object/assign-buttons.js');
 require('./generic_object/custom-button-group-form.js');
 require('./generic_object/custom-image.js');
 require('./generic_object/generic-object-definition-toolbar.js');
-require('./generic_object/generic-object-definition.js');
-require('./generic_object/generic-object-table.js');
 require('./generic_object/main-custom-button-form.js');
 require('./generic_object/main-custom-button-group-form.js');
 require('./index.js');
