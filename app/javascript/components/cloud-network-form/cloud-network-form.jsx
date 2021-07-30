@@ -39,11 +39,19 @@ class CloudNetworkForm extends Component {
             cloudTenantName: data.cloud_tenant.name,
             isLoading: false,
           });
+          API.options(`/api/cloud_networks/${cloudNetworkId}`).then(this.loadSchema());
         })
         .then(miqSparkleOff)
         .catch(handleFailure);
     }
   }
+
+  loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
+    this.setState({
+      ...appendState,
+      fields,
+    });
+  };
 
   cancelClicked = () => {
     const { cloudNetworkId } = this.props;
@@ -73,11 +81,13 @@ class CloudNetworkForm extends Component {
       return null;
     }
 
+    const { fields } = this.state;
+
     return (
       <Grid fluid>
         <MiqFormRenderer
           initialValues={initialValues}
-          schema={createSchema(ems, cloudNetworkId)}
+          schema={createSchema(ems, cloudNetworkId, this.loadSchema, fields)}
           onSubmit={this.saveClicked}
           onCancel={this.cancelClicked}
           canReset={!!cloudNetworkId}
