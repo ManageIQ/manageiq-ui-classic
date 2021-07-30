@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 import { pick, keyBy } from 'lodash';
 
 import { API } from '../../http_api';
@@ -15,7 +15,7 @@ import DetectButton from './detect-button';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
-  const children = Array.isArray(schema.fields) ? schema.fields.flatMap(field => findSkipSubmits(field, items)) : [];
+  const children = Array.isArray(schema.fields) ? schema.fields.flatMap((field) => findSkipSubmits(field, items)) : [];
   return [...found, ...children];
 };
 
@@ -46,7 +46,7 @@ const commonFields = [
   },
 ];
 
-const loadProviderFields = type => API.options(`/api/providers?type=${type}`).then(
+const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
   ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
     ...commonFields,
     {
@@ -70,12 +70,14 @@ const typeSelectField = (edit, filter, setState) => ({
     API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
       .filter(({ kind }) => kind === filter)
       .map(({ title, type }) => ({ value: type, label: title }))),
-  onChange: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
+  onChange: (value) => loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
     fields: [firstField, ...fields],
   }))),
 });
 
-const ProviderForm = ({ providerId, kind, title, redirect }) => {
+const ProviderForm = ({
+  providerId, kind, title, redirect,
+}) => {
   const edit = !!providerId;
   const [{ fields, initialValues }, setState] = useState({});
 
@@ -137,13 +139,13 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
     // Imit the fields that have `skipSubmit` set to `true`
     const toDelete = findSkipSubmits({ fields }, modified);
     // Construct a list of fields to be submitted
-    const toSubmit = modified.filter(field => !toDelete.includes(field));
+    const toSubmit = modified.filter((field) => !toDelete.includes(field));
 
     // Build up the form data using the list and pull out endpoints and authentications
     const { endpoints: _endpoints = { default: {} }, authentications: _authentications = {}, ...rest } = pick(_data, toSubmit);
     // Convert endpoints and authentications back to an array
-    const endpoints = Object.keys(_endpoints).map(key => ({ role: key, ..._endpoints[key] }));
-    const authentications = Object.keys(_authentications).map(key => ({ authtype: key, ..._authentications[key] }));
+    const endpoints = Object.keys(_endpoints).map((key) => ({ role: key, ..._endpoints[key] }));
+    const authentications = Object.keys(_authentications).map((key) => ({ authtype: key, ..._authentications[key] }));
 
     // Construct the full form data with all the necessary items
     const data = {

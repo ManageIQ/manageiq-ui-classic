@@ -8,23 +8,21 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 const PxeCustomizationTemplateForm = ({ recordId, copy }) => {
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!recordId });
   const submitLabel = !!recordId ? __('Save') : __('Add');
-  const disableSubmit = copy && copy != recordId ? ['invalid'] : ['pristine'];
+  const disableSubmit = copy && copy !== recordId ? ['invalid'] : ['pristine'];
 
-  useEffect(() => {	
+  useEffect(() => {
     if (recordId) {
       miqSparkleOn();
-      API.get(`/api/customization_templates/${recordId}`).then(initialValues => {
-          setState({ initialValues, isLoading: false });
-          miqSparkleOff();
+      API.get(`/api/customization_templates/${recordId}`).then((initialValues) => {
+        setState({ initialValues, isLoading: false });
+        miqSparkleOff();
       });
-    }
-    else if (copy)
-    {
+    } else if (copy) {
       miqSparkleOn();
-      API.get(`/api/customization_templates/${copy}`).then(initialValues => {
-          initialValues.name = `Copy of ${initialValues.name}`;
-          setState({ initialValues, isLoading: false });
-          miqSparkleOff();
+      API.get(`/api/customization_templates/${copy}`).then((initialValues) => {
+        initialValues.name = `Copy of ${initialValues.name}`;
+        setState({ initialValues, isLoading: false });
+        miqSparkleOff();
       });
     }
   }, [recordId, copy]);
@@ -56,7 +54,7 @@ const PxeCustomizationTemplateForm = ({ recordId, copy }) => {
 
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema( initialValues )}
+      schema={createSchema(initialValues)}
       initialValues={initialValues}
       canReset={!!recordId}
       onSubmit={onSubmit}

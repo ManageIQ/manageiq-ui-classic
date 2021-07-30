@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -91,7 +92,7 @@ export const ToolbarGroup = ({ group, onClick }) => {
 };
 
 ToolbarGroup.propTypes = {
-  group: PropTypes.arrayOf(PropTypes.any),
+  group: PropTypes.arrayOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
@@ -111,8 +112,8 @@ export const Toolbar = (props) => (
 Toolbar.propTypes = {
   count: PropTypes.number,
   kebabLimit: PropTypes.number,
-  groups: PropTypes.arrayOf(PropTypes.any), // array of arrays of buttons
-  views: PropTypes.arrayOf(PropTypes.any), // array of view buttons
+  groups: PropTypes.arrayOf(PropTypes.any).isRequired, // array of arrays of buttons
+  views: PropTypes.arrayOf(PropTypes.any).isRequired, // array of view buttons
   onClick: PropTypes.func.isRequired,
   onViewClick: PropTypes.func.isRequired,
 };

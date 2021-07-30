@@ -183,6 +183,29 @@
         .col-md-8
           = h(@record.options[:scan_item_set_name])
     %hr
+  - when "run_ansible_playbook"
+    %h3
+      = _("Run Ansible Playbook")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+          = _("Playbook Catalog Item")
+        .col-md-8
+          = h(@record.options[:service_template_name].join)
+      .form-group
+        %label.control-label.col-md-2
+          = _("Inventory")
+        - if @record.options[:use_localhost]
+          .col-md-8
+            = _("Localhost")
+        - elsif @record.options[:use_event_target]
+          .col-md-8
+            = _("Target Machine")
+        - else
+          .col-md-8
+            = _("Specific Hosts ")
+            = h(@record.options[:hosts])
+    %hr  
   - when "evaluate_alerts"
     %h3
       = _("Alerts to Evaluate")

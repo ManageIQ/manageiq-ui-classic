@@ -114,7 +114,6 @@ class CloudVolumeBackupController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Storage")},
-        {:title => _("Block Storage")},
         {:title => _("Volume Backups"), :url => controller_url},
       ],
     }

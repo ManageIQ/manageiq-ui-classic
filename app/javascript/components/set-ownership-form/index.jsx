@@ -33,23 +33,22 @@ const addOptions = (ownershipIds, type, data, tenantGroupId = '') => {
  * Vms and Services have the user & group id in resources object.
  * Templates have the user & group id in the base object.
  */
-const getInitialValues = ownershipItems => new Promise((resolve) => {
+const getInitialValues = (ownershipItems) => new Promise((resolve) => {
   if (ownershipItems.length > 1) {
     resolve({ group: 'dont-change', user: 'dont-change' });
   } else if (ownershipItems.length === 1) {
     const item = ownershipItems[0];
     if (item.kind !== 'templates') {
       API.get(`/api/${item.kind}/${item.id}?expand=resources&attributes=evm_owner_id,miq_group_id`)
-        .then(results => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+        .then((results) => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
     } else {
       API.get(`/api/${item.kind}/${item.id}?attributes=evm_owner_id,miq_group_id`)
-        .then(results => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+        .then((results) => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
     }
   } else {
     resolve({ group: '', user: '' });
   }
 });
-
 
 function SetOwnershipForm(props) {
   const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel`;
@@ -74,14 +73,14 @@ function SetOwnershipForm(props) {
           resolve('');
         } else {
           API.get(`/api/tenant_groups/${initialValues.group}`, { skipErrors: true })
-            .then(response => resolve(response.id))
+            .then((response) => resolve(response.id))
             .catch(() => resolve(''));
         }
       }).then((tenantGroupId) => {
         setUserOptions(addOptions(ownershipItems, 'user',
-          userOptions.resources.map(user => ({ label: user.name, value: user.id }))));
+          userOptions.resources.map((user) => ({ label: user.name, value: user.id }))));
         setGroupOptions(addOptions(ownershipItems, 'group',
-          groupOptions.resources.map(group => ({ label: group.description, value: group.id })),
+          groupOptions.resources.map((group) => ({ label: group.description, value: group.id })),
           tenantGroupId));
         setInitialValues(initialValues);
         miqSparkleOff();
@@ -97,14 +96,14 @@ function SetOwnershipForm(props) {
   });
 
   const handleSubmit = (values, submitUrl) => {
-    const kinds = groupBy(ownershipItems, item => item.kind);
+    const kinds = groupBy(ownershipItems, (item) => item.kind);
 
-    return Promise.all(Object.keys(kinds).map(key =>
+    return Promise.all(Object.keys(kinds).map((key) =>
       API.post(`/api/${key}`, {
         action: 'set_ownership',
-        resources: kinds[key].map(item => ({ id: item.id, owner: { id: values.user }, group: { id: values.group } })),
+        resources: kinds[key].map((item) => ({ id: item.id, owner: { id: values.user }, group: { id: values.group } })),
       })))
-      .then(() => miqAjaxButton(submitUrl, { objectIds: Array.from(ownershipItems, item => item.id) }))
+      .then(() => miqAjaxButton(submitUrl, { objectIds: Array.from(ownershipItems, (item) => item.id) }))
       .catch(handleFailure);
   };
 
@@ -113,7 +112,7 @@ function SetOwnershipForm(props) {
       <MiqFormRenderer
         initialValues={initialValues}
         schema={createSchema(userOptions, groupOptions)}
-        onSubmit={values => handleSubmit(values, submitUrl)}
+        onSubmit={(values) => handleSubmit(values, submitUrl)}
         onCancel={() => miqAjaxButton(cancelUrl)}
         canReset
       />
@@ -122,6 +121,7 @@ function SetOwnershipForm(props) {
 }
 
 SetOwnershipForm.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
   ownershipItems: PropTypes.arrayOf(PropTypes.exact({ id: PropTypes.string, kind: PropTypes.string })).isRequired,
 };
 

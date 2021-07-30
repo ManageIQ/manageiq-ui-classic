@@ -4,30 +4,22 @@ describe EmsStorageController do
   it_behaves_like "controller with custom buttons"
 
   describe "#check_generic_rbac" do
-    let(:feature)        { MiqProductFeature.find_all_by_identifier(%w(ems_block_storage_show ems_block_storage_show_list)) }
+    let(:feature)        { MiqProductFeature.find_all_by_identifier(%w(ems_storage_show ems_storage_show_list)) }
     let(:role)           { FactoryBot.create(:miq_user_role, :miq_product_features => feature) }
     let(:group)          { FactoryBot.create(:miq_group, :miq_user_role => role) }
     let(:user)           { FactoryBot.create(:user, :miq_groups => [group]) }
-    let(:object_storage) { FactoryBot.create(:ems_swift) }
-    let(:block_storage)  { FactoryBot.create(:ems_cinder) }
+    let(:storage)        { FactoryBot.create(:ems_swift) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(ems_block_storage_show ems_block_storage_show_list))
+      EvmSpecHelper.seed_specific_product_features(%w(ems_storage_show ems_storage_show_list))
       login_as user
     end
 
     it "allows access for block_storage" do
       controller.action_name = 'show'
-      controller.instance_variable_set(:@record, block_storage)
+      controller.instance_variable_set(:@record, storage)
       expect(controller.send(:type_feature_role_check)).to be_truthy
-    end
-
-    it "denies access for object_storage" do
-      controller.action_name = 'show'
-      allow(controller).to receive(:redirect_to)
-      controller.instance_variable_set(:@record, object_storage)
-      expect(controller.send(:type_feature_role_check)).to be_falsey
     end
 
     it "sets @ems in init_show for a selected record" do
@@ -51,6 +43,17 @@ describe EmsStorageController do
       it 'returns proper record class' do
         expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
       end
+    end
+  end
+
+  describe '#show_list' do
+    render_views
+
+    it 'renders the view and the Block Storage Managers toolbar' do
+      setup_zone
+      login_as FactoryBot.create(:user, :features => "everything")
+      expect(ApplicationHelper::Toolbar::EmsStoragesCenter).to receive(:definition).and_call_original
+      post :show_list
     end
   end
 end

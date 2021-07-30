@@ -84,7 +84,6 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
               {config.availableof}
               {''}
               <span className="available-text-total">{memoryData.total}</span>
-              {''}
               <span className="available-text-total">{config.units}</span>
             </span>
           </div>

@@ -118,12 +118,14 @@ class CloudObjectStoreContainerController < ApplicationController
   end
 
   def download_data
-    assert_privileges('cloud_object_store_container_view')
+    # TODO: rename to match others: cloud_object_store_container_view, write migration to update existing
+    assert_privileges('cloudobject_store_container_view')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('cloud_object_store_container_view')
+    # TODO: rename to match others: cloud_object_store_container_view, write migration to update existing
+    assert_privileges('cloudobject_store_container_view')
     super
   end
 
@@ -150,7 +152,6 @@ class CloudObjectStoreContainerController < ApplicationController
     {
       :breadcrumbs  => [
         {:title => _("Storage")},
-        {:title => _("Object Storage")},
         {:title => _("Object Store Containers"), :url => controller_url},
       ],
       :record_info  => @record,

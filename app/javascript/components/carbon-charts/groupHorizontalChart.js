@@ -27,7 +27,7 @@ const GroupHorizontalBarChart = ({ data }) => {
 };
 
 GroupHorizontalBarChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 GroupHorizontalBarChart.defaultProps = {

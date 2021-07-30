@@ -288,6 +288,7 @@ module VmCommon
       page << javascript_reload_toolbars
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
       page.replace("desc_content", :partial => "/vm_common/snapshots_desc",
                                    :locals  => {:selected => params[:id]})
     end
@@ -985,7 +986,7 @@ module VmCommon
       options = list_child_vms(model, node_id, title, show_list)
 
       # After adding to history, add name filter suffix if showing a list
-      if @search_text.present?
+      if @search_text.present? && !@in_a_form
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
     end
@@ -995,6 +996,11 @@ module VmCommon
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
+    if params[:action] == 'x_history'
+      # Making selected checkboxes array empty when compare cancel is clicked
+      params[:miq_grid_checks] = []
+    end
+
     action, presenter, refresh_breadcrumbs = options.values_at(:action, :presenter, :refresh_breadcrumbs)
     refresh_breadcrumbs = true unless options.key?(:refresh_breadcrumbs)
 
@@ -1142,6 +1148,8 @@ module VmCommon
             presenter.update(:form_buttons_div, '')
             presenter.remove_paging.hide(:form_buttons_div)
           end
+        elsif @sb[:action] == 'rename'
+          presenter.hide(:form_buttons_div)
         elsif %w[chargeback reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end

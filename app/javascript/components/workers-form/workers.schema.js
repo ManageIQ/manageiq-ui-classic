@@ -226,6 +226,6 @@ const addSchema = (formValues) => {
   ];
 
   return { fields };
-}
+};
 
 export default addSchema;

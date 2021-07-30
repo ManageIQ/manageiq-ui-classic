@@ -26,7 +26,7 @@ const StackHorizontalChart = ({ data }) => {
 };
 
 StackHorizontalChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 StackHorizontalChart.defaultProps = {

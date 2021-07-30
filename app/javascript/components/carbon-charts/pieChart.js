@@ -19,7 +19,7 @@ const PieChartGraph = ({ data }) => {
 };
 
 PieChartGraph.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 PieChartGraph.defaultProps = {

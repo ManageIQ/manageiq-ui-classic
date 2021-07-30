@@ -9,20 +9,21 @@ const PxeImageForm = ({ recordId }) => {
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!recordId });
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
-  useEffect(() => {	
+  useEffect(() => {
     if (recordId) {
       miqSparkleOn();
-      API.get(`/api/pxe_image_types/${recordId}`).then(initialValues => {
-          setState({ initialValues, isLoading: false });
-          miqSparkleOff();
+      API.get(`/api/pxe_image_types/${recordId}`).then((initialValues) => {
+        setState({ initialValues, isLoading: false });
+        miqSparkleOff();
       });
     }
   }, [recordId]);
 
-  const onSubmit = (values) => {
-    values = {
-      ...values,
-      provision_type: values.provision_type ? values.provision_type : null,
+  const onSubmit = (valuesProp) => {
+    // eslint-disable-next-line no-param-reassign
+    const values = {
+      ...valuesProp,
+      provision_type: valuesProp.provision_type ? valuesProp.provision_type : null,
     };
     miqSparkleOn();
 

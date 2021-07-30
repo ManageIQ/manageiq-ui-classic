@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { API } from '../../http_api';
 import MiqFormRenderer from '@@ddf';
+import { API } from '../../http_api';
 import createSchema from './ansible-credentials-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
@@ -13,16 +13,18 @@ const AnsibleCredentialsForm = ({ recordId }) => {
 
   const loadSchema = (value, appendState = {}) => ({
     data: {
+      // eslint-disable-next-line camelcase
       credential_types: { embedded_ansible_credential_types },
     },
   }) =>
-    setState(state => ({
+    setState((state) => ({
       ...state,
       ...appendState,
       fields: embedded_ansible_credential_types[value].attributes,
     }));
 
   useEffect(() => {
+    // eslint-disable-next-line camelcase
     API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager').then(({ resources: [manager_resource] }) => {
       if (!recordId) {
         setState((state) => ({

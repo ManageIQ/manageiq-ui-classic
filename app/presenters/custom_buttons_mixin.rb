@@ -11,8 +11,9 @@ module CustomButtonsMixin
   def get_custom_buttons(object)
     # FIXME: don't we have a method for the splits?
     # FIXME: cannot we ask for the null parent using Arel?
-    CustomButton.buttons_for(object.name.split('|').last.split('-').last).select do |uri|
-      uri.parent.nil?
+    button_name = object.name.split('|').last.split('-').last
+    CustomButton.buttons_for(button_name).includes(:custom_button_sets).select do |uri|
+      uri.custom_button_sets.blank?
     end
   end
 

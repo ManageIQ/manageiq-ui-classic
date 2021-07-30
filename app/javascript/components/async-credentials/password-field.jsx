@@ -17,20 +17,27 @@ const PasswordField = ({
 }) => {
   const formOptions = useFormApi();
   const [editMode, setEditMode] = useState(!edit);
+
   const secretField = {
     type: 'password',
     autoComplete: 'new-password',
     validateOnMount: rest.validateOnMount,
     helperText,
     ...rest,
-    component: edit ? 'edit-password-field' : componentClass, 
-    componentClass: componentClass,
+    component: edit ? 'edit-password-field' : componentClass,
+    componentClass,
   };
+
+  const newProps = { ...secretField };
+  delete newProps.componentClass;
+  if (rest.label === undefined) {
+    rest.label = '';
+  }
 
   return (
     <>
       {edit && editMode && formOptions.renderForm([{
-        ...secretField,
+        ...newProps,
         editMode: !editMode,
         buttonLabel: cancelEditLabel,
         setEditMode: () => {
@@ -71,7 +78,7 @@ const PasswordField = ({
         </FormGroup>
       )}
 
-      {!edit && formOptions.renderForm([secretField], formOptions)}
+      {!edit && formOptions.renderForm([newProps], formOptions)}
     </>
   );
 };

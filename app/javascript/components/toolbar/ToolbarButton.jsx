@@ -24,7 +24,7 @@ ButtonIcon.propTypes = {
   img_url: PropTypes.string,
   icon: PropTypes.string,
   color: PropTypes.string,
-  enabled: PropTypes.bool,
+  enabled: PropTypes.bool.isRequired,
 };
 
 ButtonIcon.defaultProps = {
@@ -35,20 +35,23 @@ ButtonIcon.defaultProps = {
 
 export const ToolbarButton = (props) => {
   const count = useContext(CountContext);
-  const disabled = !(props.onwhen ? isEnabled(props.onwhen, count) : props.enabled);
+  const {
+    onwhen, enabled, id, name, title, text, selected,
+  } = props;
+  const disabled = !(onwhen ? isEnabled(onwhen, count) : enabled);
 
   return (
     <button
       type="button"
-      id={props.id}
-      name={props.name}
-      title={props.title}
+      id={id}
+      name={name}
+      title={title}
       disabled={disabled}
-      className={classNames('btn btn-default toolbar-button', { active: props.selected, disabled })}
+      className={classNames('btn btn-default toolbar-button', { active: selected, disabled })}
       onClick={() => props.onClick(props)}
     >
       { ButtonIcon(props) }
-      { props.text }
+      { text }
     </button>
   );
 };
@@ -59,7 +62,7 @@ ToolbarButton.propTypes = {
   name: PropTypes.string,
   text: PropTypes.string,
   selected: PropTypes.bool,
-  enabled: PropTypes.bool,
+  enabled: PropTypes.bool.isRequired,
   onwhen: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
@@ -70,4 +73,5 @@ ToolbarButton.defaultProps = {
   name: null,
   text: null,
   onwhen: null,
+  selected: null,
 };

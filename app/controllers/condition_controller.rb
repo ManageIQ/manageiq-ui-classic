@@ -118,6 +118,7 @@ class ConditionController < ApplicationController
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "miqScrollTop();" if @flash_array.present?
           page.replace_html("form_div", :partial => "form") unless @flash_errors
           page << javascript_for_miq_button_visibility(@changed)
           page << "miqSparkle(false);"

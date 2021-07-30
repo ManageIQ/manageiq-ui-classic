@@ -49,6 +49,14 @@
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.urlValidation"}
           = _("URL must include a protocol (http://, https:// or file://) or be a valid SSH path (user@server:path or ssh://user@address:port/path)")
     .form-group
+      %label.control-label.col-md-2
+        = _("Verify SSL")
+      .col-md-8
+        %input{:type      => "checkbox",
+               :name      => "verify_ssl",
+               :id        => "verify_ssl",
+               'ng-model' => "vm.repositoryModel.verify_ssl"}
+    .form-group
       %label.col-md-2.control-label
         = _('SCM credentials')
       .col-md-8

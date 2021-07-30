@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Subnet form component renders the adding form variant 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "ems_id",
+          "includeEmpty": true,
+          "isDisabled": false,
+          "isRequired": true,
+          "label": "Network Manager",
+          "loadOptions": [Function],
+          "name": "ems_id",
+          "onChange": [Function],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "condition": Object {
+            "isNotEmpty": true,
+            "when": "ems_id",
+          },
+          "id": "name",
+          "isRequired": true,
+          "label": "Name",
+          "name": "name",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "condition": Object {
+            "isNotEmpty": true,
+            "when": "ems_id",
+          },
+          "id": "cidr",
+          "isDisabled": false,
+          "isRequired": true,
+          "label": "CIDR",
+          "name": "cidr",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "AddButtonProps": Object {
+            "size": "small",
+          },
+          "RemoveButtonProps": Object {
+            "size": "small",
+          },
+          "buttonLabels": Object {
+            "add": "Add",
+            "remove": "Remove",
+          },
+          "component": "field-array",
+          "condition": Object {
+            "isNotEmpty": true,
+            "when": "ems_id",
+          },
+          "fields": Array [
+            Object {
+              "component": "text-field",
+            },
+          ],
+          "id": "dns_nameservers",
+          "label": "DNS Servers",
+          "name": "dns_nameservers",
+          "noItemsMessage": "None",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Subnet form component renders the editing form variant 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <SubnetForm
+    recordId="1"
+  >
+    <Loading
+      active={true}
+      className="export-spinner"
+      description="Active loading indicator"
+      small={true}
+      withOverlay={false}
+    >
+      <div
+        aria-atomic="true"
+        aria-labelledby="loading-id-1"
+        aria-live="assertive"
+        className="export-spinner bx--loading bx--loading--small"
+      >
+        <label
+          className="bx--visually-hidden"
+          id="loading-id-1"
+        >
+          Active loading indicator
+        </label>
+        <svg
+          className="bx--loading__svg"
+          viewBox="0 0 100 100"
+        >
+          <title>
+            Active loading indicator
+          </title>
+          <circle
+            className="bx--loading__background"
+            cx="50%"
+            cy="50%"
+            r="42"
+          />
+          <circle
+            className="bx--loading__stroke"
+            cx="50%"
+            cy="50%"
+            r="42"
+          />
+        </svg>
+      </div>
+    </Loading>
+  </SubnetForm>
+</Provider>
+`;

@@ -135,30 +135,6 @@ describe OpsController do
         login_as user
         allow(controller).to receive(:data_for_breadcrumbs).and_return({})
       end
-
-      it "#does not allow duplicate names when adding" do
-        EvmSpecHelper.local_miq_server
-        MiqRegion.seed
-        EvmSpecHelper.create_guid_miq_server_zone
-        expect(controller).to receive(:render)
-        @zone = FactoryBot.create(:zone, :name => 'zoneName', :description => "description1")
-        allow(controller).to receive(:assert_privileges)
-        allow(controller).to receive(:x_node).and_return('root')
-
-        @params = {:id     => 'new',
-                   :action => "zone_edit",
-                   :button => "add"}
-        edit = {:new => {:name        => @zone.name,
-                         :description => "description02"}}
-        controller.instance_variable_set(:@edit, edit)
-        controller.params = @params
-        seed_session_trees('ops', :settings_tree)
-        allow(controller).to receive(:load_edit).and_return(true)
-        controller.send(:zone_edit)
-
-        expect(controller.send(:flash_errors?)).to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("Name is not unique within region")
-      end
     end
 
     context '#forest_accept' do

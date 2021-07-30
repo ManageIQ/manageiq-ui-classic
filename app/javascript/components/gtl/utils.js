@@ -12,23 +12,16 @@ import {
 // pf-react paginator component has a bug, it doesnt pass this value to PaginationRow component
 PaginationRow.defaultProps.pageSizeDropUp = false;
 
-export const renderDataTableToolbar = () => {
-  return (
-    <Toolbar
-    // onClick={onClick}
-    // onViewClick={onViewClick}
-    />
-  );
-};
+export const renderDataTableToolbar = () => (
+  <Toolbar />
+);
 
-export const NoRecordsFound = () => {
-  return (
-    <EmptyState className="records-empty-state">
-      <EmptyState.Icon type="fa" name="search" />
-      <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
-    </EmptyState>
-  );
-};
+export const NoRecordsFound = () => (
+  <EmptyState className="records-empty-state">
+    <EmptyState.Icon type="fa" name="search" />
+    <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
+  </EmptyState>
+);
 
 // fixme: Grid view paginator has sorting!
 export const renderPagination = ({
@@ -56,4 +49,3 @@ renderPagination.propTypes = {
   onPageSet: PropTypes.func.isRequired,
   onPerPageSelect: PropTypes.func.isRequired,
 };
-

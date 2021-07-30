@@ -1,6 +1,8 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const normalize = (fields, edit) => fields.map(({ component, label, helperText, fields, ...field }) => ({
+const normalize = (fields, edit) => fields.map(({
+  component, label, helperText, fields, ...field
+}) => ({
   ...field,
   component,
   label: __(label),
@@ -14,7 +16,9 @@ const createSchema = (fields, promise, edit, loadSchema) => ({
     {
       component: componentTypes.TEXT_FIELD,
       name: 'manager_resource',
-      type: 'hidden',
+      hideField: true,
+      label: 'manager_resource',
+      value: '',
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -35,15 +39,16 @@ const createSchema = (fields, promise, edit, loadSchema) => ({
       isRequired: true,
       isDisabled: edit,
       includeEmpty: true,
-      onChange: value => promise.then(loadSchema(value)),
+      onChange: (value) => promise.then(loadSchema(value)),
       loadOptions: () =>
         promise.then(
           ({
             data: {
+              // eslint-disable-next-line camelcase
               credential_types: { embedded_ansible_credential_types },
             },
           }) =>
-            Object.keys(embedded_ansible_credential_types).map(key => ({
+            Object.keys(embedded_ansible_credential_types).map((key) => ({
               value: key,
               label: __(embedded_ansible_credential_types[key].label),
             })),

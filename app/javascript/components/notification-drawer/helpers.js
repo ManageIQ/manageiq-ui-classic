@@ -1,8 +1,9 @@
 export const newCountText = function(count) {
+  // eslint-disable-next-line no-undef
   return sprintf(n__('%d New', '%d New', count), count);
 };
 
-export const getNotficationStatusIconName = notification => (
+export const getNotficationStatusIconName = (notification) => (
   {
     info: 'info',
     error: 'error',

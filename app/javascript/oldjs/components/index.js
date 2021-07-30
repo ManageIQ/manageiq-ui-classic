@@ -1,15 +1,12 @@
 require('./ae_resolve_options/ae-resolve-options.js');
 require('./ansible-raw-stdout.js');
 require('./auth-credentials.js');
-require('./cloud_subnet/cloud-subnet-form.js');
 require('./cloud_volume_backup/cloud-volume-backup-form.js');
 require('./datetime-delay-picker.js');
 require('./generic_object/assign-buttons.js');
 require('./generic_object/custom-button-group-form.js');
 require('./generic_object/custom-image.js');
 require('./generic_object/generic-object-definition-toolbar.js');
-require('./generic_object/generic-object-definition.js');
-require('./generic_object/generic-object-table.js');
 require('./generic_object/main-custom-button-form.js');
 require('./generic_object/main-custom-button-group-form.js');
 require('./index.js');

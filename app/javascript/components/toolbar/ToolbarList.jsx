@@ -9,11 +9,12 @@ import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
-  //set this true for overflowmenu keydown event
+  const { items, title, id } = props;
+  // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
 
   // Filter out invisible items.
-  const visibleItems = props.items.filter((i) => !i.hidden);
+  const visibleItems = items.filter((i) => !i.hidden);
 
   // Do not render at all if no child is visible.
   if (visibleItems.length === 0) {
@@ -34,23 +35,23 @@ export const ToolbarList = (props) => {
 
   const keydownFunc = (event) => {
     if (event.keyCode === 9 || event.keyCode === 27) {
-      setOverflowTab(true);  
+      setOverflowTab(true);
     }
-  }; 
+  };
 
   const closeFunc = () => {
     if (overflowTab === true) {
       document.getElementById(props.id).focus();
       setOverflowTab(false);
     }
-  };	  
+  };
 
   return (
     <OverflowMenu
-      ariaLabel={props.title}
-      id={props.id}
+      ariaLabel={title}
+      id={id}
       floatingmenu="true"
-      title={props.title}
+      title={title}
       iconDescription=""
       className={!isToolbarEnabled ? 'overflow-menu-disabled' : ''}
       disabled={!isToolbarEnabled}

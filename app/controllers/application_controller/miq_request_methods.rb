@@ -66,6 +66,7 @@ module ApplicationController::MiqRequestMethods
           page << javascript_for_miq_button_visibility(changed)
         end
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page << "miqSparkle(false);"
       end
     end
@@ -689,6 +690,7 @@ module ApplicationController::MiqRequestMethods
         page << javascript_prologue
         page.replace("prov_wf_div", :partial => "/miq_request/prov_wf") if @error_div
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
       end
     end
   end

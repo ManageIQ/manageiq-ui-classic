@@ -6,6 +6,7 @@ import {
 } from '../carbon-charts';
 import { getConvertedData } from '../carbon-charts/helpers';
 
+// eslint-disable-next-line no-unused-vars
 const DashboardWidget = ({ data, id }) => {
   const convertedData = getConvertedData(data);
 
@@ -37,7 +38,7 @@ const DashboardWidget = ({ data, id }) => {
 };
 
 DashboardWidget.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.objectOf(PropTypes.any),
   id: PropTypes.string,
 };
 

@@ -423,19 +423,6 @@ DashboardController:
 - tree_select
 - wait_for_task
 - widget_to_pdf
-EmsBlockStorageController:
-- dialog_field_changed
-- dialog_form_button_pressed
-- dialog_load
-- dynamic_checkbox_refresh
-- dynamic_date_refresh
-- dynamic_radio_button_refresh
-- dynamic_text_box_refresh
-- index
-- open_url_after_dialog
-- sections_field_changed
-- tl_chooser
-- wait_for_task
 EmsCloudController:
 - compare_cancel
 - compare_choose_base
@@ -558,19 +545,6 @@ EmsNetworkController:
 - sections_field_changed
 - tl_chooser
 - wait_for_task
-EmsObjectStorageController:
-- dialog_field_changed
-- dialog_form_button_pressed
-- dialog_load
-- dynamic_checkbox_refresh
-- dynamic_date_refresh
-- dynamic_radio_button_refresh
-- dynamic_text_box_refresh
-- index
-- open_url_after_dialog
-- sections_field_changed
-- tl_chooser
-- wait_for_task
 EmsPhysicalInfraController:
 - dialog_field_changed
 - dialog_form_button_pressed
@@ -589,7 +563,6 @@ EmsStorageController:
 - dialog_field_changed
 - dialog_form_button_pressed
 - dialog_load
-- download_data
 - dynamic_checkbox_refresh
 - dynamic_date_refresh
 - dynamic_radio_button_refresh
@@ -808,7 +781,6 @@ MiqPolicyController:
 - exp_token_pressed
 - index
 - miq_event_field_changed
-- miq_policy_edit
 - policy_field_changed
 - quick_search
 - reload
@@ -993,7 +965,8 @@ PhysicalServerController:
 - perf_top_chart
 - tl_chooser
 - wait_for_task
-PhysicalStorageController: []
+PhysicalStorageController:
+- index
 PhysicalSwitchController:
 - index
 PictureController:

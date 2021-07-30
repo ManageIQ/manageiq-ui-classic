@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import FormRenderer from '@data-driven-forms/react-form-renderer';
+import { FormRenderer } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 
@@ -39,9 +39,8 @@ describe('Async credentials component', () => {
     });
   });
 
-
   it('should call async validation function on button click and set valid state to true', async(done) => {
-    const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
+    const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
     const onSubmit = jest.fn();
 
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
@@ -78,13 +77,13 @@ describe('Async credentials component', () => {
 
     wrapper.update();
 
-    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation failed');
+    expect(wrapper.find('div.ddorg__carbon-error-helper-text').text()).toEqual('Validation failed');
 
     done();
   });
 
   it('should correctly set invalid state after input change', async(done) => {
-    const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
+    const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
     await act(async() => {
@@ -97,13 +96,13 @@ describe('Async credentials component', () => {
     expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
-    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
+    expect(wrapper.find('div.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
 
     done();
   });
 
   it('should correctly set valid state after input change if passed initial values', async(done) => {
-    const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
+    const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
     const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
 
     await act(async() => {
@@ -116,7 +115,7 @@ describe('Async credentials component', () => {
     expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
     wrapper.update();
-    expect(wrapper.find('div.bx--form-requirement.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
+    expect(wrapper.find('div.ddorg__carbon-error-helper-text').text()).toEqual('Validation Required');
     wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
     wrapper.update();
     expect(wrapper.find('div.bx--form__helper-text').text()).toEqual('Validation successful');

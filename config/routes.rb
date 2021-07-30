@@ -157,6 +157,7 @@ Rails.application.routes.draw do
 
     :automation_manager_configured_system => {
       :get => %w(
+        download_data
         download_summary_pdf
         show
         show_list
@@ -619,8 +620,6 @@ Rails.application.routes.draw do
         filters_field_changed
         theme_changed
         timeprofile_delete
-        timeprofile_field_changed
-        timeprofile_update
         tree_autoload
         update
         view_selected
@@ -1556,7 +1555,6 @@ Rails.application.routes.draw do
         compare_get,
       :post => %w(
         button
-        create
         dynamic_checkbox_refresh
         listnav_search_selected
         protect
@@ -1565,7 +1563,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -2289,7 +2286,7 @@ Rails.application.routes.draw do
                ownership_post
     },
 
-    :ems_block_storage              => {
+    :ems_storage              => {
       :get  => %w(
         dialog_load
         download_data
@@ -2315,70 +2312,6 @@ Rails.application.routes.draw do
         show
         show_list
         quick_search
-        tagging_edit
-        tl_chooser
-        wait_for_task
-      ) +
-        adv_search_post +
-        dialog_runner_post +
-        exp_post +
-        save_post
-    },
-
-    :ems_object_storage              => {
-      :get  => %w(
-        dialog_load
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
-        listnav_search_selected
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tagging_edit
-        tl_chooser
-        wait_for_task
-      ) +
-        adv_search_post +
-        dialog_runner_post +
-        exp_post +
-        save_post
-    },
-
-    :ems_storage              => {
-      :get  => %w(
-        dialog_load
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        button
-        dynamic_checkbox_refresh
-        dynamic_radio_button_refresh
-        dynamic_text_box_refresh
-        listnav_search_selected
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
         tagging_edit
         tl_chooser
         wait_for_task
@@ -2538,7 +2471,6 @@ Rails.application.routes.draw do
         wait_for_task
         x_button
         zone_edit
-        zone_field_changed
       ) + exp_post + dialog_runner_post
     },
 
@@ -2954,7 +2886,6 @@ Rails.application.routes.draw do
       :post => %w(
         edit_vm
         form_field_changed
-        name_changed
         policy_sim
         policy_sim_add
         policy_sim_cancel
@@ -3117,7 +3048,6 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
-        name_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3205,7 +3135,6 @@ Rails.application.routes.draw do
         guest_applications
         kernel_drivers
         linux_initprocesses
-        name_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3302,7 +3231,6 @@ Rails.application.routes.draw do
     ems_storage
     miq_ae_customization
     network_service
-    physical_storage
     pxe
     security_policy
     security_policy_rule
@@ -3362,7 +3290,7 @@ Rails.application.routes.draw do
   # prevent No route matches [GET] "/favicon.ico"
   get '/favicon.ico' => 'static#favicon', :format => false
 
-  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage ems_block_storage].each do |resource|
+  %w[ems_cloud ems_infra ems_physical_infra ems_container ems_network ems_storage].each do |resource|
     resources(resource.to_sym, :as => resource.pluralize.to_sym, :except => %i[create update destroy])
   end
   # rubocop:enable Layout/HashAlignment

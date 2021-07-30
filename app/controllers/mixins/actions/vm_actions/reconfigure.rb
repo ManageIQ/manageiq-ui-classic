@@ -60,18 +60,18 @@ module Mixins
           if recs.empty?
             add_flash(_("One or more %{model} must be selected to Reconfigure") %
               {:model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
-            javascript_flash(:scroll_top => true)
+            javascript_flash
             return
           else
 
             if VmOrTemplate.includes_template?(recs)
               add_flash(_("Reconfigure does not apply because you selected at least one VM Template"), :error)
-              javascript_flash(:scroll_top => true)
+              javascript_flash
               return
             end
             unless VmOrTemplate.reconfigurable?(recs)
               add_flash(_("Reconfigure does not apply because you selected at least one un-reconfigurable VM"), :error)
-              javascript_flash(:scroll_top => true)
+              javascript_flash
               return
             end
             reconfigure_ids = recs.collect(&:to_i)

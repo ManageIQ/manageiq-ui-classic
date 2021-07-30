@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import FormRenderer, { useFormApi } from '@data-driven-forms/react-form-renderer';
+import { FormRenderer, useFormApi } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
 import Select from '../../components/select';
 

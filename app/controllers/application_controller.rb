@@ -372,6 +372,7 @@ class ApplicationController < ActionController::Base
     end
 
     render :json => {
+      :checkboxes_clicked => params.fetch_path(:additional_options, :checkboxes_clicked),
       :settings => settings,
       :data     => view_to_hash(@view, true),
       :messages => @flash_array
@@ -491,6 +492,7 @@ class ApplicationController < ActionController::Base
   # Clear the Search and display original list of items
   def search_clear
     @search_text = @sb[:search_text] = nil
+    params[:miq_grid_checks] = []
     if params[:in_explorer] == "true"
       reload
     else # non-explorer screens
@@ -889,7 +891,7 @@ class ApplicationController < ActionController::Base
              end
 
     # add @search_text to title for gtl screens only
-    if @search_text.present? && @display.nil?
+    if @search_text.present? && @display.nil? && !@in_a_form
       @title += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
     end
   end
@@ -1421,6 +1423,7 @@ class ApplicationController < ActionController::Base
     render :update do |page|
       page << javascript_prologue
       page.replace(:flash_msg_div, :partial => "layouts/flash_msg") # Replace the flash message
+      page << "miqScrollTop();" if @flash_array.present?
       page << "miqSetButtons(0, 'center_tb');" # Reset the center toolbar
       if layout_uses_listnav?
         page.replace(:listnav_div, :partial => "layouts/listnav") # Replace accordion, if list_nav_div is there
@@ -1895,7 +1898,7 @@ class ApplicationController < ActionController::Base
       add_flash(_("%{task} does not apply to at least one of the selected items") %
                   {:task => type.split.map(&:capitalize).join(' ')}, :error)
     end
-    javascript_flash(:scroll_top => true) if @explorer
+    javascript_flash if @explorer
   end
 
   def set_gettext_locale

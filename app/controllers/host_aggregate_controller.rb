@@ -40,46 +40,7 @@ class HostAggregateController < ApplicationController
 
   def create
     assert_privileges("host_aggregate_new")
-    case params[:button]
-    when "cancel"
-      javascript_redirect(:action    => 'show_list',
-                          :flash_msg => _("Creation of new Host Aggregate was cancelled by the user"))
-
-    when "add"
-      @host_aggregate = HostAggregate.new
-      options = form_params(params)
-      ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
-      if ext_management_system.supports?(:create_host_aggregate)
-        task_id = ext_management_system.create_host_aggregate_queue(session[:userid], options)
-
-        add_flash(_("Host Aggregate creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
-
-        if @flash_array
-          javascript_flash(:spinner_off => true)
-        else
-          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-        end
-      else
-        @in_a_form = true
-        add_flash(_("Host Aggregates not supported by chosen provider"), :error)
-        @breadcrumbs&.pop
-        javascript_flash
-      end
-    end
-  end
-
-  def create_finished
-    task_id = session[:async][:params][:task_id]
-    host_aggregate_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      flash_and_redirect(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
-    else
-      flash_and_redirect(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
-        :name    => host_aggregate_name,
-        :details => task.message
-      }, :error)
-    end
+    @in_a_form = true
   end
 
   def edit
@@ -94,54 +55,8 @@ class HostAggregateController < ApplicationController
 
   def update
     assert_privileges("host_aggregate_edit")
+    @in_a_form = true
     @host_aggregate = find_record_with_rbac(HostAggregate, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
-        :name => @host_aggregate.name
-      })
-
-    when "save"
-      options = form_params(params)
-
-      if @host_aggregate.supports?(:update_aggregate)
-        task_id = @host_aggregate.update_aggregate_queue(session[:userid], options)
-
-        unless task_id.kind_of?(Integer)
-          add_flash(_("Edit of Host Aggregate \"%{name}\" failed: Task start failed") % {
-            :name => @host_aggregate.name,
-          }, :error)
-        end
-
-        if @flash_array
-          javascript_flash(:spinner_off => true)
-        else
-          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
-        end
-      else
-        @in_a_form = true
-        add_flash(_("Update aggregate not supported by Host Aggregate \"%{name}\"") % {
-          :name => @host_aggregate.name
-        }, :error)
-        @breadcrumbs&.pop
-        javascript_flash
-      end
-    end
-  end
-
-  def update_finished
-    task_id = session[:async][:params][:task_id]
-    host_aggregate_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      flash_and_redirect(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
-    else
-      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
-        :name    => host_aggregate_name,
-        :details => task.message
-      }, :error)
-    end
   end
 
   def delete_host_aggregates

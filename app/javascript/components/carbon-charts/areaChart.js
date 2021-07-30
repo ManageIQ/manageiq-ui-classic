@@ -28,7 +28,7 @@ const AreaChartGraph = ({ data }) => {
 };
 
 AreaChartGraph.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 AreaChartGraph.defaultProps = {

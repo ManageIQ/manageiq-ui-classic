@@ -28,6 +28,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html('settings_co_categories', :partial => 'settings_co_categories_tab')
       end
     else
@@ -83,7 +84,7 @@ module OpsController::Settings::Tags
         else
           @category = Classification.find_by(:description => @edit[:new][:description])
           AuditEvent.success(build_created_audit(@category, @edit))
-          add_flash(_("Category \"%{name}\" was added") % {:name => @category.description})
+          add_flash(_("Category \"%{name}\" was added") % {:name => @category.name})
           get_node_info(x_node)
           @category = @edit = session[:edit] = nil # clean out the saved info
           replace_right_cell(:nodetype => "root")
@@ -168,6 +169,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => "new", :edit => true})
         page << javascript_focus('entry_name')
         page << "$('#entry_name').select();"
@@ -178,6 +180,7 @@ module OpsController::Settings::Tags
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => entry, :edit => true})
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"

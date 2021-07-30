@@ -3,8 +3,7 @@ describe ApplicationHelper::Button::WidgetGenerateContent do
   let(:record) do
     rec = FactoryBot.create(:miq_widget)
     set = FactoryBot.create(:miq_widget_set)
-    w_set_rel = FactoryBot.create(:relationship_miq_widget_set_with_membership, :resource_id => set.id)
-    FactoryBot.create(:relationship_miq_widget_with_membership, :resource_id => rec.id, :ancestry => w_set_rel.id)
+    set.add_member(rec)
     rec
   end
   let(:widget_running) { false }

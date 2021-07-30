@@ -19,6 +19,7 @@ export const NotificationsToggle = () => {
   };
 
   const unreadCountText = function(count) {
+    // eslint-disable-next-line no-undef
     return sprintf(n__('%d unread notification', '%d unread notifications', count), count);
   };
 

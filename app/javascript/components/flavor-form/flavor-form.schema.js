@@ -27,7 +27,7 @@ const createSchema = (emsId, setState) => ({
       component: componentTypes.SELECT,
       id: 'emsId',
       name: 'emsId',
-      label: __('Provider'),
+      labelText: __('Provider'),
       isRequired: true,
       isSearchable: true,
       validate: [{ type: validatorTypes.REQUIRED }],

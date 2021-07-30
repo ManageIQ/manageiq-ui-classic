@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 const HelperTextBlock = ({ helperText, errorText, warnText }) => {
   if (errorText) {
-    return <div className="bx--form-requirement ddorg__carbon-error-helper-text">{errorText}</div>;
+    return <div className="ddorg__carbon-error-helper-text">{errorText}</div>;
   }
 
   if (warnText) {
-    return <div className="bx--form-requirement ddorg__carbon-warning-helper-text">{warnText}</div>;
+    return <div className="ddorg__carbon-warning-helper-text">{warnText}</div>;
   }
 
   if (helperText) {

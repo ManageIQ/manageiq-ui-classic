@@ -51,6 +51,7 @@ class MiqPolicySetController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("form_div", :partial => "form") unless @flash_errors
       end
     else
@@ -86,7 +87,7 @@ class MiqPolicySetController < ApplicationController
   end
 
   def profile_save_add
-    assert_privileges("profile_#{params[:id] ? "edit" : "new"}")
+    assert_privileges("miq_policy_set_#{params[:id] ? "edit" : "new"}")
     return unless load_edit("profile_edit__#{params[:id] ? "#{params[:id]}" : "new"}")
     add_flash(_("Policy Profile must contain at least one Policy"), :error) if @edit[:new][:policies].length.zero? # At least one member is required
 

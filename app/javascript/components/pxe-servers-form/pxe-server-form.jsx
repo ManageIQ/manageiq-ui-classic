@@ -30,11 +30,13 @@ const PxeServersForm = ({ id }) => {
         .then(({
           id: _id,
           href: _h,
+          // eslint-disable-next-line camelcase
           pxe_menus,
           authentications,
           ...data
         }) => setInitialValues({
           ...data,
+          // eslint-disable-next-line camelcase
           pxe_menus: pxe_menus.map(({ file_name }) => ({ file_name })),
           authentication: authentications[0] ? ({
             userid: authentications[0].userid,

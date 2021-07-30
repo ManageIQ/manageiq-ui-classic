@@ -13,9 +13,9 @@ module MiqPolicyController::Policies
   end
 
   def policy_edit_reset
-    assert_privileges('miq_policy_edit') if params[:button] == "reset"
-    @in_a_form = true
     @policy = params[:id] ? MiqPolicy.find(params[:id]) : MiqPolicy.new # Get existing or new record
+    assert_privileges("miq_policy_#{@policy.id ? "edit" : "new"}")
+    @in_a_form = true
 
     if @policy.read_only
       add_flash(_("This Policy is read only and cannot be modified"), :error)
@@ -31,7 +31,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_edit_save
-    assert_privileges("policy_#{@policy.id ? "edit" : "new"}")
+    assert_privileges("miq_policy_#{@policy.id ? "edit" : "new"}")
     policy = @policy.id.blank? ? MiqPolicy.new : MiqPolicy.find(@policy.id) # Get new or existing record
     policy.mode = @edit[:new][:mode]
     policy.updated_by = session[:userid]
@@ -103,7 +103,7 @@ module MiqPolicyController::Policies
 
   # Copy a policy
   def copy
-    assert_privileges("policy_copy")
+    assert_privileges("miq_policy_copy")
     @_params[:id] ||= find_checked_items[0]
     policy = MiqPolicy.find(params[:id])
     new_desc = truncate("Copy of #{policy.description}", :length => 255, :omission => "")
@@ -145,21 +145,22 @@ module MiqPolicyController::Policies
       @edit[:new][:notes] = params[:notes].presence if params[:notes]
       @edit[:new][:active] = (params[:active] == "1") if params.key?(:active)
       @edit[:new][:mode] = params[:mode] if params[:mode]
+      params[:towhat] ||= 'Vm'
       if params[:towhat]
         @edit[:new][:towhat] = params[:towhat]
-        policy = @edit[:rec_id] ? MiqPolicy.find_by(:id => @edit[:rec_id]) : MiqPolicy.new
-        build_expression(policy, params[:towhat])
+        @policy = @edit[:rec_id] ? MiqPolicy.find_by(:id => @edit[:rec_id]) : MiqPolicy.new
+        build_expression(@policy, params[:towhat])
       end
     end
     send_button_changes
   end
 
   def miq_policy_edit_events
-    assert_privileges('miq_policy_edit_events')
+    assert_privileges('miq_policy_events_assignment')
     case params[:button]
     when "cancel"
       @sb[:action] = @edit = nil
-      flash_msg = _("Edit of Policy's Event Assginment cancelled by user")
+      flash_msg = _("Edit of Policy's Event Assignment cancelled by user")
       session[:changed] = false
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
     when "reset", nil # Reset or first time in
@@ -182,7 +183,7 @@ module MiqPolicyController::Policies
   end
 
   def miq_policy_edit_conditions
-    assert_privileges('miq_policy_edit_conditions')
+    assert_privileges('miq_policy_conditions_assignment')
     case params[:button]
     when "cancel"
       @sb[:action] = @edit = nil

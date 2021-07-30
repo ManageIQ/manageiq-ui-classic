@@ -27,7 +27,7 @@ const GroupBarChart = ({ data }) => {
 };
 
 GroupBarChart.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 GroupBarChart.defaultProps = {
