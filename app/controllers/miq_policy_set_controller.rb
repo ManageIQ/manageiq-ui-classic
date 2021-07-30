@@ -17,11 +17,14 @@ class MiqPolicySetController < ApplicationController
 
   def new
     profile_reset_or_set
+    @in_a_form = true
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")
   end
 
   def edit
+    @in_a_form = true
     @_params[:pressed] ||= 'miq_policy_set_edit'
+    @_params[:id] ||= find_checked_items[0]
     case params[:button]
     when "cancel"
       profile_cancel

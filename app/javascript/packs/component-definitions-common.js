@@ -36,6 +36,7 @@ import PxeCustomizationTemplateForm from '../components/pxe-customization-templa
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import PerformanceChartWidget from '../components/performance-charts';
 import PodsTrendChart from '../components/provider-dashboard-charts/pod-trend-charts';
+import PolicyProfileForm from '../components/policy-profile-form';
 import RecentHostGraph from '../components/provider-dashboard-charts/recent-host-chart';
 import RecentVmGraph from '../components/provider-dashboard-charts/recent-vm-chart';
 import RefreshDataNotification from '../components/refresh-data-notification';
@@ -84,6 +85,7 @@ ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
 ManageIQ.component.addReact('DashboardWidget', DashboardWidget);
 ManageIQ.component.addReact('FirmwareRegistryForm', FirmwareRegistryForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
+ManageIQ.component.addReact('PolicyProfileForm', PolicyProfileForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
