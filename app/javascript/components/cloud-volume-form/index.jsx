@@ -20,7 +20,7 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   useEffect(() => {
     if (recordId) {
       API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
-        API.options(`/api/cloud_volumes?ems_id=${initialValues.ems_id}&record_id=${recordId}`).then(loadSchema({ initialValues, isLoading: false }));
+        API.options(`/api/cloud_volumes/${recordId}?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
       });
     }
     if (storageManagerId) {
