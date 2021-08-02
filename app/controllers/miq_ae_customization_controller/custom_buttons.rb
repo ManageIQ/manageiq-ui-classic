@@ -42,10 +42,10 @@ module MiqAeCustomizationController::CustomButtons
     elsif @nodetype.length == 1 && nodeid[1] == "ub" # Unassigned buttons group selected
       @sb[:buttons] = []
       @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @resolve[:target_classes][nodeid[2]]}
-      uri = CustomButton.buttons_for(nodeid[2]).sort_by(&:name)
+      uri = CustomButton.buttons_for(nodeid[2]).includes(:custom_button_sets).sort_by(&:name)
       if uri.present?
         uri.each do |b|
-          next if b.parent.present?
+          next if b.custom_button_sets.blank?
 
           button = {
             :name         => b.name,
