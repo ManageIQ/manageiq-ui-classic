@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
-
+import { Loading } from 'carbon-components-react';
 import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './policy-profile-form.schema';
@@ -17,6 +16,7 @@ const PolicyProfileForm = ({ recordId }) => {
       if (recordId) {
         API.get(
           `/api/policy_profiles/${recordId}?attributes=name,description,set_data,miq_policies&expand=miq_policies`
+        // eslint-disable-next-line camelcase
         ).then(({ miq_policies, ...initialValues }) => setState({
           initialValues: {
             policies: miq_policies.map(({ id }) => id),
@@ -34,18 +34,14 @@ const PolicyProfileForm = ({ recordId }) => {
     });
   }, [recordId]);
 
-
-
-  console.log('options--->', options);
   const onSubmit = ({ policies, ...values }) => {
     miqSparkleOn();
-
-    const data = { ...values, miq_policies: policies };
+    const data = { ...values, miq_policy_ids: policies };
 
     const request = recordId ? API.patch(`/api/policy_profiles/${recordId}`, data) : API.post('/api/policy_profiles', data);
 
     request.then(() => {
-      const message = sprintf(__('Policy Profile "%s" was saved.'), values.name);
+      const message = sprintf(__('Policy Profile "%s" was saved.'), values.description);
       miqRedirectBack(message, 'success', '/miq_policy_set/show_list');
     }).catch(miqSparkleOff);
   };
@@ -60,21 +56,19 @@ const PolicyProfileForm = ({ recordId }) => {
     miqRedirectBack(message, 'warning', '/miq_policy_set/show_list');
   };
 
-  if (isLoading || (options === undefined)) return null;
+  if (isLoading || (options === undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
 
   return (!isLoading && options) && (
-    <Grid>
-      <MiqFormRenderer
-        schema={createSchema(options)}
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        canReset={!!recordId}
-        buttonsLabels={{
-          submitLabel: recordId ? __('Save') : __('Add'),
-        }}
-      />
-    </Grid>
+    <MiqFormRenderer
+      schema={createSchema(options)}
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+      canReset={!!recordId}
+      buttonsLabels={{
+        submitLabel: recordId ? __('Save') : __('Add'),
+      }}
+    />
   );
 };
 
