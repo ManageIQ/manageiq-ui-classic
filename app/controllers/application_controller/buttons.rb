@@ -722,8 +722,8 @@ module ApplicationController::Buttons
       end
     end
     @edit[:new][:available_fields] =
-      CustomButton.buttons_for(@sb[:applies_to_class])
-                  .select { |u| u.parent.nil? }
+      CustomButton.buttons_for(@sb[:applies_to_class]).includes(:custom_button_sets)
+                  .select { |u| u.custom_button_sets.blank? }
                   .sort_by(&:name)
                   .collect { |u| [u.name, u.id] }
     @edit[:current] = copy_hash(@edit[:new])
