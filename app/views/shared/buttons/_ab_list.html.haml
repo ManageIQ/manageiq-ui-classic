@@ -75,7 +75,7 @@
           .checkbox-inline
             %label{:style => "font-weight: normal"}
               = check_box_tag(display, true, display, :disabled => true)
-              = _('Display on Button')
+              = _('Display on Button 11')
 
       .form-group
         %label.control-label.col-md-2
@@ -111,7 +111,7 @@
             %td
               = obj[:description]
 - elsif %w(ab_group_edit ab_group_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "group_update")
-  = render :partial => 'shared/buttons/group_form'
+  = render :partial => 'shared/buttons/group_form'                      
 - elsif %w(ab_button_edit ab_button_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "button_update") || (params[:button] == "paste" && params[:action] == "resolve")
   = render :partial => 'shared/buttons/ab_form'
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")

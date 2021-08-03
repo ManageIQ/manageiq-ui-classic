@@ -12,7 +12,7 @@ import classNames from 'classnames';
 
 import IconList from './icon-list';
 
-const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
+const FontIconPicker = ({ iconTypes, selected, onChangeURL, iconChange }) => {
   const [{
     showModal,
     selectedIcon,
@@ -28,6 +28,7 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
   const onModalApply = () => {
     // This is required to connect the old session-backed form with the component
     window.miqObserveRequest(onChangeURL, { data: { button_icon: activeIcon } });
+    iconChange(activeIcon)
     setState((state) => ({ ...state, showModal: false, selectedIcon: activeIcon }));
   };
 
@@ -101,7 +102,7 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
 FontIconPicker.propTypes = {
   iconTypes: PropTypes.objectOf(PropTypes.any),
   selected: PropTypes.string,
-  onChangeURL: PropTypes.string.isRequired,
+  onChangeURL: PropTypes.string
 };
 
 FontIconPicker.defaultProps = {

@@ -135,3 +135,36 @@
     }
   }
 }
+
+#button_group_form{
+  #basic_info_text_group{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .bx--text-input-wrapper{
+      padding-right: 10px;
+    }
+  }
+  .fonticon-picker{
+    margin-bottom: 30px;
+  }
+
+  .form-control{
+    padding: 0 !important;
+    background: #FFF !important;
+    border: 1px solid #bbb !important;
+  }
+
+  .bx--fieldset .bx--grid .bx--row {
+    .buttonWrapper-0-2-8, .buttonWrapper-0-2-9{
+      display: flex !important;
+      justify-content: center !important;
+      margin-top: 24px;
+  
+      button{
+        width: 100%;
+      }
+    }
+  }
+}

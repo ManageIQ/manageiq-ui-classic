@@ -21,6 +21,7 @@ import FirmwareRegistryForm from '../components/firmware-registry/firmware-regis
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GenericObjectForm from '../components/generic-objects-form';
+import GroupForm from '../components/button-group/group-form';
 import GtlView from  '../components/gtl-view';
 import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
@@ -75,7 +76,6 @@ import ZoneForm from '../components/zone-form';
 * example of component definition:
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
-
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
@@ -94,6 +94,7 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GenericObjectForm', GenericObjectForm);
+ManageIQ.component.addReact('GroupForm', GroupForm);
 ManageIQ.component.addReact('GtlView', GtlView);
 ManageIQ.component.addReact('TreeViewRedux', TreeViewRedux);
 ManageIQ.component.addReact('FonticonPicker', FonticonPicker);
