@@ -4,6 +4,7 @@ import { TagGroup, TableListView, GenericGroup } from '../components/textual_sum
 import { Quadicon } from '../components/quadicon';
 import { Toolbar } from '../components/toolbar';
 
+import ActionForm from '../components/action-form';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import AuthKeypairCloudForm from '../components/auth-key-pair-cloud';
@@ -76,6 +77,7 @@ import ZoneForm from '../components/zone-form';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
+ManageIQ.component.addReact('ActionForm', ActionForm);
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
