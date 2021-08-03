@@ -181,8 +181,8 @@ const unSelectAll = (state) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
-      if (state && state.additionalOptions && state.additionalOptions.no_checkboxes_clicked
-        && state.additionalOptions.no_checkboxes_clicked.length === 0) {
+      if (state && state.additionalOptions && state.additionalOptions.checkboxes_clicked
+        && state.additionalOptions.checkboxes_clicked.length === 0) {
         // Making selected checkboxes array empty when those rows are  deleted or on compare/drift cancel
         ManageIQ.gridChecks = [];
       }
