@@ -62,6 +62,10 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
     legend: {
       enabled: false,
     },
+    toolbar:
+    {
+      enabled: false,
+    },
     height: '60px',
     tooltip: {
       customHTML: config.sparklineTooltip(data),
