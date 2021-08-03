@@ -41,6 +41,8 @@ const ZoneForm = ({ recordId }) => {
     if (recordId) {
       API.get(`/api/zones/${recordId}?attributes=authentications`).then(
         ({ authentications, ...res }) => {
+          console.log('authentications=',authentications);
+          console.log('res=',res);
           setState({
             initialValues: {
               ...res,

@@ -9,6 +9,8 @@ import Select from '../../components/select';
 import CodeEditor from '../../components/code-editor';
 import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 import MultiSelectWithSelectAll from '../../components/multiselect-with-selectall';
+import FontIconPicker from '../../components/fonticon-picker';
+import FontIconPickerNew from '../../components/fonticon-picker/font-icon-picker-new';
 
 const mapper = {
   ...componentMapper,
@@ -21,6 +23,8 @@ const mapper = {
   'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,
   'multi-select': MultiSelectWithSelectAll,
+  'font-icon-picker': FontIconPicker,
+  'font-icon-picker-new': FontIconPickerNew, // used for react form pages
 };
 
 export default mapper;

@@ -170,3 +170,39 @@
     padding-bottom: 12px;
   }
 }
+
+.button-group-form{
+  form > div{
+    margin-bottom: 32px;
+  }
+
+  #button_group_button_color{
+    padding: 0 2px;
+    border: 1px solid #d3d3d3;
+  }
+  fieldset.bx--fieldset {
+    legend.bx--label{
+      font-size: 0.75rem;
+    }
+    .bx--grid .bx--row {
+      .buttonWrapper-0-2-5{
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 24px;
+        button{
+          width: 100%;
+        }
+      }
+    }
+  }
+  .custom-button-wrapper{
+    margin-top: 8px;
+
+    .btnRight{
+      margin-right: 8px !important;
+    }
+  }
+}
+
+
+

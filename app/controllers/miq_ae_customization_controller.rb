@@ -288,8 +288,14 @@ class MiqAeCustomizationController < ApplicationController
     end
   end
 
+  # is_allowed function is used to show form buttons in custom-button form page.
+  def is_allowed(action)
+    allowed = ['ab_button_new', 'ab_button_edit']
+    action ? allowed.include?(action.to_s) : false
+  end
+
   def handle_bottom_cell(presenter)
-    if @pages || @in_a_form
+    if is_allowed(@sb[:action]) && (@pages || @in_a_form)
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form && @sb[:action]
