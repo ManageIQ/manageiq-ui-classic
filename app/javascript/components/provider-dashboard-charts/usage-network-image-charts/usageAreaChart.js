@@ -32,7 +32,12 @@ const UsageAreaChart = ({ data, config, dataPoint }) => {
       alignment: 'center',
 
     },
+    toolbar:
+    {
+      enabled: false,
+    },
     height: config.size.height ? config.size.height : '400px',
+    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
@@ -72,7 +77,7 @@ UsageAreaChart.propTypes = {
     createdLabel: PropTypes.string.isRequired,
     tooltipFn: PropTypes.func.isRequired,
     size: PropTypes.shape({
-      height: PropTypes.number.isRequired,
+      height: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

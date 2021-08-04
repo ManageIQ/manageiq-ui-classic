@@ -19,6 +19,10 @@ const GroupHorizontalBarChart = ({ data }) => {
         type: 'none',
       },
     },
+    toolbar:
+    {
+      enabled: false,
+    },
   };
 
   return (
