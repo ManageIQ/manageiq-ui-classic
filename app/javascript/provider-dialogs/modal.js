@@ -18,12 +18,16 @@ function closeModal(id) {
   divs[divs.length - 1].remove(); // the div closest to body
 }
 
-export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>) {
+export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>, closefunc) {
   const div = document.createElement('div');
   document.body.appendChild(div);
   const removeId = 'provider-dialogs';
 
-  const close = () => closeModal(removeId);
+  // combine  default close function with the one coming from component
+  const close = () => {
+    closefunc();
+    closeModal(removeId);
+  };
 
   const output = modal(title, Inner, close, removeId);
 
@@ -32,12 +36,11 @@ export default function renderModal(title = __('Modal'), Inner = () => <div>Empt
 
 function modal(title, Inner, closed, removeId) {
   const overrides = {
-    addClicked: orig => Promise.resolve(orig()).then(closed),
-    saveClicked: orig => Promise.resolve(orig()).then(closed),
-    cancelClicked: orig => Promise.resolve(orig()).then(closed),
+    addClicked: (orig) => Promise.resolve(orig()).then(closed),
+    saveClicked: (orig) => Promise.resolve(orig()).then(closed),
+    cancelClicked: (orig) => Promise.resolve(orig()).then(closed),
     // don't close on reset
   };
-
   return (
     <Provider store={ManageIQ.redux.store}>
       <Modal
