@@ -6,7 +6,6 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   def tear_down
-    LogFile.delete_all
     MiqTask.delete_all
     MiqServer.delete_all
   end

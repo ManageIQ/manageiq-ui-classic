@@ -74,80 +74,6 @@ module OpsController::Diagnostics
   end
   alias refresh_workers pm_refresh_workers
 
-  def log_depot_edit
-    assert_privileges("#{@sb[:selected_typ] == "miq_server" ? "" : "zone_"}log_depot_edit")
-    @record = @sb[:selected_typ].classify.constantize.find(@sb[:selected_server_id])
-    # @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
-    case params[:button]
-    when "cancel"
-      @in_a_form = false
-      @edit = session[:edit] = nil
-      add_flash(_("Edit Log Depot settings was cancelled by the user"))
-      diagnostics_set_form_vars
-      replace_right_cell(:nodetype => x_node)
-    when "save"
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-        return
-      end
-
-      begin
-        if params[:log_protocol].blank?
-          @record.log_file_depot.try(:destroy)
-        else
-          new_uri = "#{params[:uri_prefix]}://#{params[:uri]}"
-          raise _("Unsupported log depot protocol: %{protocol}") % {:protocol => params[:log_protocol]} unless FileDepot.supported_depots.key?(params[:log_protocol])
-
-          build_supported_depots_for_select
-          log_protocol = params[:log_protocol]
-          protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
-          raise _('Invalid or unsupported file depot type.') unless protocols.key?(log_protocol)
-
-          depot = @record.log_file_depot.instance_of?(protocols[log_protocol]) ? @record.log_file_depot : @record.build_log_file_depot(:type => log_protocol)
-          depot.update(:uri => new_uri, :name => params[:depot_name])
-          creds = set_credentials
-          depot.update_authentication(creds) if type.try(:requires_credentials?)
-          @record.save!
-        end
-      rescue => bang
-        add_flash(_("Error during 'Save': %{message}") % {:message => bang.message}, :error)
-        @changed = true
-        render :update do |page|
-          page << javascript_prologue
-          page.replace_html("diagnostics_collect_logs", :partial => "ops/log_collection")
-        end
-      else
-        add_flash(_("Log Depot Settings were saved"))
-        @edit = nil
-        diagnostics_set_form_vars
-        replace_right_cell(:nodetype => x_node)
-      end
-    when "validate"
-      creds = set_credentials
-      settings = {
-        :username => creds[:default][:userid],
-        :password => creds[:default][:password],
-        :uri      => "#{params[:uri_prefix]}://#{params[:uri]}"
-      }
-
-      begin
-        log_protocol = params[:log_protocol]
-        protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
-        raise _("Unsupported log depot protocol: %{protocol}") % {:protocol => log_protocol} unless protocols.key?(log_protocol)
-
-        protocols[log_protocol].validate_settings(settings)
-      rescue => bang
-        add_flash(_("Error during 'Validate': %{message}") % {:message => bang.message}, :error)
-      else
-        add_flash(_("Log Depot Settings were validated"))
-      end
-      javascript_flash(:spinner_off => true)
-    when nil # Reset or first time in
-      @in_a_form = true
-      replace_right_cell(:nodetype => "log_depot_edit")
-    end
-  end
-
   # Send the log in text format
   def fetch_log
     assert_privileges("fetch_log")
@@ -724,9 +650,6 @@ module OpsController::Diagnostics
         end
       elsif @sb[:active_tab] == "diagnostics_replication" # Replication tab
         @selected_server = MiqRegion.my_region
-      elsif @sb[:active_tab] == "diagnostics_database"
-        build_backup_schedule_options_for_select
-        build_db_options_for_select
       elsif @sb[:active_tab] == "diagnostics_orphaned_data"
         orphaned_records_get
       elsif @sb[:active_tab] == "diagnostics_server_list"
@@ -804,25 +727,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def build_backup_schedule_options_for_select
-    @backup_schedules = {}
-    database_details
-    miq_schedules = MiqSchedule.where(:resource_type => 'DatabaseBackup', :adhoc => nil)
-    miq_schedules.sort_by { |s| s.name.downcase }.each do |s|
-      @backup_schedules[s.id] = s.name if s.resource_type == "DatabaseBackup"
-    end
-  end
-
-  def database_details
-    @database_details = ActiveRecord::Base.configurations[Rails.env]
-    @database_display_name =
-      if @database_details["host"].in?([nil, "", "localhost", "127.0.0.1"])
-        _("Internal Database")
-      else
-        _("External Database")
-      end
-  end
-
   def orphaned_records_get
     @sb[:orphaned_records] = MiqReportResult.orphaned_counts_by_userid
   end
@@ -858,21 +762,5 @@ module OpsController::Diagnostics
       @sb[:selected_server_id] = @selected_server.id
       diagnostics_set_form_vars
     end
-  end
-
-  def build_supported_depots_for_select
-    not_supported_depots = %w[FileDepotS3 FileDepotSwift]
-    supported_depots = FileDepot.supported_depots.reject { |model, _desc| not_supported_depots.include?(model) }
-    @uri_prefixes = supported_depots.keys.map { |model| [model, model.constantize.uri_prefix] }.to_h
-    @supported_depots_for_select = {'' => _('<No Depot>')}.merge(supported_depots)
-  end
-
-  def set_credentials
-    creds = {}
-    if params[:log_userid]
-      log_password = params[:log_password] || @record.log_file_depot.authentication_password
-      creds[:default] = {:userid => params[:log_userid], :password => log_password}
-    end
-    creds
   end
 end

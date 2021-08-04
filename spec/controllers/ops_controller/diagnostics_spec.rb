@@ -94,25 +94,6 @@ describe OpsController do
     end
   end
 
-  context "#log_collection_form_fields" do
-    it "renders log_collection_form_fields" do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
-
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      file_depot = FileDepotNfs.create(:name => "abc", :uri => "nfs://abc")
-      @miq_server.update(:log_file_depot_id => file_depot.id)
-
-      session[:sandboxes] = {"ops" => {:active_tree        => :diagnostics_tree,
-                                       :selected_typ       => "miq_server",
-                                       :selected_server_id => @miq_server.id}}
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      get :log_collection_form_fields, :params => { :id => @miq_server.id }
-      expect(response.status).to eq(200)
-    end
-  end
-
   context "#set_credentials" do
     it "uses params[:log_password] to set the creds hash if it exists" do
       stub_user(:features => :all)
@@ -124,21 +105,6 @@ describe OpsController do
       controller.params = {:log_userid   => "default_userid",
                            :log_password => "default_password2"}
       default_creds = {:userid => "default_userid", :password => "default_password2"}
-      expect(controller.send(:set_credentials)).to include(:default => default_creds)
-    end
-
-    it "uses stored password to set the creds hash" do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
-
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      file_depot = FileDepotSmb.create(:name => "abc", :uri => "smb://abc")
-      expect(@miq_server).to receive(:log_file_depot).and_return(file_depot)
-      expect(file_depot).to receive(:authentication_password).and_return('default_password')
-      controller.instance_variable_set(:@record, @miq_server)
-      controller.params = {:log_userid => "default_userid"}
-      default_creds = {:userid => "default_userid", :password => "default_password"}
       expect(controller.send(:set_credentials)).to include(:default => default_creds)
     end
   end

@@ -81,34 +81,6 @@ describe OpsController do
       end
     end
   end
-  context "#build_uri_settings" do
-    let(:mocked_filedepot) { double(FileDepotSmb) }
-    it "uses params[:log_password] for validation if one exists" do
-      controller.params = {:log_userid   => "userid",
-                           :log_password => "password2",
-                           :uri_prefix   => "smb",
-                           :uri          => "samba_uri",
-                           :log_protocol => "Samba"}
-      settings = {:username   => "userid",
-                  :password   => "password2",
-                  :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"}
-      expect(controller.send(:build_uri_settings, :mocked_filedepot)).to include(settings)
-    end
-
-    it "uses the stored password for validation if params[:log_password] does not exist" do
-      controller.params = {:log_userid   => "userid",
-                           :uri_prefix   => "smb",
-                           :uri          => "samba_uri",
-                           :log_protocol => "Samba"}
-      expect(mocked_filedepot).to receive(:try).with(:authentication_password).and_return('password')
-      settings = {:username   => "userid",
-                  :password   => "password",
-                  :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"}
-      expect(controller.send(:build_uri_settings, mocked_filedepot)).to include(settings)
-    end
-  end
 
   context "#schedule_set_record_vars" do
     let(:user) { stub_user(:features => :all) }

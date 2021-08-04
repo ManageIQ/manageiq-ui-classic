@@ -2427,8 +2427,6 @@ Rails.application.routes.draw do
         label_tag_mapping_edit
         label_tag_mapping_update
         label_tag_mapping_field_changed
-        log_depot_edit
-        log_depot_validate
         orphaned_records_delete
         perf_chart_chooser
         pglogical_save_subscriptions
