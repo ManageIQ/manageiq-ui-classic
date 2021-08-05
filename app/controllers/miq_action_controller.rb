@@ -424,7 +424,12 @@ class MiqActionController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Actions")
+    @action = MiqAction.find_by(:id => params[:miq_grid_checks])
+    @title = if @action.present?
+               _("Editing Action \"%{name}\"") % {:name => @action.description}
+             else
+               _("Adding a new Action")
+             end
     @layout = "miq_action"
     @lastaction = session[:miq_action_lastaction]
     @display = session[:miq_action_display]
