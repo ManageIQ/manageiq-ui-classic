@@ -66,21 +66,19 @@ const FontIconPicker = (props) => {
     <FormGroup legendText={labelText} {...FormGroupProps}>
       {/* // <FormGroup> */}
       <div className="fonticon-picker">
-        {/* <ButtonGroup>
+        <ButtonGroup>
           <Button className="icon-picker-btn" onClick={show}>
             { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
           </Button>
           <Button onClick={show}>
             <Icon type="fa" name="angle-down" />
           </Button>
-        </ButtonGroup> */}
+        </ButtonGroup>
         <Button onClick={show}>
           <Icon type="fa" name="angle-down" />
         </Button>
         <div>
-          <label htmlFor={input.value}>kkk</label>
           <TextInput
-          {...input}
             type="text"
             className="file-upload-input"
             disabled
