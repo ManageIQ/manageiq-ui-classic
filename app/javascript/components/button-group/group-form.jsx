@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
- import MiqFormRenderer,{ useFormApi, useFieldApi } from '@@ddf';
- import { Loading } from 'carbon-components-react';
- import PropTypes from 'prop-types';
- import miqRedirectBack from '../../helpers/miq-redirect-back';
- import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
- import groupFormSchema from './group-form-schema';
+import MiqFormRenderer, {useFormApi} from '@@ddf';
+import { Loading } from 'carbon-components-react';
+import PropTypes from 'prop-types';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
+import groupFormSchema from './group-form-schema';
+import {  FormSpy } from '@data-driven-forms/react-form-renderer';
 
- const GroupForm = ({ rec_id, available_fields, fields, url }, ...props) => {
+const GroupForm = ({ rec_id, available_fields, fields, url }, ...props) => {
 
   const [{ isLoading, initialValues, buttonIcon, options }, setState] = useState({
     isLoading: !!rec_id,
   });
 
   let disableSubmit = ['invalid'];
+  let iconChanged = false;
+  
 
   /** Function to change the format of the unassiged and selected buttons from the format
    * [[string,number]] to [{label:string, value:number}] */
@@ -45,19 +47,21 @@ import React, { useState, useEffect } from 'react';
     }
   }, [rec_id]);
 
-  if (rec_id && initialValues) {
+ if (rec_id && initialValues) {
     if (initialValues.set_data.button_icon !== buttonIcon) {
-        disableSubmit =['dirty'];
+        iconChanged = true;
+        disableSubmit =[];
     } else {
       disableSubmit = ['pristine', 'invalid'];
+      iconChanged = false;
     }
   } else {
     disableSubmit = ['invalid'];
+    iconChanged = false;
   }
     
   const onSubmit = (values) => {
-    console.log('values = ', values);
-    console.log('buttonIcon', buttonIcon);
+    console.log(values);
     values.set_data.button_color = (values.set_data && values.set_data.button_color) ? values.set_data.button_color : '#000';
     values.set_data.button_icon = buttonIcon;
     miqSparkleOn();
@@ -90,13 +94,46 @@ import React, { useState, useEffect } from 'react';
     <div className="col-md-12">
       <MiqFormRenderer
         initialValues={initialValues}
+        FormTemplate={(props) => <FormTemplate {...props} modified={ iconChanged } miqSubmit={onSubmit}/>}
         schema={groupFormSchema(initialValues, buttonIcon, options, url, setState)}
-        onSubmit={onSubmit}
-        canReset={!!rec_id}
-        onCancel={onCancel}
+        //onSubmit={onSubmit}
+        //canReset={!!rec_id}
+        //onCancel={onCancel}
         //disableSubmit={disableSubmit}
       />
     </div>
+  );
+};
+
+const FormTemplate = ({ formFields, groupFormSchema, modified, miqSubmit}) => {
+  const { handleSubmit, onReset, onCancel, getState } = useFormApi();
+  const { submitting, valid, pristine } = getState();
+  return (
+    <form onSubmit={miqSubmit}>
+      {formFields}
+      <FormSpy>
+        {() => (
+          <div style={{ marginTop: 8 }}>
+            <button disabled={!valid && !modified} 
+                    style={{ marginRight: 8 }} 
+                    type="submit" 
+                    
+                    variant="contained">
+              Submit
+            </button>
+            <button disabled={ pristine } 
+                    style={{ marginRight: 8 }} 
+                    onClick={ onReset } 
+                    variant="contained">
+              Reset
+            </button>
+            <button variant="contained" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
+        )}
+      </FormSpy>
+    </form>
   );
 };
 
