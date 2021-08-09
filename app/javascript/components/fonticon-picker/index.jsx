@@ -17,12 +17,13 @@ import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi } from '@@ddf';
 
 import IconList from './icon-list';
+import IconModal from './icon-modal';
 
 const FontIconPicker = (props) => {
   console.log('propssss before', props);
   const {
     labelText,
-    input: { value, onChange, name },
+    input,
     FormGroupProps,
     helperText,
     meta: { error, warning, touched },
@@ -74,70 +75,29 @@ const FontIconPicker = (props) => {
             <Icon type="fa" name="angle-down" />
           </Button>
         </ButtonGroup>
-        <Button onClick={show}>
-          <Icon type="fa" name="angle-down" />
-        </Button>
         <div>
           <TextInput
+            {...input}
+            id={input.name}
             type="text"
             className="file-upload-input"
             disabled
             value={selectedIcon || 'NoICOn'}
+            labelText=""
             {...rest}
 
           />
         </div>
-        <Modal show={showModal} onHide={hide} bsSize="large">
-          <Modal.Header>
-            <button
-              id="close-icon-picker-modal"
-              type="button"
-              className="close"
-              onClick={hide}
-              aria-label={__('Close')}
-            >
-              <Icon type="pf" name="close" />
-            </button>
-            <Modal.Title>{ __('Select an icon') }</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="fonticon-picker-modal">
-              <Tabs
-                id="font-icon-tabs"
-                activeKey={activeTab}
-                animation={false}
-                onSelect={(activeTab) => setState((state) => ({ ...state, activeTab }))}
-              >
-                { Object.keys(iconTypes).map((type) => (
-                  <Tab eventKey={type} key={type} title={iconTypes[type]}>
-                    <IconList
-                      {...{
-                        type,
-                        activeIcon,
-                        activeTab,
-                        setState,
-                      }}
-                    />
-                  </Tab>
-                )) }
-              </Tabs>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              id="apply-icon-picker-icon"
-              bsStyle="primary"
-              onClick={onModalApply}
-              disabled={selectedIcon === activeIcon || activeIcon === undefined}
-            >
-              { __('Apply') }
-            </Button>
-            <Button id="cancel-icon-picker-modal" bsStyle="default" className="btn-cancel" onClick={hide}>
-              { __('Cancel') }
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
+        <IconModal
+          showModal={showModal}
+          hide={hide}
+          activeTab={activeTab}
+          selectedIcon={selectedIcon}
+          activeIcon={activeIcon}
+          iconTypes={iconTypes}
+          onModalApply={onModalApply}
+          setState={setState}
+        />
       </div>
 
     </FormGroup>
@@ -161,3 +121,38 @@ FontIconPicker.defaultProps = {
 };
 
 export default FontIconPicker;
+
+// import React, { useState, useEffect } from 'react';
+// import { componentTypes, validatorTypes, useFieldApi } from '@@ddf';
+// import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
+// import PropTypes from 'prop-types';
+
+// const FontIconPicker = (props) => {
+//   const {
+//     iconTypes, selected, onChangeURL, iconChange,labelText, input, meta, ...rest
+//   } = useFieldApi(prepareProps(props));
+
+//    console.log('iconChangeiconChangeiconChangeiconChange', iconChange, onChangeURL);
+//   return (
+//     <div>
+//       <label htmlFor={input.value}>{labelText}</label>
+//       <input {...input} {...rest} id={input.name} />
+//     </div>
+//   );
+// };
+// FontIconPicker.propTypes = {
+//   iconTypes: PropTypes.objectOf(PropTypes.any),
+//   selected: PropTypes.string,
+//   onChangeURL: PropTypes.string,
+// };
+
+// FontIconPicker.defaultProps = {
+//   selected: undefined,
+//   iconTypes: {
+//     ff: 'Font Fabulous',
+//     pficon: 'PatternFly',
+//     fa: 'Font Awesome',
+//   },
+// };
+
+// export default FontIconPicker;

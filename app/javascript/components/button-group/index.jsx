@@ -3,18 +3,19 @@ import MiqFormRenderer from '@@ddf';
 import { Loading } from 'carbon-components-react';
 import PropTypes from 'prop-types';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import groupFormSchema from './group-form-schema';
+import createSchema from './group-form.schema';
 
 const GroupForm = ({
-  rec_id, available_fields, fields, url,
+  rec_id, available_fields, fields1, url,
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, unassignedButtons,
   }, setState] = useState({
     isLoading: !!rec_id,
   });
+  console.log('rec_id, available_fields, fields1, url,', rec_id, available_fields, fields1, url);
 
-  let disableSubmit = ['invalid'];
+  const disableSubmit = ['invalid'];
   /** Function to change the format of the unassiged and selected buttons from the format
    * [[string,number]] to [{label:string, value:number}] */
   const formatButton = (buttons) => {
@@ -23,7 +24,7 @@ const GroupForm = ({
     return options;
   };
 
-  const buttonOptions = formatButton(available_fields.concat(fields));
+  const buttonOptions = available_fields.length > 0 ? formatButton(available_fields.concat(fields1)) : [];
 
   useEffect(() => {
     if (rec_id) {
@@ -39,22 +40,22 @@ const GroupForm = ({
     } else {
       setState((state) => ({
         ...state,
-        unassignedButtons: buttonOptions,
+        unassignedButtons: available_fields.length > 0 ? buttonOptions : [],
         isLoading: false,
       }));
     }
   }, []);
 
-  if (rec_id && initialValues) {
-    if (initialValues.set_data.button_icon !== buttonIcon) {
-        disableSubmit = ['pristine', 'invalid'];
-    } else {
-      disableSubmit = ['pristine', 'invalid'];
-    }
-  } else {
-    disableSubmit = ['invalid'];
-  }
- 
+  //   if (rec_id && initialValues) {
+  //     if (initialValues.set_data.button_icon !== buttonIcon) {
+  //         disableSubmit = ['pristine', 'invalid'];
+  //     } else {
+  //       disableSubmit = ['pristine', 'invalid'];
+  //     }
+  //   } else {
+  //     disableSubmit = ['invalid'];
+  //   }
+
   const onSubmit = (values) => {
     console.log('valuesss', values);
     console.log('buttonIcon', buttonIcon);
@@ -85,16 +86,15 @@ const GroupForm = ({
     miqRedirectBack(message, 'warning', '/miq_ae_customization/explorer');
   };
 
-  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
-  return !isLoading && (
+  if (isLoading || (unassignedButtons===undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
+  return (!isLoading && unassignedButtons) && (
     <div className="col-md-12">
       <MiqFormRenderer
+        schema={createSchema( buttonIcon, unassignedButtons, url, setState)}
         initialValues={initialValues}
-        schema={groupFormSchema(buttonIcon, unassignedButtons, url, setState)}
-        onSubmit={onSubmit}
         canReset={!!rec_id}
+        onSubmit={onSubmit}
         onCancel={onCancel}
-        disableSubmit={disableSubmit}
       />
     </div>
   );

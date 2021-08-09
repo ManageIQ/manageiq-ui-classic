@@ -21,7 +21,7 @@ import FirmwareRegistryForm from '../components/firmware-registry/firmware-regis
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GenericObjectForm from '../components/generic-objects-form';
-import GroupForm from '../components/button-group/group-form';
+import GroupForm from '../components/button-group';
 import GtlView from  '../components/gtl-view';
 import { TreeViewRedux } from '../components/tree-view';
 import FonticonPicker from '../components/fonticon-picker';
