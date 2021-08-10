@@ -13,7 +13,7 @@ const GroupForm = ({
   }, setState] = useState({
     isLoading: !!rec_id,
   });
-  console.log('rec_id, available_fields, fields, url,', rec_id, available_fields, fields, url);
+  console.log('rec_id, available_fields, fields, url =', rec_id, available_fields, fields, url);
 
   const disableSubmit = ['invalid'];
   /** Function to change the format of the unassiged and selected buttons from the format
