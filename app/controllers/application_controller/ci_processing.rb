@@ -324,6 +324,12 @@ module ApplicationController::CiProcessing
                  "%{task} initiated for %{count} providers", manager_ids.length) %
                 {:task  => task_name(task),
                  :count => manager_ids.length})
+    if @lastaction == "show_list"
+      show_list
+      @refresh_partial = "layouts/gtl"
+    else
+      params[:display] = @display
+    end
   end
 
   # Delete all selected or single displayed VM(s)
