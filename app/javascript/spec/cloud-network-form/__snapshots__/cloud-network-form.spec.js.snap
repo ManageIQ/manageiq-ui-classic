@@ -123,7 +123,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "options": Array [
                   Object {
                     "label": "<Choose>",
-                    "value": undefined,
+                    "value": "-1",
                   },
                   Object {
                     "label": "Provider 4",

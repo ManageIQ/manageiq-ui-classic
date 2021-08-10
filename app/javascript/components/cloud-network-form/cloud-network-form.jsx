@@ -26,7 +26,7 @@ class CloudNetworkForm extends Component {
     if (!cloudNetworkId) {
       networkProviders().then((providers) => {
         this.setState({
-          ems: [{ name: `<${__('Choose')}>` }, ...providers],
+          ems: [{ name: `<${__('Choose')}>`, id: '-1' }, ...providers],
           isLoading: false,
         });
       }).then(miqSparkleOff);
@@ -71,6 +71,14 @@ class CloudNetworkForm extends Component {
     }
   };
 
+  emptySchema = (appendState = {}) => {
+    const fields = [];
+    this.setState({
+      ...appendState,
+      fields,
+    });
+  }
+
   render() {
     const {
       initialValues, ems, isLoading,
@@ -87,7 +95,7 @@ class CloudNetworkForm extends Component {
       <Grid fluid>
         <MiqFormRenderer
           initialValues={initialValues}
-          schema={createSchema(ems, cloudNetworkId, this.loadSchema, fields)}
+          schema={createSchema(ems, cloudNetworkId, this.loadSchema, this.emptySchema, fields)}
           onSubmit={this.saveClicked}
           onCancel={this.cancelClicked}
           canReset={!!cloudNetworkId}
