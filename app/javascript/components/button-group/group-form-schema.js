@@ -42,8 +42,8 @@ const groupFormSchema = (initialValue, buttonIcon, options, url, setState) => ({
         },
         {
           component: 'font-icon-picker',
-          id: 'button_group_button_icon',
-          name: 'set_data.button_icon',
+          id: 'button_group_button_icon_1',
+          name: 'set_data.button_icon_1',
           label: __('Icon'),
           selected: buttonIcon,
           onChangeURL: url,
@@ -56,6 +56,13 @@ const groupFormSchema = (initialValue, buttonIcon, options, url, setState) => ({
               buttonIcon: icon,
             }));
           },
+        },
+        {
+          component: 'font-icon-selector',
+          id: 'button_group_button_icon',
+          name: 'set_data.button_icon',
+          label: __('Test Component'),
+         
         },
         {
           component: componentTypes.TEXT_FIELD,
