@@ -6,14 +6,14 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './group-form.schema';
 
 const GroupForm = ({
-  rec_id, available_fields, fields1, url,
+  rec_id, available_fields, fields, url,
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, unassignedButtons,
   }, setState] = useState({
     isLoading: !!rec_id,
   });
-  console.log('rec_id, available_fields, fields1, url,', rec_id, available_fields, fields1, url);
+  console.log('rec_id, available_fields, fields, url,', rec_id, available_fields, fields, url);
 
   const disableSubmit = ['invalid'];
   /** Function to change the format of the unassiged and selected buttons from the format
@@ -24,7 +24,7 @@ const GroupForm = ({
     return options;
   };
 
-  const buttonOptions = available_fields.length > 0 ? formatButton(available_fields.concat(fields1)) : [];
+  const buttonOptions = available_fields.length > 0 ? formatButton(available_fields.concat(fields)) : [];
 
   useEffect(() => {
     if (rec_id) {
