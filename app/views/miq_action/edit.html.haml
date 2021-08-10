@@ -2,7 +2,7 @@
 = react('ActionForm', 
          :recordId => @action.id.to_s,
          :inheritTags => @edit[:cats],
-         :availableAlerts => @edit[:allChoices].sort,
+         :availableAlerts => @edit[:allAlertChoices].sort,
          :tags => @tags_select,
          :ansibleInventory => @edit[:ansible_playbooks],
          :snapshotAge => MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),

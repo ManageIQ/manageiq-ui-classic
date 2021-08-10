@@ -287,7 +287,7 @@ class MiqActionController < ApplicationController
   # Build the alert choice hash for evaluate_alerts action_type
   def action_build_alert_choices
     @edit[:choices] = MiqAlert.all.each_with_object({}) { |a, h| h[a.description] = a.guid } # Build the hash of alert choices
-    @edit[:allChoices] = MiqAlert.all.each_with_object({}) { |a, h| h[a.description] = a.guid }
+    @edit[:allAlertChoices] = @edit[:choices].dup
     @edit[:new][:alerts] = {} # Clear out the alerts hash
   end
 
