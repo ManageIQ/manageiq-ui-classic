@@ -31,7 +31,12 @@ const VmAreaChart = ({ data, config, dataPoint }) => {
       enabled: true,
       alignment: 'center',
     },
-    height: config.size.height,
+    toolbar:
+    {
+      enabled: false,
+    },
+    height: config.size.height || '150px',
+    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
@@ -55,7 +60,7 @@ VmAreaChart.propTypes = {
     units: PropTypes.string.isRequired,
     tooltipFn: PropTypes.func,
     size: PropTypes.shape({
-      height: PropTypes.number.isRequired,
+      height: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

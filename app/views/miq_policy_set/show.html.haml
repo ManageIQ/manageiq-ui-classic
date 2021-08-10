@@ -32,9 +32,12 @@
 
   -# Notes field
   %h3= _("Notes")
-  - if @record.notes.blank?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
+  - if @record.set_data.present? && (@record.set_data[:notes] || @record.set_data["notes"])
+    - if @record.set_data[:notes].blank? && @record.set_data["notes"].blank?
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
+    - else
+      = text_area_tag("notes", @record.set_data[:notes] || @record.set_data["notes"] , :readonly => true, :rows => 4)
   - else
-    = text_area_tag("notes", @record.notes, :readonly => true, :rows => 4)
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
   %hr
 

@@ -693,7 +693,12 @@ class MiqAlertController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Alerts")
+    @alert = MiqAlert.find_by(:id => params[:miq_grid_checks])
+    @title = if @alert.present?
+               _("Editing Alert \"%{name}\"") % {:name => @alert.description}
+             else
+               _("Adding a new Alert")
+             end
     @layout =  "miq_alert"
     @lastaction = session[:miq_alert_lastaction]
     @display = session[:miq_alert_display]
