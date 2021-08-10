@@ -36,7 +36,12 @@ const HostLineChart = ({ data, config }) => {
       alignment: 'center',
 
     },
-    height: config.size.height,
+    toolbar:
+    {
+      enabled: false,
+    },
+    height: config.size.height || '150px',
+    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
@@ -60,7 +65,7 @@ HostLineChart.propTypes = {
     units: PropTypes.string.isRequired,
     tooltipFn: PropTypes.func.isRequired,
     size: PropTypes.shape({
-      height: PropTypes.number.isRequired,
+      height: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

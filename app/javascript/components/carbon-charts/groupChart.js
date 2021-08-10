@@ -19,6 +19,10 @@ const GroupBarChart = ({ data }) => {
         type: 'none',
       },
     },
+    toolbar:
+    {
+      enabled: false,
+    },
   };
 
   return (

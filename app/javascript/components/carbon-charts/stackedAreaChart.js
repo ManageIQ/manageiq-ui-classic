@@ -22,6 +22,10 @@ const StackAreaChart = ({ data }) => {
         type: 'none',
       },
     },
+    toolbar:
+    {
+      enabled: false,
+    },
   };
 
   return (

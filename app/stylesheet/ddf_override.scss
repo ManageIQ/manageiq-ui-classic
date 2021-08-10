@@ -120,6 +120,15 @@
   }
 }
 
+#subform-4 {
+  #move-right, #move-all-right, #move-all-left, #move-left {
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: content-box;
+    width: 50%;
+  }
+}
+
 #edit_section {
   .edit-div {
     position: relative;
@@ -135,12 +144,23 @@
     }
   }
 }
+.ddorg__carbon-dual-list-body {
+  .bx--structured-list-td {
+    padding-top : 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
 
-#subform-4 {
-  #move-right, #move-all-right, #move-all-left, #move-left {
-    white-space: nowrap;
-    text-align: center;
-    box-sizing: content-box;
-    width: 50%;
+.buttonWrapper-0-2-7 {
+  .bx--btn--primary {
+    width: 150px;
+    padding-right:20px;
+  }
+}
+
+.dualListBody-0-2-6 {
+  .bx--structured-list-td {
+    padding-top :12px;
+    padding-bottom: 12px;
   }
 }
