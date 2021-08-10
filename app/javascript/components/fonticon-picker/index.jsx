@@ -75,14 +75,14 @@ const FontIconPicker = (props) => {
             <Icon type="fa" name="angle-down" />
           </Button>
         </ButtonGroup>
-        <div>
+        <div style={{'display':'none'}}>
           <TextInput
             {...input}
             id={input.name}
             type="text"
             className="file-upload-input"
             disabled
-            value={selectedIcon || 'NoICOn'}
+            value={selectedIcon || 'NoIcon'}
             labelText=""
             {...rest}
 

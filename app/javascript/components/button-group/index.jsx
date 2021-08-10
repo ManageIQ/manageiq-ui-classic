@@ -88,7 +88,7 @@ const GroupForm = ({
 
   if (isLoading || (unassignedButtons===undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
   return (!isLoading && unassignedButtons) && (
-    <div className="col-md-12">
+    <div className="col-md-12 button-group-form">
       <MiqFormRenderer
         schema={createSchema( buttonIcon, unassignedButtons, url, setState)}
         initialValues={initialValues}

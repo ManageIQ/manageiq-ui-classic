@@ -27,12 +27,6 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       isRequired: true,
     },
     {
-      component: componentTypes.PLAIN_TEXT,
-      id: 'button_group_icon',
-      name: 'button_group.icon_label',
-      label: __('Icon'),
-    },
-    {
       component: 'font-icon-picker',
       id: 'button_group_button_icon',
       name: 'set_data.button_icon_1',
@@ -40,7 +34,6 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       selected: buttonIcon,
       onChangeURL: url,
       iconChange: (icon) => {
-        console.log('iconnnnnnn', icon);
         setState((state) => ({ ...state, buttonIcon: icon }));
       },
     },
