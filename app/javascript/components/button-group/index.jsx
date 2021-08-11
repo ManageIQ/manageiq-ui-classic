@@ -14,7 +14,7 @@ const GroupForm = ({
     isLoading: !!rec_id,
   });
 
-  const disableSubmit = ['invalid'];
+  //const disableSubmit = ['invalid'];
   
   /** Function to change the format of the unassiged and selected buttons from the format
    * [[string,number]] to [{label:string, value:number}] */
@@ -24,7 +24,8 @@ const GroupForm = ({
     return options;
   };
 
-  const buttonOptions = available_fields.length > 0 ? formatButton(available_fields.concat(fields)) : [];
+  /**available fields or blank array is passed as props. */
+  const buttonOptions = formatButton(available_fields.concat(fields));
 
   useEffect(() => {
     if (rec_id) {

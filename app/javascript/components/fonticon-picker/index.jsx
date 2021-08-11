@@ -14,7 +14,6 @@ import { useFieldApi } from '@@ddf';
 import IconModal from './icon-modal';
 
 const FontIconPicker = (props) => {
-  console.log('propssss before', props);
   const {
     labelText,
     input,
