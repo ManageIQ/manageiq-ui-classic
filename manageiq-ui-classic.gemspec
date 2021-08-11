@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 6.0.0"
 
   s.add_dependency "coffee-rails"
+  s.add_dependency "execjs", "2.7.0" # HACK: 2.8.1 is causing node to exit 1 when compiling uglify's sourcecode in some environments. See https://github.com/rails/execjs/issues #105
   s.add_dependency "font-fabulous", "~> 1.0.5"
   s.add_dependency "high_voltage", "~> 3.0.0"
   s.add_dependency "more_core_extensions", ">= 3.2", "< 5"
