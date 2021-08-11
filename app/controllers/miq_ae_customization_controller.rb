@@ -255,7 +255,7 @@ class MiqAeCustomizationController < ApplicationController
 
     setup_presenter_based_on_active_tree(nodetype, presenter)
     set_right_cell_text(presenter)
-    handle_bottom_cell(presenter)
+    #handle_bottom_cell(presenter)
     setup_dialog_sample_buttons(nodetype, presenter)
     set_miq_record_id(presenter)
 

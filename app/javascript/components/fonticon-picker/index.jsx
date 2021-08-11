@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import {
   Button,
-  Modal,
   ButtonGroup,
-  Icon,
-  Tabs,
-  Tab,
+  Icon
 } from 'patternfly-react';
 import {
   FormGroup, TextInput,
@@ -13,10 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
-
 import { useFieldApi } from '@@ddf';
-
-import IconList from './icon-list';
 import IconModal from './icon-modal';
 
 const FontIconPicker = (props) => {
@@ -31,12 +25,7 @@ const FontIconPicker = (props) => {
     iconTypes, selected, onChangeURL, iconChange,
     ...rest
   } = useFieldApi(prepareProps(props));
-  console.log('propssss', props);
-
-  //   const {
-  //     iconTypes, selected, onChangeURL, iconChange,
-  //   } = props;
-  console.log('iconChangeiconChangeiconChangeiconChange', iconChange, onChangeURL);
+  
   const [{
     showModal,
     selectedIcon,
