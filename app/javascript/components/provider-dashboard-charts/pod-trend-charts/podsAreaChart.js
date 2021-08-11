@@ -32,12 +32,7 @@ const PodsAreaChart = ({ data, config, dataPoint }) => {
       alignment: 'center',
 
     },
-    toolbar:
-    {
-      enabled: false,
-    },
     height: config.size.height || '150px',
-    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },

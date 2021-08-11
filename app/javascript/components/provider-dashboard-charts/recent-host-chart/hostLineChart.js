@@ -36,12 +36,7 @@ const HostLineChart = ({ data, config }) => {
       alignment: 'center',
 
     },
-    toolbar:
-    {
-      enabled: false,
-    },
     height: config.size.height || '150px',
-    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },

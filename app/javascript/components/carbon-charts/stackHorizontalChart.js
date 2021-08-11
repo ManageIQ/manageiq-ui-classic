@@ -18,10 +18,6 @@ const StackHorizontalChart = ({ data }) => {
         type: 'none',
       },
     },
-    toolbar:
-    {
-      enabled: false,
-    },
   };
 
   return (
