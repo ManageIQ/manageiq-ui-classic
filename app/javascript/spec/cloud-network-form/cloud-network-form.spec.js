@@ -117,7 +117,7 @@ describe('Cloud Network form component', () => {
           shared: false,
         });
         expect(wrapper.children().instance().state.ems).toEqual([
-          { name: `<${__('Choose')}>` },
+          { id: '-1', name: '<Choose>' },
           { href: 'http://localhost:3000/api/providers/4', id: '4', name: 'Provider 4' },
           { href: 'http://localhost:3000/api/providers/31', id: '31', name: 'Provider 31' },
           { href: 'http://localhost:3000/api/providers/8', id: '8', name: 'Provider 8' },
@@ -191,6 +191,7 @@ describe('Cloud Network form component', () => {
         done();
       });
     });
+
     it('renders the editing form variant', async(done) => {
       const expectedValues = {
         ...networkMock,

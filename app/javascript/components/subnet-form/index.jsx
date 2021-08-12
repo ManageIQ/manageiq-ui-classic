@@ -24,6 +24,15 @@ const SubnetForm = ({ recordId }) => {
     }));
   };
 
+  const emptySchema = (appendState = {}) => {
+    const fields = [];
+    setState((state) => ({
+      ...state,
+      ...appendState,
+      fields,
+    }));
+  };
+
   useEffect(() => {
     if (recordId) {
       API.get(`/api/cloud_subnets/${recordId}`).then((initialValues) => {
@@ -39,31 +48,30 @@ const SubnetForm = ({ recordId }) => {
   }, [recordId]);
 
   const onSubmit = (values) => {
-    API.get(`/api/providers/${values.ems_id}`).then(({ type }) => {
-      if (type === 'ManageIQ::Providers::Openstack::NetworkManager') {
-        if (values.ip_version === undefined) {
-          values.ip_version = '4';
+    if (values.ems_id !== '-1') {
+      API.get(`/api/providers/${values.ems_id}`).then(({ type }) => {
+        if (type === 'ManageIQ::Providers::Openstack::NetworkManager') {
+          if (values.ip_version === undefined) {
+            values.ip_version = '4';
+          }
+          if (values.dhcp_enabled === undefined) {
+            values.dhcp_enabled = false;
+          }
+          values.enable_dhcp = values.dhcp_enabled;
+          delete values.dhcp_enabled;
+          delete Object.assign(values, values.extra_attributes).extra_attributes;
         }
-        if (values.dhcp_enabled === undefined) {
-          values.dhcp_enabled = false;
-        }
-        values.enable_dhcp = values.dhcp_enabled;
-        delete values.dhcp_enabled;
-        delete Object.assign(values, values.extra_attributes).extra_attributes;
-      }
-
-      miqSparkleOn();
-      const request = recordId ? API.patch(`/api/cloud_subnets/${recordId}`, values) : API.post('/api/cloud_subnets', values);
-
-      request.then(() => {
-        const message = sprintf(recordId
-          ? __('Modification of Cloud Subnet %s has been successfully queued')
-          : __('Add of Cloud Subnet "%s" has been successfully queued.'),
-        values.name);
-
-        miqRedirectBack(message, 'success', '/cloud_subnet/show_list');
-      }).catch(miqSparkleOff);
-    });
+        miqSparkleOn();
+        const request = recordId ? API.patch(`/api/cloud_subnets/${recordId}`, values) : API.post('/api/cloud_subnets', values);
+        request.then(() => {
+          const message = sprintf(recordId
+            ? __('Modification of Cloud Subnet %s has been successfully queued')
+            : __('Add of Cloud Subnet "%s" has been successfully queued.'),
+          values.name);
+          miqRedirectBack(message, 'success', '/cloud_subnet/show_list');
+        }).catch(miqSparkleOff);
+      });
+    }
   };
 
   const onCancel = () => {
@@ -79,12 +87,13 @@ const SubnetForm = ({ recordId }) => {
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(!!recordId, fields, loadSchema)}
+      schema={createSchema(!!recordId, fields, loadSchema, emptySchema)}
       initialValues={initialValues}
       canReset={!!recordId}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{ submitLabel }}
+      canSubmit={false}
     />
   );
 };

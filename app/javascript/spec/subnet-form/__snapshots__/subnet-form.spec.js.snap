@@ -8,6 +8,7 @@ exports[`Subnet form component renders the adding form variant 1`] = `
     }
   }
   canReset={false}
+  canSubmit={false}
   onCancel={[Function]}
   onSubmit={[Function]}
   schema={
@@ -16,7 +17,6 @@ exports[`Subnet form component renders the adding form variant 1`] = `
         Object {
           "component": "select",
           "id": "ems_id",
-          "includeEmpty": true,
           "isDisabled": false,
           "isRequired": true,
           "label": "Network Manager",
@@ -28,65 +28,6 @@ exports[`Subnet form component renders the adding form variant 1`] = `
               "type": "required",
             },
           ],
-        },
-        Object {
-          "component": "text-field",
-          "condition": Object {
-            "isNotEmpty": true,
-            "when": "ems_id",
-          },
-          "id": "name",
-          "isRequired": true,
-          "label": "Name",
-          "name": "name",
-          "validate": Array [
-            Object {
-              "type": "required",
-            },
-          ],
-        },
-        Object {
-          "component": "text-field",
-          "condition": Object {
-            "isNotEmpty": true,
-            "when": "ems_id",
-          },
-          "id": "cidr",
-          "isDisabled": false,
-          "isRequired": true,
-          "label": "CIDR",
-          "name": "cidr",
-          "validate": Array [
-            Object {
-              "type": "required",
-            },
-          ],
-        },
-        Object {
-          "AddButtonProps": Object {
-            "size": "small",
-          },
-          "RemoveButtonProps": Object {
-            "size": "small",
-          },
-          "buttonLabels": Object {
-            "add": "Add",
-            "remove": "Remove",
-          },
-          "component": "field-array",
-          "condition": Object {
-            "isNotEmpty": true,
-            "when": "ems_id",
-          },
-          "fields": Array [
-            Object {
-              "component": "text-field",
-            },
-          ],
-          "id": "dns_nameservers",
-          "label": "DNS Servers",
-          "name": "dns_nameservers",
-          "noItemsMessage": "None",
         },
       ],
     }

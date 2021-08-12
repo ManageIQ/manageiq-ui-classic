@@ -1,9 +1,20 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { API } from '../../http_api';
 
-function createSchema(ems, cloudNetworkId, loadSchema, providerFields = []) {
-  const providers = ems.filter((tenant) => tenant.type !== 'ManageIQ::Providers::Nuage::NetworkManager');
+let showError = false;
 
+function changeValue(value, loadSchema, emptySchema) {
+  if (value === '-1') {
+    emptySchema();
+    showError = true;
+  } else {
+    API.options(`/api/cloud_networks?ems_id=${value}`).then(loadSchema());
+    showError = false;
+  }
+}
+
+function createSchema(ems, cloudNetworkId, loadSchema, emptySchema, providerFields = []) {
+  const providers = ems.filter((tenant) => tenant.type !== 'ManageIQ::Providers::Nuage::NetworkManager');
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Network Provider'),
@@ -17,7 +28,8 @@ function createSchema(ems, cloudNetworkId, loadSchema, providerFields = []) {
       placeholder: `<${__('Choose')}>`,
       isDisabled: !!cloudNetworkId,
       validateOnMount: true,
-      onChange: (value) => API.options(`/api/cloud_networks?ems_id=${value}`).then(loadSchema()),
+      isRequired: true,
+      onChange: (value) => changeValue(value, loadSchema, emptySchema),
       validate: [{
         type: validatorTypes.REQUIRED,
         message: __('Required'),
@@ -25,6 +37,14 @@ function createSchema(ems, cloudNetworkId, loadSchema, providerFields = []) {
       options: providers.map(({ id, name }) => ({ label: name, value: id })),
     }],
   },
+  ...(showError ? [
+    {
+      id: 'networkWarning',
+      component: componentTypes.PLAIN_TEXT,
+      name: 'networkWarning',
+      label: __('Please select a network manager.'),
+    },
+  ] : []),
   ...providerFields,
   ];
   return { fields };
