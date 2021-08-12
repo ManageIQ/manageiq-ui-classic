@@ -633,7 +633,7 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_untestable_actions = %w[destroy vm_miq_request_new]
+    vm_infra_untestable_actions = %w[vm_miq_request_new]
     ems_cluster_untestable_actions = %w[scan]
 
     return false if @display == 'ems_clusters' && action == 'scan'
