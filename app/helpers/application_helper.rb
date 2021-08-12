@@ -220,20 +220,19 @@ module ApplicationHelper
   #
   # Params:
   #   records - an array of record instances or a single instance of a record
-  #   feature - symbol, a feature from SupportsFeatureMixin::QUERYABLE_FEATURES
+  #   feature - symbol
   # Returns:
   #   boolean - true if all records support the feature
   #           - false in case the record (or one of many records) does not
   #             support the feature
   def records_support_feature?(records, feature)
-    unsupported_record = Array.wrap(records).find do |record|
+    Array.wrap(records).all? do |record|
       if record.respond_to?("supports_#{feature}?")
-        !record.supports?(feature)
+        record.supports?(feature)
       else # TODO: remove with deleting AvailabilityMixin module
-        !record.is_available?(feature)
+        record.is_available?(feature)
       end
     end
-    unsupported_record.nil?
   end
 
   # Create a url for a record that links to the proper controller
