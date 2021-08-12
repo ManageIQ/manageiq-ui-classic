@@ -633,7 +633,6 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_untestable_actions = %w[vm_miq_request_new]
     ems_cluster_untestable_actions = %w[scan]
 
     return false if @display == 'ems_clusters' && action == 'scan'
@@ -641,8 +640,6 @@ module ApplicationController::CiProcessing
     case controller
     when 'ems_cluster'
       ems_cluster_untestable_actions.exclude?(action)
-    when 'vm_infra'
-      vm_infra_untestable_actions.exclude?(action)
     else
       true
     end
@@ -661,6 +658,7 @@ module ApplicationController::CiProcessing
       "scan"                   => :smartstate_analysis,
       "retire_now"             => :retire,
       "vm_destroy"             => :terminate,
+      "vm_miq_request_new"     => :provisioning,
       "check_compliance_queue" => :check_compliance
     }
     feature_aliases[action] || action.to_sym
