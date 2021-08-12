@@ -31,12 +31,7 @@ const VmAreaChart = ({ data, config, dataPoint }) => {
       enabled: true,
       alignment: 'center',
     },
-    toolbar:
-    {
-      enabled: false,
-    },
     height: config.size.height || '150px',
-    resizable: false,
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
