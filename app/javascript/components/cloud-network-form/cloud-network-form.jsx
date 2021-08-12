@@ -60,14 +60,16 @@ class CloudNetworkForm extends Component {
   };
 
   saveClicked = (values) => {
-    const { cloudNetworkId } = this.props;
-    if (cloudNetworkId) {
-      const { cloudTenantName } = this.state;
-      const url = `/cloud_network/update/${cloudNetworkId}?button=save`;
-      miqAjaxButton(url, { ...values, cloud_tenant: { id: values.cloud_tenant, name: cloudTenantName } }, { complete: false });
-    } else {
-      const url = 'create/new?button=add';
-      miqAjaxButton(url, { ...values, vlan_transparent: false, cloud_tenant: { id: values.cloud_tenant } }, { complete: false });
+    if (values.ems_id !== '-1') {
+      const { cloudNetworkId } = this.props;
+      if (cloudNetworkId) {
+        const { cloudTenantName } = this.state;
+        const url = `/cloud_network/update/${cloudNetworkId}?button=save`;
+        miqAjaxButton(url, { ...values, cloud_tenant: { id: values.cloud_tenant, name: cloudTenantName } }, { complete: false });
+      } else {
+        const url = 'create/new?button=add';
+        miqAjaxButton(url, { ...values, vlan_transparent: false, cloud_tenant: { id: values.cloud_tenant } }, { complete: false });
+      }
     }
   };
 
