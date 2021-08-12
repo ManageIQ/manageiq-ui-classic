@@ -129,29 +129,6 @@ module ApplicationHelper
     record.class.base_model.name.underscore
   end
 
-  def type_has_quadicon(type)
-    !%w[
-      ConfigurationProfile
-      Account
-      GuestApplication
-      SystemService
-      Filesystem
-      ChargebackRate
-      ServiceTemplateProvisionRequest
-      MiqProvisionRequest
-      MiqProvisionRequestTemplate
-      MiqWebServiceWorker
-      CustomizationTemplateSysprep
-      CustomizationTemplateCloudInit
-      CustomizationTemplateKickstart
-      PxeImageType
-      IsoDatastore
-      MiqTask
-      MiqRequest
-      PxeServer
-    ].include?(type)
-  end
-
   CONTROLLER_TO_MODEL = {
     "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
     "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
