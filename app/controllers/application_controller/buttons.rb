@@ -410,6 +410,7 @@ module ApplicationController::Buttons
   end
 
   def group_button_reset
+    puts "#####################"
     group_set_form_vars
     @changed = session[:changed] = false
     add_flash(_("All changes have been reset"), :warning)

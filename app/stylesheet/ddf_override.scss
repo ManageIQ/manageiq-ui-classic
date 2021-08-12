@@ -137,39 +137,37 @@
 }
 
 .button-group-form{
+  form > div{
+    margin-bottom: 32px;
+  }
 
-  #basic_info_text_group{
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-  
-    .bx--text-input-wrapper{
-      padding-right: 10px;
+  #button_group_button_color{
+    padding: 0 2px;
+    border: 1px solid #d3d3d3;
+  }
+  fieldset.bx--fieldset {
+    legend.bx--label{
+      font-size: 0.75rem;
     }
-  }
-
-  form .bx--fieldset .bx--label{
-    font-size: 0.75rem !important;
-  }
-  
-  .form-control{
-    padding: 0 2px !important;
-    background: #FFF !important;
-    border: 1px solid #bbb !important;
-  }
-  
-  .bx--fieldset .bx--grid .bx--row {
-    .buttonWrapper-0-2-8{
-      
-      display: flex !important;
-      justify-content: center !important;
-      margin-top: 24px;
-  
-      button{
-        width: 100%;
+    .bx--grid .bx--row {
+      .buttonWrapper-0-2-5{
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 24px;
+        button{
+          width: 100%;
+        }
       }
     }
   }
+  .custom-button-wrapper{
+    margin-top: 8px;
+
+    .btnRight{
+      margin-right: 8px !important;
+    }
+  }
 }
+
 
 
