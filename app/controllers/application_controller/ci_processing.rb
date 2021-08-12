@@ -633,17 +633,14 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_untestable_actions = %w[check_compliance_queue destroy refresh_ems vm_miq_request_new]
-    ems_cluster_untestable_actions = %w[check_compliance_queue scan]
-    other_untestable_actions = %w[check_compliance_queue]
+    vm_infra_untestable_actions = %w[destroy refresh_ems vm_miq_request_new]
+    ems_cluster_untestable_actions = %w[scan]
 
     return false if @display == 'ems_clusters' && action == 'scan'
 
     case controller
     when 'ems_cluster'
       ems_cluster_untestable_actions.exclude?(action)
-    when 'auth_key_pair_cloud', 'availability_zone', 'cloud_network', 'cloud_subnet', 'cloud_tenant', 'ems_cloud', 'ems_infra', 'flavor', 'host', 'host_aggregate', 'network_router', 'resource_pool', 'security_group', 'storage', 'vm_cloud'
-      other_untestable_actions.exclude?(action)
     when 'vm_infra'
       vm_infra_untestable_actions.exclude?(action)
     else
@@ -659,12 +656,12 @@ module ApplicationController::CiProcessing
   # Returns:
   #   symbol      - a feature implemented by using AvailabilityMixin or
   #                 SupportsFeatureMixin
-  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
   def action_to_feature(action)
     feature_aliases = {
-      "scan"       => :smartstate_analysis,
-      "retire_now" => :retire,
-      "vm_destroy" => :terminate
+      "scan"                   => :smartstate_analysis,
+      "retire_now"             => :retire,
+      "vm_destroy"             => :terminate,
+      "check_compliance_queue" => :check_compliance
     }
     feature_aliases[action] || action.to_sym
   end
