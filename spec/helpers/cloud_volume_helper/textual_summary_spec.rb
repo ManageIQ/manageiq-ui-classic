@@ -11,5 +11,5 @@ describe CloudVolumeHelper::TextualSummary do
     custom_button_events
     host_initiators
   )
-  include_examples "textual_group", "Properties", %i(name size bootable description status)
+  include_examples "textual_group", "Properties", %i(name size bootable description status health_state)
 end
