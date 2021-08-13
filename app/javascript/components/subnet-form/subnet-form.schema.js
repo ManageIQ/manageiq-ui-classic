@@ -2,7 +2,7 @@ import { componentTypes, validatorTypes } from '@@ddf';
 import { API } from '../../http_api';
 
 const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_cloud_subnet_create&filter[]=supports_cloud_subnet_create=true';
-const networkManagers = API.get(emsUrl).then(({ resources }) => {
+const networkManagers = () => API.get(emsUrl).then(({ resources }) => {
   let networkManagersOptions = [];
   networkManagersOptions = resources.map(({ id, name }) => ({ label: name, value: id }));
   networkManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
@@ -30,7 +30,7 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
           showError = true;
         }
       },
-      loadOptions: () => networkManagers,
+      loadOptions: networkManagers,
       isDisabled: edit,
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
