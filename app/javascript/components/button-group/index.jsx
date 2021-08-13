@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import MiqFormRenderer, {useFormApi} from '@@ddf';
+import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { Loading } from 'carbon-components-react';
 import PropTypes from 'prop-types';
+import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './group-form.schema';
-import {  FormSpy } from '@data-driven-forms/react-form-renderer';
 
-const GroupForm = ({ rec_id, available_fields, fields, url }) => {
-
-  const [{ isLoading, initialValues, buttonIcon, unassignedButtons }, setState] = useState({
-    isLoading: !!rec_id
+const GroupForm = ({
+  rec_id, available_fields, fields, url,
+}) => {
+  const [{
+    isLoading, initialValues, buttonIcon, unassignedButtons,
+  }, setState] = useState({
+    isLoading: true,
   });
 
   let iconChanged = false;
-  
+
   /** Function to change the format of the unassiged and selected buttons from the format
    * [[string,number]] to [{label:string, value:number}] */
   const formatButton = (buttons) => {
@@ -48,8 +51,8 @@ const GroupForm = ({ rec_id, available_fields, fields, url }) => {
   iconChanged = rec_id && initialValues ? (initialValues.set_data.button_icon !== buttonIcon) : false;
 
   const onSubmit = (values) => {
-    values.set_data.button_color = (values.set_data && values.set_data.button_color) 
-      ? values.set_data.button_color 
+    values.set_data.button_color = (values.set_data && values.set_data.button_color)
+      ? values.set_data.button_color
       : '#000';
     values.set_data.button_icon = buttonIcon;
     miqSparkleOn();
@@ -77,53 +80,77 @@ const GroupForm = ({ rec_id, available_fields, fields, url }) => {
     miqRedirectBack(message, 'warning', '/miq_ae_customization/explorer');
   };
 
-  if (isLoading || (unassignedButtons===undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
+  const onReset1 = () => {
+    setState((state) => ({
+      ...state,
+      buttonIcon: initialValues.set_data.button_icon,
+      isLoading: false,
+    }));
+    add_flash(__('All changes have been reset'), 'warn');
+    // miqRedirectBack(message, 'warning', '/miq_ae_customization/explorer');
+  };
+
+  if (isLoading || (unassignedButtons === undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
   return (!isLoading && unassignedButtons) && (
     <div className="col-md-12 button-group-form">
       <MiqFormRenderer
-        schema={createSchema( buttonIcon, unassignedButtons, url, setState)}
+        schema={createSchema(buttonIcon, unassignedButtons, url, setState)}
         initialValues={initialValues}
         FormTemplate={(props) => <FormTemplate {...props} rec_id={rec_id} modified={iconChanged} />}
         onSubmit={onSubmit}
         onCancel={onCancel}
+        onReset={onReset1}
       />
-      </div>
-    );
-  };
-  
-  const FormTemplate = ({ formFields, createSchema, rec_id, modified}) => {
-    const { handleSubmit, onReset, onCancel, getState } = useFormApi();
-    const { valid, pristine } = getState();
-    const submitLabel = !!rec_id ? __('Save') : __('Add');
-    console.log(valid, modified, pristine);
-    return (
-      <form onSubmit={handleSubmit}>
-        {formFields}
-        <FormSpy>
-          {({values, validating }) => (
-            <div className='custom-button-wrapper'>
-              <button disabled={(!valid || !modified) && pristine} 
-                      className={'bx--btn bx--btn--primary btnRight'}
-                      type="submit" variant="contained">
-                {submitLabel}
-              </button>
-              {
-                !!rec_id && 
-                  <button disabled={(!valid || !modified) && pristine} 
-                          className={'bx--btn bx--btn--secondary btnRight'}
-                          onClick={onReset} variant="contained">
-                    Reset
-                  </button>
-              }
-              <button variant="contained" onClick={onCancel} className={'bx--btn bx--btn--secondary'}>
-                Cancel
-              </button>
-            </div>
-          )}
-        </FormSpy>
-      </form>
-    );
-  };
+    </div>
+  );
+};
+
+const FormTemplate = ({
+  formFields, createSchema, rec_id, modified,
+}) => {
+  const {
+    handleSubmit, onReset, onCancel, getState,
+  } = useFormApi();
+  const { valid, pristine } = getState();
+  const submitLabel = !!rec_id ? __('Save') : __('Add');
+  console.log(valid, modified, pristine);
+  return (
+    <form onSubmit={handleSubmit}>
+      {formFields}
+      <FormSpy>
+        {({ values, validating }) => (
+          <div className="custom-button-wrapper">
+            <button
+              disabled={(!valid || !modified) && pristine}
+              className="bx--btn bx--btn--primary btnRight"
+              type="submit"
+              variant="contained"
+            >
+              {submitLabel}
+            </button>
+
+            {!!rec_id
+              ? (
+                <button
+                  disabled={(!valid || !modified) && pristine}
+                  className="bx--btn bx--btn--secondary btnRight"
+                  variant="contained"
+                  onClick={onReset}
+                  type="button"
+                >
+                  Reset
+                </button>
+              ) : null}
+
+            <button variant="contained" type="button" onClick={onCancel} className="bx--btn bx--btn--secondary">
+              Cancel
+            </button>
+          </div>
+        )}
+      </FormSpy>
+    </form>
+  );
+};
 
 GroupForm.propTypes = {
   rec_id: PropTypes.number,

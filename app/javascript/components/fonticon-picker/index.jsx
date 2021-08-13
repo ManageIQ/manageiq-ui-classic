@@ -40,7 +40,7 @@ const FontIconPicker = (props) => {
   const onModalApply = () => {
     // This is required to connect the old session-backed form with the component
 
-    window.miqObserveRequest(onChangeURL, { data: { button_icon: activeIcon } });
+    //window.miqObserveRequest(onChangeURL, { data: { button_icon: activeIcon } });
     console.log('activeIcon)', activeIcon);
     iconChange(activeIcon);
     setState((state) => ({ ...state, showModal: false, selectedIcon: activeIcon }));

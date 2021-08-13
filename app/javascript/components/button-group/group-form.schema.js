@@ -29,7 +29,7 @@ const createSchema = (buttonIcon, options, url, setState) => ({
     {
       component: 'font-icon-picker',
       id: 'button_group_button_icon',
-      name: 'set_data.button_icon_1',
+      name: 'set_data.button_icon',
       label: __('Icon'),
       selected: buttonIcon,
       onChangeURL: url,
