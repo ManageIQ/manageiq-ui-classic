@@ -632,17 +632,7 @@ module ApplicationController::CiProcessing
   #             support for the action
   #           - false otherwise
   def testable_action(action)
-    controller = params[:controller]
-    ems_cluster_untestable_actions = %w[scan]
-
-    return false if @display == 'ems_clusters' && action == 'scan'
-
-    case controller
-    when 'ems_cluster'
-      ems_cluster_untestable_actions.exclude?(action)
-    else
-      true
-    end
+    true
   end
 
   # Maps UI actions to queryable feature in case it is not possible
