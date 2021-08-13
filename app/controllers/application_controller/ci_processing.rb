@@ -606,7 +606,7 @@ module ApplicationController::CiProcessing
   #   options     - other optional parameters
   def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(record_class, checked_or_params)
-    if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
+    if !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
         :severity   => :error,
@@ -617,22 +617,6 @@ module ApplicationController::CiProcessing
     operation.call(records.map(&:id), action, action_name)
     @single_delete = action == 'destroy' && !flash_errors?
     screen_redirection(options)
-  end
-
-  # Some of the tasks are not testable by SupportsFeatureMixin
-  # nor AvailabilityMixin.
-  #
-  # In case a record does not support the feature, the test won't be ran for
-  # any of selected records.
-  #
-  # Params:
-  #   action  - a string indicating the operation user wants to execute
-  # Returns:
-  #   boolean - true, if the action should not skip the test for records
-  #             support for the action
-  #           - false otherwise
-  def testable_action(action)
-    true
   end
 
   # Maps UI actions to queryable feature in case it is not possible
