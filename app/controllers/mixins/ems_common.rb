@@ -193,9 +193,9 @@ module Mixins
     def block_storage_manager_id(provider_id)
       manager = find_record_with_rbac(ExtManagementSystem, provider_id)
       return nil unless manager
-      return manager.id unless manager.respond_to?(:storage_managers)
+      return manager.id unless manager.supports?(:storage_manager)
 
-      manager.storage_managers.detect(&:supports_block_storage?)&.id
+      manager.block_storage_manager&.id
     end
 
     # handle buttons pressed on the button bar
