@@ -1494,7 +1494,13 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  #
+  # This method is ONLY called from prov_redirect method.
+  # prov_redirect is ONLY called with one of 4 parameters:
+  #   "clone", "migrate", "publish" and nil (meaning "provisioning")
+  #
   # renders a flash message in case the records do not support the task
+  #
   def task_supported(typ)
     vms = find_records_with_rbac(VmOrTemplate, checked_or_params)
     if %w[migrate publish].include?(typ) && vms.any?(&:template?)
@@ -1514,11 +1520,7 @@ class ApplicationController < ActionController::Base
     end
 
     vms.each do |vm|
-      if vm.respond_to?("supports_#{typ}?")
-        render_flash_not_applicable_to_model(typ) unless vm.send("supports_#{typ}?")
-      else
-        render_flash_not_applicable_to_model(typ) unless vm.is_available?(typ)
-      end
+      render_flash_not_applicable_to_model(typ) unless vm.supports?(typ)
     end
   end
 
