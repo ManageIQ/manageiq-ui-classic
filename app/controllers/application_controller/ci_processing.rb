@@ -606,7 +606,7 @@ module ApplicationController::CiProcessing
   #   options     - other optional parameters
   def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(record_class, checked_or_params)
-    if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
+    if !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
         :severity   => :error,
@@ -619,38 +619,6 @@ module ApplicationController::CiProcessing
     screen_redirection(options)
   end
 
-  # Some of the tasks are not testable by SupportsFeatureMixin
-  # nor AvailabilityMixin.
-  #
-  # In case a record does not support the feature, the test won't be ran for
-  # any of selected records.
-  #
-  # Params:
-  #   action  - a string indicating the operation user wants to execute
-  # Returns:
-  #   boolean - true, if the action should not skip the test for records
-  #             support for the action
-  #           - false otherwise
-  def testable_action(action)
-    controller = params[:controller]
-    vm_infra_untestable_actions = %w[check_compliance_queue destroy refresh_ems vm_miq_request_new]
-    ems_cluster_untestable_actions = %w[check_compliance_queue scan]
-    other_untestable_actions = %w[check_compliance_queue]
-
-    return false if @display == 'ems_clusters' && action == 'scan'
-
-    case controller
-    when 'ems_cluster'
-      ems_cluster_untestable_actions.exclude?(action)
-    when 'auth_key_pair_cloud', 'availability_zone', 'cloud_network', 'cloud_subnet', 'cloud_tenant', 'ems_cloud', 'ems_infra', 'flavor', 'host', 'host_aggregate', 'network_router', 'resource_pool', 'security_group', 'storage', 'vm_cloud'
-      other_untestable_actions.exclude?(action)
-    when 'vm_infra'
-      vm_infra_untestable_actions.exclude?(action)
-    else
-      true
-    end
-  end
-
   # Maps UI actions to queryable feature in case it is not possible
   # to use the action itself in supports query.
   #
@@ -659,12 +627,13 @@ module ApplicationController::CiProcessing
   # Returns:
   #   symbol      - a feature implemented by using AvailabilityMixin or
   #                 SupportsFeatureMixin
-  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
   def action_to_feature(action)
     feature_aliases = {
-      "scan"       => :smartstate_analysis,
-      "retire_now" => :retire,
-      "vm_destroy" => :terminate
+      "scan"                   => :smartstate_analysis,
+      "retire_now"             => :retire,
+      "vm_destroy"             => :terminate,
+      "vm_miq_request_new"     => :provisioning,
+      "check_compliance_queue" => :check_compliance
     }
     feature_aliases[action] || action.to_sym
   end
