@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import FormRender, {
-  Validators,
+import {
+  validators,
   componentTypes,
   validatorTypes,
   useFormApi,
   useFieldApi,
   FieldArray,
   FormSpy,
+  FormRenderer,
 } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
 import { connect } from 'react-redux';
@@ -15,8 +16,8 @@ import { connect } from 'react-redux';
 import defaultComponentMapper from './mappers/componentMapper';
 import SpyField from './spy-field';
 
-Validators.messages = {
-  ...Validators.messages,
+validators.messages = {
+  ...validators.messages,
   required: __('Required'),
 };
 
@@ -49,20 +50,20 @@ const MiqFormRenderer = ({
   onSubmit,
   ...props
 }) => {
-  const { current: MiqFormTemplate } = useRef(props => (
+  const { current: MiqFormTemplate } = useRef((props) => (
     <FormTemplate
       {...props}
       disableSubmit={disableSubmit}
       canReset={canReset}
       showFormControls={showFormControls}
-      formWrapperProps={{className}}
+      formWrapperProps={{ className }}
       {...defaultLabels}
       {...buttonsLabels}
     />
   ));
 
   return (
-    <FormRender
+    <FormRenderer
       componentMapper={{ ...componentMapper, 'spy-field': SpyField }}
       FormTemplate={MiqFormTemplate}
       schema={{ fields: [...fields, { component: 'spy-field', name: 'spy-field', initialize }], ...schema }}

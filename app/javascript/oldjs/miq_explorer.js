@@ -142,7 +142,7 @@ ManageIQ.explorer.rx = function(data) {
 
 ManageIQ.explorer.scrollTop = function(data) {
   if (data.scrollTop) {
-    $('#main_div').scrollTop(0);
+    miqScrollTop();
   }
 };
 

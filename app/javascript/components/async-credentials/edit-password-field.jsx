@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, TextInput, TextArea, Button } from 'carbon-components-react';
+import {
+  FormGroup, TextInput, TextArea, Button,
+} from 'carbon-components-react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { EditOff16 } from '@carbon/icons-react';
 

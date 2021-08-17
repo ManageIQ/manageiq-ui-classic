@@ -1,4 +1,4 @@
-import { validatorTypes } from "@@ddf";
+import { validatorTypes } from '@@ddf';
 
 function createSchema(maxDescLen) {
   return {

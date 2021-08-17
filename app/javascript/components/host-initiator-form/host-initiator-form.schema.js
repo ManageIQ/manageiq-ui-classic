@@ -12,7 +12,7 @@ const loadProviders = () =>
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
-const loadStorages = id => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
+const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physical_storages`)
   // eslint-disable-next-line camelcase
   .then(({ physical_storages }) => physical_storages.map(({ name, id }) => ({
     label: name,
@@ -24,13 +24,15 @@ const createSchema = (emsId, setEmsId) => ({
     {
       component: componentTypes.SELECT,
       name: 'ems_id',
-      key: 'ems_id',
       id: 'ems_id',
+      key: `${emsId}`,
       label: __('Provider:'),
+      placeholder: __('<Choose>'),
       isRequired: true,
       loadOptions: loadProviders,
-      onChange: value => setEmsId(value),
+      onChange: (value) => setEmsId(value),
       validate: [{ type: validatorTypes.REQUIRED }],
+      includeEmpty: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -46,9 +48,11 @@ const createSchema = (emsId, setEmsId) => ({
       id: 'physical_storage_id',
       label: __('Physical Storage:'),
       isRequired: true,
+      placeholder: __('<Choose>'),
+      includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
-      key: emsId,
+      key: `physical_storage_id-${emsId}`,
       condition: {
         when: 'ems_id',
         isNotEmpty: true,
@@ -59,10 +63,11 @@ const createSchema = (emsId, setEmsId) => ({
       id: 'port_type',
       name: 'port_type',
       label: __('Port type:'),
-      placeholder: __('Nothing selected'),
+      placeholder: __('<Choose>'),
       options: portTypes,
       isRequired: true,
-      validate: [{type: validatorTypes.REQUIRED}],
+      validate: [{ type: validatorTypes.REQUIRED }],
+      includeEmpty: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -70,7 +75,17 @@ const createSchema = (emsId, setEmsId) => ({
       id: 'iqn',
       label: __('iqn:'),
       isRequired: true,
-      validate: [{type: validatorTypes.REQUIRED}],
+      validate: [{ type: validatorTypes.REQUIRED }],
+      condition: {
+        when: 'port_type',
+        is: 'ISCSI',
+      },
+    },
+    {
+      component: componentTypes.CHECKBOX,
+      id: 'chap_authentication',
+      name: 'chap_authentication',
+      label: __('CHAP Authentication'),
       condition: {
         when: 'port_type',
         is: 'ISCSI',
@@ -80,23 +95,25 @@ const createSchema = (emsId, setEmsId) => ({
       component: componentTypes.TEXT_FIELD,
       name: 'chap_name',
       id: 'chap_name',
-      label: __('chap_name:'),
-      isRequired: false,
-      condition: {
+      label: __('CHAP Username:'),
+      isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      condition: {and: [{
         when: 'port_type',
         is: 'ISCSI',
-      },
+      }, {when: 'chap_authentication', is:true}]},
     },
     {
       component: componentTypes.TEXT_FIELD,
       name: 'chap_secret',
       id: 'chap_secret',
-      label: __('chap_secret:'),
-      isRequired: false,
-      condition: {
+      validate: [{ type: validatorTypes.REQUIRED }],
+      label: __('CHAP Secret:'),
+      isRequired: true,
+      condition: {and: [{
         when: 'port_type',
         is: 'ISCSI',
-      },
+      }, {when: 'chap_authentication', is:true}]},
     },
     {
       component: componentTypes.TEXT_FIELD,

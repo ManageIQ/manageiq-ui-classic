@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,8 +9,8 @@ const simpleRow = (row, i, colOrder) => (
 );
 
 const clickableRow = (row, i, colOrder, rowLabel, onClick) => (
-  <a href={row.link} onClick={e => onClick(row, e)}>
-    <tr key={i} >
+  <a href={row.link} onClick={(e) => onClick(row, e)}>
+    <tr key={i}>
       {colOrder.map((col, j) => <td key={j} title={rowLabel}>{`${row[col]}`}</td>)}
     </tr>
   </a>
@@ -20,18 +21,20 @@ const renderRow = (row, i, colOrder, rowLabel, onClick) => (
 );
 
 export default function TableListView(props) {
+  const { headers, values, title } = props;
+
   return (
     <table className="table table-bordered table-hover table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan={props.headers.length} align="left">{props.title}</th>
+          <th colSpan={headers.length} align="left">{title}</th>
         </tr>
         <tr>
-          {props.headers.map((header, i) => <th key={i}>{header}</th>)}
+          {headers.map((header, i) => <th key={i}>{header}</th>)}
         </tr>
       </thead>
       <tbody>
-        {props.values.map((row, i) => renderRow(row, i, props.colOrder, props.rowLabel, props.onClick))}
+        {values.map((row, i) => renderRow(row, i, props.colOrder, props.rowLabel, props.onClick))}
       </tbody>
     </table>
   );

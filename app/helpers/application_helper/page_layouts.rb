@@ -87,7 +87,7 @@ module ApplicationHelper::PageLayouts
       ems_infra
       ems_network
       ems_physical_infra
-      ems_block_storage
+      ems_storage
     ].include?(controller_name) &&
       action_name == 'show_list' &&
       controller.class.model.none?

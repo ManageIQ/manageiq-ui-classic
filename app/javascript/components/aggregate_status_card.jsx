@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { Quadicon } from './quadicon';
-
 import PfAggregateStatusCard from './pf_aggregate_status_card';
-import { http } from '../http_api/';
+import RefreshNotifications from './refresh-notifications';
+import { http } from '../http_api';
 
 const AggregateStatusCard = ({ providerId, providerType }) => {
   const [data, setCardData] = useState({ loading: true });
@@ -22,6 +21,7 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
           showTopBorder: aggStatusData.showTopBorder,
           aggregateLayout: aggStatusData.aggregateLayout,
           aggregateClass: aggStatusData.aggregateClass,
+          refreshStatus: aggStatusData.refreshStatus ? aggStatusData.refreshStatus : [],
         });
       });
   }, []);
@@ -49,12 +49,18 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
 
   return (
     <div className="aggregate_status">
+      {(data.refreshStatus && data.refreshStatus.last_refresh && data.refreshStatus.last_refresh.status !== 'never'
+       && (data.refreshStatus.last_refresh.stale
+         || data.refreshStatus.last_refresh.status !== 'success'))
+            && (
+              <RefreshNotifications status={data.refreshStatus} />
+            )}
       <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 here">
         { data.quadicon ? renderQuad() : renderPlain() }
       </div>
       <div className="col-xs-12 col-sm-12 col-md-9 col-lg-10">
         <div className="row">
-          { data.aggStatus.map(st => (
+          { data.aggStatus.map((st) => (
             <div key={st.id} className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
               <PfAggregateStatusCard
                 layout="mini"

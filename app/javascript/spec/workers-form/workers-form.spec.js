@@ -48,9 +48,7 @@ describe('Workers form', () => {
                 memory_threshold: 2147483648,
               },
             },
-            defaults: {
-              memory_threshold: '500.megabytes',
-            },
+            defaults: {},
             ems_metrics_processor_worker: {
               count: 2, memory_threshold: 629145600,
             },
@@ -58,7 +56,7 @@ describe('Workers form', () => {
             priority_worker: {
               memory_threshold: 419430400, count: 2,
             },
-            reporting_worker: { count: 2, memory_threshold: 524288000 },
+            reporting_worker: { count: 2 },
             smart_proxy_worker: {
               count: 2, memory_threshold: 576716800,
             },
@@ -92,7 +90,7 @@ describe('Workers form', () => {
       'priority_worker.memory_threshold': 419430400,
       'remote_console_worker.count': 1,
       'reporting_worker.count': 2,
-      'reporting_worker.memory_threshold': 524288000,
+      'reporting_worker.memory_threshold': 419430400,
       'smart_proxy_worker.count': 2,
       'smart_proxy_worker.memory_threshold': 576716800,
       'ui_worker.count': 1,

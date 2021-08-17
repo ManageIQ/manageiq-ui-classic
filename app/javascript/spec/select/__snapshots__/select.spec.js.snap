@@ -19,7 +19,7 @@ exports[`Select component should match the snapshot 1`] = `
   }
   placeholder="<Choose>"
 >
-  <Select$1
+  <Select
     component="select"
     label="Choose"
     loadingMessage="Loading..."
@@ -63,7 +63,6 @@ exports[`Select component should match the snapshot 1`] = `
           },
         ]
       }
-      originalOnChange={[Function]}
       placeholder="<Choose>"
       pluckSingleValue={true}
       simpleValue={false}
@@ -96,7 +95,6 @@ exports[`Select component should match the snapshot 1`] = `
             },
           ]
         }
-        originalOnChange={[Function]}
         placeholder="<Choose>"
         value=""
       >
@@ -213,6 +211,6 @@ exports[`Select component should match the snapshot 1`] = `
         </Select>
       </ClearedSelect>
     </Select>
-  </Select$1>
+  </Select>
 </SelectWithOnChange>
 `;

@@ -16,7 +16,8 @@
                       "selectpicker-for-select-tag" => "")
   = render :partial => "layouts/angular/x_custom_form_buttons_angular",
            :locals  => {:button_label           => _("Add"),
-                        :button_click           => "addHostClicked()"}
+                        :button_click           => "addHostClicked()",
+                        :cancel_function        => "cancelAddHostClicked()"}
 
 :javascript
   ManageIQ.angular.app.value('hostAggregateFormId', '#{@host_aggregate.id}');

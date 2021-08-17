@@ -48,6 +48,7 @@ class MiqActionController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("form_div", :partial => "form") unless @flash_errors
       end
     end
@@ -96,7 +97,7 @@ class MiqActionController < ApplicationController
       update_playbook_variables(params)
     end
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
-
+    @edit[:new][:options][:service_template_name] = ServiceTemplateAnsiblePlaybook.order(:name).where(:id => @edit[:new][:options][:service_template_id]).pluck(:name)
     # Note that the params[:tag] here is intentionally singular
     @edit[:new][:options][:tags] = params[:tag].present? ? [Classification.find(params[:tag]).tag.name] : nil if params[:tag]
 
@@ -423,7 +424,12 @@ class MiqActionController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Actions")
+    @action = MiqAction.find_by(:id => params[:miq_grid_checks])
+    @title = if @action.present?
+               _("Editing Action \"%{name}\"") % {:name => @action.description}
+             else
+               _("Adding a new Action")
+             end
     @layout = "miq_action"
     @lastaction = session[:miq_action_lastaction]
     @display = session[:miq_action_display]

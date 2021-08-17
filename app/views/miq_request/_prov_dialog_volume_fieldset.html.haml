@@ -30,7 +30,7 @@
                                                       "data-trigger"      => "focus",
                                                       "data-placement"    => "top",
                                                       "data-toggle"       => "popover",
-                                                      "data-content"      => @record.try(:decorate).try(:provisioning_volume_size_tooltip)}
+                                                      "data-content"      => @record.try(:decorate).try(:provisioning_volume_size_tooltip) ? @record.try(:decorate).try(:provisioning_volume_size_tooltip) : _("Default value is 1") }
           .col-md-6
             - if workflow.get_field(key, dialog)[:data_type] == :string
               - if @edit && workflow.get_field(key, dialog)[:display] == :edit && !@edit[:stamp_typ]

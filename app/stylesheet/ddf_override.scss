@@ -1,30 +1,164 @@
-.ddorg__carbon-form-template-buttons {
-  margin-bottom: 48px;
-}
-
 #code-section {
   .bx--form-item {
     margin-bottom: 15px;
   }
 }
 
-.ddorg__carbon-dual-list-toolbar {
-  .ddorg__carbon-dual-list-tooltipbutton {
+#dual-list-sub-form {
+  .bx--row--condensed {
     svg {
       height: 48px;
     }
   }
 }
 
-.ddorg__carbon-form-template-form {
+.form-react {
   .bx--grid {
-  padding-left: 1rem;
-  padding-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .bx--form-item {
+    margin-bottom: 2rem;
+  }
+
+  .bx--btn-set {
+    margin-bottom: 48px;
+    .bx--btn--secondary {
+      margin-left: 10px;
+    }
   }
 }
 
-.ddorg__carbon-form-template-buttons {
-  .bx--btn--secondary {
-    margin-left: 10px;
+#CheckboxDays,
+#CheckboxHours {
+  margin-bottom: 0px;
+  .bx--fieldset {
+    display: inline-flex;
+    margin-bottom: 0px;
+    .bx--checkbox-label-text {
+      padding-left: 2px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#hoursWarning {
+  color: #da1e28;
+  font-size: 14px;
+}
+
+#networkWarning {
+  margin-top: -30px;
+  color: #da1e28;
+  font-size: 14px;
+}
+
+.bx--fieldset {
+  legend.bx--label {
+    font-size: 16px;
+  }
+}
+
+#file_section {
+  .file-upload {
+    .file-upload-input {
+      display: none;
+    }
+    .file-upload-label {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+      width: 90%;
+      height: 2.5rem;
+      padding: 0 1rem;
+      color: #161616;
+      background-color: #f4f4f4;
+      border: 10px solid #f4f4f4;
+      border-bottom: 1px solid #8d8d8d;
+    }
+    .file-button {
+      color: #ffffff;
+      background-color: #0f62fe;
+      font-size: 0.875rem;
+      display: inline-block;
+      position: absolute;
+      height: 2.5rem;
+      width: 10%;
+      min-width: fit-content;
+      text-align: center;
+      border: 10px solid #0f62fe;
+      .file-button-label {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: #ffffff;
+        background-color: #0f62fe;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 1px;
+        padding: 0px;
+        border: 0px;
+        background-image: none;
+      }
+    }
+    .file-button:hover {
+      background-color: $hover-primary;
+      border-color: $hover-primary;
+      .file-button-label {
+        background-color: $hover-primary;
+      }
+    }
+    .file-button:active {
+      background-color: $active-primary;
+      border-color: $active-primary;
+      .file-button-label {
+        background-color: $active-primary;
+      }
+    }
+    .file-button:focus {
+      outline: 1px solid #ffffff;
+      outline-offset: -3px;
+    }
+  }
+}
+
+#edit_section {
+  .edit-div {
+    position: relative;
+    .edit-image {
+      margin-right: 2px;
+      max-width: 125px;
+      max-height: 125px;
+      object-fit: contain;
+    }
+    .edit-button {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+.ddorg__carbon-dual-list-body {
+  .bx--structured-list-td {
+    padding-top : 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.buttonWrapper-0-2-7 {
+  .bx--btn--primary {
+    width: 150px;
+    padding-right:20px;
+  }
+}
+
+.dualListBody-0-2-6 {
+  .bx--structured-list-td {
+    padding-top :12px;
+    padding-bottom: 12px;
   }
 }

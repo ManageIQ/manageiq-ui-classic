@@ -33,7 +33,6 @@ class VolumeMappingController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Storage")},
-        {:title => _("Block Storage")},
         {:title => _("Volume Mappings"), :url => controller_url},
       ],
     }

@@ -1,10 +1,12 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-console */
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
+import assign from 'lodash/assign';
 import { http } from '../http_api';
 
-import assign from 'lodash/assign';
-
-import { StaticGTLView } from '../components/gtl';
+import { StaticGTLView } from './gtl';
 import { NoRecordsFound } from './gtl/utils';
 
 const generateParamsFromSettings = (settings) => {
@@ -13,7 +15,8 @@ const generateParamsFromSettings = (settings) => {
     assign(params, settings.current && { page: settings.current });
     assign(params, settings.perpage && { ppsetting: settings.perpage });
     assign(params, settings.sort_header_text && { sort_choice: settings.sort_header_text });
-    assign(params, settings.sort_dir && { is_ascending: settings.sort_dir == "ASC"});
+    // eslint-disable-next-line eqeqeq
+    assign(params, settings.sort_dir && { is_ascending: settings.sort_dir == 'ASC' });
   }
   return params;
 };
@@ -63,7 +66,7 @@ const getData = (
   records, // ?: any,
   additionalOptions, // ?: any): ng.IPromise<IRowsColsResponse> {
 ) => {
-  dispatch({type: 'isLoading', isLoading: true});
+  dispatch({ type: 'isLoading', isLoading: true });
   http.post( // FIXME: window
     `/${ManageIQ.controller}/report_data`,
     generateConfig(
@@ -130,7 +133,6 @@ const setRowActive = (rows, item) => {
   return newRows;
 };
 
-
 const broadcastSelectedItem = (item) => {
   sendDataWithRx({ rowSelect: item });
 
@@ -164,7 +166,7 @@ const reduceSelectedItem = (state, item, isSelected) => {
 
 const unSelectAll = (state) => {
   ManageIQ.gridChecks = [];
-  if (! state.rows) {
+  if (!state.rows) {
     return state;
   }
 
@@ -179,7 +181,11 @@ const unSelectAll = (state) => {
 const gtlReducer = (state, action) => {
   switch (action.type) {
     case 'dataLoaded':
-      ManageIQ.gridChecks = [];
+      if (state && state.additionalOptions && state.additionalOptions.checkboxes_clicked
+        && state.additionalOptions.checkboxes_clicked.length === 0) {
+        // Making selected checkboxes array empty when those rows are  deleted or on compare/drift cancel
+        ManageIQ.gridChecks = [];
+      }
       return {
         ...state,
         isLoading: false,
@@ -223,7 +229,7 @@ const subscribeToSubject = (dispatch) =>
     (event) => {
       if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         // TODO
-         this.setExtraClasses();
+        this.setExtraClasses();
       }
 
       if (event.type === 'gtlSetOneRowActive') {
@@ -251,18 +257,16 @@ const initialState = {
     is_ascending: true,
     perpage: 20,
     sort_col: 0,
-    sort_dir: "ASC",
+    sort_dir: 'ASC',
   },
 };
 
-const setPaging = (settings, start, perPage) => {
-  return {
-    ...settings,
-    perpage: perPage,
-    startIndex: start,
-    current: (start / perPage) + 1,
-  };
-};
+const setPaging = (settings, start, perPage) => ({
+  ...settings,
+  perpage: perPage,
+  startIndex: start,
+  current: (start / perPage) + 1,
+});
 
 const computePagination = (settings) => ({
   page: settings.current,
@@ -287,6 +291,7 @@ const GtlView = ({
   // const { settings, data } = props;
   const initState = {
     ...initialState,
+    additionalOptions,
     // namedScope is taken from props to state and then used from state
     namedScope: additionalOptions.named_scope,
   };
@@ -294,6 +299,7 @@ const GtlView = ({
   const [state, dispatch] = useReducer(gtlReducer, initState);
 
   useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
     flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
   }, []);
 
@@ -306,8 +312,8 @@ const GtlView = ({
       isExplorer,
       {}, // settings, // FIXME
       records,
+      additionalOptions,
       {
-        ...additionalOptions,
         named_scope: state.namedScope,
       },
     );
@@ -329,13 +335,14 @@ const GtlView = ({
   };
 
   const onSelectAll = (items, target) => {
-    var isSelected = target.checked;
+    const isSelected = target.checked;
     if (typeof items === 'undefined') {
       return;
     }
     items.map((item) => (
       dispatch({ type: 'itemSelected', item, isSelected })
     ));
+    // eslint-disable-next-line consistent-return
     return false;
   };
 
@@ -365,15 +372,13 @@ const GtlView = ({
     additionalOptions,
   );
 
-  const setSort = (settings, headerId, isAscending) => {
-    return {
-      ...settings,
-      sort_dir: isAscending ? "DESC" : "ASC",
-      is_ascending: !(!!isAscending),
-      sort_col: headerId,
-      sort_header_text: head.filter((column) => column.col_idx == headerId)[0].text,
-    };
-  }
+  const setSort = (settings, headerId, isAscending) => ({
+    ...settings,
+    sort_dir: isAscending ? 'DESC' : 'ASC',
+    is_ascending: !(!!isAscending),
+    sort_col: headerId,
+    sort_header_text: head.filter((column) => column.col_idx === headerId)[0].text,
+  });
 
   const onSort = ({ headerId, isAscending }) => () => {
     getData(
@@ -463,33 +468,35 @@ const GtlView = ({
   return (
     <div id="miq-gtl-view">
       { (rows.length === 0) ? (
-        <NoRecordsFound/>
+        <NoRecordsFound />
       ) : (
-        (isLoading) ? <div className="spinner spinner-lg" /> :
-        <StaticGTLView
-          pagination={computePagination(settings)}
-          rows={rows}
-          head={head}
-          inEditMode={inEditMode}
-          noCheckboxes={noCheckboxes}
-          settings={settings}
-          total={settings.items}
-          onPageSet={onPageSet}
-          onPerPageSelect={onPerPageSelect}
-          onItemSelect={onItemSelect}
-          onItemButtonClick={onItemButtonClick}
-          onItemClick={onItemClick}
-          onSort={onSort}
-          onSelectAll={onSelectAll}
-          showPagination={showPagination}
-        />
+        (isLoading) ? <div className="spinner spinner-lg" />
+          : (
+            <StaticGTLView
+              pagination={computePagination(settings)}
+              rows={rows}
+              head={head}
+              inEditMode={inEditMode}
+              noCheckboxes={noCheckboxes}
+              settings={settings}
+              total={settings.items}
+              onPageSet={onPageSet}
+              onPerPageSelect={onPerPageSelect}
+              onItemSelect={onItemSelect}
+              onItemButtonClick={onItemButtonClick}
+              onItemClick={onItemClick}
+              onSort={onSort}
+              onSelectAll={onSelectAll}
+              showPagination={showPagination}
+            />
+          )
       )}
     </div>
   );
 };
 
 GtlView.propTypes = {
-  flashMessages: PropTypes.array,
+  flashMessages: PropTypes.arrayOf(PropTypes.any),
   additionalOptions: PropTypes.shape({}),
   modelName: PropTypes.string,
   activeTree: PropTypes.string,
@@ -500,6 +507,7 @@ GtlView.propTypes = {
   hideSelect: PropTypes.bool,
   showUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   pages: PropTypes.shape({}), // fixme
+  isAscending: PropTypes.bool,
 };
 
 GtlView.defaultProps = {
@@ -514,6 +522,7 @@ GtlView.defaultProps = {
   hideSelect: false,
   showUrl: null,
   pages: null,
+  isAscending: null,
 };
 
 export default GtlView;

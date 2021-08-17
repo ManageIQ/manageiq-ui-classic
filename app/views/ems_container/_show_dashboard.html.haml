@@ -1,5 +1,9 @@
 = render :partial => "layouts/flash_msg"
 .container-fluid.container-tiles-pf.containers-dashboard
+  - if @record
+    .row.row-tile-pf
+      = react('RefreshDataNotification', :providerId => @record.id.to_s, 
+       :apiUrl => 'container_dashboard/refresh_status_data')
   .row.row-tile-pf
     = render :partial => "ems_container/aggregate-status-card"
   .row.row-tile-pf

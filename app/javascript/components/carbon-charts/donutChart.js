@@ -24,7 +24,7 @@ const DonutChartGraph = ({ data }) => {
 };
 
 DonutChartGraph.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 DonutChartGraph.defaultProps = {

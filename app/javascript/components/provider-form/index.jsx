@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 import { pick, keyBy } from 'lodash';
 
 import { API } from '../../http_api';
@@ -15,7 +15,7 @@ import DetectButton from './detect-button';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
-  const children = Array.isArray(schema.fields) ? schema.fields.flatMap(field => findSkipSubmits(field, items)) : [];
+  const children = Array.isArray(schema.fields) ? schema.fields.flatMap((field) => findSkipSubmits(field, items)) : [];
   return [...found, ...children];
 };
 
@@ -46,7 +46,7 @@ const commonFields = [
   },
 ];
 
-const loadProviderFields = type => API.options(`/api/providers?type=${type}`).then(
+const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
   ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
     ...commonFields,
     {
@@ -58,30 +58,46 @@ const loadProviderFields = type => API.options(`/api/providers?type=${type}`).th
   ]),
 );
 
-const typeSelectField = (edit, filter, setState) => ({
+const typeSelectField = (edit, filter, setState, providers) => ({
   component: 'select',
   id: 'type',
   name: 'type',
   label: __('Type'),
   kind: filter,
   isDisabled: edit,
-  includeEmpty: true,
-  loadOptions: () =>
-    API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
-      .filter(({ kind }) => kind === filter)
-      .map(({ title, type }) => ({ value: type, label: title }))),
-  onChange: value => loadProviderFields(value).then(fields => setState(({ fields: [firstField] }) => ({
-    fields: [firstField, ...fields],
-  }))),
+  isRequired: true,
+  options: providers,
+  onChange: (value) => {
+    if (value !== '-1') {
+      loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
+        fields: [firstField, ...fields],
+      })));
+    } else {
+      setState(({ fields: [firstField] }) => ({
+        fields: [firstField,
+          {
+            id: 'networkWarning',
+            component: componentTypes.PLAIN_TEXT,
+            name: 'networkWarning',
+            label: __('Please select a type.'),
+          }],
+      }));
+    }
+  },
 });
 
-const ProviderForm = ({ providerId, kind, title, redirect }) => {
+const ProviderForm = ({
+  providerId, kind, title, redirect,
+}) => {
   const edit = !!providerId;
   const [{ fields, initialValues }, setState] = useState({});
 
   const submitLabel = edit ? __('Save') : __('Add');
 
   useEffect(() => {
+    const filter = kind;
+    let providers = [];
+
     if (providerId) {
       miqSparkleOn();
       API.get(`/api/providers/${providerId}?attributes=endpoints,authentications`).then(({
@@ -112,7 +128,11 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
     } else {
       // As the typeSelectField relies on the setState() function, it's necessary to set the initial state
       // here and not above in the useState() function.
-      setState({ fields: [typeSelectField(false, kind, setState)] });
+      API.options('/api/providers').then(({ data: { supported_providers } }) => { // eslint-disable-line camelcase
+        providers = supported_providers.filter(({ kind }) => kind === filter).map(({ title, type }) => ({ value: type, label: title }));
+        providers.unshift({ label: `<${__('Choose')}>`, value: '-1' });
+        setState({ fields: [typeSelectField(false, kind, setState, providers)] });
+      });
     }
   }, [providerId]);
 
@@ -128,34 +148,36 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
   };
 
   const onSubmit = ({ type, ..._data }, { getState }) => {
-    miqSparkleOn();
+    if (type !== '-1') {
+      miqSparkleOn();
 
-    const message = sprintf(__('%s %s was saved'), title, _data.name || initialValues.name);
+      const message = sprintf(__('%s %s was saved'), title, _data.name || initialValues.name);
 
-    // Retrieve the modified fields from the schema
-    const modified = Object.keys(getState().modified);
-    // Imit the fields that have `skipSubmit` set to `true`
-    const toDelete = findSkipSubmits({ fields }, modified);
-    // Construct a list of fields to be submitted
-    const toSubmit = modified.filter(field => !toDelete.includes(field));
+      // Retrieve the modified fields from the schema
+      const modified = Object.keys(getState().modified);
+      // Imit the fields that have `skipSubmit` set to `true`
+      const toDelete = findSkipSubmits({ fields }, modified);
+      // Construct a list of fields to be submitted
+      const toSubmit = modified.filter((field) => !toDelete.includes(field));
 
-    // Build up the form data using the list and pull out endpoints and authentications
-    const { endpoints: _endpoints = { default: {} }, authentications: _authentications = {}, ...rest } = pick(_data, toSubmit);
-    // Convert endpoints and authentications back to an array
-    const endpoints = Object.keys(_endpoints).map(key => ({ role: key, ..._endpoints[key] }));
-    const authentications = Object.keys(_authentications).map(key => ({ authtype: key, ..._authentications[key] }));
+      // Build up the form data using the list and pull out endpoints and authentications
+      const { endpoints: _endpoints = { default: {} }, authentications: _authentications = {}, ...rest } = pick(_data, toSubmit);
+      // Convert endpoints and authentications back to an array
+      const endpoints = Object.keys(_endpoints).map((key) => ({ role: key, ..._endpoints[key] }));
+      const authentications = Object.keys(_authentications).map((key) => ({ authtype: key, ..._authentications[key] }));
 
-    // Construct the full form data with all the necessary items
-    const data = {
-      ...rest,
-      endpoints,
-      authentications,
-      ...(edit ? undefined : { type }),
-      ddf: true,
-    };
+      // Construct the full form data with all the necessary items
+      const data = {
+        ...rest,
+        endpoints,
+        authentications,
+        ...(edit ? undefined : { type }),
+        ddf: true,
+      };
 
-    const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
-    request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
+      const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
+      request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
+    }
   };
 
   const componentMapper = {

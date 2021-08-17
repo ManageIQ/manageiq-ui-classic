@@ -7,6 +7,7 @@ import Quaditem from './Quaditem';
 const quadSet = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'middle'];
 
 const renderSingle = (item) => {
+  // eslint-disable-next-line no-unused-vars
   const { className: _className, ...rest } = item;
   return (
     <div className="single-wrapper">
@@ -15,23 +16,25 @@ const renderSingle = (item) => {
   );
 };
 
-const renderQuad = data => (
+const renderQuad = (data) => (
   <div className="quad-wrapper">
-    {quadSet.filter(key => data[key]).map((item) => {
+    {quadSet.filter((key) => data[key]).map((item) => {
+      // eslint-disable-next-line no-unused-vars
       const { className: _className, ...rest } = data[item];
       return (<Quaditem key={item} className={kebabCase(item)} {...rest} />);
     })}
   </div>
 );
 
-const isQuad = data => quadSet.some(quad => data[quad]);
+const isQuad = (data) => quadSet.some((quad) => data[quad]);
 
-const Quadicon = props => (<div className="miq-quadicon">{isQuad(props.data) ? renderQuad(props.data) : renderSingle(props.data)}</div>);
+// eslint-disable-next-line react/destructuring-assignment
+const Quadicon = (props) => (<div className="miq-quadicon">{isQuad(props.data) ? renderQuad(props.data) : renderSingle(props.data)}</div>);
 export default Quadicon;
 
 Quadicon.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape(Quaditem.propTypes)).isRequired,
     PropTypes.shape(Quaditem.propTypes).isRequired,
-  ]),
+  ]).isRequired,
 };

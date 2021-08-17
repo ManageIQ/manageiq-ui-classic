@@ -9,5 +9,5 @@
     :javascript
       ManageIQ.component.componentFactory('TagGroup', '#tag_group', #{textual_tags_render_data(@record).to_json});
   .col-md-12.col-lg-8
-    - if @record.survey_spec['spec']
+    - if @record.survey_spec&.dig("spec")
       = react 'TableListViewWrapper', TextualListview.data(textual_configuration_script_survey)

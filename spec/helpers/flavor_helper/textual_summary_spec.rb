@@ -1,7 +1,7 @@
 describe FlavorHelper::TextualSummary do
   include_examples "textual_group", "Properties", %i(
     cpus
-    cpu_cores
+    cpu_sockets
     memory
     enabled
     publicly_available

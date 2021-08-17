@@ -32,7 +32,7 @@ const TreeViewBase = ({
         return nl > min ? min : nl;
       }, undefined);
 
-      return Tree.nodeChildren(node, value.filter(key => key.split('.').length === min));
+      return Tree.nodeChildren(node, value.filter((key) => key.split('.').length === min));
     },
     ...overrideActionMapper,
   };
@@ -43,7 +43,7 @@ const TreeViewBase = ({
     });
   }, [loadData]);
 
-  const lazyLoad = node => lazyLoadData(node).then((result) => {
+  const lazyLoad = (node) => lazyLoadData(node).then((result) => {
     const data = convert(result, { check, select });
 
     return Object.keys(data).reduce((subtree, key) => {
@@ -51,7 +51,7 @@ const TreeViewBase = ({
         // Creating the node id from the parent id.
         const nodeId = `${node.nodeId}.${key}`;
         // Updating the children ids, so it does not point to something else.
-        const element = { ...data[key], nodeId, nodes: data[key].nodes.map(child => `${node.nodeId}.${child}`) };
+        const element = { ...data[key], nodeId, nodes: data[key].nodes.map((child) => `${node.nodeId}.${child}`) };
         return { ...subtree, [nodeId]: element };
       }
 
@@ -59,7 +59,7 @@ const TreeViewBase = ({
     }, {});
   });
 
-  const onDataChange = commands => setNodes(commands.reduce(
+  const onDataChange = (commands) => setNodes(commands.reduce(
     (nodes, { type, value, nodeId }) => (
       type === ActionTypes.ADD_NODES
         ? Tree.addNodes(nodes, value)
@@ -87,7 +87,7 @@ const TreeViewBase = ({
 };
 
 TreeViewBase.propTypes = {
-  actionMapper: PropTypes.any,
+  actionMapper: PropTypes.objectOf(PropTypes.any),
   loadData: PropTypes.func.isRequired,
   lazyLoadData: PropTypes.func,
   isMulti: PropTypes.bool,

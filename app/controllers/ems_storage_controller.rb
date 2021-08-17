@@ -20,7 +20,27 @@ class EmsStorageController < ApplicationController
     @table_name ||= "ems_storage"
   end
 
-  TYPE_CHECK_SHOW_IDENTIFIERS = %w[ems_storage_show].freeze
+  def breadcrumb_name(_model)
+    _('Storage Managers')
+  end
+
+  # Show the main MS list view
+  def show_list
+    opts = {:layout => "ems_storage", :model => model}
+    process_show_list(opts)
+  end
+
+  def download_data
+    assert_privileges('ems_storage_show_list')
+    super
+  end
+
+  def download_summary_pdf
+    assert_privileges('ems_storage_show')
+    super
+  end
+
+  TYPE_CHECK_SHOW_IDENTIFIERS = %w[ems_storage_show ems_storage-show_list].freeze
 
   def check_generic_rbac
     ident = "#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}"
@@ -44,22 +64,14 @@ class EmsStorageController < ApplicationController
   end
 
   def feature_role(record)
-    if record.supports_object_storage?
-      'ems_object_storage_show'
-    elsif record.supports_block_storage?
-      'ems_block_storage_show'
-    end
-  end
-
-  def download_summary_pdf
-    assert_privileges('ems_storage_show')
-    super
+    'ems_storage_show'
   end
 
   def breadcrumbs_options
     {
       :breadcrumbs => [
         {:title => _("Storage")},
+        {:title => _("Managers"), :url => controller_url},
       ],
     }
   end

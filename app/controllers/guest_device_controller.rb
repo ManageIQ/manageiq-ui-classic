@@ -11,10 +11,6 @@ class GuestDeviceController < ApplicationController
 
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 
-  def self.model
-    @model ||= "GuestDevice".safe_constantize
-  end
-
   def title
     _('Guest Devices')
   end

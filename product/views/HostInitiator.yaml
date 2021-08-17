@@ -28,6 +28,8 @@ include:
 cols:
 - name
 - v_total_addresses
+- status
+- host_cluster_name
 
 
 # Included tables and columns for query performance
@@ -40,6 +42,8 @@ col_order:
 - ext_management_system.name
 - physical_storage.name
 - v_total_addresses
+- status
+- host_cluster_name
 
 
 # Column titles, in order
@@ -48,6 +52,8 @@ headers:
 - EMS Name
 - Storage System Name
 - Total addresses
+- Status
+- Host Cluster Name
 
 # Condition(s) string for the SQL query
 conditions:

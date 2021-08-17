@@ -23,7 +23,7 @@ module PxeController::IsoDatastores
   end
 
   def iso_datastore_create
-    assert_privileges('iso_datastore_create')
+    assert_privileges('iso_datastore_new')
     id = params[:id] || "new"
     return unless load_edit("isd_edit__#{id}")
     iso_datastore_get_form_vars

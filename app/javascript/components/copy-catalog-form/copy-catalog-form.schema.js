@@ -2,7 +2,7 @@ import { componentTypes } from '@@ddf';
 import debouncePromise from '../../helpers/promise-debounce';
 import { http } from '../../http_api';
 
-export const asyncValidator = value =>
+export const asyncValidator = (value) =>
   http.get('/catalog/servicetemplates_names')
     .then((json) => {
       if (json.names.includes(value)) {
@@ -22,7 +22,7 @@ function createSchema() {
       id: 'name',
       name: 'name',
       validate: [
-        value => asyncValidatorDebounced(value),
+        (value) => asyncValidatorDebounced(value),
       ],
       label: __('Name'),
       maxLength: 40,

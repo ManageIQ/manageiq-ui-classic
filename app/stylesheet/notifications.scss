@@ -220,4 +220,13 @@
   }
 }
 
-
+.refresh-notifications {
+  display: flex;
+  .last-refresh-notification {
+    margin-top: 0px;
+    margin-left: 10px;
+  }
+  .date-notification {
+    margin-left: 20px;
+  }
+}

@@ -4,6 +4,7 @@ import { LineChart } from '@carbon/charts-react';
 
 const LineChartGraph = ({ data, format, size }) => {
   const getYAxisValue = (format, value) => {
+    // eslint-disable-next-line no-useless-escape
     const tmp = /^([0-9\,\.]+)(.*)/.exec(ManageIQ.charts.formatters[format.function].c3(format.options)(value));
     return [`${numeral(tmp[1]).value()}${tmp[2]}`];
   };

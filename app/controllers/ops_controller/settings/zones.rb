@@ -5,62 +5,8 @@ module OpsController::Settings::Zones
     assert_privileges(params[:id] ? "zone_edit" : "zone_new")
 
     case params[:button]
-    when "cancel"
-      @edit = nil
-      @zone = Zone.find(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
-      if @zone.try(:id)
-        add_flash(_("Edit of Zone \"%{name}\" was cancelled by the user") % {:name => @zone.name})
-      else
-        add_flash(_("Add of new Zone was cancelled by the user"))
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
-    when "save", "add"
-      assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
-      id = params[:id] || "new"
-      return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
-
-      @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
-
-      unless @edit[:new][:name]
-        add_flash(_("Name can't be blank"), :error)
-      end
-      unless @edit[:new][:description]
-        add_flash(_("Description can't be blank"), :error)
-      end
-
-      # This is needed for cases when more than one required field is missing or is not correct, to prevent rendering same flash messages
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-        return
-      end
-
-      zone_set_record_vars(@zone)
-      @edit[:errors] = []
-      if @zone.save
-        AuditEvent.success(build_created_audit(@zone, @edit))
-        if params[:button] == "save"
-          add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-        else
-          add_flash(_("Zone \"%{name}\" was added") % {:name => @edit[:new][:name]})
-        end
-        @edit = nil
-        self.x_node = params[:button] == "save" ? "z-#{@zone.id}" : "xx-z"
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => "root", :replace_trees => %i[settings diagnostics])
-      else
-        @in_a_form = true
-        @edit[:errors].each { |msg| add_flash(msg, :error) }
-        @zone.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "ze")
-      end
     when "reset", nil # Reset or first time in
       zone_build_edit_screen
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
       replace_right_cell(:nodetype => "ze")
     end
   end
@@ -86,44 +32,11 @@ module OpsController::Settings::Zones
     end
   end
 
-  # AJAX driven routine to check for changes in ANY field on the user form
-  def zone_field_changed
-    assert_privileges(params[:id] == "new" ? "zone_new" : "zone_edit")
 
-    return unless load_edit("zone_edit__#{params[:id]}", "replace_cell__explorer")
-
-    zone_get_form_vars
-    session[:changed] = @changed = @edit[:new] != @edit[:current]
-    render :update do |page|
-      page << javascript_prologue
-      if @refresh_div
-        page.replace(@refresh_div, :partial => @refresh_partial,
-                                   :locals  => {:type => "zones", :action_url => 'zone_field_changed'})
-      end
-      page << javascript_for_miq_button_visibility(@changed)
-    end
-  end
 
   private
 
-  # Set user record variables to new values
-  def zone_set_record_vars(zone, mode = nil)
-    zone.name = @edit[:new][:name]
-    zone.description = @edit[:new][:description]
-    zone.settings ||= {}
-    zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
-    zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-  end
 
-  # Get variables from zone edit form
-  def zone_get_form_vars
-    @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
-
-    copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip])
-    @edit[:new][:concurrent_vm_scans] = params[:max_scans].to_i if params[:max_scans]
-
-    set_verify_status
-  end
 
   def zone_build_edit_screen
     @zone = params[:id] ? Zone.find(params[:id]) : Zone.new # Get existing or new record

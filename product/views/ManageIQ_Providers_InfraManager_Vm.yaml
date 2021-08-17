@@ -27,6 +27,8 @@ cols:
 - last_scan_on
 - region_description
 - normalized_state
+- product_name
+- os_image_name
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -51,6 +53,7 @@ include_for_find:
 col_order:
 - name
 - normalized_state
+- product_name
 - ext_management_system.name
 - ems_cluster_name
 - host.name
@@ -60,11 +63,13 @@ col_order:
 - allocated_disk_storage
 - last_scan_on
 - region_description
+- os_image_name
 
 # Column titles, in order
 headers:
 - Name
 - Power State
+- Operating System
 - Provider
 - Cluster
 - Host

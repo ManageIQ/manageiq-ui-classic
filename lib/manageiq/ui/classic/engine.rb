@@ -11,7 +11,6 @@ require 'sprockets/railtie'
 # For this to work properly, it is dependent on patternfly/patternfly-sass#150
 if ENV["RAILS_ENV"] != "production" || defined?(Rake)
   require 'sass-rails'
-  require 'coffee-rails'
   require 'font-fabulous'
   require 'patternfly-sass'
 else

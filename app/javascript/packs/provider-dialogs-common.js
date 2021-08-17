@@ -5,13 +5,15 @@ function reactModal(buttonData) {
   const props = {
     recordId: ManageIQ.record.recordId,
     gridChecks: ManageIQ.gridChecks,
-    modalData: buttonData
+    modalData: buttonData,
   };
 
   const Component = ManageIQ.component.getReact(buttonData.component_name);
   const inner = () => <Component {...props} />;
-
-  renderModal(__(buttonData.modal_title), inner);
+  const noop = () => {};
+  const closefunc = (Component.WrappedComponent && Component.WrappedComponent.defaultProps && Component.WrappedComponent.defaultProps.closefunc)
+    ? Component.WrappedComponent.defaultProps.closefunc : noop;
+  renderModal(__(buttonData.modal_title), inner, closefunc);
 }
 
 function apiCall(buttonData, dialogData) {

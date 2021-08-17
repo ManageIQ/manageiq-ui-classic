@@ -32,7 +32,7 @@ const PodsAreaChart = ({ data, config, dataPoint }) => {
       alignment: 'center',
 
     },
-    height: config.size.height,
+    height: config.size.height || '150px',
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
@@ -78,7 +78,7 @@ PodsAreaChart.propTypes = {
     tooltipFn: PropTypes.func.isRequired,
     valueType: PropTypes.string,
     size: PropTypes.shape({
-      height: PropTypes.number.isRequired,
+      height: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

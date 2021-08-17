@@ -97,9 +97,22 @@ module ApplicationHelper
 
   # Check role based authorization for a UI task
   def role_allows?(**options)
-    if options[:feature].nil?
+    features = Array(options[:feature])
+
+    if features.blank?
       $log.debug("Auth failed - no feature was specified (required)")
       return false
+    end
+
+    # Detect if queried features are missing from the database and possibly invalid
+    if !Rails.env.production? && MiqProductFeature.where(:identifier => features).count != features.length
+      message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
+      identifiers = MiqProductFeature.all.pluck(:identifier)
+      if Rails.env.development?
+        raise message
+      elsif Rails.env.test? && identifiers.length >= 5
+        raise("#{message} Note: detected features: #{identifiers.inspect}")
+      end
     end
 
     Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
@@ -114,29 +127,6 @@ module ApplicationHelper
   # make sure you have the right one.
   def model_to_controller(record)
     record.class.base_model.name.underscore
-  end
-
-  def type_has_quadicon(type)
-    !%w[
-      ConfigurationProfile
-      Account
-      GuestApplication
-      SystemService
-      Filesystem
-      ChargebackRate
-      ServiceTemplateProvisionRequest
-      MiqProvisionRequest
-      MiqProvisionRequestTemplate
-      MiqWebServiceWorker
-      CustomizationTemplateSysprep
-      CustomizationTemplateCloudInit
-      CustomizationTemplateKickstart
-      PxeImageType
-      IsoDatastore
-      MiqTask
-      MiqRequest
-      PxeServer
-    ].include?(type)
   end
 
   CONTROLLER_TO_MODEL = {
@@ -207,20 +197,19 @@ module ApplicationHelper
   #
   # Params:
   #   records - an array of record instances or a single instance of a record
-  #   feature - symbol, a feature from SupportsFeatureMixin::QUERYABLE_FEATURES
+  #   feature - symbol
   # Returns:
   #   boolean - true if all records support the feature
   #           - false in case the record (or one of many records) does not
   #             support the feature
   def records_support_feature?(records, feature)
-    unsupported_record = Array.wrap(records).find do |record|
+    Array.wrap(records).all? do |record|
       if record.respond_to?("supports_#{feature}?")
-        !record.supports?(feature)
+        record.supports?(feature)
       else # TODO: remove with deleting AvailabilityMixin module
-        !record.is_available?(feature)
+        record.is_available?(feature)
       end
     end
-    unsupported_record.nil?
   end
 
   # Create a url for a record that links to the proper controller
@@ -267,6 +256,10 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
+      if controller == "ems_storage" && action == "show"
+        return ems_storages_path
+      end
+    
       if request[:controller] == 'service' && view.db == 'GenericObject'
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
@@ -998,6 +991,7 @@ module ApplicationHelper
     ex = ExplorerPresenter.main_div.update('main_div', render_to_string(args))
 
     ex.replace("flash_msg_div", render_to_string(:partial => "layouts/flash_msg")) if options[:flash]
+    ex.scroll_top if @flash_array.present?
     ex.spinner_off if options[:spinner_off]
 
     render :json => ex.for_render
@@ -1071,7 +1065,7 @@ module ApplicationHelper
                              storage_resource
                              host_initiator
                              container_topology
-                             ems_block_storage
+                             ems_storage
                              ems_cloud
                              ems_cluster
                              ems_configuration
@@ -1079,9 +1073,7 @@ module ApplicationHelper
                              ems_infra
                              ems_infra_dashboard
                              ems_network
-                             ems_object_storage
                              ems_physical_infra
-                             ems_storage
                              infra_topology
                              event
                              flavor
@@ -1204,6 +1196,7 @@ module ApplicationHelper
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.with_no_checkboxes(@no_checkboxes || options[:no_checkboxes])
+    @report_data_additional_options.with_checkboxes_clicked(params[:miq_grid_checks]) if params[:miq_grid_checks]
     @report_data_additional_options.freeze
   end
 

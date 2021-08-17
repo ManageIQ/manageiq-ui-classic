@@ -47,6 +47,12 @@ class ContainerDashboardController < ApplicationController
     render :json => {:data => collect_image_metrics_data(params[:id])}
   end
 
+  def refresh_status_data
+    assert_privileges("container_dashboard_view")
+
+    render :json => {:data => collect_refresh_status_data(params[:id])}
+  end
+
   def data_live
     render :json => collect_live_data(params[:id], params[:query])
   end
@@ -97,6 +103,10 @@ class ContainerDashboardController < ApplicationController
 
   def collect_image_metrics_data(provider_id)
     ContainerDashboardService.new(provider_id, self).image_metrics_data
+  end
+
+  def collect_refresh_status_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).refresh_status_data
   end
 
   def collect_live_data(provider_id, query)

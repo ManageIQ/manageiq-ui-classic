@@ -75,7 +75,7 @@ const createSchema = () => ({
           id: 'perpage.list',
           label: __('List View'),
           initialValue: 20,
-          options: [5, 10, 20, 50, 100, 200, 500, 1000].map((n) => ({ label: n, value: n })),
+          options: ['5', '10', '20', '50', '100', '200', '500', '1000'].map((n) => ({ label: n, value: n })),
         },
         {
           component: componentTypes.SELECT,
@@ -83,7 +83,7 @@ const createSchema = () => ({
           id: 'perpage.reports',
           label: __('Reports'),
           initialValue: 20,
-          options: [5, 10, 20, 50, 100, 200, 500, 1000].map((n) => ({ label: n, value: n })),
+          options: ['5', '10', '20', '50', '100', '200', '500', '1000'].map((n) => ({ label: n, value: n })),
         },
       ],
     },
@@ -99,7 +99,7 @@ const createSchema = () => ({
           label: __('Containers'),
           options: [
             { label: __('Unlimited'), value: 0 },
-            ...[5, 10, 20, 50, 100, 200, 500, 1000].map((n) => ({ label: n, value: n })),
+            ...['5', '10', '20', '50', '100', '200', '500', '1000'].map((n) => ({ label: n, value: n })),
           ],
         },
       ],

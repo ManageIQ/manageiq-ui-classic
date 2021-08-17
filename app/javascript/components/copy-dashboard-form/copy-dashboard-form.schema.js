@@ -32,7 +32,7 @@ export default (miqGroups, name, dashboardId) => {
           id: 'name',
           name: 'name',
           validate: [
-            value => asyncValidatorDebounced(value, dashboardId, name),
+            (value) => asyncValidatorDebounced(value, dashboardId, name),
           ],
           label: __('Name'),
           maxLength: 40,

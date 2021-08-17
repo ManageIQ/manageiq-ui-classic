@@ -9,19 +9,27 @@ export default function OperationRanges(props) {
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
-      {item.value.map((subitem, j) => <tr key={j}><td>{subitem.label}</td><td>{subitem.value}</td></tr>)}
+      {item.value.map((subitem, j) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <tr key={j}>
+          <td>{subitem.label}</td>
+          <td>{subitem.value}</td>
+        </tr>
+      ))}
     </React.Fragment>
   );
+
+  const { title, items } = props;
 
   return (
     <table className="table table-bordered table-striped table-summary-screen">
       <thead>
         <tr>
-          <th colSpan="3" align="left">{props.title}</th>
+          <th colSpan="3" align="left">{title}</th>
         </tr>
       </thead>
       <tbody>
-        {props.items.map((item, i) => renderItem(item, i))}
+        {items.map((item, i) => renderItem(item, i))}
       </tbody>
     </table>
   );

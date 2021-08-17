@@ -439,10 +439,8 @@ class ApplicationHelper::ToolbarChooser
             physical_server
             physical_switch
             physical_storage
-            resource_pool
             container_template
-            ems_block_storage
-            ems_object_storage
+            resource_pool
             timeline
             usage
             guest_device

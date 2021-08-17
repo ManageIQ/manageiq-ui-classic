@@ -150,11 +150,7 @@ module OpsController::OpsRbac
   def rbac_tenant_manage_quotas_save_add
     tenant = Tenant.find(params[:id])
     begin
-      if !params[:quotas]
-        tenant.set_quotas({})
-      else
-        tenant.set_quotas(params.require(:quotas).permit!.to_h.deep_symbolize_keys)
-      end
+      tenant.set_quotas(rbac_tenant_manage_quotas_params.to_h.deep_symbolize_keys)
     rescue => bang
       add_flash(_("Error when saving tenant quota: %{message}") % {:message => bang.message}, :error)
       javascript_flash
@@ -163,6 +159,15 @@ module OpsController::OpsRbac
                     {:model => tenant_type_title_string(tenant.divisible), :name => tenant.name})
       get_node_info(x_node)
       replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
+    end
+  end
+
+  private def rbac_tenant_manage_quotas_params
+    if params[:quotas]
+      permitted_attrs = TenantQuota::NAMES.index_with { %i[unit value warn_value] }
+      params.require(:quotas).permit(permitted_attrs)
+    else
+      {}
     end
   end
 
@@ -235,7 +240,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_user_delete")
     users = []
     if params[:id] # showing a list
-      if params[:id].nil? || !User.exists?(params[:id])
+      if params[:id].nil? || !User.exists?(:id => params[:id])
         add_flash(_("User no longer exists"), :error)
       else
         user = User.find(params[:id])
@@ -285,7 +290,7 @@ module OpsController::OpsRbac
     else # showing 1 role, delete it
       roles.push(params[:id])
       process_roles(roles, "destroy") unless roles.empty?
-      self.x_node = "xx-ur" unless MiqUserRole.exists?(params[:id]) # reset node to show list
+      self.x_node = "xx-ur" unless MiqUserRole.exists?(:id => params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -350,7 +355,7 @@ module OpsController::OpsRbac
     else # showing 1 group, delete it
       groups.push(params[:id])
       process_groups(groups, "destroy") unless groups.empty?
-      self.x_node = "xx-g" unless MiqGroup.exists?(params[:id]) # reset node to show list
+      self.x_node = "xx-g" unless MiqGroup.exists?(:id => params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -521,6 +526,7 @@ module OpsController::OpsRbac
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
         page.replace("ldap_user_div", :partial => "ldap_auth_users")
       end
     else
@@ -786,6 +792,7 @@ module OpsController::OpsRbac
       if %w[up down].include?(params[:button])
         if @refresh_div
           page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
+          page << "miqScrollTop();" if @flash_array.present?
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
       else

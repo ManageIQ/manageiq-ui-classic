@@ -25,36 +25,39 @@ const fontSize = (text) => {
 
   if (len < 3) {
     return 'font-normal';
-  } else if (len > 2 && len < 4) {
+  } if (len > 2 && len < 4) {
     return 'font-small';
   }
   return 'font-tiny';
 };
 
 const Quaditem = (props) => {
-  const shortText = abbrNumber(props.text);
+  const {
+    text, fonticon, color, fileicon, piechart, className, tooltip, background,
+  } = props;
+  const shortText = abbrNumber(text);
   const parts = [
-    props.fonticon && (
+    fonticon && (
       <div key="fonticon" className="fonticon">
-        <i className={props.fonticon} style={props.color ? { color: props.color } : {}} />
+        <i className={fonticon} style={color ? { color } : {}} />
       </div>
     ),
-    !props.fonticon && props.fileicon && (
+    !fonticon && fileicon && (
       <div key="fileicon" className="fileicon">
-        <img alt="fileicon" src={props.fileicon} />
+        <img alt="fileicon" src={fileicon} />
       </div>
     ),
-    props.text && (
+    text && (
       <div key="text" className={`text ${fontSize(shortText)}`}>
         {shortText}
       </div>
     ),
-    (props.piechart || props.piechart === 0) && (
-      <div key="piechart" className={`piechart fill-${props.piechart}`} />
+    (piechart || piechart === 0) && (
+      <div key="piechart" className={`piechart fill-${piechart}`} />
     ),
   ].filter(Boolean);
   return (
-    <div className={classNames('miq-quaditem', props.className)} title={props.tooltip} style={{ background: props.background || 'initial' }}>
+    <div className={classNames('miq-quaditem', className)} title={tooltip} style={{ background: background || 'initial' }}>
       {parts}
     </div>
   );
@@ -83,4 +86,15 @@ Quaditem.propTypes = {
   background: PropTypes.string,
   color: PropTypes.string,
   piechart: PropTypes.number,
+};
+
+Quaditem.defaultProps = {
+  fonticon: undefined,
+  fileicon: undefined,
+  text: undefined,
+  background: undefined,
+  color: undefined,
+  piechart: undefined,
+  tooltip: undefined,
+  className: undefined,
 };

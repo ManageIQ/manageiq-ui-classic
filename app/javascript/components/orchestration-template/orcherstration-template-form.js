@@ -8,17 +8,19 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import orchestrationFormSchema from './orchestration-template-form.schema';
 
-const submitNewTemplate = (values, message) => API.post('/api/orchestration_templates', values, {skipErrors: [400, 500]})
+const submitNewTemplate = (values, message) => API.post('/api/orchestration_templates', values, { skipErrors: [400, 500] })
   .then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
   .catch((apiResult) => {
     add_flash(apiResult.data.error.message, 'error');
-    miqSparkleOff()});
+    miqSparkleOff();
+  });
 
-const updateTemplate = (values, message, otId) => API.patch(`/api/orchestration_templates/${otId}`, values, {skipErrors: [400, 500]})
+const updateTemplate = (values, message, otId) => API.patch(`/api/orchestration_templates/${otId}`, values, { skipErrors: [400, 500] })
   .then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
   .catch((apiResult) => {
     add_flash(apiResult.data.error.message, 'error');
-    miqSparkleOff()});
+    miqSparkleOff();
+  });
 
 const copyTemplate = (values, message, otId) => API.post(`/api/orchestration_templates/${otId}`, {
   action: 'copy',
@@ -32,6 +34,7 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line no-nested-ternary
     setSubmitAction(() => (copy ? copyTemplate : otId ? updateTemplate : submitNewTemplate));
     if (otId) {
       API.get(`/api/orchestration_templates/${otId}?attributes=name,description,type,ems_id,draft,content`)

@@ -27,29 +27,6 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
       .catch(miqService.handleFailure);
   }
 
-  $scope.addClicked = function() {
-    miqService.sparkleOn();
-    var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.hostAggregateModel, { complete: false });
-  };
-
-  $scope.cancelClicked = function() {
-    miqService.sparkleOn();
-    var url;
-    if (hostAggregateFormId === 'new') {
-      url = '/host_aggregate/create/new' + '?button=cancel';
-    } else {
-      url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';
-    }
-    miqService.miqAjaxButton(url);
-  };
-
-  $scope.saveClicked = function() {
-    miqService.sparkleOn();
-    var url = '/host_aggregate/update/' + hostAggregateFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.hostAggregateModel, { complete: false });
-  };
-
   $scope.addHostClicked = function() {
     miqService.sparkleOn();
     var url = '/host_aggregate/add_host/' + hostAggregateFormId + '?button=addHost';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
@@ -72,6 +73,7 @@ const onClick = (button) => {
       if (button.popup) {
         window.open(buttonUrl);
       } else {
+        // eslint-disable-next-line no-undef
         DoNav(encodeURI(buttonUrl));
       }
       return;
@@ -138,7 +140,7 @@ const onRowSelect = (isChecked, dispatch) => {
   dispatch({ type: isChecked ? 'INCREMENT' : 'DECREMENT' });
 };
 
-const subscribeToSubject = dispatch => (
+const subscribeToSubject = (dispatch) => (
   listenToRx(
     (event) => {
       if (event.eventType === 'updateToolbarCount') {
@@ -157,7 +159,7 @@ const subscribeToSubject = dispatch => (
         dispatch({ type: 'SET', count: event.setCount });
       }
     },
-    err => console.error('Toolbar RxJs Error: ', err),
+    (err) => console.error('Toolbar RxJs Error: ', err),
     () => console.debug('Toolbar RxJs subject completed, no more events to catch.'),
   )
 );
@@ -177,25 +179,22 @@ const separateItems = (toolbarItems) => {
   return separatedArray;
 };
 
-const filterViews = toolbarItems => toolbarItems
+const filterViews = (toolbarItems) => toolbarItems
   .flat()
-  .filter(i => i && i.id && i.id.indexOf('view_') === 0);
+  .filter((i) => i && i.id && i.id.indexOf('view_') === 0);
 
-const filterNonViews = toolbars => toolbars
-  .map(toolbar =>
-    toolbar.filter(i => i && i.id && i.id.indexOf('view_') !== 0)
-  );
+const filterNonViews = (toolbars) => toolbars
+  .map((toolbar) =>
+    toolbar.filter((i) => i && i.id && i.id.indexOf('view_') !== 0));
 
-const sanitizeToolbars = arr => arr ? arr.filter(Boolean) : [];
+const sanitizeToolbars = (arr) => (arr ? arr.filter(Boolean) : []);
 
 const applyButtonChanges = (toolbars, changes) =>
-  toolbars.map(toolbar =>
-    toolbar.map(item => item.id in changes ? {
-        ...item,
-        ...changes[item.id]
-      } : item
-    ),
-  );
+  toolbars.map((toolbar) =>
+    toolbar.map((item) => (item.id in changes ? {
+      ...item,
+      ...changes[item.id],
+    } : item)));
 
 const toolbarReducer = (state, action) => {
   switch (action.type) {
@@ -237,27 +236,28 @@ const initState = {
 
 /* Wrapper class for generic toolbars and special toolbars. */
 const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
-  const [state, dispatch] = useReducer(toolbarReducer, {...initState, toolbars: sanitizeToolbars(initToolbars)});
+  const [state, dispatch] = useReducer(toolbarReducer, { ...initState, toolbars: sanitizeToolbars(initToolbars) });
 
   useEffect(() => {
     // Initiall toolbars are given in props.
     // Later can be changed by an RxJs event.
+    // eslint-disable-next-line no-use-before-define
     dispatch({ type: 'TOOLBARS', toolbars });
 
     const subscription = subscribeToSubject(dispatch);
     return () => subscription.unsubscribe();
   }, []);
 
-  const {count, toolbars} = state;
+  const { count, toolbars } = state;
 
   const renderGenericToolbar = () => {
-    const all = separateItems(toolbars.filter(item => !!item));
+    const all = separateItems(toolbars.filter((item) => !!item));
     const views = filterViews(all);
     const groups = filterNonViews(all);
 
     return (
       <Toolbar
-	kebabLimit={kebabLimit}
+        kebabLimit={kebabLimit}
         count={count}
         groups={groups}
         views={views}

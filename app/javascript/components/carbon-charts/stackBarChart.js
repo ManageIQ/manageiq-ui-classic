@@ -28,7 +28,7 @@ const StackBarChartGraph = ({ data }) => {
 };
 
 StackBarChartGraph.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.any),
 };
 
 StackBarChartGraph.defaultProps = {

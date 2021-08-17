@@ -1,6 +1,2 @@
 = render :partial => "layouts/flash_msg"
-
-%cloud-subnet-form{'cloud-subnet-form-id' => @subnet.id}
-
-:javascript
-  miq_bootstrap('cloud-subnet-form');
+= react 'SubnetForm', :recordId => @subnet.try(:id).try(:to_s)

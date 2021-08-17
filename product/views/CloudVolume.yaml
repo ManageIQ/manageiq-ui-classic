@@ -21,6 +21,7 @@ db: CloudVolume
 cols:
 - name
 - size
+- health_state
 - status
 - volume_type
 - bootable
@@ -41,6 +42,7 @@ include:
 col_order:
 - name
 - size
+- health_state
 - status
 - volume_type
 - bootable
@@ -51,6 +53,7 @@ col_order:
 headers:
 - Name
 - Size
+- Health State
 - Status
 - Type
 - Bootable?

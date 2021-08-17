@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
@@ -20,11 +20,12 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   useEffect(() => {
     if (recordId) {
       API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
-        API.options(`/api/cloud_volumes?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
+        API.options(`/api/cloud_volumes/${recordId}?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
       });
     }
     if (storageManagerId) {
-      API.options(`/api/cloud_volumes?ems_id=${storageManagerId}`).then(loadSchema({ initialValues: { ems_id: storageManagerId }, isLoading: false }));
+      API.options(`/api/cloud_volumes?ems_id=${storageManagerId}`)
+        .then(loadSchema({ initialValues: { ems_id: storageManagerId }, isLoading: false }));
     }
   }, [recordId, storageManagerId]);
 

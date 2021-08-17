@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual, flatMap, get, set } from 'lodash';
+import {
+  isEqual, flatMap, get, set,
+} from 'lodash';
 import { Button, InlineLoading } from 'carbon-components-react';
 
-import { useFormApi, useFieldApi, validatorTypes, FormSpy } from '@@ddf';
+import {
+  useFormApi, useFieldApi, validatorTypes, FormSpy,
+} from '@@ddf';
 import HelperTextBlock from '../../forms/helper-text-block';
 
 const extractNames = (schema) => {
-  const childFields = schema.fields ? flatMap(schema.fields, field => extractNames(field)) : [];
+  const childFields = schema.fields ? flatMap(schema.fields, (field) => extractNames(field)) : [];
   return schema.name ? [...childFields, schema.name] : childFields;
 };
 
@@ -127,6 +131,9 @@ AsyncCredentials.propTypes = {
   validateDefaultError: PropTypes.string,
   asyncValidate: PropTypes.func.isRequired,
   edit: PropTypes.bool,
+  fields: PropTypes.arrayOf(PropTypes.any).isRequired,
+  isRequired: PropTypes.bool,
+  name: PropTypes.string.isRequired,
   validationDependencies: PropTypes.arrayOf(PropTypes.string),
 };
 
@@ -137,6 +144,7 @@ AsyncCredentials.defaultProps = {
   validateDefaultError: __('Validation Required'),
   edit: false,
   validationDependencies: [],
+  isRequired: undefined,
 };
 
 export default AsyncCredentials;

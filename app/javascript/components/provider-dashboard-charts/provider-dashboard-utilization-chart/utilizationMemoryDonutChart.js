@@ -62,6 +62,10 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
     legend: {
       enabled: false,
     },
+    toolbar:
+    {
+      enabled: false,
+    },
     height: '60px',
     tooltip: {
       customHTML: config.sparklineTooltip(data),
@@ -84,7 +88,6 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
               {config.availableof}
               {''}
               <span className="available-text-total">{memoryData.total}</span>
-              {''}
               <span className="available-text-total">{config.units}</span>
             </span>
           </div>

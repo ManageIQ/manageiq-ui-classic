@@ -10,7 +10,7 @@ import serviceDialogFromOtSchema from './service-dialog-from.schema';
 const ServiceDialogFromOt = ({
   templateId, dialogClass, templateClass, miqRedirectBackAdress,
 }) => {
-  const onSubmit = values => API.post('/api/service_dialogs', {
+  const onSubmit = (values) => API.post('/api/service_dialogs', {
     action: 'template_service_dialog',
     resource: {
       ...values,

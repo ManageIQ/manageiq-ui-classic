@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -5,21 +6,23 @@ import { Modal, Spinner } from 'patternfly-react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
+  // eslint-disable-next-line no-prototype-builtins
   if (error.hasOwnProperty('data')) {
     return error.data.error.message;
-  } else if (error.hasOwnProperty('message')) {
+  // eslint-disable-next-line no-prototype-builtins
+  } if (error.hasOwnProperty('message')) {
     return error.message;
   }
 };
 
 export const removeCatalogItems = (catalogItems) => {
-  let apiPromises = [];
+  const apiPromises = [];
 
   miqSparkleOn();
-  catalogItems.forEach(item => {
-    apiPromises.push(API.post(`/api/service_templates/${item.id}`, {action: 'delete'}, {skipErrors: [400, 500]})
-                       .then((apiResult) => ({result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name}))
-                       .catch((apiResult) => ({result: 'error', data: apiResult, name: item.name})))
+  catalogItems.forEach((item) => {
+    apiPromises.push(API.post(`/api/service_templates/${item.id}`, { action: 'delete' }, { skipErrors: [400, 500] })
+      .then((apiResult) => ({ result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name }))
+      .catch((apiResult) => ({ result: 'error', data: apiResult, name: item.name })));
   });
   Promise.all(apiPromises)
     .then((apiData) => {
@@ -27,11 +30,13 @@ export const removeCatalogItems = (catalogItems) => {
         add_flash(sprintf(__('Error deleting catalog item "%s": %s'), apiData[0].name, parseApiError(apiData[0].data)), 'error');
         miqSparkleOff();
       } else {
-        apiData.forEach(item => {
+        apiData.forEach((item) => {
           if (item.result === 'success') {
-            miqFlashLater({message: sprintf(__('The catalog item "%s" has been successfully deleted'), item.name)});
+            // eslint-disable-next-line no-undef
+            miqFlashLater({ message: sprintf(__('The catalog item "%s" has been successfully deleted'), item.name) });
           } else if (item.result === 'error' && catalogItems.length > 1) {
-            miqFlashLater({message: sprintf(__('Error deleting catalog item "%s": %s'), item.name, parseApiError(item.data)), level: 'error'});
+            // eslint-disable-next-line no-undef
+            miqFlashLater({ message: sprintf(__('Error deleting catalog item "%s": %s'), item.name, parseApiError(item.data)), level: 'error' });
           }
         });
       }
@@ -52,65 +57,70 @@ class RemoveCatalogItemModal extends React.Component {
     super(props);
     this.state = {
       data: [],
-      loaded: false
+      loaded: false,
     };
   }
 
   componentDidMount() {
-    let apiPromises = [];
-    const catalogItemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
+    const apiPromises = [];
+    const { recordId, gridChecks, dispatch } = this.props;
+    const catalogItemsIds = recordId ? [recordId] : _.uniq(gridChecks);
 
     // Load modal data from API
-    catalogItemsIds.forEach(item => apiPromises.push(API.get(`/api/service_templates/${item}?attributes=services`)));
+    catalogItemsIds.forEach((item) => apiPromises.push(API.get(`/api/service_templates/${item}?attributes=services`)));
     Promise.all(apiPromises)
-      .then(apiData => apiData.map(catalogItem => (
-        {id:           catalogItem.id,
-         name:         catalogItem.name,
-         service_type: catalogItem.service_type, // 'atomic' or 'composite'
-         services:     catalogItem.services})))
-      .then(data => this.setState({data: data, loaded: true}))
-      .then(() => this.props.dispatch({
+      .then((apiData) => apiData.map((catalogItem) => (
+        {
+          id: catalogItem.id,
+          name: catalogItem.name,
+          service_type: catalogItem.service_type, // 'atomic' or 'composite'
+          services: catalogItem.services,
+        })))
+      .then((data) => this.setState({ data, loaded: true }))
+      .then(() => dispatch({
         type: 'FormButtons.saveable',
-        payload: true
+        payload: true,
       }));
 
     // Buttons setup
-    this.props.dispatch({
+    const { data } = this.state;
+    dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeCatalogItems(this.state.data)
-      }
+        addClicked: () => removeCatalogItems(data),
+      },
     });
-    this.props.dispatch({
-      type: "FormButtons.customLabel",
+    dispatch({
+      type: 'FormButtons.customLabel',
       payload: __('Delete'),
     });
   }
 
-  render () {
+  render() {
     const usedServicesMessage = (data) => {
       let warningItems = [];
       if (data.length === 1) { // We're deleting just one catalog item
-        let services = {};
-        data[0].services.forEach(service => { services[service.name] = service.id })
-        warningItems = Object.keys(services).map(item => ({id: services[item], name: item}));
-      } else {                 // We're deleting multiple catalog items
-        warningItems = data.filter(item => item.services && item.services.length > 0);
+        const services = {};
+        data[0].services.forEach((service) => { services[service.name] = service.id; });
+        warningItems = Object.keys(services).map((item) => ({ id: services[item], name: item }));
+      } else { // We're deleting multiple catalog items
+        warningItems = data.filter((item) => item.services && item.services.length > 0);
       }
       if (warningItems.length > 0) {
         let warningMessage = '';
         if (data.length === 1 && isCatalogBundle(data[0])) {
           warningMessage = __('The catalog bundle is linked to the following services:');
         } else {
+          // eslint-disable-next-line no-undef
           warningMessage = n__('The catalog item is linked to the following services:',
-                               'The following catalog items are linked to services:', data.length)
+            'The following catalog items are linked to services:', data.length);
         }
         return (
           <div>
             <h4>{warningMessage}</h4>
-            {warningItems.map(item => (
+            {warningItems.map((item) => (
               <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
             ))}
           </div>
@@ -121,10 +131,10 @@ class RemoveCatalogItemModal extends React.Component {
     const confirmationMessage = (data) => {
       if (data.length === 1 && isCatalogBundle(data[0])) {
         return __('Are you sure you want to permanently delete the following catalog bundle?');
-      } else {
-        return n__('Are you sure you want to permanently delete the following catalog item?',
-                   'Are you sure you want to permanently delete the following catalog items?', data.length);
       }
+      // eslint-disable-next-line no-undef
+      return n__('Are you sure you want to permanently delete the following catalog item?',
+        'Are you sure you want to permanently delete the following catalog items?', data.length);
     };
 
     const renderSpinner = (spinnerOn) => {
@@ -133,27 +143,37 @@ class RemoveCatalogItemModal extends React.Component {
       }
     };
 
+    const { loaded, data } = this.state;
+
     return (
       <Modal.Body className="warning-modal-body">
-        {renderSpinner(!this.state.loaded)}
-        {usedServicesMessage(this.state.data)}
-        {this.state.loaded &&
-          <div>
-             <h4>{confirmationMessage(this.state.data)}</h4>
-             <ul>
-               {this.state.data.map(item => (
-                 <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
-               ))}
-             </ul>
-          </div>
-        }
+        {renderSpinner(!loaded)}
+        {usedServicesMessage(data)}
+        {loaded
+          && (
+            <div>
+              <h4>{confirmationMessage(data)}</h4>
+              <ul>
+                {data.map((item) => (
+                  <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
+                ))}
+              </ul>
+            </div>
+          )}
       </Modal.Body>
     );
   }
 }
 
 RemoveCatalogItemModal.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  recordId: PropTypes.number,
+  gridChecks: PropTypes.arrayOf(PropTypes.any),
+};
+
+RemoveCatalogItemModal.defaultProps = {
+  recordId: undefined,
+  gridChecks: undefined,
 };
 
 export default connect()(RemoveCatalogItemModal);

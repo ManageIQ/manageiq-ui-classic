@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-
+import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
@@ -42,11 +42,14 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
 
   useEffect(() => {
     if (retireItems.length === 1) {
+      // eslint-disable-next-line camelcase
       API.get(`${url}/${retireItems[0]}?attributes=retires_on,retirement_warn`).then(({ retires_on, retirement_warn }) => {
         setState({
           isLoading: false,
+          // eslint-disable-next-line camelcase
           initialValues: retires_on && {
             retirementDate: retires_on,
+            // eslint-disable-next-line camelcase
             retirementWarning: retirement_warn || '',
           },
         });
@@ -73,6 +76,16 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
       />
     )
   );
+};
+
+RetirementForm.propTypes = {
+  retirementID: PropTypes.string.isRequired,
+  redirect: PropTypes.string,
+  url: PropTypes.string.isRequired,
+};
+
+RetirementForm.defaultProps = {
+  redirect: undefined,
 };
 
 export default RetirementForm;

@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,9 +19,9 @@ const showModal = () => (dispatch, getState) => {
   }
 
   // Request the modal data from the API
-  return API.get('/api').then(root =>
-    API.get(root.server_info.region_href).then(region =>
-      API.get(root.server_info.zone_href).then(zone => ({ ...root, region, zone })).then(data =>
+  return API.get('/api').then((root) =>
+    API.get(root.server_info.region_href).then((region) =>
+      API.get(root.server_info.zone_href).then((zone) => ({ ...root, region, zone })).then((data) =>
         dispatch({ type: LOAD_ABOUT_MODAL, data })).then(() =>
         dispatch({ type: SHOW_ABOUT_MODAL }))));
 };
@@ -46,9 +50,10 @@ class MiqAboutModal extends React.Component {
   }
 
   componentDidMount() {
+    const { showModal } = this.props;
     this.subscribe = window.listenToRx((event) => {
       if (event.type === 'showAboutModal') {
-        this.props.showModal();
+        showModal();
       }
     });
   }
@@ -58,11 +63,14 @@ class MiqAboutModal extends React.Component {
   }
 
   render() {
-    if (!this.props.data) {
+    const {
+      data, dialogClassName, show, hideModal,
+    } = this.props;
+    const { expand } = this.state;
+    if (!data) {
       return null;
     }
 
-    const { data } = this.props;
     const browser = window.miqBrowserDetect();
     const plugins = Object.keys(data.server_info.plugins).map((key) => {
       const val = data.server_info.plugins[key];
@@ -77,9 +85,9 @@ class MiqAboutModal extends React.Component {
 
     return (
       <AboutModal
-        dialogClassName={this.props.dialogClassName}
-        show={this.props.show}
-        onHide={this.props.hideModal}
+        dialogClassName={dialogClassName}
+        show={show}
+        onHide={hideModal}
         productTitle={`${data.product_info.name_full} ${data.server_info.release}`}
         logo={data.product_info.branding_info.logo}
         altLogo={data.product_info.name_full}
@@ -99,16 +107,16 @@ class MiqAboutModal extends React.Component {
           <a
             style={{ color: 'white' }}
             onClick={(event) => {
-              this.setState({ expand: !this.state.expand });
+              this.setState({ expand: !expand });
               event.preventDefault();
             }}
           >
             <strong>
-              <i className={this.state.expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
+              <i className={expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
               Plugins
             </strong>
           </a>
-          <div className={this.state.expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
+          <div className={expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
             {plugins}
           </div>
         </AboutModal.Versions>
@@ -142,7 +150,7 @@ MiqAboutModal.defaultProps = {
   data: undefined,
 };
 
-const mapStateToProps = state =>
+const mapStateToProps = (state) =>
   (state.AboutModal ? { show: state.AboutModal.show, data: state.AboutModal.data } : {});
-const mapDispatchToProps = dispatch => bindActionCreators({ showModal, hideModal }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ showModal, hideModal }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MiqAboutModal);

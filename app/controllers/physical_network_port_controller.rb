@@ -8,10 +8,6 @@ class PhysicalNetworkPortController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def self.model
-    @model ||= "PhysicalNetworkPort".safe_constantize
-  end
-
   def title
     _('Network Ports')
   end

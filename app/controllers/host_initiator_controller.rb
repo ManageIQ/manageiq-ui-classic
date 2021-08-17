@@ -45,7 +45,6 @@ class HostInitiatorController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Storage")},
-        {:title => _("Block Storage")},
         {:title => _("Host Initiators"), :url => controller_url},
       ],
     }

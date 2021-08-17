@@ -73,7 +73,7 @@ module MiqAeCustomizationController::OldDialogs
 
       get_node_info
       replace_right_cell(:nodetype => x_node, :replace_trees => [:old_dialogs])
-    elsif params[:id].nil? || !MiqDialog.exists?(params[:id])
+    elsif params[:id].nil? || !MiqDialog.exists?(:id => params[:id])
       add_flash(_("Dialog no longer exists"), :error)
       old_dialogs_list
       @refresh_partial = "layouts/gtl"

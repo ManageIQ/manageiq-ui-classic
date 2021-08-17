@@ -2,10 +2,11 @@ describe ReportController do
   context "::Dashboards" do
     let(:miq_widget)     { FactoryBot.create(:miq_widget) }
     let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [miq_widget.id], :col2 => [], :col3 => []}) }
-    let(:user)           { FactoryBot.create(:user, :features => "db_edit") }
+    let(:user)           { user_with_feature(%w(db_copy db_edit)) }
 
     before do
-      stub_user(:features => :all)
+      EvmSpecHelper.local_miq_server
+      login_as user
     end
 
     describe "#db_copy" do

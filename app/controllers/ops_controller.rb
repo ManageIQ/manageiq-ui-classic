@@ -602,6 +602,7 @@ class OpsController < ApplicationController
     extra_js_commands(presenter)
 
     presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
+    presenter.scroll_top if @flash_array.present?
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs']) unless %w[change_tab].include?(action_name)
 
     render :json => presenter.for_render
@@ -790,7 +791,7 @@ class OpsController < ApplicationController
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
-        if nodetype == "log_depot_edit"
+        if ["log_depot_edit", "ze"].include?(nodetype)
           presenter.hide(:form_buttons_div)
         else
           presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])

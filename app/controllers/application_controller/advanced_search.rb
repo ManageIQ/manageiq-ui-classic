@@ -34,7 +34,7 @@ module ApplicationController::AdvancedSearch
       @edit[:adv_search_open] = false
       @edit[@expkey][:exp_model] = model.to_s
     end
-    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Build the table to display the exp
+    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) if @edit[@expkey] # Build the table to display the exp
     @edit[:in_explorer] = @explorer # Remember if we're in an explorer
 
     if @hist && @hist[:qs_exp] # Override qs exp if qs history button was pressed

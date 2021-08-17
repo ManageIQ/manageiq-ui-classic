@@ -23,7 +23,7 @@ const CopyDashboardForm = ({ dashboardId }) => {
       .then(({ name }) =>
         miqAjaxButton(
           ('/report/dashboard_render'),
-          { original_name: name, name: values.name, group: options.find(option => option.value === values.group_id).label },
+          { original_name: name, name: values.name, group: options.find((option) => option.value === values.group_id).label },
         ))
       .catch((e) => {
         handleError(e);
@@ -40,6 +40,7 @@ const CopyDashboardForm = ({ dashboardId }) => {
     miqSparkleOn();
     Promise.all([API.get('/api/groups?expand=resources'),
       http.get(`/report/dashboard_get/${dashboardId}`)])
+      // eslint-disable-next-line camelcase
       .then(([{ resources }, { name, description, owner_id }]) => {
         const options = resources.map(({ id, description }) => ({ value: id, label: description }));
         setOptions(options);

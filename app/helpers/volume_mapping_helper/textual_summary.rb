@@ -22,7 +22,7 @@ module VolumeMappingHelper::TextualSummary
         :value => provider.name,
         :icon  => "pficon",
         :title => _("Show the provider of this Mapping"),
-        :link  => url_for_only_path(:controller => 'ems_block_storage', :action => 'show', :id => provider.id)
+        :link  => url_for_only_path(:controller => 'ems_storage', :action => 'show', :id => provider.id)
       }
     end
   end

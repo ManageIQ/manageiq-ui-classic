@@ -13,7 +13,7 @@ describe MiqAlertController do
 
   describe "#edit" do
     before do
-      login_as user_with_feature(%w[miq_alert miq_alert_edit miq_alert_profile_new])
+      login_as user_with_feature(%w[miq_alert miq_alert_edit miq_alert_set_view])
       @miq_alert = FactoryBot.create(:miq_alert)
       controller.instance_variable_set(:@lastaction, "show")
     end
@@ -91,7 +91,7 @@ describe MiqAlertController do
   context 'test click on toolbar button' do
     before do
       EvmSpecHelper.local_miq_server
-      login_as FactoryBot.create(:user, :features => %w[alert alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
+      login_as FactoryBot.create(:user, :features => %w[miq_alert miq_alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new])
       # login_as FactoryBot.create(:user, :features => "alert_admin")
       @miq_alert = FactoryBot.create(:miq_alert)
     end
