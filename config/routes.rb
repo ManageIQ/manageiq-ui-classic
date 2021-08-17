@@ -2763,16 +2763,17 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
+        edit
+        set_ownership
         show_list
         tagging_edit
       ),
       :post => %w(
-        button
         listnav_search_selected
         ownership_update
         quick_search
         reload
-        service_edit
+        edit
         service_tag
         show
         show_list

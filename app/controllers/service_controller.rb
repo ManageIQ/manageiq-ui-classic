@@ -3,43 +3,45 @@ class ServiceController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericListMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::GenericFormMixin
+  include Mixins::GenericListMixin
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
 
-  SERVICE_X_BUTTON_ALLOWED_ACTIONS = {
-    'service_delete'      => :service_delete,
-    'service_edit'        => :service_edit,
-    'service_ownership'   => :service_ownership,
-    'service_tag'         => :service_tag_edit,
-    'service_retire'      => :service_retire,
-    'service_retire_now'  => :service_retire_now,
-    'service_reconfigure' => :service_reconfigure
-  }.freeze
+#   SERVICE_X_BUTTON_ALLOWED_ACTIONS = {
+#     'service_delete'      => :service_delete,
+#     'service_edit'        => :service_edit,
+#     'service_ownership'   => :service_ownership,
+#     'service_tag'         => :service_tag_edit,
+#     'service_retire'      => :service_retire,
+#     'service_retire_now'  => :service_retire_now,
+#     'service_reconfigure' => :service_reconfigure
+#   }.freeze
 
-  def button
-    case params[:pressed]
-    when 'generic_object_tag'
-      tag(GenericObject)
-    when "custom_button"
-      @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
-    end
-  end
+#   def button
+#     case params[:pressed]
+#     when 'generic_object_tag'
+#       tag(GenericObject)
+#     when "custom_button"
+#       @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
+#     end
+#   end
 
-  def generic_object_custom_buttons
-    display_options = {}
-    ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
-    display_options[:display] = @display
-    display_options[:record_id] = parse_nodetype_and_id(x_node).last
-    display_options[:display_id] = params[:id] if @lastaction == 'generic_object'
-    custom_buttons(ids, display_options)
-  end
+#   def generic_object_custom_buttons
+#     display_options = {}
+#     ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
+#     display_options[:display] = @display
+#     display_options[:record_id] = parse_nodetype_and_id(x_node).last
+#     display_options[:display_id] = params[:id] if @lastaction == 'generic_object'
+#     custom_buttons(ids, display_options)
+#   end
 
-  def x_button
-    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
-  end
+#   def x_button
+#     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
+#   end
 
   def title
     _("My Services")
@@ -88,22 +90,26 @@ class ServiceController < ApplicationController
     end
   end
 
-  def service_edit
+  def edit
     assert_privileges("service_edit")
-    case params[:button]
-    when "cancel"
-      service = find_record_with_rbac(Service, params[:id])
-      add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.name})
-    when "save"
-      service = find_record_with_rbac(Service, params[:id])
-      add_flash(_("Service \"%{name}\" was saved") % {:name => service.name})
-    when "reset", nil # Reset or first time in
+    #case params[:button]
+    # when "cancel"
+    #   service = find_record_with_rbac(Service, params[:id])
+    #   add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.name})
+    # when "save"
+    #   service = find_record_with_rbac(Service, params[:id])
+    #   add_flash(_("Service \"%{name}\" was saved") % {:name => service.name})
+    # when "reset", nil # Reset or first time in
       checked = find_checked_items
       checked[0] = params[:id] if checked.blank? && params[:id]
       @service = find_record_with_rbac(Service, checked[0])
       @in_a_form = true
-      return
-    end
+      drop_breadcrumb(
+        :name => _("Edit Service\"%{name}\"") % {:name => @service.name},
+        :url  => "/service/edit/#{@service.id}"
+      )
+     # return
+    # end
   end
 
   def service_reconfigure
@@ -263,7 +269,7 @@ class ServiceController < ApplicationController
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
-      action = "service_edit"
+      action = "edit"
     when "tag", 'service_tag'
       partial = "layouts/tagging"
       header = _("Edit Tags for Service")
