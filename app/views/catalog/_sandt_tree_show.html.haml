@@ -153,6 +153,12 @@
           .form-horizontal
             .form-group
               %label.col-md-3.control-label
+                = _('Datacenter')
+              .col-md-9
+                = provisioning[:datacenter_name]
+          .form-horizontal
+            .form-group
+              %label.col-md-3.control-label
                 = _('Resource Pool')
               .col-md-9
                 = provisioning[:resource_pool_name]
