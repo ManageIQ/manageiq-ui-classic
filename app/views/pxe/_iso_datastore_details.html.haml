@@ -3,8 +3,8 @@
   - if @isd
     -# if PXE Server is selected %>
     #iso_datastore_info_div
-      - if @edit
-        = render :partial => "iso_datastore_form"
+      - if @in_a_form
+        = react 'PxeIsoDatastoreForm', :emses => @edit[:emses]
       - else
         = render :partial => "layouts/flash_msg"
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(binf, textual_iso_datastore_basicinfo), @record)
@@ -23,8 +23,8 @@
   - if @img
     -# PXE Image is selected
     #iso_img_info_div
-      - if @edit
-        = render :partial => "iso_img_form"
+      - if @in_a_form
+        = react 'PxeIsoImageForm', :recordId => @img.try(:id).try(:to_s)
       - else
         = render :partial => "layouts/flash_msg"
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(binf, textual_iso_img_info), @record)
