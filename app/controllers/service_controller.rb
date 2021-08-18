@@ -5,6 +5,7 @@ class ServiceController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
+  include Mixins::Actions::VmActions::Ownership
 
   before_action :check_privileges
   before_action :get_session_data
@@ -66,7 +67,7 @@ class ServiceController < ApplicationController
       display_nested_list(@display)
       return
     else
-      drop_breadcrumb(:name => _('Services'), :url => '/service/explorer') if @breadcrumbs.empty?
+      drop_breadcrumb(:name => _('Services'), :url => '/service/show_list') if @breadcrumbs.empty?
       @right_cell_text = _("Service \"%{name}\"") % {:name => @record.name}
       @no_checkboxes = true
       @items_per_page = ONE_MILLION
@@ -159,6 +160,17 @@ class ServiceController < ApplicationController
     super
   end
 
+  def service_ownership
+    assert_privileges('service_ownership')
+    params[:pressed]='service_ownership'
+    set_ownership
+  end
+
+  def previous_breadcrumb_url
+    action = @lastaction
+    url_for_only_path(:action => action)
+  end
+
   private
 
   def sanitize_output(stdout)
@@ -200,11 +212,6 @@ class ServiceController < ApplicationController
     [%i[tower_job_results tower_job_plays], %i[tower_job_details tower_job_credentials]]
   end
   helper_method :textual_tower_job_group_list
-
-  def service_ownership
-    assert_privileges('service_ownership')
-    set_ownership
-  end
 
   def service_tag_edit
     assert_privileges('service_tag')
@@ -256,7 +263,7 @@ class ServiceController < ApplicationController
       action = "dialog_form_button_pressed"
     when "ownership"
       partial = "shared/views/ownership"
-      header = _("Set Ownership for Service")
+      header = _("Set Ownership for Service1")
       action = "ownership_update"
     when "retire"
       partial = "shared/views/retire"
@@ -306,7 +313,7 @@ class ServiceController < ApplicationController
         {:title => _("My Services"), :url => controller_url},
       ],
       :record_info => (hide_record_info? ? {} : @service),
-      :ancestry    => Service,
+    #   :ancestry    => Service,
     }
   end
 

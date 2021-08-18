@@ -2764,9 +2764,10 @@ Rails.application.routes.draw do
         service_form_fields
         show
         edit
-        set_ownership
+        service_ownership
         show_list
         tagging_edit
+        ownership_update
       ),
       :post => %w(
         listnav_search_selected
@@ -2774,7 +2775,7 @@ Rails.application.routes.draw do
         quick_search
         reload
         edit
-        service_tag
+        service_ownership
         show
         show_list
         tagging_edit

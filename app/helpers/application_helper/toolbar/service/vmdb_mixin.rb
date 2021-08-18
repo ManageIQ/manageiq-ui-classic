@@ -35,7 +35,7 @@ module ApplicationHelper::Toolbar::Service::VmdbMixin
             'pficon pficon-user fa-lg',
             N_('Set Ownership for the selected Services'),
             N_('Set Ownership'),
-            :url   => "/set_ownership",
+            :url   => "/service_ownership",
             :url_parms    => "main_div",
             :send_checked => true,
             :enabled      => false,
