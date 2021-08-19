@@ -221,53 +221,6 @@ class PxeController < ApplicationController
     # FIXME: check where @right_cell_text is set and replace that with loca variable
     presenter[:right_cell_text] = right_cell_text || @right_cell_text
 
-    if !@view || @in_a_form ||
-       (@pages && (@items_per_page == ONE_MILLION || @pages[:items]&.zero?))
-      if @in_a_form
-        presenter.hide(:toolbar)
-        # in case it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:paging_div, :form_buttons_div)
-
-        action_url, multi_record = case x_active_tree
-                                   when :pxe_servers_tree
-                                     case x_node.split('-').first
-                                     when 'pi' then ["pxe_image_edit", true]
-                                     when 'wi' then ["pxe_wimg_edit",  true]
-                                     end
-                                   when :iso_datastores_tree
-                                     if x_node == "root"
-                                       "iso_datastore_create"
-                                     elsif x_node.split('-').first == "isi"
-                                       ["iso_image_edit", true]
-                                     else
-                                       "iso_datastore_create"
-                                     end
-                                   when :pxe_image_types_tree
-                                     "pxe_image_type_edit"
-                                   end
-
-        presenter.update(:form_buttons_div, r[
-          :partial => "layouts/x_edit_buttons",
-          :locals  => {
-            :record_id    => @edit.try(:[], :rec_id),
-            :action_url   => action_url,
-            :multi_record => multi_record,
-            :serialize    => true
-          }
-        ])
-      else
-        presenter.hide(:form_buttons_div)
-      end
-      presenter.remove_paging
-    else
-      presenter.hide(:form_buttons_div)
-    end
-
-    # disable toolbar and buttons for react add/edit/copy pxe server, customization template, and system image type forms
-    if @in_a_form && nodetype.start_with?('ps', 'ct-', 'pit')
-      presenter.hide(:form_buttons_div, :toolbar)
-    end
-
     presenter[:record_id] = determine_record_id_for_presenter
 
     # Save open nodes, if any were added

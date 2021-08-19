@@ -18,63 +18,7 @@ module PxeController::IsoDatastores
     @isd = @record = identify_record(params[:id], IsoDatastore) if params[:id]
     iso_datastore_set_form_vars
     @in_a_form = true
-    session[:changed] = false
     replace_right_cell(:nodetype => "isd")
-  end
-
-  def iso_datastore_create
-    assert_privileges('iso_datastore_new')
-    id = params[:id] || "new"
-    return unless load_edit("isd_edit__#{id}")
-    iso_datastore_get_form_vars
-    if params[:button] == "cancel"
-      @edit = session[:edit] = nil # clean out the saved info
-      add_flash(_("Add of new ISO Datastore was cancelled by the user"))
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
-    elsif params[:button] == "add"
-      isd = params[:id] ? find_record_with_rbac(IsoDatastore, params[:id]) : IsoDatastore.new
-      if @edit[:new][:ems_id].blank?
-        add_flash(_("Provider is required"), :error)
-      end
-      if @flash_array
-        javascript_flash
-        return
-      end
-      iso_datastore_set_record_vars(isd)
-
-      add_flash(_("ISO Datastore \"%{name}\" was added") % {:name => @edit[:ems_name]})
-
-      if !flash_errors? && isd.save!
-        AuditEvent.success(build_created_audit(isd, @edit))
-        @edit = session[:edit] = nil # clean out the saved info
-
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
-      else
-        @in_a_form = true
-        isd.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
-      end
-    elsif params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-      @in_a_form = true
-      iso_datastore_edit
-    end
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def iso_datastore_form_field_changed
-    assert_privileges('iso_datastore_new')
-    return unless load_edit("isd_edit__#{params[:id]}", "replace_cell__explorer")
-    iso_datastore_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-    end
   end
 
   # Refresh the power states for selected or single VMs
@@ -147,54 +91,9 @@ module PxeController::IsoDatastores
 
   def iso_image_edit
     assert_privileges("iso_image_edit")
-    case params[:button]
-    when "cancel"
-      add_flash(_("Edit of ISO Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:img].name})
-      @edit = session[:edit] = nil # clean out the saved info
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
-    when "save"
-      return unless load_edit("iso_img_edit__#{params[:id]}", "replace_cell__explorer")
-      update_img = find_record_with_rbac(IsoImage, params[:id])
-      iso_img_set_record_vars(update_img)
-      if update_img.valid? && !flash_errors? && update_img.save!
-        add_flash(_("ISO Image \"%{name}\" was saved") % {:name => update_img.name})
-        AuditEvent.success(build_saved_audit(update_img, @edit))
-        refresh_tree = @edit[:new][:default_for_windows] == @edit[:current][:default_for_windows] ? [] : [:iso_datastore]
-        @edit = session[:edit] = nil # clean out the saved info
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => refresh_tree)
-      else
-        update_img.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        @in_a_form = true
-        @changed = true
-        javascript_flash
-        return
-      end
-    when "reset", nil
-      @img = IsoImage.find(params[:id])
-      iso_img_set_form_vars
-      @in_a_form = true
-      session[:changed] = false
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "isi")
-    end
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def iso_img_form_field_changed
-    assert_privileges('iso_image_edit')
-    return unless load_edit("iso_img_edit__#{params[:id]}", "replace_cell__explorer")
-    iso_img_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-    end
+    @img = IsoImage.find(params[:id])
+    @in_a_form = true
+    replace_right_cell(:nodetype => "isi")
   end
 
   private #######################
@@ -206,32 +105,6 @@ module PxeController::IsoDatastores
     @edit[:new][:default_for_windows] = params[:default_for_windows] == "1" if params[:default_for_windows]
   end
 
-  # Set form variables for edit
-  def iso_img_set_form_vars
-    @edit = {}
-    @edit[:img] = @img
-
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "iso_img_edit__#{@img.id || "new"}"
-    @edit[:rec_id] = @img.id || nil
-    @edit[:pxe_image_types] = PxeImageType.all.sort_by(&:name).collect { |img| [img.name, img.id] }
-    @edit[:new][:img_type] = @img.pxe_image_type.try(:id)
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit] = @edit
-  end
-
-  def iso_img_set_record_vars(img)
-    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
-  end
-
-  def iso_datastore_set_record_vars(isd)
-    ems = ManageIQ::Providers::Redhat::InfraManager.find(@edit[:new][:ems_id])
-    isd.ext_management_system = ems
-    # saving name to use in flash message
-    @edit[:ems_name] = ems.name
-  end
-
   # Get variables from edit form
   def iso_datastore_get_form_vars
     @isd = @edit[:isd]
@@ -241,21 +114,7 @@ module PxeController::IsoDatastores
   # Set form variables for edit
   def iso_datastore_set_form_vars
     @edit = {}
-    @edit[:isd] = @isd
-
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "isd_edit__#{@isd.id || "new"}"
-    @edit[:rec_id] = @isd.id || nil
-    @edit[:new][:ems_id] = @isd.ext_management_system.try(:id)
-
-    @edit[:emses] = ManageIQ::Providers::Redhat::InfraManager
-                    .without_iso_datastores
-                    .order(:name)
-                    .pluck(:name, :id)
-
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit] = @edit
+    @edit[:emses] = ManageIQ::Providers::Redhat::InfraManager.without_iso_datastores.order(:name)
   end
 
   # Common Schedule button handler routines
