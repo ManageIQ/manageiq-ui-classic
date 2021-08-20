@@ -21,13 +21,13 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 6.0.0"
 
-  s.add_dependency "execjs", "2.7.0" # HACK: 2.8.1 is causing node to exit 1 when compiling uglify's sourcecode in some environments. See https://github.com/rails/execjs/issues #105
+  s.add_dependency "execjs", "2.8.1" # Note: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
   s.add_dependency "font-fabulous", "~> 1.0.5"
   s.add_dependency "high_voltage", "~> 3.0.0"
   s.add_dependency "more_core_extensions", ">= 3.2", "< 5"
   s.add_dependency "patternfly-sass", "~> 3.59.1"
   s.add_dependency "sass-rails"
-  s.add_dependency "uglifier", "~>3.0.0"
+  s.add_dependency "uglifier", "~>4.2.0"
   s.add_dependency "webpacker", "~>2.0.0"
 
   s.add_development_dependency "debride"
