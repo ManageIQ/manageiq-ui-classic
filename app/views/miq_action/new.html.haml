@@ -1,1 +1,9 @@
 = render :partial => 'form'
+= react('ActionForm',
+         :inheritTags => @edit[:cats],
+         :availableAlerts => @edit[:choices].sort,
+         :tags => @tags_select,
+         :ansibleInventory => @edit[:ansible_playbooks],
+         :snapshotAge => MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
+         :parentType => @edit[:tag_parent_types])
+

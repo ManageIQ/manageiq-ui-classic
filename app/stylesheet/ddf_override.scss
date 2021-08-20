@@ -126,6 +126,15 @@
   }
 }
 
+#subform-4 {
+  #move-right, #move-all-right, #move-all-left, #move-left {
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: content-box;
+    width: 50%;
+  }
+}
+
 #edit_section {
   .edit-div {
     position: relative;
@@ -141,7 +150,6 @@
     }
   }
 }
-
 .ddorg__carbon-dual-list-body {
   .bx--structured-list-td {
     padding-top : 0.5rem;
