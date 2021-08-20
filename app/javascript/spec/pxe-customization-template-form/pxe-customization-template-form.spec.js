@@ -12,12 +12,12 @@ describe('Pxe Customization Template Form Component', () => {
   const api = {
     resources: [
       {
-          name: 'pxe-image-type1',
-          id: '1',
+        name: 'pxe-image-type1',
+        id: '1',
       },
       {
-          name: 'pxe-image-type2',
-          id: '2',
+        name: 'pxe-image-type2',
+        id: '2',
       },
     ],
   };
@@ -35,11 +35,11 @@ describe('Pxe Customization Template Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render adding a new pxe customization template', async(done) => {
+  it('should render adding a new pxe customization template', async (done) => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     let wrapper;
 
-    await act(async() => {
+    await act(async () => {
       wrapper = mount(<PxeCustomizationTemplateForm />);
     });
     wrapper.update();
@@ -48,12 +48,12 @@ describe('Pxe Customization Template Form Component', () => {
     done();
   });
 
-  it('should render editing a pxe customization template', async(done) => {
+  it('should render editing a pxe customization template', async (done) => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
     let wrapper;
 
-    await act(async() => {
+    await act(async () => {
       wrapper = mount(<PxeCustomizationTemplateForm recordId="1" />);
     });
     wrapper.update();
@@ -62,12 +62,12 @@ describe('Pxe Customization Template Form Component', () => {
     done();
   });
 
-  it('should render copying a pxe customization template', async(done) => {
+  it('should render copying a pxe customization template', async (done) => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
     let wrapper;
 
-    await act(async() => {
+    await act(async () => {
       wrapper = mount(<PxeCustomizationTemplateForm copy="1" />);
     });
     wrapper.update();

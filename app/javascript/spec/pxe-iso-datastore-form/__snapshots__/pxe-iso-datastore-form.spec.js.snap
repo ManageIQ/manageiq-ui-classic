@@ -1,0 +1,1325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pxe Iso Datastore Form Component should render adding a new iso datastore 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <PxeIsoDatastoreForm
+    emses={
+      Array [
+        Object {
+          "id": "1",
+          "name": "provider 1",
+        },
+        Object {
+          "id": "2",
+          "name": "provider 2",
+        },
+      ]
+    }
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "ems_id",
+                  "includeEmpty": true,
+                  "label": "Provider",
+                  "name": "ems_id",
+                  "options": Array [
+                    Object {
+                      "label": "provider 1",
+                      "value": "1 provider 1",
+                    },
+                    Object {
+                      "label": "provider 2",
+                      "value": "2 provider 2",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+              ],
+              "id": "basic-information",
+              "name": "basic-information",
+              "title": "Basic Information",
+            },
+          ],
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Add",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "component": "select",
+                    "id": "ems_id",
+                    "includeEmpty": true,
+                    "label": "Provider",
+                    "name": "ems_id",
+                    "options": Array [
+                      Object {
+                        "label": "provider 1",
+                        "value": "1 provider 1",
+                      },
+                      Object {
+                        "label": "provider 2",
+                        "value": "2 provider 2",
+                      },
+                    ],
+                    "placeholder": "<Choose>",
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                ],
+                "id": "basic-information",
+                "name": "basic-information",
+                "title": "Basic Information",
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "ems_id",
+                      "includeEmpty": true,
+                      "label": "Provider",
+                      "name": "ems_id",
+                      "options": Array [
+                        Object {
+                          "label": "provider 1",
+                          "value": "1 provider 1",
+                        },
+                        Object {
+                          "label": "provider 2",
+                          "value": "2 provider 2",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                  ],
+                  "id": "basic-information",
+                  "name": "basic-information",
+                  "title": "Basic Information",
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="sub-form"
+                    fields={
+                      Array [
+                        Object {
+                          "component": "select",
+                          "id": "ems_id",
+                          "includeEmpty": true,
+                          "label": "Provider",
+                          "name": "ems_id",
+                          "options": Array [
+                            Object {
+                              "label": "provider 1",
+                              "value": "1 provider 1",
+                            },
+                            Object {
+                              "label": "provider 2",
+                              "value": "2 provider 2",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                      ]
+                    }
+                    id="basic-information"
+                    name="basic-information"
+                    title="Basic Information"
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "sub-form",
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "ems_id",
+                          "includeEmpty": true,
+                          "label": "Provider",
+                          "name": "ems_id",
+                          "options": Array [
+                            Object {
+                              "label": "provider 1",
+                              "value": "1 provider 1",
+                            },
+                            Object {
+                              "label": "provider 2",
+                              "value": "2 provider 2",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                      ],
+                      "id": "basic-information",
+                      "name": "basic-information",
+                      "title": "Basic Information",
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="sub-form"
+                      fields={
+                        Array [
+                          Object {
+                            "component": "select",
+                            "id": "ems_id",
+                            "includeEmpty": true,
+                            "label": "Provider",
+                            "name": "ems_id",
+                            "options": Array [
+                              Object {
+                                "label": "provider 1",
+                                "value": "1 provider 1",
+                              },
+                              Object {
+                                "label": "provider 2",
+                                "value": "2 provider 2",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                      id="basic-information"
+                      name="basic-information"
+                      title="Basic Information"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "sub-form",
+                        "fields": Array [
+                          Object {
+                            "component": "select",
+                            "id": "ems_id",
+                            "includeEmpty": true,
+                            "label": "Provider",
+                            "name": "ems_id",
+                            "options": Array [
+                              Object {
+                                "label": "provider 1",
+                                "value": "1 provider 1",
+                              },
+                              Object {
+                                "label": "provider 2",
+                                "value": "2 provider 2",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                        ],
+                        "id": "basic-information",
+                        "name": "basic-information",
+                        "title": "Basic Information",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Add"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="sub-form"
+                        fields={
+                          Array [
+                            Object {
+                              "component": "select",
+                              "id": "ems_id",
+                              "includeEmpty": true,
+                              "label": "Provider",
+                              "name": "ems_id",
+                              "options": Array [
+                                Object {
+                                  "label": "provider 1",
+                                  "value": "1 provider 1",
+                                },
+                                Object {
+                                  "label": "provider 2",
+                                  "value": "2 provider 2",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                          ]
+                        }
+                        id="basic-information"
+                        name="basic-information"
+                        title="Basic Information"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "sub-form",
+                          "fields": Array [
+                            Object {
+                              "component": "select",
+                              "id": "ems_id",
+                              "includeEmpty": true,
+                              "label": "Provider",
+                              "name": "ems_id",
+                              "options": Array [
+                                Object {
+                                  "label": "provider 1",
+                                  "value": "1 provider 1",
+                                },
+                                Object {
+                                  "label": "provider 2",
+                                  "value": "2 provider 2",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                          ],
+                          "id": "basic-information",
+                          "name": "basic-information",
+                          "title": "Basic Information",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Add"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="sub-form"
+                          fields={
+                            Array [
+                              Object {
+                                "component": "select",
+                                "id": "ems_id",
+                                "includeEmpty": true,
+                                "label": "Provider",
+                                "name": "ems_id",
+                                "options": Array [
+                                  Object {
+                                    "label": "provider 1",
+                                    "value": "1 provider 1",
+                                  },
+                                  Object {
+                                    "label": "provider 2",
+                                    "value": "2 provider 2",
+                                  },
+                                ],
+                                "placeholder": "<Choose>",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                            ]
+                          }
+                          id="basic-information"
+                          key="basic-information"
+                          name="basic-information"
+                          title="Basic Information"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "sub-form",
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "ems_id",
+                                    "includeEmpty": true,
+                                    "label": "Provider",
+                                    "name": "ems_id",
+                                    "options": Array [
+                                      Object {
+                                        "label": "provider 1",
+                                        "value": "1 provider 1",
+                                      },
+                                      Object {
+                                        "label": "provider 2",
+                                        "value": "2 provider 2",
+                                      },
+                                    ],
+                                    "placeholder": "<Choose>",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "id": "basic-information",
+                                "name": "basic-information",
+                                "title": "Basic Information",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SubForm
+                                DescriptionElement="p"
+                                TitleElement="h3"
+                                component="sub-form"
+                                fields={
+                                  Array [
+                                    Object {
+                                      "component": "select",
+                                      "id": "ems_id",
+                                      "includeEmpty": true,
+                                      "label": "Provider",
+                                      "name": "ems_id",
+                                      "options": Array [
+                                        Object {
+                                          "label": "provider 1",
+                                          "value": "1 provider 1",
+                                        },
+                                        Object {
+                                          "label": "provider 2",
+                                          "value": "2 provider 2",
+                                        },
+                                      ],
+                                      "placeholder": "<Choose>",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                  ]
+                                }
+                                id="basic-information"
+                                name="basic-information"
+                                title="Basic Information"
+                              >
+                                <div
+                                  className=""
+                                  id="basic-information"
+                                  name="basic-information"
+                                >
+                                  <div>
+                                    <h3>
+                                      Basic Information
+                                    </h3>
+                                  </div>
+                                  <SingleField
+                                    component="select"
+                                    id="ems_id"
+                                    includeEmpty={true}
+                                    key="ems_id"
+                                    label="Provider"
+                                    name="ems_id"
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "provider 1",
+                                          "value": "1 provider 1",
+                                        },
+                                        Object {
+                                          "label": "provider 2",
+                                          "value": "2 provider 2",
+                                        },
+                                      ]
+                                    }
+                                    placeholder="<Choose>"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "select",
+                                          "id": "ems_id",
+                                          "includeEmpty": true,
+                                          "label": "Provider",
+                                          "name": "ems_id",
+                                          "options": Array [
+                                            Object {
+                                              "label": "provider 1",
+                                              "value": "1 provider 1",
+                                            },
+                                            Object {
+                                              "label": "provider 2",
+                                              "value": "2 provider 2",
+                                            },
+                                          ],
+                                          "placeholder": "<Choose>",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <SelectWithOnChange
+                                          component="select"
+                                          id="ems_id"
+                                          includeEmpty={true}
+                                          label="Provider"
+                                          name="ems_id"
+                                          options={
+                                            Array [
+                                              Object {
+                                                "label": "provider 1",
+                                                "value": "1 provider 1",
+                                              },
+                                              Object {
+                                                "label": "provider 2",
+                                                "value": "2 provider 2",
+                                              },
+                                            ]
+                                          }
+                                          placeholder="<Choose>"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <Select
+                                            component="select"
+                                            id="ems_id"
+                                            label="Provider"
+                                            loadingMessage="Loading..."
+                                            name="ems_id"
+                                            options={
+                                              Array [
+                                                Object {
+                                                  "label": "<Choose>",
+                                                  "value": undefined,
+                                                },
+                                                Object {
+                                                  "label": "provider 1",
+                                                  "value": "1 provider 1",
+                                                },
+                                                Object {
+                                                  "label": "provider 2",
+                                                  "value": "2 provider 2",
+                                                },
+                                              ]
+                                            }
+                                            placeholder="<Choose>"
+                                            validate={
+                                              Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            <Select
+                                              SelectComponent={[Function]}
+                                              id="ems_id"
+                                              invalid={false}
+                                              invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
+                                              labelText="Provider"
+                                              loadOptionsChangeCounter={1}
+                                              loadingMessage="Loading..."
+                                              name="ems_id"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "<Choose>",
+                                                    "value": undefined,
+                                                  },
+                                                  Object {
+                                                    "label": "provider 1",
+                                                    "value": "1 provider 1",
+                                                  },
+                                                  Object {
+                                                    "label": "provider 2",
+                                                    "value": "2 provider 2",
+                                                  },
+                                                ]
+                                              }
+                                              placeholder="<Choose>"
+                                              pluckSingleValue={true}
+                                              simpleValue={false}
+                                              value=""
+                                            >
+                                              <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
+                                                id="ems_id"
+                                                invalidText=""
+                                                isClearable={false}
+                                                isFetching={false}
+                                                isSearchable={false}
+                                                labelText="Provider"
+                                                name="ems_id"
+                                                noOptionsMessage={[Function]}
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onInputChange={[Function]}
+                                                options={
+                                                  Array [
+                                                    Object {
+                                                      "label": "<Choose>",
+                                                      "value": undefined,
+                                                    },
+                                                    Object {
+                                                      "label": "provider 1",
+                                                      "value": "1 provider 1",
+                                                    },
+                                                    Object {
+                                                      "label": "provider 2",
+                                                      "value": "2 provider 2",
+                                                    },
+                                                  ]
+                                                }
+                                                placeholder="<Choose>"
+                                                value=""
+                                              >
+                                                <Select
+                                                  className=""
+                                                  disabled={false}
+                                                  helperText=""
+                                                  id="ems_id"
+                                                  inline={false}
+                                                  invalid={false}
+                                                  invalidText=""
+                                                  labelText="Provider"
+                                                  light={false}
+                                                  name="ems_id"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  value=""
+                                                >
+                                                  <div
+                                                    className="bx--form-item"
+                                                  >
+                                                    <div
+                                                      className="bx--select"
+                                                    >
+                                                      <label
+                                                        className="bx--label"
+                                                        htmlFor="ems_id"
+                                                      >
+                                                        Provider
+                                                      </label>
+                                                      <div
+                                                        className="bx--select-input__wrapper"
+                                                        data-invalid={null}
+                                                      >
+                                                        <select
+                                                          className="bx--select-input"
+                                                          id="ems_id"
+                                                          name="ems_id"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          value=""
+                                                        >
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="0"
+                                                            label="<Choose>"
+                                                            text="<Choose>"
+                                                            value=""
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="<Choose>"
+                                                              value=""
+                                                            >
+                                                              &lt;Choose&gt;
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="1 provider 1"
+                                                            label="provider 1"
+                                                            text="provider 1"
+                                                            value="1 provider 1"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="provider 1"
+                                                              value="1 provider 1"
+                                                            >
+                                                              provider 1
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="2 provider 2"
+                                                            label="provider 2"
+                                                            text="provider 2"
+                                                            value="2 provider 2"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="provider 2"
+                                                              value="2 provider 2"
+                                                            >
+                                                              provider 2
+                                                            </option>
+                                                          </SelectItem>
+                                                        </select>
+                                                        <ForwardRef(ChevronDown16)
+                                                          className="bx--select__arrow"
+                                                        >
+                                                          <Icon
+                                                            className="bx--select__arrow"
+                                                            fill="currentColor"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <svg
+                                                              aria-hidden={true}
+                                                              className="bx--select__arrow"
+                                                              fill="currentColor"
+                                                              focusable="false"
+                                                              height={16}
+                                                              preserveAspectRatio="xMidYMid meet"
+                                                              viewBox="0 0 16 16"
+                                                              width={16}
+                                                              xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                              <path
+                                                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                              />
+                                                            </svg>
+                                                          </Icon>
+                                                        </ForwardRef(ChevronDown16)>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </Select>
+                                              </ClearedSelect>
+                                            </Select>
+                                          </Select>
+                                        </SelectWithOnChange>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                </div>
+                              </SubForm>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="sub-form"
+                                  fields={
+                                    Array [
+                                      Object {
+                                        "component": "select",
+                                        "id": "ems_id",
+                                        "includeEmpty": true,
+                                        "label": "Provider",
+                                        "name": "ems_id",
+                                        "options": Array [
+                                          Object {
+                                            "label": "provider 1",
+                                            "value": "1 provider 1",
+                                          },
+                                          Object {
+                                            "label": "provider 2",
+                                            "value": "2 provider 2",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                  id="basic-information"
+                                  name="basic-information"
+                                  title="Basic Information"
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "ems_id": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {},
+                                "invalid": true,
+                                "modified": Object {
+                                  "ems_id": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "ems_id": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {
+                                  "ems_id": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "sub-form",
+                                    "fields": Array [
+                                      Object {
+                                        "component": "select",
+                                        "id": "ems_id",
+                                        "includeEmpty": true,
+                                        "label": "Provider",
+                                        "name": "ems_id",
+                                        "options": Array [
+                                          Object {
+                                            "label": "provider 1",
+                                            "value": "1 provider 1",
+                                          },
+                                          Object {
+                                            "label": "provider 2",
+                                            "value": "2 provider 2",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                    "id": "basic-information",
+                                    "name": "basic-information",
+                                    "title": "Basic Information",
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Add"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Add"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Add
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </PxeIsoDatastoreForm>
+</Provider>
+`;

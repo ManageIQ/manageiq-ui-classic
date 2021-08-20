@@ -2633,16 +2633,12 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         explorer
-        iso_datastore_create
-        iso_datastore_form_field_changed
         iso_datastore_list
         iso_image_edit
-        iso_img_form_field_changed
         log_depot_validate
         pxe_image_edit
         pxe_image_type_edit
         pxe_image_type_list
-        pxe_img_form_field_changed
         pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit

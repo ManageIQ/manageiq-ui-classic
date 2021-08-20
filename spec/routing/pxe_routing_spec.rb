@@ -15,18 +15,6 @@ describe PxeController do
     end
   end
 
-  describe "#iso_datastore_create" do
-    it "routes with POST" do
-      expect(post("/pxe/iso_datastore_create")).to route_to("pxe#iso_datastore_create")
-    end
-  end
-
-  describe "#iso_datastore_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/iso_datastore_form_field_changed")).to route_to("pxe#iso_datastore_form_field_changed")
-    end
-  end
-
   describe "#iso_datastore_list" do
     it "routes with POST" do
       expect(post("/pxe/iso_datastore_list")).to route_to("pxe#iso_datastore_list")
@@ -36,12 +24,6 @@ describe PxeController do
   describe "#iso_image_edit" do
     it "routes with POST" do
       expect(post("/pxe/iso_image_edit")).to route_to("pxe#iso_image_edit")
-    end
-  end
-
-  describe "#iso_img_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/iso_img_form_field_changed")).to route_to("pxe#iso_img_form_field_changed")
     end
   end
 
@@ -66,12 +48,6 @@ describe PxeController do
   describe "#pxe_image_type_list" do
     it "routes with POST" do
       expect(post("/pxe/pxe_image_type_list")).to route_to("pxe#pxe_image_type_list")
-    end
-  end
-
-  describe "#pxe_img_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/pxe/pxe_img_form_field_changed")).to route_to("pxe#pxe_img_form_field_changed")
     end
   end
 
