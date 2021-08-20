@@ -19,15 +19,15 @@ class CloudVolumeController < ApplicationController
     case pressed
     when 'cloud_volume_attach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if !volume.is_available?(:attach_volume) || volume.status != "available"
-        render_flash(_("Cloud Volume \"%{volume_name}\" is not available to be attached to any Instances") % {:volume_name => volume.name}, :error)
+      if !volume.supports?(:attach_volume)
+        render_flash(_("Cloud Volume \"%{volume_name}\" cannot be attached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:attach_volume)}, :error)
       else
         javascript_redirect(:action => 'attach', :id => checked_item_id)
       end
     when 'cloud_volume_detach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if volume.attachments.empty?
-        render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {:volume_name => volume.name}, :error)
+      if !volume.supports?(:detach_volume)
+        render_flash(_("Cloud Volume \"%{volume_name}\" cannot be detached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:detach_volume)}, :error)
       else
         javascript_redirect(:action => 'detach', :id => checked_item_id)
       end
@@ -94,7 +94,7 @@ class CloudVolumeController < ApplicationController
     when "attach"
       options = form_params
       vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.is_available?(:attach_volume)
+      if @volume.supports?(:attach_volume)
         task_id = @volume.attach_volume_queue(session[:userid], vm.ems_ref, options[:device_path])
 
         if task_id.kind_of?(Integer)
@@ -104,7 +104,7 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(volume.is_available_now_error_message(:attach_volume)), :error)
+        add_flash(_(volume.unsupported_reason(:attach_volume)), :error)
         javascript_flash
       end
     end
@@ -149,7 +149,7 @@ class CloudVolumeController < ApplicationController
     when "detach"
       options = form_params
       vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.is_available?(:detach_volume)
+      if @volume.supports?(:detach_volume)
         task_id = @volume.detach_volume_queue(session[:userid], vm.ems_ref)
 
         if task_id.kind_of?(Integer)
@@ -159,7 +159,7 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(@volume.is_available_now_error_message(:detach_volume)), :error)
+        add_flash(_(@volume.unsupported_reason(:detach_volume)), :error)
         javascript_flash(:spinner_off => true)
       end
     end
