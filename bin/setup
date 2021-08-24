@@ -13,7 +13,7 @@ if ENV.key?("MANAGEIQ_REPO")
   FileUtils.ln_s(manageiq_repo.expand_path, spec_manageiq.expand_path)
 elsif !spec_manageiq.exist?
   puts "== Cloning manageiq sample app =="
-  system "git clone https://github.com/ManageIQ/manageiq.git --branch lasker --depth 1 spec/manageiq"
+  system "git clone https://github.com/ManageIQ/manageiq.git --branch morphy --depth 1 spec/manageiq"
 end
 
 require gem_root.join("spec/manageiq/lib/manageiq/environment").to_s

@@ -1,11 +1,11 @@
 # ManageIQ::UI::Classic
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-ui-classic.svg)](http://badge.fury.io/rb/manageiq-ui-classic)
-[![Build Status](https://travis-ci.com/ManageIQ/manageiq-ui-classic.svg?branch=lasker)](https://travis-ci.com/ManageIQ/manageiq-ui-classic)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-ui-classic.svg?branch=morphy)](https://travis-ci.com/ManageIQ/manageiq-ui-classic)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/coverage)
-[![Coverage Status](https://coveralls.io/repos/github/ManageIQ/manageiq-ui-classic/badge.svg?branch=lasker)](https://coveralls.io/github/ManageIQ/manageiq-ui-classic?branch=lasker)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/lasker.svg)](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/lasker)
+[![Coverage Status](https://coveralls.io/repos/github/ManageIQ/manageiq-ui-classic/badge.svg?branch=morphy)](https://coveralls.io/github/ManageIQ/manageiq-ui-classic?branch=morphy)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/morphy.svg)](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/morphy)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq/ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
