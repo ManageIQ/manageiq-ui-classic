@@ -1,8 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb } from 'patternfly-react';
+import { Breadcrumb, BreadcrumbItem } from 'carbon-components-react';
 import { unescape } from 'lodash';
-
 import { onClickTree, onClick, onClickToExplorer } from './on-click-functions';
 
 // FIXME: don't parse html here
@@ -13,44 +14,43 @@ const renderItems = ({ items, controllerName }) => items
   .map((item, index) => {
     const text = parsedText(item.title);
     if (item.action || (!item.url && !item.key && !item.to_explorer)) {
-      // eslint-disable-next-line react/no-array-index-key
-      return <li key={index}>{text}</li>;
+      return <li key={index} className="inactive-item">{text}</li>;
     }
 
     if (item.key || item.to_explorer) {
       return (
-        <Breadcrumb.Item
-          // eslint-disable-next-line react/no-array-index-key
+        <BreadcrumbItem
           key={`${item.key}-${index}`}
+          href="#"
           onClick={(e) =>
             (item.to_explorer
               ? onClickToExplorer(e, controllerName, item.to_explorer)
               : onClickTree(e, controllerName, item))}
         >
           {text}
-        </Breadcrumb.Item>
+        </BreadcrumbItem>
       );
     }
 
     return (
-      <Breadcrumb.Item
+      <BreadcrumbItem
         key={item.url || index}
         href={item.url}
         onClick={(e) => onClick(e, item.url)}
       >
         {text}
-      </Breadcrumb.Item>
+      </BreadcrumbItem>
     );
   });
 
 export const Breadcrumbs = ({ items, title, controllerName }) => (
-  <Breadcrumb>
+  <Breadcrumb noTrailingSlash>
     {items && renderItems({ items, controllerName })}
-    <Breadcrumb.Item active>
+    <BreadcrumbItem isCurrentPage>
       <strong>
         {items && items.length > 0 ? parsedText(items[items.length - 1].title) : parsedText(title)}
       </strong>
-    </Breadcrumb.Item>
+    </BreadcrumbItem>
   </Breadcrumb>
 );
 
