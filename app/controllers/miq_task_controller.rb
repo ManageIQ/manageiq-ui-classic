@@ -82,7 +82,7 @@ class MiqTaskController < ApplicationController
     when "tasks_1" then @layout = "my_tasks"
     when "tasks_2", "alltasks_2" then @layout = "all_tasks"
     end
-
+    tasks_set_default_options
     @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]), :clickable => false)
     @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
   end
@@ -173,51 +173,6 @@ class MiqTaskController < ApplicationController
           page.replace_html("main_div", :partial => @refresh_partial)
         end
       end
-    end
-  end
-
-  # Gather any changed options
-  def tasks_change_options
-    assert_privileges('tasks_view')
-    @edit = session[:edit]
-    copy_params_if_present(@edit[:opts], params, %i[user_choice state_choice])
-    @edit[:opts][:zone] = params[:chosen_zone] if params[:chosen_zone]
-    @edit[:opts][:time_period] = params[:time_period].to_i if params[:time_period]
-    @edit[:opts][:queued] = params[:queued] == "1" ? params[:queued] : nil if params[:queued]
-    @edit[:opts][:ok] = params[:ok] == "1" ? params[:ok] : nil if params[:ok]
-    @edit[:opts][:error] = params[:error] == "1" ? params[:error] : nil if params[:error]
-    @edit[:opts][:warn] = params[:warn] == "1" ? params[:warn] : nil if params[:warn]
-    @edit[:opts][:running] = params[:running] == "1" ? params[:running] : nil if params[:running]
-
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(@tasks_options[@tabform] != @edit[:opts])
-    end
-  end
-
-  # Refresh the display with the chosen filters
-  def tasks_button
-    assert_privileges('tasks_view')
-    @edit = session[:edit]
-    if params[:button] == "apply"
-      @tasks_options[@tabform] = copy_hash(@edit[:opts]) # Copy the latest changed options
-    elsif params[:button] == "reset"
-      @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Reset to the saved options
-    elsif params[:button] == "default"
-      tasks_set_default_options
-      @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Backup current settings
-    end
-
-    list_jobs # Get the jobs based on the latest options
-    @pp_choices = PPCHOICES2 # Get special pp choices for jobs/tasks lists
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page << "miqSetButtons(0, 'center_tb');" # Reset the center toolbar
-      page.replace("main_div", :partial => "layouts/tasks")
-      page << "miqSparkle(false);"
     end
   end
 
@@ -358,6 +313,7 @@ class MiqTaskController < ApplicationController
     # Specify user scope
     if @tabform == "tasks_1"
       scope << [:with_userid, session[:userid]]
+      @userid = session[:userid]
     elsif opts[:user_choice] && opts[:user_choice] != "all"
       scope << [:with_userid, opts[:user_choice]]
     end
@@ -410,7 +366,7 @@ class MiqTaskController < ApplicationController
     session[:tabform]             = @tabform
     session[:layout]              = @layout
     session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
-    session[:tabs]                ||= @tabs 
+    session[:tabs]                ||= @tabs
   end
 
   def jobs_info

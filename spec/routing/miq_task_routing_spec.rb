@@ -16,8 +16,6 @@ describe "routes for MiqTaskController" do
   %w(
     button
     jobs
-    tasks_button
-    tasks_change_options
   ).each do |task|
     describe "##{task}" do
       it 'routes with POST' do
