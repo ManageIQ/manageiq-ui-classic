@@ -78,27 +78,31 @@ const createSchema = (initialValues = {}, edit, promise) => {
         RemoveButtonProps: {
           size: 'small',
         },
-        fields: [
-          {
-            component: componentTypes.TEXT_FIELD,
-            name: 'attributes_name',
-            label: __('Name'),
-            validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
-          },
-          {
-            component: componentTypes.SELECT,
-            name: 'type',
-            label: __('Type'),
-            placeholder: __('<Choose>'),
-            includeEmpty: true,
-            loadOptions: () => promise.then(({ data: { allowed_types } }) =>
-              Object.keys(allowed_types).map((key) => ({
-                value: key,
-                label: __(allowed_types[key]),
-              }))),
-            validate: [{ type: validatorTypes.REQUIRED }],
-          },
-        ],
+        fields: [{
+          name: 'attributes_column',
+          component: 'dual-column',
+          fields: [
+            {
+              component: componentTypes.TEXT_FIELD,
+              name: 'text-field',
+              label: __('Name'),
+              //validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+            },
+            {
+              component: componentTypes.SELECT,
+              name: 'select',
+              label: __('Type'),
+              placeholder: __('<Choose>'),
+              includeEmpty: true,
+              loadOptions: () => promise.then(({ data: { allowed_types } }) =>
+                Object.keys(allowed_types).map((key) => ({
+                  value: key,
+                  label: __(allowed_types[key]),
+                }))),
+              //validate: [{ type: validatorTypes.REQUIRED }],
+            },
+          ],
+        }],
       },
       {
         component: componentTypes.FIELD_ARRAY,
@@ -139,29 +143,34 @@ const createSchema = (initialValues = {}, edit, promise) => {
         ],
       },
       {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'methods',
-        id: 'methods',
-        label: __('Methods'),
-        noItemsMessage: __('None'),
-        buttonLabels: {
-          add: __('Add'),
-          remove: __('Remove'),
-        },
-        AddButtonProps: {
-          size: 'small',
-        },
-        RemoveButtonProps: {
-          size: 'small',
-        },
-        fields: [
-          {
-            component: componentTypes.TEXT_FIELD,
-            name: 'methods_name',
-            label: __('Name'),
-            validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+        component: componentTypes.SUB_FORM,
+        name: 'methods_section',
+        id: 'methods_section',
+        fields: [{
+          component: componentTypes.FIELD_ARRAY,
+          name: 'methods',
+          id: 'methods',
+          label: __('Methods'),
+          noItemsMessage: __('None'),
+          buttonLabels: {
+            add: __('Add'),
+            remove: __('Remove'),
           },
-        ],
+          AddButtonProps: {
+            size: 'small',
+          },
+          RemoveButtonProps: {
+            size: 'small',
+          },
+          fields: [
+            {
+              component: componentTypes.TEXT_FIELD,
+              name: 'methods_name',
+              label: __('Name'),
+              validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+            },
+          ],
+        }],
       },
       ...(edit ? edit_field : [{
         component: componentTypes.SUB_FORM,

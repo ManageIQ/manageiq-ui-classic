@@ -2,6 +2,7 @@ import React from 'react';
 import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
+import DualColumnComponent from '../../components/dual-column';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import FileUploadComponent from '../../components/file-upload';
 import PasswordField from '../../components/async-credentials/password-field';
@@ -13,6 +14,7 @@ import MultiSelectWithSelectAll from '../../components/multiselect-with-selectal
 const mapper = {
   ...componentMapper,
   'code-editor': CodeEditor,
+  'dual-column': DualColumnComponent,
   'edit-password-field': EditPasswordField,
   'file-upload': FileUploadComponent,
   'password-field': PasswordField,
