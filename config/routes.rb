@@ -2263,8 +2263,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         jobs
-        tasks_button
-        tasks_change_options
       )
     },
 
