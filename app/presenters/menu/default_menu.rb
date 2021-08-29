@@ -161,6 +161,7 @@ module Menu
           Menu::Item.new('cloud_volume_type',            N_('Volume Types'),            'cloud_volume_type',            {:feature => 'cloud_volume_type_show_list'},            '/cloud_volume_type/show_list'),
           Menu::Item.new('volume_mapping',               N_('Volume Mappings'),         'volume_mapping',               {:feature => 'volume_mapping_show_list'},               '/volume_mapping/show_list'),
           Menu::Item.new('host_initiator',               N_('Host Initiators'),         'host_initiator',               {:feature => 'host_initiator_show_list'},               '/host_initiator/show_list'),
+          Menu::Item.new('host_initiator_group',         N_('Host Initiator Groups'),   'host_initiator_group',         {:feature => 'host_initiator_show_list'},               '/host_initiator_group/show_list'),
           Menu::Item.new('physical_storage',             N_('Storages'),                'physical_storage',             {:feature => 'physical_storage_show_list'},             '/physical_storage/show_list'),
           Menu::Item.new('storage_resource',             N_('Storage Resources'),       'storage_resource',             {:feature => 'storage_resource_show_list'},             '/storage_resource/show_list'),
           Menu::Item.new('cloud_object_store_container', N_('Object Store Containers'), 'cloud_object_store_container', {:feature => 'cloud_object_store_container_show_list'}, '/cloud_object_store_container/show_list'),

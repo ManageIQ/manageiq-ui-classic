@@ -690,6 +690,8 @@ HostController:
 - wait_for_task
 HostInitiatorController:
 - index
+HostInitiatorGroupController:
+- index
 InfraNetworkingController:
 - dialog_field_changed
 - dialog_form_button_pressed
