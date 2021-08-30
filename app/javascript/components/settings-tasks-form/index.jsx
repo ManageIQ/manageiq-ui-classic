@@ -44,9 +44,6 @@ const SettingsTasksForm = ({
           add_flash(__('All changes have been reset'), 'warn');
           loadDefaultTable();
         }}
-        buttonsLabels={{
-          submitLabel: 'Apply',
-        }}
       />
     </div>
   );
@@ -72,7 +69,7 @@ const FormTemplate = ({
               type="submit"
               variant="contained"
             >
-              Apply
+              {__('Apply')}
             </button>
             <button
               disabled={!valid || (pristine && !dirtySinceLastSubmit)}
@@ -82,7 +79,7 @@ const FormTemplate = ({
               onClick={onReset}
               type="button"
             >
-              Reset
+              {__('Reset')}
             </button>
           </div>
         )}
