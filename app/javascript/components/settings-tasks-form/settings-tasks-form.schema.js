@@ -70,23 +70,23 @@ const createSchema = (allTasks, zones, users, timePeriods, taskStates) => ({
           options: [
             {
               value: 'queued',
-              label: <Icon text="Queued" icon="carbon--SkipForwardFilled" color="#363636" size={16} />,
+              label: <Icon text={__('Queued')} icon="carbon--SkipForwardFilled" color="#363636" size={16} />,
             },
             {
               value: 'running',
-              label: <Icon text="Running" icon="carbon--CircleDash" color="#363636" size={16} />,
+              label: <Icon text={__('Running')} icon="carbon--CircleDash" color="#363636" size={16} />,
             },
             {
               value: 'completed_ok',
-              label: <Icon text="Ok" icon="carbon--CheckmarkOutline" color="#3f9c35" size={16} />,
+              label: <Icon text={__('Ok')} icon="carbon--CheckmarkOutline" color="#3f9c35" size={16} />,
             },
             {
               value: 'completed_error',
-              label: <Icon text="Error" icon="carbon--MisuseOutline" color="#cc0000 " size={16} />,
+              label: <Icon text={__('Error')} icon="carbon--MisuseOutline" color="#cc0000 " size={16} />,
             },
             {
               value: 'completed_warn',
-              label: <Icon text="Warn" icon="carbon--WarningAlt" color="#ec7a08" size={16} />,
+              label: <Icon text={__('Warn')} icon="carbon--WarningAlt" color="#ec7a08" size={16} />,
             },
           ],
         }],

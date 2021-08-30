@@ -6,11 +6,6 @@ exports[`VM common form component should render all tasks form 1`] = `
 >
   <Connect(MiqFormRenderer)
     FormTemplate={[Function]}
-    buttonsLabels={
-      Object {
-        "submitLabel": "Apply",
-      }
-    }
     canReset={true}
     onReset={[Function]}
     onSubmit={[Function]}
@@ -202,11 +197,6 @@ exports[`VM common form component should render my tasks form 1`] = `
 >
   <Connect(MiqFormRenderer)
     FormTemplate={[Function]}
-    buttonsLabels={
-      Object {
-        "submitLabel": "Apply",
-      }
-    }
     canReset={true}
     onReset={[Function]}
     onSubmit={[Function]}
