@@ -16,3 +16,18 @@
     }
   }
 }
+
+.fonticon-picker{
+  .icon-button{
+    background-color: #f4f4f4;
+    border: none;
+    border-bottom: 1px solid #8d8d8d;
+    color: #161616;
+    &:before, &:after, &:focus, &:hover, &:visited, &:active{
+      background-color: #f4f4f4;
+      color: #161616;
+      border: none;
+      border: 1px solid #8d8d8d !important;
+    }
+  }
+}

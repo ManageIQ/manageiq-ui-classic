@@ -1,50 +1,7 @@
 - url = url_for_only_path(:action => 'group_form_field_changed', :id => (@custom_button_set.id || 'new'))
-#group_form_div
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Basic Info')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _('Text')
-      .col-md-8
-        .input-group
-          = text_field_tag("name", @edit[:new][:name],
-                          :maxlength         => 15,
-                          :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-          .input-group-addon
-            %label.checkbox-inline
-              - display = @record.set_data.present? ? [true, "1"].include?(@record.set_data[:display]) : @edit[:new][:display]
-              = check_box_tag("display", "1", display,
-                              "data-miq_observe_checkbox" => {:url => url}.to_json)
-              = _('Display on Button')
-            = javascript_tag(javascript_focus('name'))
-    .form-group
-      %label.control-label.col-md-2
-        = _('Hover Text')
-      .col-md-8
-        = text_field_tag("description", @edit[:new][:description],
-                        :maxlength         => 30,
-                        :class             => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    .form-group
-      %label.control-label.col-md-2
-        = _('Icon')
-      .col-md-8#button-icon-picker
-        = react 'FonticonPicker', :selected => @edit[:new][:button_icon], :onChangeURL => url
-    .form-group
-      %label.control-label.col-md-2
-        = _('Icon Color')
-      .col-md-8
-        -# Remove the default #4d5258 value when using a color picker with nil support
-        = color_field_tag("button_color", @edit[:new][:button_color] || '#4d5258',
-                          :maxlength         => 30,
-                          :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+= react 'GroupForm', :recId => @edit[:rec_id],
+                    :availableFields => (@edit[:new][:available_fields] || []), 
+                    :fields => (@edit[:new][:fields] || []),
+                    :url => url, 
+                    :appliesToClass => @sb[:applies_to_class]
 
-  - if x_active_tree == :ab_tree || (x_active_tree == :sandt_tree && @edit[:rec_id])
-    %hr
-    %h3
-      = _('Assign Buttons')
-    = render :partial => "shared/buttons/column_lists"
