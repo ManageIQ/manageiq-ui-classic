@@ -1,0 +1,22 @@
+#breadcrumbs{
+    div[id*='react']{
+        display: flex;
+        nav{
+            display: flex;
+            flex-grow: 1;
+            ol {
+                li.inactive-item{
+                    list-style: none;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    margin-right: 0.5rem;
+                    &::after{
+                        margin-left: 0.5rem;
+                        content: "/";
+                    }
+                }
+            }
+        }
+    }
+}

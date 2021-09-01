@@ -61,84 +61,79 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
         title="Title"
       >
         <Breadcrumb
-          title={false}
+          noTrailingSlash={true}
         >
-          <Breadcrumb
-            bsClass="breadcrumb"
-            className=""
+          <nav
+            aria-label="Breadcrumb"
           >
             <ol
-              aria-label="breadcrumbs"
-              className="breadcrumb"
-              role="navigation"
+              className="bx--breadcrumb bx--breadcrumb--no-trailing-slash"
             >
               <BreadcrumbItem
-                active={false}
                 href="/providers"
                 key="/providers"
                 onClick={[Function]}
               >
                 <li
-                  className=""
+                  className="bx--breadcrumb-item"
+                  onClick={[Function]}
                 >
-                  <SafeAnchor
-                    componentClass="a"
+                  <Link
                     href="/providers"
-                    onClick={[Function]}
                   >
                     <a
+                      className="bx--link"
                       href="/providers"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
+                      rel={null}
                     >
                       Providers
                     </a>
-                  </SafeAnchor>
+                  </Link>
                 </li>
               </BreadcrumbItem>
               <BreadcrumbItem
-                active={false}
+                href="#"
                 key="in tree-1"
                 onClick={[Function]}
               >
                 <li
-                  className=""
+                  className="bx--breadcrumb-item"
+                  onClick={[Function]}
                 >
-                  <SafeAnchor
-                    componentClass="a"
-                    onClick={[Function]}
+                  <Link
+                    href="#"
                   >
                     <a
+                      className="bx--link"
                       href="#"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      role="button"
+                      rel={null}
                     >
                       Google
                     </a>
-                  </SafeAnchor>
+                  </Link>
                 </li>
               </BreadcrumbItem>
               <li
+                className="inactive-item"
                 key="2"
               >
                 All
               </li>
               <BreadcrumbItem
-                active={true}
+                isCurrentPage={true}
               >
                 <li
-                  className="active"
+                  className="bx--breadcrumb-item bx--breadcrumb-item--current"
                 >
-                  <span>
-                    <strong>
-                      This
-                    </strong>
-                  </span>
+                  <strong
+                    className="bx--link"
+                  >
+                    This
+                  </strong>
                 </li>
               </BreadcrumbItem>
             </ol>
-          </Breadcrumb>
+          </nav>
         </Breadcrumb>
       </Breadcrumbs>
       <NotificationsToggle>
