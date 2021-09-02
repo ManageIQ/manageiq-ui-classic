@@ -1,7 +1,8 @@
-- url = url_for_only_path(:action => 'group_form_field_changed', :id => (@custom_button_set.id || 'new'))
+#group_form_div
+  = render :partial => "layouts/flash_msg"
 = react 'GroupForm', :recId => @edit[:rec_id],
                     :availableFields => (@edit[:new][:available_fields] || []), 
                     :fields => (@edit[:new][:fields] || []),
-                    :url => url, 
-                    :appliesToClass => @sb[:applies_to_class]
-
+                    :url => (url_for_only_path(:action => 'group_form_field_changed', :id => (@custom_button_set.id || 'new'))), 
+                    :appliesToClass => @sb[:applies_to_class],
+                    :appliesToId => @sb[:applies_to_id]

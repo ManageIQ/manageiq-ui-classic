@@ -2211,7 +2211,7 @@ class CatalogController < ApplicationController
           locals[:action_url] = 'servicetemplate_edit'
           locals[:serialize] = true
         end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
+        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) if allow_presenter_update(action)
       elsif action == "dialog_provision"
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
@@ -2240,6 +2240,12 @@ class CatalogController < ApplicationController
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
+  end
+
+  # This method disables the action buttons of the old button-group form page.
+  def allow_presenter_update(action)
+    restricted_actions = ['group_edit']
+    action ? restricted_actions.exclude?(action.to_s) : false
   end
 
   def need_ansible_locals?
