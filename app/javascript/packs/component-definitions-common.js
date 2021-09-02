@@ -30,6 +30,7 @@ import FonticonPickerDdf from '../components/fonticon-picker/font-icon-picker-dd
 import HostAggregateForm from '../components/host-aggregate-form';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal/miq-about-modal';
+import MiqAlertSetForm from '../components/miq-alert-set-form';
 import MiqToolbar from '../components/miq-toolbar';
 import { MainMenu, Navbar } from '../menu';
 import NotificationDrawer from '../components/notification-drawer/notification-drawer';
@@ -113,6 +114,7 @@ ManageIQ.component.addReact('HostAggregateForm', HostAggregateForm);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('MiqToolbar', MiqToolbar);
+ManageIQ.component.addReact('MiqAlertSetForm', MiqAlertSetForm);
 ManageIQ.component.addReact('menu.MainMenu', MainMenu);
 ManageIQ.component.addReact('menu.Navbar', Navbar);
 ManageIQ.component.addReact('NotificationDrawer', NotificationDrawer);

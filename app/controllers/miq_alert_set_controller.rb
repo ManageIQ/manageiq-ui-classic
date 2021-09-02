@@ -1,3 +1,4 @@
+require 'byebug'
 class MiqAlertSetController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
@@ -17,6 +18,7 @@ class MiqAlertSetController < ApplicationController
 
   def alert_profile_load
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by(:id => @edit[:alert_profile_id]) : MiqAlertSet.new
+    #byebug
   end
 
   def alert_profile_edit_cancel
@@ -49,7 +51,6 @@ class MiqAlertSetController < ApplicationController
     alert_profile.description = @edit[:new][:description]
     alert_profile.notes = @edit[:new][:notes]
     alert_profile.mode = @edit[:new][:mode]
-
     unless alert_profile.valid? && !@flash_array && alert_profile.save
       alert_profile.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -61,6 +62,7 @@ class MiqAlertSetController < ApplicationController
     alerts = alert_profile.members                        # Get the sets members
     current = alerts.collect(&:id)                        # Build an array of the current alert ids
     mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
+    #byebug
     begin
       alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
       mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
@@ -258,11 +260,12 @@ class MiqAlertSetController < ApplicationController
     @edit[:new][:alerts] = {}
     alerts = @alert_profile.members # Get the set's members
     alerts.each { |a| @edit[:new][:alerts][a.description] = a.id } # Build a hash for the members list box
+    #byebug
 
     get_alerts
 
     @edit[:current] = copy_hash(@edit[:new])
-
+    #byebug
     @embedded = true
     @in_a_form = true
     @edit[:current][:add] = true unless @edit[:alert_profile_id] # Force changed to be true if adding a record
@@ -334,7 +337,7 @@ class MiqAlertSetController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Alert Profiles")
+    @title = _("Alert Profilessss")
     @layout =  "miq_alert_set"
     @lastaction = session[:miq_alert_set_lastaction]
     @display = session[:miq_alert_set_display]

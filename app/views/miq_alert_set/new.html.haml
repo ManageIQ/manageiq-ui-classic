@@ -1,1 +1,5 @@
 = render :partial => 'form'
+= react('MiqAlertSetForm',
+         :mode => Array(MiqAlertSet::ALERT_SET_MODES.invert),
+         :available_alerts => @edit[:choices])
+#selected #{Array(MiqAlertSet::ALERT_SET_MODES.invert)}
