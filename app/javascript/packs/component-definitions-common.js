@@ -55,6 +55,7 @@ import ServiceDialogFromForm from '../components/service-dialog-from-form/servic
 import SettingsTimeProfileForm from '../components/settings-time-profile-form';
 import SubnetForm from '../components/subnet-form';
 import EditServiceForm from '../components/edit-service-form';
+import ServiceRequestDefault from '../components/service-request-default';
 import SetOwnershipForm from '../components/set-ownership-form';
 import SettingsTasksForm from '../components/settings-tasks-form';
 import ServersDataChart from '../components/provider-dashboard-charts/servers-pie-chart';
@@ -134,6 +135,7 @@ ManageIQ.component.addReact('RetirementForm', RetirementForm);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);
 ManageIQ.component.addReact('SettingsTasksForm', SettingsTasksForm);
 ManageIQ.component.addReact('EditServiceForm', EditServiceForm);
+ManageIQ.component.addReact('ServiceRequestDefault', ServiceRequestDefault);
 ManageIQ.component.addReact('SetOwnershipForm', SetOwnershipForm);
 ManageIQ.component.addReact('ServersDataChart', ServersDataChart);
 ManageIQ.component.addReact('SettingsTimeProfileForm', SettingsTimeProfileForm);
