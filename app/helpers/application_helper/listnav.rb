@@ -6,6 +6,7 @@ module ApplicationHelper
         auth_key_pair_cloud
         automation_manager_configured_system
         availability_zone
+        cloud_database
         cloud_network
         cloud_object_store_container
         cloud_object_store_object

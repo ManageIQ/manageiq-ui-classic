@@ -64,6 +64,7 @@ module Mixins
       def display_methods
         %w[
           availability_zones
+          cloud_databases
           cloud_networks
           cloud_object_store_containers
           cloud_object_store_objects

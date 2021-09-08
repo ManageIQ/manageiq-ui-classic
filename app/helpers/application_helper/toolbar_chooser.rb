@@ -428,6 +428,7 @@ class ApplicationHelper::ToolbarChooser
             network_port
             network_service
             network_service_rule
+            cloud_database
             cloud_network
             load_balancer
             container_image_registry

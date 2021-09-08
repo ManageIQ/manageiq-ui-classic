@@ -412,6 +412,7 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "ManageIQ::Providers::AnsibleTower::AutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
+        "ManageIQ::Providers::CloudManager::CloudDatabase",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
@@ -738,6 +739,7 @@ module ApplicationHelper
        automation_manager_configured_system
        availability_zone
        ems_automation
+       cloud_database
        cloud_network
        cloud_object_store_container
        cloud_object_store_object
@@ -1038,6 +1040,7 @@ module ApplicationHelper
                              alerts_overview
                              alerts_list
                              alerts_most_recent
+                             cloud_database
                              cloud_network
                              cloud_object_store_container
                              cloud_object_store_object
