@@ -1,29 +1,43 @@
 .fonticon-picker-modal {
-  height: calc(100vh - 260px);
-  overflow-y: auto !important;
-  overflow-x: hidden;
-
   div.fonticon {
     font-size: 24px;
     text-align: center;
+    padding: 0;
 
-    span.active {
+    span {
       i {
-        padding: 3px 5px 3px 5px;
-        background-color: #0088ce;
-        color: #fff;
+        padding: 3px 5px;
+        cursor: pointer;
+        min-width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &.active {
+        i {
+          background-color: #0088ce;
+          color: #fff;
+        }
       }
     }
   }
 }
 
-.fonticon-picker{
-  .icon-button{
+.fonticon-picker {
+  .icon-button {
     background-color: #f4f4f4;
     border: none;
     border-bottom: 1px solid #8d8d8d;
     color: #161616;
-    &:before, &:after, &:focus, &:hover, &:visited, &:active{
+
+    &::before,
+    &::after,
+    &:focus,
+    &:hover,
+    &:visited,
+    &:active {
       background-color: #f4f4f4;
       color: #161616;
       border: none;
@@ -31,3 +45,20 @@
     }
   }
 }
+
+#apply-icon-picker-icon {
+  margin-right: 10px;
+}
+
+.font-icon-list-modal {
+  div[class*="modal-container"] {
+    div[id*="modal-body"] {
+      padding-right: 15px !important;
+
+      .font-icon-list-modal-body {
+        padding-right: 15px !important;
+      }
+    }
+  }
+}
+
