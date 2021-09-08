@@ -343,70 +343,34 @@ module ApplicationController::Buttons
 
   def group_button_add_save(typ)
     assert_privileges(params[:button] == "add" ? "ab_group_new" : "ab_group_edit")
-    if @edit[:new][:name].blank?
-      render_flash(_("Name is required"), :error)
-      return
-    end
-    if @edit[:new][:description].blank?
-      render_flash(_("Description is required"), :error)
-      return
-    end
-    if @edit[:new][:button_icon].blank?
-      render_flash(_("Button Icon must be selected"), :error)
-      return
-    end
-    group_set_record_vars(@custom_button_set)
-
     if typ == "update"
-      if @custom_button_set.save
-        add_flash(_("Button Group \"%{name}\" was saved") % {:name => @edit[:new][:description]})
-        @edit = session[:edit] = nil # clean out the saved info
-        ab_get_node_info(x_node) if x_active_tree == :ab_tree
-        replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-      else
-        @custom_button_set.errors.each do |field, msg|
-          add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
-            {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
-        end
-        @lastaction = "automate_button"
-        @layout     = "miq_ae_automate_button"
-        render_flash
-      end
+      update_page_content("saved")
     else
-      # set group_index of new record being added and exiting ones so they are in order incase some were deleted
-      all_sets = CustomButtonSet.find_all_by_class_name(@edit[:new][:applies_to_class])
+      all_sets = CustomButtonSet.find_all_by_class_name(params[:applies_to_class])
       all_sets.each_with_index do |group, i|
         group.set_data[:group_index] = i + 1
         group.save!
       end
-      @custom_button_set.set_data[:group_index] = all_sets.length + 1
-      if @custom_button_set.save
-        if x_active_tree == :sandt_tree
-          aset = CustomButtonSet.find_by(:id => @custom_button_set.id)
-          # push new button at the end of button_order array
-          if aset
-            st = ServiceTemplate.find(@sb[:applies_to_id])
-            st.custom_button_sets.push(aset)
-            st.options[:button_order] ||= []
-            st.options[:button_order].push("cbg-#{aset.id}")
-            st.save
-          end
+      if x_active_tree == :sandt_tree
+        aset = CustomButtonSet.find_by(:id => params[:id])
+        # push new button at the end of button_order array
+        if aset
+          st = ServiceTemplate.find(@sb[:applies_to_id])
+          st.custom_button_sets.push(aset)
+          st.options[:button_order] ||= []
+          st.options[:button_order].push("cbg-#{aset.id}")
+          st.save
         end
-
-        add_flash(_("Button Group \"%{name}\" was added") % {:name => @edit[:new][:description]})
-        @edit = session[:edit] = nil # clean out the saved info
-        ab_get_node_info(x_node) if x_active_tree == :ab_tree
-        replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-      else
-        @custom_button_set.errors.each do |field, msg|
-          add_flash(_("Error during 'add': %{field_name} %{error_message}") %
-            {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
-        end
-        @lastaction = "automate_button"
-        @layout     = "miq_ae_automate_button"
-        render_flash
       end
+      update_page_content("added")
     end
+  end
+
+  def update_page_content(action)
+    add_flash("Button Group #{params[:name]} was #{action}")
+    @edit = session[:edit] = nil # clean out the saved info
+    ab_get_node_info(x_node) if x_active_tree == :ab_tree
+    replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
   end
 
   def group_button_reset

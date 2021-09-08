@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
-import { Loading } from 'carbon-components-react';
+import { Button, Loading } from 'carbon-components-react';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './group-form.schema';
+import { formatButton, formatName, formatSetData } from './helper';
 
 const GroupForm = ({
-  recId, availableFields, fields, url, appliesToClass,
+  recId, availableFields, fields, url, appliesToClass, appliesToId,
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, options,
@@ -16,36 +16,10 @@ const GroupForm = ({
   });
 
   let iconChanged = false;
-
-  /** Function to change the format of the props available_fields & fields from the format
-   * [[string,number]] to [{label:string, value:number}] to use as options in dual-list-select */
-  const formatButton = (buttons) => {
-    if (buttons.length <= 0) {
-      return [];
-    }
-    const options = [];
-    buttons.forEach((btn) => options.push({ label: btn[0], value: btn[1] }));
-    return options;
-  };
-
-  /** available_fields or an empty array is passed as props. */
+  const actionType = (recId ? 'group_update' : 'group_create');
+  const buttonType = (recId ? 'save' : 'add');
+  const cancelUrl = `${actionType}/${recId}?button=cancel`;
   const buttonOptions = formatButton(availableFields.concat(fields));
-
-  /** Function to extract the ButtonGroupName from api result like 'ButtonGroupName | xyz'. */
-  const formatName = (buttonGroupName) => {
-    if (!buttonGroupName) {
-      return undefined;
-    }
-    return buttonGroupName.split('|')[0].trim('');
-  };
-
-  /** Function to update the field set_data's values during form submit */
-  const formatSetData = (setData) => ({
-    ...setData,
-    button_color: (setData && setData.button_color) ? setData.button_color : '#000',
-    button_icon: buttonIcon,
-    applies_to_class: appliesToClass,
-  });
 
   useEffect(() => {
     if (recId) {
@@ -71,31 +45,30 @@ const GroupForm = ({
     ? (initialValues.set_data.button_icon !== buttonIcon)
     : false;
 
+  /** When the api resquest is completed, an miqAjaxButton method is used to retain the current page.
+   * While saving from 'services/catalogItem', if the redirect method is used, the current page will not be displayed.
+  */
   const onSubmit = (values) => {
     miqSparkleOn();
-    values.set_data = formatSetData(values.set_data);
+    if (appliesToId) {
+      values.owner_id = appliesToId;
+    }
+    values.owner_type = appliesToClass;
+    values.set_data = formatSetData(values.set_data, buttonIcon, appliesToClass);
     const request = recId
-      ? API.patch(`/api/custom_button_sets/${recId}`, values)
-      : API.post('/api/custom_button_sets', values);
-    request.then(() => {
-      const message = sprintf(
-        recId
-          ? __('Modification of Button group "%s" has been successfully queued.')
-          : __('Add Button group "%s" has been successfully queued.'),
-        values.name,
-      );
-      miqRedirectBack(message, 'success', '/miq_ae_customization/explorer');
-    }).catch(() => miqSparkleOff());
+      ? API.patch(`/api/custom_button_sets/${recId}`, values, { skipErrors: [400, 500] })
+      : API.post('/api/custom_button_sets', values, { skipErrors: [400, 500] });
+    request.then(({ results }) => {
+      miqAjaxButton(`${actionType}/${recId || results[0].id}?button=${buttonType}`, values);
+    }).catch(({ data: { error: { message } } }) => {
+      const errorMessage = message ? message.split(': ')[1] : __('Please try again');
+      add_flash(errorMessage, 'error');
+      miqSparkleOff();
+    });
   };
 
   const onCancel = () => {
-    const message = sprintf(
-      recId
-        ? __('Edit of Button group "%s" was canceled by the user.')
-        : __('Creation of new Button group was canceled by the user.'),
-      initialValues && initialValues.name,
-    );
-    miqRedirectBack(message, 'warning', '/miq_ae_customization/explorer');
+    miqAjaxButton(cancelUrl);
   };
 
   const onFormReset = () => {
@@ -106,7 +79,7 @@ const GroupForm = ({
     }));
     add_flash(__('All changes have been reset'), 'warn');
   };
-  
+
   if (isLoading || (options === undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
   return (!isLoading && options) && (
     <div className="col-md-12 button-group-form">
@@ -136,31 +109,33 @@ const FormTemplate = ({
       <FormSpy>
         {() => (
           <div className="custom-button-wrapper">
-            <button
+            <Button
               disabled={(!valid || !modified) && pristine}
-              className="bx--btn bx--btn--primary btnRight"
+              kind="primary"
+              className="btnRight"
               type="submit"
               variant="contained"
             >
               {submitLabel}
-            </button>
+            </Button>
 
             {!!recId
               ? (
-                <button
+                <Button
                   disabled={(!valid || !modified) && pristine}
-                  className="bx--btn bx--btn--secondary btnRight"
+                  kind="secondary"
+                  className="btnRight"
                   variant="contained"
                   onClick={onReset}
                   type="button"
                 >
-                 { __('Reset')}
-                </button>
+                  { __('Reset')}
+                </Button>
               ) : null}
 
-            <button variant="contained" type="button" onClick={onCancel} className="bx--btn bx--btn--secondary">
-            { __('Cancel')}
-            </button>
+            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
+              { __('Cancel')}
+            </Button>
           </div>
         )}
       </FormSpy>
@@ -174,6 +149,7 @@ GroupForm.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.any),
   url: PropTypes.string,
   appliesToClass: PropTypes.string,
+  appliesToId: PropTypes.string,
 };
 
 GroupForm.defaultProps = {
@@ -182,6 +158,7 @@ GroupForm.defaultProps = {
   fields: [],
   url: '',
   appliesToClass: '',
+  appliesToId: undefined,
 };
 
 FormTemplate.propTypes = {

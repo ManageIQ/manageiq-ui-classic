@@ -448,12 +448,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def group_button_add_save(typ)
-    # override for AE Customization Buttons - the label doesn't say Description
-    if @edit[:new][:description].blank?
-      render_flash(_("Button Group Hover Text is required"), :error)
-      return
-    end
-
     super(typ)
   end
 
