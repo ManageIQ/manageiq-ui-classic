@@ -109,7 +109,7 @@ module CloudVolumeHelper::TextualSummary
   def textual_host_initiators
     num   = @record.number_of(:host_initiators)
     h     = {:label => _('Host Initiators'), :value => num, :icon => "pficon pficon-volume"}
-    if num > 0 && role_allows?(:feature => "host_initiators_show_list")
+    if num > 0 && role_allows?(:feature => "host_initiator_show_list")
       h[:title] = _("Show host initiators mapped to this volume")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'host_initiators')
     end

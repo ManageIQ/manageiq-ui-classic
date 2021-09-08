@@ -48,7 +48,7 @@ module HostInitiatorHelper::TextualSummary
   def textual_cloud_volumes
     num   = @record.number_of(:cloud_volumes)
     h     = {:label => _('Cloud Volumes'), :value => num, :icon => "pficon pficon-volume"}
-    if num > 0 && role_allows?(:feature => "cloud_volumes_show_list")
+    if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
       h[:title] = _("Show volumes mapped to this host initiator")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volumes')
     end
