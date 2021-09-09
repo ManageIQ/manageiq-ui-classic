@@ -116,10 +116,29 @@ const createSchema = (emsId, setEmsId) => ({
       }, {when: 'chap_authentication', is:true}]},
     },
     {
-      component: componentTypes.TEXT_FIELD,
+      component: componentTypes.FIELD_ARRAY,
       name: 'wwpn',
       id: 'wwpn',
       label: __('wwpn:'),
+      initialValue: [
+        null
+      ],
+      fieldKey: 'field_array',
+      buttonLabels: {
+        add: __('Add'),
+        remove: __('Remove'),
+      },
+      AddButtonProps: {
+        size: 'small',
+      },
+      RemoveButtonProps: {
+        size: 'small',
+      },
+      fields: [{
+        component: componentTypes.TEXT_FIELD,
+        isRequired: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+      }],
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       condition: {
