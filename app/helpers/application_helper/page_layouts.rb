@@ -188,6 +188,7 @@ module ApplicationHelper::PageLayouts
       auth_key_pair_cloud
       availability_zone
       automation_manager
+      cloud_database
       cloud_network
       cloud_object_store_container
       cloud_object_store_object

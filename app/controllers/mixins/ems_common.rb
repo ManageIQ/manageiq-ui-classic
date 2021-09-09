@@ -73,6 +73,7 @@ module Mixins
         %w[
           availability_zones
           block_storage_managers
+          cloud_databases
           cloud_networks
           cloud_object_store_containers
           cloud_subnets

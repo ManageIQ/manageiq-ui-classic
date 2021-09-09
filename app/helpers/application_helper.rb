@@ -435,6 +435,7 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
+        "ManageIQ::Providers::CloudManager::CloudDatabase",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
       controller = request.parameters[:controller]
@@ -759,6 +760,7 @@ module ApplicationHelper
        physical_storage
        availability_zone
        automation_manager
+       cloud_database
        cloud_network
        cloud_object_store_container
        cloud_object_store_object
@@ -1068,6 +1070,7 @@ module ApplicationHelper
                              alerts_overview
                              alerts_list
                              alerts_most_recent
+                             cloud_database
                              cloud_network
                              cloud_object_store_container
                              cloud_object_store_object
