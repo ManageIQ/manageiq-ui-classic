@@ -215,8 +215,7 @@ class CloudVolumeController < ApplicationController
       @volume = CloudVolume.new
       options = form_params_create
       ext_management_system = options.delete(:ems)
-      validate_results = CloudVolume.validate_create_volume(ext_management_system)
-      if validate_results[:available]
+      if ext_management_system.supports?(:cloud_volume_create)
         task_id = CloudVolume.create_volume_queue(session[:userid], ext_management_system, options)
 
         if task_id.kind_of?(Integer)
@@ -227,7 +226,7 @@ class CloudVolumeController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(ext_management_system.unsupported_reason(:cloud_volume_create), :error)
         drop_breadcrumb(
           :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
@@ -239,11 +238,11 @@ class CloudVolumeController < ApplicationController
       @in_a_form = true
       options = form_params
       cloud_tenant = find_record_with_rbac(CloudTenant, options[:cloud_tenant_id])
-      validate_results = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
-      if validate_results[:available]
+      ext_management_system = cloud_tenant.ext_management_system
+      if ext_management_system.supports?(:cloud_volume_create)
         add_flash(_("Validation successful"))
       else
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(ext_management_system.unsupported_reason(:cloud_volume_create), :error)
       end
       javascript_flash
     end
