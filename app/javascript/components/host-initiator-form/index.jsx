@@ -6,7 +6,9 @@ import createSchema from './host-initiator-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const HostInitiatorForm = ({ redirect }) => {
-  const state = useState(undefined);
+  // const state = useState(undefined);
+  const [emsId, setEmsId] = useState(undefined);
+  const [storageId, setStorageId] = useState(undefined);
 
   const onSubmit = async(values) => {
     miqSparkleOn();
@@ -20,9 +22,18 @@ const HostInitiatorForm = ({ redirect }) => {
     miqRedirectBack(message, 'success', redirect);
   };
 
+  const validate=(values) => {
+    const errors = {};
+    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)){
+      errors.wwpn = "Please provide at least one WWPN."
+    }
+    return errors;
+  }
+
   return (
     <MiqFormRenderer
-      schema={createSchema(...state)}
+      validate={validate}
+      schema={createSchema(emsId, setEmsId, storageId, setStorageId)}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{

@@ -19,7 +19,17 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
     value: id,
   })));
 
-const createSchema = (emsId, setEmsId) => ({
+const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_candidates`)
+  // eslint-disable-next-line camelcase
+  .then(
+    ({wwpn_candidates}) => wwpn_candidates.map(({candidate}) =>
+      ({
+        value: candidate,
+        label: candidate
+      }))
+  );
+
+const createSchema = (emsId, setEmsId, storageId, setStorageId) => ({
   fields: [
     {
       component: componentTypes.SELECT,
@@ -52,6 +62,7 @@ const createSchema = (emsId, setEmsId) => ({
       includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
+      onChange: (value) => setStorageId(value),
       key: `physical_storage_id-${emsId}`,
       condition: {
         when: 'ems_id',
@@ -68,6 +79,7 @@ const createSchema = (emsId, setEmsId) => ({
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       includeEmpty: true,
+      condition: {when: 'physical_storage_id', isNotEmpty: true}
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -97,32 +109,33 @@ const createSchema = (emsId, setEmsId) => ({
       id: 'chap_name',
       label: __('CHAP Username:'),
       isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      condition: {and: [{
-        when: 'port_type',
-        is: 'ISCSI',
-      }, {when: 'chap_authentication', is:true}]},
+      validate: [{type: validatorTypes.REQUIRED}],
+      condition: {
+        and: [{
+          when: 'port_type',
+          is: 'ISCSI',
+        }, {when: 'chap_authentication', is: true}]
+      },
     },
     {
       component: componentTypes.TEXT_FIELD,
       name: 'chap_secret',
       id: 'chap_secret',
-      validate: [{ type: validatorTypes.REQUIRED }],
+      validate: [{type: validatorTypes.REQUIRED}],
       label: __('CHAP Secret:'),
       isRequired: true,
-      condition: {and: [{
-        when: 'port_type',
-        is: 'ISCSI',
-      }, {when: 'chap_authentication', is:true}]},
+      condition: {
+        and: [{
+          when: 'port_type',
+          is: 'ISCSI',
+        }, {when: 'chap_authentication', is: true}]
+      },
     },
     {
       component: componentTypes.FIELD_ARRAY,
       name: 'wwpn',
       id: 'wwpn',
-      label: __('wwpn:'),
-      initialValue: [
-        null
-      ],
+      label: __('WWPNs detected by the storage'),
       fieldKey: 'field_array',
       buttonLabels: {
         add: __('Add'),
@@ -134,13 +147,42 @@ const createSchema = (emsId, setEmsId) => ({
       RemoveButtonProps: {
         size: 'small',
       },
-      fields: [{
-        component: componentTypes.TEXT_FIELD,
-        isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
-      }],
-      isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
+      fields: [
+        {
+          component: componentTypes.SELECT,
+          placeholder: __('<Choose>'),
+          validate: [{type: validatorTypes.REQUIRED}],
+          loadOptions: () => (storageId ? loadWwpns(storageId) : Promise.resolve([])),
+          isSearchable: true,
+        },
+      ],
+      condition: {
+        or: [{when: 'port_type', is: 'FC'}, {when: 'port_type', is: 'NVMeFC'}],
+      },
+    },
+    {
+      component: componentTypes.FIELD_ARRAY,
+      name: 'custom_wwpn',
+      id: 'custom_wwpn',
+      label: __('Custom manually entered WWPNs'),
+      fieldKey: 'field_array',
+      buttonLabels: {
+        add: __('Add'),
+        remove: __('Remove'),
+      },
+      AddButtonProps: {
+        size: 'small',
+      },
+      RemoveButtonProps: {
+        size: 'small',
+      },
+      fields: [
+        {
+          component: componentTypes.TEXT_FIELD,
+          isRequired: true,
+          validate: [{type: validatorTypes.REQUIRED}],
+        }
+      ],
       condition: {
         or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
       },
