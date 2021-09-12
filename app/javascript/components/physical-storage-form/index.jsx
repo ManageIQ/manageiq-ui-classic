@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import MiqFormRenderer from '@@ddf';
 import { Loading } from 'carbon-components-react';
 import createSchema from './physical-storage-form.schema';
@@ -8,7 +7,7 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
   const [state, setState] = useState({});
-  const {isLoading, initialValues} = state;
+  const { isLoading, initialValues } = state;
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
   const loadSchema = (appendState = {}) => () => {
@@ -33,7 +32,6 @@ const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
 
   const onSubmit = ({ edit: _edit, ...values }) => {
     miqSparkleOn();
-
     const request = recordId ? API.patch(`/api/physical_storages/${recordId}`, values) : API.post('/api/physical_storages', values);
     request.then(() => {
       const message = sprintf(

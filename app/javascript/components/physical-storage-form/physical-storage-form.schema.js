@@ -27,7 +27,7 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
         id: 'ems_id',
         label: __('Provider:'),
         isRequired: true,
-        isDisabled: edit || ems ,
+        isDisabled: edit || ems,
         loadOptions: loadProviders,
         includeEmpty: true,
         onChange: (value) => setState({ ...state, ems_id: value }),
