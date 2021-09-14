@@ -19,9 +19,16 @@ describe "report/_report_list.html.haml" do
                                   :trees         => {:reports_tree => {:active_node => "xx-1_xx-1-0"}})
   end
 
-  it "Check links in the list view" do
-    render
-    expect(response).to have_selector("//tr[@onclick=\"miqTreeActivateNode('reports_tree','xx-1_xx-1-0_rep-5');\"]")
-    expect(response).to have_selector("//tr[@onclick=\"miqTreeActivateNode('reports_tree','xx-1_xx-1-0_rep-6');\"]")
+  context 'Check if report list is present' do
+    let(:user) { FactoryBot.create(:user_with_group) }
+
+    before do
+      login_as user
+    end
+
+    it 'Check if report list is present' do
+      render
+      expect(response).to have_selector("//div[@id=\"report_list_div\"]")
+    end
   end
 end

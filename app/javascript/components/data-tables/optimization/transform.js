@@ -27,8 +27,11 @@ function formatDate(date) {
   return date ? moment(date).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss z') : null;
 }
 
-function transformSaved({id, report_id, name, last_run_on, userid, url}) {
+function transformSaved({
+  id, report_id, name, last_run_on, userid, url,
+}) {
   return {
+    id,
     name,
     last_run_on: formatDate(last_run_on),
     userid,
@@ -36,15 +39,18 @@ function transformSaved({id, report_id, name, last_run_on, userid, url}) {
   };
 }
 
-function transformReport({id, name, last_run_on, count, action, url, queue_url}) {
+function transformReport({
+  id, name, last_run_on, count, action, url, queue_url,
+}) {
   return {
+    id,
     name,
     last_run_on: formatDate(last_run_on),
     count,
     action: (
       <div className="table-view-pf-btn">
         <button type="button" onClick={queue(queue_url)} className="btn btn-default button-queue">
-          {__("Queue Report")}
+          {__('Queue Report')}
         </button>
       </div>
     ),

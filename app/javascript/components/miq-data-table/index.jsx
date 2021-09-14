@@ -1,0 +1,182 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  DataTable,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableSelectAll,
+  TableSelectRow,
+} from 'carbon-components-react';
+import classNames from 'classnames';
+import MiqPagination from '../miq-pagination';
+import {
+  CellAction, DefaultKey, sortableRows, SortDirections,
+} from './helper';
+import MiqTableCell from './miq-table-cell';
+
+const MiqDataTable = ({
+  headers, rows, onCellClick, mode, sortable, rowCheckBox, showPagination, pageOptions, gridChecks, onSort,
+}) => {
+  const isRowSelected = (itemId) => gridChecks.includes(itemId);
+  const propRows = rows;
+
+  const isAllSelected = rows.every((row) => gridChecks.includes(row.id));
+
+  /** Function to print the header label.
+   * The DefultKey is used to identify the headers which needs to be blank. */
+  const headerLabel = (header) => (header.split('_')[0] === DefaultKey ? '' : header);
+
+  /** Function to render the select all checkbox in header. */
+  const selectAll = (getSelectionProps) => (
+    <TableSelectAll
+      {...getSelectionProps({
+        rows,
+        onClick: (event) => onCellClick(rows, CellAction.selectAll, event),
+      })}
+      checked={isAllSelected}
+    />
+  );
+
+  /** Function to render the checkbox for each row. */
+  const renderRowCheckBox = (getSelectionProps, row) => (
+    <TableSelectRow
+      {...getSelectionProps({
+        row,
+        onClick: (event) => onCellClick(row, CellAction.itemSelect, event),
+      })}
+      checked={isRowSelected(row.id)}
+
+    />
+  );
+
+  /** Function to return the sort arrow direction. */
+  const sortDirection = ({ sortData }) => {
+    if (sortData && sortData.sortDirection) {
+      if (!(sortData.sortDirection === SortDirections.ASC)) {
+        return SortDirections.ASC;
+      }
+      if (!(!!sortData.sortDirection === SortDirections.ASC)) {
+        return SortDirections.DESC;
+      }
+      return SortDirections.NONE;
+    }
+    return SortDirections.NONE;
+  };
+
+  /** Function to render the header cells. */
+  const renderHeaders = (getHeaderProps) => (
+    headers.map((header) => (
+      <TableHeader
+        {...getHeaderProps({ header, isSortHeader: { sortable } })}
+        onClick={() => sortable && onSort(header.col_idx)}
+        isSortHeader={sortable && header.sortData.isFilteredBy}
+        sortDirection={sortable ? sortDirection(header) : 'NONE'}
+      >
+        {headerLabel(header.header)}
+      </TableHeader>
+    ))
+  );
+
+  /** Function to render the cells of each row. */
+  const renderCells = (row) => (
+    row.cells.map((cell, index) => (
+      <MiqTableCell
+        key={`${index.toString()}-cellKey`}
+        onCellClick={onCellClick}
+        cell={cell}
+        row={row}
+      />
+    ))
+  );
+
+  /** Function to identify if the row is clickable or not and the returns a class name */
+  const classNameRow = (item) => {
+    const { clickable } = item;
+    if (clickable === false) return 'simple-row';
+    if (clickable === true || clickable === null) return 'clickable-row';
+    return '';
+  };
+
+  return (
+    <div className={classNames('miq-data-table', mode)}>
+      <DataTable
+        rows={rows}
+        headers={headers}
+        isSortable={sortable}
+        sortDirection="ASC"
+      >
+        {({
+          rows, getTableProps, getHeaderProps, getRowProps, getSelectionProps,
+        }) => (
+          <Table {...getTableProps()}>
+            <TableHead>
+              <TableRow>
+                {rowCheckBox && selectAll(getSelectionProps)}
+                {renderHeaders(getHeaderProps)}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortableRows(rows).map((row, index) => {
+                const item = propRows[index];
+                return (
+                  <TableRow
+                    {...getRowProps({ row })}
+                    title={__('Click to view details')}
+                    className={classNameRow(item)}
+                    tabIndex={(item.clickable === false) ? '' : '0'}
+                    onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}
+                  >
+                    {rowCheckBox && renderRowCheckBox(getSelectionProps, row)}
+                    {renderCells(row)}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
+      </DataTable>
+      {
+        showPagination && <MiqPagination pageOptions={pageOptions} />
+      }
+    </div>
+  );
+};
+
+MiqDataTable.propTypes = {
+  headers: PropTypes.arrayOf(PropTypes.any),
+  rows: PropTypes.arrayOf(PropTypes.any),
+  mode: PropTypes.string,
+  onCellClick: PropTypes.func,
+  sortable: undefined || PropTypes.bool,
+  rowCheckBox: undefined || PropTypes.bool,
+  showPagination: PropTypes.bool,
+  pageOptions: PropTypes.shape({
+    totalItems: PropTypes.number,
+    onPageChange: PropTypes.func,
+    pageSizes: PropTypes.arrayOf(PropTypes.number),
+    pageSize: PropTypes.number,
+    page: PropTypes.number,
+  }),
+  gridChecks: PropTypes.arrayOf(PropTypes.any),
+  onSort: PropTypes.func,
+};
+
+MiqDataTable.defaultProps = {
+  headers: [],
+  rows: [],
+  mode: '',
+  onCellClick: undefined,
+  sortable: false,
+  rowCheckBox: false,
+  showPagination: false,
+  pageOptions: {
+    totalItems: 10, page: 1, pageSizes: [5, 10, 20, 50, 100, 200], pageSize: 20,
+  },
+  gridChecks: [],
+  onSort: undefined,
+};
+
+export default MiqDataTable;

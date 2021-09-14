@@ -1,0 +1,1630 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data table component should render a simple data tabe with pagination and sorting 1`] = `
+<div
+  className="miq-data-table list"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={
+      Array [
+        Object {
+          "header": "Name",
+          "key": "name",
+        },
+        Object {
+          "header": "Status",
+          "key": "status",
+        },
+      ]
+    }
+    isSortable={true}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "id": "a",
+          "name": "Load balancer 1",
+          "status": "Disabled",
+        },
+        Object {
+          "id": "b",
+          "name": "Load balancer 2",
+          "status": "Starting",
+        },
+        Object {
+          "id": "c",
+          "name": "Load balancer 3",
+          "status": "Active",
+        },
+      ]
+    }
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+  <MiqPagination
+    pageOptions={
+      Object {
+        "onPageChange": [MockFunction],
+        "onPageSet": [MockFunction],
+        "onPerPageSelect": [MockFunction],
+        "page": 1,
+        "pageSize": 10,
+        "pageSizes": Array [
+          10,
+          20,
+          30,
+          40,
+          50,
+        ],
+        "totalItems": 3,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Data table component should render a simple data table 1`] = `
+<div
+  className="miq-data-table list"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={false}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={Array []}
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+</div>
+`;
+
+exports[`Data table component should render a static-gtl-view data table with checkboxes and icon 1`] = `
+<div
+  className="miq-data-table static-gtl-view"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={true}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "9",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "10",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "11",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "12",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "13",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "19",
+        },
+        Object {
+          "Kernel Version": Object {
+            "text": "3.10.0-327.el7.x86_64",
+          },
+          "Name": Object {
+            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
+          },
+          "Operating System": Object {
+            "text": "Red Hat Enterprise Linux",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "",
+            "text": "OCP 3.6 QE1",
+            "title": "OCP 3.6 QE1",
+          },
+          "Ready": Object {
+            "text": "True",
+          },
+          "Runtime Version": Object {
+            "text": "docker://1.12.6",
+          },
+          "clickable": null,
+          "id": "20",
+        },
+      ]
+    }
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+  <MiqPagination
+    pageOptions={
+      Object {
+        "onPageChange": [MockFunction],
+        "onPageSet": [MockFunction],
+        "onPerPageSelect": [MockFunction],
+        "page": 1,
+        "pageSize": 10,
+        "pageSizes": Array [
+          10,
+          20,
+          30,
+          40,
+          50,
+        ],
+        "totalItems": 7,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Data table component should render a static-gtl-view data table with checkboxes, images and icon 1`] = `
+<div
+  className="miq-data-table static-gtl-view"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={true}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "7",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "8",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "9",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "21",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "18",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "17",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "20",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "19",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "16",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "25",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "26",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "27",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "28",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "3",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "24",
+        },
+        Object {
+          "Authentication Status": Object {
+            "icon": "pficon pficon-unknown",
+            "text": "None",
+            "title": "None",
+          },
+          "Cluster": Object {
+            "text": "overcloud-Controller-kw7lgjvt3ncf",
+          },
+          "Compliant": Object {
+            "text": "",
+            "title": "",
+          },
+          "Hypervisor Hostname": Object {
+            "text": "overcloud-controller-0",
+          },
+          "IP Address": Object {
+            "text": "10.9.60.8",
+          },
+          "Last Analysis Time": Object {
+            "text": "Never",
+          },
+          "Name": Object {
+            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
+          },
+          "Platform": Object {
+            "text": "rhel (No hypervisor, Host Type is Controller)",
+          },
+          "Power": Object {
+            "background": "#336699",
+            "icon": "pficon pficon-unknown",
+            "text": "unknown",
+            "title": "unknown",
+          },
+          "Provider": Object {
+            "icon": "pficon pficon-container-node",
+            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
+            "text": "OpenStack Director",
+            "title": "OpenStack Director",
+          },
+          "Total Templates": Object {
+            "text": "0",
+          },
+          "Total VMs": Object {
+            "text": "3",
+          },
+          "clickable": null,
+          "id": "1",
+        },
+      ]
+    }
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+  <MiqPagination
+    pageOptions={
+      Object {
+        "onPageChange": [MockFunction],
+        "onPageSet": [MockFunction],
+        "onPerPageSelect": [MockFunction],
+        "page": 1,
+        "pageSize": 10,
+        "pageSizes": Array [
+          10,
+          20,
+          30,
+          40,
+          50,
+        ],
+        "totalItems": 100,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Data table component should render a static-gtl-view data table with icons and buttons 1`] = `
+<div
+  className="miq-data-table static-gtl-view"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={true}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "141",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "143",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "139",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "138",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "140",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "54",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "83",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "31",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "46",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "68",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": "miqOrderService(\\"141\\");",
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "7",
+        },
+      ]
+    }
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+  <MiqPagination
+    pageOptions={
+      Object {
+        "onPageChange": [MockFunction],
+        "onPageSet": [MockFunction],
+        "onPerPageSelect": [MockFunction],
+        "page": 1,
+        "pageSize": 10,
+        "pageSizes": Array [
+          10,
+          20,
+          30,
+          40,
+          50,
+        ],
+        "totalItems": 100,
+      }
+    }
+  />
+</div>
+`;

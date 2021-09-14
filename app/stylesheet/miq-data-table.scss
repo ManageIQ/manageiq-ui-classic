@@ -1,0 +1,75 @@
+.miq-data-table {
+  .bx--data-table-content {
+    overflow-x: visible;
+  }
+
+  thead tr th {
+    &.bx--table-column-checkbox {
+      min-width: 45px;
+    }
+
+    .bx--table-header-label {
+      line-height: 20px;
+    }
+  }
+
+  tbody tr {
+    &.clickable-row {
+      cursor: pointer;
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      &.truncate_cell {
+        max-width: 250px;
+      }
+
+      .image {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+      }
+
+      .icon {
+        min-width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+      }
+
+      span {
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+      }
+
+      button {
+        padding: 0;
+        margin: 5px 0;
+
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+          padding: 0 8px;
+          min-width: 100px;
+        }
+      }
+    }
+
+    td .bx--front-line {
+      width: 100%;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding-top: 6px;
+    }
+  }
+}

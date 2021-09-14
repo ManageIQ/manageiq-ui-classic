@@ -7,40 +7,39 @@ import { DataTable } from './DataTable';
 const translateHeaderText = (heads) => heads.map((h) => ({ ...h, header_text: typeof h.text !== 'undefined' ? __(h.text) : '' }));
 
 export const StaticGTLView = ({
+  pagination,
   rows,
   head,
   inEditMode,
   noCheckboxes,
-  total,
   settings,
-  pagination,
-  onItemButtonClick,
-  onItemClick,
-  onItemSelect,
-  onSort,
-  onSelectAll,
-  onPerPageSelect,
+  total,
   onPageSet,
+  onPerPageSelect,
+  onItemSelect,
+  onItemClick,
+  onSelectAll,
+  onSort,
   showPagination,
+  onPageChange,
 }) => {
   const miqDataTable = () => (
     <DataTable
       rows={rows}
       columns={translateHeaderText(head)}
-      pagination={pagination}
-      total={total}
-      settings={settings}
-      loadMoreItems={() => console.log('loadMoreItems')}
       inEditMode={inEditMode}
       noCheckboxes={noCheckboxes}
-      onSort={onSort}
+      settings={settings}
+      pagination={pagination}
+      total={total}
       onSelectAll={onSelectAll}
+      onSort={(headerItem) => onSort(headerItem)}
       onItemClick={onItemClick}
       onItemSelect={onItemSelect}
-      onItemButtonClick={onItemButtonClick}
-      onPageSet={onPageSet}
       onPerPageSelect={onPerPageSelect}
+      onPageSet={onPageSet}
       showPagination={showPagination}
+      onPageChange={onPageChange}
     />
   );
   return miqDataTable();
@@ -51,6 +50,7 @@ StaticGTLView.defaultProps = {
   inEditMode: (foo) => console.log('inEditMode', foo),
   onSort: (headerId, isAscending) => console.log('onSort', headerId, isAscending),
   onPerPageSelect: (foo) => console.log('onPerPageSelect', foo),
+  onPageChange: (foo, bar) => console.log('onPageChange', foo, bar),
   onPageSet: (foo) => console.log('onPageSet', foo),
   onItemButtonClick: (foo) => console.log('onItemButtonClick', foo),
   onItemClick: (foo) => console.log('onItemClick', foo),
@@ -70,11 +70,11 @@ StaticGTLView.propTypes = {
     perPage: PropTypes.number,
     perPageOptions: PropTypes.arrayOf(PropTypes.number),
   }),
-  onItemButtonClick: PropTypes.func,
   onItemSelect: PropTypes.func,
-  onRowClick: PropTypes.func,
+  onCellClick: PropTypes.func,
   onSort: PropTypes.func,
   onSelectAll: PropTypes.func,
   onPerPageSelect: PropTypes.func,
   onPageSet: PropTypes.func,
+  onPageChange: PropTypes.func,
 };
