@@ -16,7 +16,7 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
   }) => {
     miqSparkleOn();
 
-    const date = formMode !== 'delay' ? retirementDate : moment().add({
+    const date = formMode !== 'delay' ? retirementDate[0] : moment().add({
       hours: Number(hours),
       days: Number(days),
       weeks: Number(weeks),
