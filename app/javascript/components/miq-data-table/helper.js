@@ -21,12 +21,20 @@ export const SortDirections = {
   NONE: 'NONE',
 };
 
+/** Sorting directions for a Report-data-table header. */
+export const ReportSortDirections = {
+  ASC: 'asc',
+  DESC: 'desc',
+  DEFAULT: '',
+};
+
 export const DefaultKey = 'defaultKey';
 export const isObject = (data) => typeof (data) === 'object';
 export const isNull = (data) => (data === null);
 export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image.trim().length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
+const hasValue = (data) => Object.keys(data).includes('value');
 
 /* Function to determin if only the icon needs to be printed, else, print its text along with the icon. */
 export const hasIcon = (keys, data) => {
@@ -47,6 +55,9 @@ const getTextValue = (cellValue) => {
   if (isObject(cellValue)) {
     if (hasText(cellValue)) {
       return isNull(cellValue.text) ? '' : cellValue.text;
+    }
+    if (hasValue(cellValue)) {
+      return isNull(cellValue.value) ? '' : cellValue.value;
     }
     return '';
   }

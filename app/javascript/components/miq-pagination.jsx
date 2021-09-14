@@ -8,6 +8,7 @@ const MiqPagination = ({
   },
 }) => (
   <Pagination
+    className="miq-pagination"
     page={page}
     pageSizes={pageSizes}
     pageSize={pageSize}

@@ -870,13 +870,6 @@ class ReportController < ApplicationController
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
           presenter.remove_paging.hide(:rpb_div_1).show(:form_buttons_div)
         end
-      elsif @sb[:pages]
-        presenter.update(:paging_div, r[:partial => 'layouts/saved_report_paging_bar', :locals => @sb[:pages]])
-        if @ght_type == 'data'
-          presenter.hide(:form_buttons_div).hide(:rpb_div_1).remove_paging
-        else
-          presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
-        end
       end
       presenter.show(:paging_div)
     else

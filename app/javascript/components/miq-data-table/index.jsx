@@ -53,7 +53,7 @@ const MiqDataTable = ({
   );
 
   /** Function to return the sort arrow direction. */
-  const sortDirection = ({ sortData }) => {
+  const headerSortDirection = (sortData) => {
     if (sortData && sortData.sortDirection) {
       if (!(sortData.sortDirection === SortDirections.ASC)) {
         return SortDirections.ASC;
@@ -66,18 +66,30 @@ const MiqDataTable = ({
     return SortDirections.NONE;
   };
 
+  const headerSortingData = ({ sortData }) => {
+    if (!sortable || !sortData) {
+      return { sortHeader: false, sortDirection: SortDirections.NONE };
+    }
+    const sortHeader = sortData.isFilteredBy || false;
+    const sortDirection = headerSortDirection(sortData);
+    return { sortHeader, sortDirection };
+  };
+
   /** Function to render the header cells. */
   const renderHeaders = (getHeaderProps) => (
-    headers.map((header) => (
-      <TableHeader
-        {...getHeaderProps({ header, isSortHeader: { sortable } })}
-        onClick={() => sortable && onSort(header.col_idx)}
-        isSortHeader={sortable && header.sortData.isFilteredBy}
-        sortDirection={sortable ? sortDirection(header) : 'NONE'}
-      >
-        {headerLabel(header.header)}
-      </TableHeader>
-    ))
+    headers.map((header) => {
+      const { sortHeader, sortDirection } = headerSortingData(header);
+      return (
+        <TableHeader
+          {...getHeaderProps({ header, isSortHeader: { sortable } })}
+          onClick={() => sortable && onSort(header)}
+          isSortHeader={sortHeader}
+          sortDirection={sortDirection}
+        >
+          {headerLabel(header.header)}
+        </TableHeader>
+      );
+    })
   );
 
   /** Function to render the cells of each row. */
@@ -94,9 +106,11 @@ const MiqDataTable = ({
 
   /** Function to identify if the row is clickable or not and the returns a class name */
   const classNameRow = (item) => {
-    const { clickable } = item;
-    if (clickable === false) return 'simple-row';
-    if (clickable === true || clickable === null) return 'clickable-row';
+    if (item) {
+      const { clickable } = item;
+      if (clickable === false) return 'simple-row';
+      if (clickable === true || clickable === null) return 'clickable-row';
+    }
     return '';
   };
 
@@ -126,7 +140,7 @@ const MiqDataTable = ({
                     {...getRowProps({ row })}
                     title={__('Click to view details')}
                     className={classNameRow(item)}
-                    tabIndex={(item.clickable === false) ? '' : '0'}
+                    tabIndex={(item && item.clickable === false) ? '' : '0'}
                     onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}
                   >
                     {rowCheckBox && renderRowCheckBox(getSelectionProps, row)}
@@ -139,7 +153,7 @@ const MiqDataTable = ({
         )}
       </DataTable>
       {
-        showPagination && <MiqPagination pageOptions={pageOptions} />
+        showPagination && rows.length > 0 && <MiqPagination pageOptions={pageOptions} />
       }
     </div>
   );

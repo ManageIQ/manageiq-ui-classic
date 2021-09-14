@@ -86,7 +86,7 @@ module ReportController::SavedReports
     if params[:type]
       @render_chart = false
 
-      @html = if %w[tabular hybrid].include?(params[:type])
+      @html = if %w[hybrid].include?(params[:type])
                 report_build_html_table(
                   @report,
                   rr.html_rows(:page     => @sb[:pages][:current],
@@ -97,10 +97,10 @@ module ReportController::SavedReports
               end
       @ght_type = params[:type]
     else
-      @ght_type = @report.graph.blank? ? 'tabular' : 'hybrid'
+      @ght_type = @report.graph.blank? ? 'data' : 'hybrid'
     end
     @render_chart = %w[graph hybrid].include?(@ght_type)
-
+    params[:type] = 'data'
     @report.extras ||= {}
     @report.extras[:to_html] ||= @html
 

@@ -2,12 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
-import { EmptyState, Paginator, Table } from 'patternfly-react';
 
 import './helpers/mockAsyncRequest';
 import './helpers/miqSparkle';
 
-import ReportDataTable from '../components/report-data-table';
+import ReportDataTable from '../components/data-tables/report-data-table/report-data-table';
 
 describe('<ReportDataTable />', () => {
   let initialProps;
@@ -18,6 +17,7 @@ describe('<ReportDataTable />', () => {
       reportResultId: 123,
       perPageDefault: 20,
       perPageOptions: [20, 50, 100],
+      reportType: 'data',
     };
   });
 
@@ -45,9 +45,9 @@ limit=${limit}&offset=${offset}`;
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.table-view-pf-toolbar')).toHaveLength(1);
-    expect(wrapper.find(Table.PfProvider)).toHaveLength(1);
-    expect(wrapper.find(Paginator)).toHaveLength(1);
+    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(1);
+    expect(wrapper.find('div.report-data-table')).toHaveLength(1);
+    expect(wrapper.find('div.miq-pagination')).toHaveLength(1);
     done();
   });
 
@@ -62,10 +62,10 @@ limit=${limit}&offset=${offset}`;
     wrapper.update();
 
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.table-view-pf-toolbar')).toHaveLength(1);
-    expect(wrapper.find(Table.PfProvider)).toHaveLength(0);
-    expect(wrapper.find(Paginator)).toHaveLength(0);
-    expect(wrapper.find(EmptyState)).toHaveLength(1);
+    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(0);
+    expect(wrapper.find('div.report-data-table')).toHaveLength(0);
+    expect(wrapper.find('div.miq-pagination')).toHaveLength(0);
+    expect(wrapper.find('div.no-records-found')).toHaveLength(1);
     done();
   });
 });
