@@ -321,6 +321,11 @@ const GtlView = ({
         named_scope: state.namedScope,
         persistentNamedScope: state.namedScope,
       },
+      {
+        ...additionalOptions,
+        named_scope: state.namedScope,
+        persistentNamedScope: state.namedScope,
+      },
     );
 
     const subscription = subscribeToSubject(dispatch);

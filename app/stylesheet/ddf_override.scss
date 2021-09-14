@@ -186,6 +186,41 @@
   }
 }
 
+.service-request-form {
+  form > div{
+    margin-bottom: 32px;
+  }
+
+  #approval_state {
+    margin-bottom: 0px;
+    .bx--fieldset {
+      display: inline-flex;
+      .bx--form-item {
+        .bx--checkbox-label-text {
+          #icon {
+            span {
+              padding-left: 5px;
+            }
+          }
+          padding-left: 2px;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+
+  .custom-button-wrapper{
+    margin-top: 10px;
+
+    #submit{
+      margin-right: 8px;
+    }
+    #reset{
+      margin-right: 8px;
+    }
+  }
+}
+
 .ddorg__carbon-dual-list-body {
   .bx--structured-list-td {
     padding-top : 0.5rem;

@@ -2242,7 +2242,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        filter
         post_install_callback
         pre_prov
         prov_continue

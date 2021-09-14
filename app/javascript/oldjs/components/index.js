@@ -11,7 +11,6 @@ require('./generic_object/main-custom-button-form.js');
 require('./generic_object/main-custom-button-group-form.js');
 require('./index.js');
 require('./miq-button.js');
-require('./miq-request-options.js');
 require('./miq_ae_class/namespace-form.js');
 require('./ops/log-collection-form.js');
 require('./pf_charts/aggregate-status-card.component.js');
