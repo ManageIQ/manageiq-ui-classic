@@ -1316,6 +1316,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        edit
         show
         show_list
         new

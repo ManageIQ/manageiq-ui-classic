@@ -1,3 +1,7 @@
-= react('PhysicalStorageForm',
-         :redirect => previous_breadcrumb_url)
+= render :partial => "layouts/flash_msg"
+
+- if @storage_manager
+  = react 'PhysicalStorageForm', :storageManagerId => @storage_manager.id.to_s
+- else
+  = react 'PhysicalStorageForm', :redirect => previous_breadcrumb_url
 
