@@ -1,0 +1,4138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Physical storage form component should render adding form variant 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onReset={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "ems_id",
+          "includeEmpty": true,
+          "isDisabled": false,
+          "isRequired": true,
+          "key": "undefined",
+          "label": "Provider:",
+          "loadOptions": [Function],
+          "name": "ems_id",
+          "onChange": [Function],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "id": "name",
+          "isRequired": true,
+          "label": "Name:",
+          "name": "name",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "select",
+          "condition": Object {
+            "isNotEmpty": true,
+            "when": "ems_id",
+          },
+          "id": "physical_storage_family_id",
+          "includeEmpty": true,
+          "isDisabled": false,
+          "isRequired": true,
+          "key": "physical_storage_family_id-undefined",
+          "label": "System Type:",
+          "loadOptions": [Function],
+          "name": "physical_storage_family_id",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "hideField": true,
+          "id": "edit",
+          "label": "edit",
+          "name": "edit",
+        },
+        Object {
+          "component": "checkbox",
+          "condition": Object {
+            "is": "yes",
+            "when": "edit",
+          },
+          "id": "edit_authentication",
+          "initialValue": false,
+          "label": "Edit Authentication",
+          "name": "edit_authentication",
+        },
+        Object {
+          "component": "text-field",
+          "condition": Object {
+            "or": Array [
+              Object {
+                "is": true,
+                "when": "edit_authentication",
+              },
+              Object {
+                "is": "",
+                "when": "edit",
+              },
+            ],
+          },
+          "id": "management_ip",
+          "isRequired": true,
+          "label": "Management IP:",
+          "name": "management_ip",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "condition": Object {
+            "or": Array [
+              Object {
+                "is": true,
+                "when": "edit_authentication",
+              },
+              Object {
+                "is": "",
+                "when": "edit",
+              },
+            ],
+          },
+          "id": "user",
+          "isRequired": true,
+          "label": "User:",
+          "name": "user",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+        Object {
+          "component": "text-field",
+          "condition": Object {
+            "or": Array [
+              Object {
+                "is": true,
+                "when": "edit_authentication",
+              },
+              Object {
+                "is": "",
+                "when": "edit",
+              },
+            ],
+          },
+          "id": "physical_storage_password",
+          "isRequired": true,
+          "label": "Password:",
+          "name": "password",
+          "type": "password",
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Physical storage form component should render editing form variant 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <PhysicalStorageForm
+    recordId="1"
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Save",
+        }
+      }
+      canReset={true}
+      onCancel={[Function]}
+      onReset={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "ems_id",
+              "includeEmpty": true,
+              "isDisabled": true,
+              "isRequired": true,
+              "key": "undefined",
+              "label": "Provider:",
+              "loadOptions": [Function],
+              "name": "ems_id",
+              "onChange": [Function],
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "isRequired": true,
+              "label": "Name:",
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "select",
+              "condition": Object {
+                "isNotEmpty": true,
+                "when": "ems_id",
+              },
+              "id": "physical_storage_family_id",
+              "includeEmpty": true,
+              "isDisabled": true,
+              "isRequired": true,
+              "key": "physical_storage_family_id-undefined",
+              "label": "System Type:",
+              "loadOptions": [Function],
+              "name": "physical_storage_family_id",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "hideField": true,
+              "id": "edit",
+              "label": "edit",
+              "name": "edit",
+            },
+            Object {
+              "component": "checkbox",
+              "condition": Object {
+                "is": "yes",
+                "when": "edit",
+              },
+              "id": "edit_authentication",
+              "initialValue": false,
+              "label": "Edit Authentication",
+              "name": "edit_authentication",
+            },
+            Object {
+              "component": "text-field",
+              "condition": Object {
+                "or": Array [
+                  Object {
+                    "is": true,
+                    "when": "edit_authentication",
+                  },
+                  Object {
+                    "is": "",
+                    "when": "edit",
+                  },
+                ],
+              },
+              "id": "management_ip",
+              "isRequired": true,
+              "label": "Management IP:",
+              "name": "management_ip",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "condition": Object {
+                "or": Array [
+                  Object {
+                    "is": true,
+                    "when": "edit_authentication",
+                  },
+                  Object {
+                    "is": "",
+                    "when": "edit",
+                  },
+                ],
+              },
+              "id": "user",
+              "isRequired": true,
+              "label": "User:",
+              "name": "user",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "condition": Object {
+                "or": Array [
+                  Object {
+                    "is": true,
+                    "when": "edit_authentication",
+                  },
+                  Object {
+                    "is": "",
+                    "when": "edit",
+                  },
+                ],
+              },
+              "id": "physical_storage_password",
+              "isRequired": true,
+              "label": "Password:",
+              "name": "password",
+              "type": "password",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Save",
+          }
+        }
+        canReset={true}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onReset={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "ems_id",
+                "includeEmpty": true,
+                "isDisabled": true,
+                "isRequired": true,
+                "key": "undefined",
+                "label": "Provider:",
+                "loadOptions": [Function],
+                "name": "ems_id",
+                "onChange": [Function],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "id": "name",
+                "isRequired": true,
+                "label": "Name:",
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "condition": Object {
+                  "isNotEmpty": true,
+                  "when": "ems_id",
+                },
+                "id": "physical_storage_family_id",
+                "includeEmpty": true,
+                "isDisabled": true,
+                "isRequired": true,
+                "key": "physical_storage_family_id-undefined",
+                "label": "System Type:",
+                "loadOptions": [Function],
+                "name": "physical_storage_family_id",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "hideField": true,
+                "id": "edit",
+                "label": "edit",
+                "name": "edit",
+              },
+              Object {
+                "component": "checkbox",
+                "condition": Object {
+                  "is": "yes",
+                  "when": "edit",
+                },
+                "id": "edit_authentication",
+                "initialValue": false,
+                "label": "Edit Authentication",
+                "name": "edit_authentication",
+              },
+              Object {
+                "component": "text-field",
+                "condition": Object {
+                  "or": Array [
+                    Object {
+                      "is": true,
+                      "when": "edit_authentication",
+                    },
+                    Object {
+                      "is": "",
+                      "when": "edit",
+                    },
+                  ],
+                },
+                "id": "management_ip",
+                "isRequired": true,
+                "label": "Management IP:",
+                "name": "management_ip",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "condition": Object {
+                  "or": Array [
+                    Object {
+                      "is": true,
+                      "when": "edit_authentication",
+                    },
+                    Object {
+                      "is": "",
+                      "when": "edit",
+                    },
+                  ],
+                },
+                "id": "user",
+                "isRequired": true,
+                "label": "User:",
+                "name": "user",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "condition": Object {
+                  "or": Array [
+                    Object {
+                      "is": true,
+                      "when": "edit_authentication",
+                    },
+                    Object {
+                      "is": "",
+                      "when": "edit",
+                    },
+                  ],
+                },
+                "id": "physical_storage_password",
+                "isRequired": true,
+                "label": "Password:",
+                "name": "password",
+                "type": "password",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "ems_id",
+                  "includeEmpty": true,
+                  "isDisabled": true,
+                  "isRequired": true,
+                  "key": "undefined",
+                  "label": "Provider:",
+                  "loadOptions": [Function],
+                  "name": "ems_id",
+                  "onChange": [Function],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "text-field",
+                  "id": "name",
+                  "isRequired": true,
+                  "label": "Name:",
+                  "name": "name",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "condition": Object {
+                    "isNotEmpty": true,
+                    "when": "ems_id",
+                  },
+                  "id": "physical_storage_family_id",
+                  "includeEmpty": true,
+                  "isDisabled": true,
+                  "isRequired": true,
+                  "key": "physical_storage_family_id-undefined",
+                  "label": "System Type:",
+                  "loadOptions": [Function],
+                  "name": "physical_storage_family_id",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "text-field",
+                  "hideField": true,
+                  "id": "edit",
+                  "label": "edit",
+                  "name": "edit",
+                },
+                Object {
+                  "component": "checkbox",
+                  "condition": Object {
+                    "is": "yes",
+                    "when": "edit",
+                  },
+                  "id": "edit_authentication",
+                  "initialValue": false,
+                  "label": "Edit Authentication",
+                  "name": "edit_authentication",
+                },
+                Object {
+                  "component": "text-field",
+                  "condition": Object {
+                    "or": Array [
+                      Object {
+                        "is": true,
+                        "when": "edit_authentication",
+                      },
+                      Object {
+                        "is": "",
+                        "when": "edit",
+                      },
+                    ],
+                  },
+                  "id": "management_ip",
+                  "isRequired": true,
+                  "label": "Management IP:",
+                  "name": "management_ip",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "text-field",
+                  "condition": Object {
+                    "or": Array [
+                      Object {
+                        "is": true,
+                        "when": "edit_authentication",
+                      },
+                      Object {
+                        "is": "",
+                        "when": "edit",
+                      },
+                    ],
+                  },
+                  "id": "user",
+                  "isRequired": true,
+                  "label": "User:",
+                  "name": "user",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "text-field",
+                  "condition": Object {
+                    "or": Array [
+                      Object {
+                        "is": true,
+                        "when": "edit_authentication",
+                      },
+                      Object {
+                        "is": "",
+                        "when": "edit",
+                      },
+                    ],
+                  },
+                  "id": "physical_storage_password",
+                  "isRequired": true,
+                  "label": "Password:",
+                  "name": "password",
+                  "type": "password",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="ems_id"
+                    includeEmpty={true}
+                    isDisabled={true}
+                    isRequired={true}
+                    label="Provider:"
+                    loadOptions={[Function]}
+                    name="ems_id"
+                    onChange={[Function]}
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="text-field"
+                    id="name"
+                    isRequired={true}
+                    label="Name:"
+                    name="name"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="select"
+                    condition={
+                      Object {
+                        "isNotEmpty": true,
+                        "when": "ems_id",
+                      }
+                    }
+                    id="physical_storage_family_id"
+                    includeEmpty={true}
+                    isDisabled={true}
+                    isRequired={true}
+                    label="System Type:"
+                    loadOptions={[Function]}
+                    name="physical_storage_family_id"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="text-field"
+                    hideField={true}
+                    id="edit"
+                    label="edit"
+                    name="edit"
+                  />,
+                  <SingleField
+                    component="checkbox"
+                    condition={
+                      Object {
+                        "is": "yes",
+                        "when": "edit",
+                      }
+                    }
+                    id="edit_authentication"
+                    initialValue={false}
+                    label="Edit Authentication"
+                    name="edit_authentication"
+                  />,
+                  <SingleField
+                    component="text-field"
+                    condition={
+                      Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      }
+                    }
+                    id="management_ip"
+                    isRequired={true}
+                    label="Management IP:"
+                    name="management_ip"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="text-field"
+                    condition={
+                      Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      }
+                    }
+                    id="user"
+                    isRequired={true}
+                    label="User:"
+                    name="user"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="text-field"
+                    condition={
+                      Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      }
+                    }
+                    id="physical_storage_password"
+                    isRequired={true}
+                    label="Password:"
+                    name="password"
+                    type="password"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "ems_id",
+                      "includeEmpty": true,
+                      "isDisabled": true,
+                      "isRequired": true,
+                      "key": "undefined",
+                      "label": "Provider:",
+                      "loadOptions": [Function],
+                      "name": "ems_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "text-field",
+                      "id": "name",
+                      "isRequired": true,
+                      "label": "Name:",
+                      "name": "name",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "condition": Object {
+                        "isNotEmpty": true,
+                        "when": "ems_id",
+                      },
+                      "id": "physical_storage_family_id",
+                      "includeEmpty": true,
+                      "isDisabled": true,
+                      "isRequired": true,
+                      "key": "physical_storage_family_id-undefined",
+                      "label": "System Type:",
+                      "loadOptions": [Function],
+                      "name": "physical_storage_family_id",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "text-field",
+                      "hideField": true,
+                      "id": "edit",
+                      "label": "edit",
+                      "name": "edit",
+                    },
+                    Object {
+                      "component": "checkbox",
+                      "condition": Object {
+                        "is": "yes",
+                        "when": "edit",
+                      },
+                      "id": "edit_authentication",
+                      "initialValue": false,
+                      "label": "Edit Authentication",
+                      "name": "edit_authentication",
+                    },
+                    Object {
+                      "component": "text-field",
+                      "condition": Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      },
+                      "id": "management_ip",
+                      "isRequired": true,
+                      "label": "Management IP:",
+                      "name": "management_ip",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "text-field",
+                      "condition": Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      },
+                      "id": "user",
+                      "isRequired": true,
+                      "label": "User:",
+                      "name": "user",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "text-field",
+                      "condition": Object {
+                        "or": Array [
+                          Object {
+                            "is": true,
+                            "when": "edit_authentication",
+                          },
+                          Object {
+                            "is": "",
+                            "when": "edit",
+                          },
+                        ],
+                      },
+                      "id": "physical_storage_password",
+                      "isRequired": true,
+                      "label": "Password:",
+                      "name": "password",
+                      "type": "password",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={true}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="ems_id"
+                      includeEmpty={true}
+                      isDisabled={true}
+                      isRequired={true}
+                      label="Provider:"
+                      loadOptions={[Function]}
+                      name="ems_id"
+                      onChange={[Function]}
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="text-field"
+                      id="name"
+                      isRequired={true}
+                      label="Name:"
+                      name="name"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="select"
+                      condition={
+                        Object {
+                          "isNotEmpty": true,
+                          "when": "ems_id",
+                        }
+                      }
+                      id="physical_storage_family_id"
+                      includeEmpty={true}
+                      isDisabled={true}
+                      isRequired={true}
+                      label="System Type:"
+                      loadOptions={[Function]}
+                      name="physical_storage_family_id"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="text-field"
+                      hideField={true}
+                      id="edit"
+                      label="edit"
+                      name="edit"
+                    />,
+                    <SingleField
+                      component="checkbox"
+                      condition={
+                        Object {
+                          "is": "yes",
+                          "when": "edit",
+                        }
+                      }
+                      id="edit_authentication"
+                      initialValue={false}
+                      label="Edit Authentication"
+                      name="edit_authentication"
+                    />,
+                    <SingleField
+                      component="text-field"
+                      condition={
+                        Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        }
+                      }
+                      id="management_ip"
+                      isRequired={true}
+                      label="Management IP:"
+                      name="management_ip"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="text-field"
+                      condition={
+                        Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        }
+                      }
+                      id="user"
+                      isRequired={true}
+                      label="User:"
+                      name="user"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="text-field"
+                      condition={
+                        Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        }
+                      }
+                      id="physical_storage_password"
+                      isRequired={true}
+                      label="Password:"
+                      name="password"
+                      type="password"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "ems_id",
+                        "includeEmpty": true,
+                        "isDisabled": true,
+                        "isRequired": true,
+                        "key": "undefined",
+                        "label": "Provider:",
+                        "loadOptions": [Function],
+                        "name": "ems_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "id": "name",
+                        "isRequired": true,
+                        "label": "Name:",
+                        "name": "name",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "select",
+                        "condition": Object {
+                          "isNotEmpty": true,
+                          "when": "ems_id",
+                        },
+                        "id": "physical_storage_family_id",
+                        "includeEmpty": true,
+                        "isDisabled": true,
+                        "isRequired": true,
+                        "key": "physical_storage_family_id-undefined",
+                        "label": "System Type:",
+                        "loadOptions": [Function],
+                        "name": "physical_storage_family_id",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "hideField": true,
+                        "id": "edit",
+                        "label": "edit",
+                        "name": "edit",
+                      },
+                      Object {
+                        "component": "checkbox",
+                        "condition": Object {
+                          "is": "yes",
+                          "when": "edit",
+                        },
+                        "id": "edit_authentication",
+                        "initialValue": false,
+                        "label": "Edit Authentication",
+                        "name": "edit_authentication",
+                      },
+                      Object {
+                        "component": "text-field",
+                        "condition": Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        },
+                        "id": "management_ip",
+                        "isRequired": true,
+                        "label": "Management IP:",
+                        "name": "management_ip",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "condition": Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        },
+                        "id": "user",
+                        "isRequired": true,
+                        "label": "User:",
+                        "name": "user",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "condition": Object {
+                          "or": Array [
+                            Object {
+                              "is": true,
+                              "when": "edit_authentication",
+                            },
+                            Object {
+                              "is": "",
+                              "when": "edit",
+                            },
+                          ],
+                        },
+                        "id": "physical_storage_password",
+                        "isRequired": true,
+                        "label": "Password:",
+                        "name": "password",
+                        "type": "password",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Save"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={true}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="ems_id"
+                        includeEmpty={true}
+                        isDisabled={true}
+                        isRequired={true}
+                        label="Provider:"
+                        loadOptions={[Function]}
+                        name="ems_id"
+                        onChange={[Function]}
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="text-field"
+                        id="name"
+                        isRequired={true}
+                        label="Name:"
+                        name="name"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="select"
+                        condition={
+                          Object {
+                            "isNotEmpty": true,
+                            "when": "ems_id",
+                          }
+                        }
+                        id="physical_storage_family_id"
+                        includeEmpty={true}
+                        isDisabled={true}
+                        isRequired={true}
+                        label="System Type:"
+                        loadOptions={[Function]}
+                        name="physical_storage_family_id"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="text-field"
+                        hideField={true}
+                        id="edit"
+                        label="edit"
+                        name="edit"
+                      />,
+                      <SingleField
+                        component="checkbox"
+                        condition={
+                          Object {
+                            "is": "yes",
+                            "when": "edit",
+                          }
+                        }
+                        id="edit_authentication"
+                        initialValue={false}
+                        label="Edit Authentication"
+                        name="edit_authentication"
+                      />,
+                      <SingleField
+                        component="text-field"
+                        condition={
+                          Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          }
+                        }
+                        id="management_ip"
+                        isRequired={true}
+                        label="Management IP:"
+                        name="management_ip"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="text-field"
+                        condition={
+                          Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          }
+                        }
+                        id="user"
+                        isRequired={true}
+                        label="User:"
+                        name="user"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="text-field"
+                        condition={
+                          Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          }
+                        }
+                        id="physical_storage_password"
+                        isRequired={true}
+                        label="Password:"
+                        name="password"
+                        type="password"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "ems_id",
+                          "includeEmpty": true,
+                          "isDisabled": true,
+                          "isRequired": true,
+                          "key": "undefined",
+                          "label": "Provider:",
+                          "loadOptions": [Function],
+                          "name": "ems_id",
+                          "onChange": [Function],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "name",
+                          "isRequired": true,
+                          "label": "Name:",
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "condition": Object {
+                            "isNotEmpty": true,
+                            "when": "ems_id",
+                          },
+                          "id": "physical_storage_family_id",
+                          "includeEmpty": true,
+                          "isDisabled": true,
+                          "isRequired": true,
+                          "key": "physical_storage_family_id-undefined",
+                          "label": "System Type:",
+                          "loadOptions": [Function],
+                          "name": "physical_storage_family_id",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "hideField": true,
+                          "id": "edit",
+                          "label": "edit",
+                          "name": "edit",
+                        },
+                        Object {
+                          "component": "checkbox",
+                          "condition": Object {
+                            "is": "yes",
+                            "when": "edit",
+                          },
+                          "id": "edit_authentication",
+                          "initialValue": false,
+                          "label": "Edit Authentication",
+                          "name": "edit_authentication",
+                        },
+                        Object {
+                          "component": "text-field",
+                          "condition": Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          },
+                          "id": "management_ip",
+                          "isRequired": true,
+                          "label": "Management IP:",
+                          "name": "management_ip",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "condition": Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          },
+                          "id": "user",
+                          "isRequired": true,
+                          "label": "User:",
+                          "name": "user",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "condition": Object {
+                            "or": Array [
+                              Object {
+                                "is": true,
+                                "when": "edit_authentication",
+                              },
+                              Object {
+                                "is": "",
+                                "when": "edit",
+                              },
+                            ],
+                          },
+                          "id": "physical_storage_password",
+                          "isRequired": true,
+                          "label": "Password:",
+                          "name": "password",
+                          "type": "password",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Save"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="select"
+                          id="ems_id"
+                          includeEmpty={true}
+                          isDisabled={true}
+                          isRequired={true}
+                          key="undefined"
+                          label="Provider:"
+                          loadOptions={[Function]}
+                          name="ems_id"
+                          onChange={[Function]}
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "ems_id",
+                                "includeEmpty": true,
+                                "isDisabled": true,
+                                "isRequired": true,
+                                "label": "Provider:",
+                                "loadOptions": [Function],
+                                "name": "ems_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="ems_id"
+                                includeEmpty={true}
+                                isDisabled={true}
+                                isRequired={true}
+                                label="Provider:"
+                                loadOptions={[Function]}
+                                name="ems_id"
+                                onChange={[Function]}
+                                placeholder="<Choose>"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <Select
+                                  component="select"
+                                  id="ems_id"
+                                  isDisabled={true}
+                                  isRequired={true}
+                                  label="Provider:"
+                                  loadOptions={[Function]}
+                                  loadingMessage="Loading..."
+                                  name="ems_id"
+                                  placeholder="<Choose>"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    disabled={true}
+                                    id="ems_id"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText={
+                                      <IsRequired>
+                                        Provider:
+                                      </IsRequired>
+                                    }
+                                    loadOptions={[Function]}
+                                    loadOptionsChangeCounter={0}
+                                    loadingMessage="Loading..."
+                                    name="ems_id"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={Array []}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      disabled={true}
+                                      hideSelectedOptions={false}
+                                      id="ems_id"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isFetching={false}
+                                      isSearchable={false}
+                                      labelText={
+                                        <IsRequired>
+                                          Provider:
+                                        </IsRequired>
+                                      }
+                                      name="ems_id"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      onInputChange={[Function]}
+                                      options={Array []}
+                                      placeholder="<Choose>"
+                                      value=""
+                                    >
+                                      <Select
+                                        className=""
+                                        disabled={true}
+                                        helperText=""
+                                        id="ems_id"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText={
+                                          <IsRequired>
+                                            Provider:
+                                          </IsRequired>
+                                        }
+                                        light={false}
+                                        name="ems_id"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        value=""
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select bx--select--disabled"
+                                          >
+                                            <label
+                                              className="bx--label bx--label--disabled"
+                                              htmlFor="ems_id"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Provider:
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                disabled={true}
+                                                id="ems_id"
+                                                name="ems_id"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                value=""
+                                              />
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="text-field"
+                          id="name"
+                          isRequired={true}
+                          key="name"
+                          label="Name:"
+                          name="name"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "name",
+                                "isRequired": true,
+                                "label": "Name:",
+                                "name": "name",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <TextField
+                                component="text-field"
+                                id="name"
+                                isRequired={true}
+                                label="Name:"
+                                name="name"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <ForwardRef(TextInput)
+                                  disabled={false}
+                                  helperText=""
+                                  id="name"
+                                  inline={false}
+                                  invalid={false}
+                                  invalidText=""
+                                  key="name"
+                                  labelText={
+                                    <IsRequired>
+                                      Name:
+                                    </IsRequired>
+                                  }
+                                  light={false}
+                                  name="name"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  type="text"
+                                  value=""
+                                  warn={false}
+                                  warnText=""
+                                >
+                                  <div
+                                    className="bx--form-item bx--text-input-wrapper"
+                                  >
+                                    <label
+                                      className="bx--label"
+                                      htmlFor="name"
+                                    >
+                                      <IsRequired>
+                                        <span
+                                          aria-hidden="true"
+                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                        >
+                                          *
+                                        </span>
+                                        Name:
+                                      </IsRequired>
+                                    </label>
+                                    <div
+                                      className="bx--text-input__field-outer-wrapper"
+                                    >
+                                      <div
+                                        className="bx--text-input__field-wrapper"
+                                        data-invalid={null}
+                                      >
+                                        <input
+                                          className="bx--text-input bx--text__input"
+                                          disabled={false}
+                                          id="name"
+                                          name="name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          onFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ForwardRef(TextInput)>
+                              </TextField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="select"
+                          condition={
+                            Object {
+                              "isNotEmpty": true,
+                              "when": "ems_id",
+                            }
+                          }
+                          id="physical_storage_family_id"
+                          includeEmpty={true}
+                          isDisabled={true}
+                          isRequired={true}
+                          key="physical_storage_family_id-undefined"
+                          label="System Type:"
+                          loadOptions={[Function]}
+                          name="physical_storage_family_id"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            condition={
+                              Object {
+                                "isNotEmpty": true,
+                                "when": "ems_id",
+                              }
+                            }
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "physical_storage_family_id",
+                                "includeEmpty": true,
+                                "isDisabled": true,
+                                "isRequired": true,
+                                "label": "System Type:",
+                                "loadOptions": [Function],
+                                "name": "physical_storage_family_id",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <ConditionTriggerDetector
+                              condition={
+                                Object {
+                                  "isNotEmpty": true,
+                                  "when": "ems_id",
+                                }
+                              }
+                              field={
+                                Object {
+                                  "component": "select",
+                                  "id": "physical_storage_family_id",
+                                  "includeEmpty": true,
+                                  "isDisabled": true,
+                                  "isRequired": true,
+                                  "label": "System Type:",
+                                  "loadOptions": [Function],
+                                  "name": "physical_storage_family_id",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                }
+                              }
+                              triggers={
+                                Array [
+                                  "ems_id",
+                                ]
+                              }
+                            >
+                              <ForwardRef(Field)
+                                name="ems_id"
+                                subscription={
+                                  Object {
+                                    "value": true,
+                                  }
+                                }
+                              >
+                                <ConditionTriggerDetector
+                                  condition={
+                                    Object {
+                                      "isNotEmpty": true,
+                                      "when": "ems_id",
+                                    }
+                                  }
+                                  field={
+                                    Object {
+                                      "component": "select",
+                                      "id": "physical_storage_family_id",
+                                      "includeEmpty": true,
+                                      "isDisabled": true,
+                                      "isRequired": true,
+                                      "label": "System Type:",
+                                      "loadOptions": [Function],
+                                      "name": "physical_storage_family_id",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  triggers={Array []}
+                                  values={
+                                    Object {
+                                      "ems_id": "",
+                                    }
+                                  }
+                                >
+                                  <ConditionTriggerWrapper
+                                    condition={
+                                      Object {
+                                        "isNotEmpty": true,
+                                        "when": "ems_id",
+                                      }
+                                    }
+                                    field={
+                                      Object {
+                                        "component": "select",
+                                        "id": "physical_storage_family_id",
+                                        "includeEmpty": true,
+                                        "isDisabled": true,
+                                        "isRequired": true,
+                                        "label": "System Type:",
+                                        "loadOptions": [Function],
+                                        "name": "physical_storage_family_id",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      }
+                                    }
+                                    values={
+                                      Object {
+                                        "ems_id": "",
+                                      }
+                                    }
+                                  >
+                                    <Component
+                                      condition={
+                                        Object {
+                                          "isNotEmpty": true,
+                                          "when": "ems_id",
+                                        }
+                                      }
+                                      field={
+                                        Object {
+                                          "component": "select",
+                                          "id": "physical_storage_family_id",
+                                          "includeEmpty": true,
+                                          "isDisabled": true,
+                                          "isRequired": true,
+                                          "label": "System Type:",
+                                          "loadOptions": [Function],
+                                          "name": "physical_storage_family_id",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      values={
+                                        Object {
+                                          "ems_id": "",
+                                        }
+                                      }
+                                    />
+                                  </ConditionTriggerWrapper>
+                                </ConditionTriggerDetector>
+                              </ForwardRef(Field)>
+                            </ConditionTriggerDetector>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="text-field"
+                          hideField={true}
+                          id="edit"
+                          key="edit"
+                          label="edit"
+                          name="edit"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "edit",
+                                "label": "edit",
+                                "name": "edit",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={true}
+                            >
+                              <div
+                                hidden={true}
+                              >
+                                <TextField
+                                  component="text-field"
+                                  id="edit"
+                                  label="edit"
+                                  name="edit"
+                                >
+                                  <ForwardRef(TextInput)
+                                    disabled={false}
+                                    helperText=""
+                                    id="edit"
+                                    inline={false}
+                                    invalid={false}
+                                    invalidText=""
+                                    key="edit"
+                                    labelText="edit"
+                                    light={false}
+                                    name="edit"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    type="text"
+                                    value=""
+                                    warn={false}
+                                    warnText=""
+                                  >
+                                    <div
+                                      className="bx--form-item bx--text-input-wrapper"
+                                    >
+                                      <label
+                                        className="bx--label"
+                                        htmlFor="edit"
+                                      >
+                                        edit
+                                      </label>
+                                      <div
+                                        className="bx--text-input__field-outer-wrapper"
+                                      >
+                                        <div
+                                          className="bx--text-input__field-wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <input
+                                            className="bx--text-input bx--text__input"
+                                            disabled={false}
+                                            id="edit"
+                                            name="edit"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ForwardRef(TextInput)>
+                                </TextField>
+                              </div>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="checkbox"
+                          condition={
+                            Object {
+                              "is": "yes",
+                              "when": "edit",
+                            }
+                          }
+                          id="edit_authentication"
+                          initialValue={false}
+                          key="edit_authentication"
+                          label="Edit Authentication"
+                          name="edit_authentication"
+                        >
+                          <FormConditionWrapper
+                            condition={
+                              Object {
+                                "is": "yes",
+                                "when": "edit",
+                              }
+                            }
+                            field={
+                              Object {
+                                "component": "checkbox",
+                                "id": "edit_authentication",
+                                "initialValue": false,
+                                "label": "Edit Authentication",
+                                "name": "edit_authentication",
+                              }
+                            }
+                          >
+                            <ConditionTriggerDetector
+                              condition={
+                                Object {
+                                  "is": "yes",
+                                  "when": "edit",
+                                }
+                              }
+                              field={
+                                Object {
+                                  "component": "checkbox",
+                                  "id": "edit_authentication",
+                                  "initialValue": false,
+                                  "label": "Edit Authentication",
+                                  "name": "edit_authentication",
+                                }
+                              }
+                              triggers={
+                                Array [
+                                  "edit",
+                                ]
+                              }
+                            >
+                              <ForwardRef(Field)
+                                name="edit"
+                                subscription={
+                                  Object {
+                                    "value": true,
+                                  }
+                                }
+                              >
+                                <ConditionTriggerDetector
+                                  condition={
+                                    Object {
+                                      "is": "yes",
+                                      "when": "edit",
+                                    }
+                                  }
+                                  field={
+                                    Object {
+                                      "component": "checkbox",
+                                      "id": "edit_authentication",
+                                      "initialValue": false,
+                                      "label": "Edit Authentication",
+                                      "name": "edit_authentication",
+                                    }
+                                  }
+                                  triggers={Array []}
+                                  values={
+                                    Object {
+                                      "edit": "",
+                                    }
+                                  }
+                                >
+                                  <ConditionTriggerWrapper
+                                    condition={
+                                      Object {
+                                        "is": "yes",
+                                        "when": "edit",
+                                      }
+                                    }
+                                    field={
+                                      Object {
+                                        "component": "checkbox",
+                                        "id": "edit_authentication",
+                                        "initialValue": false,
+                                        "label": "Edit Authentication",
+                                        "name": "edit_authentication",
+                                      }
+                                    }
+                                    values={
+                                      Object {
+                                        "edit": "",
+                                      }
+                                    }
+                                  >
+                                    <Component
+                                      condition={
+                                        Object {
+                                          "is": "yes",
+                                          "when": "edit",
+                                        }
+                                      }
+                                      field={
+                                        Object {
+                                          "component": "checkbox",
+                                          "id": "edit_authentication",
+                                          "initialValue": false,
+                                          "label": "Edit Authentication",
+                                          "name": "edit_authentication",
+                                        }
+                                      }
+                                      values={
+                                        Object {
+                                          "edit": "",
+                                        }
+                                      }
+                                    />
+                                  </ConditionTriggerWrapper>
+                                </ConditionTriggerDetector>
+                              </ForwardRef(Field)>
+                            </ConditionTriggerDetector>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="text-field"
+                          condition={
+                            Object {
+                              "or": Array [
+                                Object {
+                                  "is": true,
+                                  "when": "edit_authentication",
+                                },
+                                Object {
+                                  "is": "",
+                                  "when": "edit",
+                                },
+                              ],
+                            }
+                          }
+                          id="management_ip"
+                          isRequired={true}
+                          key="management_ip"
+                          label="Management IP:"
+                          name="management_ip"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            condition={
+                              Object {
+                                "or": Array [
+                                  Object {
+                                    "is": true,
+                                    "when": "edit_authentication",
+                                  },
+                                  Object {
+                                    "is": "",
+                                    "when": "edit",
+                                  },
+                                ],
+                              }
+                            }
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "management_ip",
+                                "isRequired": true,
+                                "label": "Management IP:",
+                                "name": "management_ip",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <ConditionTriggerDetector
+                              condition={
+                                Object {
+                                  "or": Array [
+                                    Object {
+                                      "is": true,
+                                      "when": "edit_authentication",
+                                    },
+                                    Object {
+                                      "is": "",
+                                      "when": "edit",
+                                    },
+                                  ],
+                                }
+                              }
+                              field={
+                                Object {
+                                  "component": "text-field",
+                                  "id": "management_ip",
+                                  "isRequired": true,
+                                  "label": "Management IP:",
+                                  "name": "management_ip",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                }
+                              }
+                              triggers={
+                                Array [
+                                  "edit_authentication",
+                                  "edit",
+                                ]
+                              }
+                            >
+                              <ForwardRef(Field)
+                                name="edit_authentication"
+                                subscription={
+                                  Object {
+                                    "value": true,
+                                  }
+                                }
+                              >
+                                <ConditionTriggerDetector
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  field={
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "management_ip",
+                                      "isRequired": true,
+                                      "label": "Management IP:",
+                                      "name": "management_ip",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  triggers={
+                                    Array [
+                                      "edit",
+                                    ]
+                                  }
+                                  values={
+                                    Object {
+                                      "edit_authentication": "",
+                                    }
+                                  }
+                                >
+                                  <ForwardRef(Field)
+                                    name="edit"
+                                    subscription={
+                                      Object {
+                                        "value": true,
+                                      }
+                                    }
+                                  >
+                                    <ConditionTriggerDetector
+                                      condition={
+                                        Object {
+                                          "or": Array [
+                                            Object {
+                                              "is": true,
+                                              "when": "edit_authentication",
+                                            },
+                                            Object {
+                                              "is": "",
+                                              "when": "edit",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "management_ip",
+                                          "isRequired": true,
+                                          "label": "Management IP:",
+                                          "name": "management_ip",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      triggers={Array []}
+                                      values={
+                                        Object {
+                                          "edit": "",
+                                          "edit_authentication": "",
+                                        }
+                                      }
+                                    >
+                                      <ConditionTriggerWrapper
+                                        condition={
+                                          Object {
+                                            "or": Array [
+                                              Object {
+                                                "is": true,
+                                                "when": "edit_authentication",
+                                              },
+                                              Object {
+                                                "is": "",
+                                                "when": "edit",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        field={
+                                          Object {
+                                            "component": "text-field",
+                                            "id": "management_ip",
+                                            "isRequired": true,
+                                            "label": "Management IP:",
+                                            "name": "management_ip",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        values={
+                                          Object {
+                                            "edit": "",
+                                            "edit_authentication": "",
+                                          }
+                                        }
+                                      >
+                                        <Component
+                                          condition={
+                                            Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          field={
+                                            Object {
+                                              "component": "text-field",
+                                              "id": "management_ip",
+                                              "isRequired": true,
+                                              "label": "Management IP:",
+                                              "name": "management_ip",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          values={
+                                            Object {
+                                              "edit": "",
+                                              "edit_authentication": "",
+                                            }
+                                          }
+                                        >
+                                          <FormFieldHideWrapper
+                                            hideField={false}
+                                          >
+                                            <TextField
+                                              component="text-field"
+                                              id="management_ip"
+                                              isRequired={true}
+                                              label="Management IP:"
+                                              name="management_ip"
+                                              validate={
+                                                Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              <ForwardRef(TextInput)
+                                                disabled={false}
+                                                helperText=""
+                                                id="management_ip"
+                                                inline={false}
+                                                invalid={false}
+                                                invalidText=""
+                                                key="management_ip"
+                                                labelText={
+                                                  <IsRequired>
+                                                    Management IP:
+                                                  </IsRequired>
+                                                }
+                                                light={false}
+                                                name="management_ip"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                type="text"
+                                                value=""
+                                                warn={false}
+                                                warnText=""
+                                              >
+                                                <div
+                                                  className="bx--form-item bx--text-input-wrapper"
+                                                >
+                                                  <label
+                                                    className="bx--label"
+                                                    htmlFor="management_ip"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Management IP:
+                                                    </IsRequired>
+                                                  </label>
+                                                  <div
+                                                    className="bx--text-input__field-outer-wrapper"
+                                                  >
+                                                    <div
+                                                      className="bx--text-input__field-wrapper"
+                                                      data-invalid={null}
+                                                    >
+                                                      <input
+                                                        className="bx--text-input bx--text__input"
+                                                        disabled={false}
+                                                        id="management_ip"
+                                                        name="management_ip"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onClick={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </ForwardRef(TextInput)>
+                                            </TextField>
+                                          </FormFieldHideWrapper>
+                                        </Component>
+                                      </ConditionTriggerWrapper>
+                                    </ConditionTriggerDetector>
+                                  </ForwardRef(Field)>
+                                </ConditionTriggerDetector>
+                              </ForwardRef(Field)>
+                            </ConditionTriggerDetector>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="text-field"
+                          condition={
+                            Object {
+                              "or": Array [
+                                Object {
+                                  "is": true,
+                                  "when": "edit_authentication",
+                                },
+                                Object {
+                                  "is": "",
+                                  "when": "edit",
+                                },
+                              ],
+                            }
+                          }
+                          id="user"
+                          isRequired={true}
+                          key="user"
+                          label="User:"
+                          name="user"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            condition={
+                              Object {
+                                "or": Array [
+                                  Object {
+                                    "is": true,
+                                    "when": "edit_authentication",
+                                  },
+                                  Object {
+                                    "is": "",
+                                    "when": "edit",
+                                  },
+                                ],
+                              }
+                            }
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "user",
+                                "isRequired": true,
+                                "label": "User:",
+                                "name": "user",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <ConditionTriggerDetector
+                              condition={
+                                Object {
+                                  "or": Array [
+                                    Object {
+                                      "is": true,
+                                      "when": "edit_authentication",
+                                    },
+                                    Object {
+                                      "is": "",
+                                      "when": "edit",
+                                    },
+                                  ],
+                                }
+                              }
+                              field={
+                                Object {
+                                  "component": "text-field",
+                                  "id": "user",
+                                  "isRequired": true,
+                                  "label": "User:",
+                                  "name": "user",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                }
+                              }
+                              triggers={
+                                Array [
+                                  "edit_authentication",
+                                  "edit",
+                                ]
+                              }
+                            >
+                              <ForwardRef(Field)
+                                name="edit_authentication"
+                                subscription={
+                                  Object {
+                                    "value": true,
+                                  }
+                                }
+                              >
+                                <ConditionTriggerDetector
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  field={
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "user",
+                                      "isRequired": true,
+                                      "label": "User:",
+                                      "name": "user",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  triggers={
+                                    Array [
+                                      "edit",
+                                    ]
+                                  }
+                                  values={
+                                    Object {
+                                      "edit_authentication": "",
+                                    }
+                                  }
+                                >
+                                  <ForwardRef(Field)
+                                    name="edit"
+                                    subscription={
+                                      Object {
+                                        "value": true,
+                                      }
+                                    }
+                                  >
+                                    <ConditionTriggerDetector
+                                      condition={
+                                        Object {
+                                          "or": Array [
+                                            Object {
+                                              "is": true,
+                                              "when": "edit_authentication",
+                                            },
+                                            Object {
+                                              "is": "",
+                                              "when": "edit",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "user",
+                                          "isRequired": true,
+                                          "label": "User:",
+                                          "name": "user",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      triggers={Array []}
+                                      values={
+                                        Object {
+                                          "edit": "",
+                                          "edit_authentication": "",
+                                        }
+                                      }
+                                    >
+                                      <ConditionTriggerWrapper
+                                        condition={
+                                          Object {
+                                            "or": Array [
+                                              Object {
+                                                "is": true,
+                                                "when": "edit_authentication",
+                                              },
+                                              Object {
+                                                "is": "",
+                                                "when": "edit",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        field={
+                                          Object {
+                                            "component": "text-field",
+                                            "id": "user",
+                                            "isRequired": true,
+                                            "label": "User:",
+                                            "name": "user",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        values={
+                                          Object {
+                                            "edit": "",
+                                            "edit_authentication": "",
+                                          }
+                                        }
+                                      >
+                                        <Component
+                                          condition={
+                                            Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          field={
+                                            Object {
+                                              "component": "text-field",
+                                              "id": "user",
+                                              "isRequired": true,
+                                              "label": "User:",
+                                              "name": "user",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          values={
+                                            Object {
+                                              "edit": "",
+                                              "edit_authentication": "",
+                                            }
+                                          }
+                                        >
+                                          <FormFieldHideWrapper
+                                            hideField={false}
+                                          >
+                                            <TextField
+                                              component="text-field"
+                                              id="user"
+                                              isRequired={true}
+                                              label="User:"
+                                              name="user"
+                                              validate={
+                                                Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              <ForwardRef(TextInput)
+                                                disabled={false}
+                                                helperText=""
+                                                id="user"
+                                                inline={false}
+                                                invalid={false}
+                                                invalidText=""
+                                                key="user"
+                                                labelText={
+                                                  <IsRequired>
+                                                    User:
+                                                  </IsRequired>
+                                                }
+                                                light={false}
+                                                name="user"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                type="text"
+                                                value=""
+                                                warn={false}
+                                                warnText=""
+                                              >
+                                                <div
+                                                  className="bx--form-item bx--text-input-wrapper"
+                                                >
+                                                  <label
+                                                    className="bx--label"
+                                                    htmlFor="user"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      User:
+                                                    </IsRequired>
+                                                  </label>
+                                                  <div
+                                                    className="bx--text-input__field-outer-wrapper"
+                                                  >
+                                                    <div
+                                                      className="bx--text-input__field-wrapper"
+                                                      data-invalid={null}
+                                                    >
+                                                      <input
+                                                        className="bx--text-input bx--text__input"
+                                                        disabled={false}
+                                                        id="user"
+                                                        name="user"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onClick={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </ForwardRef(TextInput)>
+                                            </TextField>
+                                          </FormFieldHideWrapper>
+                                        </Component>
+                                      </ConditionTriggerWrapper>
+                                    </ConditionTriggerDetector>
+                                  </ForwardRef(Field)>
+                                </ConditionTriggerDetector>
+                              </ForwardRef(Field)>
+                            </ConditionTriggerDetector>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="text-field"
+                          condition={
+                            Object {
+                              "or": Array [
+                                Object {
+                                  "is": true,
+                                  "when": "edit_authentication",
+                                },
+                                Object {
+                                  "is": "",
+                                  "when": "edit",
+                                },
+                              ],
+                            }
+                          }
+                          id="physical_storage_password"
+                          isRequired={true}
+                          key="password"
+                          label="Password:"
+                          name="password"
+                          type="password"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            condition={
+                              Object {
+                                "or": Array [
+                                  Object {
+                                    "is": true,
+                                    "when": "edit_authentication",
+                                  },
+                                  Object {
+                                    "is": "",
+                                    "when": "edit",
+                                  },
+                                ],
+                              }
+                            }
+                            field={
+                              Object {
+                                "component": "text-field",
+                                "id": "physical_storage_password",
+                                "isRequired": true,
+                                "label": "Password:",
+                                "name": "password",
+                                "type": "password",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <ConditionTriggerDetector
+                              condition={
+                                Object {
+                                  "or": Array [
+                                    Object {
+                                      "is": true,
+                                      "when": "edit_authentication",
+                                    },
+                                    Object {
+                                      "is": "",
+                                      "when": "edit",
+                                    },
+                                  ],
+                                }
+                              }
+                              field={
+                                Object {
+                                  "component": "text-field",
+                                  "id": "physical_storage_password",
+                                  "isRequired": true,
+                                  "label": "Password:",
+                                  "name": "password",
+                                  "type": "password",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                }
+                              }
+                              triggers={
+                                Array [
+                                  "edit_authentication",
+                                  "edit",
+                                ]
+                              }
+                            >
+                              <ForwardRef(Field)
+                                name="edit_authentication"
+                                subscription={
+                                  Object {
+                                    "value": true,
+                                  }
+                                }
+                              >
+                                <ConditionTriggerDetector
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  field={
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "physical_storage_password",
+                                      "isRequired": true,
+                                      "label": "Password:",
+                                      "name": "password",
+                                      "type": "password",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  triggers={
+                                    Array [
+                                      "edit",
+                                    ]
+                                  }
+                                  values={
+                                    Object {
+                                      "edit_authentication": "",
+                                    }
+                                  }
+                                >
+                                  <ForwardRef(Field)
+                                    name="edit"
+                                    subscription={
+                                      Object {
+                                        "value": true,
+                                      }
+                                    }
+                                  >
+                                    <ConditionTriggerDetector
+                                      condition={
+                                        Object {
+                                          "or": Array [
+                                            Object {
+                                              "is": true,
+                                              "when": "edit_authentication",
+                                            },
+                                            Object {
+                                              "is": "",
+                                              "when": "edit",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "physical_storage_password",
+                                          "isRequired": true,
+                                          "label": "Password:",
+                                          "name": "password",
+                                          "type": "password",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                      triggers={Array []}
+                                      values={
+                                        Object {
+                                          "edit": "",
+                                          "edit_authentication": "",
+                                        }
+                                      }
+                                    >
+                                      <ConditionTriggerWrapper
+                                        condition={
+                                          Object {
+                                            "or": Array [
+                                              Object {
+                                                "is": true,
+                                                "when": "edit_authentication",
+                                              },
+                                              Object {
+                                                "is": "",
+                                                "when": "edit",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        field={
+                                          Object {
+                                            "component": "text-field",
+                                            "id": "physical_storage_password",
+                                            "isRequired": true,
+                                            "label": "Password:",
+                                            "name": "password",
+                                            "type": "password",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        values={
+                                          Object {
+                                            "edit": "",
+                                            "edit_authentication": "",
+                                          }
+                                        }
+                                      >
+                                        <Component
+                                          condition={
+                                            Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          field={
+                                            Object {
+                                              "component": "text-field",
+                                              "id": "physical_storage_password",
+                                              "isRequired": true,
+                                              "label": "Password:",
+                                              "name": "password",
+                                              "type": "password",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          values={
+                                            Object {
+                                              "edit": "",
+                                              "edit_authentication": "",
+                                            }
+                                          }
+                                        >
+                                          <FormFieldHideWrapper
+                                            hideField={false}
+                                          >
+                                            <TextField
+                                              component="text-field"
+                                              id="physical_storage_password"
+                                              isRequired={true}
+                                              label="Password:"
+                                              name="password"
+                                              type="password"
+                                              validate={
+                                                Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              <ForwardRef(TextInput)
+                                                disabled={false}
+                                                helperText=""
+                                                id="physical_storage_password"
+                                                inline={false}
+                                                invalid={false}
+                                                invalidText=""
+                                                key="password"
+                                                labelText={
+                                                  <IsRequired>
+                                                    Password:
+                                                  </IsRequired>
+                                                }
+                                                light={false}
+                                                name="password"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                type="password"
+                                                value=""
+                                                warn={false}
+                                                warnText=""
+                                              >
+                                                <div
+                                                  className="bx--form-item bx--text-input-wrapper"
+                                                >
+                                                  <label
+                                                    className="bx--label"
+                                                    htmlFor="physical_storage_password"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Password:
+                                                    </IsRequired>
+                                                  </label>
+                                                  <div
+                                                    className="bx--text-input__field-outer-wrapper"
+                                                  >
+                                                    <div
+                                                      className="bx--text-input__field-wrapper"
+                                                      data-invalid={null}
+                                                    >
+                                                      <input
+                                                        className="bx--text-input bx--text__input"
+                                                        disabled={false}
+                                                        id="physical_storage_password"
+                                                        name="password"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onClick={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="password"
+                                                        value=""
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </ForwardRef(TextInput)>
+                                            </TextField>
+                                          </FormFieldHideWrapper>
+                                        </Component>
+                                      </ConditionTriggerWrapper>
+                                    </ConditionTriggerDetector>
+                                  </ForwardRef(Field)>
+                                </ConditionTriggerDetector>
+                              </ForwardRef(Field)>
+                            </ConditionTriggerDetector>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={true}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="ems_id"
+                                  includeEmpty={true}
+                                  isDisabled={true}
+                                  isRequired={true}
+                                  label="Provider:"
+                                  loadOptions={[Function]}
+                                  name="ems_id"
+                                  onChange={[Function]}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="text-field"
+                                  id="name"
+                                  isRequired={true}
+                                  label="Name:"
+                                  name="name"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="select"
+                                  condition={
+                                    Object {
+                                      "isNotEmpty": true,
+                                      "when": "ems_id",
+                                    }
+                                  }
+                                  id="physical_storage_family_id"
+                                  includeEmpty={true}
+                                  isDisabled={true}
+                                  isRequired={true}
+                                  label="System Type:"
+                                  loadOptions={[Function]}
+                                  name="physical_storage_family_id"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="text-field"
+                                  hideField={true}
+                                  id="edit"
+                                  label="edit"
+                                  name="edit"
+                                />,
+                                <SingleField
+                                  component="checkbox"
+                                  condition={
+                                    Object {
+                                      "is": "yes",
+                                      "when": "edit",
+                                    }
+                                  }
+                                  id="edit_authentication"
+                                  initialValue={false}
+                                  label="Edit Authentication"
+                                  name="edit_authentication"
+                                />,
+                                <SingleField
+                                  component="text-field"
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  id="management_ip"
+                                  isRequired={true}
+                                  label="Management IP:"
+                                  name="management_ip"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="text-field"
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  id="user"
+                                  isRequired={true}
+                                  label="User:"
+                                  name="user"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="text-field"
+                                  condition={
+                                    Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                  id="physical_storage_password"
+                                  isRequired={true}
+                                  label="Password:"
+                                  name="password"
+                                  type="password"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {},
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": false,
+                                "initialValues": Object {},
+                                "invalid": false,
+                                "modified": Object {},
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {},
+                                "valid": true,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {},
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "ems_id",
+                                    "includeEmpty": true,
+                                    "isDisabled": true,
+                                    "isRequired": true,
+                                    "key": "undefined",
+                                    "label": "Provider:",
+                                    "loadOptions": [Function],
+                                    "name": "ems_id",
+                                    "onChange": [Function],
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "isRequired": true,
+                                    "label": "Name:",
+                                    "name": "name",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "select",
+                                    "condition": Object {
+                                      "isNotEmpty": true,
+                                      "when": "ems_id",
+                                    },
+                                    "id": "physical_storage_family_id",
+                                    "includeEmpty": true,
+                                    "isDisabled": true,
+                                    "isRequired": true,
+                                    "key": "physical_storage_family_id-undefined",
+                                    "label": "System Type:",
+                                    "loadOptions": [Function],
+                                    "name": "physical_storage_family_id",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "hideField": true,
+                                    "id": "edit",
+                                    "label": "edit",
+                                    "name": "edit",
+                                  },
+                                  Object {
+                                    "component": "checkbox",
+                                    "condition": Object {
+                                      "is": "yes",
+                                      "when": "edit",
+                                    },
+                                    "id": "edit_authentication",
+                                    "initialValue": false,
+                                    "label": "Edit Authentication",
+                                    "name": "edit_authentication",
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "condition": Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    },
+                                    "id": "management_ip",
+                                    "isRequired": true,
+                                    "label": "Management IP:",
+                                    "name": "management_ip",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "condition": Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    },
+                                    "id": "user",
+                                    "isRequired": true,
+                                    "label": "User:",
+                                    "name": "user",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "text-field",
+                                    "condition": Object {
+                                      "or": Array [
+                                        Object {
+                                          "is": true,
+                                          "when": "edit_authentication",
+                                        },
+                                        Object {
+                                          "is": "",
+                                          "when": "edit",
+                                        },
+                                      ],
+                                    },
+                                    "id": "physical_storage_password",
+                                    "isRequired": true,
+                                    "label": "Password:",
+                                    "name": "password",
+                                    "type": "password",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Save"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Save"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Save
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="reset"
+                                    disabled={true}
+                                    key="form-reset"
+                                    label="Reset"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                        disabled={true}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Reset
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      disabled={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </PhysicalStorageForm>
+</Provider>
+`;

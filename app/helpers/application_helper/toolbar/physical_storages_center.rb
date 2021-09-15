@@ -25,6 +25,16 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
             t = N_('Attach a new storage system'),
             t,
           ),
+          button(
+            :physical_storage_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit selected Physical Storage'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1'
+          ),
           api_button(
             :physical_storage_delete,
             nil,

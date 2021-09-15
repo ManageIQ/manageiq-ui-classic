@@ -19,6 +19,14 @@ class ApplicationHelper::Toolbar::PhysicalStorageCenter < ApplicationHelper::Too
             :confirm => N_("Refresh relationships and power states for all items related to this Physical Storage?"),
             :options => {:feature => :refresh}
           ),
+          button(
+            :physical_storage_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit this Physical Storage'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true
+          ),
           api_button(
             :physical_storage_delete,
             nil,
