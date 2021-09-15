@@ -50,10 +50,6 @@ export const linkProps = ({
     hideSecondary();
     miqSparkleOn();
 
-    if (type === 'new_window') {
-      miqSparkleOff();
-    }
-
     // react router support
     onNextRouteChange(() => miqSparkleOff());
   },
