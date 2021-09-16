@@ -11,7 +11,6 @@ module Menu
           compute_menu_section,
           network_menu_section,
           storage_menu_section,
-          configuration_menu_section,
           automation_menu_section,
 
           control_menu_section,
@@ -248,6 +247,7 @@ module Menu
 
       def automation_menu_section
         Menu::Section.new(:aut, N_("Automation"), 'carbon--FlowData', [
+          configuration_menu_section,
           ansible_menu_section,
           automation_manager_menu_section,
           automate_menu_section,
@@ -255,14 +255,14 @@ module Menu
       end
 
       def automation_manager_menu_section
-        Menu::Section.new(:at, N_("Ansible Tower"), nil, [
+        Menu::Section.new(:at, N_("Automation"), nil, [
           Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
           Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job/show_list')
         ])
       end
 
       def ansible_menu_section
-        Menu::Section.new(:ansible, N_("Ansible"), nil, [
+        Menu::Section.new(:ansible, N_("Embedded Ansible"), nil, [
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload', :any => true}, '/ansible_playbook/show_list'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository/show_list'),
           Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential/show_list'),
@@ -270,7 +270,7 @@ module Menu
       end
 
       def automate_menu_section
-        Menu::Section.new(:automate, N_("Automate"), nil, [
+        Menu::Section.new(:automate, N_("Embedded Automate"), nil, [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('generic_object_definition', N_('Generic Objects'), 'generic_object_definition', {:feature => 'generic_object_definition'},   '/generic_object_definition/show_list'),
