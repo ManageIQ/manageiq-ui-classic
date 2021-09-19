@@ -19,7 +19,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images cloud_volumes orchestration_stacks storage_managers
+        security_groups instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
         custom_button_events tenant
       ]
     )
@@ -124,6 +124,16 @@ module EmsCloudHelper::TextualSummary
     if num.positive? && role_allows?(:feature => "ems_storage_show_list")
       h[:title] = _("Show all Storage Managers")
       h[:link] = ems_cloud_path(@record.id, :display => 'storage_managers')
+    end
+    h
+  end
+
+  def textual_cloud_databases
+    num   = @record.try(:cloud_databases) ? @record.number_of(:cloud_databases) : 0
+    h     = {:label => _('Cloud Databases'), :icon => "fa fa-database", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_database_show_list")
+      h[:title] = _("Show all Cloud Databases")
+      h[:link] = ems_cloud_path(@record.id, :display => 'cloud_databases')
     end
     h
   end

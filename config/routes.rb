@@ -1316,6 +1316,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        edit
         show
         show_list
         new
@@ -1571,7 +1572,22 @@ Rails.application.routes.draw do
         exp_post +
         dialog_runner_post
     },
-
+    :cloud_database             => {
+      :get  => %w(
+        show_list
+        index
+        show
+        download_data
+        download_summary_pdf
+      ),
+      :post => %w(
+        quick_search
+        show_list
+        show
+      ) +
+        adv_search_post +
+        exp_post
+    },
     :cloud_network             => {
       :get  => %w(
         dialog_load
@@ -2227,7 +2243,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        filter
         post_install_callback
         pre_prov
         prov_continue

@@ -111,6 +111,11 @@ ChargebackReportController:
 - render_pdf
 - render_txt
 - report_data
+CloudDatabaseController:
+- index
+- render_csv
+- render_pdf
+- render_txt
 CloudNetworkController:
 - compare_cancel
 - compare_choose_base

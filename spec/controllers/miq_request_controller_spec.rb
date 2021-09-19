@@ -403,17 +403,6 @@ describe MiqRequestController do
     end
   end
 
-  describe '#filter' do
-    before { stub_user(:features => :all) }
-
-    it 'returns a scope for the GTL' do
-      post :filter, :params => {:reasonText => 'foobar', :selectedPeriod => 7}
-      expect(response.status).to eq(200)
-      scope = JSON.parse(response.body)['data']['scope']
-      expect(scope).to match(array_including(['created_recently', 7], %w(with_reason_like foobar)))
-    end
-  end
-
   describe '#miq_request_initial_options' do
     before { stub_user(:features => :all) }
     subject { controller.send(:miq_request_initial_options) }

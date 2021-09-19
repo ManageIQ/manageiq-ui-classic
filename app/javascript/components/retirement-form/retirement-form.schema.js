@@ -30,24 +30,28 @@ const createSchema = () => ({
         label: __('Months'),
         name: 'months',
         initialValue: 0,
+        min: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Weeks'),
         name: 'weeks',
         initialValue: 0,
+        min: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Days'),
         name: 'days',
         initialValue: 0,
+        min: 0,
       }, {
         component: 'text-field',
         type: 'number',
         label: __('Hours'),
         name: 'hours',
         initialValue: 0,
+        min: 0,
       },
       ],
     }, {
