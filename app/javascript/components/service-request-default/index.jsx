@@ -6,17 +6,9 @@ import createSchema from './service-request-default.schema';
 
 // NOTE: parameters to be used as filters
 let daysAgo;
-let types;
 
 // NOTE: processing the user selected filter values
 const onSubmitData = (values, miqRequestInitialOptions) => {
-  // Type (with_request_type)
-  if (values.types && values.types !== 'all') {
-    types = [values.types];
-  } else { // default to all
-    types = miqRequestInitialOptions.requestType;
-  }
-
   // Request Date (created_recently)
   if (values.selectedPeriod) { // user selected
     daysAgo = values.selectedPeriod;
@@ -32,10 +24,17 @@ const onSubmitData = (values, miqRequestInitialOptions) => {
       'with_approval_state',
       values.approvalStateCheckboxes,
     ], [
-      'with_request_type',
-      types,
+      'with_type',
+      miqRequestInitialOptions.requestType,
     ],
   ];
+
+  if (values.types && values.types !== 'all') {
+    submitThis.push([
+      'with_request_type',
+      [values.types],
+    ]);
+  }
 
   if (values.reasonText) {
     submitThis.push([
