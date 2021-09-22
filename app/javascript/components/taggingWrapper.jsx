@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Spinner } from 'patternfly-react';
+import { Loading } from 'carbon-components-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
 
 const params = (type = 'default', state, tag = {}) => ({
@@ -59,7 +59,14 @@ class TaggingWrapper extends React.Component {
 
   render() {
     const { isLoaded } = this.props;
-    if (!isLoaded) return <Spinner loading size="lg" />;
+
+    if (!isLoaded) {
+      return (
+        <div className="loadingSpinner">
+          <Loading active small withOverlay={false} className="loading" />
+        </div>
+      );
+    }
     const { urls, options, tagging } = this.props;
     // eslint-disable-next-line no-mixed-operators
     return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
@@ -76,8 +83,8 @@ class TaggingWrapper extends React.Component {
           description: __('Save'),
         }}
         cancelButton={{
-        // FIXME: jQuery is necessary here as it communicates with the old world
-        // don't replace $.post with http.post
+          // FIXME: jQuery is necessary here as it communicates with the old world
+          // don't replace $.post with http.post
           onClick: () => { this.reset(); $.post(urls.cancel_url); },
           href: '',
           type: 'button',

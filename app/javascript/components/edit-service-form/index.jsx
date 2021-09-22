@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import createSchema from './edit-service-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 
@@ -21,7 +21,7 @@ const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
   };
 
   return !isLoading && (
-    <Grid fluid style={{ paddingTop: 20 }}>
+    <Grid style={{ paddingTop: 20 }}>
       <MiqFormRenderer
         initialValues={initialValues}
         schema={createSchema(maxNameLen, maxDescLen)}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -20,7 +20,7 @@ const VmSnapshotForm = ({ url, redirect }) => {
   };
 
   return !isLoading && (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         schema={schema}
         onSubmit={onSubmit}

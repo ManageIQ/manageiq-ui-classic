@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
-
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './flavor-form.schema';
@@ -21,7 +20,7 @@ const FlavorForm = ({ redirect }) => {
   };
 
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         schema={createSchema(emsId, setState)}
         onSubmit={onSubmit}

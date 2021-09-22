@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import { get } from 'lodash';
 import addSchema from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -174,7 +174,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
   }
 
   return (
-    <Grid fluid style={{ marginBottom: 16 }}>
+    <Grid style={{ marginBottom: 16 }}>
       <MiqFormRenderer
         initialValues={initialValues}
         schema={schema}

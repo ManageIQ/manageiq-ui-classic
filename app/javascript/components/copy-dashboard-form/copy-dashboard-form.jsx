@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './copy-dashboard-form.schema';
 import { http, API } from '../../http_api';
@@ -57,7 +57,7 @@ const CopyDashboardForm = ({ dashboardId }) => {
 
   if (isLoading) return null;
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         initialValues={initialValues}
         schema={schema}

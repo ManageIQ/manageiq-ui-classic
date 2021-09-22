@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import createSchema from './region-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
@@ -42,7 +42,7 @@ const RegionForm = ({ id, maxDescLen }) => {
   }
 
   return (
-    <Grid fluid style={{ paddingTop: 20 }}>
+    <Grid style={{ paddingTop: 20 }}>
       <MiqFormRenderer
         initialValues={{ description }}
         schema={createSchema(maxDescLen)}

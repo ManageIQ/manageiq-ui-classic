@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './copy-catalog-form.schema';
 import { http } from '../../http_api';
@@ -45,7 +45,7 @@ class CopyCatalogForm extends Component {
     const cancelUrl = `/catalog/servicetemplate_copy_cancel/${catalogId}`;
 
     return (
-      <Grid fluid>
+      <Grid>
         <MiqFormRenderer
           initialValues={initialValues}
           schema={schema}

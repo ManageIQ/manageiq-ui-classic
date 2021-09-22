@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud Network form component should render edit variant 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
->
+<Grid>
   <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
@@ -87,11 +83,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
 `;
 
 exports[`Cloud Network form component should render form 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
->
+<Grid>
   <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
