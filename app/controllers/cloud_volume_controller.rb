@@ -15,33 +15,29 @@ class CloudVolumeController < ApplicationController
     %w[cloud_volume_snapshots cloud_volume_backups instances custom_button_events host_initiators]
   end
 
-  def specific_buttons(pressed)
-    case pressed
-    when 'cloud_volume_attach'
-      validate_results = validate_item_supports_action_button(:attach_volume, CloudVolume)
-      javascript_redirect(:action => 'attach', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_detach'
-      validate_results = validate_item_supports_action_button(:detach_volume, CloudVolume)
-      javascript_redirect(:action => 'detach', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_edit'
-      javascript_redirect(:action => 'edit', :id => checked_item_id)
-    when 'cloud_volume_snapshot_create'
-      validate_results = validate_item_supports_action_button(:snapshot_create, CloudVolume)
-      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_new'
-      javascript_redirect(:action => 'new')
-    when 'cloud_volume_backup_create'
-      validate_results = validate_item_supports_action_button(:backup_create, CloudVolume)
-      javascript_redirect(:action => 'backup_new', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_backup_restore'
-      validate_results = validate_item_supports_action_button(:backup_restore, CloudVolume)
-      javascript_redirect(:action => 'backup_select', :id => checked_item_id) if validate_results[:action_supported]
-    else
-      return false
-    end
+  BUTTON_TO_ACTION_MAPPING = {
+    'cloud_volume_attach'          => [:attach_volume,   'attach'],
+    'cloud_volume_detach'          => [:detach_volume,   'detach'],
+    'cloud_volume_edit'            => [nil,              'edit'],
+    'cloud_volume_new'             => [nil,              'new'],
+    'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
+    'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
+    'cloud_volume_backup_restore'  => [:backup_restore,  'backup_select'],
+  }.freeze
 
-    if validate_results && validate_results[:message]
-      render_flash(validate_results[:message], :error)
+  def specific_buttons(pressed)
+    return false unless BUTTON_TO_ACTION_MAPPING.include?(pressed)
+
+    validate_action, ui_action = BUTTON_TO_ACTION_MAPPING[pressed]
+    if validate_action
+      validate_results = validate_item_supports_action_button(validate_action, CloudVolume)
+      if validate_results[:action_supported]
+        javascript_redirect(:action => ui_action, :id => checked_item_id)
+      else
+        render_flash(validate_results[:message], :error)
+      end
+    else
+      javascript_redirect(:action => ui_action, :id => checked_item_id)
     end
 
     true
