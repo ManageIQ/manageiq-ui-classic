@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ToastNotificationList, TimedToastNotification,
-} from 'patternfly-react';
-import { markNotificationRead, removeToastNotification } from '../../miq-redux/actions/notifications-actions';
-import { viewDetails } from '../notification-drawer/helpers';
+import { ToastNotification, Link } from 'carbon-components-react';
+import { markNotificationRead } from '../../miq-redux/actions/notifications-actions';
 
 const notificationTimerDelay = 8000;
+const EMPTY = '';
 
 const ToastList = () => {
   const dispatch = useDispatch();
@@ -15,29 +13,29 @@ const ToastList = () => {
 
   return (
     toastNotifications.length > 0 ? (
-      <ToastNotificationList>
+      <div id="toastnotification" className="toast-notification">
         {toastNotifications.map((toastNotification) => (
-          <TimedToastNotification
+          <ToastNotification
             key={toastNotification.id}
-            type={toastNotification.type}
-            persistent={toastNotification.type === 'error'}
-            onDismiss={(event) => {
-              if (event) {
+            kind={toastNotification.type}
+            lowContrast
+            title={EMPTY}
+            caption={EMPTY}
+            subtitle={toastNotification.message}
+            onClick={() => {
                 return dispatch(markNotificationRead(toastNotification));
-              }
-              return dispatch(removeToastNotification(toastNotification));
             }}
-            timerdelay={notificationTimerDelay}
+            timeout={notificationTimerDelay}
           >
             {toastNotification.data.link && (
               <div className="pull-right toast-pf-action">
-                <a href="#" onClick={() => viewDetails(toastNotification)}>{__('View details')}</a>
+                <Link href={toastNotification.data.link}>{__('View details')}</Link>
               </div>
             )}
-            <span>{toastNotification.message}</span>
-          </TimedToastNotification>
+            <span>{toastNotification.messages}</span>
+          </ToastNotification>
         ))}
-      </ToastNotificationList>
+      </div>
     ) : null
   );
 };

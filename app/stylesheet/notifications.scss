@@ -29,6 +29,13 @@
   }
 }
 
+#toastnotification{
+  position: fixed;
+  z-index: 900;
+  right: 50px;
+  top: 50px;
+}
+
 #breadcrumbs .breadcrumb {
   display: inline-block;
   margin-bottom: 0;
