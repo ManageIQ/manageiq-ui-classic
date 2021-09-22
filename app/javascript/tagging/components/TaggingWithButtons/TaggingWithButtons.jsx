@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, ButtonGroup, Button } from 'patternfly-react';
+import { Row, ButtonGroup, Button } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 
@@ -11,7 +12,7 @@ class TaggingWithButtons extends React.Component {
 
   render() {
     return (
-      <Grid fluid>
+      <Grid>
         <Tagging
           selectedTagCategory={this.props.selectedTagCategory}
           tags={this.props.tags}

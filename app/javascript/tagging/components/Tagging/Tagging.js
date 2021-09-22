@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col } from 'patternfly-react';
+import { Row, Col } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import TagModifier from '../InnerComponents/TagModifier';
 import TagView from '../InnerComponents/TagView';
 import CategoryModifier from '../InnerComponents/CategoryModifier';
@@ -52,7 +53,7 @@ class Tagging extends React.Component {
 
   render() {
     return (
-      <Grid fluid>
+      <Grid>
         <Row>
           <Col xs={12} md={8} lg={6}>
             <TagModifier hideHeader={this.props.options && this.props.options.hideHeaders}>

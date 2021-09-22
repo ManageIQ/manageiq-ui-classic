@@ -2,7 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Spinner } from 'patternfly-react';
+import { Modal } from 'patternfly-react';
+import { Loading } from 'carbon-components-react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
@@ -39,6 +40,7 @@ export const removeCatalogItems = (catalogItems) => {
             miqFlashLater({ message: sprintf(__('Error deleting catalog item "%s": %s'), item.name, parseApiError(item.data)), level: 'error' });
           }
         });
+        miqSparkleOff();
       }
       return apiData;
     })
@@ -139,7 +141,11 @@ class RemoveCatalogItemModal extends React.Component {
 
     const renderSpinner = (spinnerOn) => {
       if (spinnerOn) {
-        return <Spinner loading size="lg" />;
+        return (
+          <div className="loadingSpinner">
+            <Loading active small withOverlay={false} className="loading" />
+          </div>
+        );
       }
     };
 

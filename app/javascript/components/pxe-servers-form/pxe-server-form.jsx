@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './pxe-server-form.schema';
 import { API } from '../../http_api';
@@ -76,7 +76,7 @@ const PxeServersForm = ({ id }) => {
   }
 
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer initialValues={initialValues} canReset={!!id} onSubmit={onSubmit} onCancel={onCancel} schema={createSchema(!!id)} />
     </Grid>
   );

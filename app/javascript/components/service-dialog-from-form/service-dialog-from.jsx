@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -24,7 +24,7 @@ const ServiceDialogFromOt = ({
   ));
 
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         schema={serviceDialogFromOtSchema}
         onSubmit={onSubmit}

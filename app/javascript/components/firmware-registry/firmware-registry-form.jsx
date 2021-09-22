@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import schema from './firmware-registry-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 
@@ -35,7 +35,7 @@ const FirmwareRegistryForm = () => {
   });
 
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         initialValues={{ type: TYPES.rest_api_depot.value }}
         schema={schema(TYPES)}
