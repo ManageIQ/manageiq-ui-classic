@@ -18,19 +18,11 @@ class CloudVolumeController < ApplicationController
   def specific_buttons(pressed)
     case pressed
     when 'cloud_volume_attach'
-      volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if !volume.supports?(:attach_volume)
-        render_flash(_("Cloud Volume \"%{volume_name}\" cannot be attached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:attach_volume)}, :error)
-      else
-        javascript_redirect(:action => 'attach', :id => checked_item_id)
-      end
+      validate_results = validate_item_supports_action_button(:attach_volume, CloudVolume)
+      javascript_redirect(:action => 'attach', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_detach'
-      volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if !volume.supports?(:detach_volume)
-        render_flash(_("Cloud Volume \"%{volume_name}\" cannot be detached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:detach_volume)}, :error)
-      else
-        javascript_redirect(:action => 'detach', :id => checked_item_id)
-      end
+      validate_results = validate_item_supports_action_button(:detach_volume, CloudVolume)
+      javascript_redirect(:action => 'detach', :id => checked_item_id) if validate_results[:action_supported]
     when 'cloud_volume_edit'
       javascript_redirect(:action => 'edit', :id => checked_item_id)
     when 'cloud_volume_snapshot_create'
