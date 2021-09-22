@@ -64,9 +64,7 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
   );
 };
 
-const verifyCheckboxes = (values) => {
-  return values.approvalStateCheckboxes.length == 0;
-};
+const verifyCheckboxes = (values) => values.approvalStateCheckboxes.length === 0;
 
 const FormTemplate = ({ formFields }) => {
   const {
