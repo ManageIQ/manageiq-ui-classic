@@ -6,6 +6,7 @@ import { Toolbar } from './toolbar';
 
 import DashboardToolbar from './dashboard_toolbar';
 import TopologyToolbar from './topology_toolbar';
+import { convertMultParamsToRailsMultParams } from '../toolbar-actions/util'
 
 /* global miqJqueryRequest, miqSerializeForm */
 /* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
@@ -114,7 +115,8 @@ const onClick = (button) => {
   }
 
   // put url_parms into params var, if defined
-  const paramstring = getParams(button.url_parms, !!button.send_checked);
+  let paramstring = getParams(button.url_parms, !!button.send_checked);
+  paramstring = convertMultParamsToRailsMultParams(paramstring);
 
   const options = {
     beforeSend: true,
