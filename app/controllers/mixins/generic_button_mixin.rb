@@ -106,7 +106,7 @@ module Mixins
     def validate_item_supports_action_button(action, item_type)
       unless checked_item_id
         error_msg = (_("\"%{action}\" requires a single item to be selected.") % {
-          :action => SupportsFeatureMixin::QUERYABLE_FEATURES[action]
+          :action => action
         })
         return {:action_supported => false, :message => error_msg}
       end
@@ -116,7 +116,7 @@ module Mixins
 
       error_msg = (_("\"%{item_name}\" does not supports %{action}") % {
         :item_name => item.name,
-        :action    => SupportsFeatureMixin::QUERYABLE_FEATURES[action]
+        :action    => action
       })
       {:action_supported => false, :message => error_msg}
     end
