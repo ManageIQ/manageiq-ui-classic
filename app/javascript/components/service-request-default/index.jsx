@@ -7,13 +7,25 @@ import createSchema from './service-request-default.schema';
 // NOTE: parameters to be used as filters
 let daysAgo;
 
+const getApprovalStateCheckboxesDefault = (miqRequestInitialOptions) => {
+  const defaultStates = [];
+  if (miqRequestInitialOptions.states) {
+    miqRequestInitialOptions.states.forEach((state) => {
+      defaultStates.push(state.value);
+    });
+  }
+  return defaultStates;
+};
+
 // NOTE: processing the user selected filter values
 const onSubmitData = (values, miqRequestInitialOptions) => {
   // Request Date (created_recently)
   if (values.selectedPeriod) { // user selected
     daysAgo = values.selectedPeriod;
   } else { // default
-    daysAgo = miqRequestInitialOptions.timePeriods[0].value;
+    if (miqRequestInitialOptions.timePeriods[1] && miqRequestInitialOptions.timePeriods[1].value) {
+      daysAgo = miqRequestInitialOptions.timePeriods[1].value;
+    }
   }
 
   const submitThis = [
@@ -22,7 +34,7 @@ const onSubmitData = (values, miqRequestInitialOptions) => {
       parseInt(daysAgo, 10),
     ], [
       'with_approval_state',
-      values.approvalStateCheckboxes,
+      values.approvalStateCheckboxes ? values.approvalStateCheckboxes : getApprovalStateCheckboxesDefault(miqRequestInitialOptions),
     ], [
       'with_type',
       miqRequestInitialOptions.requestType,
@@ -52,6 +64,10 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
     onSubmitData(values, miqRequestInitialOptions);
   };
 
+  const onReset = () => {
+    onSubmitData({}, miqRequestInitialOptions);
+  };
+
   return (
     <div className="service-request-form">
       <MiqFormRenderer
@@ -59,6 +75,7 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
         schema={createSchema(miqRequestInitialOptions)}
         canReset
         onSubmit={onSubmit}
+        onReset={onReset}
       />
     </div>
   );
