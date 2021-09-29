@@ -6,7 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AboutModal } from 'patternfly-react';
+import { Modal, ModalBody, Button } from 'carbon-components-react';
+import ModalItem from './modal-item';
 
 const SHOW_ABOUT_MODAL = '@@aboutModal/show';
 const HIDE_ABOUT_MODAL = '@@aboutModal/hide';
@@ -64,8 +65,9 @@ class MiqAboutModal extends React.Component {
 
   render() {
     const {
-      data, dialogClassName, show, hideModal,
+      data, hideModal,
     } = this.props;
+    const { show } = this.props;
     const { expand } = this.state;
     if (!data) {
       return null;
@@ -75,37 +77,59 @@ class MiqAboutModal extends React.Component {
     const plugins = Object.keys(data.server_info.plugins).map((key) => {
       const val = data.server_info.plugins[key];
       return (
-        <AboutModal.VersionItem
-          label={val.display_name}
-          versionText={val.version}
-          key={key}
-        />
+        <ModalItem key={key} label={val.display_name} value={val.version} />
       );
     });
 
     return (
-      <AboutModal
-        dialogClassName={dialogClassName}
-        show={show}
-        onHide={hideModal}
-        productTitle={`${data.product_info.name_full} ${data.server_info.release}`}
-        logo={data.product_info.branding_info.logo}
-        altLogo={data.product_info.name_full}
-        trademarkText={data.product_info.copyright}
+      <Modal
+        aria-label="About Modal"
+        modalHeading={`${data.product_info.name_full} ${data.server_info.release}`}
+        open={show}
+        onRequestClose={() => { hideModal(); }}
+        passiveModal
+        className="about-modal"
       >
-        <AboutModal.Versions>
-          <AboutModal.VersionItem label={__('Version')} versionText={`${data.server_info.version}.${data.server_info.build}`} />
-          <AboutModal.VersionItem label={__('Server Name')} versionText={data.server_info.appliance || ''} />
-          <AboutModal.VersionItem label={__('Region')} versionText={data.region.region.toString()} />
-          <AboutModal.VersionItem label={__('Zone')} versionText={data.zone.name || ''} />
-          <AboutModal.VersionItem label={__('User Name')} versionText={data.identity.name} />
-          <AboutModal.VersionItem label={__('User Role')} versionText={data.identity.role} />
-          <AboutModal.VersionItem label={__('Browser')} versionText={browser.browser} />
-          <AboutModal.VersionItem label={__('Browser Version')} versionText={browser.version.toString()} />
-          <AboutModal.VersionItem label={__('Browser OS')} versionText={browser.OS} />
-          <br />
-          <a
-            style={{ color: 'white' }}
+        <ModalBody className="about-modal-body">
+          <ModalItem
+            label={`${__('Version')}`}
+            value={`${data.server_info.version}.${data.server_info.build}`}
+          />
+          <ModalItem
+            label={`${__('Server Name')}`}
+            value={data.server_info.appliance || ''}
+          />
+          <ModalItem
+            label={`${__('Region')}`}
+            value={data.region.region.toString()}
+          />
+          <ModalItem
+            label={`${__('Zone')} `}
+            value={data.zone.name || ''}
+          />
+          <ModalItem
+            label={`${__('User Name')} `}
+            value={data.identity.name}
+          />
+          <ModalItem
+            label={`${__('User Role')} `}
+            value={data.identity.role}
+          />
+          <ModalItem
+            label={`${__('Browser')} `}
+            value={browser.browser}
+          />
+          <ModalItem
+            label={`${__('Browser Version')} `}
+            value={browser.version.toString()}
+          />
+          <ModalItem
+            label={`${__('Browser OS')} `}
+            value={browser.OS}
+          />
+          <Button
+            kind="ghost"
+            className="plugins-button"
             onClick={(event) => {
               this.setState({ expand: !expand });
               event.preventDefault();
@@ -115,18 +139,23 @@ class MiqAboutModal extends React.Component {
               <i className={expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
               Plugins
             </strong>
-          </a>
-          <div className={expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
+          </Button>
+          <div className={expand ? 'about-visible-scrollbar' : 'hidden'}>
             {plugins}
           </div>
-        </AboutModal.Versions>
-      </AboutModal>
+          <br />
+          <br />
+          <p className="ModalItem">
+            {data.product_info.copyright}
+          </p>
+          <img src={data.product_info.branding_info.logo} alt="logo" className="logo" />
+        </ModalBody>
+      </Modal>
     );
   }
 }
 
 MiqAboutModal.propTypes = {
-  dialogClassName: PropTypes.string,
   show: PropTypes.bool,
   data: PropTypes.shape({
     product_info: PropTypes.shape({
@@ -145,7 +174,6 @@ MiqAboutModal.propTypes = {
 };
 
 MiqAboutModal.defaultProps = {
-  dialogClassName: undefined,
   show: false,
   data: undefined,
 };
