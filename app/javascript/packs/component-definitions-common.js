@@ -29,7 +29,7 @@ import FonticonPicker from '../components/fonticon-picker';
 import FonticonPickerDdf from '../components/fonticon-picker/font-icon-picker-ddf';
 import HostAggregateForm from '../components/host-aggregate-form';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
-import MiqAboutModal from '../components/miq-about-modal';
+import MiqAboutModal from '../components/miq-about-modal/miq-about-modal';
 import MiqToolbar from '../components/miq-toolbar';
 import { MainMenu, Navbar } from '../menu';
 import NotificationDrawer from '../components/notification-drawer/notification-drawer';
