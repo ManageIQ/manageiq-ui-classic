@@ -62,14 +62,14 @@ module Mixins
         def process_hosts_maintenance(hosts, display_name)
           each_host(hosts, display_name) do |host|
             if host.maintenance
-              if host.respond_to?(:unset_node_maintenance)
-                host.send(:unset_node_maintenance_queue, session[:userid])
+              if host.supports?(:unset_node_maintenance)
+                host.unset_node_maintenance_queue(session[:userid])
                 add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
               else
                 add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
               end
-            elsif host.respond_to?(:set_node_maintenance)
-              host.send(:set_node_maintenance_queue, session[:userid])
+            elsif host.supports?(:set_node_maintenance)
+              host.set_node_maintenance_queue(session[:userid])
               add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
             else
               add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
