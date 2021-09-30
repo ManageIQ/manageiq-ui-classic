@@ -135,11 +135,11 @@ module ApplicationController::Tags
 
   # Add/remove tags in a single transaction
   def tagging_save_tags
-    @edit[:new][:assignments] = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| v['id'] } }
+    @edit[:new][:assignments] = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| v['id'].to_i } }
     Classification.bulk_reassignment(:model      => @edit[:tagging],
                                      :object_ids => @edit[:object_ids],
-                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
-                                     :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments])
+                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments].map { |c| c.id },
+                                     :delete_ids => @edit[:current][:assignments].map { |c| c.id } - @edit[:new][:assignments])
   rescue StandardError => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
