@@ -113,6 +113,71 @@ describe ApplicationController do
         expect(controller.instance_variable_get(:@tagging)).not_to be_nil
       end
     end
+
+    # I CHALLENGE YOU to make this spec smaller...
+    context "saving changes" do
+      let(:host)            { FactoryBot.create(:host) }
+
+      let(:department)      { FactoryBot.create(:classification_department_with_tags) }
+      let(:environment)     { FactoryBot.create(:classification_environment_with_tags) }
+
+      let(:dept_accounting) { department.entries.find_by(:description => "Accounting") }
+      let(:dept_finance)    { department.entries.find_by(:description => "Financial Services") }
+      let(:env_accounting)  { environment.entries.find_by(:description => "Accounting") }
+      let(:env_production)  { environment.entries.find_by(:description => "Production") }
+
+      let(:params)          { {"data" => data, "button" => "save", :id => host.id} }
+      let(:s)               { {:tag_db => Host} }
+
+      let(:data) do
+        [
+          {
+            "description" => department.description,
+            "id"          => department.id.to_s,
+            "values"      => [{"id" => dept_finance.id.to_s, "description" => dept_finance.description}]
+          },
+          {
+            "description" => environment.description,
+            "id"          => environment.id.to_s,
+            "values"      => [{"id" => env_production.id.to_s, "description" => env_production.description}]
+          }
+        ].to_json
+      end
+
+      before do
+        user = FactoryBot.create(:user, :userid => "for_science")
+        controller.current_user = user
+
+        allow(user).to receive(:get_timezone).and_return(Time.zone)
+        allow(controller).to receive(:button_url)
+        allow(controller).to receive(:render)
+        allow(controller).to receive(:javascript_redirect)
+        allow(controller).to receive(:previous_breadcrumb_url)
+        allow(controller).to receive(:load_edit).and_return(true)
+
+        dept_accounting.assign_entry_to(host)
+        env_accounting.assign_entry_to(host)
+      end
+
+      it "properly passes the correct `add_ids` and `delete_ids` to Classification.bulk_reassignment" do
+        expected_options = {
+          :model      => "Host",
+          :object_ids => [host.id],
+          :add_ids    => [dept_finance.id, env_production.id],
+          :delete_ids => [dept_accounting.id, env_accounting.id]
+        }
+        expect(Classification).to receive(:bulk_reassignment).with(expected_options)
+
+        controller.instance_variable_set(:@edit, :new => {})
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@tagging, 'Host')
+        controller.instance_variable_set(:@object_ids, [host.id])
+        controller.send(:get_tagdata, host)
+        controller.send(:get_tag_items)
+        controller.send(:tagging_edit_tags_reset)
+        controller.send(:tagging_edit)
+      end
+    end
   end
 
   describe EmsInfraController do
