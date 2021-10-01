@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 import { Loading } from 'carbon-components-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
 
+const selectedTags = (state, tag) => {
+  const selectedVal = Array.isArray(tag.tagValue) ? tag.tagValue.map((val) => val.id).flat() : [];
+  return [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), selectedVal].flat();
+};
+
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
     id: 'new',
-    ids_checked: [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
+    ids_checked: selectedTags(state, tag),
     tree_typ: 'tags',
   },
   default: {
