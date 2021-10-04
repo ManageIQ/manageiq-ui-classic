@@ -37,9 +37,9 @@ include:
 # Order of columns (from all tables)
 col_order:
 - id
+- name
 - created_on
 - last_run_on
-- name
 - report_source
 - userid
 - miq_group_description
@@ -48,9 +48,9 @@ col_order:
 # Column titles, in order
 headers:
 - ID
+- Name
 - Queued At
 - Run At
-- Name
 - Source
 - Username
 - Group

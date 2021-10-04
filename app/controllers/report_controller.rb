@@ -8,6 +8,7 @@ class ReportController < ApplicationController
   include_concern 'Schedules'
   include_concern 'Widgets'
 
+  ReportController::DEFAULT_SORT_COL = 2
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper
   include Mixins::GenericSessionMixin

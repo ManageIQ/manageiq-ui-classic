@@ -1215,6 +1215,11 @@ class ApplicationController < ActionController::Base
       params[:sortby]      = view.headers.index(params[:sort_choice])
     end
 
+    report_symbols = [:all_sortcol, :savedreports_tree_sortcol, :reports_tree_sortcol]
+    if report_symbols.include?(sortcol_sym) && session[sortcol_sym].nil?
+      session[sortcol_sym] = ReportController::DEFAULT_SORT_COL
+    end
+
     # Get the current sort info, else get defaults from the view
     @sortcol = session[sortcol_sym].try(:to_i) || view.sort_col
     @sortdir = session[sortdir_sym] || (view.ascending? ? "ASC" : "DESC")
