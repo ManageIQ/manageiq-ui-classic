@@ -143,7 +143,7 @@ module ReportController::SavedReports
     end
 
     @sortcol = session["#{x_active_tree}_sortcol".to_sym].nil? ? ReportController::DEFAULT_SORT_COL : session["#{x_active_tree}_sortcol".to_sym].to_i
-    @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? "DESC" : session["#{x_active_tree}_sortdir".to_sym]
+    @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? ReportController::DEFAULT_SORT_DIR : session["#{x_active_tree}_sortdir".to_sym]
     @no_checkboxes = !role_allows?(:feature => "miq_report_saved_reports_admin", :any => true)
 
     # show all saved reports

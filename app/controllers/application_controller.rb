@@ -1000,7 +1000,8 @@ class ApplicationController < ActionController::Base
       @sortcol = 0
       @sortdir = "ASC"
     end
-    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' unless params[:is_ascending].nil?
+    params[:is_ascending] = @sortdir.to_s.downcase != "desc"
+    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC'
     @sortcol
   end
 
@@ -1216,10 +1217,11 @@ class ApplicationController < ActionController::Base
     end
 
     report_symbols = [:all_sortcol, :savedreports_tree_sortcol, :reports_tree_sortcol]
+    # Check if the symbol representing the page is included in the array above and then check if the variable for the sort column (session[sortcol_sym]) is nil
     if report_symbols.include?(sortcol_sym) && session[sortcol_sym].nil?
       session[sortcol_sym] = ReportController::DEFAULT_SORT_COL
+      session[sortdir_sym] = ReportController::DEFAULT_SORT_DIR
     end
-
     # Get the current sort info, else get defaults from the view
     @sortcol = session[sortcol_sym].try(:to_i) || view.sort_col
     @sortdir = session[sortdir_sym] || (view.ascending? ? "ASC" : "DESC")
@@ -1229,7 +1231,7 @@ class ApplicationController < ActionController::Base
     session[sortcol_sym] = @sortcol               # Save the new sort values
     session[sortdir_sym] = @sortdir
     view.sortby = [view.col_order[@sortcol]]      # Set sortby array in the view
-    view.ascending = @sortdir.to_s.downcase != "desc"
+    view.order = @sortdir == "ASC" ? "Ascending" : "Descending"
 
     @items_per_page = get_view_pages_perpage(dbname)
     @items_per_page = ONE_MILLION if db_sym.to_s == 'vm' && controller_name == 'service'

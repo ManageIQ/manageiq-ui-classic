@@ -124,7 +124,7 @@ module ReportController::Reports
       end
 
       @sortcol = session["#{x_active_tree}_sortcol".to_sym].nil? ? ReportController::DEFAULT_SORT_COL : session["#{x_active_tree}_sortcol".to_sym].to_i
-      @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? "DESC" : session["#{x_active_tree}_sortdir".to_sym]
+      @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? ReportController::DEFAULT_SORT_DIR : session["#{x_active_tree}_sortdir".to_sym]
 
       report_id = nodeid.split('_')[0]
       @view, @pages = get_view(MiqReportResult, :named_scope => [[:with_current_user_groups_and_report, report_id]])

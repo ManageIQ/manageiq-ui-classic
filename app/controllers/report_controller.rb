@@ -1,6 +1,9 @@
 require 'yaml'
 
 class ReportController < ApplicationController
+  DEFAULT_SORT_COL = 2
+  DEFAULT_SORT_DIR = "DESC".freeze
+
   include_concern 'Dashboards'
   include_concern 'Menus'
   include_concern 'Reports'
@@ -8,7 +11,6 @@ class ReportController < ApplicationController
   include_concern 'Schedules'
   include_concern 'Widgets'
 
-  ReportController::DEFAULT_SORT_COL = 2
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper
   include Mixins::GenericSessionMixin
