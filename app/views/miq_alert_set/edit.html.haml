@@ -1,1 +1,5 @@
 = render :partial => 'form'
+= react('MiqAlertSetForm', 
+         :recordId => @alert_profile.id.to_s,
+         :mode => Array(MiqAlertSet::ALERT_SET_MODES.invert),
+         :available_alerts => @alert_profile_alerts)

@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert Profile Form Component should render correctly 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "text-field",
+              "id": "description",
+              "isRequired": true,
+              "label": "Description",
+              "maxLength": 50,
+              "name": "description",
+            },
+            Object {
+              "component": "select",
+              "id": "mode",
+              "includeEmpty": true,
+              "isRequired": true,
+              "label": "Mode",
+              "name": "mode",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "Host",
+                  "value": "Host",
+                },
+              ],
+              "placeholder": "<Choose>",
+            },
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "AddAllButtonProps": Object {
+                    "size": "small",
+                  },
+                  "AddButtonProps": Object {
+                    "size": "small",
+                  },
+                  "RemoveAllButtonProps": Object {
+                    "size": "small",
+                  },
+                  "RemoveButtonProps": Object {
+                    "size": "small",
+                  },
+                  "allToRight": false,
+                  "component": "dual-list-select",
+                  "id": "alert_profile_alerts",
+                  "key": "alerts-undefined",
+                  "label": "Alert Selection",
+                  "leftTitle": "Avaliable Alerts",
+                  "moveAllLeftTitle": "Remove All",
+                  "moveAllRightTitle": "Add All",
+                  "moveLeftTitle": "Remove",
+                  "moveRightTitle": "Add",
+                  "name": "alert_profile_alerts",
+                  "options": Array [],
+                  "resolveProps": [Function],
+                  "rightTitle": "Profile Alerts:",
+                },
+              ],
+              "id": "alert-profile",
+              "name": "alert-profile",
+            },
+            Object {
+              "component": "textarea",
+              "id": "notes",
+              "label": "Notes",
+              "maxLength": 512,
+              "name": "notes",
+              "resolveProps": [Function],
+            },
+          ],
+          "id": "basic-information",
+          "name": "basic-information",
+          "title": "Basic Information",
+        },
+      ],
+    }
+  }
+/>
+`;
