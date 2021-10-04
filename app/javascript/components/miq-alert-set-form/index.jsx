@@ -1,69 +1,58 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
+import { Loading } from 'carbon-components-react';
 import createSchema from './miq-alert-set-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const MiqAlertSetForm = ({ recordId, mode }) => {
   const [{
-    fields, initialValues, isLoading, emsId, alertState,
+    fields, initialValues, isLoading, emsId, alertState, alertOptions,
   }, setState] = useState({
     fields: [],
     isLoading: !!recordId,
     alertState: [],
   });
-  /*
-  const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
+
+  // eslint-disable-next-line max-len
+  const alertUrl = (emsId, editSelectedOptions) => `/api/alert_definitions?expand=resources&attributes=id,description&filter[]=db=${emsId}&filter[]=or id=[${editSelectedOptions}]`;
+  const availiableAlerts = (emsId, selectedOptions, editSelectedOptions, selectedOptionsChanged,
+    appendState) => API.get(alertUrl(emsId, editSelectedOptions)).then(({ resources }) => {
+    let alertsArray = [];
+    resources.forEach((alert) => {
+      const tempObj = { label: alert.description, value: alert.id };
+      alertsArray.push(tempObj);
+    });
+
+    // in edit form, when switching mode without editing selected options
+    // add previous selected options to the alertArray and remove duplicates
+    if (!selectedOptionsChanged && recordId) {
+      selectedOptions.forEach((alert) => {
+        const tempObj = { label: alert.label, value: alert.value };
+        alertsArray.push(tempObj);
+      });
+      alertsArray = [...new Map(alertsArray.map((item) => [item.value, item])).values()];
+    }
     setState((state) => ({
       ...state,
       ...appendState,
+      alertState: alertsArray,
+      emsId,
       fields,
     }));
-  };
-*/
-
-  const tenantUrl = (emsId) => `/api/alert_definitions?expand=resources&attributes=id,description&filter[]=db=${emsId}`;
-  const networkManagers = (emsId) => API.get(tenantUrl(emsId)).then(({ resources }) => {
-    console.log("in network manager funtion");
-    // let networkManagersOptions = [];
-    // networkManagersOptions = resources.map(({ id, description }) => ({ label: description, value: id }));
-    const parentTypeArray = [];
-    resources.forEach((pt) => {
-      const tempObj = { label: pt.description, value: pt.id };
-      parentTypeArray.push(tempObj);
-    });
-    // networkManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
-    return parentTypeArray;
   });
 
-  const loadSchema = (emsId, appendState = {}) => {
-    console.log('in load schema');
-
-    // not working bc promise is pending
-    const alertState = networkManagers(emsId);
-    
-    /* this hardcode value is working
-    const alertState = [{
-      label: 'Kickstart',
-      value: 'CustomizationTemplateKickstart',
-    }];
-    */
-    console.log("alert state is" + alertState);
-    setState((state) => ({
-      ...state,
-      ...appendState,
-      alertState,
-      fields,
-    }));
+  const loadSchema = (emsId, selectedOptions, editSelectedOptions, selectedOptionsChanged, appendState = {}) => {
+    availiableAlerts(emsId, selectedOptions, editSelectedOptions, selectedOptionsChanged, appendState);
   };
   const submitLabel = !!recordId ? __('Save') : __('Add');
-  const promise = useMemo(() => API.options('/api/actions'), []);
 
-  const onSubmit = (values) => {
+  // eslint-disable-next-line camelcase
+  const onSubmit = ({ alert_profile_alerts, ...values }) => {
     miqSparkleOn();
-    // const data = dataHelper(values);
-
-    const request = recordId ? API.patch(`/api/alert_definition_profiles/${recordId}`, values) : API.post('/api/alert_definition_profiles', values);
+    if (recordId) { values.name = values.description; }
+    const data = { ...values, miq_alert_ids: alert_profile_alerts };
+    const request = recordId ? API.patch(`/api/alert_definition_profiles/${recordId}`, data) : API.post('/api/alert_definition_profiles', data);
     request.then(() => {
       const message = sprintf(
         recordId
@@ -80,22 +69,40 @@ const MiqAlertSetForm = ({ recordId, mode }) => {
       recordId
         ? __('Edit of Alert Profile "%s" was canceled by the user.')
         : __('Creation of new Alert Profile was canceled by the user.'),
-      initialValues && initialValues.name,
+      initialValues && initialValues.description,
     );
     miqRedirectBack(message, 'warning', '/miq_alert_set/show_list');
   };
-
   useEffect(() => {
     if (recordId) {
-      API.get(`/api/alert_definition_profiles/${recordId}`).then((initialValues) => {
-        setState({ initialValues, isLoading: false });
-      });
+      API.get(`/api/alert_definition_profiles/${recordId}?attributes=name,description,mode,set_data,miq_alerts&expand=miq_alerts`).then(
+        // eslint-disable-next-line camelcase
+        ({ miq_alerts, ...initialValues }) => {
+          if (initialValues.set_data) {
+            initialValues.notes = initialValues.set_data.notes;
+          }
+          // eslint-disable-next-line camelcase
+          if (miq_alerts) {
+            initialValues.alert_profile_alerts = miq_alerts.map(({ id }) => id);
+          }
+          setState(
+            {
+              initialValues,
+              alertOptions: miq_alerts.map(({ id, description }) => ({ label: description, value: id })),
+              alertState: [],
+              isLoading: false,
+            }
+          );
+        }
+      );
     }
   }, [recordId]);
 
+  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
+
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(fields, !!recordId, emsId, setState, promise, mode, loadSchema, alertState)}
+      schema={createSchema(fields, !!recordId, emsId, mode, loadSchema, alertState, alertOptions)}
       initialValues={initialValues}
       canReset={!!recordId}
       onSubmit={onSubmit}

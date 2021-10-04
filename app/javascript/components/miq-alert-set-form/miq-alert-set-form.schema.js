@@ -1,61 +1,18 @@
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import {
-  buildModeOptions,
+  buildModeOptions, changeTitle,
 } from './helper';
 
-const tenantUrl = (emsId) => `/api/alert_definitions?expand=resources&attributes=id,description&filter[]=db=${emsId}`;
-/*
-const loadTenants = (emsId) => API.get(tenantUrl(emsId)).then(({ resources }) => resources.map(({
-  id, description,
-}) => ({
-  label: description,
-  value: id,
-})));
-*/
-/*
-const networkManagers = (emsId) => API.get(tenantUrl(emsId)).then(({ resources }) => {
-  let networkManagersOptions = [];
-  networkManagersOptions = resources.map(({ id, description }) => ({ label: description, value: id }));
-  // networkManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
-  return networkManagersOptions;
-});
-*/
-const networkManagers = (emsId) => API.get(tenantUrl(emsId)).then(({ resources }) => {
-  // let networkManagersOptions = [];
-  // networkManagersOptions = resources.map(({ id, description }) => ({ label: description, value: id }));
-  const parentTypeArray = [];
-  resources.forEach((pt) => {
-    const tempObj = { label: pt.description, value: pt.id };
-    parentTypeArray.push(tempObj);
-  });
-  // networkManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
-  return parentTypeArray;
-});
+function createSchema(fieldss, recordId, emsId, mode, loadSchema, alertState, alertOptions) {
+  let selectedOptions = []; // in edit form, selectedOptions are options that are passed in when open the form for first time
+  let editSelectedOptions = []; // in edit form, editSelectedOptions recorded all the selected options once the form is changed
+  let selectedOptionsChanged = false; // in edit form, selectedOptionsChanged changes to true once there is a change in selected options
 
-// const myVar;
-const myVar = networkManagers('MiddlewareServer');
-function createSchema(fieldss, recordId, emsId, setState, promise, mode, loadSchema, alertState) {
-  const idx = fieldss.findIndex((field) => field.name === 'volume_type');
-  const subForm = [
-    {
-      component: componentTypes.SUB_FORM,
-      id: 'subform-1',
-      name: 'subform-1',
-      title: __('Analysis Profiles'),
-      condition: {
-        when: 'active',
-        is: true,
-      },
-      fields: [
-        {
-          component: componentTypes.TEXT_FIELD,
-          id: 'options.scan_item_set_name',
-          name: 'options.scan_item_set_name',
-          label: __('Analysis Profiles'),
-        },
-      ],
-    },
-  ];
+  if (recordId) {
+    selectedOptions = alertOptions;
+  } else {
+    selectedOptions = [];
+  }
 
   const fields = [
     {
@@ -70,7 +27,6 @@ function createSchema(fieldss, recordId, emsId, setState, promise, mode, loadSch
           name: 'description',
           label: __('Description'),
           isRequired: true,
-          validate: [{ type: validatorTypes.REQUIRED }],
           maxLength: 50,
         },
         {
@@ -79,94 +35,58 @@ function createSchema(fieldss, recordId, emsId, setState, promise, mode, loadSch
           name: 'mode',
           label: __('Mode'),
           placeholder: __('<Choose>'),
-          onChange: (emsId) => loadSchema(emsId),
-          // onChange: (emsId) => setState((state) => ({ ...state, emsId })),
+          isRequired: true,
+          onChange: (emsId) => loadSchema(emsId, selectedOptions, editSelectedOptions, selectedOptionsChanged),
           options: buildModeOptions(mode),
-          /*
-          resolveProps: (props, { meta, input }, formOptions) => {
-            if (meta.touched) {
-              return {
-                myVar: networkManagers('MiddlewareServer'),
-              };
-            }
-          },
-          */
           includeEmpty: true,
         },
         {
-          component: componentTypes.DUAL_LIST_SELECT,
-          id: 'alerts',
-          name: 'alerts',
-          key: `alerts-${emsId}`,
-          label: __('Alert Selection'),
-          leftTitle: __('Available Alerts:'),
-          rightTitle: __('Profile Alerts:'),
-          allToRight: false,
-          moveLeftTitle: __('Remove'),
-          moveAllLeftTitle: __('Remove All'),
-          moveRightTitle: __('Add'),
-          moveAllRightTitle: __('Add All'),
-          AddButtonProps: {
-            size: 'small',
-          },
-          AddAllButtonProps: {
-            size: 'small',
-          },
-          RemoveButtonProps: {
-            size: 'small',
-          },
-          RemoveAllButtonProps: {
-            size: 'small',
-          },
-          options: alertState,
-          /*
-          options: [
+          component: componentTypes.SUB_FORM,
+          id: 'alert-profile',
+          name: 'alert-profile',
+          fields: [
             {
-              label: 'Kickstart',
-              value: 'CustomizationTemplateKickstart',
+              component: 'dual-list-select',
+              id: 'alert_profile_alerts',
+              name: 'alert_profile_alerts',
+              key: `alerts-${emsId}`,
+              label: __('Alert Selection'),
+              leftTitle: emsId ? changeTitle(emsId, mode) : 'Avaliable Alerts',
+              rightTitle: __('Profile Alerts:'),
+              allToRight: false,
+              moveLeftTitle: __('Remove'),
+              moveAllLeftTitle: __('Remove All'),
+              moveRightTitle: __('Add'),
+              moveAllRightTitle: __('Add All'),
+              AddButtonProps: {
+                size: 'small',
+              },
+              AddAllButtonProps: {
+                size: 'small',
+              },
+              RemoveButtonProps: {
+                size: 'small',
+              },
+              RemoveAllButtonProps: {
+                size: 'small',
+              },
+              resolveProps: (props, { meta, input }) => {
+                if (!meta.pristine && meta.dirty) {
+                  editSelectedOptions = input.value;
+                  selectedOptionsChanged = true;
+                  return {
+                  };
+                } if (meta.pristine && !recordId) {
+                  editSelectedOptions = [];
+                  selectedOptionsChanged = false;
+                  return {
+                  };
+                }
+                return {};
+              },
+              options: alertState,
             },
           ],
-*/
-          // options: myVar,
-          // options: networkManagers('MiddlewareServer'),
-/*
-          options: emsId ? networkManagers(emsId)
-            : [{
-              label: 'Kickstart',
-              value: 'CustomizationTemplateKickstart',
-            }],
-    */      
-          /*
-          loadOptions: () =>
-            promise.then(
-              ({
-                data: {
-                  // eslint-disable-next-line camelcase
-                  snmp_trap,
-                },
-              }) =>
-                Object.values(snmp_trap).sort().map((key) => ({
-                  value: key,
-                  label: key,
-                })),
-            ),
-            */
-          /*
-          options: [
-            {
-              label: 'Kickstart',
-              value: 'CustomizationTemplateKickstart',
-            },
-            {
-              label: 'Sysprep',
-              value: 'CustomizationTemplateSysprep',
-            },
-            {
-              label: 'CloudInit',
-              value: 'CustomizationTemplateCloudInit',
-            },
-          ],
-          */
         },
         {
           component: componentTypes.TEXTAREA,
@@ -174,7 +94,24 @@ function createSchema(fieldss, recordId, emsId, setState, promise, mode, loadSch
           name: 'notes',
           label: __('Notes'),
           maxLength: 512,
-        }, ...subForm],
+          resolveProps: (props, { meta, input }) => {
+            if (meta.pristine && input.value === undefined) {
+              return {
+                helperText: `(0/512)`,
+              };
+            }
+            if (meta.pristine) {
+              return {
+                helperText: `(${input.value.length}/512)`,
+              };
+            } if (meta.dirty) {
+              return {
+                helperText: `(${input.value.length}/512)`,
+              };
+            }
+            return {};
+          },
+        }],
     },
   ];
   return { fields };

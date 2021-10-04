@@ -1,4 +1,3 @@
-require 'byebug'
 class MiqAlertSetController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
@@ -18,20 +17,6 @@ class MiqAlertSetController < ApplicationController
 
   def alert_profile_load
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by(:id => @edit[:alert_profile_id]) : MiqAlertSet.new
-    #byebug
-  end
-
-  def alert_profile_edit_cancel
-    return unless alert_profile_edit_load_edit
-    @edit = nil
-    if @alert_profile && @alert_profile.id.blank?
-      flash_msg = _("Add of new Alert Profile was cancelled by the user")
-    else
-      flash_msg = _("Edit of Alert Profile \"%{name}\" was cancelled by the user") % {:name => @alert_profile.description}
-    end
-    @edit = session[:edit] = nil # clean out the saved info
-    session[:changed] = false
-    javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
   end
 
   def alert_profile_edit_reset
@@ -44,39 +29,6 @@ class MiqAlertSetController < ApplicationController
 
   def alert_profile_edit_save_add
     assert_privileges("miq_alert_set_#{@alert_profile.id ? "edit" : "new"}")
-    add_flash(_("Alert Profile must contain at least one Alert"), :error) if @edit[:new][:alerts].empty?
-    add_flash(_("Mode is required"), :error) if @edit[:new][:mode].blank?
-
-    alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id) # Get new or existing record
-    alert_profile.description = @edit[:new][:description]
-    alert_profile.notes = @edit[:new][:notes]
-    alert_profile.mode = @edit[:new][:mode]
-    unless alert_profile.valid? && !@flash_array && alert_profile.save
-      alert_profile.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
-      end
-      javascript_flash
-      return
-    end
-
-    alerts = alert_profile.members                        # Get the sets members
-    current = alerts.collect(&:id)                        # Build an array of the current alert ids
-    mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
-    #byebug
-    begin
-      alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
-      mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
-    rescue StandardError => bang
-      add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
-                  {:params => params[:button], :message => bang.message}, :error)
-      javascript_flash
-    end
-    AuditEvent.success(build_saved_audit(alert_profile, @edit))
-    flash_key = params[:button] == "save" ? _("Alert Profile \"%{name}\" was saved") : _("Alert Profile \"%{name}\" was added")
-    flash_msg = (flash_key % {:name => @edit[:new][:description]})
-    @edit = session[:edit] = nil # clean out the saved info
-    session[:changed] = @changed = false
-    javascript_redirect(:controller => 'miq_alert_set', :action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
   end
 
   def alert_profile_edit_move
@@ -98,14 +50,9 @@ class MiqAlertSetController < ApplicationController
 
   def edit
     case params[:button]
-    when 'cancel'
-      alert_profile_edit_cancel
     when 'reset', nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
       alert_profile_edit_reset
-    when 'save', 'add'
-      return unless alert_profile_edit_load_edit
-      alert_profile_edit_save_add
     when 'move_right', 'move_left', 'move_allleft'
       return unless alert_profile_edit_load_edit
       alert_profile_edit_move
@@ -260,12 +207,11 @@ class MiqAlertSetController < ApplicationController
     @edit[:new][:alerts] = {}
     alerts = @alert_profile.members # Get the set's members
     alerts.each { |a| @edit[:new][:alerts][a.description] = a.id } # Build a hash for the members list box
-    #byebug
 
     get_alerts
 
     @edit[:current] = copy_hash(@edit[:new])
-    #byebug
+
     @embedded = true
     @in_a_form = true
     @edit[:current][:add] = true unless @edit[:alert_profile_id] # Force changed to be true if adding a record
@@ -337,7 +283,7 @@ class MiqAlertSetController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Alert Profilessss")
+    @title = _("Alert Profiles")
     @layout =  "miq_alert_set"
     @lastaction = session[:miq_alert_set_lastaction]
     @display = session[:miq_alert_set_display]
