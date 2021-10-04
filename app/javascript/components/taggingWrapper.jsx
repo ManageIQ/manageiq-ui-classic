@@ -5,11 +5,16 @@ import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
 import { http } from '../http_api';
 
+const selectedTags = (state, tag) => {
+  const selectedVal = Array.isArray(tag.tagValue) ? tag.tagValue.map((val) => val.id).flat() : [];
+  return [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), selectedVal].flat();
+};
+
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
     id: "new",
-    ids_checked: [state.tagging.appState.assignedTags.map(t => t.values.map(val => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
-    tree_typ: 'tags'
+    ids_checked: selectedTags(state, tag),
+    tree_typ: 'tags',
   },
   default: {
     id: state.tagging.appState.affectedItems[0] || "new",
