@@ -41,9 +41,13 @@ class Tagging extends React.Component {
   findSelectedTag = (selectedTagCategory = { id: undefined }) =>
     this.props.tags.find(tag => tag.id === selectedTagCategory.id);
 
-  isMulti = selectedTagCategory =>
-    this.findSelectedTag(selectedTagCategory) &&
-    this.findSelectedTag(selectedTagCategory).singleValue === false;
+  isMulti = (selectedTagCategory) => {
+    const selectedCategory = this.findSelectedTag(selectedTagCategory);
+    if (selectedCategory && selectedCategory.singleValue) {
+      return !selectedCategory.singleValue;
+    }
+    return true;
+  }
 
   tagCategories = this.props.tags.map(tag => ({
     description: tag.description,

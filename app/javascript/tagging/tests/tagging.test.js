@@ -26,6 +26,7 @@ const tags = [
   {
     description: 'Food',
     id: 4,
+    singleValue: false,
     values: [
       { description: 'Steak', id: 41 },
       { description: 'Duck', id: 42 },
@@ -35,6 +36,7 @@ const tags = [
   {
     description: 'Something',
     id: 5,
+    singleValue: true,
     values: [
       { description: 'Knedlik', id: 51 },
       {
@@ -48,6 +50,8 @@ const tags = [
 
 const selectedTagCategory = { description: 'animal', id: 1 };
 const selectedTagValue = { description: 'duck', id: 1 };
+const selectedTagCategory1 = { description: 'Food', id: 4 };
+const selectedTagCategory2 = { description: 'Something', id: 5 };
 const assignedTags = [
   {
     description: 'Name',
@@ -99,5 +103,49 @@ describe('Tagging component without redux mapping', () => {
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
     wrapper.instance().onTagDeleteClick('wowo');
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
+  });
+
+  it('should call methods - singleValue is false', () => {
+    const onTagCategoryChange = jest.fn();
+    const onTagValueChange = jest.fn();
+    const onSingleTagValueChange = jest.fn();
+    const onTagDeleteClick = jest.fn();
+    const onTagMultiValueChange = jest.fn();
+    const wrapper = shallow(<Tagging
+      tags={tags}
+      assignedTags={assignedTags}
+      onTagValueChange={onTagValueChange}
+      onSingleTagValueChange={onSingleTagValueChange}
+      onTagMultiValueChange={onTagMultiValueChange}
+      onTagCategoryChange={onTagCategoryChange}
+      onTagDeleteClick={onTagDeleteClick}
+      selectedTagCategory={selectedTagCategory1}
+      selectedTagValue={selectedTagValue}
+    />);
+    const tree = toJson(wrapper);
+    expect(tree).toMatchSnapshot();
+    expect(wrapper.find('ValueModifier').props().multiValue).toBe(true);
+  });
+
+  it('should call methods - singleValue is true', () => {
+    const onTagCategoryChange = jest.fn();
+    const onTagValueChange = jest.fn();
+    const onSingleTagValueChange = jest.fn();
+    const onTagDeleteClick = jest.fn();
+    const onTagMultiValueChange = jest.fn();
+    const wrapper = shallow(<Tagging
+      tags={tags}
+      assignedTags={assignedTags}
+      onTagValueChange={onTagValueChange}
+      onSingleTagValueChange={onSingleTagValueChange}
+      onTagMultiValueChange={onTagMultiValueChange}
+      onTagCategoryChange={onTagCategoryChange}
+      onTagDeleteClick={onTagDeleteClick}
+      selectedTagCategory={selectedTagCategory2}
+      selectedTagValue={selectedTagValue}
+    />);
+    const tree = toJson(wrapper);
+    expect(tree).toMatchSnapshot();
+    expect(wrapper.find('ValueModifier').props().multiValue).toBe(false);
   });
 });
