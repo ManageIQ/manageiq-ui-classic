@@ -10,6 +10,7 @@ exports[`match snapshot 1`] = `
       "value": 2,
     }
   }
+  isDisabled={false}
   meta={Object {}}
   multi={false}
   options={
@@ -40,6 +41,7 @@ exports[`match snapshot without multiple values 1`] = `
       "value": 2,
     }
   }
+  isDisabled={false}
   meta={Object {}}
   multi={false}
   options={

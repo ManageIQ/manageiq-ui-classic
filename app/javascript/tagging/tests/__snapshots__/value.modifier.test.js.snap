@@ -26,6 +26,7 @@ exports[`TagCategory Component match snapshot 1`] = `
     xs={12}
   >
     <ValueSelector
+      isDisabled={false}
       multiValue={false}
       onTagValueChange={[MockFunction]}
       selectedOption={

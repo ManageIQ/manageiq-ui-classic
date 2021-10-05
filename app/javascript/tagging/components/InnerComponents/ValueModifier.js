@@ -10,6 +10,7 @@ const ValueModifier = ({
   selectedTagValues,
   multiValue,
   valueLabel,
+  isDisabled,
 }) => (
   <FormGroup>
     <Col xs={12} md={4} lg={4}>
@@ -21,6 +22,7 @@ const ValueModifier = ({
         onTagValueChange={onTagValueChange}
         selectedOption={selectedTagValues}
         multiValue={multiValue}
+        isDisabled={isDisabled}
       />
     </Col>
   </FormGroup>
@@ -32,11 +34,13 @@ ValueModifier.propTypes = {
   valueLabel: PropTypes.string,
   multiValue: PropTypes.bool,
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 ValueModifier.defaultProps = {
   valueLabel: __('Value'),
   multiValue: true,
+  isDisabled: false,
 };
 
 export default ValueModifier;

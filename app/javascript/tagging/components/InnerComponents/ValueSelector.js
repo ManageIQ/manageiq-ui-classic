@@ -49,6 +49,7 @@ class ValueSelector extends React.Component {
       clearable
       searchable={values.length > 0}
       placeholder={__('Select tag value')}
+      isDisabled={this.props.isDisabled}
     />
   );
 
@@ -65,11 +66,13 @@ ValueSelector.propTypes = {
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   multiValue: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 };
 
 ValueSelector.defaultProps = {
   multiValue: false,
   selectedOption: [],
+  isDisabled: false,
 };
 
 export default ValueSelector;

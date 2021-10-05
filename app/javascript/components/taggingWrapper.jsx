@@ -72,6 +72,7 @@ class TaggingWrapper extends React.Component {
         </div>
       );
     }
+    const isDisabled = this.props.isDisabled;
     const { urls, options, tagging } = this.props;
     // eslint-disable-next-line no-mixed-operators
     return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
@@ -103,7 +104,7 @@ class TaggingWrapper extends React.Component {
           disabled: _.isEqual({ ...tagging.initialState, selected: undefined }, { ...tagging.appState, selected: undefined }),
           description: __('Reset'),
         }}
-        options={{ ...options, params, onDelete }}
+        options={{ ...options, params, onDelete, isDisabled }}
       />
     ));
   }

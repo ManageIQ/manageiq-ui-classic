@@ -12,6 +12,7 @@ class TagView extends React.Component {
         tagCategory={{ id: tag.id, description: tag.description }}
         values={tag.values}
         onTagDeleteClick={this.props.onTagDeleteClick}
+        showCloseButton={this.props.showCloseButton}
       />
     </li>
   );
@@ -44,11 +45,13 @@ TagView.propTypes = {
   onTagDeleteClick: PropTypes.func,
   header: PropTypes.string,
   hideHeader: PropTypes.bool,
+  showCloseButton: PropTypes.bool,
 };
 
 TagView.defaultProps = {
   header: __('Assigned tags'),
   hideHeader: false,
+  showCloseButton: true,
 };
 
 export default TagView;

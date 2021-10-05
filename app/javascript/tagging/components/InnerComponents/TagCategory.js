@@ -11,6 +11,7 @@ class TagCategory extends React.Component {
       tagValue={tagValue}
       onTagDeleteClick={this.props.onTagDeleteClick}
       truncate={this.props.valueTruncate}
+      showCloseButton={this.props.showCloseButton}
     />
   );
 
@@ -37,12 +38,14 @@ TagCategory.propTypes = {
   values: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
   categoryTruncate: PropTypes.func,
   valueTruncate: PropTypes.func,
+  showCloseButton: PropTypes.bool,
 };
 
 TagCategory.defaultProps = {
   categoryTruncate: str =>
     (str.length > 18 ? `${str.substring(0, 18)}...` : str),
   valueTruncate: str => (str.length > 18 ? `${str.substring(0, 18)}...` : str),
+  showCloseButton: true,
 };
 
 export default TagCategory;

@@ -254,7 +254,7 @@ class MiqRequestController < ApplicationController
       page.replace_html(
         @options[:current_tab_key],
         :partial => dialog_partial_for_workflow,
-        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key]}
+        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key], :isDisabled => true}
       )
       # page << javascript_show("hider_#{@options[:current_tab_key].to_s}_div")
       page << "miqSparkle(false);"

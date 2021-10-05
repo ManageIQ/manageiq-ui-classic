@@ -27,6 +27,7 @@ exports[`TagCategory Component match snapshot 1`] = `
   >
     <TagSelector
       infoText="Only a single value can be assigned from these categories"
+      isDisabled={false}
       onTagCategoryChange={[MockFunction]}
       selectedOption={
         Object {

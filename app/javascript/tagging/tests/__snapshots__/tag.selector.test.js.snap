@@ -14,6 +14,7 @@ exports[`Tagging modifier match snapshot 1`] = `
       },
     }
   }
+  isDisabled={false}
   meta={Object {}}
   options={
     Array [

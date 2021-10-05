@@ -22,6 +22,7 @@
         :prefix                     => "/miq_request/",
         :keys                       => keys})
   - when :purpose
+    - (defined? isDisabled) ? @tags[:isDisabled] = isDisabled : @tags[:isDisabled] = false
     - keys = [:vm_tags]
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,
