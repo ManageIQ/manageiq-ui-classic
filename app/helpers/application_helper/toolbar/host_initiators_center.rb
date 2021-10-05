@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Define a new host initiator'),
             t,
-            :url => "/new"
+            :klass => ApplicationHelper::Button::HostInitiatorNew
           ),
         ]
       ),
