@@ -9,6 +9,7 @@ const CategoryModifier = ({
   onTagCategoryChange,
   selectedTagCategory,
   categoryLabel,
+  isDisabled,
 }) => (
   <FormGroup>
     <Col xs={12} md={4} lg={4}>
@@ -19,6 +20,7 @@ const CategoryModifier = ({
         tagCategories={tagCategories}
         onTagCategoryChange={onTagCategoryChange}
         selectedOption={selectedTagCategory}
+        isDisabled={isDisabled}
       />
     </Col>
   </FormGroup>
@@ -29,11 +31,13 @@ CategoryModifier.propTypes = {
   selectedTagCategory: TaggingPropTypes.category,
   onTagCategoryChange: PropTypes.func.isRequired,
   categoryLabel: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 CategoryModifier.defaultProps = {
   categoryLabel: __('Category'),
   selectedTagCategory: {},
+  isDisabled: false,
 };
 
 export default CategoryModifier;

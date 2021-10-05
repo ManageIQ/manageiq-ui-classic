@@ -35,6 +35,7 @@ export const PfSelect = ({
   input,
   meta,
   simpleValue,
+  isDisabled,
   ...rest
 }) => (
   <ReactSelect
@@ -56,6 +57,7 @@ export const PfSelect = ({
     onChange={option => input.onChange(rest.multi
           ? selectValue(option, simpleValue)
           : option && (simpleValue ? option.value : option))}
+    isDisabled={isDisabled}
   />
 );
 
@@ -63,10 +65,12 @@ PfSelect.propTypes = {
   meta: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   simpleValue: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 };
 
 PfSelect.defaultProps = {
   simpleValue: true,
+  isDisabled: false,
 };
 
 export default PfSelect;

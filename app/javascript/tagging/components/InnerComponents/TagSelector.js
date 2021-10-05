@@ -55,6 +55,7 @@ class TagSelector extends React.Component {
         // clearable={false}
         simpleValue={false}
         searchable
+        isDisabled={this.props.isDisabled}
       />
     );
   }
@@ -64,11 +65,13 @@ TagSelector.propTypes = {
   selectedOption: TaggingPropTypes.value,
   onTagCategoryChange: PropTypes.func.isRequired,
   infoText: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 TagSelector.defaultProps = {
   infoText: __('Only a single value can be assigned from these categories'),
   selectedOption: {},
+  isDisabled: false,
 };
 
 export default TagSelector;

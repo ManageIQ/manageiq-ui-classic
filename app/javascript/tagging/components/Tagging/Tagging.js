@@ -56,6 +56,7 @@ class Tagging extends React.Component {
   })) || [];
 
   render() {
+    const isDisabled = this.props.options && this.props.options.isDisabled;
     return (
       <Grid>
         <Row>
@@ -65,12 +66,14 @@ class Tagging extends React.Component {
                 selectedTagCategory={this.props.selectedTagCategory}
                 onTagCategoryChange={this.props.onTagCategoryChange}
                 tagCategories={this.tagCategories}
+                isDisabled={isDisabled}
               />
               <ValueModifier
                 onTagValueChange={this.onTagValueChange}
                 selectedTagValues={this.getSelectedCategoryValues().values}
                 multiValue={this.isMulti(this.props.selectedTagCategory)}
                 values={this.getCategoryValues()}
+                isDisabled={isDisabled}
               />
             </TagModifier>
           </Col>
@@ -78,7 +81,8 @@ class Tagging extends React.Component {
             <TagView
               hideHeader={this.props.options && this.props.options.hideHeaders}
               assignedTags={this.props.assignedTags}
-              onTagDeleteClick={this.onTagDeleteClick}
+              onTagDeleteClick={isDisabled ? () => {} : this.onTagDeleteClick}
+              showCloseButton={!isDisabled}
             />
           </Col>
         </Row>
@@ -98,6 +102,7 @@ Tagging.propTypes = {
   options: PropTypes.shape({
     onlySingleTag: PropTypes.bool,
     hideHeaders: PropTypes.bool,
+    isDisabled: PropTypes.bool,
   }),
 };
 
@@ -105,6 +110,7 @@ Tagging.defaultProps = {
   options: {
     onlySingleTag: false,
     hideHeaders: false,
+    isDisabled: false,
   },
 };
 

@@ -18,6 +18,7 @@ exports[`TagCategory Component match snapshot 1`] = `
   <Tag
     key="1"
     onTagDeleteClick={[Function]}
+    showCloseButton={true}
     tagCategory={
       Object {
         "description": "animal",
@@ -35,6 +36,7 @@ exports[`TagCategory Component match snapshot 1`] = `
   <Tag
     key="2"
     onTagDeleteClick={[Function]}
+    showCloseButton={true}
     tagCategory={
       Object {
         "description": "animal",

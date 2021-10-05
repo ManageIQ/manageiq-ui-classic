@@ -24,6 +24,7 @@ exports[`Tagging modifier match snapshot 1`] = `
   >
     <CategoryModifier
       categoryLabel="Category"
+      isDisabled={false}
       onTagCategoryChange={[Function]}
       selectedTagCategory={
         Object {
@@ -53,6 +54,7 @@ exports[`Tagging modifier match snapshot 1`] = `
       }
     />
     <ValueModifier
+      isDisabled={false}
       multiValue={false}
       onTagValueChange={[Function]}
       selectedTagValue={
