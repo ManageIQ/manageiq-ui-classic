@@ -82,6 +82,7 @@ import VmServerRelationshipForm from '../components/vm-server-relationship-form'
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
 import PhysicalStorageForm from '../components/physical-storage-form';
+import SearchBar from '../components/search-bar';
 import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
@@ -154,6 +155,7 @@ ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
 ManageIQ.component.addReact('ReportList', ReportList);
 ManageIQ.component.addReact('RetirementForm', RetirementForm);
 ManageIQ.component.addReact('RoutersForm', RoutersForm);
+ManageIQ.component.addReact('SearchBar', SearchBar);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);
 ManageIQ.component.addReact('SettingsTasksForm', SettingsTasksForm);
 ManageIQ.component.addReact('EditServiceForm', EditServiceForm);

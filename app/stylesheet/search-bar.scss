@@ -1,0 +1,17 @@
+.search_bar {
+  display: flex;
+  margin-bottom: 20px;
+
+  .bx--text-input {
+    height: 48px;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+  }
+
+  .search_button {
+    margin-right: 2px;
+  }
+}

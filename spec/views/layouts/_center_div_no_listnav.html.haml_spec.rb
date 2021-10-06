@@ -12,6 +12,6 @@ describe "layouts/_center_div_no_listnav.html.haml" do
 
   it 'renders Search bar' do
     render
-    expect(rendered).to include('Search by Name within results')
+    expect(rendered).to include('SearchBar')
   end
 end
