@@ -119,7 +119,11 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
-<Grid>
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
   <Row
     bsClass="row"
     componentClass="div"
@@ -230,7 +234,11 @@ exports[`Tagging component without redux mapping should call methods - singleVal
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
-<Grid>
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
   <Row
     bsClass="row"
     componentClass="div"
