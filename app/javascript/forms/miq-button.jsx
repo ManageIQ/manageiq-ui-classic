@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
+import { Button } from 'carbon-components-react';
 
 function MiqButton(props) {
-  let title = props.title;
+  let { title } = props;
   if (props.enabled && props.enabledTitle) {
     title = props.enabledTitle;
   }
-  if (! props.enabled && props.disabledTitle) {
+  if (!props.enabled && props.disabledTitle) {
     title = props.disabledTitle;
   }
 
   const klass = ClassNames({
-    'btn': true,
+    btn: true,
     'btn-xs': props.xs,
     'btn-primary': props.primary,
     'btn-default': !props.primary,
-    'disabled': !props.enabled,
+    disabled: !props.enabled,
   });
 
   const buttonClicked = (event) => {
@@ -28,15 +29,28 @@ function MiqButton(props) {
     event.target.blur();
   };
 
+  const { btnType } = props;
+  if (btnType === 'modal') {
+    return (
+      <Button
+        className={title}
+        onClick={buttonClicked}
+        onKeyPress={buttonClicked}
+        title={title}
+      >
+        {props.name}
+      </Button>
+    );
+  }
   return (
-    <button
+    <Button
       className={klass}
       onClick={buttonClicked}
+      onKeyPress={buttonClicked}
       title={title}
-      alt={title}
     >
       {props.name}
-    </button>
+    </Button>
   );
 }
 
@@ -49,6 +63,7 @@ MiqButton.propTypes = {
   primary: PropTypes.bool,
   xs: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  btnType: PropTypes.string,
 };
 
 MiqButton.defaultProps = {
@@ -57,6 +72,7 @@ MiqButton.defaultProps = {
   disabledTitle: '',
   primary: false,
   xs: false,
+  btnType: '',
 };
 
 export default MiqButton;

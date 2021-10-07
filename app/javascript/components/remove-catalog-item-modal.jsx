@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal } from 'patternfly-react';
-import { Loading } from 'carbon-components-react';
+import { Loading, ModalBody } from 'carbon-components-react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
@@ -150,9 +149,8 @@ class RemoveCatalogItemModal extends React.Component {
     };
 
     const { loaded, data } = this.state;
-
     return (
-      <Modal.Body className="warning-modal-body">
+      <ModalBody className="warning-modal-body">
         {renderSpinner(!loaded)}
         {usedServicesMessage(data)}
         {loaded
@@ -166,7 +164,7 @@ class RemoveCatalogItemModal extends React.Component {
               </ul>
             </div>
           )}
-      </Modal.Body>
+      </ModalBody>
     );
   }
 }
