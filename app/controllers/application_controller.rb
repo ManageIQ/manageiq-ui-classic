@@ -1219,8 +1219,8 @@ class ApplicationController < ActionController::Base
     report_symbols = [:all_sortcol, :savedreports_tree_sortcol, :reports_tree_sortcol]
     # Check if the symbol representing the page is included in the array above and then check if the variable for the sort column (session[sortcol_sym]) is nil
     if report_symbols.include?(sortcol_sym) && session[sortcol_sym].nil?
-      session[sortcol_sym] = ReportController::DEFAULT_SORT_COL
-      session[sortdir_sym] = ReportController::DEFAULT_SORT_DIR
+      session[sortcol_sym] = ReportController::DEFAULT_SORT_COLUMN_NUMBER
+      session[sortdir_sym] = ReportController::DEFAULT_SORT_ORDER
     end
     # Get the current sort info, else get defaults from the view
     @sortcol = session[sortcol_sym].try(:to_i) || view.sort_col
