@@ -1,6 +1,9 @@
 require 'yaml'
 
 class ReportController < ApplicationController
+  DEFAULT_SORT_COLUMN_NUMBER = 2
+  DEFAULT_SORT_ORDER = "DESC".freeze
+
   include_concern 'Dashboards'
   include_concern 'Menus'
   include_concern 'Reports'

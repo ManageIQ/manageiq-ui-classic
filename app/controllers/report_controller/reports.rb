@@ -123,8 +123,8 @@ module ReportController::Reports
         @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
       end
 
-      @sortcol = session["#{x_active_tree}_sortcol".to_sym].nil? ? 0 : session["#{x_active_tree}_sortcol".to_sym].to_i
-      @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? "DESC" : session["#{x_active_tree}_sortdir".to_sym]
+      @sortcol = session["#{x_active_tree}_sortcol".to_sym].nil? ? ReportController::DEFAULT_SORT_COLUMN_NUMBER : session["#{x_active_tree}_sortcol".to_sym].to_i
+      @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? ReportController::DEFAULT_SORT_ORDER : session["#{x_active_tree}_sortdir".to_sym]
 
       report_id = nodeid.split('_')[0]
       @view, @pages = get_view(MiqReportResult, :named_scope => [[:with_current_user_groups_and_report, report_id]])
