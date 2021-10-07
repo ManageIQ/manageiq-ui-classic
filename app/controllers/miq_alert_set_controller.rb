@@ -283,7 +283,12 @@ class MiqAlertSetController < ApplicationController
   end
 
   def get_session_data
-    @title = _("Alert Profiles")
+    @alert_profile = MiqAlertSet.find_by(:id => params[:miq_grid_checks])
+    @title = if @alert_profile.present?
+               _("Editing Alert Profile \"%{name}\"") % {:name => @alert_profile.name}
+             else
+               _("Adding a new Alert Profile")
+             end
     @layout =  "miq_alert_set"
     @lastaction = session[:miq_alert_set_lastaction]
     @display = session[:miq_alert_set_display]
