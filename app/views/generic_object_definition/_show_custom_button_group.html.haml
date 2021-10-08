@@ -5,7 +5,7 @@
   .form-horizontal
     .form-group
       %label.control-label.col-md-2
-        = _('Text')
+        = _('Name')
       .col-md-8
         = @record.name.split('|').first
         - display = @record.set_data.key?(:display) ? @record.set_data[:display] : true
@@ -17,7 +17,7 @@
 
     .form-group
       %label.control-label.col-md-2
-        = _('Hover Text')
+        = _('Description')
       .col-md-8
         = @record.description
     .form-group

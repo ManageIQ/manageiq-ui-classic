@@ -7,9 +7,9 @@
       %thead
         %th.table-view-pf-select
         %th
-          = _('Text')
+          = _('Name')
         %th
-          = _('Hover Text')
+          = _('Description')
       %tbody
         - @record.custom_button_sets.sort_by{ |group | group.name }.each do |obj|
           %tr

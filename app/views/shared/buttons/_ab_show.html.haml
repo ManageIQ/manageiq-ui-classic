@@ -22,7 +22,7 @@
         = @custom_button.uri_attributes[:hosts]
   .form-group
     %label.control-label.col-md-2
-      = _('Text')
+      = _('Name')
     .col-md-8
       = @custom_button.name
       - display = @custom_button.options.key?(:display) ? @custom_button.options[:display] : true
@@ -33,7 +33,7 @@
           = _('Display on Button')
   .form-group
     %label.control-label.col-md-2
-      = _('Hover Text')
+      = _('Description')
     .col-md-8
       = @custom_button.description
   .form-group
