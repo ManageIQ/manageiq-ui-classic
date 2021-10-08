@@ -183,7 +183,7 @@ class CloudObjectStoreContainerController < ApplicationController
           :userid       => session[:userid]
         }
         AuditEvent.success(audit)
-        CloudObjectStoreContainer.cloud_object_store_container_delete_queue(session[:userid], container)
+        container.cloud_object_store_container_delete_queue(session[:userid])
       end
       add_flash(n_("Delete initiated for %{number} Cloud Object Store Container.",
                    "Delete initiated for %{number} Cloud Object Store Containers.",
