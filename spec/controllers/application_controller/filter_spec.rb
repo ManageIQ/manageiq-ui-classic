@@ -12,6 +12,26 @@ describe ApplicationController, "::Filter" do
     end
   end
 
+  describe "#filters_present?" do
+    context "without a system default" do
+      it "without any filters" do
+        controller.instance_variable_set(:@def_searches, [])
+        controller.instance_variable_set(:@my_searches, [])
+        expect(controller.filters_present?).to eq(false)
+      end
+      it "with only def_searches filters" do
+        controller.instance_variable_set(:@def_searches, [{:id => 0, :name => nil, :description => "ALL", :options => nil, :filter => nil, :db => nil, :search_type => nil, :search_key => nil}])
+        controller.instance_variable_set(:@my_searches, [])
+        expect(controller.filters_present?).to eq(true)
+      end
+      it "with only my_searches filters" do
+        controller.instance_variable_set(:@def_searches, [])
+        controller.instance_variable_set(:@my_searches, [{:id => 0, :name => nil, :description => "ALL", :options => nil, :filter => nil, :db => nil, :search_type => nil, :search_key => nil}])
+        expect(controller.filters_present?).to eq(true)
+      end
+    end
+  end
+
   context "Verify removal of tokens from expressions" do
     it "removes tokens if present" do
       e = MiqExpression.new("=" => {:field => "Vm.name", :value => "Test"}, :token => 1)

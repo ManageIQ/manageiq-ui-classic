@@ -746,3 +746,20 @@ table.c3-tooltip td {
 .report-col {
   width: 17.6666666667%;
 }
+
+.no_filters {
+  .sidebar-pf-left {
+    display: none;
+  }
+  
+
+  @media (min-width: 768px) {
+    .col-sm-pull-8 {
+      display: none;
+    }
+  }
+    
+  .col-md-9 {
+    width: 100%;     
+  }
+}
