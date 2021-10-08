@@ -3,6 +3,14 @@ module ApplicationController::Filter
   extend ActiveSupport::Concern
   include ::MiqExpression::SubstMixin
   include ApplicationController::ExpressionHtml
+  included do
+    helper_method :filters_present?
+  end
+
+  def filters_present?
+    @def_searches.present? || @my_searches.present? || self.respond_to?(:display_tree)
+  end
+
 
   # Handle buttons pressed in the expression editor
   def exp_button
