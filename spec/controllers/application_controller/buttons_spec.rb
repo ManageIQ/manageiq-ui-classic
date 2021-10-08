@@ -285,9 +285,9 @@ describe ApplicationController do
 
       controller.send(:button_valid?, edit[:new])
       flash_messages = [
-        {:message => "Button Text is required", :level => :error},
+        {:message => "Button Name is required", :level => :error},
         {:message => "Button Icon must be selected", :level => :error},
-        {:message => "Button Hover Text is required", :level => :error},
+        {:message => "Button Description is required", :level => :error},
         {:message => "Starting Process is required", :level => :error},
         {:message => "Request is required", :level => :error}
       ]
