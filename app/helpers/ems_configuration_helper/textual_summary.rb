@@ -34,7 +34,7 @@ module EmsConfigurationHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.supports?(:port) ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_guid

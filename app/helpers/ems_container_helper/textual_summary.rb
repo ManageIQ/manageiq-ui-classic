@@ -71,7 +71,7 @@ module EmsContainerHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? @record.port : nil
+    @record.supports?(:port) ? @record.port : nil
   end
 
   def textual_topology
