@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'patternfly-react';
+import { Button } from 'carbon-components-react';
 import IconOrImage from './icon_or_image';
 
 const filterValue = (val) => (val == null ? '' : String(val));
@@ -44,17 +44,23 @@ export default function GenericTableRow(props) {
       {item.link
       && (
         <td>
-          <a href={item.link} onClick={(e) => props.onClick(item, e)}>
-            <IconOrImage icon={item.icon} image={item.image} title={item.title} background={item.background} />
-            {item.button ? <Button bsSize="small">{value}</Button> : value}
-          </a>
+          <div id="text_summary_button_link" className="text_summary_button_link">
+            <a href={item.link} onClick={(e) => props.onClick(item, e)}>
+              <IconOrImage icon={item.icon} image={item.image} title={item.title} background={item.background} />
+              {!item.button ? (
+                <Button size="sm" kind="ghost">{value}</Button>
+              ) : value}
+            </a>
+          </div>
         </td>
       )}
       {(item.link === undefined)
       && (
         <td>
-          <IconOrImage icon={item.icon} image={item.image} title={item.title} background={item.background} />
-          {item.button ? <Button bsSize="small">{value}</Button> : value}
+          <div id="text_summary_button" className="text_summary_button">
+            <IconOrImage icon={item.icon} image={item.image} title={item.title} background={item.background} />
+            {!item.button ? <Button size="sm" kind="ghost">{value}</Button> : value}
+          </div>
         </td>
       )}
     </tr>
