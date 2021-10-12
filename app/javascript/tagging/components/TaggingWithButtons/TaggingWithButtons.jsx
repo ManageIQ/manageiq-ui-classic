@@ -40,7 +40,6 @@ class TaggingWithButtons extends React.Component {
             <ButtonSet>
               <Button
                 onClick={() => saveButton.onClick(assignedTags)}
-                href={saveButton.href}
                 disabled={saveButton.disabled}
                 type={saveButton.type}
               >
@@ -50,7 +49,6 @@ class TaggingWithButtons extends React.Component {
                 && (
                   <Button
                     onClick={resetButton.onClick}
-                    href={resetButton.href}
                     disabled={resetButton.disabled}
                     type={resetButton.type}
                   >
@@ -59,7 +57,6 @@ class TaggingWithButtons extends React.Component {
                 )}
               <Button
                 onClick={cancelButton.onClick}
-                href={cancelButton.href}
                 disabled={cancelButton.disabled}
                 type={cancelButton.type}
                 kind="secondary"
