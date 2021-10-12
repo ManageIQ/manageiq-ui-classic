@@ -52,7 +52,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_physical_racks
