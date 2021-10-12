@@ -29,7 +29,7 @@ export const linkProps = ({
   rel: (type === 'new_window' ? 'noreferrer noopener' : undefined),
 
   onClick: (event) => {
-    if (type === 'modal') {
+    if (type === 'deleteModal') {
       sendDataWithRx({ type: 'showAboutModal' });
       hideSecondary();
 

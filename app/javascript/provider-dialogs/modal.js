@@ -65,7 +65,7 @@ function modal(title, Inner, closed, removeId) {
           <div id={/* see closeModal */ removeId} />
         </ModalBody>
         <ModalFooter>
-          <FormButtonsRedux callbackOverrides={overrides} btnType="modal" />
+          <FormButtonsRedux callbackOverrides={overrides} btnType="deleteModal" />
         </ModalFooter>
       </ComposedModal>
     </Provider>

@@ -11,7 +11,7 @@ function FormButtons(props) {
   const cancelTitle = __('Cancel');
 
   const { btnType } = props;
-  if (btnType === 'modal') {
+  if (btnType === 'deleteModal') {
     return (
       <>
         <div className="clearfix" />

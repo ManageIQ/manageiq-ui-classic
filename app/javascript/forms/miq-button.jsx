@@ -30,7 +30,7 @@ function MiqButton(props) {
   };
 
   const { btnType } = props;
-  if (btnType === 'modal') {
+  if (btnType === 'deleteModal') {
     return (
       <Button
         className={title}
