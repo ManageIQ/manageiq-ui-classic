@@ -42,9 +42,7 @@ module EmsInfraHelper::TextualSummary
   #
 
   def textual_region
-    return nil if @record.region_id.blank?
-
-    {:label => _('Region'), :value => @record.region_id}
+    @record.region_id.present? ? {:label => _('Region'), :value => @record.region_id} : nil
   end
 
   def textual_hostname
@@ -60,7 +58,7 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_cpu_resources
