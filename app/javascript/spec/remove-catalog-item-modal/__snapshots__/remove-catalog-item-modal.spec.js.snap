@@ -2,9 +2,7 @@
 
 exports[`RemoveCatalogItemModal should correctly render modal for duplicate catalog items 1`] = `
 <ModalBody
-  bsClass="modal-body"
   className="warning-modal-body"
-  componentClass="div"
 >
   <div>
     <h4>
@@ -27,9 +25,7 @@ exports[`RemoveCatalogItemModal should correctly render modal for duplicate cata
 
 exports[`RemoveCatalogItemModal should correctly render modal for multiple catalog items 1`] = `
 <ModalBody
-  bsClass="modal-body"
   className="warning-modal-body"
-  componentClass="div"
 >
   <div>
     <h4>
@@ -61,9 +57,7 @@ exports[`RemoveCatalogItemModal should correctly render modal for multiple catal
 
 exports[`RemoveCatalogItemModal should correctly render modal for single catalog item 1`] = `
 <ModalBody
-  bsClass="modal-body"
   className="warning-modal-body"
-  componentClass="div"
 >
   <div>
     <h4>

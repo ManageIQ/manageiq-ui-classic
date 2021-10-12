@@ -21,7 +21,6 @@ FormButtonsRedux.defaultProps = {
   callbackOverrides: {},
 };
 
-
 function mapStateToProps(state, ownProps) {
   const props = { ...state.FormButtons };
 

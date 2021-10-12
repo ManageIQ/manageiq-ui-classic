@@ -245,3 +245,19 @@
 .loadingSpinner {
   margin-left: 15rem;
 }
+
+#provider-modal {
+  .bx--modal-container {
+    .bx--modal-footer {
+      .modal-pull-right {
+        display: inline-flex;
+        .Cancel {
+          background-color: #393939;
+        }
+        .Delete {
+          background-color: #da1e28
+        }
+      }
+    }
+  }
+}
