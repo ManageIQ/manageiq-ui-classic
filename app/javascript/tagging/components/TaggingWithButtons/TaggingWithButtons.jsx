@@ -1,61 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, ButtonGroup, Button } from 'patternfly-react';
-import { Grid } from 'carbon-components-react';
+import { Row } from 'patternfly-react';
+import { Grid, ButtonSet, Button } from 'carbon-components-react';
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TaggingWithButtons extends React.Component {
-  onTagCategoryChange = selectedTagCategory => this.props.onTagCategoryChange(selectedTagCategory);
+  onTagCategoryChange = (selectedTagCategory) => {
+    const { onTagCategoryChange } = this.props;
+    onTagCategoryChange(selectedTagCategory);
+  };
 
-  onTagDeleteClick = (tagCategory, tagValue) => this.props.onTagDeleteClick({ tagCategory, tagValue });
+  onTagDeleteClick = (tagCategory, tagValue) => {
+    const { onTagDeleteClick } = this.props;
+    onTagDeleteClick({ tagCategory, tagValue });
+  };
 
   render() {
+    const {
+      selectedTagCategory, tags, assignedTags,
+      onTagDeleteClick, onTagCategoryChange,
+      onTagValueChange, onSingleTagValueChange, showReset,
+      options, saveButton, resetButton, cancelButton,
+    } = this.props;
     return (
       <Grid>
         <Tagging
-          selectedTagCategory={this.props.selectedTagCategory}
-          tags={this.props.tags}
-          assignedTags={this.props.assignedTags}
-          onTagDeleteClick={this.props.onTagDeleteClick}
-          onTagCategoryChange={this.props.onTagCategoryChange}
-          onTagValueChange={this.props.onTagValueChange}
-          onSingleTagValueChange={this.props.onSingleTagValueChange}
-          options={this.props.options}
+          selectedTagCategory={selectedTagCategory}
+          tags={tags}
+          assignedTags={assignedTags}
+          onTagDeleteClick={onTagDeleteClick}
+          onTagCategoryChange={onTagCategoryChange}
+          onTagValueChange={onTagValueChange}
+          onSingleTagValueChange={onSingleTagValueChange}
+          options={options}
         />
         <Row className="pull-right">
           <div role="toolbar" className="btn-toolbar">
-            <ButtonGroup>
+            <ButtonSet>
               <Button
-                onClick={() => this.props.saveButton.onClick(this.props.assignedTags)}
-                href={this.props.saveButton.href}
-                disabled={this.props.saveButton.disabled}
-                type={this.props.saveButton.type}
+                onClick={() => saveButton.onClick(assignedTags)}
+                disabled={saveButton.disabled}
+                type={saveButton.type}
               >
-                {this.props.saveButton.description}
+                {saveButton.description}
               </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              {this.props.showReset &&
-                <Button
-                  onClick={this.props.resetButton.onClick}
-                  href={this.props.resetButton.href}
-                  disabled={this.props.resetButton.disabled}
-                  type={this.props.resetButton.type}
-                >
-                  {this.props.resetButton.description}
-                </Button>}
-            </ButtonGroup>
-            <ButtonGroup>
+              {showReset
+                && (
+                  <Button
+                    onClick={resetButton.onClick}
+                    disabled={resetButton.disabled}
+                    type={resetButton.type}
+                  >
+                    {resetButton.description}
+                  </Button>
+                )}
               <Button
-                onClick={this.props.cancelButton.onClick}
-                href={this.props.cancelButton.href}
-                disabled={this.props.cancelButton.disabled}
-                type={this.props.cancelButton.type}
+                onClick={cancelButton.onClick}
+                disabled={cancelButton.disabled}
+                type={cancelButton.type}
+                kind="secondary"
               >
-                {this.props.cancelButton.description}
+                {cancelButton.description}
               </Button>
-            </ButtonGroup>
+            </ButtonSet>
           </div>
         </Row>
       </Grid>
@@ -84,6 +92,16 @@ TaggingWithButtons.propTypes = {
 TaggingWithButtons.defaultProps = {
   showReset: true,
   onSingleTagValueChange: () => {},
+  selectedTagCategory: {},
+  tags: [],
+  assignedTags: [],
+  cancelButton: {},
+  resetButton: {},
+  saveButton: {},
+  options: {
+    onlySingleTag: false,
+    hideHeaders: false,
+  },
 };
 
 export default TaggingWithButtons;

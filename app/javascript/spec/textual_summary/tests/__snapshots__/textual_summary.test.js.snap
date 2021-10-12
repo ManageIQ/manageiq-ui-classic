@@ -339,16 +339,38 @@ exports[`TextualSummary renders just fine 1`] = `
                       Region
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title={null}
-                      />
-                      <span>
-                         
-                        US East (N. Virginia)
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title={null}
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              US East (N. Virginia)
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -372,16 +394,38 @@ exports[`TextualSummary renders just fine 1`] = `
                       Type
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title={null}
-                      />
-                      <span>
-                         
-                        Amazon EC2 Network
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title={null}
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              Amazon EC2 Network
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -405,15 +449,37 @@ exports[`TextualSummary renders just fine 1`] = `
                       Management Engine GUID
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title={null}
-                      />
-                      <span>
-                         
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title={null}
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -537,16 +603,38 @@ exports[`TextualSummary renders just fine 1`] = `
                       Default Credentials
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title="Ok"
-                      />
-                      <span>
-                         
-                        Valid
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title="Ok"
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              Valid
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -572,16 +660,38 @@ exports[`TextualSummary renders just fine 1`] = `
                       SmartState Docker Credentials
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title="Ok"
-                      />
-                      <span>
-                         
-                        Valid
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title="Ok"
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              Valid
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -614,64 +724,86 @@ exports[`TextualSummary renders just fine 1`] = `
                       Last Refresh
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title={null}
-                      />
-                      <table
-                        cellPadding="0"
-                        cellSpacing="0"
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
                       >
-                        <tbody>
-                          <tr
-                            className="no-hover"
-                            key="0"
-                            onClick={[Function]}
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title={null}
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
                           >
-                            <td
-                              style={
-                                Object {
-                                  "border": 0,
-                                  "margin": 0,
-                                  "padding": 0,
-                                }
-                              }
+                            <table
+                              cellPadding="0"
+                              cellSpacing="0"
                             >
-                              <IconOrImage
-                                background={null}
-                                icon={null}
-                                image={null}
-                                title={null}
-                              />
-                              Success - 4 Months Ago
-                            </td>
-                          </tr>
-                          <tr
-                            className="no-hover"
-                            key="1"
-                            onClick={[Function]}
-                          >
-                            <td
-                              style={
-                                Object {
-                                  "border": 0,
-                                  "margin": 0,
-                                  "padding": 0,
-                                }
-                              }
-                            >
-                              <IconOrImage
-                                background={null}
-                                icon={null}
-                                image={null}
-                                title={null}
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                              <tbody>
+                                <tr
+                                  className="no-hover"
+                                  key="0"
+                                  onClick={[Function]}
+                                >
+                                  <td
+                                    style={
+                                      Object {
+                                        "border": 0,
+                                        "margin": 0,
+                                        "padding": 0,
+                                      }
+                                    }
+                                  >
+                                    <IconOrImage
+                                      background={null}
+                                      icon={null}
+                                      image={null}
+                                      title={null}
+                                    />
+                                    Success - 4 Months Ago
+                                  </td>
+                                </tr>
+                                <tr
+                                  className="no-hover"
+                                  key="1"
+                                  onClick={[Function]}
+                                >
+                                  <td
+                                    style={
+                                      Object {
+                                        "border": 0,
+                                        "margin": 0,
+                                        "padding": 0,
+                                      }
+                                    }
+                                  >
+                                    <IconOrImage
+                                      background={null}
+                                      icon={null}
+                                      image={null}
+                                      title={null}
+                                    />
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -695,16 +827,38 @@ exports[`TextualSummary renders just fine 1`] = `
                       Last Refresh Date
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon={null}
-                        image={null}
-                        title={null}
-                      />
-                      <span>
-                         
-                        2018-01-20T23:35:50.908Z
-                      </span>
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
+                      >
+                        <IconOrImage
+                          background={null}
+                          icon={null}
+                          image={null}
+                          title={null}
+                        />
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              2018-01-20T23:35:50.908Z
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1052,21 +1206,43 @@ exports[`TextualSummary renders just fine 1`] = `
                       Cloud Tenants
                     </td>
                     <td>
-                      <IconOrImage
-                        background={null}
-                        icon="pficon pficon-cloud-tenant"
-                        image={null}
-                        title={null}
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
                       >
-                        <i
-                          className="pficon pficon-cloud-tenant"
+                        <IconOrImage
+                          background={null}
+                          icon="pficon pficon-cloud-tenant"
+                          image={null}
                           title={null}
-                        />
-                      </IconOrImage>
-                      <span>
-                         
-                        0
-                      </span>
+                        >
+                          <i
+                            className="pficon pficon-cloud-tenant"
+                            title={null}
+                          />
+                        </IconOrImage>
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              0
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1095,26 +1271,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Cloud Networks
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=cloud_networks"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="ff ff-cloud-network"
-                          image={null}
-                          title="Show all Cloud Networks"
+                        <a
+                          href="/ems_network/39?display=cloud_networks"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="ff ff-cloud-network"
+                          <IconOrImage
+                            background={null}
+                            icon="ff ff-cloud-network"
+                            image={null}
                             title="Show all Cloud Networks"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          1
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="ff ff-cloud-network"
+                              title="Show all Cloud Networks"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                1
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1143,26 +1341,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Cloud Subnets
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=cloud_subnets"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="pficon pficon-network"
-                          image={null}
-                          title="Show all Cloud Subnets"
+                        <a
+                          href="/ems_network/39?display=cloud_subnets"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="pficon pficon-network"
+                          <IconOrImage
+                            background={null}
+                            icon="pficon pficon-network"
+                            image={null}
                             title="Show all Cloud Subnets"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          6
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="pficon pficon-network"
+                              title="Show all Cloud Subnets"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                6
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1191,26 +1411,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Network Routers
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=network_routers"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="pficon pficon-route"
-                          image={null}
-                          title="Show all Network Routers"
+                        <a
+                          href="/ems_network/39?display=network_routers"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="pficon pficon-route"
+                          <IconOrImage
+                            background={null}
+                            icon="pficon pficon-route"
+                            image={null}
                             title="Show all Network Routers"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          1
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="pficon pficon-route"
+                              title="Show all Network Routers"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                1
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1239,26 +1481,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Security Groups
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=security_groups"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="pficon pficon-cloud-security"
-                          image={null}
-                          title="Show all Security Groups"
+                        <a
+                          href="/ems_network/39?display=security_groups"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="pficon pficon-cloud-security"
+                          <IconOrImage
+                            background={null}
+                            icon="pficon pficon-cloud-security"
+                            image={null}
                             title="Show all Security Groups"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          18
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="pficon pficon-cloud-security"
+                              title="Show all Security Groups"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                18
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1287,26 +1551,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Floating IPs
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=floating_ips"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="ff ff-floating-ip"
-                          image={null}
-                          title="Show all Floating IPs"
+                        <a
+                          href="/ems_network/39?display=floating_ips"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="ff ff-floating-ip"
+                          <IconOrImage
+                            background={null}
+                            icon="ff ff-floating-ip"
+                            image={null}
                             title="Show all Floating IPs"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          14
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="ff ff-floating-ip"
+                              title="Show all Floating IPs"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                14
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1335,26 +1621,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Network Ports
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=network_ports"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="ff ff-network-port"
-                          image={null}
-                          title="Show all Network Ports"
+                        <a
+                          href="/ems_network/39?display=network_ports"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="ff ff-network-port"
+                          <IconOrImage
+                            background={null}
+                            icon="ff ff-network-port"
+                            image={null}
                             title="Show all Network Ports"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          26
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="ff ff-network-port"
+                              title="Show all Network Ports"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                26
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1383,26 +1691,48 @@ exports[`TextualSummary renders just fine 1`] = `
                       Load Balancers
                     </td>
                     <td>
-                      <a
-                        href="/ems_network/39?display=load_balancers"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="ff ff-load-balancer"
-                          image={null}
-                          title="Show all Load Balancers"
+                        <a
+                          href="/ems_network/39?display=load_balancers"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="ff ff-load-balancer"
+                          <IconOrImage
+                            background={null}
+                            icon="ff ff-load-balancer"
+                            image={null}
                             title="Show all Load Balancers"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                          2
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="ff ff-load-balancer"
+                              title="Show all Load Balancers"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                                2
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1429,30 +1759,52 @@ exports[`TextualSummary renders just fine 1`] = `
                       Power State
                     </td>
                     <td>
-                      <IconOrImage
-                        background="green"
-                        icon="fa fa-play"
-                        image={null}
-                        title={null}
+                      <div
+                        className="text_summary_button"
+                        id="text_summary_button"
                       >
-                        <div
-                          className="backgrounded-icon"
-                          style={
-                            Object {
-                              "background": "green",
-                            }
-                          }
+                        <IconOrImage
+                          background="green"
+                          icon="fa fa-play"
+                          image={null}
+                          title={null}
                         >
-                          <i
-                            className="fa fa-play"
-                            title={null}
-                          />
-                        </div>
-                      </IconOrImage>
-                      <span>
-                         
-                        On
-                      </span>
+                          <div
+                            className="backgrounded-icon"
+                            style={
+                              Object {
+                                "background": "green",
+                              }
+                            }
+                          >
+                            <i
+                              className="fa fa-play"
+                              title={null}
+                            />
+                          </div>
+                        </IconOrImage>
+                        <Button
+                          disabled={false}
+                          kind="ghost"
+                          size="sm"
+                          tabIndex={0}
+                          tooltipAlignment="center"
+                          tooltipPosition="top"
+                          type="button"
+                        >
+                          <button
+                            className="bx--btn bx--btn--sm bx--btn--ghost"
+                            disabled={false}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span>
+                               
+                              On
+                            </span>
+                          </button>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>
@@ -1531,25 +1883,47 @@ exports[`TextualSummary renders just fine 1`] = `
                       Topology
                     </td>
                     <td>
-                      <a
-                        href="/network_topology/show/39"
-                        onClick={[Function]}
+                      <div
+                        className="text_summary_button_link"
+                        id="text_summary_button_link"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="pficon pficon-topology"
-                          image={null}
-                          title="Show topology"
+                        <a
+                          href="/network_topology/show/39"
+                          onClick={[Function]}
                         >
-                          <i
-                            className="pficon pficon-topology"
+                          <IconOrImage
+                            background={null}
+                            icon="pficon pficon-topology"
+                            image={null}
                             title="Show topology"
-                          />
-                        </IconOrImage>
-                        <span>
-                           
-                        </span>
-                      </a>
+                          >
+                            <i
+                              className="pficon pficon-topology"
+                              title="Show topology"
+                            />
+                          </IconOrImage>
+                          <Button
+                            disabled={false}
+                            kind="ghost"
+                            size="sm"
+                            tabIndex={0}
+                            tooltipAlignment="center"
+                            tooltipPosition="top"
+                            type="button"
+                          >
+                            <button
+                              className="bx--btn bx--btn--sm bx--btn--ghost"
+                              disabled={false}
+                              tabIndex={0}
+                              type="button"
+                            >
+                              <span>
+                                 
+                              </span>
+                            </button>
+                          </Button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </GenericTableRow>

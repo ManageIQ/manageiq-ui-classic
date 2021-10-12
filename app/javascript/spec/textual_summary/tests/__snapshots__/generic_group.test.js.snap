@@ -53,16 +53,38 @@ exports[`GenericGroup renders just fine 1`] = `
             foo
           </td>
           <td>
-            <IconOrImage
-              background={null}
-              icon={null}
-              image={null}
-              title={null}
-            />
-            <span>
-               
-              bar
-            </span>
+            <div
+              className="text_summary_button"
+              id="text_summary_button"
+            >
+              <IconOrImage
+                background={null}
+                icon={null}
+                image={null}
+                title={null}
+              />
+              <Button
+                disabled={false}
+                kind="ghost"
+                size="sm"
+                tabIndex={0}
+                tooltipAlignment="center"
+                tooltipPosition="top"
+                type="button"
+              >
+                <button
+                  className="bx--btn bx--btn--sm bx--btn--ghost"
+                  disabled={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  <span>
+                     
+                    bar
+                  </span>
+                </button>
+              </Button>
+            </div>
           </td>
         </tr>
       </GenericTableRow>
@@ -86,16 +108,38 @@ exports[`GenericGroup renders just fine 1`] = `
             mrkef?
           </td>
           <td>
-            <IconOrImage
-              background={null}
-              icon={null}
-              image={null}
-              title={null}
-            />
-            <span>
-               
-              v zime!
-            </span>
+            <div
+              className="text_summary_button"
+              id="text_summary_button"
+            >
+              <IconOrImage
+                background={null}
+                icon={null}
+                image={null}
+                title={null}
+              />
+              <Button
+                disabled={false}
+                kind="ghost"
+                size="sm"
+                tabIndex={0}
+                tooltipAlignment="center"
+                tooltipPosition="top"
+                type="button"
+              >
+                <button
+                  className="bx--btn bx--btn--sm bx--btn--ghost"
+                  disabled={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  <span>
+                     
+                    v zime!
+                  </span>
+                </button>
+              </Button>
+            </div>
           </td>
         </tr>
       </GenericTableRow>

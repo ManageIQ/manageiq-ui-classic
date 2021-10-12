@@ -38,78 +38,100 @@ exports[`Simple Table renders multi-value just fine... 1`] = `
           Network Manager
         </td>
         <td>
-          <a
-            href="/ems_network/10000000000045"
-            onClick={[Function]}
+          <div
+            className="text_summary_button_link"
+            id="text_summary_button_link"
           >
-            <IconOrImage
-              background={null}
-              icon={null}
-              image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
-              title="Show Network Manager 'Amazon East Network Manager'"
+            <a
+              href="/ems_network/10000000000045"
+              onClick={[Function]}
             >
-              <img
-                alt="Show Network Manager 'Amazon East Network Manager'"
-                src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+              <IconOrImage
+                background={null}
+                icon={null}
+                image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
                 title="Show Network Manager 'Amazon East Network Manager'"
-              />
-            </IconOrImage>
-            <table
-              cellPadding="0"
-              cellSpacing="0"
-            >
-              <tbody>
-                <tr
-                  className="no-hover"
-                  key="0"
-                  onClick={[Function]}
-                  title="Amazon East Network Manager"
+              >
+                <img
+                  alt="Show Network Manager 'Amazon East Network Manager'"
+                  src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+                  title="Show Network Manager 'Amazon East Network Manager'"
+                />
+              </IconOrImage>
+              <Button
+                disabled={false}
+                kind="ghost"
+                size="sm"
+                tabIndex={0}
+                tooltipAlignment="center"
+                tooltipPosition="top"
+                type="button"
+              >
+                <button
+                  className="bx--btn bx--btn--sm bx--btn--ghost"
+                  disabled={false}
+                  tabIndex={0}
+                  type="button"
                 >
-                  <td
-                    style={
-                      Object {
-                        "border": 0,
-                        "margin": 0,
-                        "padding": 0,
-                      }
-                    }
+                  <table
+                    cellPadding="0"
+                    cellSpacing="0"
                   >
-                    <IconOrImage
-                      background={null}
-                      icon={null}
-                      image={null}
-                      title="Amazon East Network Manager"
-                    />
-                    foobar
-                  </td>
-                </tr>
-                <tr
-                  className="no-hover"
-                  key="1"
-                  onClick={[Function]}
-                  title="Amazon West Network Manager"
-                >
-                  <td
-                    style={
-                      Object {
-                        "border": 0,
-                        "margin": 0,
-                        "padding": 0,
-                      }
-                    }
-                  >
-                    <IconOrImage
-                      background={null}
-                      icon={null}
-                      image={null}
-                      title="Amazon West Network Manager"
-                    />
-                    boofar
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </a>
+                    <tbody>
+                      <tr
+                        className="no-hover"
+                        key="0"
+                        onClick={[Function]}
+                        title="Amazon East Network Manager"
+                      >
+                        <td
+                          style={
+                            Object {
+                              "border": 0,
+                              "margin": 0,
+                              "padding": 0,
+                            }
+                          }
+                        >
+                          <IconOrImage
+                            background={null}
+                            icon={null}
+                            image={null}
+                            title="Amazon East Network Manager"
+                          />
+                          foobar
+                        </td>
+                      </tr>
+                      <tr
+                        className="no-hover"
+                        key="1"
+                        onClick={[Function]}
+                        title="Amazon West Network Manager"
+                      >
+                        <td
+                          style={
+                            Object {
+                              "border": 0,
+                              "margin": 0,
+                              "padding": 0,
+                            }
+                          }
+                        >
+                          <IconOrImage
+                            background={null}
+                            icon={null}
+                            image={null}
+                            title="Amazon West Network Manager"
+                          />
+                          boofar
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </button>
+              </Button>
+            </a>
+          </div>
         </td>
       </tr>
     </GenericTableRow>
@@ -144,27 +166,49 @@ exports[`Simple Table renders simple value just fine... 1`] = `
           Network Manager
         </td>
         <td>
-          <a
-            href="/ems_network/10000000000045"
-            onClick={[Function]}
+          <div
+            className="text_summary_button_link"
+            id="text_summary_button_link"
           >
-            <IconOrImage
-              background={null}
-              icon={null}
-              image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
-              title="Show Network Manager 'Amazon East Network Manager'"
+            <a
+              href="/ems_network/10000000000045"
+              onClick={[Function]}
             >
-              <img
-                alt="Show Network Manager 'Amazon East Network Manager'"
-                src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+              <IconOrImage
+                background={null}
+                icon={null}
+                image="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
                 title="Show Network Manager 'Amazon East Network Manager'"
-              />
-            </IconOrImage>
-            <span>
-               
-              Amazon East Network Manager
-            </span>
-          </a>
+              >
+                <img
+                  alt="Show Network Manager 'Amazon East Network Manager'"
+                  src="http://localhost:3000/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg"
+                  title="Show Network Manager 'Amazon East Network Manager'"
+                />
+              </IconOrImage>
+              <Button
+                disabled={false}
+                kind="ghost"
+                size="sm"
+                tabIndex={0}
+                tooltipAlignment="center"
+                tooltipPosition="top"
+                type="button"
+              >
+                <button
+                  className="bx--btn bx--btn--sm bx--btn--ghost"
+                  disabled={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  <span>
+                     
+                    Amazon East Network Manager
+                  </span>
+                </button>
+              </Button>
+            </a>
+          </div>
         </td>
       </tr>
     </GenericTableRow>
