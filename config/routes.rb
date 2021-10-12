@@ -3237,9 +3237,7 @@ Rails.application.routes.draw do
     ems_physical_infra_dashboard
     ems_storage
     miq_ae_customization
-    network_service
     pxe
-    security_policy
     security_policy_rule
     storage_resource
   ].freeze

@@ -882,6 +882,7 @@ NetworkRouterController:
 - sections_field_changed
 - wait_for_task
 NetworkServiceController:
+- index
 - wait_for_task
 NetworkTopologyController:
 - index
@@ -1059,6 +1060,7 @@ SecurityPolicyController:
 - dynamic_date_refresh
 - dynamic_radio_button_refresh
 - dynamic_text_box_refresh
+- index
 - open_url_after_dialog
 - wait_for_task
 SecurityPolicyRuleController:
