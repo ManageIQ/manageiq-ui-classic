@@ -293,7 +293,7 @@
           = react('TaggingWrapperConnected',
             :tags    => @tags,
             :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true, 
-                          :url => url_for_only_path(:action => 'prov_field_changed'), :isDisabled => @tags[:isDisabled]})
+                          :url => url, :isDisabled => @tags[:isDisabled]})
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
