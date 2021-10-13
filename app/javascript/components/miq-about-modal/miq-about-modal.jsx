@@ -65,10 +65,14 @@ class MiqAboutModal extends React.Component {
 
   render() {
     const {
-      data, hideModal,
+      data, dialogClassName, hideModal,
     } = this.props;
     const { show } = this.props;
     const { expand } = this.state;
+    let className = 'about-modal';
+    if (dialogClassName === 'whitelabel') {
+      className = dialogClassName;
+    }
     if (!data) {
       return null;
     }
@@ -88,7 +92,7 @@ class MiqAboutModal extends React.Component {
         open={show}
         onRequestClose={() => { hideModal(); }}
         passiveModal
-        className="about-modal"
+        className={className}
       >
         <ModalBody className="about-modal-body">
           <ModalItem
@@ -156,6 +160,7 @@ class MiqAboutModal extends React.Component {
 }
 
 MiqAboutModal.propTypes = {
+  dialogClassName: PropTypes.string,
   show: PropTypes.bool,
   data: PropTypes.shape({
     product_info: PropTypes.shape({
@@ -174,6 +179,7 @@ MiqAboutModal.propTypes = {
 };
 
 MiqAboutModal.defaultProps = {
+  dialogClassName: '',
   show: false,
   data: undefined,
 };
