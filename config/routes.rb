@@ -3238,7 +3238,6 @@ Rails.application.routes.draw do
     ems_storage
     miq_ae_customization
     pxe
-    security_policy_rule
     storage_resource
   ].freeze
 
