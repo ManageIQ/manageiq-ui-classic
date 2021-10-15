@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Label } from 'patternfly-react';
+import { FormLabel, Button } from 'carbon-components-react';
+import { Close16 } from '@carbon/icons-react';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 const Tag = ({
@@ -9,39 +10,54 @@ const Tag = ({
   if (showCloseButton) {
     return (
       <li key={tagValue.id} className="tag">
-        <Label
+        <FormLabel
           key={tagValue.id}
           id={`tag_value_${tagValue.id}`}
-          bsStyle="primary"
-          onRemoveClick={onTagDeleteClick ? () => onTagDeleteClick(tagCategory, tagValue) : undefined}
           className="tagColor"
           title={tagValue.description}
         >
-          {truncate(tagValue.description)}
-        </Label>
+          <div className="value-label">
+            <span className="value-span">
+              {truncate(tagValue.description)}
+            </span>
+            <Button
+              size="sm"
+              className="tagButton"
+              renderIcon={Close16}
+              iconDescription={__('Close Icon')}
+              hasIconOnly
+              onClick={onTagDeleteClick ? () => onTagDeleteClick(tagCategory, tagValue) : undefined}
+            />
+          </div>
+        </FormLabel>
       </li>
     );
   }
   return (
     <li key={tagValue.id} className="tag">
-      <Label
+      <FormLabel
         key={tagValue.id}
         id={`tag_value_${tagValue.id}`}
         className="tagColor"
         title={tagValue.description}
       >
         {truncate(tagValue.description)}
-      </Label>
+      </FormLabel>
     </li>
   );
 };
 
 Tag.propTypes = {
-  onTagDeleteClick: PropTypes.func,
+  onTagDeleteClick: PropTypes.func.isRequired,
   tagCategory: TaggingPropTypes.category,
   tagValue: TaggingPropTypes.value,
   truncate: PropTypes.func.isRequired,
-  showCloseButton: PropTypes.bool,
+  showCloseButton: PropTypes.bool.isRequired,
+};
+
+Tag.defaultProps = {
+  tagCategory: undefined,
+  tagValue: undefined,
 };
 
 export default Tag;

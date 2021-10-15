@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown, MultiSelect } from 'carbon-components-react';
 import TaggingPropTypes from '../TaggingPropTypes';
-import { PfSelect } from '../../../pf-select/pf-select';
 
 class ValueSelector extends React.Component {
-  getValues = values =>
-    values.map(tag => ({ value: tag.id, label: tag.description }));
+  getValues = (values) =>
+    values.map((tag) => ({ value: tag.id, label: tag.description }));
 
   /**
    * Maps the selected options for the select box input.
    *
    */
   getActiveValues = () => {
-    if (this.props.selectedOption.length) {
-      return this.props.multiValue
-        ? this.props.selectedOption.map(el => el.id)
-        : this.props.selectedOption[0].id;
+    const { selectedOption, multiValue } = this.props;
+    if (selectedOption.length) {
+      return multiValue
+        ? selectedOption.map((el) => el.id)
+        : selectedOption[0].id;
     }
     return [];
   };
@@ -31,32 +32,103 @@ class ValueSelector extends React.Component {
    * @param val [] Currently selected values.
    */
   handleChange = (val) => {
-    // Deleting all the multi selected items
-    if (!val) {
-      return this.props.onTagValueChange([]);
+    const { selectedItem, selectedItems } = val;
+    const { onTagValueChange, values } = this.props;
+    let selection;
+    if (selectedItem) {
+      selection = selectedItem;
+    } else {
+      selection = selectedItems;
     }
-
-    return this.props.onTagValueChange((this.props.values.filter(el => (Array.isArray(val) ? val.includes(el.id) : el.id === val))));
+    // Deleting all the multi selected items
+    const arrayIds = [];
+    if (selectedItems) {
+      if (selectedItems.length !== 0) {
+        selectedItems.forEach((item) => {
+          arrayIds.push(item.value);
+        });
+      } else {
+        return onTagValueChange([]);
+      }
+    }
+    return onTagValueChange((values.filter((el) => (Array.isArray(selection) ? arrayIds.includes(el.id) : el.id === selection.value))));
   };
 
-  selector = (value, values) => (
-    <PfSelect
-      meta={{}}
-      options={values}
-      input={{ onChange: this.handleChange, name: 'ValueSelector', value }}
-      multi={this.props.multiValue}
-      simpleValue
-      clearable
-      searchable={values.length > 0}
-      placeholder={__('Select tag value')}
-      isDisabled={this.props.isDisabled}
-    />
-  );
+  getOptions = (values) => {
+    const options = [];
+    values.forEach((item) => (
+      options.push(
+        { key: item.value, value: item.value, label: item.label }
+      )
+    ));
+    return options;
+  }
+
+  selector = (value, values) => {
+    const { isDisabled, multiValue, selectedOption } = this.props;
+    let label = '';
+    const selectedOptions = [];
+    if (selectedOption.length !== 0) {
+      if (selectedOption.length === 1) {
+        label = `${selectedOption[0].description}`;
+        if (multiValue) {
+          selectedOptions.push({
+            label: selectedOption[0].description,
+            value: selectedOption[0].id,
+          });
+        }
+      } else {
+        selectedOption.forEach((option) => {
+          selectedOptions.push({
+            label: option.description,
+            value: option.id,
+          });
+          if (label === '') {
+            label = `${option.description}`;
+          } else {
+            label = `${label}, ${option.description}`;
+          }
+        });
+      }
+    } else {
+      label = `${__('Select tag value')}`;
+    }
+    if (multiValue) {
+      return (
+        <MultiSelect
+          className="tag-select"
+          id="tag-select"
+          label={label}
+          initialSelectedItems={selectedOptions}
+          // eslint-disable-next-line react/destructuring-assignment
+          key={selectedOptions.length === 0 ? -1 : this.props.values[0].id + selectedOptions.length}
+          items={values}
+          disabled={isDisabled}
+          onChange={(val) => this.handleChange(val)}
+        />
+      );
+    }
+
+    return (
+      <Dropdown
+        className="tag-select"
+        id="tag-select"
+        label={label}
+        defaultValue="placeholder"
+        // eslint-disable-next-line react/destructuring-assignment
+        key={selectedOption.length === 0 ? -1 : this.props.values[0].id}
+        disabled={isDisabled}
+        onChange={(val) => this.handleChange(val)}
+        items={this.getOptions(values)}
+      />
+    );
+  };
 
   render() {
+    const { values } = this.props;
     return this.selector(
       this.getActiveValues(),
-      this.getValues(this.props.values),
+      this.getValues(values),
     );
   }
 }

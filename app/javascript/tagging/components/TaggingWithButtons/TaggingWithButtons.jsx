@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row } from 'patternfly-react';
-import { Grid, ButtonSet, Button } from 'carbon-components-react';
+import {
+  Grid, Row, ButtonSet, Button,
+} from 'carbon-components-react';
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 
