@@ -3,21 +3,10 @@
 exports[`TagCategory Component match snapshot 1`] = `
 <FormGroup
   invalid={false}
-  legendText=""
+  legendText="Value"
   message={false}
   messageText=""
 >
-  <Column
-    lg={4}
-    md={4}
-    xs={12}
-  >
-    <FormLabel>
-      <b>
-        Value
-      </b>
-    </FormLabel>
-  </Column>
   <Column
     lg={8}
     md={8}

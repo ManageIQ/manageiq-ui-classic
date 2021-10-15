@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Column, FormLabel, FormGroup } from 'carbon-components-react';
+import { Column, FormGroup } from 'carbon-components-react';
 import ValueSelector from './ValueSelector';
 import TaggingPropTypes from '../TaggingPropTypes';
 
@@ -12,10 +12,7 @@ const ValueModifier = ({
   valueLabel,
   isDisabled,
 }) => (
-  <FormGroup legendText="">
-    <Column xs={12} md={4} lg={4}>
-      <FormLabel><b>{valueLabel}</b></FormLabel>
-    </Column>
+  <FormGroup legendText={valueLabel}>
     <Column xs={12} md={8} lg={8}>
       <ValueSelector
         values={values}
