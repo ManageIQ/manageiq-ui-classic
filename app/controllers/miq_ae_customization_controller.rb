@@ -174,7 +174,7 @@ class MiqAeCustomizationController < ApplicationController
       feature = "old_dialogs_accord"
     else
       klass = Dialog
-      feature = "dialogs_accord"
+      feature = "dialog_accord"
     end
     assert_privileges(feature)
 
