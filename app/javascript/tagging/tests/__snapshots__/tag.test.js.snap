@@ -5,12 +5,11 @@ exports[`Tag Component match snapshot 1`] = `
   className="tag"
   key="1"
 >
-  <Label
+  <FormLabel
     className="tagColor"
     id="tag_value_1"
     key="1"
     title="duck"
-    type="default"
   />
 </li>
 `;

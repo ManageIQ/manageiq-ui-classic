@@ -1,10 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from './Tag';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagCategory extends React.Component {
-  generateTag = tagValue => (
+  generateTag = (tagValue) => (
     <Tag
       key={tagValue.id}
       tagCategory={this.props.tagCategory}
@@ -26,14 +27,14 @@ class TagCategory extends React.Component {
         </li>
         {values
           .sort((a, b) => (a.description < b.description ? -1 : 1))
-          .map(tagValue => this.generateTag(tagValue))}
+          .map((tagValue) => this.generateTag(tagValue))}
       </ul>
     );
   }
 }
 
 TagCategory.propTypes = {
-  onTagDeleteClick: PropTypes.func,
+  onTagDeleteClick: PropTypes.func.isRequired,
   tagCategory: TaggingPropTypes.category,
   values: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
   categoryTruncate: PropTypes.func,
@@ -42,9 +43,10 @@ TagCategory.propTypes = {
 };
 
 TagCategory.defaultProps = {
-  categoryTruncate: str =>
+  tagCategory: undefined,
+  categoryTruncate: (str) =>
     (str.length > 18 ? `${str.substring(0, 18)}...` : str),
-  valueTruncate: str => (str.length > 18 ? `${str.substring(0, 18)}...` : str),
+  valueTruncate: (str) => (str.length > 18 ? `${str.substring(0, 18)}...` : str),
   showCloseButton: true,
 };
 

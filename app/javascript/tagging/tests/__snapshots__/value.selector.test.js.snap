@@ -1,63 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`match snapshot 1`] = `
-<PfSelect
-  clearable={true}
-  input={
-    Object {
-      "name": "ValueSelector",
-      "onChange": [Function],
-      "value": 2,
-    }
-  }
-  isDisabled={false}
-  meta={Object {}}
-  multi={false}
-  options={
+<Dropdown
+  className="tag-select"
+  defaultValue="placeholder"
+  direction="bottom"
+  disabled={false}
+  helperText=""
+  id="tag-select"
+  itemToElement={null}
+  itemToString={[Function]}
+  items={
     Array [
       Object {
+        "key": 1,
         "label": "Asterix",
         "value": 1,
       },
       Object {
+        "key": 2,
         "label": "Obelix",
         "value": 2,
       },
     ]
   }
-  placeholder="Select tag value"
-  searchable={true}
-  simpleValue={true}
+  key="1"
+  label="Obelix"
+  light={false}
+  onChange={[Function]}
+  titleText=""
+  type="default"
 />
 `;
 
 exports[`match snapshot without multiple values 1`] = `
-<PfSelect
-  clearable={true}
-  input={
-    Object {
-      "name": "ValueSelector",
-      "onChange": [Function],
-      "value": 2,
-    }
-  }
-  isDisabled={false}
-  meta={Object {}}
-  multi={false}
-  options={
+<Dropdown
+  className="tag-select"
+  defaultValue="placeholder"
+  direction="bottom"
+  disabled={false}
+  helperText=""
+  id="tag-select"
+  itemToElement={null}
+  itemToString={[Function]}
+  items={
     Array [
       Object {
+        "key": 1,
         "label": "Asterix",
         "value": 1,
       },
       Object {
+        "key": 2,
         "label": "Obelix",
         "value": 2,
       },
     ]
   }
-  placeholder="Select tag value"
-  searchable={true}
-  simpleValue={true}
+  key="1"
+  label="Obelix"
+  light={false}
+  onChange={[Function]}
+  titleText=""
+  type="default"
 />
 `;

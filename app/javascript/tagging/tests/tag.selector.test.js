@@ -1,14 +1,7 @@
 import React from 'react';
-import TagSelector from '../components/InnerComponents/TagSelector';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-
-const tagCategories = [
-  { description: 'Name', id: 1 },
-  { description: 'Number', id: 2 }
-];
-const selectedTagValue = { description: 'Homer', id: 1 };
-const onTagCategoryChange = jest.fn();
+import TagSelector from '../components/InnerComponents/TagSelector';
 
 describe('Tagging modifier', () => {
   const tagCategories = [
@@ -38,7 +31,7 @@ describe('Tagging modifier', () => {
         selectedOption={selectedTagValue}
       />
     );
-    wrapper.instance().handleChange({ label: 'Name', value: 1 });
+    wrapper.instance().handleChange({ selectedItem: { label: 'Name', value: 1 } });
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
   });
 });

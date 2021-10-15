@@ -2,13 +2,8 @@
 
 exports[`Tagging component without redux mapping match snapshot 1`] = `
 <Grid>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      componentClass="div"
+  <Row>
+    <Column
       lg={6}
       md={8}
       xs={12}
@@ -84,10 +79,8 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
           }
         />
       </TagModifier>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
+    </Column>
+    <Column
       lg={6}
       md={4}
       xs={12}
@@ -112,20 +105,15 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         onTagDeleteClick={[Function]}
         showCloseButton={true}
       />
-    </Col>
+    </Column>
   </Row>
 </Grid>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
 <Grid>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      componentClass="div"
+  <Row>
+    <Column
       lg={6}
       md={8}
       xs={12}
@@ -198,10 +186,8 @@ exports[`Tagging component without redux mapping should call methods - singleVal
           }
         />
       </TagModifier>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
+    </Column>
+    <Column
       lg={6}
       md={4}
       xs={12}
@@ -226,20 +212,15 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagDeleteClick={[Function]}
         showCloseButton={true}
       />
-    </Col>
+    </Column>
   </Row>
 </Grid>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
 <Grid>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      componentClass="div"
+  <Row>
+    <Column
       lg={6}
       md={8}
       xs={12}
@@ -308,10 +289,8 @@ exports[`Tagging component without redux mapping should call methods - singleVal
           }
         />
       </TagModifier>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
+    </Column>
+    <Column
       lg={6}
       md={4}
       xs={12}
@@ -336,7 +315,7 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagDeleteClick={[Function]}
         showCloseButton={true}
       />
-    </Col>
+    </Column>
   </Row>
 </Grid>
 `;
