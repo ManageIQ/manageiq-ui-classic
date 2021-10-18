@@ -29,165 +29,172 @@ const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_
       }))
   );
 
-const createSchema = (emsId, setEmsId, storageId, setStorageId) => ({
-  fields: [
-    {
-      component: componentTypes.SELECT,
-      name: 'ems_id',
-      id: 'ems_id',
-      key: `${emsId}`,
-      label: __('Provider:'),
-      placeholder: __('<Choose>'),
-      isRequired: true,
-      loadOptions: loadProviders,
-      onChange: (value) => setEmsId(value),
-      validate: [{ type: validatorTypes.REQUIRED }],
-      includeEmpty: true,
-    },
-    {
-      component: componentTypes.TEXT_FIELD,
-      name: 'name',
-      id: 'name',
-      label: __('Name:'),
-      isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-    },
-    {
-      component: componentTypes.SELECT,
-      name: 'physical_storage_id',
-      id: 'physical_storage_id',
-      label: __('Physical Storage:'),
-      isRequired: true,
-      placeholder: __('<Choose>'),
-      includeEmpty: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
-      onChange: (value) => setStorageId(value),
-      key: `physical_storage_id-${emsId}`,
-      condition: {
-        when: 'ems_id',
-        isNotEmpty: true,
+const createSchema = (state, setState, ems, initialValues, storageId, setStorageId) => {
+  let emsId = state.ems_id;
+  if (initialValues && initialValues.ems_id) {
+    emsId = initialValues.ems_id;
+  }
+  return ({
+    fields: [
+      {
+        component: componentTypes.SELECT,
+        name: 'ems_id',
+        id: 'ems_id',
+        key: `${emsId}`,
+        label: __('Provider:'),
+        placeholder: __('<Choose>'),
+        isRequired: true,
+        isDisabled: ems,
+        loadOptions: loadProviders,
+        onChange: (value) => setState({ ...state, ems_id: value }),
+        validate: [{ type: validatorTypes.REQUIRED }],
+        includeEmpty: true,
       },
-    },
-    {
-      component: componentTypes.SELECT,
-      id: 'port_type',
-      name: 'port_type',
-      label: __('Port type:'),
-      placeholder: __('<Choose>'),
-      options: portTypes,
-      isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      includeEmpty: true,
-      condition: {when: 'physical_storage_id', isNotEmpty: true}
-    },
-    {
-      component: componentTypes.TEXT_FIELD,
-      name: 'iqn',
-      id: 'iqn',
-      label: __('iqn:'),
-      isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      condition: {
-        when: 'port_type',
-        is: 'ISCSI',
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: 'name',
+        id: 'name',
+        label: __('Name:'),
+        isRequired: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
       },
-    },
-    {
-      component: componentTypes.CHECKBOX,
-      id: 'chap_authentication',
-      name: 'chap_authentication',
-      label: __('CHAP Authentication'),
-      condition: {
-        when: 'port_type',
-        is: 'ISCSI',
-      },
-    },
-    {
-      component: componentTypes.TEXT_FIELD,
-      name: 'chap_name',
-      id: 'chap_name',
-      label: __('CHAP Username:'),
-      isRequired: true,
-      validate: [{type: validatorTypes.REQUIRED}],
-      condition: {
-        and: [{
-          when: 'port_type',
-          is: 'ISCSI',
-        }, {when: 'chap_authentication', is: true}]
-      },
-    },
-    {
-      component: componentTypes.TEXT_FIELD,
-      name: 'chap_secret',
-      id: 'chap_secret',
-      validate: [{type: validatorTypes.REQUIRED}],
-      label: __('CHAP Secret:'),
-      isRequired: true,
-      condition: {
-        and: [{
-          when: 'port_type',
-          is: 'ISCSI',
-        }, {when: 'chap_authentication', is: true}]
-      },
-    },
-    {
-      component: componentTypes.FIELD_ARRAY,
-      name: 'wwpn',
-      id: 'wwpn',
-      label: __('WWPNs detected by the storage'),
-      fieldKey: 'field_array',
-      buttonLabels: {
-        add: __('Add'),
-        remove: __('Remove'),
-      },
-      AddButtonProps: {
-        size: 'small',
-      },
-      RemoveButtonProps: {
-        size: 'small',
-      },
-      fields: [
-        {
-          component: componentTypes.SELECT,
-          placeholder: __('<Choose>'),
-          validate: [{type: validatorTypes.REQUIRED}],
-          loadOptions: () => (storageId ? loadWwpns(storageId) : Promise.resolve([])),
-          isSearchable: true,
+      {
+        component: componentTypes.SELECT,
+        name: 'physical_storage_id',
+        id: 'physical_storage_id',
+        label: __('Physical Storage:'),
+        isRequired: true,
+        placeholder: __('<Choose>'),
+        includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
+        onChange: (value) => setStorageId(value),
+        key: `physical_storage_id-${emsId}`,
+        condition: {
+          when: 'ems_id',
+          isNotEmpty: true,
         },
-      ],
-      condition: {
-        or: [{when: 'port_type', is: 'FC'}, {when: 'port_type', is: 'NVMeFC'}],
       },
-    },
-    {
-      component: componentTypes.FIELD_ARRAY,
-      name: 'custom_wwpn',
-      id: 'custom_wwpn',
-      label: __('Custom manually entered WWPNs'),
-      fieldKey: 'field_array',
-      buttonLabels: {
-        add: __('Add'),
-        remove: __('Remove'),
+      {
+        component: componentTypes.SELECT,
+        id: 'port_type',
+        name: 'port_type',
+        label: __('Port type:'),
+        placeholder: __('<Choose>'),
+        options: portTypes,
+        isRequired: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        includeEmpty: true,
+        condition: {when: 'physical_storage_id', isNotEmpty: true}
       },
-      AddButtonProps: {
-        size: 'small',
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: 'iqn',
+        id: 'iqn',
+        label: __('iqn:'),
+        isRequired: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        condition: {
+          when: 'port_type',
+          is: 'ISCSI',
+        },
       },
-      RemoveButtonProps: {
-        size: 'small',
+      {
+        component: componentTypes.CHECKBOX,
+        id: 'chap_authentication',
+        name: 'chap_authentication',
+        label: __('CHAP Authentication'),
+        condition: {
+          when: 'port_type',
+          is: 'ISCSI',
+        },
       },
-      fields: [
-        {
-          component: componentTypes.TEXT_FIELD,
-          isRequired: true,
-          validate: [{type: validatorTypes.REQUIRED}],
-        }
-      ],
-      condition: {
-        or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: 'chap_name',
+        id: 'chap_name',
+        label: __('CHAP Username:'),
+        isRequired: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        condition: {
+          and: [{
+            when: 'port_type',
+            is: 'ISCSI',
+          }, {when: 'chap_authentication', is: true}]
+        },
       },
-    },
-  ],
-});
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: 'chap_secret',
+        id: 'chap_secret',
+        validate: [{ type: validatorTypes.REQUIRED }],
+        label: __('CHAP Secret:'),
+        isRequired: true,
+        condition: {
+          and: [{
+            when: 'port_type',
+            is: 'ISCSI',
+          }, {when: 'chap_authentication', is: true}]
+        },
+      },
+      {
+        component: componentTypes.FIELD_ARRAY,
+        name: 'wwpn',
+        id: 'wwpn',
+        label: __('WWPNs detected by the storage'),
+        fieldKey: 'field_array',
+        buttonLabels: {
+          add: __('Add'),
+          remove: __('Remove'),
+        },
+        AddButtonProps: {
+          size: 'small',
+        },
+        RemoveButtonProps: {
+          size: 'small',
+        },
+        fields: [
+          {
+            component: componentTypes.SELECT,
+            placeholder: __('<Choose>'),
+            validate: [{type: validatorTypes.REQUIRED}],
+            loadOptions: () => (storageId ? loadWwpns(storageId) : Promise.resolve([])),
+            isSearchable: true,
+          },
+        ],
+        condition: {
+          or: [{when: 'port_type', is: 'FC'}, {when: 'port_type', is: 'NVMeFC'}],
+        },
+      },
+      {
+        component: componentTypes.FIELD_ARRAY,
+        name: 'custom_wwpn',
+        id: 'custom_wwpn',
+        label: __('Custom manually entered WWPNs'),
+        fieldKey: 'field_array',
+        buttonLabels: {
+          add: __('Add'),
+          remove: __('Remove'),
+        },
+        AddButtonProps: {
+          size: 'small',
+        },
+        RemoveButtonProps: {
+          size: 'small',
+        },
+        fields: [
+          {
+            component: componentTypes.TEXT_FIELD,
+            isRequired: true,
+            validate: [{type: validatorTypes.REQUIRED}],
+          }
+        ],
+        condition: {
+          or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
+        },
+      },
+    ],
+  });
+};
 
 export default createSchema;

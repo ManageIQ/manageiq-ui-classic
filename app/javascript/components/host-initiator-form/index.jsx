@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import MiqFormRenderer from '@@ddf';
+import { Loading } from 'carbon-components-react';
 import createSchema from './host-initiator-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const HostInitiatorForm = ({ redirect }) => {
-  // const state = useState(undefined);
-  const [emsId, setEmsId] = useState(undefined);
+const HostInitiatorForm = ({ redirect, storageManagerId }) => {
+  const [state, setState] = useState({});
   const [storageId, setStorageId] = useState(undefined);
+  const { isLoading, initialValues } = state;
+
+  const loadSchema = (appendState = {}) => () => {
+    setState((state) => ({
+      ...state,
+      ...appendState,
+    }));
+  };
+
+  useEffect(() => {
+    if (storageManagerId) {
+      API.options(`/api/host_initiators?ems_id=${storageManagerId}`)
+        .then(loadSchema({ initialValues: { ems_id: storageManagerId }, isLoading: false }));
+    }
+  }, [storageManagerId]);
 
   const onSubmit = async(values) => {
     miqSparkleOn();
@@ -30,10 +44,13 @@ const HostInitiatorForm = ({ redirect }) => {
     return errors;
   }
 
-  return (
+  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
+
+  return !isLoading && (
     <MiqFormRenderer
       validate={validate}
-      schema={createSchema(emsId, setEmsId, storageId, setStorageId)}
+      schema={createSchema(state, setState, !!storageManagerId, initialValues, storageId, setStorageId)}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{
@@ -46,6 +63,13 @@ const HostInitiatorForm = ({ redirect }) => {
 
 HostInitiatorForm.propTypes = {
   redirect: PropTypes.string.isRequired,
+};
+
+HostInitiatorForm.propTypes = {
+  storageManagerId: PropTypes.string,
+};
+HostInitiatorForm.defaultProps = {
+  storageManagerId: undefined,
 };
 
 export default HostInitiatorForm;
