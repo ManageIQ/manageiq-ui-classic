@@ -716,7 +716,6 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         protect
-        launch_cockpit
         launch_external_logging
       ) +
                adv_search_post +
@@ -1036,7 +1035,6 @@ Rails.application.routes.draw do
     :dashboard                => {
       :get  => %w(
         auth_error
-        cockpit_redirect
         iframe
         change_tab
         index
@@ -2961,7 +2959,6 @@ Rails.application.routes.draw do
         event_logs
         explorer
         launch_html5_console
-        launch_cockpit
         filesystems
         filesystem_drivers
         form_field_changed
@@ -3085,7 +3082,6 @@ Rails.application.routes.draw do
         tree_select
         users
         vmrc_console
-        launch_cockpit
         vm_pre_prov
         html5_console
         native_console

@@ -1186,7 +1186,6 @@ VmCloudController:
 - html5_console
 - index
 - kernel_drivers
-- launch_cockpit
 - launch_html5_console
 - launch_vmrc_console
 - linux_initprocesses
@@ -1279,7 +1278,6 @@ VmInfraController:
 - html5_console
 - index
 - kernel_drivers
-- launch_cockpit
 - launch_html5_console
 - launch_native_console
 - launch_vmrc_console
