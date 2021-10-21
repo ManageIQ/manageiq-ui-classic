@@ -22,7 +22,6 @@ cypress/videos
 .DS_Store
 
 /node_modules/
-/yarn.lock
 /.pnp.*
 /.yarn/*
 !/.yarn/patches
