@@ -23,9 +23,6 @@ class RestfulRedirectController < ApplicationController
       else
         handle_missing_record
       end
-    when 'ServiceTemplateTransformationPlanRequest'
-      req = ServiceTemplateTransformationPlanRequest.select(:source_id).find(params[:id])
-      req ? redirect_to(:controller => 'migration', :action => 'index', :anchor => "plan/#{req.source_id}") : handle_missing_record
     when 'MiqRequest'
       redirect_to(:controller => 'miq_request', :action => 'show', :id => params[:id])
     when 'VmOrTemplate'
