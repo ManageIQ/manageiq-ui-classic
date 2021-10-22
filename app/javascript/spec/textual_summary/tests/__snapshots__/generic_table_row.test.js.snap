@@ -59,7 +59,9 @@ exports[`Simple Table renders multi-value just fine... 1`] = `
                 />
               </IconOrImage>
               <Button
+                dangerDescription="danger"
                 disabled={false}
+                isExpressive={false}
                 kind="ghost"
                 size="sm"
                 tabIndex={0}
@@ -68,8 +70,15 @@ exports[`Simple Table renders multi-value just fine... 1`] = `
                 type="button"
               >
                 <button
+                  aria-describedby={null}
+                  aria-pressed={null}
                   className="bx--btn bx--btn--sm bx--btn--ghost"
                   disabled={false}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
                   tabIndex={0}
                   type="button"
                 >
@@ -187,7 +196,9 @@ exports[`Simple Table renders simple value just fine... 1`] = `
                 />
               </IconOrImage>
               <Button
+                dangerDescription="danger"
                 disabled={false}
+                isExpressive={false}
                 kind="ghost"
                 size="sm"
                 tabIndex={0}
@@ -196,8 +207,15 @@ exports[`Simple Table renders simple value just fine... 1`] = `
                 type="button"
               >
                 <button
+                  aria-describedby={null}
+                  aria-pressed={null}
                   className="bx--btn bx--btn--sm bx--btn--ghost"
                   disabled={false}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
                   tabIndex={0}
                   type="button"
                 >

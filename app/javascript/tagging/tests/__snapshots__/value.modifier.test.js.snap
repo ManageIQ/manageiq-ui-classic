@@ -2,6 +2,7 @@
 
 exports[`TagCategory Component match snapshot 1`] = `
 <FormGroup
+  hasMargin={true}
   invalid={false}
   legendText="Value"
   message={false}

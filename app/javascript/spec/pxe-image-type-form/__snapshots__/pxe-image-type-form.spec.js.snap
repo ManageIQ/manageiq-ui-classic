@@ -828,7 +828,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="name"
@@ -866,7 +866,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -881,7 +881,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -1429,7 +1429,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -1439,8 +1441,15 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -1457,7 +1466,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -1467,9 +1478,15 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -2349,7 +2366,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="name"
@@ -2387,7 +2404,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -2402,7 +2419,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -2957,7 +2974,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -2967,8 +2986,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -2986,7 +3012,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -2996,9 +3024,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -3014,7 +3048,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -3024,9 +3060,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >

@@ -142,8 +142,10 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
         >
           <Button
             className="btn btn-default"
+            dangerDescription="danger"
             disabled={false}
             id="notifications-toggle"
+            isExpressive={false}
             kind="primary"
             onClick={[Function]}
             size="sm"
@@ -154,10 +156,16 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
             type="button"
           >
             <button
+              aria-describedby={null}
+              aria-pressed={null}
               className="btn btn-default bx--btn bx--btn--sm bx--btn--primary"
               disabled={false}
               id="notifications-toggle"
+              onBlur={[Function]}
               onClick={[Function]}
+              onFocus={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
               tabIndex={0}
               title="0 unread notification"
               type="button"

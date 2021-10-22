@@ -1647,7 +1647,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           maxLength={50}
                                           name="name"
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={true}
                                             helperText=""
                                             id="name"
@@ -1697,7 +1697,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={true}
                                                     id="name"
                                                     maxLength={50}
@@ -1712,7 +1712,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -1768,7 +1768,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="description"
@@ -1818,7 +1818,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={50}
@@ -1833,7 +1833,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -1867,7 +1867,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           maxLength={50}
                                           name="settings.proxy_server_ip"
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="settings.proxy_server_ip"
@@ -1905,7 +1905,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="settings.proxy_server_ip"
                                                     maxLength={50}
@@ -1920,7 +1920,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -3401,7 +3401,9 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -3411,8 +3413,15 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -3430,7 +3439,9 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -3440,9 +3451,15 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -3458,7 +3475,9 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -3468,9 +3487,15 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >

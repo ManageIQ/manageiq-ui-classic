@@ -2050,7 +2050,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   ]
                                 }
                               >
-                                <ForwardRef(TextInput)
+                                <TextInput
                                   disabled={false}
                                   helperText=""
                                   id="name"
@@ -2099,7 +2099,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input bx--text__input"
+                                          className="bx--text-input"
                                           disabled={false}
                                           id="name"
                                           name="name"
@@ -2113,7 +2113,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       </div>
                                     </div>
                                   </div>
-                                </ForwardRef(TextInput)>
+                                </TextInput>
                               </TextField>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
@@ -2332,7 +2332,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   label="edit"
                                   name="edit"
                                 >
-                                  <ForwardRef(TextInput)
+                                  <TextInput
                                     disabled={false}
                                     helperText=""
                                     id="edit"
@@ -2369,7 +2369,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           data-invalid={null}
                                         >
                                           <input
-                                            className="bx--text-input bx--text__input"
+                                            className="bx--text-input"
                                             disabled={false}
                                             id="edit"
                                             name="edit"
@@ -2383,7 +2383,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         </div>
                                       </div>
                                     </div>
-                                  </ForwardRef(TextInput)>
+                                  </TextInput>
                                 </TextField>
                               </div>
                             </FormFieldHideWrapper>
@@ -2800,7 +2800,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 ]
                                               }
                                             >
-                                              <ForwardRef(TextInput)
+                                              <TextInput
                                                 disabled={false}
                                                 helperText=""
                                                 id="management_ip"
@@ -2849,7 +2849,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       data-invalid={null}
                                                     >
                                                       <input
-                                                        className="bx--text-input bx--text__input"
+                                                        className="bx--text-input"
                                                         disabled={false}
                                                         id="management_ip"
                                                         name="management_ip"
@@ -2863,7 +2863,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     </div>
                                                   </div>
                                                 </div>
-                                              </ForwardRef(TextInput)>
+                                              </TextInput>
                                             </TextField>
                                           </FormFieldHideWrapper>
                                         </Component>
@@ -3152,7 +3152,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 ]
                                               }
                                             >
-                                              <ForwardRef(TextInput)
+                                              <TextInput
                                                 disabled={false}
                                                 helperText=""
                                                 id="user"
@@ -3201,7 +3201,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       data-invalid={null}
                                                     >
                                                       <input
-                                                        className="bx--text-input bx--text__input"
+                                                        className="bx--text-input"
                                                         disabled={false}
                                                         id="user"
                                                         name="user"
@@ -3215,7 +3215,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     </div>
                                                   </div>
                                                 </div>
-                                              </ForwardRef(TextInput)>
+                                              </TextInput>
                                             </TextField>
                                           </FormFieldHideWrapper>
                                         </Component>
@@ -3512,7 +3512,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 ]
                                               }
                                             >
-                                              <ForwardRef(TextInput)
+                                              <TextInput
                                                 disabled={false}
                                                 helperText=""
                                                 id="physical_storage_password"
@@ -3561,7 +3561,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       data-invalid={null}
                                                     >
                                                       <input
-                                                        className="bx--text-input bx--text__input"
+                                                        className="bx--text-input"
                                                         disabled={false}
                                                         id="physical_storage_password"
                                                         name="password"
@@ -3575,7 +3575,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     </div>
                                                   </div>
                                                 </div>
-                                              </ForwardRef(TextInput)>
+                                              </TextInput>
                                             </TextField>
                                           </FormFieldHideWrapper>
                                         </Component>
@@ -4040,7 +4040,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -4050,8 +4052,15 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -4069,7 +4078,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -4079,9 +4090,15 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -4097,7 +4114,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -4107,9 +4126,15 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >

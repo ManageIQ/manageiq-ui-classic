@@ -350,7 +350,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title={null}
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -359,8 +361,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -405,7 +414,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title={null}
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -414,8 +425,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -460,7 +478,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title={null}
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -469,8 +489,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -614,7 +641,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title="Ok"
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -623,8 +652,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -671,7 +707,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title="Ok"
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -680,8 +718,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -735,7 +780,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title={null}
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -744,8 +791,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -838,7 +892,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           title={null}
                         />
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -847,8 +903,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -1222,7 +1285,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           />
                         </IconOrImage>
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -1231,8 +1296,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -1291,7 +1363,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1300,8 +1374,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1361,7 +1442,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1370,8 +1453,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1431,7 +1521,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1440,8 +1532,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1501,7 +1600,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1510,8 +1611,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1571,7 +1679,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1580,8 +1690,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1641,7 +1758,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1650,8 +1769,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1711,7 +1837,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1720,8 +1848,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
@@ -1784,7 +1919,9 @@ exports[`TextualSummary renders just fine 1`] = `
                           </div>
                         </IconOrImage>
                         <Button
+                          dangerDescription="danger"
                           disabled={false}
+                          isExpressive={false}
                           kind="ghost"
                           size="sm"
                           tabIndex={0}
@@ -1793,8 +1930,15 @@ exports[`TextualSummary renders just fine 1`] = `
                           type="button"
                         >
                           <button
+                            aria-describedby={null}
+                            aria-pressed={null}
                             className="bx--btn bx--btn--sm bx--btn--ghost"
                             disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                             tabIndex={0}
                             type="button"
                           >
@@ -1903,7 +2047,9 @@ exports[`TextualSummary renders just fine 1`] = `
                             />
                           </IconOrImage>
                           <Button
+                            dangerDescription="danger"
                             disabled={false}
+                            isExpressive={false}
                             kind="ghost"
                             size="sm"
                             tabIndex={0}
@@ -1912,8 +2058,15 @@ exports[`TextualSummary renders just fine 1`] = `
                             type="button"
                           >
                             <button
+                              aria-describedby={null}
+                              aria-pressed={null}
                               className="bx--btn bx--btn--sm bx--btn--ghost"
                               disabled={false}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               tabIndex={0}
                               type="button"
                             >
