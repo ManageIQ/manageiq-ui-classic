@@ -1348,6 +1348,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/feature-flags@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@carbon/feature-flags@npm:0.6.0"
+  checksum: 51cb90e557027c64fd7eeb9b0a7f86b58b8ca68364f6cc17750e589f84ffe6271d2a6aca2771d6ed7b4f9a01b69338a9a249d46705083dfca250c32215574993
+  languageName: node
+  linkType: hard
+
 "@carbon/icon-helpers@npm:^10.14.0, @carbon/icon-helpers@npm:^10.24.0":
   version: 10.24.0
   resolution: "@carbon/icon-helpers@npm:10.24.0"
@@ -1355,7 +1362,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^10.26.0, @carbon/icons-react@npm:^10.32.0":
+"@carbon/icons-react@npm:^10.32.0":
   version: 10.40.0
   resolution: "@carbon/icons-react@npm:10.40.0"
   dependencies:
@@ -1365,6 +1372,19 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: f0702bb3a7dd10614540fef8d200c8727b7a4608959ea1125f7616badfafc22bcb1be45d9a0f0f1038d8326dbb6e9470a895bff2afe3bf0cfcf67e7b311d7747
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^10.41.0":
+  version: 10.41.0
+  resolution: "@carbon/icons-react@npm:10.41.0"
+  dependencies:
+    "@carbon/icon-helpers": ^10.24.0
+    "@carbon/telemetry": 0.0.0-alpha.6
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16"
+  checksum: 5a3be35fd390dc962e32952cf3201804061b305f1c71d5d42dfeeff0650edeb5f2f60601b1d1e66ef1c1b7048b4123d7826ea1e8e98028f5d40e1c47763936f2
   languageName: node
   linkType: hard
 
@@ -1559,15 +1579,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~3.11.2":
-  version: 3.11.4
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.11.4"
+"@data-driven-forms/carbon-component-mapper@npm:~3.15.0":
+  version: 3.15.3
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.15.3"
   dependencies:
     "@data-driven-forms/common": "*"
+    clsx: ^1.1.1
     lodash: ^4.17.21
     prop-types: ">=15.7.2"
     react-jss: ^10.5.0
-  checksum: 856c0d03383e841a5af18ae4700549da25ba5f81e5db848405f477041d6d9e09d6fdae814415c2b89eea2e7502c36cc388be56cd61748381d6e32df276b2ac65
+  checksum: c8aa9c3dae6faab3f9784514c475e52674411132a7ddaed12d6c6485e95f0ca583990c8fca4c7ca16caeccf53c580e55ae6f270e1fdd77d99429ca995b6c2839
   languageName: node
   linkType: hard
 
@@ -1586,11 +1607,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:~3.11.2":
-  version: 3.11.4
-  resolution: "@data-driven-forms/react-form-renderer@npm:3.11.4"
+"@data-driven-forms/react-form-renderer@npm:~3.15.0":
+  version: 3.15.3
+  resolution: "@data-driven-forms/react-form-renderer@npm:3.15.3"
   dependencies:
-    final-form: ^4.20.0
+    final-form: ^4.20.4
     final-form-arrays: ^3.0.2
     final-form-focus: ^1.1.2
     lodash: ^4.17.15
@@ -1598,9 +1619,9 @@ __metadata:
     react-final-form: ^6.5.0
     react-final-form-arrays: ^3.1.1
   peerDependencies:
-    react: ">=16.13.1"
-    react-dom: ">=16.13.1"
-  checksum: c5a97d6e77024fb9f6ea435bd820cb5fa8801275629a75403ed037085f2cd030542dce95de258c97017e98f086702679f5e524653e026364bea4ea1a0bc46f17
+    react: ^16.13.1 || ^17.0.2
+    react-dom: ^16.13.1 || ^17.0.2
+  checksum: bf011c92b140aa334ef3c375e0ff54ab19c82f72c7d467a4fe8657770f44c061e939c070667e642d3dedc79e1459bf614072af4e4cfd6c2f3f202893a6b463b5
   languageName: node
   linkType: hard
 
@@ -5222,15 +5243,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"carbon-components-react@npm:~7.29.0":
-  version: 7.29.0
-  resolution: "carbon-components-react@npm:7.29.0"
+"carbon-components-react@npm:~7.46.0":
+  version: 7.46.0
+  resolution: "carbon-components-react@npm:7.46.0"
   dependencies:
-    "@carbon/icons-react": ^10.26.0
+    "@carbon/feature-flags": ^0.6.0
+    "@carbon/icons-react": ^10.41.0
     "@carbon/telemetry": 0.0.0-alpha.6
-    classnames: 2.2.6
+    classnames: 2.3.1
+    copy-to-clipboard: ^3.3.1
     downshift: 5.2.1
-    flatpickr: 4.6.1
+    flatpickr: 4.6.9
     invariant: ^2.2.3
     lodash.debounce: ^4.0.8
     lodash.findlast: ^4.5.0
@@ -5239,14 +5262,14 @@ __metadata:
     lodash.throttle: ^4.1.1
     react-is: ^16.8.6
     use-resize-observer: ^6.0.0
-    warning: ^3.0.0
+    wicg-inert: ^3.1.1
     window-or-global: ^1.0.1
   peerDependencies:
-    carbon-components: ^10.9.0
+    carbon-components: ^10.30.0
     carbon-icons: ^7.0.7
     react: ^16.8.6 || ^17.0.1
     react-dom: ^16.8.6 || ^17.0.1
-  checksum: c5498e29ad99783aa2c7e0079d1636be63d54bef1ccfb682d6931be6140b118ca8ceee20fb85735b738d7e2de207b33dac771dec4e86519e6a215e0598eea723
+  checksum: a42b9a2de8c1d9494c1ff12fd7736c993b8c3e53e58f1c7b893166508818ad7b477157e342ca9229e6b6150c6fb7fda798eca8551a5bda62a723f4c3e9a57785
   languageName: node
   linkType: hard
 
@@ -5262,15 +5285,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"carbon-components@npm:~10.29.0":
-  version: 10.29.0
-  resolution: "carbon-components@npm:10.29.0"
+"carbon-components@npm:~10.46.0":
+  version: 10.46.0
+  resolution: "carbon-components@npm:10.46.0"
   dependencies:
     "@carbon/telemetry": 0.0.0-alpha.6
     flatpickr: 4.6.1
     lodash.debounce: ^4.0.8
     warning: ^3.0.0
-  checksum: edf6c83694f183514fcea5f208e9ba641b432b75ef33e7daf522143790f9303be2b97cb670b087c8e86f44566527d410c111e480d4017c34683617a07434f6a0
+  checksum: 421f07f9239a8efaa9225659190a52990265260b2c6b0148d18504d27507d16abffeddb2a154b70c8abb9270393d6d3ec660c555dd1f1d12a09bb5101a4b6194
   languageName: node
   linkType: hard
 
@@ -5414,7 +5437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:>=2.0.0 <4.0.0, chokidar@npm:^3.4.1":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.4.1":
   version: 3.5.2
   resolution: "chokidar@npm:3.5.2"
   dependencies:
@@ -5522,17 +5545,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.2.6, classnames@npm:~2.2.6":
-  version: 2.2.6
-  resolution: "classnames@npm:2.2.6"
-  checksum: 09a4fda780158aa8399079898eabeeca0c48c28641d9e4de140db7412e5e346843039ded1af0152f755afc2cc246ff8c3d6f227bf0dcb004e070b7fa14ec54cc
-  languageName: node
-  linkType: hard
-
-"classnames@npm:^2.2.0, classnames@npm:^2.2.5":
+"classnames@npm:2.3.1, classnames@npm:^2.2.0, classnames@npm:^2.2.5":
   version: 2.3.1
   resolution: "classnames@npm:2.3.1"
   checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
+  languageName: node
+  linkType: hard
+
+"classnames@npm:~2.2.6":
+  version: 2.2.6
+  resolution: "classnames@npm:2.2.6"
+  checksum: 09a4fda780158aa8399079898eabeeca0c48c28641d9e4de140db7412e5e346843039ded1af0152f755afc2cc246ff8c3d6f227bf0dcb004e070b7fa14ec54cc
   languageName: node
   linkType: hard
 
@@ -5716,7 +5739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.0.4":
+"clsx@npm:^1.0.4, clsx@npm:^1.1.1":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
@@ -6289,6 +6312,15 @@ __metadata:
   version: 0.1.1
   resolution: "copy-descriptor@npm:0.1.1"
   checksum: d4b7b57b14f1d256bb9aa0b479241048afd7f5bcf22035fc7b94e8af757adeae247ea23c1a774fe44869fd5694efba4a969b88d966766c5245fdee59837fe45b
+  languageName: node
+  linkType: hard
+
+"copy-to-clipboard@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "copy-to-clipboard@npm:3.3.1"
+  dependencies:
+    toggle-selection: ^1.0.6
+  checksum: 3c7b1c333dc6a4b2e9905f52e4df6bbd34ff9f9c97ecd3ca55378a6bc1c191bb12a3252e6289c7b436e9188cff0360d393c0161626851d2301607860bbbdcfd5
   languageName: node
   linkType: hard
 
@@ -9153,7 +9185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"final-form@npm:^4.20.0":
+"final-form@npm:^4.20.4":
   version: 4.20.4
   resolution: "final-form@npm:4.20.4"
   dependencies:
@@ -9299,6 +9331,13 @@ __metadata:
   version: 4.6.1
   resolution: "flatpickr@npm:4.6.1"
   checksum: 66ea82084a70570a0dcf5a46a3b7e6a6551ec06fd1238f544226540feae69d2c3fd7af69f77c73023059e1a0d50e2f6ed0a6c4d4c390794cc4c8dd3c50002338
+  languageName: node
+  linkType: hard
+
+"flatpickr@npm:4.6.9":
+  version: 4.6.9
+  resolution: "flatpickr@npm:4.6.9"
+  checksum: 4702ad182531af0524b2fc74a70e06d276ff91918449092b3a11c464cb5a5e010df6c7cc9ff92e8b8373f81b238ea85d911ce9b3b883ee8df5085180cc3aea13
   languageName: node
   linkType: hard
 
@@ -13742,8 +13781,8 @@ fsevents@^1.2.7:
     "@carbon/charts-react": ^0.41.100
     "@carbon/icons-react": ~10.26.0
     "@carbon/themes": ~10.28.0
-    "@data-driven-forms/carbon-component-mapper": ~3.11.2
-    "@data-driven-forms/react-form-renderer": ~3.11.2
+    "@data-driven-forms/carbon-component-mapper": ~3.15.0
+    "@data-driven-forms/react-form-renderer": ~3.15.0
     "@manageiq/ui-components": 1.4.4
     "@novnc/novnc": ~1.2.0
     "@pf3/select": ~1.12.6
@@ -13769,8 +13808,8 @@ fsevents@^1.2.7:
     babel-loader: ~8.1.0
     bootstrap-filestyle: ~1.2.1
     bootstrap-switch: 3.3.4
-    carbon-components: ~10.29.0
-    carbon-components-react: ~7.29.0
+    carbon-components: ~10.46.0
+    carbon-components-react: ~7.46.0
     carbon-icons: ~7.0.7
     classnames: ~2.2.6
     codemirror: ~5.47.0
@@ -13845,7 +13884,7 @@ fsevents@^1.2.7:
     regenerator-runtime: ~0.13.5
     resolve-url-loader: ~3.1.1
     rxjs: ~5.6.0-forward-compat.2
-    sass: ~1.26.5
+    sass: ~1.34.0
     sass-loader: ~8.0.2
     spice-html5-bower: ~1.7.3
     spin.js: ~4.0.0
@@ -18911,14 +18950,14 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"sass@npm:~1.26.5":
-  version: 1.26.11
-  resolution: "sass@npm:1.26.11"
+"sass@npm:~1.34.0":
+  version: 1.34.1
+  resolution: "sass@npm:1.34.1"
   dependencies:
-    chokidar: ">=2.0.0 <4.0.0"
+    chokidar: ">=3.0.0 <4.0.0"
   bin:
     sass: sass.js
-  checksum: 20445606e45760572eea3b8814c630422ae95f867d19b0b01479abd718654d82fabd75614d8d839353867ebed46705be018f1be1d76142f266586759edfcb9fa
+  checksum: 97b3816ab1bf8f59421b61ce84e4c45ad9c59890f960bdd7a23bc5058283070252dcc23f19559c12121c18d6da0b4cd2fddedb6ffe8f2509aad20662fd9ca087
   languageName: node
   linkType: hard
 
@@ -20737,6 +20776,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"toggle-selection@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "toggle-selection@npm:1.0.6"
+  checksum: a90dc80ed1e7b18db8f4e16e86a5574f87632dc729cfc07d9ea3ced50021ad42bb4e08f22c0913e0b98e3837b0b717e0a51613c65f30418e21eb99da6556a74c
+  languageName: node
+  linkType: hard
+
 "toidentifier@npm:1.0.0":
   version: 1.0.0
   resolution: "toidentifier@npm:1.0.0"
@@ -21872,6 +21918,13 @@ resolve@1.1.7:
   bin:
     node-which: ./bin/node-which
   checksum: 1a5c563d3c1b52d5f893c8b61afe11abc3bab4afac492e8da5bde69d550de701cf9806235f20a47b5c8fa8a1d6a9135841de2596535e998027a54589000e66d1
+  languageName: node
+  linkType: hard
+
+"wicg-inert@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "wicg-inert@npm:3.1.1"
+  checksum: d4553ea762ad5808b2d20990f05695d3272cf5d24ee9b0008d0edb0c69466eb6a24824ed932070553a2dc8b25eee8fcde780e073de89d640882d9da99f874944
   languageName: node
   linkType: hard
 
