@@ -90,6 +90,23 @@ class VmInfraController < ApplicationController
     }
   end
 
+  def vm_rename
+    ## 
+    @record = find_record_with_rbac(VmOrTemplate, params[:miq_grid_checks] || params[:id])
+    unless @record.supports?(:rename)
+      add_flash(_("Renaming selected VM \"%{name}\" is not supported") % {:name => @record.name}, :error)
+      if @explorer
+        @record = @sb[:action] = nil
+        replace_right_cell
+      end
+      return
+    end
+    if @explorer
+      @changed = session[:changed] = false
+    end
+    @refresh_partial = 'rename_vm'
+  end
+
   menu_section :inf
   feature_for_actions %w[vms_filter_accord templates_filter_accord], *ADV_SEARCH_ACTIONS
   feature_for_actions 'vm_show', :groups, :users, :patches

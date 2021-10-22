@@ -2902,7 +2902,6 @@ Rails.application.routes.draw do
         disassociate_floating_ip_form_fields
         add_security_group
         remove_security_group
-        rename_vm
         retire
         right_size
         show
@@ -2923,7 +2922,6 @@ Rails.application.routes.draw do
         live_migrate_vm
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-        rename_vm
         right_size
         set_checked_items
         show_list
@@ -3085,7 +3083,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups
@@ -3172,7 +3169,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups

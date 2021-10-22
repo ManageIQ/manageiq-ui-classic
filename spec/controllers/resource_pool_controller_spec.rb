@@ -150,18 +150,6 @@ describe ResourcePoolController do
       end
     end
 
-    context 'Rename selected VM' do
-      before do
-        allow(controller).to receive(:performed?).and_return(true)
-        controller.params = {:pressed => 'vm_rename'}
-      end
-
-      it 'calls vm_rename' do
-        expect(controller).to receive(:vm_rename)
-        controller.send(:button)
-      end
-    end
-
     context 'Set ownership for selected VMs' do
       before { controller.params = {:pressed => 'vm_ownership'} }
 
