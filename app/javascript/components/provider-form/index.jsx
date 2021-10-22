@@ -59,7 +59,7 @@ const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).
 );
 
 const typeSelectField = (edit, filter, setState, providers) => ({
-  component: 'select',
+  component: componentTypes.SELECT,
   id: 'type',
   name: 'type',
   label: __('Type'),
@@ -95,45 +95,43 @@ const ProviderForm = ({
   const submitLabel = edit ? __('Save') : __('Add');
 
   useEffect(() => {
-    const filter = kind;
-    let providers = [];
+    API.options('/api/providers').then(({ data: { supported_providers } }) => { // eslint-disable-line camelcase
+      const filter = kind;
+      const providers = supported_providers.filter(({ kind }) => kind === filter).map(({ title, type }) => ({ value: type, label: title }));
+      providers.unshift({ label: `<${__('Choose')}>`, value: '-1' });
 
-    if (providerId) {
-      miqSparkleOn();
-      API.get(`/api/providers/${providerId}?attributes=endpoints,authentications`).then(({
-        type,
-        endpoints: _endpoints,
-        authentications: _authentications,
-        ...provider
-      }) => {
+      if (providerId) {
+        miqSparkleOn();
+        API.get(`/api/providers/${providerId}?attributes=endpoints,authentications`).then(({
+          type,
+          endpoints: _endpoints,
+          authentications: _authentications,
+          ...provider
+        }) => {
         // DDF can handle arrays with FieldArray, but only with a heterogenous schema, which isn't enough.
         // As a solution, we're converting the arrays to objects indexed by role/authtype and converting
         // it back to an array of objects before submitting the form. Validation, however, should not be
         // converted back as the schema is being used in the password sanitization process.
-        const endpoints = keyBy(_endpoints, 'role');
-        const authentications = keyBy(_authentications, 'authtype');
-
-        loadProviderFields(type).then((fields) => {
-          setState({
-            fields: [typeSelectField(true, kind), ...fields],
-            initialValues: {
-              ...provider,
-              type,
-              endpoints,
-              authentications,
-            },
-          });
-        }).then(miqSparkleOff);
-      });
-    } else {
+          const endpoints = keyBy(_endpoints, 'role');
+          const authentications = keyBy(_authentications, 'authtype');
+          loadProviderFields(type).then((fields) => {
+            setState({
+              fields: [typeSelectField(true, kind, setState, providers), ...fields],
+              initialValues: {
+                ...provider,
+                type,
+                endpoints,
+                authentications,
+              },
+            });
+          }).then(miqSparkleOff);
+        });
+      } else {
       // As the typeSelectField relies on the setState() function, it's necessary to set the initial state
       // here and not above in the useState() function.
-      API.options('/api/providers').then(({ data: { supported_providers } }) => { // eslint-disable-line camelcase
-        providers = supported_providers.filter(({ kind }) => kind === filter).map(({ title, type }) => ({ value: type, label: title }));
-        providers.unshift({ label: `<${__('Choose')}>`, value: '-1' });
         setState({ fields: [typeSelectField(false, kind, setState, providers)] });
-      });
-    }
+      }
+    });
   }, [providerId]);
 
   const onCancel = () => {
