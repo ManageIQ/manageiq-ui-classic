@@ -12,6 +12,7 @@ module Menu
           network_menu_section,
           storage_menu_section,
           automation_menu_section,
+          cicd_menu_section,
 
           control_menu_section,
           monitor_menu_section,
@@ -27,6 +28,15 @@ module Menu
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
           container_menu_section,
+        ])
+      end
+
+      def cicd_menu_section
+        Menu::Section.new(:cicd, N_("CI & CD"), 'carbon--InventoryManagement', [
+          Menu::Item.new('ems_cicd',      N_('Providers'),  'ems_cicd',     {:feature => 'ems_cicd_show_list'},     '/ems_cicd/show_list'),
+          Menu::Item.new('pipeine',       N_('Pipelines'),  'pipeine',      {:feature => 'pipeine_show_list'},      '/pipeine/show_list'),
+          Menu::Item.new('ci_job',        N_('Jobs'),       'ci_job',       {:feature => 'ci_job_show_list'},       '/ci_job/show_list'),
+          Menu::Item.new('ci_schedule',   N_('Schedule'),   'ci_schedule',  {:feature => 'ci_schedule_show_list'},  '/ci_schedule/show_list'),
         ])
       end
 
