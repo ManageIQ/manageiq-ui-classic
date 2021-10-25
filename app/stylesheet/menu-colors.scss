@@ -14,6 +14,12 @@ $divider-fg: $disabled-02; // $carbon--gray-60;
 $find-bg: $carbon--gray-80;
 $find-placeholder-fg: $carbon--gray-50;
 
+$clear-btn-outline: $interactive-03;
+$clear-btn-fill: $ui-05;
+$clear-btn-background: $ui-01;
+$clear-btn-hover-background: $hover-ui;
+$clear-btn-active: $ui-02;
+
 // unused, theme default
 // $row-selected-border: $carbon--blue-60;
 
@@ -69,10 +75,38 @@ li.menu-group {
   .bx--search-input {
     background-color: $find-bg;
     color: $row-fg-text;
+    
+    &:focus~.bx--search-close:hover{
+      outline: 2px solid $clear-btn-outline;
+      outline-offset: -2px;
+    }
   }
 
-  .bx--search-close::before {
-    background-color: $find-bg;
+  button.bx--search-close {
+    fill: $clear-btn-fill;
+
+    &::before {
+      background-color: $clear-btn-background;
+    }
+  
+    &:hover {
+      background: $clear-btn-hover-background;
+    }
+
+    &:focus {
+      outline: 2px solid $clear-btn-outline;
+      outline-offset: -2px;
+      
+      &:before {
+        background-color: $clear-btn-outline;
+      }
+    }
+
+    &:active {
+      outline: 2px solid $clear-btn-outline;
+      outline-offset: -2px;
+      background-color: $clear-btn-active;
+    }
   }
 
   .bx--label {
