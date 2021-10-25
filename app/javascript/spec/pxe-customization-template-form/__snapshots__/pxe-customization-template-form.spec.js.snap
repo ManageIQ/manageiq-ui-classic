@@ -1313,7 +1313,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="name"
@@ -1363,7 +1363,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -1378,7 +1378,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -1412,7 +1412,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           maxLength={100}
                                           name="description"
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="description"
@@ -1450,7 +1450,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -1465,7 +1465,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -2175,6 +2175,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           name="script"
                                         >
                                           <FormGroup
+                                            hasMargin={true}
                                             invalid={false}
                                             legendText="Script"
                                             message={false}
@@ -2564,7 +2565,9 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -2574,8 +2577,15 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -2592,7 +2602,9 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -2602,9 +2614,15 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -3981,7 +3999,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="name"
@@ -4031,7 +4049,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -4046,7 +4064,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -4080,7 +4098,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           maxLength={100}
                                           name="description"
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="description"
@@ -4118,7 +4136,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -4133,7 +4151,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -4843,6 +4861,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           name="script"
                                         >
                                           <FormGroup
+                                            hasMargin={true}
                                             invalid={false}
                                             legendText="Script"
                                             message={false}
@@ -5244,7 +5263,9 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -5254,8 +5275,15 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary"
                                         disabled={false}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -5272,7 +5300,9 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -5282,9 +5312,15 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -6661,7 +6697,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                             ]
                                           }
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="name"
@@ -6711,7 +6747,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -6726,7 +6762,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -6760,7 +6796,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           maxLength={100}
                                           name="description"
                                         >
-                                          <ForwardRef(TextInput)
+                                          <TextInput
                                             disabled={false}
                                             helperText=""
                                             id="description"
@@ -6798,7 +6834,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text__input"
+                                                    className="bx--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -6813,7 +6849,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                 </div>
                                               </div>
                                             </div>
-                                          </ForwardRef(TextInput)>
+                                          </TextInput>
                                         </TextField>
                                       </FormFieldHideWrapper>
                                     </FormConditionWrapper>
@@ -7523,6 +7559,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           name="script"
                                         >
                                           <FormGroup
+                                            hasMargin={true}
                                             invalid={false}
                                             legendText="Script"
                                             message={false}
@@ -7926,7 +7963,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -7936,8 +7975,15 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -7955,7 +8001,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -7965,9 +8013,15 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -7983,7 +8037,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -7993,9 +8049,15 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
