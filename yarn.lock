@@ -1579,16 +1579,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~3.15.0":
-  version: 3.15.3
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.15.3"
+"@data-driven-forms/carbon-component-mapper@npm:~3.15.5":
+  version: 3.15.5
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.15.5"
   dependencies:
     "@data-driven-forms/common": "*"
     clsx: ^1.1.1
     lodash: ^4.17.21
     prop-types: ">=15.7.2"
     react-jss: ^10.5.0
-  checksum: c8aa9c3dae6faab3f9784514c475e52674411132a7ddaed12d6c6485e95f0ca583990c8fca4c7ca16caeccf53c580e55ae6f270e1fdd77d99429ca995b6c2839
+  peerDependencies:
+    react: ^16.13.1 || ^17.0.2
+    react-dom: ^16.13.1 || ^17.0.2
+  checksum: 521acae6ff04c42a751f0844e0094ca4515870d76ffcca2b4f53a4f9125b47b7a76e295e67a7dad16f40212b9218b0e9ec7f2c3956420e6a16022b3af662d41b
   languageName: node
   linkType: hard
 
@@ -1607,9 +1610,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:~3.15.0":
-  version: 3.15.3
-  resolution: "@data-driven-forms/react-form-renderer@npm:3.15.3"
+"@data-driven-forms/react-form-renderer@npm:~3.15.5":
+  version: 3.15.5
+  resolution: "@data-driven-forms/react-form-renderer@npm:3.15.5"
   dependencies:
     final-form: ^4.20.4
     final-form-arrays: ^3.0.2
@@ -1621,7 +1624,7 @@ __metadata:
   peerDependencies:
     react: ^16.13.1 || ^17.0.2
     react-dom: ^16.13.1 || ^17.0.2
-  checksum: bf011c92b140aa334ef3c375e0ff54ab19c82f72c7d467a4fe8657770f44c061e939c070667e642d3dedc79e1459bf614072af4e4cfd6c2f3f202893a6b463b5
+  checksum: ada19c223645b1f3b20914c9f2c8656e2752b71d2c64996eeebde6ee3ef4b33853ca089c0669817b305277175826e238bcda41c580d6fbf6fc71aca3dcba46e8
   languageName: node
   linkType: hard
 
@@ -13781,8 +13784,8 @@ fsevents@^1.2.7:
     "@carbon/charts-react": ^0.41.100
     "@carbon/icons-react": ~10.26.0
     "@carbon/themes": ~10.28.0
-    "@data-driven-forms/carbon-component-mapper": ~3.15.0
-    "@data-driven-forms/react-form-renderer": ~3.15.0
+    "@data-driven-forms/carbon-component-mapper": ~3.15.5
+    "@data-driven-forms/react-form-renderer": ~3.15.5
     "@manageiq/ui-components": 1.4.4
     "@novnc/novnc": ~1.2.0
     "@pf3/select": ~1.12.6

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -10,29 +11,62 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
   const retireItems = JSON.parse(retirementID);
 
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!retireItems });
+  const [showDateError, setShowDateError] = useState(false);
 
   const onSubmit = ({
-    formMode, retirementDate, retirementWarning, days, weeks, months, hours,
+    formMode, retirementDate, retirementTime, retirementWarning, days, weeks, months, hours,
   }) => {
-    miqSparkleOn();
-
-    const date = formMode !== 'delay' ? retirementDate[0] : moment().add({
-      hours: Number(hours),
-      days: Number(days),
-      weeks: Number(weeks),
-      months: Number(months),
-    })._d;
-
-    const resources = retireItems.map((id) => ({
-      id,
-      date,
-      warn: retirementWarning,
-    }));
-
-    API.post(url, { action: 'request_retire', resources }).then(() => {
-      const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
-      miqRedirectBack(message, 'success', redirect);
-    }).catch(miqSparkleOff);
+    if (retirementDate || formMode === 'delay') {
+      miqSparkleOn();
+      let tempDate = retirementDate;
+      if (Array.isArray(retirementDate)) {
+        [tempDate] = retirementDate;
+      }
+      let date;
+      if (tempDate !== undefined || formMode === 'delay') {
+        if (formMode === 'delay') {
+          date = moment().add({
+            hours: Number(hours),
+            days: Number(days),
+            weeks: Number(weeks),
+            months: Number(months),
+          })._d;
+        } else {
+          date = new Date(tempDate);
+          let time;
+          let timeHours;
+          let timeMinutes;
+          if (retirementTime instanceof Date === false || retirementTime === undefined) {
+            time = moment().startOf('D');
+            timeHours = time.hour();
+            timeMinutes = time.minute();
+            if (/^([0-1][0-2]|0?[1-9]):[0-5][0-9]$/.test(retirementTime)) {
+              [timeHours, timeMinutes] = retirementTime.split(':');
+            } else {
+              time = moment().startOf('D');
+            }
+          } else {
+            time = moment(retirementTime);
+            timeHours = time.hour();
+            timeMinutes = time.minute();
+          }
+          date.setHours(timeHours);
+          date.setMinutes(timeMinutes);
+        }
+      }
+      tempDate = date;
+      const resources = retireItems.map((id) => ({
+        id,
+        date,
+        warn: retirementWarning,
+      }));
+      API.post(url, { action: 'request_retire', resources }).then(() => {
+        const message = sprintf(__(`Retirement date set to ${date.toLocaleString()}`));
+        miqRedirectBack(message, 'success', redirect);
+      }).catch(miqSparkleOff);
+    } else if (retirementDate === undefined) {
+      setShowDateError(true);
+    }
   };
 
   const onCancel = () => {
@@ -42,15 +76,26 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
 
   useEffect(() => {
     if (retireItems.length === 1) {
-      // eslint-disable-next-line camelcase
       API.get(`${url}/${retireItems[0]}?attributes=retires_on,retirement_warn`).then(({ retires_on, retirement_warn }) => {
+        let retirementTime;
+        if (retires_on) {
+          const tempDate = new Date(retires_on);
+          const hours = `${tempDate.getHours()}`;
+          const minutes = `${tempDate.getMinutes()}`;
+          retirementTime = new Date();
+          retirementTime.setHours(hours);
+          retirementTime.setMinutes(minutes);
+        } else {
+          retirementTime = moment().startOf('D')._d;
+        }
         setState({
           isLoading: false,
-          // eslint-disable-next-line camelcase
-          initialValues: retires_on && {
+          initialValues: retires_on ? {
             retirementDate: retires_on,
-            // eslint-disable-next-line camelcase
+            retirementTime,
             retirementWarning: retirement_warn || '',
+          } : {
+            retirementTime,
           },
         });
       }).catch(handleFailure);
@@ -63,7 +108,7 @@ const RetirementForm = ({ retirementID, redirect, url }) => {
     !isLoading && (
       <MiqFormRenderer
         initialValues={initialValues}
-        schema={createSchema()}
+        schema={createSchema(showDateError)}
         onSubmit={onSubmit}
         canReset={!!retireItems}
         onCancel={onCancel}

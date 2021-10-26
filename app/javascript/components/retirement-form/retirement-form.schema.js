@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = () => ({
+const createSchema = (showDateError) => ({
   fields: [{
     component: componentTypes.SUB_FORM,
     name: 'retirement-date-subform',
@@ -59,8 +59,17 @@ const createSchema = () => ({
       id: 'retirementDate',
       name: 'retirementDate',
       variant: 'date-time',
-      label: __('Retirement Date and Time'),
+      label: __('Retirement Date'),
       isRequired: true,
+      condition: {
+        or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
+      },
+    }, {
+      component: componentTypes.TIME_PICKER,
+      label: __('Retirement Time'),
+      name: 'retirementTime',
+      key: 'test',
+      twelveHoursFormat: true,
       condition: {
         or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
       },
@@ -69,7 +78,6 @@ const createSchema = () => ({
       id: 'retirementWarning',
       name: 'retirementWarning',
       label: __('Retirement Warning'),
-      description: __('* Saving a blank date will remove all retirement dates'),
       options: [
         { label: __('None'), value: '' },
         { label: __('1 Week before retirement'), value: 7 },
@@ -77,6 +85,17 @@ const createSchema = () => ({
         { label: __('30 Days before retirement'), value: 30 },
       ],
     },
+    ...(showDateError ? [
+      {
+        id: 'dateWarning',
+        component: componentTypes.PLAIN_TEXT,
+        name: 'dateWarning',
+        label: __('Please select a date.'),
+        condition: {
+          or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
+        },
+      },
+    ] : []),
     ],
   },
   ],
