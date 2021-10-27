@@ -711,8 +711,6 @@ InfraNetworkingController:
 InfraTopologyController:
 - index
 - report_data
-MigrationController:
-- index
 MiqActionController:
 - action_field_changed
 - index
