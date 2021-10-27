@@ -129,7 +129,15 @@
       color: #c6c6c6;
       pointer-events: inherit;
     }
-    
+    .bx--side-nav__menu-item {
+      list-style: none;
+    }
+    .bx--side-nav__menu {
+      padding-left: 0px;
+    }
+    .bx--side-nav__item.bx--side-nav__item--icon a.bx--side-nav__link {
+      padding-left: 2rem;
+    }
 }
 
 .bx--overflow-menu-options[data-floating-menu-direction=bottom]::after {
