@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = (showDateError) => ({
+const createSchema = (showTimeField, setShowTimeField) => ({
   fields: [{
     component: componentTypes.SUB_FORM,
     name: 'retirement-date-subform',
@@ -60,20 +60,49 @@ const createSchema = (showDateError) => ({
       name: 'retirementDate',
       variant: 'date-time',
       label: __('Retirement Date'),
-      isRequired: true,
+      onChange: () => setShowTimeField(false),
       condition: {
         or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
       },
-    }, {
+    },
+    {
+      id: 'dateInfo',
+      component: componentTypes.PLAIN_TEXT,
+      name: 'dateInfo',
+      label: __('* Saving a blank date will remove all retirement dates'),
+      condition: {
+        or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
+      },
+    },
+    ...(showTimeField ? [
+      {
+        component: componentTypes.TIME_PICKER,
+        label: __('Retirement Time'),
+        name: 'retirementTime',
+        key: 'showTimeField',
+        twelveHoursFormat: true,
+        condition: {
+          and: [
+            { or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }] },
+            { or: [{ when: 'retirementDate', isEmpty: true }] },
+          ],
+        },
+      },
+    ] : []),
+    {
       component: componentTypes.TIME_PICKER,
       label: __('Retirement Time'),
       name: 'retirementTime',
-      key: 'test',
+      key: 'retirementTime1',
       twelveHoursFormat: true,
       condition: {
-        or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
+        and: [
+          { or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }] },
+          { or: [{ when: 'retirementDate', isNotEmpty: true }] },
+        ],
       },
-    }, {
+    },
+    {
       component: 'select',
       id: 'retirementWarning',
       name: 'retirementWarning',
@@ -85,17 +114,6 @@ const createSchema = (showDateError) => ({
         { label: __('30 Days before retirement'), value: 30 },
       ],
     },
-    ...(showDateError ? [
-      {
-        id: 'dateWarning',
-        component: componentTypes.PLAIN_TEXT,
-        name: 'dateWarning',
-        label: __('Please select a date.'),
-        condition: {
-          or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }],
-        },
-      },
-    ] : []),
     ],
   },
   ],
