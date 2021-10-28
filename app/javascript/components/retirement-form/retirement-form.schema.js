@@ -102,10 +102,32 @@ const createSchema = (showTimeField, setShowTimeField) => ({
         ],
       },
     },
+    ...(showTimeField ? [
+      {
+        component: 'select',
+        id: 'retirementWarning',
+        name: 'retirementWarning',
+        key: 'retirementWarning0',
+        label: __('Retirement Warning'),
+        options: [
+          { label: __('None'), value: '' },
+          { label: __('1 Week before retirement'), value: 7 },
+          { label: __('2 Weeks before retirement'), value: 14 },
+          { label: __('30 Days before retirement'), value: 30 },
+        ],
+        condition: {
+          and: [
+            { or: [{ when: 'formMode', is: 'date' }, { when: 'formMode', is: '' }] },
+            { or: [{ when: 'retirementDate', isEmpty: true }] },
+          ],
+        },
+      },
+    ] : []),
     {
       component: 'select',
       id: 'retirementWarning',
       name: 'retirementWarning',
+      key: 'retirementWarning1',
       label: __('Retirement Warning'),
       options: [
         { label: __('None'), value: '' },
@@ -113,6 +135,9 @@ const createSchema = (showTimeField, setShowTimeField) => ({
         { label: __('2 Weeks before retirement'), value: 14 },
         { label: __('30 Days before retirement'), value: 30 },
       ],
+      condition: {
+        or: [{ when: 'formMode', is: 'delay' }, { when: 'retirementDate', isNotEmpty: true }],
+      },
     },
     ],
   },
