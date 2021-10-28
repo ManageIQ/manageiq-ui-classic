@@ -50,25 +50,24 @@ describe CloudObjectStoreContainerController do
 
   describe "#delete" do
     let(:ems) { FactoryBot.create(:ems_openstack) }
-    let(:container) { FactoryBot.create(:cloud_object_store_container, :name => "cloud-object-store-container-01",:ext_management_system => ems) }
+    let(:container) { FactoryBot.create(:cloud_object_store_container, :name => "cloud-object-store-container-01", :ext_management_system => ems) }
 
     let(:task_options) do
-        {
-          :action => "deleting Cloud Object Store Container for user %{user}" %
-            {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-
-      let(:queue_options) do
-        {
-          :class_name  => "CloudObjectStoreContainer",
-          :method_name => 'cloud_object_store_container_delete',
-          :role        => 'ems_operations',
-          :instance_id => container.id,
-          :args        => []
-        }
-      end
+      {
+        :action => "deleting Cloud Object Store Container for user %{user}" %
+          {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => "CloudObjectStoreContainer",
+        :method_name => 'cloud_object_store_container_delete',
+        :role        => 'ems_operations',
+        :instance_id => container.id,
+        :args        => []
+      }
+    end
 
     before do
       stub_user(:features => :all)
