@@ -140,7 +140,15 @@ const RetirementForm = ({
         onSubmit={onSubmit}
         canReset={!!retireItems}
         onCancel={onCancel}
-        onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+        onReset={() => {
+          add_flash(__('All changes have been reset'), 'warn');
+          setShowTimeField(true);
+          if (initialValues.retirementDate) {
+            setShowTimeField(true);
+          } else {
+            setShowTimeField(false);
+          }
+        }}
         buttonsLabels={{
           resetLabel: __('Reset'),
           submitLabel: __('Save'),
