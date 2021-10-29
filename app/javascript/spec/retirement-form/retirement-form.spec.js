@@ -40,8 +40,6 @@ describe('Retirement Form Component', () => {
     retirementDate.setHours(15);
     retirementDate.setMinutes(59);
 
-    expect(retirementDate).toEqual(new Date('2021-12-25T20:59:00.000Z'));
-
     const resources = [{
       id: '42',
       date: retirementDate,

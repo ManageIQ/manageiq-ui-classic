@@ -6,6 +6,9 @@ import MiqFormRenderer from '@@ddf';
 import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import {
+  convertDate, getDelay, getDate, getRetirementWarning, getRetirementDate, getDateFromUTC,
+} from './helper';
 
 const RetirementForm = ({
   retirementID, redirect, url, timezone,
@@ -23,72 +26,43 @@ const RetirementForm = ({
     if (retirementDate === []) {
       NotEmpty = false;
     }
+
     if ((retirementDate || formMode === 'delay') && NotEmpty) {
       miqSparkleOn();
-      let retirementWarn = retirementWarning;
-      if (retirementWarn === undefined) {
-        retirementWarn = '';
-      }
-      let tempDate = retirementDate;
-      if (Array.isArray(retirementDate)) {
-        [tempDate] = retirementDate;
-      }
+
+      const retirementWarn = getRetirementWarning(retirementWarning);
+      let tempDate = getRetirementDate(retirementDate);
+
       let date;
-      if (tempDate !== undefined || formMode === 'delay') {
-        if (formMode === 'delay') {
-          date = moment().add({
-            hours: Number(hours),
-            days: Number(days),
-            weeks: Number(weeks),
-            months: Number(months),
-          })._d;
-        } else {
-          date = new Date(tempDate);
-          let time;
-          let timeHours;
-          let timeMinutes;
-          if (retirementTime instanceof Date === false || retirementTime === undefined) {
-            time = moment().startOf('D');
-            timeHours = time.hour();
-            timeMinutes = time.minute();
-            if (/^([0-1][0-2]|0?[1-9]):[0-5][0-9]$/.test(retirementTime)) {
-              [timeHours, timeMinutes] = retirementTime.split(':');
-            } else {
-              time = moment().startOf('D');
-            }
-          } else {
-            time = moment(retirementTime);
-            timeHours = time.hour();
-            timeMinutes = time.minute();
-          }
-          date.setHours(timeHours);
-          date.setMinutes(timeMinutes);
-          date.setSeconds(0);
-        }
+      if (formMode === 'delay') {
+        date = getDelay(hours, days, weeks, months);
+      } else {
+        date = getDate(tempDate, retirementTime);
       }
 
+      // Keep temp date as original date relative to user's timezone then convert date to manageiq timezone for posting data
       tempDate = date;
-
-      // Find utc offset of browser time zone (utcOffset) and manage iq timezone (newOffset)
-      const browserOffset = moment().utcOffset();
-      const miqOffset = moment.tz(tz.tzinfo.info.identifier).utcOffset();
-      date = moment(date).add({ minutes: browserOffset - miqOffset })._d;
+      date = convertDate(date, tz.tzinfo.info.identifier);
 
       const resources = retireItems.map((id) => ({
         id,
         date,
         warn: retirementWarn,
       }));
+
       API.post(url, { action: 'request_retire', resources }).then(() => {
         const message = sprintf(__(`Retirement date set to ${tempDate.toLocaleString()}`));
         miqRedirectBack(message, 'success', redirect);
       }).catch(miqSparkleOff);
     } else if (retirementDate === undefined || NotEmpty === false) {
+      miqSparkleOn();
+
       const resources = retireItems.map((id) => ({
         id,
         date: '',
         warn: '',
       }));
+
       API.post(url, { action: 'request_retire', resources }).then(() => {
         const message = sprintf(__('Retirement date removed'));
         miqRedirectBack(message, 'success', redirect);
@@ -108,8 +82,7 @@ const RetirementForm = ({
         let retirementTime;
         if (retires_on) {
           // Convert utc date from api to miq time zone then add browser timezone utc offset to get time relative to user's browser
-          const utcOffset = -1 * moment().utcOffset();
-          retirementDate = moment(retires_on).tz(tz.tzinfo.info.identifier).add({ minutes: utcOffset })._d;
+          retirementDate = getDateFromUTC(retires_on, tz.tzinfo.info.identifier);
           retirementTime = retirementDate;
           setShowTimeField(true);
         } else {
@@ -142,7 +115,8 @@ const RetirementForm = ({
         onCancel={onCancel}
         onReset={() => {
           add_flash(__('All changes have been reset'), 'warn');
-          setShowTimeField(true);
+          // If there is an initial value for retirement date then show time and warning fields on reset.
+          // If initial value for date is empty then we don't need to show these fields.
           if (initialValues.retirementDate) {
             setShowTimeField(true);
           } else {
