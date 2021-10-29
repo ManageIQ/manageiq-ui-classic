@@ -48,90 +48,41 @@ describe CloudObjectStoreContainerController do
     end
   end
 
-  context "delete object store container" do
+  describe "#delete" do
+    let(:ems) { FactoryBot.create(:ems_openstack) }
+    let(:container) { FactoryBot.create(:cloud_object_store_container, :name => "cloud-object-store-container-01", :ext_management_system => ems) }
+
+    let(:task_options) do
+      {
+        :action => "deleting Cloud Object Store Container for user %{user}" %
+          {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => "CloudObjectStoreContainer",
+        :method_name => 'cloud_object_store_container_delete',
+        :role        => 'ems_operations',
+        :instance_id => container.id,
+        :args        => []
+      }
+    end
+
     before do
-      login_as FactoryBot.create(:user, :features => "everything")
-      request.parameters["controller"] = "cloud_object_store_container"
-      allow(controller).to receive(:role_allows?).and_return(true)
-      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
+      stub_user(:features => :all)
+      session[:cloud_object_store_container_lastaction] = 'show'
+      controller.params = {:pressed => "cloud_object_store_container_delete",
+                           :id      => container.id}
+      controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_object_store_container/show_list"}, 'placeholder'])
     end
 
-    it "delete invokes process_cloud_object_storage_buttons" do
-      expect(controller).to receive(:process_cloud_object_storage_buttons)
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-    end
-
-    it "delete triggers delete" do
-      expect(controller).to receive(:cloud_object_store_button_operation).with(
-        CloudObjectStoreContainer,
-        'delete'
-      )
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-    end
-
-    it "delete redirects to previous breadcrumb if on container's details page" do
-      session[:cloud_object_store_container_display] = "main"
-      expect(controller).to receive(:javascript_redirect).with("previous-url")
-      expect(controller).not_to receive(:render_flash)
-
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-    end
-
-    it "delete does not redirect if on container list page" do
-      session[:cloud_object_store_container_display] = nil
-      expect(controller).not_to receive(:javascript_redirect)
-      expect(controller).to receive(:render_flash)
-
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-    end
-
-    it "delete does not redirect if on object list page" do
-      session[:cloud_object_store_container_display] = "cloud_object_store_objects"
-      expect(controller).not_to receive(:javascript_redirect)
-      expect(controller).to receive(:render_flash)
-
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-    end
-
-    it "clear does not redirect but only renders flash" do
-      session[:cloud_object_store_container_display] = nil
-      expect(controller).not_to receive(:javascript_redirect)
-      expect(controller).to receive(:render_flash)
-
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_clear", :format => :js, :id => @container.id
-      }
-    end
-
-    it "delete shows expected flash" do
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-
-      expect(assigns(:flash_array).first[:message]).to include(
-        "Delete initiated for 1 Cloud Object Store Container from the ManageIQ Database"
-      )
-      expect(response.status).to eq(200)
-    end
-
-    it "delete shows expected flash (non-existing container)" do
-      @container.destroy
-
-      post :button, :params => {
-        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
-      }
-
-      expect(response.body).to match(/throw "error"/)
+    it "queues the delete action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
+      controller.send(:delete_cloud_object_store_containers)
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Cloud Object Store Container.",
+                                         :level   => :success)
     end
   end
 

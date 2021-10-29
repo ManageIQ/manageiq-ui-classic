@@ -58,13 +58,13 @@
 }
 
 .pficon-folder-close-blue {
-  @extend .pficon-folder-close, .blue;
+  @extend .pficon-folder-close, .blue  !optional;
 }
 
 .pficon-registry-unknown {
-  @extend .pficon-registry, .orange;
+  @extend .pficon-registry, .orange  !optional;
 }
 
 .single-wrapper .fonticon {
-  @extend .blue-quad;
+  @extend .blue-quad  !optional;
 }

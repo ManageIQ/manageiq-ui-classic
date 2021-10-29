@@ -1,7 +1,6 @@
 %html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
     = miq_favicon_link_tag
-    = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
     = javascript_dependencies(false)
 

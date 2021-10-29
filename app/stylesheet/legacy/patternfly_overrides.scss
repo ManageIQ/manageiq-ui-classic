@@ -567,7 +567,7 @@ table .label {
 
 #notification,
 #search_notification {
-  background: image-url('layout/overlay_dark.png');
+  background-image: url("#{$img-base-path}overlay_dark.png");
   bottom: 0;
   color: #fff;
   display: block;
@@ -583,7 +583,7 @@ table .label {
 }
 
 #blocker_div {
-  background: image-url('layout/overlay_dark.png');
+  background-image: url("#{$img-base-path}overlay_dark.png");
   bottom: 0;
   color: #fff;
   display: block;
@@ -597,7 +597,7 @@ table .label {
 }
 
 #spinner_div {
-  background: image-url('layout/overlay_dark.png');
+  background-image: url("#{$img-base-path}overlay_dark.png");
   border-radius: 8px;
   height: 180px;
   left: 0;
