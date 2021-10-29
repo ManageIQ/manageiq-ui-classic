@@ -1567,7 +1567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~3.15.0":
+"@data-driven-forms/carbon-component-mapper@npm:~3.15.5":
   version: 3.15.5
   resolution: "@data-driven-forms/carbon-component-mapper@npm:3.15.5"
   dependencies:
@@ -1598,7 +1598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:~3.15.0":
+"@data-driven-forms/react-form-renderer@npm:~3.15.5":
   version: 3.15.5
   resolution: "@data-driven-forms/react-form-renderer@npm:3.15.5"
   dependencies:
@@ -13772,8 +13772,8 @@ fsevents@^1.2.7:
     "@carbon/charts-react": ^0.41.100
     "@carbon/icons-react": ~10.26.0
     "@carbon/themes": ~10.28.0
-    "@data-driven-forms/carbon-component-mapper": ~3.15.0
-    "@data-driven-forms/react-form-renderer": ~3.15.0
+    "@data-driven-forms/carbon-component-mapper": ~3.15.5
+    "@data-driven-forms/react-form-renderer": ~3.15.5
     "@manageiq/font-fabulous": ~1.0.5
     "@manageiq/ui-components": 1.4.4
     "@novnc/novnc": ~1.2.0

@@ -1,7 +1,8 @@
 = react("RetirementForm",
   :retirementID => @retireitems.map { |i| i.id.to_s }.to_json,
   :redirect => @redirect_url,
-  :url => api_collection_path(@retireitems.first.class))
+  :url => api_collection_path(@retireitems.first.class),
+  :timezone => Time.zone)
 
 %h3
   - if request.parameters[:controller] == "service"
