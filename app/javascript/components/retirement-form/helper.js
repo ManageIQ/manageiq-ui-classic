@@ -8,6 +8,16 @@ export const convertDate = (date, timezone) => {
   return moment(date).add({ minutes: browserOffset - miqOffset })._d;
 };
 
+export const datePassed = (retirementDate) => {
+  const retireDate = new Date(retirementDate);
+  const today = new Date();
+
+  if (retireDate <= today) {
+    return true;
+  }
+  return false;
+};
+
 // Convert date from UTC time to user's manageiq timezone
 export const getDateFromUTC = (retirementDate, timezone) => {
   const utcOffset = -1 * moment(retirementDate).utcOffset();
