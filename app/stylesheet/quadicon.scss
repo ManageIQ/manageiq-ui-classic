@@ -1,8 +1,10 @@
+@use "sass:math";
+
 div.miq-quadicon {
     $quad-w: 78px;
     $quad-h: 78px;
     $radius: 6px;
-    $font-size: $quad-w /3;
+    $font-size: math.div($quad-w, 3);
     $quad-bg: linear-gradient(180deg, rgb(144, 142, 143) 0%, rgb(87, 87, 87) 62%, rgb(64, 64, 65) 100%);
     $piechart-small: 30px;
     $piechart-large: 60px;
@@ -40,7 +42,7 @@ div.miq-quadicon {
         justify-content: center;
   
         position: relative;
-        height: $quad-h / 2;
+        height: math.div($quad-h, 2);
   
         .piechart {
           width: $piechart-small;
@@ -48,20 +50,20 @@ div.miq-quadicon {
         }
   
         .fileicon img{
-          height: $quad-h / 3 + ($quad-h / 14);
-          width: $quad-w / 3 + ($quad-h / 14);
+          height: math.div($quad-h, 3) + math.div($quad-h, 14);
+          width: math.div($quad-w, 3) + math.div($quad-h, 14);
         }
   
         .fonticon, .text {
-          font-size: $font-size / 2 + ($font-size / 3);
+          font-size: math.div($font-size, 2) + math.div($font-size, 3);
         }
   
         .text.font-small {
-          font-size: $font-size / 3 + ($font-size / 3);
+          font-size: math.div($font-size, 3) + math.div($font-size, 3);
         }
   
         .text.font-tiny {
-          font-size: $font-size * 1/2;
+          font-size: math.div($font-size, 2);
         }
   
         &.top-left {
@@ -84,14 +86,14 @@ div.miq-quadicon {
   
         &.middle {
           flex: 0 0 100%;
-          margin-top: - $quad-h + ($quad-h / 4);
+          margin-top: - $quad-h + math.div($quad-h, 4);
   
           .fileicon img {
-            height: $quad-h / 3 + ($quad-h / 14);
-            width: $quad-w / 3 + ($quad-h / 14);
+            height: math.div($quad-h, 3) + math.div($quad-h, 14);
+            width: math.div($quad-w, 3) + math.div($quad-h, 14);
           }
           .fonticon {
-            font-size: $font-size + ($font-size / 5);
+            font-size: $font-size + math.div($font-size, 5);
           }
         }
       }
@@ -109,8 +111,8 @@ div.miq-quadicon {
         & > div.miq-quaditem {
   
           .fileicon img {
-            height: $quad-h / 2 + ($quad-h / 4);
-            width: $quad-w / 2 + ($quad-w / 4);
+            height: math.div($quad-h, 2) + math.div($quad-h, 4);
+            width: math.div($quad-w, 2) + math.div($quad-w, 4);
           }
   
           .piechart {
