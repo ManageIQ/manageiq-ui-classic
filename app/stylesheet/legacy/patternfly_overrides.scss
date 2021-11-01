@@ -89,13 +89,13 @@ body#dashboard .blank-slate-pf {
 
 .card-pf-title {
   .card-pf-aggregate-status & {
-    .ff
-    {
+    .ff {
       color: $card-pf-aggregate-status-title-icon-color;
       font-size: $font-size-h3;
       margin-right: 7px;
     }
   }
+
   .card-pf-aggregate-status-mini & {
     .ff {
       font-size: ($font-size-base * 2 + 2); // 26px
@@ -136,9 +136,11 @@ body#dashboard .blank-slate-pf {
 @media (min-width: $screen-md) {
   .aggregate-object-card .card-pf {
     min-height: 137px;
-   > .card-pf-title > span > img {
-      height: 60px;margin-top:0;
-      width: 60px
+
+    > .card-pf-title > span > img {
+      height: 60px;
+      margin-top: 0;
+      width: 60px;
     }
   }
 }
@@ -163,6 +165,7 @@ body#dashboard .blank-slate-pf {
     white-space: normal;
     width: 20% !important;
   }
+
   i {
     display: inline-block;
     font-size: 1.333em; // equivalent to fa-lg
@@ -171,6 +174,7 @@ body#dashboard .blank-slate-pf {
     vertical-align: -15%;
     width: 1.25em;
   }
+
   img {
     height: 16px;
     margin: 0 2px 0 2px;
@@ -275,7 +279,8 @@ miq-quadicon > .single-wrapper {
 
 .no-action .miq-data-table,
 .no-action .miq-tile-section {
-  td, a {
+  td,
+  a {
     cursor: default !important;
   }
 }
@@ -383,6 +388,7 @@ table.table tbody td img {
 .nav-stacked > li.disabled > a {
   color: #9c9c9c;
 }
+
 .nav-stacked > li.disabled:hover > a {
   background: transparent;
   border: transparent;
@@ -440,8 +446,10 @@ table.table.table-selectable tbody tr.selected td {
   .dropdown-menu {
     overflow-y: visible !important; //eliminates horiz. scrollbar
   }
+
   &.selectWidth {
-    width: auto !important; 
+    width: auto !important;
+
     .dropdown-menu ul li {
       padding-right: 10px;  // required for narrow dropdowns
     }
@@ -452,9 +460,11 @@ table.table.table-selectable tbody tr.selected td {
 
 #tab_div ul.list-inline {
   font-size: 16px;
+
   a {
     color: #222222 !important;
   }
+
   li.active {
     color: $link-color !important;
   }
@@ -465,6 +475,7 @@ table.table.table-selectable tbody tr.selected td {
 .action-cell {
   position: relative;
   width: 100px;
+
   .btn {
     border: none;
     bottom: 0;
@@ -501,7 +512,8 @@ tr.rdetail > td {
 
 /// custom modal class for Entry Point (creates scrollable area)
 
-#automate_treebox, #automate_catalog_treebox {
+#automate_treebox,
+#automate_catalog_treebox {
   height: 350px !important;
   overflow-y: auto !important;
 }
@@ -534,6 +546,7 @@ tr.rdetail > td {
 .sidebar-pf-left {
   .panel-group {
     margin-bottom: 0;
+
     .panel-title > a:focus {
       outline: -webkit-focus-ring-color auto 5px;
       outline-offset: -2px;
@@ -687,7 +700,8 @@ fieldset {
   z-index: 1001;
 }
 
-.sidebar-disabled, .treeview.disabled {
+.sidebar-disabled,
+.treeview.disabled {
   pointer-events: none;
   opacity: 0.4;
 }
@@ -702,8 +716,8 @@ fieldset {
   overflow-y: auto;
 }
 
-#exp_editor_div .form-group{
-  margin-left: 0
+#exp_editor_div .form-group {
+  margin-left: 0;
 }
 
 /* make sure uib-tooltip respects newlines */
@@ -728,19 +742,22 @@ table.c3-tooltip td {
   z-index: 9999;
 }
 
-.table-summary-screen > tbody > tr:hover > td, .table-summary-screen > tbody > tr:hover > th {
+.table-summary-screen > tbody > tr:hover > td,
+.table-summary-screen > tbody > tr:hover > th {
   background-color: transparent;
 }
 
 .content-focus-order {
   @media (min-width: 992px) {
-    .col-md-push-3, .col-md-push-4 {
+    .col-md-push-3,
+    .col-md-push-4 {
       left: 0%;
     }
   }
 
   @media (min-width: 992px) {
-    .col-md-pull-9, .col-md-pull-8 {
+    .col-md-pull-9,
+    .col-md-pull-8 {
       right: 0%;
     }
   }
@@ -755,15 +772,14 @@ table.c3-tooltip td {
   .sidebar-pf-left {
     display: none;
   }
-  
 
   @media (min-width: 768px) {
     .col-sm-pull-8 {
       display: none;
     }
   }
-    
+
   .col-md-9 {
-    width: 100%;     
+    width: 100%;
   }
 }

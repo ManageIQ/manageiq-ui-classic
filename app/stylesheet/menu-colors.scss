@@ -23,7 +23,6 @@ $clear-btn-active: $ui-02;
 // unused, theme default
 // $row-selected-border: $carbon--blue-60;
 
-
 .bx--side-nav {
   background-color: $rail-primary-bg;
 
@@ -59,6 +58,7 @@ li.menu-group {
 .menu-user svg {
   fill: $row-fg-icon;
 }
+
 .bx--side-nav__icon > i {
   color: $row-fg-icon;
 }
@@ -75,8 +75,8 @@ li.menu-group {
   .bx--search-input {
     background-color: $find-bg;
     color: $row-fg-text;
-    
-    &:focus~.bx--search-close:hover{
+
+    &:focus ~ .bx--search-close:hover {
       outline: 2px solid $clear-btn-outline;
       outline-offset: -2px;
     }
@@ -88,7 +88,7 @@ li.menu-group {
     &::before {
       background-color: $clear-btn-background;
     }
-  
+
     &:hover {
       background: $clear-btn-hover-background;
     }
@@ -96,8 +96,8 @@ li.menu-group {
     &:focus {
       outline: 2px solid $clear-btn-outline;
       outline-offset: -2px;
-      
-      &:before {
+
+      &::before {
         background-color: $clear-btn-outline;
       }
     }

@@ -11,7 +11,7 @@
 .tag {
   font-size: 0.8em;
   display: table-cell !important;
-  vertical-align:middle;
+  vertical-align: middle;
   border-radius: 1px;
   border-color: #4c4c4c;
 
@@ -36,6 +36,7 @@
 
 .value-label {
   background-color: #78a9ff;
+
   .value-span {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -53,7 +54,7 @@
     background-color: #78a9ff;
     min-height: 26px;
   }
-  
+
   .tagButton:hover {
     background-color: #002d9c;
   }

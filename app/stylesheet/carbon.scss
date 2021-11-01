@@ -15,9 +15,10 @@ $css--default-type: false;
 // Use the white theme
 @import '~@carbon/themes/scss/themes';
 $carbon--theme: $carbon--theme--white;
-@include carbon--theme();
-@import '~@carbon/charts/styles.css';
 
+@include carbon--theme();
+
+@import '~@carbon/charts/styles.css';
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
 // ignored by patternfly, but sets the right base for carbon rem units
