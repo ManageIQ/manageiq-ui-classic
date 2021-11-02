@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = (showTimeField, setShowTimeField) => ({
+const createSchema = (showTimeField, setShowTimeField, showDateError) => ({
   fields: [{
     component: componentTypes.SUB_FORM,
     name: 'retirement-date-subform',
@@ -139,6 +139,14 @@ const createSchema = (showTimeField, setShowTimeField) => ({
         or: [{ when: 'formMode', is: 'delay' }, { when: 'retirementDate', isNotEmpty: true }],
       },
     },
+    ...(showDateError ? [
+      {
+        id: 'dateWarning',
+        component: componentTypes.PLAIN_TEXT,
+        name: 'dateWarning',
+        label: __('Invalid date selected.'),
+      },
+    ] : []),
     ],
   },
   ],
