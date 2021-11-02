@@ -2,7 +2,6 @@
 
 $bootstrap-sass-asset-helper: true;
 $patternfly-sass-asset-helper: true;
-// $img-path: '../../assets/images/layout';
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 // Font Awesome path variables
 $fa-font-path: '~font-awesome/fonts';
@@ -12,11 +11,11 @@ $img-base-path: '../../assets/images/layout/' !default;
 $img-path: '~patternfly/dist/img/';
 $font-path: '~patternfly/dist/fonts/';
 $ff-font-path: '~@manageiq/font-fabulous/assets/fonts/font-fabulous';
+
 @import "~patternfly/dist/sass/patternfly/_variables.scss";
 @import "~patternfly/dist/sass/patternfly/_color-variables.scss";
 @import "~font-awesome/scss/font-awesome.scss";
 @import "~@manageiq/font-fabulous/assets/stylesheets/_font-fabulous.scss";
-
 @import "./variables.scss";
 @import "./patternfly_overrides";
 @import "./about_modal_background"; // sets a custom background image in the 'About' modal

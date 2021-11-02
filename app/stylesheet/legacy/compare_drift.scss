@@ -6,39 +6,49 @@
     text-align: center;
     width: auto !important;
     word-wrap: break-word !important;
+
     .treegrid-node {
       text-align: left;
       white-space: nowrap !important;
       width: 270px !important;
     }
   }
+
   .table-compressed {
-    thead tr th, tbody tr td {
-      width: 26px !important;    
+    thead tr th,
+    tbody tr td {
+      width: 26px !important;
     }
+
     thead tr th {
       height: 150px !important;
       white-space: nowrap;
+
       .rotated-text {
         transform: translate(0, 110px) rotate(270deg);
         width: 26px;
       }
     }
+
     tbody tr td {
       .piechart {
         margin-left: 5px;
       }
     }
   }
+
   .table-expanded {
-    thead tr th, tbody tr td {
+    thead tr th,
+    tbody tr td {
       min-width: 175px !important;
       width: 175px !important;
     }
+
     thead tr th {
       height: 150px;
       position: relative;
       text-align: center;
+
       .quadicon_grid {
         bottom: 0;
         height: 80px;
@@ -48,6 +58,7 @@
         right: 0;
       }
     }
+
     tbody tr td {
       .piechart {
         margin-left: 67px;

@@ -18,12 +18,12 @@
   max-width: none;
 }
 
-.blue {color: #39a5dc;}   //pf-blue-300
-.blue-quad {color: #0099cc;}
-.green {color: #2d7623;}  //pf-green-500
-.orange {color: #ec7a08;} //pf-orange-400
-.purple {color: #40199a;} //pf-purple-600
-.red {color: #cc0000;}    //pf-red-100
+.blue { color: #39a5dc; }   //pf-blue-300
+.blue-quad { color: #0099cc; }
+.green { color: #2d7623; }  //pf-green-500
+.orange { color: #ec7a08; } //pf-orange-400
+.purple { color: #40199a; } //pf-purple-600
+.red { color: #cc0000; }    //pf-red-100
 
 .compare-same {
   @extend .fa, .fa-lg, .fa-check, .purple;
