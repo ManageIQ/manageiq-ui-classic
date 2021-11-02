@@ -108,11 +108,4 @@ describe('logCollectionForm', function() {
       expect(miqService.miqFlash).toHaveBeenCalledWith("warn", "All changes have been reset");
     });
   });
-
-  describe('miqDBBackupService should exist in the scope', function() {
-    it('returns true', function() {
-      expect(vm.miqDBBackupService).toBeDefined();
-    });
-  });
-
 });

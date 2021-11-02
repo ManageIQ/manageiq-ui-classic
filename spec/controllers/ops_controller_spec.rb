@@ -139,29 +139,6 @@ describe OpsController do
     end
   end
 
-  describe "#db_backup" do
-    it "posts db_backup action" do
-      session[:settings] = {:default_search => ''}
-
-      miq_schedule = FactoryBot.create(:miq_schedule,
-                                        :name          => "test_db_schedule",
-                                        :description   => "test_db_schedule_desc",
-                                        :resource_type => "DatabaseBackup",
-                                        :run_at        => {:start_time => "2015-04-19 00:00:00 UTC",
-                                                           :tz         => "UTC",
-                                                           :interval   => {:unit => "once", :value => ""}})
-      post :db_backup, :params => {
-        :backup_schedule => miq_schedule.id,
-        :uri             => "nfs://test_location",
-        :uri_prefix      => "nfs",
-        :action_typ      => "db_backup",
-        :format          => :js
-      }
-      expect(response.status).to eq(200)
-      expect(response.body).to_not be_empty
-    end
-  end
-
   describe "#edit_changed?" do
     it "should set session[:changed] as false" do
       edit = {

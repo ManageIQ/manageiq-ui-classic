@@ -2441,8 +2441,6 @@ Rails.application.routes.draw do
         cu_collection_update
         cu_repair
         cu_repair_field_changed
-        db_backup
-        db_backup_form_field_changed
         diagnostics_server_list
         diagnostics_tree_select
         explorer
