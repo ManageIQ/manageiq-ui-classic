@@ -7,7 +7,7 @@ import createSchema from './retirement-form.schema';
 import handleFailure from '../../helpers/handle-failure';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import {
-  convertDate, getDelay, getDate, getRetirementWarning, getRetirementDate, getDateFromUTC,
+  convertDate, getDelay, getDate, getRetirementWarning, getRetirementDate, getDateFromUTC, datePassed,
 } from './helper';
 
 const RetirementForm = ({
@@ -18,6 +18,7 @@ const RetirementForm = ({
 
   const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!retireItems });
   const [showTimeField, setShowTimeField] = useState(false);
+  const [showDateError, setShowDateError] = useState(false);
 
   const onSubmit = ({
     formMode, retirementDate, retirementTime, retirementWarning, days, weeks, months, hours,
@@ -40,20 +41,25 @@ const RetirementForm = ({
         date = getDate(tempDate, retirementTime);
       }
 
-      // Keep temp date as original date relative to user's timezone then convert date to manageiq timezone for posting data
-      tempDate = date;
-      date = convertDate(date, tz.tzinfo.info.identifier);
+      if (datePassed(date)) {
+        setShowDateError(true);
+        miqSparkleOff();
+      } else {
+        // Keep temp date as original date relative to user's timezone then convert date to manageiq timezone for posting data
+        tempDate = date;
+        date = convertDate(date, tz.tzinfo.info.identifier);
 
-      const resources = retireItems.map((id) => ({
-        id,
-        date,
-        warn: retirementWarn,
-      }));
+        const resources = retireItems.map((id) => ({
+          id,
+          date,
+          warn: retirementWarn,
+        }));
 
-      API.post(url, { action: 'request_retire', resources }).then(() => {
-        const message = sprintf(__(`Retirement date set to ${tempDate.toLocaleString()}`));
-        miqRedirectBack(message, 'success', redirect);
-      }).catch(miqSparkleOff);
+        API.post(url, { action: 'request_retire', resources }).then(() => {
+          const message = sprintf(__(`Retirement date set to ${tempDate.toLocaleString()}`));
+          miqRedirectBack(message, 'success', redirect);
+        }).catch(miqSparkleOff);
+      }
     } else if (retirementDate === undefined || NotEmpty === false) {
       miqSparkleOn();
 
@@ -109,7 +115,7 @@ const RetirementForm = ({
     !isLoading && (
       <MiqFormRenderer
         initialValues={initialValues}
-        schema={createSchema(showTimeField, setShowTimeField)}
+        schema={createSchema(showTimeField, setShowTimeField, showDateError)}
         onSubmit={onSubmit}
         canReset={!!retireItems}
         onCancel={onCancel}
