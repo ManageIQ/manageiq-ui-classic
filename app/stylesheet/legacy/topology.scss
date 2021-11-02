@@ -8,7 +8,7 @@ kubernetes-topology-graph {
 }
 
 .topology .legend {
-  font-family: "Open Sans", Open Sans, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   display: inline-block;
   vertical-align: middle;
@@ -44,7 +44,7 @@ kubernetes-topology-icon svg {
 }
 
 .kube-topology g {
-  font-family: "Open Sans", Open Sans, sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .kube-topology g text.attached-label {
