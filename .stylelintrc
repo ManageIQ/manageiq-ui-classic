@@ -1,9 +1,14 @@
 {
   "defaultSeverity": "warning",
   "extends": ["stylelint-config-standard"],
+  "plugins": [
+    "stylelint-scss"
+  ],
   "rules": {
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+
     "color-hex-length": null,
     "shorthand-property-no-redundant-values": null
   }
-
 }
