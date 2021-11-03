@@ -24,8 +24,10 @@ const RetirementForm = ({
     formMode, retirementDate, retirementTime, retirementWarning, days, weeks, months, hours,
   }) => {
     let NotEmpty = true;
-    if (retirementDate === []) {
-      NotEmpty = false;
+    if (Array.isArray(retirementDate)) {
+      if (retirementDate.length === 0) {
+        NotEmpty = false;
+      }
     }
 
     if ((retirementDate || formMode === 'delay') && NotEmpty) {
