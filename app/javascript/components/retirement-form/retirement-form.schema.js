@@ -144,7 +144,7 @@ const createSchema = (showTimeField, setShowTimeField, showDateError) => ({
         id: 'dateWarning',
         component: componentTypes.PLAIN_TEXT,
         name: 'dateWarning',
-        label: __('Invalid date selected.'),
+        label: __('Invalid date selected. Please select a future date.'),
       },
     ] : []),
     ],
