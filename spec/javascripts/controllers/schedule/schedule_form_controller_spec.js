@@ -405,16 +405,6 @@ describe('scheduleFormController', function() {
       });
     });
 
-    describe('when the action type is a db_backup type', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.action_typ = 'db_backup';
-      });
-
-      it('returns Database Backup Selection', function() {
-        expect($scope.buildLegend()).toEqual('Database Backup Selection');
-      });
-    });
-
     describe('when the action type is a automation_request type', function() {
       beforeEach(function() {
         $scope.scheduleModel.action_typ = 'automation_request';
@@ -577,21 +567,6 @@ describe('scheduleFormController', function() {
   });
 
   describe('#actionTypeChanged', function() {
-    describe('when the action type is db_backup', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.action_typ = 'db_backup';
-        $scope.actionTypeChanged();
-      });
-
-      it('sets the log protocol to network file system', function() {
-        expect($scope.scheduleModel.log_protocol).toEqual('FileDepotNfs');
-      });
-
-      it('sets filter values empty to true', function() {
-        expect($scope.filterValuesEmpty).toBe(true);
-      });
-    });
-
     describe('when the action type is automation_request', function() {
       var data = {
         action_type: 'automation_request',
@@ -621,63 +596,6 @@ describe('scheduleFormController', function() {
         expect($scope.scheduleModel.target_class).toEqual(data.target_class);
         expect($scope.scheduleModel.ui_attrs).toEqual(data.ui_attrs);
         expect($scope.scheduleModel.target_id).toEqual(data.target_id);
-      });
-    });
-
-    describe('when the action type is not db_backup', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.action_typ = 'not_db_backup';
-        $scope.scheduleModel.filter_typ = 'not_all';
-        $scope.filterValuesEmpty = false;
-        $scope.actionTypeChanged();
-      });
-
-      it('resets the filter type to all', function() {
-        expect($scope.scheduleModel.filter_typ).toEqual('all');
-      });
-
-      it('sets filter values empty to true', function() {
-        expect($scope.filterValuesEmpty).toBe(true);
-      });
-    });
-  });
-
-  describe('#credsProtocol', function() {
-    describe('when the action type is db_backup', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.action_typ = 'db_backup';
-      });
-
-      describe('when the log protocol is Samba', function() {
-        beforeEach(function() {
-          $scope.scheduleModel.log_protocol = 'FileDepotSmb';
-        });
-
-        it('returns true', function() {
-          expect($scope.credsProtocol()).toBe(true);
-        });
-      });
-
-      describe('when the log protocol is S3', function() {
-        beforeEach(function() {
-          $scope.scheduleModel.log_protocol = 'FileDepotS3';
-        });
-
-        it('returns true', function() {
-          expect($scope.credsProtocol()).toBe(true);
-        });
-      });
-
-      describe('when the log protocol is not Samba or S3', function() {
-        it('returns false', function() {
-          expect($scope.credsProtocol()).toBe(false);
-        });
-      });
-    });
-
-    describe('when the action type is not db_backup', function() {
-      it('returns false', function() {
-        expect($scope.credsProtocol()).toBe(false);
       });
     });
   });

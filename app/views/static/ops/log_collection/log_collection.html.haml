@@ -21,48 +21,4 @@
                    "ng-change"                   => "vm.logProtocolChanged()",
                    "pf-select"                   => true,
                    "selectpicker-for-select-tag" => "",)
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== ''"}
-    .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
-      %label.col-md-2.control-label{"for" => "depot_name"}
-        = _("Depot Name")
-      .col-md-8
-        %input.form-control{"type"        => "text",
-                            "id"          => "depot_name",
-                            "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
-                            "name"        => "depot_name",
-                            "ng-model"    => "vm.logCollectionModel.depot_name",
-                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
-                            "checkchange" => "",
-                            "auto-focus"  => "reactiveFocus"}
-        %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
-          = _("Required")
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== ''"}
-    .form-group{"ng-class" => "{'has-error': angularForm.uri.$invalid}"}
-      %label.col-md-2.control-label{"for" => "uri"}
-        = _("URI")
-      .col-md-8
-        .input-group
-          %span.input-group-addon
-            = "{{vm.logCollectionModel.uri_prefix}}://"
-          %input.uri-input.form-control{"type"        => "text",
-                                        "id"          => "uri",
-                                        "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
-                                        "name"        => "uri",
-                                        "ng-model"    => "vm.logCollectionModel.uri",
-                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
-                                        "checkchange" => ""}
-        %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
-          = _("Required")
-        %input{"type" => "hidden", "name" => "uri_prefix", "ng-value" => "vm.logCollectionModel.uri_prefix"}
-
-  %auth-credentials{'ng-if'               => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
-                    'form-model'          => 'vm.logCollectionModel',
-                    'model-copy'          => 'vm.modelCopy',
-                    'prefix'              => '{{vm.prefix}}',
-                    'user-required'       => true,
-                    'password-required'   => true,
-                    'enable-valid-button' => 'vm.canValidateBasicInfo()',
-                    'validate'            => 'vm.validateClicked',
-                    'new-record'          => 'vm.newRecord'}
-
   = render :partial => "layouts/angular/generic_form_buttons"
