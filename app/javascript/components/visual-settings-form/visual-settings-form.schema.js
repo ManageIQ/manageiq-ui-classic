@@ -4,6 +4,24 @@ const createSchema = () => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
+      name: 'ui-theme',
+      title: __('User Interface'),
+      fields: [
+        {
+          component: componentTypes.SELECT,
+          name: 'display.theme',
+          id: 'display.theme',
+          label: __('UI Theme'),
+          initialValue: 'light',
+          options: [
+            { label: __('Light'), value: 'light' },
+            { label: __('Dark (Experimenal)'), value: 'dark' },
+          ],
+        },
+      ]
+    },
+    {
+      component: componentTypes.SUB_FORM,
       name: 'general-subform',
       title: __('General'),
       fields: [

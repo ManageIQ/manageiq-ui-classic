@@ -5,6 +5,7 @@ module ApplicationHelper
   include_concern 'Navbar'
   include_concern 'PageLayouts'
   include_concern 'Tasks'
+  include_concern 'UserHelper'
   include Sandbox
   include JsHelper
   include StiRoutingHelper
