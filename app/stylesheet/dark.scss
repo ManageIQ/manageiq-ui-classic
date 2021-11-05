@@ -1,0 +1,347 @@
+html.dark {
+  /* GitHub-style Color Schemes Names */
+  // --color-bg-primary:          var(--ui-background);
+  // --color-bg-secondary:        var(--ui-01);
+  // --color-bg-tertiary:         var(--ui-02);
+  // --color-bg-canvas:           var(--overlay-01);
+  // --color-bg-field:            var(--field-01);
+  // --color-bg-field-hover:      var(--hover-secondary);
+  // --color-bg-field-disabled:   var(--disabled-02);
+  // --color-bg-danger:           var(--danger-01);
+  // --color-bg-danger:           #da1e2822; // $danger-01
+  // --color-bg-info:             #0043ce22; // $inverse-support-04
+  // --color-bg-success:          #24a14822; // $inverse-support-02
+  // --color-bg-warn:             #f1c21b22; // $inverse-support-03
+  // /* --color-bg-danger:           var(--support-01)88; */
+
+  // --color-border-primary:      var(--ui-03);
+  // --color-border-secondary:    var(--ui-04);
+  // --color-border-tertiary:     var(--ui-05);
+  // --color-border-field:        var(--ui-04);
+  // --color-border-danger:       var(--danger-02);
+  // --color-border-danger:       #ff838922; // $danger-02
+  // --color-border-info:         #4589ff22; // $support-04
+  // --color-border-success:      #42be6522; // $support-02
+  // --color-border-warn:         #f1c21b22; // $support-03
+
+  // --color-text-primary:        var(--text-01);
+  // --color-text-secondary:      var(--text-02);
+  // --color-text-tertiary:       var(--text-05);
+  // --color-text-link:           var(--link-01);
+  // --color-text-link-hover:     var(--inverse-link);
+  // --color-text-field:          var(--text-01);
+  // --color-text-field-label:    var(--text-01);
+  // --color-text-field-hover:    var(--text-02);
+  // --color-text-field-disabled: var(--disabled-03);
+  // --color-text-danger:         #ff8389;
+  // --color-text-info:           #4589ff;
+  // --color-text-success:        #42be65;
+  // --color-text-warn:           #f1c21b;
+
+  @include carbon--theme($carbon--theme--g90) {
+    background-color: $ui-background;
+
+    body                                                          { background-color: $ui-background; }
+    table.table-hover tbody tr:nth-child(2n).no-hover:hover td    { background-color: $hover-ui }
+    #main-menu .bx--side-nav                                      { background-color: $inverse-01; }
+    #main-menu .bx--side-nav .bx--side-nav__link.force-hover,
+    #main-menu .bx--side-nav .bx--side-nav__link:hover,
+    #main-menu .bx--side-nav
+    .bx--side-nav__link.bx--side-nav__link--current               { background-color: $ui-background; }
+    #main-menu .bx--side-nav.secondary                            { background-color: $ui-01; }
+    #main-menu .bx--side-nav.secondary .bx--side-nav__item--active > .bx--side-nav__submenu,
+    #main-menu .bx--side-nav.secondary .bx--side-nav__link.bx--side-nav__link--current,
+    #main-menu .bx--side-nav.secondary .bx--side-nav__link.force-hover,
+    #main-menu .bx--side-nav.secondary .bx--side-nav__link:hover,
+    #main-menu .bx--side-nav.secondary .bx--side-nav__submenu[aria-expanded="false"]:hover { background-color: $ui-02; }
+    #notifications-toggle                                         { background-color: $field-01; }
+    .alert-danger                                                 { background-color: $danger-01; }
+    .alert-info                                                   { background-color: $inverse-support-04; }
+    .blank-slate-pf                                               { background-color: $ui-01; }
+    .bx--accordion__heading:hover::before                         { background-color: $hover-secondary; }
+    .bx--btn:disabled,
+    .bx--btn:hover:disabled,
+    .bx--btn:focus:disabled,
+    .bx--btn.bx--btn--disabled,
+    .bx--btn.bx--btn--disabled:hover,
+    .bx--btn.bx--btn--disabled:focus                              { background-color: $disabled-02; }
+    .bx--btn--ghost:hover                                         { background-color: $ui-01; }
+    .bx--chart-holder .bx--cc--chart-wrapper                      { background-color: $ui-background; }
+    .bx--chart-holder .bx--overflow-menu:hover,
+    .bx--chart-holder .bx--overflow-menu__trigger:hover           { background-color: $ui-02; }
+    .bx--dropdown                                                 { background-color: $field-01; }
+    .bx--dropdown:hover                                           { background-color: $hover-secondary; }
+    .bx--inline-notification--low-contrast.bx--inline-notification--success { background-color: $inverse-support-02; }
+    .bx--inline-notification--low-contrast.bx--inline-notification--error   { background-color: $danger-01; }
+    .bx--list-box                                                 { background-color: $field-01; }
+    .bx--list-box__menu                                           { background-color: $field-01; }
+    .bx--list-box__menu-item:hover                                { background-color: $hover-secondary; }
+    .bx--list-box__menu-item--highlighted                         { background-color: $hover-secondary; }
+    .bx--overflow-menu.bx--overflow-menu--open:hover,
+    .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn:hover,
+    .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn:active,
+    .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn:focus,
+    .bx--overflow-menu:hover, .bx--overflow-menu__trigger:hover   { background-color: $hover-secondary; }
+    .bx--overflow-menu.bx--overflow-menu--open,
+    .bx--overflow-menu.bx--overflow-menu--open
+    .bx--overflow-menu__trigger                                   { background-color: $hover-secondary; }
+    .bx--overflow-menu-options__option:hover                      { background-color: $hover-secondary; }
+    .bx--overflow-menu-options                                    { background-color: $field-01; }
+    .btn-default                                                  { background-color: $field-01; }
+    .btn-default                                                  { background-image: none; }
+    .btn-default:active:hover,
+    .btn-default.active:hover,
+    .open .dropdown-toggle.btn-default:hover,
+    .btn-default:active:focus,
+    .btn-default.active:focus,
+    .open .dropdown-toggle.btn-default:focus,
+    .btn-default:active.focus,
+    .btn-default.active.focus,
+    .open .dropdown-toggle.btn-default.focus,
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default:active,
+    .btn-default.active,
+    .open .dropdown-toggle.btn-default                            { background-color: $hover-secondary; }
+    .btn.disabled, .btn[disabled], fieldset[disabled] .btn        { background-color: $disabled-02 !important; }
+    .bx--select-input                                             { background-color: $field-01; }
+    .bx--select-input:hover                                       { background-color: $hover-secondary; }
+    optgroup.bx--select-optgroup, .bx--select-option              { background-color: $hover-secondary; }
+    .card-pf                                                      { background-color: $ui-background; }
+    .card-pf-footer                                               { background-color: $ui-background; }
+    .cards-pf .nav-tabs > li.active > a,
+    .content-view-pf-pagination                                   { background-color: $ui-01; }
+    .filter-select .btn-default                                   { background-color: $field-01; }
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus                               { background-color: $hover-secondary !important;}
+    .dropdown-menu                                                { background-color: $field-01; }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus  { background-color: $hover-secondary; }
+    .form-control                                                 { background-color: $field-01; }
+    .form-control[disabled],
+    .form-control[readonly],
+    fieldset[disabled] .form-control                              { background-color: $disabled-02; }
+    .miq-body                                                     { background-color: $overlay-01; }
+    .miq-body .nav-tabs > li.active > a,
+    .miq-body .nav-tabs > li.active > a:hover,
+    .miq-body .nav-tabs > li.active > a:focus                     { background-color: transparent; }
+    .modal-content                                                { background-color: $ui-background; }
+    .modal-header                                                 { background-color: $ui-01; }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus                               { background-color: $ui-background; }
+    .notification-drawer                                          { background-color: $ui-background; }
+    .notification-drawer .panel-header                            { background-color: $ui-01; }
+    .notification-drawer .panel-header                            { background-image: none }
+    .notification-drawer .bx--accordion--start
+    .bx--accordion__heading                                       { background-color: $ui-02; }
+    .notification-drawer .bx--accordion--start
+    .bx--accordion__heading                                       { background-image: none; }
+    .pagination > li > a, .pagination > li > span                 { background-color: $field-01; }
+    .pagination > li > a, .pagination > li > span                 { background-image: none; }
+    .pagination > li > a:hover,
+    .pagination > li > span:hover,
+    .pagination > li > a:focus,
+    .pagination > li > span:focus,
+    .pagination > li > a:active,
+    .pagination > li > span:active,
+    .pagination > li > a.active,
+    .pagination > li > span.active,
+    .open .dropdown-toggle.pagination > li > a,
+    .open .dropdown-toggle.pagination > li > span                 { background-color: $hover-secondary; }
+    .pagination .disabled                                         { background-color: $disabled-02 !important; }
+    .pagination > .disabled > span,
+    .pagination > .disabled > span:hover,
+    .pagination > .disabled > span:focus,
+    .pagination > .disabled > a,
+    .pagination > .disabled > a:hover,
+    .pagination > .disabled > a:focus                             { background-color: $disabled-02; }
+    .pagination > .disabled > span,
+    .pagination > .disabled > span:hover,
+    .pagination > .disabled > span:focus,
+    .pagination > .disabled > a,
+    .pagination > .disabled > a:hover,
+    .pagination > .disabled > a:focus                             { background-image: none; }
+    .sidebar-pf                                                   { background-color: $ui-01; }
+    .table > thead                                                { background-image: none }
+    .table > thead                                                { background-color: $ui-01 }
+    .table-striped > tbody > tr:nth-of-type(2n)                   { background-color: $ui-01 }
+    .table-hover > tbody > tr:hover > td                          { background-color: $hover-ui }
+    .table-hover > tbody > tr:hover > th                          { background-color: $hover-ui }
+    .table-view-pf-actions                                        { background-color: $ui-01 }
+    .toolbar-pf                                                   { background-color: $ui-background; }
+
+    .panel-group .panel-default .panel-heading {
+      background-image: linear-gradient(to bottom, $ui-02 0%, $ui-01 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#ffededed', GradientType=0);
+      background-repeat: repeat-x;
+    }
+
+
+    hr                                                            { border-color: $ui-03; }
+    #notifications-toggle                                         { border-color: $ui-04; }
+    .alert-danger                                                 { border-color: $danger-02; }
+    .alert-info                                                   { border-color: $support-04; }
+    .blank-slate-pf                                               { border-color: $ui-03; }
+    .btn.disabled, .btn[disabled], fieldset[disabled] .btn        { border-color: $ui-04 !important; }
+    .bx--accordion__item,
+    .bx--accordion__item:last-child                               { border-color: $ui-04; }
+    .bx--btn:disabled,
+    .bx--btn:hover:disabled,
+    .bx--btn:focus:disabled,
+    .bx--btn.bx--btn--disabled,
+    .bx--btn.bx--btn--disabled:hover,
+    .bx--btn.bx--btn--disabled:focus                              { border-color: $ui-04; }
+    .bx--overflow-menu-options                                    { border-color: $ui-04; }
+    .bx--overflow-menu--divider                                   { border-color: $ui-04; }
+    .dropdown-menu                                                { border-color: $ui-04; }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus  { border-color: $ui-04; }
+    .card-pf-footer                                               { border-color: $ui-03; }
+    .card-pf-heading                                              { border-color: $ui-03; }
+    .content-view-pf-pagination                                   { border-color: $ui-03; }
+    .form-control                                                 { border-color: $ui-04; }
+    .list-group                                                   { border-top-color: $ui-03; }
+    .list-group-item                                              { border-color: $ui-03; }
+    .nav-tabs                                                     { border-color: $ui-03; }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus                               { border-color: $ui-03 $ui-03 transparent; }
+    .nav-tabs > li > a:active,
+    .nav-tabs > li > a:focus,
+    .nav-tabs > li > a:hover                                      { border-color: $ui-03; }
+    .notification-drawer                                          { border-color: $ui-03; }
+    .notification-accordion-content .notification-footer          { border-color: $ui-03; }
+    .pagination > li > a,
+    .pagination > li > span,
+    .pagination > .disabled > span,
+    .pagination > .disabled > span:hover,
+    .pagination > .disabled > span:focus,
+    .pagination > .disabled > a,
+    .pagination > .disabled > a:hover,
+    .pagination > .disabled > a:focus                             { border-color: $ui-04; }
+    .panel-group .panel-default                                   { border-color: $ui-04; }
+    .panel-group .panel-default .panel-heading +
+    .panel-collapse .panel-body                                   { border-color: $ui-04; }
+    .sidebar-pf.sidebar-pf-left                                   { border-color: $ui-03; }
+    .table-hover > tbody > tr:hover > td                          { border-bottom-color: $ui-05 }
+    .table-hover > tbody > tr:hover > th                          { border-bottom-color: $ui-05 }
+    .table-bordered,
+    .table-bordered > thead > tr > th,
+    .table-bordered > tbody > tr > th,
+    .table-bordered > tfoot > tr > th,
+    .table-bordered > thead > tr > td,
+    .table-bordered > tbody > tr > td,
+    .table-bordered > tfoot > tr > td                             { border-color: $ui-04; }
+    .toolbar-pf                                                   { border-color: $ui-03; }
+    .toolbar-pf .form-group                                       { border-right-color: $ui-03; }
+    .toolbar-pf-results                                           { border-top-color: $ui-03; }
+
+    .bx--overflow-menu.bx--overflow-menu--open,
+    .bx--overflow-menu.bx--overflow-menu--open
+    .bx--overflow-menu__trigger,
+    .bx--list-box__menu                                           { box-shadow: 0 2px 6px $overlay-01; }
+    .bx--btn-set .bx--btn:not(:focus)                             { box-shadow: -0.0625rem 0 0 0 $ui-background }
+
+    a                                                             { color: $link-01; }
+    a:hover, a:focus                                              { color: $inverse-link; }
+    body                                                          { color: $text-01; }
+    #notifications-toggle                                         { color: $text-01; }
+    #notifications-toggle:hover                                   { color: $text-02; }
+    #text_summary_button .bx--btn--ghost                          { color: $text-01; }
+    .alert-danger                                                 { color: $danger-02; }
+    .alert-info                                                   { color: $support-04; }
+    .alert .pficon-info                                           { color: $support-04; }
+    .btn-default                                                  { color: $text-01; }
+    .btn-default:active:hover,
+    .btn-default.active:hover,
+    .open > .dropdown-toggle.btn-default:hover,
+    .btn-default:active:focus,
+    .btn-default.active:focus,
+    .open > .dropdown-toggle.btn-default:focus,
+    .btn-default:active.focus,
+    .btn-default.active.focus,
+    .open > .dropdown-toggle.btn-default.focus,
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default:active,
+    .btn-default.active,
+    .open .dropdown-toggle.btn-default                            { color: $text-02; }
+    .btn.disabled, .btn[disabled], fieldset[disabled] .btn        { color: $disabled-03 !important; }
+    .bx--accordion__heading                                       { color: $text-01; }
+    .bx--breadcrumb-item::after                                   { color: $text-01; }
+    .bx--breadcrumb-item [aria-current="page"]                    { color: $text-01; }
+    .bx--breadcrumb-item.bx--breadcrumb-item--current .bx--link   { color: $text-01; }
+    .bx--btn--ghost                                               { color: $link-01; }
+    .bx--btn--ghost:hover, .bx--btn--ghost:active                 { color: $inverse-link; }
+    .bx--cc--chart-wrapper p                                      { color: $text-01; }
+    .bx--dropdown                                                 { color: $text-01; }
+    .bx--inline-notification--low-contrast                        { color: $text-01; }
+    .bx--label                                                    { color: $text-01; }
+    .bx--link                                                     { color: $link-01; }
+    .bx--link:hover                                               { color: $inverse-link; }
+    .bx--list-box                                                 { color: $text-01; }
+    .bx--list-box__label                                          { color: $text-01; }
+    .bx--list-box__menu-item__option                              { color: $text-01; }
+    .bx--list-box__menu-item:hover
+    .bx--list-box__menu-item__option                              { color: $text-01; }
+    .bx--overflow-menu-options .bx--overflow-menu-options__btn    { color: $text-01; }
+    .bx--select-input                                             { color: $text-01; }
+    .bx--select-input:focus                                       { color: $text-01; }
+    .card-pf.card-pf-aggregate-status
+    .card-pf-aggregate-status-notifications a,
+    .card-pf.card-pf-aggregate-status .card-pf-title a            { color: $text-01; }
+    .card-pf-aggregate-status .card-pf-title .fa,
+    .card-pf-aggregate-status .card-pf-title .fas,
+    .card-pf-aggregate-status .card-pf-title .far,
+    .card-pf-aggregate-status .card-pf-title .fab,
+    .card-pf-aggregate-status .card-pf-title .fal,
+    .card-pf-aggregate-status .card-pf-title .pficon              { color: $link-01; }
+    .close                                                        { color: $text-01; }
+    optgroup.bx--select-optgroup, .bx--select-option              { color: $text-01; }
+    .dropdown-menu > li > a                                       { color: $text-01; }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus  { color: $text-02; }
+    .form-control                                                 { color: $text-01; }
+    .form-control[disabled],
+    .form-control[readonly],
+    fieldset[disabled] .form-control                              { color: $disabled-03; }
+    .miq-toolbar-actions .bx--overflow-menu .toolbar-overflow span { color: $text-01; }
+    .nav-tabs > li > a                                            { color: $text-02; }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus                               { color: $link-01; }
+    .nav-tabs > li > a:active,
+    .nav-tabs > li > a:focus,
+    .nav-tabs > li > a:hover                                      { color: $text-01; }
+    .notification-drawer .panel-header .heading-icon              { color: $text-01; }
+    .pagination > li > a, .pagination > li > span                 { color: $text-01; }
+    .pagination > li > a:hover,
+    .pagination > li > span:hover,
+    .pagination > li > a:focus,
+    .pagination > li > span:focus,
+    .pagination > li > a:active,
+    .pagination > li > span:active,
+    .pagination > li > a.active,
+    .pagination > li > span.active,
+    .open .dropdown-toggle.pagination > li > a,
+    .open .dropdown-toggle.pagination > li > span                 { color: $text-02; }
+    .panel-default > .panel-heading                               { color: $text-01; }
+    .panel-group .panel-title > a                                 { color: $text-01; }
+    .panel-group .panel                                           { color: $text-01; }
+    .table-summary-screen .label                                  { color: $text-01; }
+    .trend-footer-pf                                              { color: $text-05; }
+
+
+    div.bx--cc--legend div.legend-item p                          { fill: $text-01; }
+    .bx--select__arrow                                            { fill: $text-01; }
+    .bx--accordion__arrow                                         { fill: $text-01; }
+    .bx--list-box__menu-icon > svg                                { fill: $text-01; }
+    .bx--accordion__item--active .bx--accordion__arrow            { fill: $text-01; }
+    .bx--cc--axes g.axis g.tick text                              { fill: $text-01; }
+    .bx--cc--chart-wrapper text                                   { fill: $text-01; }
+    .bx--cc--grid rect.chart-grid-backdrop                        { fill: $ui-background; }
+    .bx--chart-holder .bx--overflow-menu__icon                    { fill: $text-01; }
+
+    .bx--cc--grid rect.chart-grid-backdrop.stroked                { stroke: $ui-03; }
+    .bx--cc--grid g.x.grid g.tick line,
+    .bx--cc--grid g.y.grid g.tick line                            { stroke: $ui-03; }
+  }
+}
