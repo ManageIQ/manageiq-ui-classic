@@ -66,9 +66,9 @@ module OrchestrationStackHelper::TextualSummary
 
   def textual_child_orchestration_stack
     num = @record.number_of(:children)
-    if num == 1 && role_allows(:feature => "orchestration_stack_show")
+    if num == 1 && role_allows?(:feature => "orchestration_stack_show")
       @record.children.first
-    elsif num > 1 && role_allows(:feature => "orchestration_stack_show_list")
+    elsif num > 1 && role_allows?(:feature => "orchestration_stack_show_list")
       h         = {:label => _("Child Orchestration Stacks"), :icon => "ff ff-stack", :value => num}
       h[:link]  = url_for_only_path(:action => 'show', :id => @record.id, :display => 'children')
       h[:title] = _("Show all Child Orchestration Stacks")
