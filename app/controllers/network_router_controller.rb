@@ -49,47 +49,6 @@ class NetworkRouterController < ApplicationController
     )
   end
 
-  def create
-    assert_privileges("network_router_new")
-    case params[:button]
-    when "cancel"
-      javascript_redirect(:action    => 'show_list',
-                          :flash_msg => _("Add of new Network Router was cancelled by the user"))
-
-    when "add"
-      options = form_params(params)
-      options.merge!(form_external_gateway(params)) if switch_to_bool(params[:external_gateway])
-
-      ems = ExtManagementSystem.find(params[:ems_id])
-      task_id = ems.create_network_router_queue(session[:userid], options)
-
-      add_flash(_("Network Router creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-      end
-    end
-  end
-
-  def create_finished
-    task_id = session[:async][:params][:task_id]
-    router_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Queued Network Router \"%{name}\" for creation") % {:name => router_name})
-    else
-      add_flash(_("Unable to create Network Router \"%{name}\": %{details}") %
-                {:name => router_name, :details => task.message}, :error)
-    end
-
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show_list")
-  end
-
   def edit
     params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("network_router_edit")
@@ -127,22 +86,6 @@ class NetworkRouterController < ApplicationController
         initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
       end
     end
-  end
-
-  def update_finished
-    task_id = session[:async][:params][:task_id]
-    router_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Network Router \"%{name}\" updated") % {:name => router_name})
-    else
-      add_flash(_("Unable to update Network Router \"%{name}\": %{details}") %
-                {:name => router_name, :details => task.message}, :error)
-    end
-
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   def add_interface_select
