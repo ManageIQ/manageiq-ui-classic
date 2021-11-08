@@ -1,3 +1,4 @@
+#selected #{@volume.id.to_s}
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "cloudVolumeFormController as vm",
                "miq-form"      => true,
@@ -37,6 +38,8 @@
                 :enabled   => "true",
                 'on-click' => "vm.cancelSnapshotCreateClicked(angularForm)"}
 
+= react 'CloudVolumeSnapshot', {:createUrl => url_for_only_path(:action => "snapshot_create", :id => @volume.id.to_s, :button => @edit ? "create" : nil), 
+                                :recordId => @volume.id.to_s}
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
   ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id.to_s}');
