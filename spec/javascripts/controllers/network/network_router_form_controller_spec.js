@@ -21,22 +21,6 @@ describe('networkRouterController', function() {
     });
   }));
 
-  describe('#saveClicked', function() {
-    beforeEach(function() {
-      setTimeout(vm.saveClicked);
-    });
-
-    it('delegates to miqService.miqAjaxButton', function(done) {
-      setTimeout(function() {
-        expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
-          '/network_router/update/1000000000001?button=save',
-          $scope.vm.networkRouterModel,
-          { complete: false }
-        );
-        done();
-      });
-    });
-  });
 
   describe('#cancelClicked', function() {
     beforeEach(function() {

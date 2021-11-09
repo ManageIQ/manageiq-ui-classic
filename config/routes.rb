@@ -1667,7 +1667,6 @@ Rails.application.routes.draw do
         add_interface
         add_interface_select
         button
-        create
         listnav_search_selected
         protect
         quick_search
