@@ -6,6 +6,7 @@ import { ToolbarButton } from '../../components/toolbar/ToolbarButton';
 import { ToolbarGroup } from '../../components/toolbar/Toolbar';
 import { ToolbarList } from '../../components/toolbar/ToolbarList';
 import { ToolbarView } from '../../components/toolbar/ToolbarView';
+import { ToolbarKebab } from '../../components/toolbar/ToolbarKebab';
 
 import toolbarData from './data/toolbar-big.json';
 import viewData from './data/toolbar-view.json';
@@ -93,5 +94,16 @@ describe('Toolbar', () => {
       count={0}
     />);
     expect(t.find(ToolbarList)).toHaveLength(10);
+  });
+
+  it('renders kebab buttons', () => {
+    const t = mount(<Toolbar
+      onClick={() => {}}
+      onViewClick={() => {}}
+      groups={toolbarData}
+      views={viewData}
+      count={0}
+    />);
+    expect(t.find(ToolbarKebab)).toHaveLength(1);
   });
 });

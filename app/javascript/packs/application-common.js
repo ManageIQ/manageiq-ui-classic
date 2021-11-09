@@ -23,7 +23,10 @@ import createReduxRoutingActions from '../miq-redux/redux-router-actions';
 import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
 import { miqOptimizationInit } from '../optimization/listen.js';
 
-import '../../stylesheet/application-webpack.scss';
+import '../../stylesheet/application-webpack.scss';// css file which includes all carbon pages.
+import '../../stylesheet/legacy/main.scss'; // css file which includes old pages.
+
+import * as move from '../helpers/move.js';
 
 ManageIQ.component = {
   ...newRegistry,
@@ -61,6 +64,4 @@ window.Spinner = Spinner;
 
 // Overview > Optimization
 miqOptimizationInit();
-
-import * as move from '../helpers/move.js';
 ManageIQ.move = move;

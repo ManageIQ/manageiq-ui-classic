@@ -8,7 +8,7 @@ kubernetes-topology-graph {
 }
 
 .topology .legend {
-  font-family: "Open Sans", Open Sans, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   display: inline-block;
   vertical-align: middle;
@@ -44,7 +44,7 @@ kubernetes-topology-icon svg {
 }
 
 .kube-topology g {
-  font-family: "Open Sans", Open Sans, sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .kube-topology g text.attached-label {
@@ -128,14 +128,14 @@ kubernetes-topology-icon svg {
 }
 
 line.PhysicalServerPhysicalSwitch {
-  stroke : #3f9c35;
+  stroke: #3f9c35;
   stroke-dasharray: 5;
 }
 
 .topology-filter-group {
   float: left;
-  padding: 0px 10px;
-  margin: 10px 0px;
+  padding: 0 10px;
+  margin: 10px 0;
 }
 
 .topology-filter-group > label {
@@ -162,17 +162,17 @@ $topology-colors: (
 );
 
 @each $filter-value, $color in $topology-colors {
-  .topology g.#{$filter-value} text.glyph{
+  .topology g.#{$filter-value} text.glyph {
     fill: $color !important;
   }
 
-  .legend kubernetes-topology-filter[filter-value="#{$filter-value}"] i{
+  .legend kubernetes-topology-filter[filter-value="#{$filter-value}"] i {
     color: $color;
   }
 }
 
-.legend kubernetes-topology-filter[filter-value="Unknown,None"] i{
-  color: map-get($topology-colors, Unknown)
+.legend kubernetes-topology-filter[filter-value="Unknown,None"] i {
+  color: map-get($topology-colors, unknown);
 }
 
 /// Container-specific styling

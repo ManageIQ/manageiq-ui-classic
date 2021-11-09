@@ -19,6 +19,50 @@ exports[`Retirement Form Component should render a new Retirement form 1`] = `
 >
   <RetirementForm
     retirementID="[\\"180\\"]"
+    timezone={
+      Object {
+        "tzinfo": Object {
+          "info": Object {
+            "identifier": "America/New York",
+          },
+        },
+      }
+    }
+    url="/api/services"
+  />
+</Provider>
+`;
+
+exports[`Retirement Form Component should submit Retirement Form with correct date and time 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <RetirementForm
+    retirementID="[\\"42\\"]"
+    retirement_warn={null}
+    retires_on="2021-10-02T00:50:00Z"
+    timezone={
+      Object {
+        "tzinfo": Object {
+          "info": Object {
+            "identifier": "Etc/UTC",
+          },
+        },
+      }
+    }
     url="/api/services"
   />
 </Provider>

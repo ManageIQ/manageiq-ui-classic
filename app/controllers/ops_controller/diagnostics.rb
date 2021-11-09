@@ -276,74 +276,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def db_backup_form_field_changed
-    assert_privileges("ops_diagnostics")
-
-    require 'uri'
-    schedule = MiqSchedule.find(params[:id])
-    depot = schedule.file_depot
-    full_uri, _query = depot.try(:uri)&.split('?')
-    uri_prefix, uri = full_uri.to_s.split('://')
-    port = URI(depot.try(:uri)).port
-    render :json => {
-      :depot_name           => depot.try(:name),
-      :uri                  => uri,
-      :uri_prefix           => uri_prefix,
-      :log_userid           => depot.try(:authentication_userid),
-      :log_aws_region       => depot.try(:aws_region),
-      :openstack_region     => depot.try(:openstack_region),
-      :keystone_api_version => depot.try(:keystone_api_version),
-      :v3_domain_ident      => depot.try(:v3_domain_ident),
-      :swift_api_port       => port || 5000,
-      :security_protocol    => depot.try(:security_protocol)
-    }
-  end
-
-  def db_backup
-    assert_privileges('ops_diagnostics')
-
-    if params[:backup_schedule].present?
-      @schedule = MiqSchedule.find(params[:backup_schedule])
-    else
-      @schedule = MiqSchedule.new(:userid => session[:userid])
-      @schedule.adhoc = true
-      @schedule.enabled = false
-      @schedule.name = "__adhoc_dbbackup_#{Time.now}__"
-      @schedule.description = _("Adhoc DB Backup at %{time}") % {:time => Time.now}
-      @schedule.run_at ||= {}
-      run_at = create_time_in_utc("00:00:00")
-      @schedule.run_at[:start_time] = "#{run_at} Z"
-      @schedule.run_at[:tz] = nil
-      @schedule.run_at[:interval] ||= {}
-      @schedule.run_at[:interval][:unit] = "Once".downcase
-    end
-    @schedule.sched_action = {:method => "db_backup"}
-    if @flash_array
-      javascript_flash(:spinner_off => true)
-      return
-    end
-
-    schedule_set_record_vars(@schedule)
-    schedule_validate?(@schedule)
-    if @schedule.valid? && !flash_errors? && @schedule.save
-      @schedule.run_adhoc_db_backup
-      add_flash(_("Database Backup successfully initiated"))
-      diagnostics_set_form_vars
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-        page.replace_html("diagnostics_database", :partial => "diagnostics_database_tab")
-        page << "miqSparkle(false);"
-      end
-    else
-      @schedule.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
-      end
-      javascript_flash(:spinner_off => true)
-    end
-  end
-
   def log_collection_form_fields
     assert_privileges("#{@sb[:selected_typ] == "miq_server" ? "" : "zone_"}log_depot_edit")
     @record = @sb[:selected_typ].classify.constantize.find(@sb[:selected_server_id])
@@ -725,8 +657,7 @@ module OpsController::Diagnostics
       elsif @sb[:active_tab] == "diagnostics_replication" # Replication tab
         @selected_server = MiqRegion.my_region
       elsif @sb[:active_tab] == "diagnostics_database"
-        build_backup_schedule_options_for_select
-        build_db_options_for_select
+        database_details
       elsif @sb[:active_tab] == "diagnostics_orphaned_data"
         orphaned_records_get
       elsif @sb[:active_tab] == "diagnostics_server_list"
@@ -801,15 +732,6 @@ module OpsController::Diagnostics
                              {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
                               :model => ui_lookup(:model => @selected_server.class.to_s)}
                          end
-    end
-  end
-
-  def build_backup_schedule_options_for_select
-    @backup_schedules = {}
-    database_details
-    miq_schedules = MiqSchedule.where(:resource_type => 'DatabaseBackup', :adhoc => nil)
-    miq_schedules.sort_by { |s| s.name.downcase }.each do |s|
-      @backup_schedules[s.id] = s.name if s.resource_type == "DatabaseBackup"
     end
   end
 

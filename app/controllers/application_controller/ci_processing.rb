@@ -13,7 +13,6 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Resize
     include Mixins::Actions::VmActions::RightSize
     include Mixins::Actions::VmActions::Reconfigure
-    include Mixins::Actions::VmActions::Rename
     helper_method(:supports_reconfigure_disks?)
     helper_method(:supports_reconfigure_disksize?)
     helper_method(:supports_reconfigure_network_adapters?)
@@ -932,7 +931,6 @@ module ApplicationController::CiProcessing
     when "instance_remove_security_group"   then remove_security_group_vms
     when "vm_transform"                     then vm_transform
     when "vm_transform_mass"                then vm_transform_mass
-    when 'vm_rename'                        then vm_rename
     end
   end
 end

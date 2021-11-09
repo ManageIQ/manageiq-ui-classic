@@ -1,22 +1,25 @@
 /* Bootstrap overrides */
 .whitelabel {
-  background-image: image-url($img-bg-login-whitelabel);
+  background-image: url($img-bg-login-whitelabel);
   background-size: 100% 100%;
 }
 
 .about-modal {
   .bx--modal-container {
     background-color: $modal-about-pf-bg-color;
+
     /* 'About' modal background image */
-    background-image: image-url($modal-about-pf-bg-img);
+    background-image: url($modal-about-pf-bg-img);
     background-size: 100% 100%;
 
     .bx--modal-header {
       padding-left: 5rem;
       padding-top: 3rem;
+
       .bx--modal-header__heading {
         color: #fff;
       }
+
       .bx--modal-close {
         .bx--modal-close__icon {
           fill: #fff;
@@ -26,22 +29,22 @@
 
     .about-modal-body {
       padding-left: 4rem;
-  
+
       .about-visible-scrollbar {
         height: 200px;
-        overflow: auto; 
+        overflow: auto;
       }
-  
+
       .about-visible-scrollbar::-webkit-scrollbar {
         width: 10px;
       }
-      
+
       /* Track */
       .about-visible-scrollbar::-webkit-scrollbar-track {
         box-shadow: inset 0 0 10px #f5f5f5;
         border-radius: 10px;
       }
-      
+
       /* Handle */
       .about-visible-scrollbar::-webkit-scrollbar-thumb {
         background: #f5f5f5;
@@ -53,6 +56,7 @@
         color: #fff;
         margin: 0 0 5px;
       }
+
       .plugins-button {
         padding: 0;
         background-color: transparent;
@@ -60,6 +64,7 @@
         color: #fff;
         font-size: 12px;
       }
+
       .logo {
         position: fixed;
         z-index: -1;
@@ -68,5 +73,5 @@
         bottom: 1rem;
       }
     }
-  }  
+  }
 }

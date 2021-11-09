@@ -146,21 +146,6 @@ module OpsController::Settings::Schedules
 
     if schedule_check_compliance?(schedule)
       action_type = schedule.resource_type.underscore + "_" + schedule.sched_action[:method]
-    elsif schedule_db_backup?(schedule)
-      require 'uri'
-      action_type          = schedule.sched_action[:method]
-      depot                = schedule.file_depot
-      full_uri, _query     = depot.try(:uri).split('?')
-      uri_prefix, uri      = full_uri.to_s.split('://')
-      protocol             = depot.try(:type)
-      depot_name           = depot.try(:name)
-      log_userid           = depot.try(:authentication_userid)
-      log_aws_region       = depot.try(:aws_region)
-      openstack_region     = depot.try(:openstack_region)
-      keystone_api_version = depot.try(:keystone_api_version)
-      v3_domain_ident      = depot.try(:v3_domain_ident)
-      swift_api_port       = full_uri.blank? ? 5000 : URI(full_uri).port
-      security_protocol    = depot.try(:security_protocol)
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
@@ -315,17 +300,12 @@ module OpsController::Settings::Schedules
     schedule.sched_action && schedule.sched_action[:method] && schedule.sched_action[:method] == "check_compliance"
   end
 
-  def schedule_db_backup?(schedule)
-    schedule.sched_action && schedule.sched_action[:method] && schedule.sched_action[:method] == "db_backup"
-  end
-
   def schedule_automation_request?(schedule)
     schedule.sched_action && schedule.sched_action[:method] && schedule.sched_action[:method] == "automation_request"
   end
 
   def schedule_resource_type_from_params_action
     case params[:action_typ]
-    when "db_backup"          then "DatabaseBackup"
     when /check_compliance\z/ then (params[:action_typ].split("_") - params[:action_typ].split("_").last(2)).join("_").classify
     when "emscluster"         then "EmsCluster"
     when "automation_request" then "AutomationRequest"
@@ -337,7 +317,6 @@ module OpsController::Settings::Schedules
     case params[:action_typ]
     when "vm", "miq_template" then "vm_scan" # Default to vm_scan method for now
     when /check_compliance\z/ then "check_compliance"
-    when "db_backup"          then "db_backup"
     when "automation_request" then "automation_request"
     else                           "scan"
     end
@@ -378,19 +357,17 @@ module OpsController::Settings::Schedules
     when "my"
       build_listnav_search_list("Vm")
       filtered_item_list = @my_searches.collect { |search| [search.id, search.description] }
-    else
-      filtered_item_list = DatabaseBackup.supported_depots
     end
 
     filtered_item_list
   end
 
-  def schedule_db_backup_or_automate(schedule)
-    %w[db_backup automation_request].include?(schedule.sched_action[:method])
+  def schedule_automate(schedule)
+    schedule.sched_action[:method] == "automation_request"
   end
 
   def determine_filter_type_and_value(schedule)
-    if schedule.sched_action && schedule.sched_action[:method] && !schedule_db_backup_or_automate(schedule)
+    if schedule.sched_action && schedule.sched_action[:method] && !schedule_automate(schedule)
       if schedule.miq_search # See if a search filter is attached
         filter_type = schedule.miq_search.search_type == "user" ? "my" : "global"
         filter_value = schedule.miq_search.id
@@ -454,7 +431,7 @@ module OpsController::Settings::Schedules
 
   def schedule_validate?(sched)
     valid = true
-    unless %w[db_backup automation_request].include?(params[:action_typ])
+    unless %w[automation_request].include?(params[:action_typ])
       if %w[global my].include?(params[:filter_typ])
         if params[:filter_value].blank? # Check for search filter chosen
           add_flash(_("Filter must be selected"), :error)
@@ -504,14 +481,7 @@ module OpsController::Settings::Schedules
     schedule.resource_type = schedule_resource_type_from_params_action
     schedule.sched_action = {:method => schedule_method_from_params_action}
 
-    if params[:action_typ] == "db_backup"
-      schedule.filter = nil
-      depot = schedule.file_depot
-      uri_settings = build_uri_settings(depot)
-      uri_settings[:name] = params[:depot_name]
-      uri_settings[:save] = true
-      schedule.verify_file_depot(uri_settings)
-    elsif params[:action_typ] == "automation_request"
+    if params[:action_typ] == "automation_request"
       schedule.zone_id = params[:zone_id].presence || MiqServer.my_server.zone_id
       ui_attrs = []
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
@@ -692,7 +662,6 @@ module OpsController::Settings::Schedules
     if role_allows?(:feature => "container_image_check_compliance")
       @action_type_options_for_select.push([_("Container Image Compliance Check"), "container_image_check_compliance"])
     end
-    @action_type_options_for_select.push([_("Database Backup"), "db_backup"])
 
     if role_allows?(:feature => "miq_ae_class_simulation")
       @action_type_options_for_select.push([_("Automation Tasks"), "automation_request"])
@@ -750,16 +719,6 @@ module OpsController::Settings::Schedules
     ] +
                                   (@storage_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
                                   (@storage_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
-
-    build_db_options_for_select
-  end
-
-  def build_db_options_for_select
-    @database_backup_options_for_select = DatabaseBackup.supported_depots
-    @database_backup_uri_prefixes = DatabaseBackup::SUPPORTED_DEPOTS.map { |model| [model, model.constantize.uri_prefix] }.to_h
-    @regions_options_for_select = retrieve_aws_regions
-    @api_versions_options_for_select = retrieve_openstack_api_versions
-    @security_protocols_options_for_select = retrieve_security_protocols
   end
 
   def retrieve_aws_regions

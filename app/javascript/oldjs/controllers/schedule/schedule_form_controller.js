@@ -190,8 +190,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       type = __('Cluster Selection');
     } else if ($scope.scheduleModel.action_typ === 'storage') {
       type = __('Datastore Selection');
-    } else if ($scope.scheduleModel.action_typ === 'db_backup') {
-      type = __('Database Backup Selection');
     } else if ($scope.scheduleModel.action_typ === 'automation_request') {
       type = __('Automate Tasks Selection');
     }
@@ -208,10 +206,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.action_typ;
   };
 
-  $scope.dbBackup = function() {
-    return $scope.scheduleModel.action_typ === 'db_backup';
-  };
-
   $scope.automateRequest = function() {
     return $scope.scheduleModel.action_typ === 'automation_request';
   };
@@ -225,24 +219,8 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       .catch(miqService.handleFailure);
   };
 
-  $scope.credsProtocol = function() {
-    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'FileDepotSmb' || $scope.scheduleModel.log_protocol === 'FileDepotS3' || $scope.scheduleModel.log_protocol === 'FileDepotSwift');
-  };
-
-  $scope.s3Backup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'FileDepotS3';
-  };
-
-  $scope.swiftBackup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'FileDepotSwift';
-  };
-
   $scope.actionTypeChanged = function() {
-    if ($scope.dbBackup()) {
-      $scope.scheduleModel.log_protocol = 'FileDepotNfs';
-      $scope.scheduleModel.uri_prefix = 'nfs';
-      $scope.scheduleModel.filter_typ = null;
-    } else if ($scope.automateRequest()) {
+    if ($scope.automateRequest()) {
       miqService.sparkleOn();
 
       $q.all([
@@ -362,19 +340,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.$broadcast('resetClicked');
     $scope.scheduleModel = angular.copy( $scope.modelCopy );
 
-    if ($scope.dbBackup()) {
-      $scope.filterValuesEmpty = true;
-    }
-
     var filter_touched = $scope.angularForm.action_typ.$touched || (typeof $scope.angularForm.filter_typ !== 'undefined' && $scope.angularForm.filter_typ.$touched);
-    if (!$scope.dbBackup() && !$scope.automateRequest() && $scope.scheduleModel.filter_typ && !filter_touched) {
-      // AJAX-less Reset
-      $scope.toggleValueForWatch('filterValuesEmpty', false);
-    }
-
-    if (!$scope.dbBackup() && !!$scope.automateRequest() && $scope.scheduleModel.filter_typ && filter_touched) {
-      $scope.filterTypeChanged();
-    }
 
     if ($scope.scheduleModel.timer_typ && $scope.angularForm.timer_typ.$touched) {
       $scope.setTimerType();
@@ -396,34 +362,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.filterValueRequired = function(value) {
     return !$scope.filterValuesEmpty && !value;
-  };
-
-  $scope.dbRequired = function(value) {
-    return $scope.dbBackup() && !value;
-  };
-
-  $scope.sambaRequired = function(value) {
-    return $scope.sambaBackup() && !value;
-  };
-
-  $scope.regionSelect = function() {
-    return $scope.scheduleModel.log_protocol === 'FileDepotS3';
-  };
-
-  $scope.regionRequired = function() {
-    return ($scope.s3Backup() && $scope.scheduleModel.log_aws_region === '');
-  };
-
-  $scope.swiftSecurityProtocolSelect = function() {
-    return $scope.scheduleModel.action_typ === 'db_backup' && $scope.scheduleModel.log_protocol === 'FileDepotSwift';
-  };
-
-  $scope.swiftSecurityProtocolRequired = function() {
-    return ($scope.swiftBackup() && $scope.scheduleModel.security_protocol === '');
-  };
-
-  $scope.s3Required = function(value) {
-    return $scope.s3Backup() && !value;
   };
 
   $scope.isBasicInfoValid = function() {

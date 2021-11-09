@@ -1,7 +1,9 @@
-const merge = require('webpack-merge')
+const merge = require('webpack-merge');
 
-const { env, publicPath } = require('./configuration.js')
+const { env, publicPath } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
+const nodeModules = '../../node_modules';
+const appBasePath = (env.NODE_ENV === 'production') ? '/packs/' : '../../assets/images/layout/';// Need different paths for developement and prod envs.
 
 let babelOptions = merge(babelrc, {
   babelrc: false,
@@ -38,6 +40,16 @@ module.exports = [
     test: /gettext_i18n_rails_js.*jed\.js/,
     use: 'imports-loader?exports=>undefined,define=>undefined,this=>window',
   },
+  {
+    test: /\.(jpg|jpeg|png|gif|svg|eot|ttf|woff|woff2)$/i,
+    use: [{
+      loader: 'file-loader',
+      options: {
+        publicPath,
+        name: '[name]-[hash].[ext]',
+      },
+    }],
+  },
 
   {
     test: /\.(scss|sass|css)$/i,
@@ -48,28 +60,30 @@ module.exports = [
         loader: 'postcss-loader',
         options: {
           sourceMap: true,
-          plugins: () => [require('autoprefixer')]
+          plugins: () => [require('autoprefixer')],
         },
       },
       'resolve-url-loader',
       {
         loader: 'sass-loader',
         options: {
-          sourceMap: true,
-          implementation: require('sass').default,
+          prependData: () => {
+            return `$img-base-path: '${appBasePath}';`;// Path variable for login and about modal images.
+          },
+          sassOptions: {
+            sourceMap: true,
+            includePaths: [
+              `${nodeModules}/bootstrap-sass/assets/stylesheets`,
+              `${nodeModules}/bootstrap/scss`,
+              `${nodeModules}/patternfly/dist/sass/patternfly`,
+              `${nodeModules}/font-awesome/scss`,
+              `${nodeModules}/@manageiq/font-fabulous/assets/stylesheets`,
+            ],
+            implementation: require('sass').default,
+          },
         },
       },
     ],
   },
 
-  {
-    test: /\.(jpg|jpeg|png|gif|svg|eot|ttf|woff|woff2)$/i,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        publicPath,
-        name: '[name]-[hash].[ext]',
-      }
-    }]
-  },
 ];

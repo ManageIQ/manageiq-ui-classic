@@ -2,8 +2,10 @@
   .CodeMirror {
     height: auto;
   }
+
   border: 1px solid transparent;
+
   &.has-error {
-    border-color: #cc0000
+    border-color: #cc0000;
   }
 }

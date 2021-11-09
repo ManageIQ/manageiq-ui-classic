@@ -15,10 +15,8 @@
                             "miq-select"       => true}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
         .form-group
-          %label.col-md-2.control-label{"for" => "filter_typ", "ng-hide" => "dbBackup() || automateRequest()"}
+          %label.col-md-2.control-label{"for" => "filter_typ", "ng-hide" => "automateRequest()"}
             = _("Filter")
-          %label.col-md-2.control-label{"for" => "filter_typ", "ng-show" => "dbBackup() && !automateRequest()"}
-            = _("Type")
           .col-md-10
             = select_tag('filter_typ', options_for_select(@vm_options_for_select),
               "ng-switch-when" => "vm",
@@ -74,12 +72,6 @@
               "ng-change"      => "filterTypeChanged()",
               "checkchange"    => "",
               "selectpicker-for-select-tag"   => "")
-            = select_tag('log_protocol', options_for_select(@database_backup_options_for_select.invert),
-              "ng-switch-when" => "db_backup",
-              "ng-model"       => "$parent.scheduleModel.log_protocol",
-              "ng-change"      => "logProtocolChanged()",
-              "checkchange"    => "",
-              "selectpicker-for-select-tag"   => "")
 
             %select#filter_value{"update-dropdown-for-filter" => "",
                                  "dropdown-model"             => "scheduleModel",
@@ -109,105 +101,6 @@
                             "target-id-options"     => "scheduleModel.targets",
                             "target-id-change"      => "setTargetId(targetId)",
                             "ui-attrs"              => "scheduleModel.ui_attrs"}
-
-        %apiversion{'ng-if' => 'swiftSecurityProtocolSelect()'}
-          .form-group{"ng-class" => "{'has-error': angularForm.keystone_api_version.$invalid}"}
-            %label.col-md-2.control-label
-              = _("API Version")
-            .col-md-8
-              = select_tag('keystone_api_version', options_for_select(@api_versions_options_for_select),
-                           "ng-model"                    => "scheduleModel.keystone_api_version",
-                           "ng-required"                 => "swiftSecurityProtocolRequired()",
-                           "checkchange"                 => "",
-                           "selectpicker-for-select-tag" => "")
-              %span.help-block{"ng-show" => "angularForm.keystone_api_version.$invalid"}
-
-        %domainid{'ng-if' => 'swiftSecurityProtocolSelect()'}
-          .form-group{"ng-class" => "{'has-error': angularForm.v3_domain_ident.$invalid}", "ng-if" => "scheduleModel.keystone_api_version == 'v3'"}
-            %label.col-md-2.control-label{"for" => "v3_domain_ident"}
-              = _('Keystone V3 Domain ID')
-            .col-md-4
-              %input.form-control{"type"        => "text",
-                                  "id"          => "v3_domain_ident",
-                                  "name"        => "v3_domain_ident",
-                                  "ng-model"    => "scheduleModel.v3_domain_ident",
-                                  "required"    => true,
-                                  "checkchange" => ""}
-              %span.help-block{"ng-show" => "angularForm.v3_domain_ident.$invalid"}
-                = _("Required")
-
-        = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
-                 :locals  => {:ng_show             => "dbBackup()",
-                              :ng_reqd_depot_name  => "dbRequired(scheduleModel.depot_name)",
-                              :ng_model_depot_name => "scheduleModel.depot_name",
-                              :ng_reqd_uri         => "dbRequired(scheduleModel.uri)",
-                              :ng_model_uri        => "scheduleModel.uri",
-                              :ng_model_uri_prefix => "scheduleModel.uri_prefix",
-                              :uri_prefix_display  => "{{scheduleModel.uri_prefix}}://"}
-
-        .form-group{"ng-class" => "{'has-error': angularForm.openstack_region.$invalid}",
-                    "ng-if"    => 'swiftSecurityProtocolSelect()'}
-          %label.col-md-2.control-label{"for" => "ems_region_input"}
-            = _('Region')
-          .col-md-4
-            %input.form-control{"type"                    => "text",
-                                "id"                      => "openstack_region",
-                                "name"                    => "openstack_region",
-                                "ng-model"                => "scheduleModel.openstack_region",
-                                "required"                => true,
-                                "checkchange"             => ""}
-            %span.help-block{"ng-show" => "angularForm.openstack_region.$invalid"}
-              = _("Required")
-
-        %region{'ng-if' => 'regionSelect()'}
-          .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
-            %label.col-md-2.control-label
-              = _("AWS Region")
-            .col-md-8
-              - default_option = [_("<Choose>"), '']
-              = select_tag('log_aws_region', options_for_select([default_option] + @regions_options_for_select),
-                           "ng-model"                    => "scheduleModel.log_aws_region",
-                           "ng-required"                 => "regionRequired()",
-                           "selectpicker-for-select-tag" => "")
-              %span.help-block{"ng-show" => "angularForm.log_aws_region.$invalid"}
-                = _("Required")
-
-        %protocol{'ng-if' => 'swiftSecurityProtocolSelect()'}
-          .form-group{"ng-class" => "{'has-error': angularForm.security_protocol.$invalid}"}
-            %label.col-md-2.control-label
-              = _("Security Protocol")
-            .col-md-8
-              - default_option = [_("<Choose>"), '']
-              = select_tag('security_protocol', options_for_select([default_option] + @security_protocols_options_for_select),
-                           "ng-model"                    => "scheduleModel.security_protocol",
-                           "ng-required"                 => "swiftSecurityProtocolRequired()",
-                           "selectpicker-for-select-tag" => "")
-              %span.help-block{"ng-show" => "angularForm.security_protocol.$invalid"}
-                = _("Required")
-
-        %apiport{"ng-if" => 'swiftSecurityProtocolSelect()'}
-          .form-group{"ng-class" => "{'has-error': angularForm.swift_api_port.$invalid}"}
-            %label.col-md-2.control-label{"for" => "swift_api_port"}
-              = _('API Port')
-            .col-md-2
-              %input.form-control{"type"                        => "text",
-                                  "id"                          => "swift_api_port",
-                                  "name"                        => "swift_api_port",
-                                  "ng-show"                     => "credsProtocol()",
-                                  "ng-model"                    => "scheduleModel.swift_api_port",
-                                  "maxlength"                   => 15,
-                                  "ng-required"                 => true,
-                                  "checkchange"                 => "",
-                                  "ng-trim"                     => false,
-                                  "detect-spaces"               => "",
-                                  "pattern"                     => "^[1-9]\\d*$"}
-              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.pattern"}
-                = _("Must be a number (greater than 0)")
-              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.required"}
-                = _("Required")
-              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.detectedSpaces"}
-                = _("Spaces are prohibited")
-
 
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                  :locals  => {:ng_show           => "credsProtocol()",

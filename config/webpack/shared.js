@@ -31,7 +31,6 @@ const sharedPackages = [
   'lodash',
   'moment',
   'patternfly-react',
-  'patternfly-sass',
   'prop-types',
   'react',
   'react-bootstrap',

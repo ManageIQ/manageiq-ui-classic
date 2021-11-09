@@ -22,11 +22,11 @@ $navbar-pf-alt-navbar-toggle-icon-bar-hover-bg: #fff;
 
 // Product overrides for 'About' Modal
 
-$modal-about-pf-bg-img:                     "layout/bg-modal-about-pf.png"; // sets background image of 'About' modal
+$modal-about-pf-bg-img:                     "#{$img-base-path}bg-modal-about-pf.png"; 
 $modal-about-pf-bg-color:                   #101010; // sets background color of 'About' modal
 
 // Product overrides of Patternfly Login variables
-$img-bg-login:                              "layout/bg-login.png";
+$img-bg-login:                              "#{$img-base-path}bg-login.png";
 $img-bg-login-whitelabel:                   "/upload/custom_login_logo.png";
 $login-bg-color:                            #101010;
 $login-container-bg-color:                  #000000;

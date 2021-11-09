@@ -1,11 +1,10 @@
 .piechart {
   $chart-empty: #92d400 !default; // pf-light-green-400
-  $chart-fill: #CC0000 !default; // pf-red-100
+  $chart-fill: #cc0000 !default; // pf-red-100
   $chart-size: 20px;
 
   width: $chart-size;
   height: $chart-size;
-
   border-radius: 50%;
   background: $chart-empty;
   background-image: linear-gradient(to right, transparent 50%, $chart-fill 0);
@@ -37,6 +36,7 @@
         background: $chart-fill;
         transform: rotate(#{($i - 10) / 20}turn);
       }
+
       &.invert::before {
         background: $chart-empty;
       }

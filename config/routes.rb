@@ -2353,6 +2353,23 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :host_initiator_group   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ],
+      :post => %w[
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
     :storage_resource   => {
       :get  => %w[
         download_data
@@ -2424,8 +2441,6 @@ Rails.application.routes.draw do
         cu_collection_update
         cu_repair
         cu_repair_field_changed
-        db_backup
-        db_backup_form_field_changed
         diagnostics_server_list
         diagnostics_tree_select
         explorer
@@ -2885,7 +2900,6 @@ Rails.application.routes.draw do
         disassociate_floating_ip_form_fields
         add_security_group
         remove_security_group
-        rename_vm
         retire
         right_size
         show
@@ -2906,7 +2920,6 @@ Rails.application.routes.draw do
         live_migrate_vm
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-        rename_vm
         right_size
         set_checked_items
         show_list
@@ -3068,7 +3081,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups
@@ -3155,7 +3167,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups
