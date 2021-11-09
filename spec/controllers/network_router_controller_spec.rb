@@ -92,61 +92,6 @@ describe NetworkRouterController do
     end
   end
 
-  describe "#create" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @router = FactoryBot.create(:network_router_openstack)
-    end
-
-    let(:task_options) do
-      {
-        :action => "creating Network Router for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-
-    let(:cloud_tenant) { FactoryBot.create(:cloud_tenant) }
-
-    let(:queue_options) do
-      {
-        :class_name  => @ems.class.name,
-        :method_name => 'create_network_router',
-        :instance_id => @ems.id,
-        :args        => [{
-          :name            => 'test',
-          :admin_state_up  => 'true',
-          :ems_id          => @ems.id.to_s,
-          :cloud_subnet_id => '',
-          :cloud_tenant    => cloud_tenant
-        }]
-      }
-    end
-
-    it "builds create screen" do
-      post :button, :params => { :pressed => "network_router_new", :format => :js }
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :create, :params => {
-        :button           => 'add',
-        :controller       => 'network_router',
-        :format           => :js,
-        :name             => 'test',
-        :admin_state_up   => 'true',
-        :cloud_subnet_id  => '',
-        :cloud_tenant     => {:id => cloud_tenant.id},
-        :ems_id           => @ems.id,
-        :external_gateway => 'false',
-        :extra_attributes => '',
-        :id               => 'new'
-      }
-    end
-  end
-
   describe "#edit" do
     before do
       stub_user(:features => :all)
