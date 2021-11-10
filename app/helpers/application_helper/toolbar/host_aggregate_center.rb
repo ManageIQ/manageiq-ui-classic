@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           :url_parms    => "main_div",
           :send_checked => true,
           :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options      => {:feature => :update_aggregate}
+          :options      => {:feature => :update}
         ),
         button(
           :host_aggregate_add_host,
@@ -45,7 +45,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           :send_checked => true,
           :confirm      => N_("Warning: The selected Host Aggregates will be permanently deleted!"),
           :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options      => {:feature => :delete_aggregate}
+          :options      => {:feature => :delete}
         ),
       ]
     ),

@@ -28,7 +28,7 @@ class HostAggregateController < ApplicationController
     @host_aggregate = HostAggregate.new
     @in_a_form = true
     @ems_choices = {}
-    Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager).select { |ems| ems.supports?(:create_host_aggregate) }.each do |ems|
+    Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager).select(&:supports_create_host_aggregate).each do |ems|
       @ems_choices[ems.name] = ems.id
     end
 
@@ -73,7 +73,7 @@ class HostAggregateController < ApplicationController
       host_aggregate = HostAggregate.find(host_aggregate_id)
       if host_aggregate.nil?
         add_flash(_("Host Aggregate no longer exists."), :error)
-      elsif !host_aggregate.supports?(:delete_aggregate)
+      elsif !host_aggregate.supports?(:delete)
         add_flash(_("Delete aggregate not supported by Host Aggregate \"%{name}\"") % {:name => host_aggregate.name}, :error)
       else
         host_aggregates_to_delete.push(host_aggregate)
