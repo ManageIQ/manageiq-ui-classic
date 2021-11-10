@@ -2,9 +2,8 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {}, {}) }
 
   def setup_ems(supports)
-    ems = object_double(ManageIQ::Providers::CloudManager.new)
-    allow(ems).to receive(:supports_auth_key_pair_create).and_return(supports)
-    allow(Rbac).to receive(:filtered).and_return([ems])
+    ems = FactoryBot.create(:ems_cloud)
+    allow(ManageIQ::Providers::CloudManager).to receive(:where).and_return(supports ? [ems] : [])
   end
 
   describe '#disabled?' do
