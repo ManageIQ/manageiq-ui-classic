@@ -36,11 +36,6 @@ module EmsContainerHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
-  end
   #
   # Items
   #
@@ -72,13 +67,6 @@ module EmsContainerHelper::TextualSummary
 
   def textual_port
     @record.port.presence
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => polymorphic_path(@record, :display => 'topology'),
-     :title => _("Show topology")}
   end
 
   def textual_volumes

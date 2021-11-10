@@ -28,13 +28,6 @@ module EmsNetworkHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-
-    TextualGroup.new(_("Overview"), i)
-  end
-
   #
   # Items
   #
@@ -96,13 +89,6 @@ module EmsNetworkHelper::TextualSummary
 
   def textual_cloud_subnets
     textual_link(@record.cloud_subnets, :label => _("Cloud Subnets"))
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => 'network_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 
   def textual_cloud_tenants

@@ -85,7 +85,6 @@ module Menu
           Menu::Item.new('orchestration_stack', N_('Stacks'),             'orchestration_stack', {:feature => 'orchestration_stack_show_list'},   '/orchestration_stack/show_list'),
           Menu::Item.new('auth_key_pair_cloud', N_('Key Pairs'),          'auth_key_pair_cloud', {:feature => 'auth_key_pair_cloud_show_list'},   '/auth_key_pair_cloud/show_list'),
           Menu::Item.new('cloud_databases',     N_('Databases'),          'cloud_database',      {:feature => 'cloud_database'},                  '/cloud_database/show_list'),
-          Menu::Item.new('cloud_topology',      N_('Topology'),           'cloud_topology',      {:feature => 'cloud_topology'},                  '/cloud_topology/show'),
         ])
       end
 
@@ -99,7 +98,6 @@ module Menu
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
           Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
-          Menu::Item.new('infra_topology',    N_('Topology'),          'infra_topology',             {:feature => 'infra_topology', :any => true},    '/infra_topology/show')
         ])
       end
 
@@ -113,7 +111,6 @@ module Menu
           Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage/show_list'),
           Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch/show_list'),
           Menu::Item.new('firmware_registry',       N_('Firmware Registry'), 'firmware',        {:feature => 'firmware', :any => true},                '/firmware_registry/show_list'),
-          Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology/show'),
         ])
       end
 
@@ -133,7 +130,6 @@ module Menu
           Menu::Item.new('container_image_registry', N_('Image Registries'),    'container_image_registry', {:feature => 'container_image_registry_show_list'},        '/container_image_registry/show_list'),
           Menu::Item.new('container_image',          N_('Container Images'),    'container_image',          {:feature => 'container_image_show_list'},                 '/container_image/show_list'),
           Menu::Item.new('container_template',       N_('Container Templates'), 'container_template',       {:feature => 'container_template_show_list'},              '/container_template/show_list'),
-          Menu::Item.new('container_topology',       N_('Topology'),            'container_topology',       {:feature => 'container_topology', :any => true},          '/container_topology/show')
         ])
       end
 
@@ -148,7 +144,6 @@ module Menu
           Menu::Item.new('security_policy',  N_('Security Policies'), 'security_policy',  {:feature => 'security_policy_show_list'}, '/security_policy/show_list'),
           Menu::Item.new('floating_ip',      N_('Floating IPs'),      'floating_ip',      {:feature => 'floating_ip_show_list'},     '/floating_ip/show_list'),
           Menu::Item.new('network_port',     N_('Ports'),             'network_port',     {:feature => 'network_port_show_list'},    '/network_port/show_list'),
-          Menu::Item.new('network_topology', N_('Topology'),          'network_topology', {:feature => 'network_topology'},          '/network_topology/show'),
         ])
       end
 

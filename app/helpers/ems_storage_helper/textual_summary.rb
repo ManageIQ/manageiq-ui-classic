@@ -27,9 +27,6 @@ module EmsStorageHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-  end
-
   #
   # Items
   #

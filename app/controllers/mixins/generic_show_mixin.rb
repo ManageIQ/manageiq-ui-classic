@@ -22,8 +22,6 @@ module Mixins
         show_performance if respond_to?(:show_performance)
       when "compliance_history"
         show_compliance_history if respond_to?(:show_compliance_history)
-      when "topology"
-        show_topology
 
       # nested list methods as enabled by 'display_methods' on the class
       when *self.class.display_methods

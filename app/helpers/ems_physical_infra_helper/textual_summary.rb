@@ -35,10 +35,6 @@ module EmsPhysicalInfraHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    TextualGroup.new(_("Overview"), %i[topology])
-  end
-
   #
   # Items
   #
@@ -105,12 +101,5 @@ module EmsPhysicalInfraHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
 
     textual_link(@record.vms, :label => _("Virtual Machines"))
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => '/physical_infra_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 end

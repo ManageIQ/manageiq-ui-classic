@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Toolbar } from './toolbar';
 
 import DashboardToolbar from './dashboard_toolbar';
-import TopologyToolbar from './topology_toolbar';
 import { convertMultParamsToRailsMultParams } from '../toolbar-actions/util'
 
 /* global miqJqueryRequest, miqSerializeForm */
@@ -278,8 +277,6 @@ const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
     switch (name) {
       case 'dashboard':
         return <DashboardToolbar {...props} />;
-      case 'topology':
-        return <TopologyToolbar />;
       default:
         return null;
     }

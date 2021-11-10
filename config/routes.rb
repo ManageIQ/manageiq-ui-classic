@@ -951,48 +951,6 @@ Rails.application.routes.draw do
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
-    :container_topology       => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :container_project_topology => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :network_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :cloud_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :infra_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :physical_infra_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
     :physical_infra_overview => {
       :get => %w(
         show

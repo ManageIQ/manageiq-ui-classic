@@ -33,12 +33,6 @@ module EmsCloudHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
-  end
-
   #
   # Items
   #
@@ -165,13 +159,6 @@ module EmsCloudHelper::TextualSummary
       h[:title] = _("Show all Security Groups")
     end
     h
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 
   def textual_tenant

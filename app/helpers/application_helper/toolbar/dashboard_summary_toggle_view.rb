@@ -17,14 +17,6 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
       :url_parms => "?display=main",
       :klass     => ApplicationHelper::Button::ViewSummary
     ),
-    twostate(
-      :view_topology,
-      'pficon pficon-topology',
-      N_('Topology View'),
-      nil,
-      :url       => "/",
-      :url_parms => "?display=topology",
-      :klass     => ApplicationHelper::Button::TopologyFeatureButton)
   ])
   button_group('summary_download', [
     button(

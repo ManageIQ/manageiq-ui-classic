@@ -112,9 +112,6 @@ class ApplicationController < ActionController::Base
       :list    => 20,
       :reports => 20
     },
-    :topology => {
-      :containers_max_items => 100
-    },
     :display  => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",

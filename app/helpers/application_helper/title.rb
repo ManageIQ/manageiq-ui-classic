@@ -27,16 +27,12 @@ module ApplicationHelper
         _("Automation Managers")
       when "catalogs"
         _("Catalogs")
-      when "cloud_topology"
-        _("Cloud Topology")
       when "configuration"
         _("My Settings")
       when "configuration_job"
         _("Configuration Jobs")
       when "container_dashboard"
         _("Container Dashboard")
-      when "container_topology"
-        _("Container Topology")
       when "dashboard"
         _("Dashboard")
       when "chargeback"
@@ -49,8 +45,6 @@ module ApplicationHelper
         _("Generic Object Definitions")
       when "host"
         _("Hosts")
-      when "infra_topology"
-        _("Infrastructure Topology")
       when "miq_server"
         _("Servers")
       when "monitor_alerts_list"
@@ -59,10 +53,6 @@ module ApplicationHelper
         _("Most Recent Monitor Alerts")
       when "monitor_alerts_overview"
         _("Monitor Alerts Overview")
-      when "network_topology"
-        _("Network Topology")
-      when "physical_infra_topology"
-        _("Physical Infrastructure Topology")
       when "services"
         _("Services")
       when "usage"

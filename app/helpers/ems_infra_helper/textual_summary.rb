@@ -31,12 +31,6 @@ module EmsInfraHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
-  end
-
   #
   # Items
   #
@@ -155,13 +149,6 @@ module EmsInfraHelper::TextualSummary
     return nil if @record.host_default_vnc_port_start.blank?
     value = "#{@record.host_default_vnc_port_start} - #{@record.host_default_vnc_port_end}"
     {:label => _("Host Default VNC Port Range"), :value => value}
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => '/infra_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 
   def textual_custom_button_events

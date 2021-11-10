@@ -203,41 +203,7 @@
   max-height: 610px !important;
 }
 
-.topology_refresh {
-  background-color: inherit;
-  border: none;
-  background-image: none;
-  box-shadow: none;
-  bottom: 1px;
-  position: relative;
-}
-
-.search-topology-button {
-  background-color: #f1f1f1;
-  position: absolute;
-  right: -29px;
-  top: 0;
-  width: 25px;
-  height: 26px;
-}
-
-.topology_toolbar {
-  margin-bottom: 20px;
-
-  .text {
-    padding-left: 0 !important;
-  }
-
-  .topology-checkbox {
-    padding-top: 8px;
-  }
-
-  .search-pf-input-group {
-    margin-top: 5px;
-  }
-}
-
-.bx--overflow-menu--divider {
+.bx--overflow-menu--divider { 
   .scrollable-menu {
     display: none;
   }

@@ -150,19 +150,6 @@ exports[`TextualSummary renders just fine 1`] = `
           "title": "Relationships",
         },
         Object {
-          "component": "GenericGroup",
-          "items": Array [
-            Object {
-              "hoverClass": "",
-              "icon": "pficon pficon-topology",
-              "label": "Topology",
-              "link": "/network_topology/show/39",
-              "title": "Show topology",
-            },
-          ],
-          "title": "Overview",
-        },
-        Object {
           "component": "TagGroup",
           "items": Array [
             Object {
@@ -1017,19 +1004,6 @@ exports[`TextualSummary renders just fine 1`] = `
               },
             ],
             "title": "Relationships",
-          },
-          Object {
-            "component": "GenericGroup",
-            "items": Array [
-              Object {
-                "hoverClass": "",
-                "icon": "pficon pficon-topology",
-                "label": "Topology",
-                "link": "/network_topology/show/39",
-                "title": "Show topology",
-              },
-            ],
-            "title": "Overview",
           },
           Object {
             "component": "TagGroup",
@@ -1948,134 +1922,6 @@ exports[`TextualSummary renders just fine 1`] = `
                             </span>
                           </button>
                         </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-              </tbody>
-            </table>
-          </GenericGroup>
-        </TextualGroup>
-        <TextualGroup
-          group={
-            Object {
-              "component": "GenericGroup",
-              "items": Array [
-                Object {
-                  "hoverClass": "",
-                  "icon": "pficon pficon-topology",
-                  "label": "Topology",
-                  "link": "/network_topology/show/39",
-                  "title": "Show topology",
-                },
-              ],
-              "title": "Overview",
-            }
-          }
-          key="Overview"
-          onClick={[Function]}
-        >
-          <GenericGroup
-            items={
-              Array [
-                Object {
-                  "hoverClass": "",
-                  "icon": "pficon pficon-topology",
-                  "label": "Topology",
-                  "link": "/network_topology/show/39",
-                  "title": "Show topology",
-                },
-              ]
-            }
-            onClick={[Function]}
-            title="Overview"
-          >
-            <table
-              className="table table-bordered table-hover table-striped table-summary-screen"
-            >
-              <thead>
-                <tr>
-                  <th
-                    align="left"
-                    colSpan="2"
-                  >
-                    Overview
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "pficon pficon-topology",
-                      "label": "Topology",
-                      "link": "/network_topology/show/39",
-                      "title": "Show topology",
-                    }
-                  }
-                  key="0"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show topology"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Topology
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/network_topology/show/39"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="pficon pficon-topology"
-                            image={null}
-                            title="Show topology"
-                          >
-                            <i
-                              className="pficon pficon-topology"
-                              title="Show topology"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
-                            >
-                              <span>
-                                 
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
                       </div>
                     </td>
                   </tr>

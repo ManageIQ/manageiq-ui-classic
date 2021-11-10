@@ -16,11 +16,7 @@ module ApplicationHelper::PageLayouts
       condition
       configuration
       container_dashboard
-      container_topology
       ems_infra_dashboard
-      infra_topology
-      network_topology
-      cloud_topology
       diagnostics
       exception
       miq_action
@@ -42,7 +38,6 @@ module ApplicationHelper::PageLayouts
       my_tasks
       ops
       physical_infra_overview
-      physical_infra_topology
       physical_network_port
       pxe
       report
@@ -57,7 +52,6 @@ module ApplicationHelper::PageLayouts
       dashboard
       dialog_provision
       policies
-      topology
     ].include?(@showtype)
 
     return false if dashboard_no_listnav?
@@ -124,8 +118,6 @@ module ApplicationHelper::PageLayouts
     showtype = case @showtype
                when 'dashboard'
                  @in_a_form ? true : !@lastaction.to_s.ends_with?("_dashboard")
-               when 'topology'
-                 false
                else
                  true
                end

@@ -89,23 +89,6 @@ const createSchema = () => ({
     },
     {
       component: componentTypes.SUB_FORM,
-      name: 'topology-subform',
-      title: __('Topology Default Items in View'),
-      fields: [
-        {
-          component: componentTypes.SELECT,
-          name: 'topology.containers_max_items',
-          id: 'topology.containers_max_items',
-          label: __('Containers'),
-          options: [
-            { label: __('Unlimited'), value: 0 },
-            ...['5', '10', '20', '50', '100', '200', '500', '1000'].map((n) => ({ label: n, value: n })),
-          ],
-        },
-      ],
-    },
-    {
-      component: componentTypes.SUB_FORM,
       name: 'display-subform',
       title: __('Miscellaneous'),
       fields: [

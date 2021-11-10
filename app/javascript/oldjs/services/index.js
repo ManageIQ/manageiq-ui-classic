@@ -10,4 +10,3 @@ require('./miq_service.js');
 require('./post_service.js');
 require('./subscription_service.js');
 require('./timer_option_service.js');
-require('./topology_service.js');
