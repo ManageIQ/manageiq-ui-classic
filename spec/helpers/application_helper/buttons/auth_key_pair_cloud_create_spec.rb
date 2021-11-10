@@ -3,7 +3,7 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
 
   def setup_ems(supports)
     ems = object_double(ManageIQ::Providers::CloudManager.new)
-    allow(ems).to receive(:supports?).with(:auth_key_pair_create).and_return(supports)
+    allow(ems).to receive(:supports_auth_key_pair_create).and_return(supports)
     allow(Rbac).to receive(:filtered).and_return([ems])
   end
 
