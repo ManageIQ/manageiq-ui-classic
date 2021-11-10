@@ -36,7 +36,7 @@ export const FileEditComponent = (props) => {
       <label className="bx--label" htmlFor={input.name}>{label}</label>
       <br />
       <div className="edit-div">
-        <img className="edit-image" alt={__("Uploaded Image")} id="imageDisplay" src={src} />
+        <img className="edit-image" alt={__('Uploaded Image')} id="imageDisplay" src={src} />
         <Button className="edit-button" renderIcon={TrashCan32} iconDescription={description} hasIconOnly onClick={deleteFile} {...input} />
       </div>
     </div>
@@ -48,20 +48,26 @@ export const uniqueNameValidator = (values) => {
   const errors = { attributes: [], associations: [], methods: [] };
   let result;
 
-  result = compare(values.attributes, 'attributes_name');
-  result.forEach((index) => {
-    errors.attributes[index] = { attributes_name: __('Name must be unique') };
-  });
+  if (values.attributes) {
+    result = compare(values.attributes, 'attributes_name');
+    result.forEach((index) => {
+      errors.attributes[index] = { attributes_name: __('Name must be unique') };
+    });
+  }
 
-  result = compare(values.associations, 'associations_name');
-  result.forEach((index) => {
-    errors.associations[index] = { associations_name: __('Name must be unique') };
-  });
+  if (values.associations) {
+    result = compare(values.associations, 'associations_name');
+    result.forEach((index) => {
+      errors.associations[index] = { associations_name: __('Name must be unique') };
+    });
+  }
 
-  result = compare(values.methods, 'methods_name');
-  result.forEach((index) => {
-    errors.methods[index] = { methods_name: __('Name must be unique') };
-  });
+  if (values.methods) {
+    result = compare(values.methods, 'methods_name');
+    result.forEach((index) => {
+      errors.methods[index] = { methods_name: __('Name must be unique') };
+    });
+  }
 
   return errors;
 };
