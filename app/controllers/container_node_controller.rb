@@ -20,19 +20,6 @@ class ContainerNodeController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def launch_cockpit
-    assert_privileges('cockpit_console')
-    node = identify_record(params[:id], ContainerNode)
-
-    disable_client_cache
-
-    if node.kubernetes_hostname
-      javascript_open_window(node.cockpit_url.to_s)
-    else
-      javascript_flash(:text => node.unsupported_reason(:launch_cockpit), :severity => :error, :spinner_off => true)
-    end
-  end
-
   def show_ad_hoc_metrics
     if @record && @record.try(:ems_id)
       ems = find_record_with_rbac(ExtManagementSystem, @record.ems_id)

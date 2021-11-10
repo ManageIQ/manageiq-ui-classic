@@ -5,18 +5,6 @@ module VmRemote
     params[:task_id] ? console_after_task('vmrc') : console_before_task('vmrc')
   end
 
-  def launch_cockpit
-    vm = identify_record(params[:id], VmOrTemplate)
-
-    disable_client_cache
-
-    if vm.supports_launch_cockpit?
-      javascript_open_window(vm.cockpit_url.to_s)
-    else
-      javascript_flash(:text => vm.unsupported_reason(:launch_cockpit), :severity => :error, :spinner_off => true)
-    end
-  end
-
   def html5_console
     params[:task_id] ? console_after_task('html5') : console_before_task('html5')
   end

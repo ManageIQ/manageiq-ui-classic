@@ -722,23 +722,6 @@
           "title": "Open a web-based VNC or SPICE console for this VM",
           "text": "VM Console",
           "url": "html5_console"
-        },
-        {
-          "child_id": "cockpit_console",
-          "id": "vm_remote_access_choice__cockpit_console",
-          "type": "button",
-          "color": null,
-          "data": null,
-          "hidden": false,
-          "icon": "pficon pficon-screen fa-lg",
-          "name": "vm_remote_access_choice__cockpit_console",
-          "onwhen": null,
-          "pressed": null,
-          "send_checked": null,
-          "enabled": false,
-          "title": "The web-based console is not available because the 'Cockpit' role is not enabled.",
-          "text": "Web Console",
-          "url": "launch_cockpit"
         }
       ],
       "explorer": true
