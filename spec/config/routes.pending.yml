@@ -212,9 +212,6 @@ CloudTenantController:
 - wait_for_task
 CloudTenantDashboardController:
 - report_data
-CloudTopologyController:
-- index
-- report_data
 CloudVolumeBackupController:
 - dynamic_checkbox_refresh
 - index
@@ -373,9 +370,6 @@ ContainerProjectController:
 - open_url_after_dialog
 - sections_field_changed
 - wait_for_task
-ContainerProjectTopologyController:
-- index
-- report_data
 ContainerReplicatorController:
 - dynamic_checkbox_refresh
 - index
@@ -402,9 +396,6 @@ ContainerTemplateController:
 - open_url_after_dialog
 - sections_field_changed
 - service_dialog_from_ct_submit
-ContainerTopologyController:
-- index
-- report_data
 DashboardController:
 - authenticate
 - change_group
@@ -708,9 +699,6 @@ InfraNetworkingController:
 - tree_select
 - x_history
 - x_search_by_name
-InfraTopologyController:
-- index
-- report_data
 MiqActionController:
 - action_field_changed
 - index
@@ -884,9 +872,6 @@ NetworkRouterController:
 NetworkServiceController:
 - index
 - wait_for_task
-NetworkTopologyController:
-- index
-- report_data
 OpsController:
 - accordion_select
 - dialog_field_changed
@@ -953,9 +938,6 @@ PhysicalChassisController:
 - protect
 - quick_search
 PhysicalInfraOverviewController:
-- index
-- report_data
-PhysicalInfraTopologyController:
 - index
 - report_data
 PhysicalNetworkPortController:

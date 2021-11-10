@@ -9,8 +9,6 @@ describe EmsPhysicalInfraHelper::TextualSummary do
 
   include_examples "textual_group", "Properties", %i(hostname type port guid)
 
-  include_examples "textual_group", "Overview", %i(topology), "topology"
-
   include_examples "textual_group", "Relationships", %i(
     datastores
     physical_chassis

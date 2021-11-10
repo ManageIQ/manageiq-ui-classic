@@ -17,7 +17,6 @@ const VisualSettingsForm = ({ recordId }) => {
   const onSubmit = (settings) => {
     settings.perpage.list = parseInt(settings.perpage.list, 10);
     settings.perpage.reports = parseInt(settings.perpage.reports, 10);
-    settings.topology.containers_max_items = parseInt(settings.topology.containers_max_items, 10);
     settings.display.timezone = settings.display.timezone.value ? settings.display.timezone.value : settings.display.timezone;
     miqSparkleOn();
     API.patch(`/api/users/${recordId}`, { settings }).then(() => {

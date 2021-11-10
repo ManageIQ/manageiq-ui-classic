@@ -17,14 +17,5 @@ class ApplicationHelper::Toolbar::ContainerProjectView < ApplicationHelper::Tool
       :url       => "/show",
       :url_parms => "?display=main"
     ),
-    twostate(
-      :view_topology,
-      'pficon pficon-topology',
-      N_('Topology View'),
-      nil,
-      :url       => "/show",
-      :url_parms => "?display=topology",
-      :klass     => ApplicationHelper::Button::TopologyFeatureButton
-    )
   ])
 end

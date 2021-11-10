@@ -12829,13 +12829,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"kubernetes-topology-graph@npm:~0.0.25":
-  version: 0.0.25
-  resolution: "kubernetes-topology-graph@npm:0.0.25"
-  checksum: d3fb0022e3c519893dd11ad1bf97a33265c5e91122a946efd24068a922a2ff592dfde3406814dfe18e3aa9a69245d849de23f66a1f81a490ed0167c906066872
-  languageName: node
-  linkType: hard
-
 "kuler@npm:^2.0.0":
   version: 2.0.0
   resolution: "kuler@npm:2.0.0"
@@ -13845,7 +13838,6 @@ fsevents@^1.2.7:
     jquery.hotkeys: ~0.1.0
     jquery.observe_field: ~0.1.0
     js-yaml: ~3.13.1
-    kubernetes-topology-graph: ~0.0.25
     lodash: ~4.17.10
     moment: ~2.22.2
     moment-duration-format: ~2.2.2

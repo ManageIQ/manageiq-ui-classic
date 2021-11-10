@@ -17,10 +17,6 @@ export const summary1 = [
       {"label":"Power State","value":"On","icon":"fa fa-play","image":null,"hoverClass":"","background": "green"}
      ]
     },
-    {"title":"Overview","component":"GenericGroup","items":[
-      {"label":"Topology","icon":"pficon pficon-topology","link":"/network_topology/show/39","title":"Show topology","hoverClass":""}
-     ]
-    },
     {"title":"Smart Management","component":"TagGroup","items":[
       {"label":"Managed by Zone","icon":"pficon pficon-zone","value":"Amazon Zone","hoverClass":"no-hover"},
       {"label":"My Company Tags","icon":"fa fa-tag","value":"No My Company Tags have been assigned","hoverClass":"no-hover"}
