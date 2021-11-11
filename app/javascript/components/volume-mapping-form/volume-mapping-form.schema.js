@@ -9,7 +9,7 @@ export const portTypes = [
 
 const loadProviders = () =>
   API.get(
-    '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true',
+    '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_volume_mapping=true',
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 

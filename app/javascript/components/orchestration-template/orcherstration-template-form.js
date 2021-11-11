@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { Grid } from 'patternfly-react';
-
+import { Grid } from 'carbon-components-react';
 import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -66,7 +64,7 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
     : __('Creation of a new Orchestration Template was cancelled by the user');
 
   return (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         schema={schema}
         onSubmit={onSubmit}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { groupBy } from 'lodash';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './ownership-form.schema';
@@ -108,7 +108,7 @@ function SetOwnershipForm(props) {
   };
 
   return (
-    <Grid fluid id="set-ownership-form">
+    <Grid id="set-ownership-form">
       <MiqFormRenderer
         initialValues={initialValues}
         schema={createSchema(userOptions, groupOptions)}

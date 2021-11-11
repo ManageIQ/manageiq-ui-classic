@@ -412,6 +412,7 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "ManageIQ::Providers::AnsibleTower::AutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
+        "ManageIQ::Providers::CloudManager::CloudDatabase",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
@@ -738,6 +739,7 @@ module ApplicationHelper
        automation_manager_configured_system
        availability_zone
        ems_automation
+       cloud_database
        cloud_network
        cloud_object_store_container
        cloud_object_store_object
@@ -1036,12 +1038,12 @@ module ApplicationHelper
                              alerts_overview
                              alerts_list
                              alerts_most_recent
+                             cloud_database
                              cloud_network
                              cloud_object_store_container
                              cloud_object_store_object
                              cloud_subnet
                              cloud_tenant
-                             cloud_topology
                              cloud_volume
                              cloud_volume_backup
                              cloud_volume_snapshot
@@ -1064,7 +1066,6 @@ module ApplicationHelper
                              container_template
                              storage_resource
                              host_initiator
-                             container_topology
                              ems_storage
                              ems_cloud
                              ems_cluster
@@ -1074,7 +1075,6 @@ module ApplicationHelper
                              ems_infra_dashboard
                              ems_network
                              ems_physical_infra
-                             infra_topology
                              event
                              flavor
                              floating_ip
@@ -1096,10 +1096,8 @@ module ApplicationHelper
                              network_router
                              network_service
                              network_service_entry
-                             network_topology
                              offline
                              orchestration_stack
-                             physical_infra_topology
                              physical_rack
                              physical_chassis
                              physical_switch

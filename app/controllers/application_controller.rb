@@ -112,9 +112,6 @@ class ApplicationController < ActionController::Base
       :list    => 20,
       :reports => 20
     },
-    :topology => {
-      :containers_max_items => 100
-    },
     :display  => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",
@@ -1000,7 +997,8 @@ class ApplicationController < ActionController::Base
       @sortcol = 0
       @sortdir = "ASC"
     end
-    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' unless params[:is_ascending].nil?
+    params[:is_ascending] = @sortdir.to_s.downcase != "desc"
+    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC'
     @sortcol
   end
 
@@ -1215,6 +1213,12 @@ class ApplicationController < ActionController::Base
       params[:sortby]      = view.headers.index(params[:sort_choice])
     end
 
+    report_symbols = [:all_sortcol, :savedreports_tree_sortcol, :reports_tree_sortcol]
+    # Check if the symbol representing the page is included in the array above and then check if the variable for the sort column (session[sortcol_sym]) is nil
+    if report_symbols.include?(sortcol_sym) && session[sortcol_sym].nil?
+      session[sortcol_sym] = ReportController::DEFAULT_SORT_COLUMN_NUMBER
+      session[sortdir_sym] = ReportController::DEFAULT_SORT_ORDER
+    end
     # Get the current sort info, else get defaults from the view
     @sortcol = session[sortcol_sym].try(:to_i) || view.sort_col
     @sortdir = session[sortdir_sym] || (view.ascending? ? "ASC" : "DESC")
@@ -1224,7 +1228,7 @@ class ApplicationController < ActionController::Base
     session[sortcol_sym] = @sortcol               # Save the new sort values
     session[sortdir_sym] = @sortdir
     view.sortby = [view.col_order[@sortcol]]      # Set sortby array in the view
-    view.ascending = @sortdir.to_s.downcase != "desc"
+    view.order = @sortdir == "ASC" ? "Ascending" : "Descending"
 
     @items_per_page = get_view_pages_perpage(dbname)
     @items_per_page = ONE_MILLION if db_sym.to_s == 'vm' && controller_name == 'service'
@@ -1494,7 +1498,13 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  #
+  # This method is ONLY called from prov_redirect method.
+  # prov_redirect is ONLY called with one of 4 parameters:
+  #   "clone", "migrate", "publish" and nil (meaning "provisioning")
+  #
   # renders a flash message in case the records do not support the task
+  #
   def task_supported(typ)
     vms = find_records_with_rbac(VmOrTemplate, checked_or_params)
     if %w[migrate publish].include?(typ) && vms.any?(&:template?)
@@ -1514,11 +1524,7 @@ class ApplicationController < ActionController::Base
     end
 
     vms.each do |vm|
-      if vm.respond_to?("supports_#{typ}?")
-        render_flash_not_applicable_to_model(typ) unless vm.send("supports_#{typ}?")
-      else
-        render_flash_not_applicable_to_model(typ) unless vm.is_available?(typ)
-      end
+      render_flash_not_applicable_to_model(typ) unless vm.supports?(typ)
     end
   end
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
-
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './cloud-tenant-form.schema';
@@ -42,7 +41,7 @@ const CloudTenantForm = ({ recordId }) => {
   };
 
   return !isLoading && (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         initialValues={initialValues}
         schema={createSchema(recordId, emsId, setState)}

@@ -24,9 +24,7 @@ module EmsConfigurationHelper::TextualSummary
   end
 
   def textual_ipaddress
-    return nil if @record.ipaddress.blank?
-
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
+    @record.ipaddress.present? ? {:label => _("Discovered IP Address"), :value => @record.ipaddress} : nil
   end
 
   def textual_type
@@ -34,7 +32,7 @@ module EmsConfigurationHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_guid

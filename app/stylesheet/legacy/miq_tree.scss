@@ -1,0 +1,37 @@
+.treeview > .list-group {
+  .list-group-item {
+    &.strikethrough {
+      text-decoration: line-through;
+    }
+
+    &.red {
+      color: red;
+    }
+
+    &.opacity {
+      opacity: 0.4;
+    }
+
+    &.no-cursor {
+      cursor: default !important;
+    }
+  }
+}
+
+.react-tree-view {
+  .strikethrough {
+    text-decoration: line-through;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .opacity {
+    opacity: 0.4;
+  }
+
+  .no-cursor {
+    cursor: default !important;
+  }
+}

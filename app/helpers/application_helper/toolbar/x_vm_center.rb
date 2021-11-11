@@ -289,15 +289,6 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :url         => "native_console",
           :klass       => ApplicationHelper::Button::VmNativeConsole
         ),
-        button(
-          :cockpit_console,
-          'pficon pficon-screen fa-lg',
-          N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
-          N_('Web Console'),
-          :keepSpinner => true,
-          :url         => "launch_cockpit",
-          :klass       => ApplicationHelper::Button::CockpitConsole
-        ),
       ]
     ),
   ])

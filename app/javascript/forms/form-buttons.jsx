@@ -10,16 +10,27 @@ function FormButtons(props) {
   const resetTitle = __('Reset');
   const cancelTitle = __('Cancel');
 
+  const { btnType } = props;
+  if (btnType === 'deleteModal') {
+    return (
+      <>
+        <div className="clearfix" />
+        <div className="modal-pull-right button-group edit_buttons">
+          <MiqButton name={cancelTitle} btnType={btnType} title={cancelTitle} enabled onClick={props.cancelClicked} />
+          <MiqButton name={primaryTitle} btnType={btnType} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary />
+        </div>
+      </>
+    );
+  }
   return (
-    <React.Fragment>
+    <>
       <div className="clearfix" />
       <div className="pull-right button-group edit_buttons">
         <MiqButton name={primaryTitle} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary />
-        {props.newRecord || <MiqButton name={resetTitle} title={resetTitle} enabled={! props.pristine} onClick={props.resetClicked} />}
+        {props.newRecord || <MiqButton name={resetTitle} title={resetTitle} enabled={!props.pristine} onClick={props.resetClicked} />}
         <MiqButton name={cancelTitle} title={cancelTitle} enabled onClick={props.cancelClicked} />
-
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

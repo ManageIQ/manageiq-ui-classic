@@ -26,6 +26,24 @@ class ApplicationHelper::Toolbar::VolumeMappingsCenter < ApplicationHelper::Tool
             t,
             :url => "/new"
           ),
+          api_button(
+            :volume_mapping_delete,
+            nil,
+            t = N_('Delete selected volume mappings'),
+            t,
+            :icon         => "pficon pficon-delete fa-lg",
+            :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
+            :options      => {:feature      => :delete,
+                              :parent_class => "VolumeMapping"},
+            :api          => {
+              :action => 'delete',
+              :entity => 'volume_mappings'
+            },
+            :confirm      => N_("Warning: The selected volume mappings will be permanently deleted!"),
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1+'
+          ),
         ]
       ),
     ]

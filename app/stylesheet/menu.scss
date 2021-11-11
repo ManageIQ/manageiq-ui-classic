@@ -1,6 +1,7 @@
 #main-menu {
   @import '~@carbon/themes/scss/themes';
   $carbon--theme: $carbon--theme--g90;
+
   @include carbon--theme();
 
   @import './menu-colors.scss';
@@ -46,7 +47,7 @@
   }
 
   .bx--side-nav__submenu:hover {
-    background-color: #666666
+    background-color: #666666;
   }
 
   .bx--side-nav__hr {
@@ -74,6 +75,7 @@
     margin-bottom: 0;
     margin-top: 5px;
   }
+
   .menu-search-parent {
     font-size: smaller;
     font-weight: 400;
@@ -110,10 +112,12 @@
   .menu-group {
     height: 32px;
     margin-bottom: 8px;
+
     & .bx--dropdown,
     & > li {
       height: 32px;
     }
+
     & .bx--dropdown__wrapper {
       padding: 0 1rem;
     }
@@ -127,10 +131,11 @@
     display: flex;
     align-items: center;
   }
-  
+
   .bx--side-nav__item {
     .bx--tooltip__trigger {
       position: fixed;
+
       &::before {
         border-color: transparent $inverse-01 transparent transparent !important;
       }
@@ -147,7 +152,6 @@
         background-color: $inverse-01;
         color: $text-04;
       }
-
     }
   }
 }
@@ -158,6 +162,7 @@
       margin-left: 48px;
     }
   }
+
   .miq-main-menu-expanded {
     .container-pf-nav-pf-vertical {
       margin-left: 256px;

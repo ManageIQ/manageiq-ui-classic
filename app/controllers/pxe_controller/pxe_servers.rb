@@ -124,18 +124,6 @@ module PxeController::PxeServers
     end
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def pxe_img_form_field_changed
-    assert_privileges('pxe_image_edit')
-    return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
-    pxe_img_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
   def pxe_wimg_edit
     assert_privileges("pxe_wimg_edit")
     case params[:button]

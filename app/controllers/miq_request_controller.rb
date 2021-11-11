@@ -79,7 +79,7 @@ class MiqRequestController < ApplicationController
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @no_checkboxes = true # Don't show checkboxes, read_only
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    @view, @pages = get_view(kls, :named_scope => prov_scope(prov_set_default_options))
+    @view, @pages = get_view(kls, :named_scope => prov_scope(user_options(params)))
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:request_sortcol] = @sortcol
@@ -254,7 +254,7 @@ class MiqRequestController < ApplicationController
       page.replace_html(
         @options[:current_tab_key],
         :partial => dialog_partial_for_workflow,
-        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key]}
+        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key], :isDisabled => true}
       )
       # page << javascript_show("hider_#{@options[:current_tab_key].to_s}_div")
       page << "miqSparkle(false);"
@@ -281,25 +281,6 @@ class MiqRequestController < ApplicationController
         page << "miqScrollTop();" if @flash_array.present?
       end
     end
-  end
-
-  def filter_choice_not_all(key)
-    choice = params[key]
-    return nil if choice == 'all'
-
-    choice
-  end
-
-  def filter
-    assert_privileges(rbac_feature_id("miq_request_show_list"))
-    scope = prov_scope(
-      :reason_text    => params[:reasonText],
-      :time_period    => params[:selectedPeriod],
-      :type_choice    => filter_choice_not_all(:selectedType),
-      :user_choice    => filter_choice_not_all(:selectedUser),
-      :applied_states => Array(params[:states]).find_all { |s| s[:checked] }.map { |s| s[:value] }
-    )
-    render :json => {:data => {:scope => scope}}
   end
 
   def post_install_callback
@@ -419,6 +400,17 @@ class MiqRequestController < ApplicationController
     end
   end
 
+  def user_options(params)
+    opts = {
+      :reason_text    => params["reasonText"],
+      :applied_states => params["approvalStateCheckboxes"],
+      :type_choice    => params["types"],
+      :user_choice    => params["selectedUser"],
+      :time_period    => params["selectedPeriod"],
+    }.compact
+    prov_set_default_options.merge(opts)
+  end
+
   # FIXME: this has a big overlap with miq_request_initial_options.
   # It is needed because the firts load of the GTL is done throught a different
   # mechanism than the subsequent reloads.
@@ -458,6 +450,7 @@ class MiqRequestController < ApplicationController
       :timePeriods    => time_periods_for_select_i18n,
       :selectedPeriod => 7,
       :reasonText     => nil,
+      :requestType    => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
     }
   end
   helper_method :miq_request_initial_options

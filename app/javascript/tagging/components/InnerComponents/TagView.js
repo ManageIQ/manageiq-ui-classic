@@ -1,22 +1,25 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'patternfly-react';
+import { Row, Column } from 'carbon-components-react';
 import TagCategory from './TagCategory';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagView extends React.Component {
-  generateTagCategories = tag => (
+  generateTagCategories = (tag) => (
     <li key={tag.id}>
       <TagCategory
         key={tag.id}
         tagCategory={{ id: tag.id, description: tag.description }}
         values={tag.values}
         onTagDeleteClick={this.props.onTagDeleteClick}
+        showCloseButton={this.props.showCloseButton}
       />
     </li>
   );
 
   render() {
+    const { hideHeader, header } = this.props;
     const assignedTags = [...this.props.assignedTags];
     const view = (assignedTags.length > 0
       ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.description < b.description ? -1 : 1)).map(this.generateTagCategories) }</ul>
@@ -24,16 +27,18 @@ class TagView extends React.Component {
     );
     return (
       <div id="assignments_div">
-        { !this.props.hideHeader &&
-          <Row>
-            <Col lg={12}>
-              <h2>{this.props.header}</h2>
-            </Col>
-          </Row>}
+        { !hideHeader
+          && (
+            <Row>
+              <Column lg={12}>
+                <h2>{header}</h2>
+              </Column>
+            </Row>
+          )}
         <Row>
-          <Col lg={12}>
+          <Column lg={12}>
             { view }
-          </Col>
+          </Column>
         </Row>
       </div>
     );
@@ -41,14 +46,17 @@ class TagView extends React.Component {
 }
 TagView.propTypes = {
   assignedTags: TaggingPropTypes.tags,
-  onTagDeleteClick: PropTypes.func,
+  onTagDeleteClick: PropTypes.func.isRequired,
   header: PropTypes.string,
   hideHeader: PropTypes.bool,
+  showCloseButton: PropTypes.bool,
 };
 
 TagView.defaultProps = {
+  assignedTags: [],
   header: __('Assigned tags'),
   hideHeader: false,
+  showCloseButton: true,
 };
 
 export default TagView;

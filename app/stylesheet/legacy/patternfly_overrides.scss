@@ -1,0 +1,785 @@
+/// ===================================================================
+/// begin layout styling
+/// ===================================================================
+
+/// this media query makes the left column and the main area independently
+/// scrollable and sets the paging_div at the bottom of the column
+
+@media (min-width: $screen-sm) {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+  }
+
+  #listnav_div .panel:first-child {
+    /* hides panel top border to prevent double border with toolbar  */
+    border-top: 0;
+  }
+
+  #main-content {
+    /* inserts height calculation for scrollable area */
+    overflow: auto;
+  }
+
+  .max-height {
+    height: 100%;
+  }
+
+  #miq_ae_tools .scrollable {
+    /* inserts height calculation for scrollable area */
+    height: calc(100% - 50px);
+    overflow: auto;
+  }
+
+  .no-padding {
+    /* removings left-right padding from column */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+iframe,
+.iframe {
+  height: 100%;
+  width: 100%;
+}
+
+.miq-body {
+  background: #f5f5f5;
+}
+
+/// ===================================================================
+/// end layout styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin dashboard styling
+/// ===================================================================
+
+/// make it possible to drop a dashboard widget into a previously empty column
+
+.db_widgets_target {
+  min-height: 78px; // .panel.height + (2 * 20px)
+  padding-top: 20px; // same as .panel's margin-bottom
+}
+
+/// styles PF blank-slate within widgets
+
+body#dashboard .blank-slate-pf {
+  padding: 0 !important;
+}
+
+.blank-slate-pf .pficon-warning-triangle-o::before {
+  color: #9c9c9c;
+}
+
+/// styles the aggregate-status-card to add suppport to font-fabulous
+/// icons that are not yet supported by PF
+
+.card-pf-aggregate-status-notifications {
+  .ff {
+    font-size: ($font-size-base * 1.5); // 18px
+    margin-right: 7px;
+  }
+}
+
+.card-pf-title {
+  .card-pf-aggregate-status & {
+    .ff {
+      color: $card-pf-aggregate-status-title-icon-color;
+      font-size: $font-size-h3;
+      margin-right: 7px;
+    }
+  }
+
+  .card-pf-aggregate-status-mini & {
+    .ff {
+      font-size: ($font-size-base * 2 + 2); // 26px
+      margin-right: 0;
+      min-width: ($font-size-base * 2 + 2); // 26px
+      position: absolute;
+      left: ($grid-gutter-width / 2);
+      text-align: center;
+      top: 15px;
+    }
+  }
+}
+
+.card-pf-link-with-icon {
+  .ff {
+    font-size: 16px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.card-pf-footer {
+  a > {
+    .ff {
+      margin-right: 5px;
+    }
+  }
+}
+
+/// add padding below toolbar on angular dashboards
+.container-tiles-pf {
+  padding-top: 20px;
+}
+
+/// styling for object card on angular dashboards
+
+@media (min-width: $screen-md) {
+  .aggregate-object-card .card-pf {
+    min-height: 137px;
+
+    > .card-pf-title > span > img {
+      height: 60px;
+      margin-top: 0;
+      width: 60px;
+    }
+  }
+}
+
+/// ===================================================================
+/// end dashboard styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin summary screen styling
+/// ===================================================================
+
+.table-summary-screen {
+  .label {
+    color: #333;
+    cursor: default;
+    display: table-cell;
+    font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
+    min-width: 200px;
+    padding-top: 6px;
+    text-align: left;
+    white-space: normal;
+    width: 20% !important;
+  }
+
+  i {
+    display: inline-block;
+    font-size: 1.333em; // equivalent to fa-lg
+    line-height: 0.75em;
+    text-align: center;
+    vertical-align: -15%;
+    width: 1.25em;
+  }
+
+  img {
+    height: 16px;
+    margin: 0 2px 0 2px;
+    width: 16px;
+  }
+}
+
+/// ===================================================================
+/// end summary screen styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin compact list view styling
+/// ===================================================================
+
+.list-view-compact .list-view-pf {
+  .list-group-item {
+    margin-bottom: 0;
+    padding-bottom: 7px;
+    padding-top: 7px;
+  }
+
+  .list-view-pf-main-info {
+    padding: 0;
+  }
+
+  .list-view-pf-left {
+    padding-right: 40px;
+  }
+
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  [class^='col-'] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .no-wrap {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .list-view-pf-actions {
+    margin: 0;
+  }
+
+  .dropdown-kebab-pf .btn-link {
+    margin-top: -7px;
+  }
+
+  .list-view-pf-checkbox,
+  .list-view-pf-expand {
+    margin-bottom: 0;
+    margin-top: -2px;
+  }
+
+  .list-group-item.list-view-pf-expand-active {
+    padding-bottom: 0;
+  }
+}
+
+/// ===================================================================
+/// end compact list view styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin quadicon styling
+/// ===================================================================
+
+miq-quadicon > .single-wrapper {
+  .fonticon > i {
+    color: #0099cc;
+  }
+}
+
+/// ===================================================================
+/// end quadicon styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin report styling
+/// ===================================================================
+
+/// report menu editor accordion
+
+.panel-heading.active {
+  background: #ddd !important;
+}
+
+/// ===================================================================
+/// end report styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin classic ui-specific overrides of ui-components styling
+/// ===================================================================
+
+.no-action .miq-data-table,
+.no-action .miq-tile-section {
+  td,
+  a {
+    cursor: default !important;
+  }
+}
+
+/// begin paginator styling
+
+@media (min-width: $screen-sm) {
+  #paging_div {
+    /* sets paging_div at bottom of screen and styles */
+    border-top: 1px solid #d1d1d1;
+    margin-top: 0;
+    top: 0;
+
+    .col-md-12 {
+      padding: 0;
+    }
+
+    .content-view-pf-pagination {
+      border: 0;
+      height: 44px;
+      margin: 0;
+      padding: 3px 0 0 10px;
+    }
+  }
+}
+
+/// end paginator styling
+
+/// begin table view styling
+
+table.non-breakable td:not(.table-view-pf-select) {
+  word-break: unset !important;
+}
+
+table.table td:not(.table-view-pf-select):not(.generic-row-label) {
+  //Force word break but prevent bs-switch from wrapping
+  word-break: break-all;
+}
+
+table.table td .bootstrap-switch {
+  word-break: keep-all;
+}
+
+#gtl_div table.table td {
+  // Enable word wrapping
+  word-break: normal !important;
+}
+
+.card .card-content .miq-info-section > div {
+  position: absolute;
+  right: 0;
+  top: -35px;
+}
+
+table.table tbody td img {
+  height: 20px;
+  width: 20px;
+}
+
+.table > thead > tr > th {
+  font-family: inherit !important;
+  vertical-align: top;
+}
+
+/// end table view styling
+
+/// ===================================================================
+/// end Classic UI-specific overrides of ui-components styling
+/// ===================================================================
+
+/// ===================================================================
+/// begin misc styling
+/// ===================================================================
+
+// replaces <br> tag
+.spacer {
+  margin-top: 20px;
+}
+
+/// Adds vertical space between tabs and content
+
+.tab-content {
+  margin-top: 10px;
+}
+
+/// replaces onmouseover="this.style.cursor='pointer'"
+.table-hover tbody tr:hover > td {
+  cursor: hand;
+  cursor: pointer;
+}
+
+/// same for other tables than originally style3
+.pointer:hover {
+  cursor: pointer;
+}
+
+/// Adjust search styling of 2nd button (adv search)
+
+.search-pf.has-button .form-group {
+  width: auto;
+}
+
+/// Overrides patternfly style for disabled accordion items
+
+.nav-stacked > li.disabled > a {
+  color: #9c9c9c;
+}
+
+.nav-stacked > li.disabled:hover > a {
+  background: transparent;
+  border: transparent;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+
+// override font-weight for dropdowns within table headers
+
+.table thead th select {
+  font-weight: normal;
+}
+
+table .table-view-pf-select i {
+  /* font icon styling in table view (equivalent to fa-lg) */
+  display: inline-table;
+  font-size: 1.33333333em;
+  line-height: 0.75em;
+  padding-left: 2px;
+  vertical-align: -15%;
+}
+
+// disables hover and pointer on row
+
+table.table-hover tbody tr:nth-child(odd).no-hover:hover td {
+  background: transparent;
+  cursor: default;
+}
+
+table.table-hover tbody tr:nth-child(even).no-hover:hover td {
+  background-color: $table-bg-accent;
+  cursor: default;
+}
+
+table.table.table-selectable tbody tr.selected td {
+  background-color: $link-color;
+  color: #fff;
+}
+
+/* extra vertical margin to accomodate multiple switches */
+.form-horizontal .form-group .bootstrap-switch {
+  margin-bottom: 4px;
+  margin-top: 2px;
+}
+
+/* prevents empty dd from collapsing */
+
+.dl-horizontal > dd::after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.bootstrap-select {
+  .dropdown-menu {
+    overflow-y: visible !important; //eliminates horiz. scrollbar
+  }
+
+  &.selectWidth {
+    width: auto !important;
+
+    .dropdown-menu ul li {
+      padding-right: 10px;  // required for narrow dropdowns
+    }
+  }
+}
+
+/* Sets font icon styling for view buttons on Default Views screen */
+
+#tab_div ul.list-inline {
+  font-size: 16px;
+
+  a {
+    color: #222222 !important;
+  }
+
+  li.active {
+    color: $link-color !important;
+  }
+}
+
+/* Action cell */
+
+.action-cell {
+  position: relative;
+  width: 100px;
+
+  .btn {
+    border: none;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+/// chargeback edit view
+
+tr.rdetail > td {
+  white-space: nowrap;
+}
+
+.cards-pf .nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  background-color: #f5f5f5 !important;
+}
+
+#advsearchModal .modal-dialog {
+  left: 50px;
+}
+
+/// custom modal class for adv search
+@media (min-width: $screen-sm) {
+  .modal-xl {
+    max-width: 1200px;
+    width: 90%;
+  }
+}
+
+/// custom modal class for Entry Point (creates scrollable area)
+
+#automate_treebox,
+#automate_catalog_treebox {
+  height: 350px !important;
+  overflow-y: auto !important;
+}
+/// scrollable
+.scrollable {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/// error modal
+
+.error-modal-miq {
+  & .error-icon {
+    font-size: xx-large;
+    margin-top: 16px;
+  }
+}
+
+#errorModal .modal.show {
+  z-index: 2000;
+}
+
+/// force word-break for long text strings in modals
+
+.modal-body p {
+  word-wrap: break-word;
+}
+
+/// Panel in sidebar doesn't need bottom margin
+.sidebar-pf-left {
+  .panel-group {
+    margin-bottom: 0;
+
+    .panel-title > a:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+      outline-offset: -2px;
+    }
+  }
+}
+
+table .label {
+  // Adds margin to the label to vertically align with text
+  margin-top: 3px;
+}
+
+//  openSCAP result styling
+
+.label-low-severity {
+  background-color: #f0ab00; //(pf-gold-200)
+}
+
+#notification {
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  display: block;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+#notification,
+#search_notification {
+  background-image: url("#{$img-base-path}overlay_dark.png");
+  bottom: 0;
+  color: #fff;
+  display: block;
+  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  text-align: center;
+  text-shadow: #000 2px 2px 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+#blocker_div {
+  background-image: url("#{$img-base-path}overlay_dark.png");
+  bottom: 0;
+  color: #fff;
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 100px 0 0 0;
+  position: fixed;
+  text-shadow: #000 2px 2px 0;
+  width: 100%;
+  z-index: 48;
+}
+
+#spinner_div {
+  background-image: url("#{$img-base-path}overlay_dark.png");
+  border-radius: 8px;
+  height: 180px;
+  left: 0;
+  margin-left: -35px;
+  margin-top: -45px;
+  position: absolute;
+  top: 20px;
+  width: 180px;
+  z-index: 1;
+}
+
+// display pointer on disabled elements
+
+div.disabled {
+  cursor: default;
+}
+
+textarea {
+  border: 1px solid #d1d1d1;
+  line-height: 1.5em;
+  padding: 7px;
+  width: 98.5%;
+}
+
+fieldset {
+  border: 1px solid #e9e8e8;
+  margin: 0 7px 20px 0;
+  padding: 10px;
+  position: relative;
+}
+
+/* Centering for Hovered VMs */
+#outer {
+  height: 1px;
+  left: 0;
+  overflow: visible;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+#inner {
+  height: 100px; /***  width / 2  ***/
+  left: 50%;
+  margin-left: -50px;
+  position: absolute; /***  height / 2   ***/
+  top: -50px;
+  width: 100px;
+}
+
+/************ Hover Buttons ************/
+
+.dimmed {
+  background: #f5f5f5;
+  opacity: 0.4;
+}
+
+/************ Misc ************/
+
+/* Lightbox background */
+
+#lightbox {
+  background: #fff;
+  display: none;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Lightbox panel with some content */
+
+#lightbox-panel {
+  background: #fff;
+  border: 2px solid #ccc;
+  display: none;
+  height: 85%;
+  left: 50%;
+  margin-left: -35%;
+  padding: 10px 15px 10px 15px;
+  position: fixed;
+  top: 100px;
+  width: 80%;
+  z-index: 1001;
+}
+
+.sidebar-disabled,
+.treeview.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.sortable-placeholder {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ddd;
+}
+
+.text-vertical-overflow-pf {
+  max-height: 17ex;
+  overflow-y: auto;
+}
+
+#exp_editor_div .form-group {
+  margin-left: 0;
+}
+
+/* make sure uib-tooltip respects newlines */
+.tooltip-inner {
+  white-space: pre-wrap;
+}
+
+/// ===================================================================
+/// end misc styling
+/// ===================================================================
+
+.miq-toolbar-actions {
+  margin-top: -20px !important;
+}
+
+table.c3-tooltip td {
+  background-color: #393f44;
+}
+
+/* popovers should go over menu, but under .miq-main-menu-overlay */
+#popover {
+  z-index: 9999;
+}
+
+.table-summary-screen > tbody > tr:hover > td,
+.table-summary-screen > tbody > tr:hover > th {
+  background-color: transparent;
+}
+
+.content-focus-order {
+  @media (min-width: 992px) {
+    .col-md-push-3,
+    .col-md-push-4 {
+      left: 0%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .col-md-pull-9,
+    .col-md-pull-8 {
+      right: 0%;
+    }
+  }
+}
+
+/* overrides col-md-2 from patternfly (width: 16.6666666667%) */
+.report-col {
+  width: 17.6666666667%;
+}
+
+.no_filters {
+  .sidebar-pf-left {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .col-sm-pull-8 {
+      display: none;
+    }
+  }
+
+  .col-md-9 {
+    width: 100%;
+  }
+}

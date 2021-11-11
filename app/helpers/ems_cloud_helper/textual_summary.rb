@@ -19,7 +19,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images cloud_volumes orchestration_stacks storage_managers
+        security_groups instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
         custom_button_events tenant
       ]
     )
@@ -31,12 +31,6 @@ module EmsCloudHelper::TextualSummary
 
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[zone tags])
-  end
-
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
   end
 
   #
@@ -64,8 +58,7 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_ipaddress
-    return nil if @record.ipaddress.blank?
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
+    @record.ipaddress.present? ? {:label => _("Discovered IP Address"), :value => @record.ipaddress} : nil
   end
 
   def textual_type
@@ -73,7 +66,7 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_guid
@@ -128,6 +121,16 @@ module EmsCloudHelper::TextualSummary
     h
   end
 
+  def textual_cloud_databases
+    num   = @record.try(:cloud_databases) ? @record.number_of(:cloud_databases) : 0
+    h     = {:label => _('Cloud Databases'), :icon => "fa fa-database", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_database_show_list")
+      h[:title] = _("Show all Cloud Databases")
+      h[:link] = ems_cloud_path(@record.id, :display => 'cloud_databases')
+    end
+    h
+  end
+
   def textual_availability_zones
     textual_link(@record.availability_zones, :label => _('Availability Zones'))
   end
@@ -156,13 +159,6 @@ module EmsCloudHelper::TextualSummary
       h[:title] = _("Show all Security Groups")
     end
     h
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 
   def textual_tenant

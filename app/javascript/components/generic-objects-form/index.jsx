@@ -53,7 +53,7 @@ const GenericObjectForm = ({ recordId }) => {
   }, [recordId]);
 
   const onSubmit = (values, formApi) => {
-    promise.then(async ({ data: { allowed_association_types } }) => {
+    promise.then(async({ data: { allowed_association_types } }) => {
       // check to determine whether to delete or replace existing custom image
       if (values.file_upload) {
         const fileList = get(values, formApi.fileInputs[0]).inputFiles;
@@ -63,39 +63,44 @@ const GenericObjectForm = ({ recordId }) => {
 
       // modifies the attributes/methods data from the form to match what the API is expecting
       values.properties = { attributes: {}, associations: {}, methods: [] };
+      if (values.attributes) {
+        values.attributes.forEach((attr) => {
+          values.properties.attributes[attr.attributes_name] = attr.type;
+        });
+        delete values.attributes;
+      }
 
-      values.attributes.forEach((attr) => {
-        values.properties.attributes[attr.attributes_name] = attr.type;
-      });
+      if (values.methods) {
+        values.methods.forEach((method) => {
+          values.properties.methods.push(method.methods_name);
+        });
+        delete values.methods;
+      }
 
-      values.methods.forEach((method) => {
-        values.properties.methods.push(method.methods_name);
-      });
-
-      delete values.attributes;
-      delete values.methods;
       delete values.image_update;
       delete values.file_upload;
 
       // data in values.associations is handled differently when editing a generic object
       if (recordId) {
         API.get(`/api/generic_object_definitions/${recordId}?attributes=picture.image_href`).then((initialValues) => {
-          values.associations.forEach((association) => {
-            switch (typeof association.class) {
-              case 'object':
-                values.properties.associations[association.associations_name] = association.class.value;
-                break;
-              case 'undefined':
+          if (values.associations) {
+            values.associations.forEach((association) => {
+              switch (typeof association.class) {
+                case 'object':
+                  values.properties.associations[association.associations_name] = association.class.value;
+                  break;
+                case 'undefined':
                 // eslint-disable-next-line max-len
-                values.properties.associations[association.associations_name] = initialValues.properties.associations[association.associations_name];
-                break;
-              default:
-                values.properties.associations[association.associations_name] = Object.keys(allowed_association_types).find((key) =>
-                  allowed_association_types[key] === association.class.replace(/»/, '').replace(/«/, ''));
-            }
-          });
+                  values.properties.associations[association.associations_name] = initialValues.properties.associations[association.associations_name];
+                  break;
+                default:
+                  values.properties.associations[association.associations_name] = Object.keys(allowed_association_types).find((key) =>
+                    allowed_association_types[key] === association.class.replace(/»/, '').replace(/«/, ''));
+              }
+            });
+            delete values.associations;
+          }
 
-          delete values.associations;
           miqSparkleOn();
           const request = API.patch(`/api/generic_object_definitions/${recordId}`, values);
           request.then(() => {
@@ -104,11 +109,13 @@ const GenericObjectForm = ({ recordId }) => {
           }).catch(miqSparkleOff);
         });
       } else {
-        values.associations.forEach((association) => {
-          values.properties.associations[association.associations_name] = association.class.value;
-        });
+        if (values.associations) {
+          values.associations.forEach((association) => {
+            values.properties.associations[association.associations_name] = association.class.value;
+          });
 
-        delete values.associations;
+          delete values.associations;
+        }
 
         miqSparkleOn();
         const request = API.post('/api/generic_object_definitions', values);

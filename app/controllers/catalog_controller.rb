@@ -261,6 +261,28 @@ class CatalogController < ApplicationController
 
     changed = (@edit[:new] != @edit[:current])
 
+    if changed && @edit[:new][:ovf_template_id]
+      ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => @edit[:new][:ovf_template_id])
+      @edit[:new][:src_vm_id] = @edit[:new][:ovf_template_id]
+      ovf_template.refresh_field_values(@edit[:new])
+
+      @edit[:available_folders] = ovf_template.allowed_folders
+                                              .collect { |m| [m.last, m.first] }
+                                              .sort
+      @edit[:available_resource_pools] = ovf_template.allowed_resource_pools
+                                                     .collect { |m| [m.last, m.first] }
+                                                     .sort
+      @edit[:available_datacenters] = ovf_template.allowed_datacenters
+                                                  .collect { |m| [m.last, m.first] }
+                                                  .sort
+      @edit[:available_hosts] = ovf_template.allowed_hosts
+                                            .collect { |h| [h.name, h.id] }
+                                            .sort
+      @edit[:available_storages] = ovf_template.allowed_storages
+                                               .collect { |s| [s.name, s.id] }
+                                               .sort
+    end
+
     render :update do |page|
       page << javascript_prologue
       if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
@@ -270,7 +292,7 @@ class CatalogController < ApplicationController
         # for generic/orchestration type tabs do not show up on screen
         # as there is only a single tab when form is initialized
         # when display in catalog is checked, replace div so tabs can be redrawn
-        if params[:st_prov_type] || (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
+        if (params[:st_prov_type] || (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))) || params[:ovf_template_id]
           page.replace("form_div", :partial => "st_form")
         end
         if automate_tree_needed?
@@ -1847,6 +1869,9 @@ class CatalogController < ApplicationController
     rp = ResourcePool.find_by(:id => provision[:resource_pool_id])
     ovf_template_details[:provisioning][:resource_pool_name] = rp.try(:name)
 
+    dc = Datacenter.find_by(:id => provision[:datacenter_id])
+    ovf_template_details[:provisioning][:datacenter_name] = dc.try(:name)
+
     host = Host.find_by(:id => provision[:host_id])
     ovf_template_details[:provisioning][:host_name] = host.try(:name)
 
@@ -1858,8 +1883,13 @@ class CatalogController < ApplicationController
 
     ovf_template_details[:provisioning][:disk_format] = provision[:disk_format]
 
-    folder = EmsFolder.find_by(:id => provision[:ems_folder_id])
-    ovf_template_details[:provisioning][:ems_folder_name] = folder.try(:name)
+    folder =
+      if dc
+        dc.folders.find { |f| f.name == 'vm' }.try(:ems_ref)
+      else
+        EmsFolder.find_by(:id => provision[:ems_folder_id]).try(:name)
+      end
+    ovf_template_details[:provisioning][:ems_folder_name] = folder if folder
 
     ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => provision[:ovf_template_id])
     ovf_template_details[:provisioning][:ovf_template_name] = ovf_template.try(:name)
@@ -1869,7 +1899,7 @@ class CatalogController < ApplicationController
 
   def fetch_form_vars_ovf_template
     @edit[:new][:accept_all_eula] = params[:accept_all_eula] == "1" if params[:accept_all_eula]
-    copy_params_if_present(@edit[:new], params, %i[disk_format ems_folder_id host_id network_id ovf_template_id resource_pool_id storage_id vm_name])
+    copy_params_if_present(@edit[:new], params, %i[datacenter_id disk_format ems_folder_id host_id network_id ovf_template_id resource_pool_id storage_id vm_name])
     form_available_vars_ovf_template if params[:st_prov_type] || params[:ovf_template_id]
   end
 
@@ -1887,6 +1917,7 @@ class CatalogController < ApplicationController
     if @record.try(:id) && params[:button] != "save"
       options = @record.config_info[:provision]
       @edit[:new][:ovf_template_id] ||= options[:ovf_template_id]
+      @edit[:new][:datacenter_id] ||= options[:datacenter_id]
       @edit[:new][:vm_name] ||= options[:vm_name]
       @edit[:new][:resource_pool_id] ||= options[:resource_pool_id]
       @edit[:new][:ems_folder_id] ||= options[:ems_folder_id]
@@ -1900,6 +1931,9 @@ class CatalogController < ApplicationController
 
     if @edit[:new][:ovf_template_id]
       ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => @edit[:new][:ovf_template_id])
+      @edit[:available_datacenters] = ovf_template.allowed_datacenters
+                                                  .collect { |m| [m.last, m.first] }
+                                                  .sort
       @edit[:available_resource_pools] = ovf_template.allowed_resource_pools
                                                      .collect { |m| [m.last, m.first] }
                                                      .sort
@@ -1917,11 +1951,13 @@ class CatalogController < ApplicationController
                                             .sort
     else
       @edit[:available_resource_pools] = []
+      @edit[:available_datacenters]    = []
       @edit[:available_folders]        = []
       @edit[:available_hosts]          = []
       @edit[:available_storages]       = []
       @edit[:available_vlans]          = []
       @edit[:new][:resource_pool_id]   = nil
+      @edit[:new][:datacenter_id]      = nil
       @edit[:new][:host_id]            = nil
       @edit[:new][:storage_id]         = nil
       @edit[:new][:disk_format]        = nil
@@ -1942,6 +1978,7 @@ class CatalogController < ApplicationController
     options[:service_template_catalog_id] = @edit[:new][:catalog_id].nil? ? nil : @edit[:new][:catalog_id]
     provision = {}
     provision[:ovf_template_id] = @edit[:new][:ovf_template_id] if @edit[:new][:ovf_template_id]
+    provision[:datacenter_id] = @edit[:new][:datacenter_id] if @edit[:new][:datacenter_id]
     provision[:vm_name] = @edit[:new][:vm_name] if @edit[:new][:vm_name]
     provision[:resource_pool_id] = @edit[:new][:resource_pool_id] if @edit[:new][:resource_pool_id]
     provision[:ems_folder_id] = @edit[:new][:ems_folder_id] if @edit[:new][:ems_folder_id]
@@ -1967,7 +2004,8 @@ class CatalogController < ApplicationController
   end
 
   def automate_tree_needed?
-    params[:display] || params[:template_id] || params[:manager_id] || params[:ovf_template_id]
+    options = %i[display template_id manager_id ovf_template_id datacenter_id resource_pool_id ems_folder_id host_id storage_id]
+    options.any? { |x| params[x] }
   end
   helper_method :automate_tree_needed?
 
@@ -2172,7 +2210,7 @@ class CatalogController < ApplicationController
           locals[:action_url] = 'servicetemplate_edit'
           locals[:serialize] = true
         end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
+        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) if allow_presenter_update(action)
       elsif action == "dialog_provision"
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
@@ -2201,6 +2239,12 @@ class CatalogController < ApplicationController
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
+  end
+
+  # This method disables the action buttons of the old button-group form page.
+  def allow_presenter_update(action)
+    restricted_actions = ['group_edit']
+    action ? restricted_actions.exclude?(action.to_s) : false
   end
 
   def need_ansible_locals?

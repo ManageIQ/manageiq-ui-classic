@@ -29,7 +29,7 @@ class ApplicationHelper::ToolbarChooser
       'compare_view_tb'
     elsif @lastaction == "drift"
       'drift_view_tb'
-    elsif %w[ems_container ems_infra ems_physical_infra].include?(@layout) && %w[main dashboard topology].include?(@display)
+    elsif %w[ems_container ems_infra ems_physical_infra].include?(@layout) && %w[main dashboard].include?(@display)
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
@@ -344,10 +344,10 @@ class ApplicationHelper::ToolbarChooser
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
     to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
-                    cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts
+                    cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts host_initiators
                     network_ports network_routers network_services orchestration_stacks resource_pools
                     security_groups security_policies security_policy_rules storages physical_storages]
-    to_display_center = %w[stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices]
+    to_display_center = %w[stack_orchestration_template cloud_object_store_objects generic_objects physical_servers guest_devices]
     performance_layouts = %w[vm host ems_container]
 
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
@@ -416,10 +416,10 @@ class ApplicationHelper::ToolbarChooser
             floating_ip
             cloud_subnet
             network_router
-            network_topology
             network_port
             network_service
             network_service_rule
+            cloud_database
             cloud_network
             load_balancer
             container_image_registry
@@ -427,14 +427,11 @@ class ApplicationHelper::ToolbarChooser
             ems_physical_infra
             flavor
             host
+            host_initiator
             container_build
             infra_networking
-            infra_topology
             ems_storage
-            container_topology
-            cloud_topology
             orchestration_stack
-            physical_infra_topology
             physical_rack
             physical_server
             physical_switch

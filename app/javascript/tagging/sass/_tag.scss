@@ -1,22 +1,61 @@
-@import '~patternfly/dist/sass/patternfly/variables';
-:export { defaultColor: $color-pf-white; }
-
 .pf-remove-button {
   color: $color-pf-white;
   vertical-align: middle;
   margin-left: 5px;
 }
 
+.tag-category.list-inline {
+  background-color: #0f62fe;
+}
+
 .tag {
   font-size: 0.8em;
   display: table-cell !important;
-  vertical-align:middle;
+  vertical-align: middle;
+  border-radius: 1px;
+  border-color: #4c4c4c;
 
   span {
-    background-color: $color-pf-blue-400;
+    background-color: #78a9ff;
   }
 }
 
+.tag-select {
+  width: 23rem;
+}
+
 .tagColor {
-  color: $color-pf-white;
+  color: #ffffff;
+  margin-top: 8px;
+}
+
+.category-label {
+  padding-top: 0.5rem;
+  padding-bottom: 1 rem;
+}
+
+.value-label {
+  background-color: #78a9ff;
+
+  .value-span {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 24px;
+  }
+
+  .bx--btn--sm.bx--btn--icon-only {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .tagButton {
+    background-color: #78a9ff;
+    min-height: 26px;
+  }
+
+  .tagButton:hover {
+    background-color: #002d9c;
+  }
 }

@@ -28,19 +28,11 @@ module EmsNetworkHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-    items = %w[topology]
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-
-    TextualGroup.new(_("Overview"), i)
-  end
-
   #
   # Items
   #
   def textual_provider_region
-    return nil if @record.provider_region.nil?
-    {:label => _("Region"), :value => @record.description}
+    @record.provider_region.present? ? {:label => _("Region"), :value => @record.description} : nil
   end
 
   def textual_hostname
@@ -48,8 +40,7 @@ module EmsNetworkHelper::TextualSummary
   end
 
   def textual_ipaddress
-    return nil if @record.ipaddress.blank?
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
+    @record.ipaddress.present? ? {:label => _("Discovered IP Address"), :value => @record.ipaddress} : nil
   end
 
   def textual_type
@@ -57,7 +48,7 @@ module EmsNetworkHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_guid
@@ -98,13 +89,6 @@ module EmsNetworkHelper::TextualSummary
 
   def textual_cloud_subnets
     textual_link(@record.cloud_subnets, :label => _("Cloud Subnets"))
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => 'network_topology', :action => 'show', :id => @record.id),
-     :title => _("Show topology")}
   end
 
   def textual_cloud_tenants

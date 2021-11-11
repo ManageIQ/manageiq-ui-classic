@@ -15,41 +15,29 @@ class CloudVolumeController < ApplicationController
     %w[cloud_volume_snapshots cloud_volume_backups instances custom_button_events host_initiators]
   end
 
-  def specific_buttons(pressed)
-    case pressed
-    when 'cloud_volume_attach'
-      volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if !volume.is_available?(:attach_volume) || volume.status != "available"
-        render_flash(_("Cloud Volume \"%{volume_name}\" is not available to be attached to any Instances") % {:volume_name => volume.name}, :error)
-      else
-        javascript_redirect(:action => 'attach', :id => checked_item_id)
-      end
-    when 'cloud_volume_detach'
-      volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if volume.attachments.empty?
-        render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {:volume_name => volume.name}, :error)
-      else
-        javascript_redirect(:action => 'detach', :id => checked_item_id)
-      end
-    when 'cloud_volume_edit'
-      javascript_redirect(:action => 'edit', :id => checked_item_id)
-    when 'cloud_volume_snapshot_create'
-      validate_results = validate_item_supports_action_button(:snapshot_create, CloudVolume)
-      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_new'
-      javascript_redirect(:action => 'new')
-    when 'cloud_volume_backup_create'
-      validate_results = validate_item_supports_action_button(:backup_create, CloudVolume)
-      javascript_redirect(:action => 'backup_new', :id => checked_item_id) if validate_results[:action_supported]
-    when 'cloud_volume_backup_restore'
-      validate_results = validate_item_supports_action_button(:backup_restore, CloudVolume)
-      javascript_redirect(:action => 'backup_select', :id => checked_item_id) if validate_results[:action_supported]
-    else
-      return false
-    end
+  BUTTON_TO_ACTION_MAPPING = {
+    'cloud_volume_attach'          => [:attach_volume,   'attach'],
+    'cloud_volume_detach'          => [:detach_volume,   'detach'],
+    'cloud_volume_edit'            => [nil,              'edit'],
+    'cloud_volume_new'             => [nil,              'new'],
+    'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
+    'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
+    'cloud_volume_backup_restore'  => [:backup_restore,  'backup_select'],
+  }.freeze
 
-    if validate_results && validate_results[:message]
-      render_flash(validate_results[:message], :error)
+  def specific_buttons(pressed)
+    return false unless BUTTON_TO_ACTION_MAPPING.include?(pressed)
+
+    validate_action, ui_action = BUTTON_TO_ACTION_MAPPING[pressed]
+    if validate_action
+      validate_results = validate_item_supports_action_button(validate_action, CloudVolume)
+      if validate_results[:action_supported]
+        javascript_redirect(:action => ui_action, :id => checked_item_id)
+      else
+        render_flash(validate_results[:message], :error)
+      end
+    else
+      javascript_redirect(:action => ui_action, :id => checked_item_id)
     end
 
     true
@@ -94,7 +82,7 @@ class CloudVolumeController < ApplicationController
     when "attach"
       options = form_params
       vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.is_available?(:attach_volume)
+      if @volume.supports?(:attach_volume)
         task_id = @volume.attach_volume_queue(session[:userid], vm.ems_ref, options[:device_path])
 
         if task_id.kind_of?(Integer)
@@ -104,7 +92,7 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(volume.is_available_now_error_message(:attach_volume)), :error)
+        add_flash(_(volume.unsupported_reason(:attach_volume)), :error)
         javascript_flash
       end
     end
@@ -149,7 +137,7 @@ class CloudVolumeController < ApplicationController
     when "detach"
       options = form_params
       vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.is_available?(:detach_volume)
+      if @volume.supports?(:detach_volume)
         task_id = @volume.detach_volume_queue(session[:userid], vm.ems_ref)
 
         if task_id.kind_of?(Integer)
@@ -159,7 +147,7 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(@volume.is_available_now_error_message(:detach_volume)), :error)
+        add_flash(_(@volume.unsupported_reason(:detach_volume)), :error)
         javascript_flash(:spinner_off => true)
       end
     end
@@ -215,8 +203,7 @@ class CloudVolumeController < ApplicationController
       @volume = CloudVolume.new
       options = form_params_create
       ext_management_system = options.delete(:ems)
-      validate_results = CloudVolume.validate_create_volume(ext_management_system)
-      if validate_results[:available]
+      if ext_management_system.supports?(:cloud_volume_create)
         task_id = CloudVolume.create_volume_queue(session[:userid], ext_management_system, options)
 
         if task_id.kind_of?(Integer)
@@ -227,7 +214,7 @@ class CloudVolumeController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(ext_management_system.unsupported_reason(:cloud_volume_create), :error)
         drop_breadcrumb(
           :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
@@ -239,11 +226,11 @@ class CloudVolumeController < ApplicationController
       @in_a_form = true
       options = form_params
       cloud_tenant = find_record_with_rbac(CloudTenant, options[:cloud_tenant_id])
-      validate_results = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
-      if validate_results[:available]
+      ext_management_system = cloud_tenant.ext_management_system
+      if ext_management_system.supports?(:cloud_volume_create)
         add_flash(_("Validation successful"))
       else
-        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
+        add_flash(ext_management_system.unsupported_reason(:cloud_volume_create), :error)
       end
       javascript_flash
     end

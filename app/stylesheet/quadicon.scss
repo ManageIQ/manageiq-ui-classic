@@ -1,135 +1,139 @@
+@use "sass:math";
+
 div.miq-quadicon {
-    $quad-w: 78px;
-    $quad-h: 78px;
-    $radius: 6px;
-    $font-size: $quad-w /3;
-    $quad-bg: linear-gradient(180deg, rgb(144, 142, 143) 0%, rgb(87, 87, 87) 62%, rgb(64, 64, 65) 100%);
-    $piechart-small: 30px;
-    $piechart-large: 60px;
-  
-    // Clearfix across the component
-    display: block;
-    display: flow-root;
-    // Hack for IE11
-    @supports not (display: flow-root) {
-      &::after {
-        content: '';
-        display: block;
-        clear: both;
-      }
-    }
-  
-    border-radius: $radius;
-    color: white;
-    height: $quad-h;
-    overflow: hidden;
-    width: $quad-w;
-  
-    & > div.quad-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      position: relative;
-      background: $quad-bg;
-  
-      & > div.miq-quaditem {
-        display: flex;
-        -webkit-box-flex: 0;
-        flex: 0 0 50%;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-  
-        position: relative;
-        height: $quad-h / 2;
-  
-        .piechart {
-          width: $piechart-small;
-          height: $piechart-small;
-        }
-  
-        .fileicon img{
-          height: $quad-h / 3 + ($quad-h / 14);
-          width: $quad-w / 3 + ($quad-h / 14);
-        }
-  
-        .fonticon, .text {
-          font-size: $font-size / 2 + ($font-size / 3);
-        }
-  
-        .text.font-small {
-          font-size: $font-size / 3 + ($font-size / 3);
-        }
-  
-        .text.font-tiny {
-          font-size: $font-size * 1/2;
-        }
-  
-        &.top-left {
-          box-shadow: inset -1px -1px 0 0px rgba(0, 0, 0, 0.6),
-                      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-        }
-  
-        &.top-right {
-          box-shadow: inset 0px -1px 0 0px rgba(0, 0, 0, 0.6);
-        }
-  
-        &.bottom-left {
-          box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.6),
-                      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-        }
-  
-        &.bottom-right {
-          box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-        }
-  
-        &.middle {
-          flex: 0 0 100%;
-          margin-top: - $quad-h + ($quad-h / 4);
-  
-          .fileicon img {
-            height: $quad-h / 3 + ($quad-h / 14);
-            width: $quad-w / 3 + ($quad-h / 14);
-          }
-          .fonticon {
-            font-size: $font-size + ($font-size / 5);
-          }
-        }
-      }
-    }
-  
-    & > div.single-wrapper {
-        display: -webkit-box;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        justify-content: center;
-        background: $quad-bg;
-        height: $quad-h;
-  
-        & > div.miq-quaditem {
-  
-          .fileicon img {
-            height: $quad-h / 2 + ($quad-h / 4);
-            width: $quad-w / 2 + ($quad-w / 4);
-          }
-  
-          .piechart {
-            width: $piechart-large;
-            height: $piechart-large;
-          }
-  
-          .fonticon, .text {
-            font-size: $font-size * 2;
-          }
-  
-          .text.font-small {
-            font-size: $font-size * 3/3;
-          }
-  
-          .text.font-tiny {
-            font-size: $font-size * 2/3;
-          }
-        }
+  $quad-w: 78px;
+  $quad-h: 78px;
+  $radius: 6px;
+  $font-size: math.div($quad-w, 3);
+  $quad-bg: linear-gradient(180deg, rgb(144, 142, 143) 0%, rgb(87, 87, 87) 62%, rgb(64, 64, 65) 100%);
+  $piechart-small: 30px;
+  $piechart-large: 60px;
+
+  // Clearfix across the component
+  display: block;
+  display: flow-root;
+  // Hack for IE11
+  @supports not (display: flow-root) {
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
     }
   }
-  
+
+  border-radius: $radius;
+  color: white;
+  height: $quad-h;
+  overflow: hidden;
+  width: $quad-w;
+
+  & > div.quad-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    background: $quad-bg;
+
+    & > div.miq-quaditem {
+      display: flex;
+      -webkit-box-flex: 0;
+      flex: 0 0 50%;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      position: relative;
+      height: math.div($quad-h, 2);
+
+      .piechart {
+        width: $piechart-small;
+        height: $piechart-small;
+      }
+
+      .fileicon img {
+        height: math.div($quad-h, 3) + math.div($quad-h, 14);
+        width: math.div($quad-w, 3) + math.div($quad-h, 14);
+      }
+
+      .fonticon,
+      .text {
+        font-size: math.div($font-size, 2) + math.div($font-size, 3);
+      }
+
+      .text.font-small {
+        font-size: math.div($font-size, 3) + math.div($font-size, 3);
+      }
+
+      .text.font-tiny {
+        font-size: math.div($font-size, 2);
+      }
+
+      &.top-left {
+        box-shadow:
+          inset -1px -1px 0 0 rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+      }
+
+      &.top-right {
+        box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.6);
+      }
+
+      &.bottom-left {
+        box-shadow:
+          inset -1px 0 0 0 rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+      }
+
+      &.bottom-right {
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+      }
+
+      &.middle {
+        flex: 0 0 100%;
+        margin-top: - $quad-h + math.div($quad-h, 4);
+
+        .fileicon img {
+          height: math.div($quad-h, 3) + math.div($quad-h, 14);
+          width: math.div($quad-w, 3) + math.div($quad-h, 14);
+        }
+
+        .fonticon {
+          font-size: $font-size + math.div($font-size, 5);
+        }
+      }
+    }
+  }
+
+  & > div.single-wrapper {
+    display: -webkit-box;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    background: $quad-bg;
+    height: $quad-h;
+
+    & > div.miq-quaditem {
+      .fileicon img {
+        height: math.div($quad-h, 2) + math.div($quad-h, 4);
+        width: math.div($quad-w, 2) + math.div($quad-w, 4);
+      }
+
+      .piechart {
+        width: $piechart-large;
+        height: $piechart-large;
+      }
+
+      .fonticon,
+      .text {
+        font-size: $font-size * 2;
+      }
+
+      .text.font-small {
+        font-size: $font-size * 3/3;
+      }
+
+      .text.font-tiny {
+        font-size: $font-size * 2/3;
+      }
+    }
+  }
+}

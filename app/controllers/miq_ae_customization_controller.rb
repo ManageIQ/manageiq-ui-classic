@@ -174,7 +174,7 @@ class MiqAeCustomizationController < ApplicationController
       feature = "old_dialogs_accord"
     else
       klass = Dialog
-      feature = "dialogs_accord"
+      feature = "dialog_accord"
     end
     assert_privileges(feature)
 
@@ -288,8 +288,14 @@ class MiqAeCustomizationController < ApplicationController
     end
   end
 
+  # allowed function is used to show form buttons in custom-button form page.
+  def allowed(action)
+    allowed = ['ab_button_new', 'ab_button_edit']
+    action ? allowed.include?(action.to_s) : false
+  end
+
   def handle_bottom_cell(presenter)
-    if @pages || @in_a_form
+    if allowed(@sb[:action]) && (@pages || @in_a_form)
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form && @sb[:action]
@@ -442,12 +448,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def group_button_add_save(typ)
-    # override for AE Customization Buttons - the label doesn't say Description
-    if @edit[:new][:description].blank?
-      render_flash(_("Button Group Hover Text is required"), :error)
-      return
-    end
-
     super(typ)
   end
 

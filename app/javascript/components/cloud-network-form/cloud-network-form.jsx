@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './cloud-network-form.schema';
 import { networkProviders } from '../../helpers/network-providers';
@@ -94,7 +94,7 @@ class CloudNetworkForm extends Component {
     const { fields } = this.state;
 
     return (
-      <Grid fluid>
+      <Grid>
         <MiqFormRenderer
           initialValues={initialValues}
           schema={createSchema(ems, cloudNetworkId, this.loadSchema, this.emptySchema, fields)}

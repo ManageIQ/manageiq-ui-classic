@@ -106,15 +106,6 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :keepSpinner => true,
             :url         => "html5_console",
             :klass       => ApplicationHelper::Button::VmHtml5Console),
-          included_class.button(
-            :cockpit_console,
-            'pficon pficon-screen fa-lg',
-            N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
-            N_('Web Console'),
-            :keepSpinner => true,
-            :url         => "launch_cockpit",
-            :klass       => ApplicationHelper::Button::CockpitConsole
-          ),
         ]
       ),
     ])

@@ -1,0 +1,18 @@
+/*
+* Select component
+* needs higher z-index because of some pf3 default values
+* sometimes it was appearing under non data-driven-forms elements
+*/
+.ddorg__pf3-component-mapper__select__menu {
+  z-index: 100 !important;
+}
+
+/*
+ * HelperTextBlock error text
+ * these colors need to be set explicitly in order to use them in custom components
+ */
+.ddorg__carbon-error-helper-text {
+  color: #da1e28;
+  display: block;
+  overflow: initial;
+}

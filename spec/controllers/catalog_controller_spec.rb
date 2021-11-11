@@ -974,6 +974,56 @@ describe CatalogController do
       end
     end
 
+    describe '#fetch_ovf_template_details' do
+      let(:user)                     { FactoryBot.create(:user_with_group) }
+      let(:admin_user)               { FactoryBot.create(:user, :role => 'super_administrator') }
+      let(:ems)                      { FactoryBot.create(:ems_vmware) }
+      let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
+      let(:ovf_template)             { FactoryBot.create(:orchestration_template_vmware_infra, :ext_management_system => ems) }
+      let(:datacenter)               { FactoryBot.create(:vmware_datacenter, :ext_management_system => ems) }
+      let(:resource_pool)            { FactoryBot.create(:resource_pool, :ext_management_system => ems) }
+      let(:ems_folder)               { FactoryBot.create(:ems_folder, :ext_management_system => ems) }
+      let(:host)                     { FactoryBot.create(:host_vmware, :ext_management_system => ems, :storages => [storage]) }
+      let(:storage)                  { FactoryBot.create(:storage_vmware, :ext_management_system => ems) }
+
+      let(:catalog_item_options) do
+        {
+          :name                        => 'Test Name',
+          :description                 => 'Test Description',
+          :service_template_catalog_id => service_template_catalog.id,
+          :config_info                 => {
+            :provision => {
+              :ovf_template_id  => ovf_template.id,
+              :datacenter_id    => datacenter.id,
+              :resource_pool_id => resource_pool.id,
+              :ems_folder_id    => ems_folder.id,
+              :host_id          => host.id,
+              :storage_id       => storage.id,
+            },
+          },
+        }
+      end
+
+      let(:ovf_service_template) { ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate.create_catalog_item(catalog_item_options, admin_user) }
+
+      it 'should try something' do
+        login_as admin_user
+        allow(User).to receive(:current_user).and_return(user)
+        options = {:provisioning => {
+          :datacenter_name    => datacenter.name,
+          :disk_format        => nil,
+          :host_name          => host.name,
+          :network_name       => nil,
+          :ovf_template_name  => ovf_template.name,
+          :resource_pool_name => resource_pool.name,
+          :storage_name       => storage.name
+        }}
+        controller.instance_variable_set(:@record, ovf_service_template)
+        ovf_details = controller.send(:fetch_ovf_template_details)
+        expect(ovf_details).to eq(options)
+      end
+    end
+
     describe '#service_template_list' do
       context 'Service Catalogs accordion' do
         before { controller.instance_variable_set(:@sb, :active_tree => :svccat_tree) }

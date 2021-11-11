@@ -22,12 +22,12 @@
       %thead
         %th.table-view-pf-select
         %th
-          = _('Text')
+          = _('Name')
         - if x_active_tree == :sandt_tree
           %th
             = _('Type')
         %th
-          = _('Hover Text')
+          = _('Description')
       %tbody
         - @sb[:button_groups].each do |obj|
           - if obj.kind_of?(String)
@@ -51,12 +51,12 @@
               %td.table-view-pf-select
                 %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
               %td
-                = obj[:name].split("|").first
+                = (obj[:name] || obj["name"]).split("|").first
               - if x_active_tree == :sandt_tree
                 %td
                   = rec_type
               %td
-                = obj[:description]
+                = obj[:description] || obj["description"]
 - elsif @sb[:buttons]
   -# button node
   = render :partial => "layouts/flash_msg"
@@ -67,7 +67,7 @@
     .form-horizontal
       .form-group
         %label.control-label.col-md-2
-          = _('Text')
+          = _('Name')
         .col-md-8
           = @record.name.split('|').first
           - display = @record.set_data.present? && [true, "1"].include?(@record.set_data[:display])
@@ -79,7 +79,7 @@
 
       .form-group
         %label.control-label.col-md-2
-          = _('Hover Text')
+          = _('Description')
         .col-md-8
           = @record.description
       .form-group
@@ -96,9 +96,9 @@
       %thead
         %th.table-view-pf-select
         %th
-          = _('Text')
+          = _('Name')
         %th
-          = _('Hover Text')
+          = _('Description')
       %tbody
         - @sb[:buttons].each do |obj|
           - tree_box = x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree'
@@ -107,11 +107,11 @@
             %td.table-view-pf-select
               %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
             %td
-              = obj[:name]
+              = obj[:name] || obj["name"]
             %td
-              = obj[:description]
+              = obj[:description] || obj["description"]
 - elsif %w(ab_group_edit ab_group_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "group_update")
-  = render :partial => 'shared/buttons/group_form'
+  = render :partial => 'shared/buttons/group_form'                      
 - elsif %w(ab_button_edit ab_button_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "button_update") || (params[:button] == "paste" && params[:action] == "resolve")
   = render :partial => 'shared/buttons/ab_form'
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")

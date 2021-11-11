@@ -716,7 +716,6 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         protect
-        launch_cockpit
         launch_external_logging
       ) +
                adv_search_post +
@@ -952,48 +951,6 @@ Rails.application.routes.draw do
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
-    :container_topology       => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :container_project_topology => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :network_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :cloud_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :infra_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
-    :physical_infra_topology         => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
     :physical_infra_overview => {
       :get => %w(
         show
@@ -1036,7 +993,6 @@ Rails.application.routes.draw do
     :dashboard                => {
       :get  => %w(
         auth_error
-        cockpit_redirect
         iframe
         change_tab
         index
@@ -1316,6 +1272,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        edit
         show
         show_list
         new
@@ -1571,7 +1528,22 @@ Rails.application.routes.draw do
         exp_post +
         dialog_runner_post
     },
-
+    :cloud_database             => {
+      :get  => %w(
+        show_list
+        index
+        show
+        download_data
+        download_summary_pdf
+      ),
+      :post => %w(
+        quick_search
+        show_list
+        show
+      ) +
+        adv_search_post +
+        exp_post
+    },
     :cloud_network             => {
       :get  => %w(
         dialog_load
@@ -1651,7 +1623,6 @@ Rails.application.routes.draw do
         add_interface
         add_interface_select
         button
-        create
         listnav_search_selected
         protect
         quick_search
@@ -2227,7 +2198,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        filter
         post_install_callback
         pre_prov
         prov_continue
@@ -2263,8 +2233,6 @@ Rails.application.routes.draw do
       :post => %w(
         button
         jobs
-        tasks_button
-        tasks_change_options
       )
     },
 
@@ -2328,6 +2296,24 @@ Rails.application.routes.draw do
         show
         show_list
         new
+      ],
+      :post => %w[
+        button
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
+    :host_initiator_group   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
       ],
       :post => %w[
         listnav_search_selected
@@ -2410,8 +2396,6 @@ Rails.application.routes.draw do
         cu_collection_update
         cu_repair
         cu_repair_field_changed
-        db_backup
-        db_backup_form_field_changed
         diagnostics_server_list
         diagnostics_tree_select
         explorer
@@ -2633,16 +2617,12 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         explorer
-        iso_datastore_create
-        iso_datastore_form_field_changed
         iso_datastore_list
         iso_image_edit
-        iso_img_form_field_changed
         log_depot_validate
         pxe_image_edit
         pxe_image_type_edit
         pxe_image_type_list
-        pxe_img_form_field_changed
         pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit
@@ -2871,7 +2851,6 @@ Rails.application.routes.draw do
         disassociate_floating_ip_form_fields
         add_security_group
         remove_security_group
-        rename_vm
         retire
         right_size
         show
@@ -2892,7 +2871,6 @@ Rails.application.routes.draw do
         live_migrate_vm
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-        rename_vm
         right_size
         set_checked_items
         show_list
@@ -2947,7 +2925,6 @@ Rails.application.routes.draw do
         event_logs
         explorer
         launch_html5_console
-        launch_cockpit
         filesystems
         filesystem_drivers
         form_field_changed
@@ -3054,7 +3031,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups
@@ -3071,7 +3047,6 @@ Rails.application.routes.draw do
         tree_select
         users
         vmrc_console
-        launch_cockpit
         vm_pre_prov
         html5_console
         native_console
@@ -3141,7 +3116,6 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
-        rename_vm
         scan_histories
         sections_field_changed
         security_groups
@@ -3224,10 +3198,7 @@ Rails.application.routes.draw do
     ems_physical_infra_dashboard
     ems_storage
     miq_ae_customization
-    network_service
     pxe
-    security_policy
-    security_policy_rule
     storage_resource
   ].freeze
 

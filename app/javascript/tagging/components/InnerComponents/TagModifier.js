@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form } from 'patternfly-react';
+import { Form, Row, Column } from 'carbon-components-react';
 
 const TagModifier = ({ header, hideHeader, children }) => (
-  <React.Fragment>
-    { !hideHeader &&
-      <Row>
-        <Col lg={12}>
-          <h2>{header}</h2>
-        </Col>
-      </Row> }
-    <Form horizontal>{children}</Form>
-  </React.Fragment>
+  <>
+    { !hideHeader
+      && (
+        <Row>
+          <Column lg={12}>
+            <h2>{header}</h2>
+          </Column>
+        </Row>
+      ) }
+    <Form horizontal="true">{children}</Form>
+  </>
 );
 
 TagModifier.propTypes = {

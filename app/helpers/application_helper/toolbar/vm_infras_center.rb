@@ -58,16 +58,6 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :vm_rename,
-          'pficon pficon-edit fa-lg',
-          N_('Select a single item to rename'),
-          N_('Rename selected item'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1"
-        ),
-        button(
           :vm_ownership,
           'pficon pficon-user fa-lg',
           N_('Set Ownership for the selected items'),

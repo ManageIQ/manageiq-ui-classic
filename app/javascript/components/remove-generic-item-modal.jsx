@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Spinner } from 'patternfly-react';
+import { Loading, ModalBody } from 'carbon-components-react';
 import { API } from '../http_api';
 
 const apiTransformFunctions = {
@@ -162,13 +162,17 @@ class RemoveGenericItemModal extends React.Component {
     // eslint-disable-next-line consistent-return
     const renderSpinner = (spinnerOn) => {
       if (spinnerOn) {
-        return <Spinner loading size="lg" />;
+        return (
+          <div className="loadingSpinner">
+            <Loading active small withOverlay={false} className="loading" />
+          </div>
+        );
       }
     };
     const { modalData } = this.props;
     const { loaded, data, force } = this.state;
     return (
-      <Modal.Body className="warning-modal-body">
+      <ModalBody className="warning-modal-body">
         {renderSpinner(!loaded)}
         {loaded
           && (
@@ -205,7 +209,7 @@ class RemoveGenericItemModal extends React.Component {
           &nbsp; Force Delete?
           </label>
         )}
-      </Modal.Body>
+      </ModalBody>
     );
   }
 }

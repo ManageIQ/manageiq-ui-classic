@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Icon, Modal } from 'patternfly-react';
+import {
+  ComposedModal, ModalHeader, ModalFooter, ModalBody,
+} from 'carbon-components-react';
 import { Provider } from 'react-redux';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 
@@ -43,32 +45,29 @@ function modal(title, Inner, closed, removeId) {
   };
   return (
     <Provider store={ManageIQ.redux.store}>
-      <Modal
-        show
-        onHide={closed}
-        onExited={closed}
+      <ComposedModal
+        open
         id="provider-modal"
       >
-        <Modal.Header>
+        <ModalHeader>
           <button
             type="button"
             className="close"
             onClick={closed}
             aria-hidden="true"
             aria-label="Close"
-          >
-            <Icon type="pf" name="close" />
-          </button>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+          />
+          <h1>{title}</h1>
+          {/* <Modal.Title>{title}</Modal.Title> */}
+        </ModalHeader>
+        <ModalBody>
           <Inner />
           <div id={/* see closeModal */ removeId} />
-        </Modal.Body>
-        <Modal.Footer>
-          <FormButtonsRedux callbackOverrides={overrides} />
-        </Modal.Footer>
-      </Modal>
+        </ModalBody>
+        <ModalFooter>
+          <FormButtonsRedux callbackOverrides={overrides} btnType="deleteModal" />
+        </ModalFooter>
+      </ComposedModal>
     </Provider>
   );
 }

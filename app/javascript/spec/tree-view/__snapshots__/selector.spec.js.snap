@@ -15,6 +15,7 @@ exports[`TreeSelector component should render correctly 1`] = `
   selectLabel="Select"
 >
   <FormGroup
+    hasMargin={true}
     invalid={false}
     legendText="tree-selector"
     message={false}
@@ -43,7 +44,7 @@ exports[`TreeSelector component should render correctly 1`] = `
           <div
             className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3"
           >
-            <ForwardRef(TextInput)
+            <TextInput
               disabled={false}
               helperText=""
               id="tree-selector"
@@ -74,7 +75,7 @@ exports[`TreeSelector component should render correctly 1`] = `
                     data-invalid={null}
                   >
                     <input
-                      className="bx--text-input bx--text__input"
+                      className="bx--text-input"
                       disabled={false}
                       id="tree-selector"
                       name="tree-selector"
@@ -88,16 +89,18 @@ exports[`TreeSelector component should render correctly 1`] = `
                   </div>
                 </div>
               </div>
-            </ForwardRef(TextInput)>
+            </TextInput>
           </div>
           <div
             className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1"
           >
             <Button
               className="tree-selector-toggle"
+              dangerDescription="danger"
               disabled={false}
               hasIconOnly={true}
               iconDescription="Toggle"
+              isExpressive={false}
               kind="primary"
               onClick={[Function]}
               renderIcon={
@@ -113,17 +116,24 @@ exports[`TreeSelector component should render correctly 1`] = `
               type="button"
             >
               <button
-                className="tree-selector-toggle bx--btn bx--btn--field bx--btn--primary bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+                aria-describedby={null}
+                aria-pressed={null}
+                className="tree-selector-toggle bx--btn bx--btn--md bx--btn--primary bx--tooltip--hidden bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--top bx--tooltip--align-center"
                 disabled={false}
+                onBlur={[Function]}
                 onClick={[Function]}
+                onFocus={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
                 tabIndex={0}
                 type="button"
               >
-                <span
+                <div
                   className="bx--assistive-text"
+                  onMouseEnter={[Function]}
                 >
                   Toggle
-                </span>
+                </div>
                 <ForwardRef(TreeViewAlt16)
                   aria-hidden="true"
                   aria-label="Toggle"
@@ -164,9 +174,11 @@ exports[`TreeSelector component should render correctly 1`] = `
             </Button>
             <Button
               className="tree-selector-clear"
+              dangerDescription="danger"
               disabled={false}
               hasIconOnly={true}
               iconDescription="Clear"
+              isExpressive={false}
               kind="danger"
               onClick={[Function]}
               renderIcon={
@@ -182,17 +194,24 @@ exports[`TreeSelector component should render correctly 1`] = `
               type="button"
             >
               <button
-                className="tree-selector-clear bx--btn bx--btn--field bx--btn--danger bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--top bx--tooltip--align-center"
+                aria-describedby="danger-description-2"
+                aria-pressed={null}
+                className="tree-selector-clear bx--btn bx--btn--md bx--btn--danger bx--tooltip--hidden bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--top bx--tooltip--align-center"
                 disabled={false}
+                onBlur={[Function]}
                 onClick={[Function]}
+                onFocus={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
                 tabIndex={0}
                 type="button"
               >
-                <span
+                <div
                   className="bx--assistive-text"
+                  onMouseEnter={[Function]}
                 >
                   Clear
-                </span>
+                </div>
                 <ForwardRef(Close16)
                   aria-hidden="true"
                   aria-label="Clear"
@@ -395,30 +414,38 @@ exports[`TreeSelector component should render correctly 1`] = `
               <div
                 className="bx--modal-footer bx--btn-set"
               >
-                <SecondaryButtonSet>
-                  <Button
+                <Button
+                  dangerDescription="danger"
+                  disabled={false}
+                  isExpressive={false}
+                  kind="secondary"
+                  onClick={[Function]}
+                  size="default"
+                  tabIndex={0}
+                  tooltipAlignment="center"
+                  tooltipPosition="top"
+                  type="button"
+                >
+                  <button
+                    aria-describedby={null}
+                    aria-pressed={null}
+                    className="bx--btn bx--btn--secondary"
                     disabled={false}
-                    kind="secondary"
+                    onBlur={[Function]}
                     onClick={[Function]}
-                    size="default"
+                    onFocus={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
                     tabIndex={0}
-                    tooltipAlignment="center"
-                    tooltipPosition="top"
                     type="button"
                   >
-                    <button
-                      className="bx--btn bx--btn--secondary"
-                      disabled={false}
-                      onClick={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      Close
-                    </button>
-                  </Button>
-                </SecondaryButtonSet>
+                    Close
+                  </button>
+                </Button>
                 <Button
+                  dangerDescription="danger"
                   disabled={true}
+                  isExpressive={false}
                   kind="primary"
                   onClick={[Function]}
                   size="default"
@@ -428,9 +455,15 @@ exports[`TreeSelector component should render correctly 1`] = `
                   type="button"
                 >
                   <button
+                    aria-describedby={null}
+                    aria-pressed={null}
                     className="bx--btn bx--btn--primary bx--btn--disabled"
                     disabled={true}
+                    onBlur={[Function]}
                     onClick={[Function]}
+                    onFocus={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
                     tabIndex={0}
                     type="button"
                   >

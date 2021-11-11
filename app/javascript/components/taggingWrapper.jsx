@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Spinner } from 'patternfly-react';
+import { Loading } from 'carbon-components-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
+
+const selectedTags = (state, tag) => {
+  const selectedVal = Array.isArray(tag.tagValue) ? tag.tagValue.map((val) => val.id).flat() : [];
+  return [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), selectedVal].flat();
+};
 
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
     id: 'new',
-    ids_checked: [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
+    ids_checked: selectedTags(state, tag),
     tree_typ: 'tags',
   },
   default: {
@@ -59,7 +64,15 @@ class TaggingWrapper extends React.Component {
 
   render() {
     const { isLoaded } = this.props;
-    if (!isLoaded) return <Spinner loading size="lg" />;
+
+    if (!isLoaded) {
+      return (
+        <div className="loadingSpinner">
+          <Loading active small withOverlay={false} className="loading" />
+        </div>
+      );
+    }
+    const isDisabled = this.props.isDisabled;
     const { urls, options, tagging } = this.props;
     // eslint-disable-next-line no-mixed-operators
     return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
@@ -76,8 +89,8 @@ class TaggingWrapper extends React.Component {
           description: __('Save'),
         }}
         cancelButton={{
-        // FIXME: jQuery is necessary here as it communicates with the old world
-        // don't replace $.post with http.post
+          // FIXME: jQuery is necessary here as it communicates with the old world
+          // don't replace $.post with http.post
           onClick: () => { this.reset(); $.post(urls.cancel_url); },
           href: '',
           type: 'button',
@@ -91,7 +104,7 @@ class TaggingWrapper extends React.Component {
           disabled: _.isEqual({ ...tagging.initialState, selected: undefined }, { ...tagging.appState, selected: undefined }),
           description: __('Reset'),
         }}
-        options={{ ...options, params, onDelete }}
+        options={{ ...options, params, onDelete, isDisabled }}
       />
     ));
   }

@@ -1,0 +1,26 @@
+.dual-list {
+  .col-md-5 {
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  .list {
+    margin-bottom: 16px;
+    overflow-x: scroll;
+  }
+
+  .buttons-block {
+    padding: 10px;
+
+    .dual-list-button {
+      max-width: 80px;
+      margin: auto;
+      margin-bottom: 8px;
+    }
+  }
+}

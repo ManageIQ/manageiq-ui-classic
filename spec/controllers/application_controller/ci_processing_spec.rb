@@ -760,27 +760,6 @@ describe ApplicationController do
     end
   end
 
-  describe '#testable_action' do
-    before { controller.params = {:controller => 'vm_infra'} }
-
-    %w[reboot_guest reset shutdown_guest start stop suspend].each do |op|
-      it "returns true for #{op} operation on a VM" do
-        expect(controller.send(:testable_action, op)).to be(true)
-      end
-    end
-
-    context 'Clusters displayed from dashboard of a Provider' do
-      before do
-        controller.params = {:controller => 'ems_infra'}
-        controller.instance_variable_set(:@display, 'ems_clusters')
-      end
-
-      it 'returns false for SmartState Analysis and Clusters' do
-        expect(controller.send(:testable_action, 'scan')).to be(false)
-      end
-    end
-  end
-
   describe '#edit_record' do
     before do
       allow(controller).to receive(:assert_privileges)

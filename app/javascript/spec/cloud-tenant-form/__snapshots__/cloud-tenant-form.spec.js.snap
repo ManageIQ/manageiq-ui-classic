@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud tenant form component should render adding form variant 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
->
+<Grid>
   <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {

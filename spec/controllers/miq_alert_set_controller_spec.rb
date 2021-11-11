@@ -63,14 +63,6 @@ describe MiqAlertSetController do
       session[:edit] = edit
       controller.instance_variable_set(:@lastaction, "show")
     end
-
-    it "Test cancel button" do
-      controller.params = {:button => "cancel"}
-      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
-                                                               :flash_msg => _("Add of new Alert Profile was cancelled by the user"),
-                                                               :id        => nil)
-      controller.send(:edit)
-    end
   end
 
   context '#alert_profile_field_changed' do

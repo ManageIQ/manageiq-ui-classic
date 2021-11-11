@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './vm-server-relationship-form.schema';
@@ -37,7 +37,7 @@ const VmServerRelationShipForm = ({ recordId, redirect }) => {
   const onCancel = () => miqRedirectBack(__('Edit Management Engine Relationship was cancelled by the user'), 'warning', redirect);
 
   return !isLoading && (
-    <Grid fluid>
+    <Grid>
       <MiqFormRenderer
         initialValues={initialValues}
         schema={createSchema(promise)}

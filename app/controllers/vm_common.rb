@@ -91,6 +91,22 @@ module VmCommon
     tree_select
   end
 
+  def vm_rename
+    @record = find_record_with_rbac(VmOrTemplate, params[:miq_grid_checks] || params[:id])
+    unless @record.supports?(:rename)
+      add_flash(_("Renaming selected VM \"%{name}\" is not supported") % {:name => @record.name}, :error)
+      if @explorer
+        @record = @sb[:action] = nil
+        replace_right_cell
+      end
+      return
+    end
+    if @explorer
+      @changed = session[:changed] = false
+    end
+    @refresh_partial = 'rename_vm'
+  end
+
   def show_timeline
     db = record_class
     @display = "timeline"

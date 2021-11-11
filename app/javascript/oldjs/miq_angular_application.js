@@ -2,7 +2,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'angular.validators', // FIXME: require('angular.validators'),
   'frapontillo.bootstrap-switch', // FIXME: require('angular-bootstrap-switch'),
   'gettext', // FIXME: require('angular-gettext'),
-  'kubernetesUI',
   'miq.api',
   'miq.card',
   'miq.compat',

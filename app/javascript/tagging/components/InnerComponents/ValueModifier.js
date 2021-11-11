@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, ControlLabel, FormGroup } from 'patternfly-react';
+import { Column, FormGroup } from 'carbon-components-react';
 import ValueSelector from './ValueSelector';
 import TaggingPropTypes from '../TaggingPropTypes';
 
@@ -10,19 +10,18 @@ const ValueModifier = ({
   selectedTagValues,
   multiValue,
   valueLabel,
+  isDisabled,
 }) => (
-  <FormGroup>
-    <Col xs={12} md={4} lg={4}>
-      <ControlLabel>{valueLabel}</ControlLabel>
-    </Col>
-    <Col xs={12} md={8} lg={8}>
+  <FormGroup legendText={valueLabel}>
+    <Column xs={12} md={8} lg={8}>
       <ValueSelector
         values={values}
         onTagValueChange={onTagValueChange}
         selectedOption={selectedTagValues}
         multiValue={multiValue}
+        isDisabled={isDisabled}
       />
-    </Col>
+    </Column>
   </FormGroup>
 );
 
@@ -32,11 +31,14 @@ ValueModifier.propTypes = {
   valueLabel: PropTypes.string,
   multiValue: PropTypes.bool,
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 ValueModifier.defaultProps = {
+  selectedTagValues: {},
   valueLabel: __('Value'),
   multiValue: true,
+  isDisabled: false,
 };
 
 export default ValueModifier;

@@ -22,6 +22,8 @@ class CloudObjectStoreContainerController < ApplicationController
     case params[:pressed]
     when "cloud_object_store_container_new"
       return javascript_redirect(:action => "new")
+    when 'cloud_object_store_container_delete'
+      delete_cloud_object_store_containers
     when "custom_button"
       custom_buttons
       return
@@ -157,6 +159,36 @@ class CloudObjectStoreContainerController < ApplicationController
       :record_info  => @record,
       :record_title => :key,
     }.compact
+  end
+
+  def delete_cloud_object_store_containers
+    assert_privileges("cloud_tenant_delete")
+    containers = find_records_with_rbac(CloudObjectStoreContainer, checked_or_params)
+
+    unless containers.empty?
+      process_cloud_object_store_container(containers, "destroy")
+    end
+  end
+
+  def process_cloud_object_store_container(containers, operation)
+    return if containers.empty?
+
+    if operation == "destroy"
+      containers.each do |container|
+        audit = {
+          :event        => "cloud_object_store_container_record_delete_initiated",
+          :message      => "[#{container.key}] Record delete initiated",
+          :target_id    => container.id,
+          :target_class => "CloudObjectStoreContainer",
+          :userid       => session[:userid]
+        }
+        AuditEvent.success(audit)
+        container.cloud_object_store_container_delete_queue(session[:userid])
+      end
+      add_flash(n_("Delete initiated for %{number} Cloud Object Store Container.",
+                   "Delete initiated for %{number} Cloud Object Store Containers.",
+                   containers.length) % {:number => containers.length})
+    end
   end
 
   menu_section :ost

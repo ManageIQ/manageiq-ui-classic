@@ -31,34 +31,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
         Object {
           "fields": Array [
             Object {
-              "component": "text-field",
-              "id": "name",
-              "label": "Name",
-              "maxLength": 255,
-              "name": "name",
-              "validate": Array [
+              "component": "sub-form",
+              "fields": Array [
                 Object {
-                  "type": "required",
+                  "component": "text-field",
+                  "id": "name",
+                  "label": "Name",
+                  "maxLength": 255,
+                  "name": "name",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "id": "provision_type",
+                  "includeEmpty": true,
+                  "label": "Type",
+                  "name": "provision_type",
+                  "options": Array [
+                    Object {
+                      "label": "Host",
+                      "value": "host",
+                    },
+                    Object {
+                      "label": "VM and Instance",
+                      "value": "vm",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
                 },
               ],
-            },
-            Object {
-              "component": "select",
-              "id": "provision_type",
-              "includeEmpty": true,
-              "label": "Type",
-              "name": "provision_type",
-              "options": Array [
-                Object {
-                  "label": "Host",
-                  "value": "host",
-                },
-                Object {
-                  "label": "VM and Instance",
-                  "value": "vm",
-                },
-              ],
-              "placeholder": "<Choose>",
+              "id": "basic-information",
+              "name": "basic-information",
+              "title": "Basic Information",
             },
           ],
         }
@@ -81,6 +89,8 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
             "edit-password-field": [Function],
             "field-array": [Function],
             "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
             "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
@@ -112,34 +122,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
           Object {
             "fields": Array [
               Object {
-                "component": "text-field",
-                "id": "name",
-                "label": "Name",
-                "maxLength": 255,
-                "name": "name",
-                "validate": Array [
+                "component": "sub-form",
+                "fields": Array [
                   Object {
-                    "type": "required",
+                    "component": "text-field",
+                    "id": "name",
+                    "label": "Name",
+                    "maxLength": 255,
+                    "name": "name",
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "select",
+                    "id": "provision_type",
+                    "includeEmpty": true,
+                    "label": "Type",
+                    "name": "provision_type",
+                    "options": Array [
+                      Object {
+                        "label": "Host",
+                        "value": "host",
+                      },
+                      Object {
+                        "label": "VM and Instance",
+                        "value": "vm",
+                      },
+                    ],
+                    "placeholder": "<Choose>",
                   },
                 ],
-              },
-              Object {
-                "component": "select",
-                "id": "provision_type",
-                "includeEmpty": true,
-                "label": "Type",
-                "name": "provision_type",
-                "options": Array [
-                  Object {
-                    "label": "Host",
-                    "value": "host",
-                  },
-                  Object {
-                    "label": "VM and Instance",
-                    "value": "vm",
-                  },
-                ],
-                "placeholder": "<Choose>",
+                "id": "basic-information",
+                "name": "basic-information",
+                "title": "Basic Information",
               },
             ],
           }
@@ -158,6 +176,8 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
               "edit-password-field": [Function],
               "field-array": [Function],
               "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
               "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
@@ -186,34 +206,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
             Object {
               "fields": Array [
                 Object {
-                  "component": "text-field",
-                  "id": "name",
-                  "label": "Name",
-                  "maxLength": 255,
-                  "name": "name",
-                  "validate": Array [
+                  "component": "sub-form",
+                  "fields": Array [
                     Object {
-                      "type": "required",
+                      "component": "text-field",
+                      "id": "name",
+                      "label": "Name",
+                      "maxLength": 255,
+                      "name": "name",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "id": "provision_type",
+                      "includeEmpty": true,
+                      "label": "Type",
+                      "name": "provision_type",
+                      "options": Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
                     },
                   ],
-                },
-                Object {
-                  "component": "select",
-                  "id": "provision_type",
-                  "includeEmpty": true,
-                  "label": "Type",
-                  "name": "provision_type",
-                  "options": Array [
-                    Object {
-                      "label": "Host",
-                      "value": "host",
-                    },
-                    Object {
-                      "label": "VM and Instance",
-                      "value": "vm",
-                    },
-                  ],
-                  "placeholder": "<Choose>",
+                  "id": "basic-information",
+                  "name": "basic-information",
+                  "title": "Basic Information",
                 },
                 Object {
                   "component": "spy-field",
@@ -261,38 +289,44 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
               formFields={
                 Array [
                   <SingleField
-                    component="text-field"
-                    id="name"
-                    label="Name"
-                    maxLength={255}
-                    name="name"
-                    validate={
+                    component="sub-form"
+                    fields={
                       Array [
                         Object {
-                          "type": "required",
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
                         },
                       ]
                     }
-                  />,
-                  <SingleField
-                    component="select"
-                    id="provision_type"
-                    includeEmpty={true}
-                    label="Type"
-                    name="provision_type"
-                    options={
-                      Array [
-                        Object {
-                          "label": "Host",
-                          "value": "host",
-                        },
-                        Object {
-                          "label": "VM and Instance",
-                          "value": "vm",
-                        },
-                      ]
-                    }
-                    placeholder="<Choose>"
+                    id="basic-information"
+                    name="basic-information"
+                    title="Basic Information"
                   />,
                   <SingleField
                     component="spy-field"
@@ -304,34 +338,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                 Object {
                   "fields": Array [
                     Object {
-                      "component": "text-field",
-                      "id": "name",
-                      "label": "Name",
-                      "maxLength": 255,
-                      "name": "name",
-                      "validate": Array [
+                      "component": "sub-form",
+                      "fields": Array [
                         Object {
-                          "type": "required",
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
                         },
                       ],
-                    },
-                    Object {
-                      "component": "select",
-                      "id": "provision_type",
-                      "includeEmpty": true,
-                      "label": "Type",
-                      "name": "provision_type",
-                      "options": Array [
-                        Object {
-                          "label": "Host",
-                          "value": "host",
-                        },
-                        Object {
-                          "label": "VM and Instance",
-                          "value": "vm",
-                        },
-                      ],
-                      "placeholder": "<Choose>",
+                      "id": "basic-information",
+                      "name": "basic-information",
+                      "title": "Basic Information",
                     },
                     Object {
                       "component": "spy-field",
@@ -354,38 +396,44 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                 formFields={
                   Array [
                     <SingleField
-                      component="text-field"
-                      id="name"
-                      label="Name"
-                      maxLength={255}
-                      name="name"
-                      validate={
+                      component="sub-form"
+                      fields={
                         Array [
                           Object {
-                            "type": "required",
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 255,
+                            "name": "name",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "id": "provision_type",
+                            "includeEmpty": true,
+                            "label": "Type",
+                            "name": "provision_type",
+                            "options": Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
                           },
                         ]
                       }
-                    />,
-                    <SingleField
-                      component="select"
-                      id="provision_type"
-                      includeEmpty={true}
-                      label="Type"
-                      name="provision_type"
-                      options={
-                        Array [
-                          Object {
-                            "label": "Host",
-                            "value": "host",
-                          },
-                          Object {
-                            "label": "VM and Instance",
-                            "value": "vm",
-                          },
-                        ]
-                      }
-                      placeholder="<Choose>"
+                      id="basic-information"
+                      name="basic-information"
+                      title="Basic Information"
                     />,
                     <SingleField
                       component="spy-field"
@@ -403,34 +451,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                   Object {
                     "fields": Array [
                       Object {
-                        "component": "text-field",
-                        "id": "name",
-                        "label": "Name",
-                        "maxLength": 255,
-                        "name": "name",
-                        "validate": Array [
+                        "component": "sub-form",
+                        "fields": Array [
                           Object {
-                            "type": "required",
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 255,
+                            "name": "name",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "id": "provision_type",
+                            "includeEmpty": true,
+                            "label": "Type",
+                            "name": "provision_type",
+                            "options": Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
                           },
                         ],
-                      },
-                      Object {
-                        "component": "select",
-                        "id": "provision_type",
-                        "includeEmpty": true,
-                        "label": "Type",
-                        "name": "provision_type",
-                        "options": Array [
-                          Object {
-                            "label": "Host",
-                            "value": "host",
-                          },
-                          Object {
-                            "label": "VM and Instance",
-                            "value": "vm",
-                          },
-                        ],
-                        "placeholder": "<Choose>",
+                        "id": "basic-information",
+                        "name": "basic-information",
+                        "title": "Basic Information",
                       },
                       Object {
                         "component": "spy-field",
@@ -468,38 +524,44 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                   formFields={
                     Array [
                       <SingleField
-                        component="text-field"
-                        id="name"
-                        label="Name"
-                        maxLength={255}
-                        name="name"
-                        validate={
+                        component="sub-form"
+                        fields={
                           Array [
                             Object {
-                              "type": "required",
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 255,
+                              "name": "name",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "id": "provision_type",
+                              "includeEmpty": true,
+                              "label": "Type",
+                              "name": "provision_type",
+                              "options": Array [
+                                Object {
+                                  "label": "Host",
+                                  "value": "host",
+                                },
+                                Object {
+                                  "label": "VM and Instance",
+                                  "value": "vm",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
                             },
                           ]
                         }
-                      />,
-                      <SingleField
-                        component="select"
-                        id="provision_type"
-                        includeEmpty={true}
-                        label="Type"
-                        name="provision_type"
-                        options={
-                          Array [
-                            Object {
-                              "label": "Host",
-                              "value": "host",
-                            },
-                            Object {
-                              "label": "VM and Instance",
-                              "value": "vm",
-                            },
-                          ]
-                        }
-                        placeholder="<Choose>"
+                        id="basic-information"
+                        name="basic-information"
+                        title="Basic Information"
                       />,
                       <SingleField
                         component="spy-field"
@@ -517,34 +579,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                     Object {
                       "fields": Array [
                         Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "label": "Name",
-                          "maxLength": 255,
-                          "name": "name",
-                          "validate": Array [
+                          "component": "sub-form",
+                          "fields": Array [
                             Object {
-                              "type": "required",
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 255,
+                              "name": "name",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "id": "provision_type",
+                              "includeEmpty": true,
+                              "label": "Type",
+                              "name": "provision_type",
+                              "options": Array [
+                                Object {
+                                  "label": "Host",
+                                  "value": "host",
+                                },
+                                Object {
+                                  "label": "VM and Instance",
+                                  "value": "vm",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
                             },
                           ],
-                        },
-                        Object {
-                          "component": "select",
-                          "id": "provision_type",
-                          "includeEmpty": true,
-                          "label": "Type",
-                          "name": "provision_type",
-                          "options": Array [
-                            Object {
-                              "label": "Host",
-                              "value": "host",
-                            },
-                            Object {
-                              "label": "VM and Instance",
-                              "value": "vm",
-                            },
-                          ],
-                          "placeholder": "<Choose>",
+                          "id": "basic-information",
+                          "name": "basic-information",
+                          "title": "Basic Information",
                         },
                         Object {
                           "component": "spy-field",
@@ -573,22 +643,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                       >
                          
                         <SingleField
-                          component="text-field"
-                          id="name"
-                          key="name"
-                          label="Name"
-                          maxLength={255}
-                          name="name"
-                          validate={
+                          component="sub-form"
+                          fields={
                             Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ]
-                          }
-                        >
-                          <FormConditionWrapper
-                            field={
                               Object {
                                 "component": "text-field",
                                 "id": "name",
@@ -600,107 +657,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     "type": "required",
                                   },
                                 ],
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
-                              <TextField
-                                component="text-field"
-                                id="name"
-                                label="Name"
-                                maxLength={255}
-                                name="name"
-                                validate={
-                                  Array [
-                                    Object {
-                                      "type": "required",
-                                    },
-                                  ]
-                                }
-                              >
-                                <ForwardRef(TextInput)
-                                  disabled={false}
-                                  helperText=""
-                                  id="name"
-                                  inline={false}
-                                  invalid={false}
-                                  invalidText=""
-                                  key="name"
-                                  labelText="Name"
-                                  light={false}
-                                  maxLength={255}
-                                  name="name"
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  type="text"
-                                  value=""
-                                  warn={false}
-                                  warnText=""
-                                >
-                                  <div
-                                    className="bx--form-item bx--text-input-wrapper"
-                                  >
-                                    <label
-                                      className="bx--label"
-                                      htmlFor="name"
-                                    >
-                                      Name
-                                    </label>
-                                    <div
-                                      className="bx--text-input__field-outer-wrapper"
-                                    >
-                                      <div
-                                        className="bx--text-input__field-wrapper"
-                                        data-invalid={null}
-                                      >
-                                        <input
-                                          className="bx--text-input bx--text__input"
-                                          disabled={false}
-                                          id="name"
-                                          maxLength={255}
-                                          name="name"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onClick={[Function]}
-                                          onFocus={[Function]}
-                                          type="text"
-                                          value=""
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </ForwardRef(TextInput)>
-                              </TextField>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <SingleField
-                          component="select"
-                          id="provision_type"
-                          includeEmpty={true}
-                          key="provision_type"
-                          label="Type"
-                          name="provision_type"
-                          options={
-                            Array [
-                              Object {
-                                "label": "Host",
-                                "value": "host",
                               },
-                              Object {
-                                "label": "VM and Instance",
-                                "value": "vm",
-                              },
-                            ]
-                          }
-                          placeholder="<Choose>"
-                        >
-                          <FormConditionWrapper
-                            field={
                               Object {
                                 "component": "select",
                                 "id": "provision_type",
@@ -718,44 +675,38 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                   },
                                 ],
                                 "placeholder": "<Choose>",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
-                              <SelectWithOnChange
-                                component="select"
-                                id="provision_type"
-                                includeEmpty={true}
-                                label="Type"
-                                name="provision_type"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "Host",
-                                      "value": "host",
-                                    },
-                                    Object {
-                                      "label": "VM and Instance",
-                                      "value": "vm",
-                                    },
-                                  ]
-                                }
-                                placeholder="<Choose>"
-                              >
-                                <Select
-                                  component="select"
-                                  id="provision_type"
-                                  label="Type"
-                                  loadingMessage="Loading..."
-                                  name="provision_type"
-                                  options={
-                                    Array [
+                              },
+                            ]
+                          }
+                          id="basic-information"
+                          key="basic-information"
+                          name="basic-information"
+                          title="Basic Information"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "sub-form",
+                                "fields": Array [
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "label": "Name",
+                                    "maxLength": 255,
+                                    "name": "name",
+                                    "validate": Array [
                                       Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
+                                        "type": "required",
                                       },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "select",
+                                    "id": "provision_type",
+                                    "includeEmpty": true,
+                                    "label": "Type",
+                                    "name": "provision_type",
+                                    "options": Array [
                                       Object {
                                         "label": "Host",
                                         "value": "host",
@@ -764,30 +715,186 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                         "label": "VM and Instance",
                                         "value": "vm",
                                       },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
+                                    ],
+                                    "placeholder": "<Choose>",
+                                  },
+                                ],
+                                "id": "basic-information",
+                                "name": "basic-information",
+                                "title": "Basic Information",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SubForm
+                                DescriptionElement="p"
+                                TitleElement="h3"
+                                component="sub-form"
+                                fields={
+                                  Array [
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "name",
+                                      "label": "Name",
+                                      "maxLength": 255,
+                                      "name": "name",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                    Object {
+                                      "component": "select",
+                                      "id": "provision_type",
+                                      "includeEmpty": true,
+                                      "label": "Type",
+                                      "name": "provision_type",
+                                      "options": Array [
+                                        Object {
+                                          "label": "Host",
+                                          "value": "host",
+                                        },
+                                        Object {
+                                          "label": "VM and Instance",
+                                          "value": "vm",
+                                        },
+                                      ],
+                                      "placeholder": "<Choose>",
+                                    },
+                                  ]
+                                }
+                                id="basic-information"
+                                name="basic-information"
+                                title="Basic Information"
+                              >
+                                <div
+                                  className=""
+                                  id="basic-information"
+                                  name="basic-information"
                                 >
-                                  <Select
-                                    SelectComponent={[Function]}
-                                    id="provision_type"
-                                    invalid={false}
-                                    invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
-                                    labelText="Type"
-                                    loadOptionsChangeCounter={1}
-                                    loadingMessage="Loading..."
-                                    name="provision_type"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    options={
+                                  <div>
+                                    <h3>
+                                      Basic Information
+                                    </h3>
+                                  </div>
+                                  <SingleField
+                                    component="text-field"
+                                    id="name"
+                                    key="name"
+                                    label="Name"
+                                    maxLength={255}
+                                    name="name"
+                                    validate={
                                       Array [
                                         Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
+                                          "type": "required",
                                         },
+                                      ]
+                                    }
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "name",
+                                          "label": "Name",
+                                          "maxLength": 255,
+                                          "name": "name",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <TextField
+                                          component="text-field"
+                                          id="name"
+                                          label="Name"
+                                          maxLength={255}
+                                          name="name"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <TextInput
+                                            disabled={false}
+                                            helperText=""
+                                            id="name"
+                                            inline={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            key="name"
+                                            labelText="Name"
+                                            light={false}
+                                            maxLength={255}
+                                            name="name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                            warn={false}
+                                            warnText=""
+                                          >
+                                            <div
+                                              className="bx--form-item bx--text-input-wrapper"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                htmlFor="name"
+                                              >
+                                                Name
+                                              </label>
+                                              <div
+                                                className="bx--text-input__field-outer-wrapper"
+                                              >
+                                                <div
+                                                  className="bx--text-input__field-wrapper"
+                                                  data-invalid={null}
+                                                >
+                                                  <input
+                                                    className="bx--text-input"
+                                                    disabled={false}
+                                                    id="name"
+                                                    maxLength={255}
+                                                    name="name"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="text"
+                                                    value=""
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </TextInput>
+                                        </TextField>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                  <SingleField
+                                    component="select"
+                                    id="provision_type"
+                                    includeEmpty={true}
+                                    key="provision_type"
+                                    label="Type"
+                                    name="provision_type"
+                                    options={
+                                      Array [
                                         Object {
                                           "label": "Host",
                                           "value": "host",
@@ -799,178 +906,284 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                       ]
                                     }
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
-                                    simpleValue={false}
-                                    value=""
                                   >
-                                    <ClearedSelect
-                                      className=""
-                                      closeMenuOnSelect={true}
-                                      hideSelectedOptions={false}
-                                      id="provision_type"
-                                      invalidText=""
-                                      isClearable={false}
-                                      isFetching={false}
-                                      isSearchable={false}
-                                      labelText="Type"
-                                      name="provision_type"
-                                      noOptionsMessage={[Function]}
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onInputChange={[Function]}
-                                      options={
-                                        Array [
-                                          Object {
-                                            "label": "<Choose>",
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ]
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "select",
+                                          "id": "provision_type",
+                                          "includeEmpty": true,
+                                          "label": "Type",
+                                          "name": "provision_type",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Host",
+                                              "value": "host",
+                                            },
+                                            Object {
+                                              "label": "VM and Instance",
+                                              "value": "vm",
+                                            },
+                                          ],
+                                          "placeholder": "<Choose>",
+                                        }
                                       }
-                                      placeholder="<Choose>"
-                                      value=""
                                     >
-                                      <Select
-                                        className=""
-                                        disabled={false}
-                                        helperText=""
-                                        id="provision_type"
-                                        inline={false}
-                                        invalid={false}
-                                        invalidText=""
-                                        labelText="Type"
-                                        light={false}
-                                        name="provision_type"
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        value=""
+                                      <FormFieldHideWrapper
+                                        hideField={false}
                                       >
-                                        <div
-                                          className="bx--form-item"
+                                        <SelectWithOnChange
+                                          component="select"
+                                          id="provision_type"
+                                          includeEmpty={true}
+                                          label="Type"
+                                          name="provision_type"
+                                          options={
+                                            Array [
+                                              Object {
+                                                "label": "Host",
+                                                "value": "host",
+                                              },
+                                              Object {
+                                                "label": "VM and Instance",
+                                                "value": "vm",
+                                              },
+                                            ]
+                                          }
+                                          placeholder="<Choose>"
                                         >
-                                          <div
-                                            className="bx--select"
+                                          <Select
+                                            component="select"
+                                            id="provision_type"
+                                            label="Type"
+                                            loadingMessage="Loading..."
+                                            name="provision_type"
+                                            options={
+                                              Array [
+                                                Object {
+                                                  "label": "<Choose>",
+                                                  "value": undefined,
+                                                },
+                                                Object {
+                                                  "label": "Host",
+                                                  "value": "host",
+                                                },
+                                                Object {
+                                                  "label": "VM and Instance",
+                                                  "value": "vm",
+                                                },
+                                              ]
+                                            }
+                                            placeholder="<Choose>"
                                           >
-                                            <label
-                                              className="bx--label"
-                                              htmlFor="provision_type"
+                                            <Select
+                                              SelectComponent={[Function]}
+                                              id="provision_type"
+                                              invalid={false}
+                                              invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
+                                              labelText="Type"
+                                              loadOptionsChangeCounter={1}
+                                              loadingMessage="Loading..."
+                                              name="provision_type"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "<Choose>",
+                                                    "value": undefined,
+                                                  },
+                                                  Object {
+                                                    "label": "Host",
+                                                    "value": "host",
+                                                  },
+                                                  Object {
+                                                    "label": "VM and Instance",
+                                                    "value": "vm",
+                                                  },
+                                                ]
+                                              }
+                                              placeholder="<Choose>"
+                                              pluckSingleValue={true}
+                                              simpleValue={false}
+                                              value=""
                                             >
-                                              Type
-                                            </label>
-                                            <div
-                                              className="bx--select-input__wrapper"
-                                              data-invalid={null}
-                                            >
-                                              <select
-                                                className="bx--select-input"
+                                              <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
                                                 id="provision_type"
+                                                invalidText=""
+                                                isClearable={false}
+                                                isFetching={false}
+                                                isSearchable={false}
+                                                labelText="Type"
                                                 name="provision_type"
+                                                noOptionsMessage={[Function]}
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onInputChange={[Function]}
+                                                options={
+                                                  Array [
+                                                    Object {
+                                                      "label": "<Choose>",
+                                                      "value": undefined,
+                                                    },
+                                                    Object {
+                                                      "label": "Host",
+                                                      "value": "host",
+                                                    },
+                                                    Object {
+                                                      "label": "VM and Instance",
+                                                      "value": "vm",
+                                                    },
+                                                  ]
+                                                }
+                                                placeholder="<Choose>"
                                                 value=""
                                               >
-                                                <SelectItem
+                                                <Select
+                                                  className=""
                                                   disabled={false}
-                                                  hidden={false}
-                                                  key="0"
-                                                  label="<Choose>"
-                                                  text="<Choose>"
+                                                  helperText=""
+                                                  id="provision_type"
+                                                  inline={false}
+                                                  invalid={false}
+                                                  invalidText=""
+                                                  labelText="Type"
+                                                  light={false}
+                                                  name="provision_type"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
                                                   value=""
                                                 >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="<Choose>"
-                                                    value=""
+                                                  <div
+                                                    className="bx--form-item"
                                                   >
-                                                    &lt;Choose&gt;
-                                                  </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="host"
-                                                  label="Host"
-                                                  text="Host"
-                                                  value="host"
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="Host"
-                                                    value="host"
-                                                  >
-                                                    Host
-                                                  </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="vm"
-                                                  label="VM and Instance"
-                                                  text="VM and Instance"
-                                                  value="vm"
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="VM and Instance"
-                                                    value="vm"
-                                                  >
-                                                    VM and Instance
-                                                  </option>
-                                                </SelectItem>
-                                              </select>
-                                              <ForwardRef(ChevronDown16)
-                                                className="bx--select__arrow"
-                                              >
-                                                <Icon
-                                                  className="bx--select__arrow"
-                                                  fill="currentColor"
-                                                  height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
-                                                  viewBox="0 0 16 16"
-                                                  width={16}
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="bx--select__arrow"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height={16}
-                                                    preserveAspectRatio="xMidYMid meet"
-                                                    viewBox="0 0 16 16"
-                                                    width={16}
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                  >
-                                                    <path
-                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                    />
-                                                  </svg>
-                                                </Icon>
-                                              </ForwardRef(ChevronDown16)>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </Select>
-                                    </ClearedSelect>
-                                  </Select>
-                                </Select>
-                              </SelectWithOnChange>
+                                                    <div
+                                                      className="bx--select"
+                                                    >
+                                                      <label
+                                                        className="bx--label"
+                                                        htmlFor="provision_type"
+                                                      >
+                                                        Type
+                                                      </label>
+                                                      <div
+                                                        className="bx--select-input__wrapper"
+                                                        data-invalid={null}
+                                                      >
+                                                        <select
+                                                          className="bx--select-input"
+                                                          id="provision_type"
+                                                          name="provision_type"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          value=""
+                                                        >
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="0"
+                                                            label="<Choose>"
+                                                            text="<Choose>"
+                                                            value=""
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="<Choose>"
+                                                              value=""
+                                                            >
+                                                              &lt;Choose&gt;
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="host"
+                                                            label="Host"
+                                                            text="Host"
+                                                            value="host"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="Host"
+                                                              value="host"
+                                                            >
+                                                              Host
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="vm"
+                                                            label="VM and Instance"
+                                                            text="VM and Instance"
+                                                            value="vm"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="VM and Instance"
+                                                              value="vm"
+                                                            >
+                                                              VM and Instance
+                                                            </option>
+                                                          </SelectItem>
+                                                        </select>
+                                                        <ForwardRef(ChevronDown16)
+                                                          className="bx--select__arrow"
+                                                        >
+                                                          <Icon
+                                                            className="bx--select__arrow"
+                                                            fill="currentColor"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <svg
+                                                              aria-hidden={true}
+                                                              className="bx--select__arrow"
+                                                              fill="currentColor"
+                                                              focusable="false"
+                                                              height={16}
+                                                              preserveAspectRatio="xMidYMid meet"
+                                                              viewBox="0 0 16 16"
+                                                              width={16}
+                                                              xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                              <path
+                                                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                              />
+                                                            </svg>
+                                                          </Icon>
+                                                        </ForwardRef(ChevronDown16)>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </Select>
+                                              </ClearedSelect>
+                                            </Select>
+                                          </Select>
+                                        </SelectWithOnChange>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                </div>
+                              </SubForm>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
                         </SingleField>
@@ -1028,38 +1241,44 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                             formFields={
                               Array [
                                 <SingleField
-                                  component="text-field"
-                                  id="name"
-                                  label="Name"
-                                  maxLength={255}
-                                  name="name"
-                                  validate={
+                                  component="sub-form"
+                                  fields={
                                     Array [
                                       Object {
-                                        "type": "required",
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 255,
+                                        "name": "name",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "select",
+                                        "id": "provision_type",
+                                        "includeEmpty": true,
+                                        "label": "Type",
+                                        "name": "provision_type",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
                                       },
                                     ]
                                   }
-                                />,
-                                <SingleField
-                                  component="select"
-                                  id="provision_type"
-                                  includeEmpty={true}
-                                  label="Type"
-                                  name="provision_type"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "Host",
-                                        "value": "host",
-                                      },
-                                      Object {
-                                        "label": "VM and Instance",
-                                        "value": "vm",
-                                      },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
+                                  id="basic-information"
+                                  name="basic-information"
+                                  title="Basic Information"
                                 />,
                                 <SingleField
                                   component="spy-field"
@@ -1147,34 +1366,42 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                               Object {
                                 "fields": Array [
                                   Object {
-                                    "component": "text-field",
-                                    "id": "name",
-                                    "label": "Name",
-                                    "maxLength": 255,
-                                    "name": "name",
-                                    "validate": Array [
+                                    "component": "sub-form",
+                                    "fields": Array [
                                       Object {
-                                        "type": "required",
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 255,
+                                        "name": "name",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "select",
+                                        "id": "provision_type",
+                                        "includeEmpty": true,
+                                        "label": "Type",
+                                        "name": "provision_type",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
                                       },
                                     ],
-                                  },
-                                  Object {
-                                    "component": "select",
-                                    "id": "provision_type",
-                                    "includeEmpty": true,
-                                    "label": "Type",
-                                    "name": "provision_type",
-                                    "options": Array [
-                                      Object {
-                                        "label": "Host",
-                                        "value": "host",
-                                      },
-                                      Object {
-                                        "label": "VM and Instance",
-                                        "value": "vm",
-                                      },
-                                    ],
-                                    "placeholder": "<Choose>",
+                                    "id": "basic-information",
+                                    "name": "basic-information",
+                                    "title": "Basic Information",
                                   },
                                   Object {
                                     "component": "spy-field",
@@ -1202,7 +1429,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -1212,8 +1441,15 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -1230,7 +1466,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -1240,9 +1478,15 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -1309,34 +1553,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
         Object {
           "fields": Array [
             Object {
-              "component": "text-field",
-              "id": "name",
-              "label": "Name",
-              "maxLength": 255,
-              "name": "name",
-              "validate": Array [
+              "component": "sub-form",
+              "fields": Array [
                 Object {
-                  "type": "required",
+                  "component": "text-field",
+                  "id": "name",
+                  "label": "Name",
+                  "maxLength": 255,
+                  "name": "name",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "id": "provision_type",
+                  "includeEmpty": true,
+                  "label": "Type",
+                  "name": "provision_type",
+                  "options": Array [
+                    Object {
+                      "label": "Host",
+                      "value": "host",
+                    },
+                    Object {
+                      "label": "VM and Instance",
+                      "value": "vm",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
                 },
               ],
-            },
-            Object {
-              "component": "select",
-              "id": "provision_type",
-              "includeEmpty": true,
-              "label": "Type",
-              "name": "provision_type",
-              "options": Array [
-                Object {
-                  "label": "Host",
-                  "value": "host",
-                },
-                Object {
-                  "label": "VM and Instance",
-                  "value": "vm",
-                },
-              ],
-              "placeholder": "<Choose>",
+              "id": "basic-information",
+              "name": "basic-information",
+              "title": "Basic Information",
             },
           ],
         }
@@ -1359,6 +1611,8 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
             "edit-password-field": [Function],
             "field-array": [Function],
             "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
             "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
@@ -1396,34 +1650,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
           Object {
             "fields": Array [
               Object {
-                "component": "text-field",
-                "id": "name",
-                "label": "Name",
-                "maxLength": 255,
-                "name": "name",
-                "validate": Array [
+                "component": "sub-form",
+                "fields": Array [
                   Object {
-                    "type": "required",
+                    "component": "text-field",
+                    "id": "name",
+                    "label": "Name",
+                    "maxLength": 255,
+                    "name": "name",
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "select",
+                    "id": "provision_type",
+                    "includeEmpty": true,
+                    "label": "Type",
+                    "name": "provision_type",
+                    "options": Array [
+                      Object {
+                        "label": "Host",
+                        "value": "host",
+                      },
+                      Object {
+                        "label": "VM and Instance",
+                        "value": "vm",
+                      },
+                    ],
+                    "placeholder": "<Choose>",
                   },
                 ],
-              },
-              Object {
-                "component": "select",
-                "id": "provision_type",
-                "includeEmpty": true,
-                "label": "Type",
-                "name": "provision_type",
-                "options": Array [
-                  Object {
-                    "label": "Host",
-                    "value": "host",
-                  },
-                  Object {
-                    "label": "VM and Instance",
-                    "value": "vm",
-                  },
-                ],
-                "placeholder": "<Choose>",
+                "id": "basic-information",
+                "name": "basic-information",
+                "title": "Basic Information",
               },
             ],
           }
@@ -1442,6 +1704,8 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
               "edit-password-field": [Function],
               "field-array": [Function],
               "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
               "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
@@ -1475,34 +1739,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
             Object {
               "fields": Array [
                 Object {
-                  "component": "text-field",
-                  "id": "name",
-                  "label": "Name",
-                  "maxLength": 255,
-                  "name": "name",
-                  "validate": Array [
+                  "component": "sub-form",
+                  "fields": Array [
                     Object {
-                      "type": "required",
+                      "component": "text-field",
+                      "id": "name",
+                      "label": "Name",
+                      "maxLength": 255,
+                      "name": "name",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "id": "provision_type",
+                      "includeEmpty": true,
+                      "label": "Type",
+                      "name": "provision_type",
+                      "options": Array [
+                        Object {
+                          "label": "Host",
+                          "value": "host",
+                        },
+                        Object {
+                          "label": "VM and Instance",
+                          "value": "vm",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
                     },
                   ],
-                },
-                Object {
-                  "component": "select",
-                  "id": "provision_type",
-                  "includeEmpty": true,
-                  "label": "Type",
-                  "name": "provision_type",
-                  "options": Array [
-                    Object {
-                      "label": "Host",
-                      "value": "host",
-                    },
-                    Object {
-                      "label": "VM and Instance",
-                      "value": "vm",
-                    },
-                  ],
-                  "placeholder": "<Choose>",
+                  "id": "basic-information",
+                  "name": "basic-information",
+                  "title": "Basic Information",
                 },
                 Object {
                   "component": "spy-field",
@@ -1555,38 +1827,44 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
               formFields={
                 Array [
                   <SingleField
-                    component="text-field"
-                    id="name"
-                    label="Name"
-                    maxLength={255}
-                    name="name"
-                    validate={
+                    component="sub-form"
+                    fields={
                       Array [
                         Object {
-                          "type": "required",
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
                         },
                       ]
                     }
-                  />,
-                  <SingleField
-                    component="select"
-                    id="provision_type"
-                    includeEmpty={true}
-                    label="Type"
-                    name="provision_type"
-                    options={
-                      Array [
-                        Object {
-                          "label": "Host",
-                          "value": "host",
-                        },
-                        Object {
-                          "label": "VM and Instance",
-                          "value": "vm",
-                        },
-                      ]
-                    }
-                    placeholder="<Choose>"
+                    id="basic-information"
+                    name="basic-information"
+                    title="Basic Information"
                   />,
                   <SingleField
                     component="spy-field"
@@ -1598,34 +1876,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                 Object {
                   "fields": Array [
                     Object {
-                      "component": "text-field",
-                      "id": "name",
-                      "label": "Name",
-                      "maxLength": 255,
-                      "name": "name",
-                      "validate": Array [
+                      "component": "sub-form",
+                      "fields": Array [
                         Object {
-                          "type": "required",
+                          "component": "text-field",
+                          "id": "name",
+                          "label": "Name",
+                          "maxLength": 255,
+                          "name": "name",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "provision_type",
+                          "includeEmpty": true,
+                          "label": "Type",
+                          "name": "provision_type",
+                          "options": Array [
+                            Object {
+                              "label": "Host",
+                              "value": "host",
+                            },
+                            Object {
+                              "label": "VM and Instance",
+                              "value": "vm",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
                         },
                       ],
-                    },
-                    Object {
-                      "component": "select",
-                      "id": "provision_type",
-                      "includeEmpty": true,
-                      "label": "Type",
-                      "name": "provision_type",
-                      "options": Array [
-                        Object {
-                          "label": "Host",
-                          "value": "host",
-                        },
-                        Object {
-                          "label": "VM and Instance",
-                          "value": "vm",
-                        },
-                      ],
-                      "placeholder": "<Choose>",
+                      "id": "basic-information",
+                      "name": "basic-information",
+                      "title": "Basic Information",
                     },
                     Object {
                       "component": "spy-field",
@@ -1648,38 +1934,44 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                 formFields={
                   Array [
                     <SingleField
-                      component="text-field"
-                      id="name"
-                      label="Name"
-                      maxLength={255}
-                      name="name"
-                      validate={
+                      component="sub-form"
+                      fields={
                         Array [
                           Object {
-                            "type": "required",
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 255,
+                            "name": "name",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "id": "provision_type",
+                            "includeEmpty": true,
+                            "label": "Type",
+                            "name": "provision_type",
+                            "options": Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
                           },
                         ]
                       }
-                    />,
-                    <SingleField
-                      component="select"
-                      id="provision_type"
-                      includeEmpty={true}
-                      label="Type"
-                      name="provision_type"
-                      options={
-                        Array [
-                          Object {
-                            "label": "Host",
-                            "value": "host",
-                          },
-                          Object {
-                            "label": "VM and Instance",
-                            "value": "vm",
-                          },
-                        ]
-                      }
-                      placeholder="<Choose>"
+                      id="basic-information"
+                      name="basic-information"
+                      title="Basic Information"
                     />,
                     <SingleField
                       component="spy-field"
@@ -1697,34 +1989,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                   Object {
                     "fields": Array [
                       Object {
-                        "component": "text-field",
-                        "id": "name",
-                        "label": "Name",
-                        "maxLength": 255,
-                        "name": "name",
-                        "validate": Array [
+                        "component": "sub-form",
+                        "fields": Array [
                           Object {
-                            "type": "required",
+                            "component": "text-field",
+                            "id": "name",
+                            "label": "Name",
+                            "maxLength": 255,
+                            "name": "name",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "id": "provision_type",
+                            "includeEmpty": true,
+                            "label": "Type",
+                            "name": "provision_type",
+                            "options": Array [
+                              Object {
+                                "label": "Host",
+                                "value": "host",
+                              },
+                              Object {
+                                "label": "VM and Instance",
+                                "value": "vm",
+                              },
+                            ],
+                            "placeholder": "<Choose>",
                           },
                         ],
-                      },
-                      Object {
-                        "component": "select",
-                        "id": "provision_type",
-                        "includeEmpty": true,
-                        "label": "Type",
-                        "name": "provision_type",
-                        "options": Array [
-                          Object {
-                            "label": "Host",
-                            "value": "host",
-                          },
-                          Object {
-                            "label": "VM and Instance",
-                            "value": "vm",
-                          },
-                        ],
-                        "placeholder": "<Choose>",
+                        "id": "basic-information",
+                        "name": "basic-information",
+                        "title": "Basic Information",
                       },
                       Object {
                         "component": "spy-field",
@@ -1762,38 +2062,44 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                   formFields={
                     Array [
                       <SingleField
-                        component="text-field"
-                        id="name"
-                        label="Name"
-                        maxLength={255}
-                        name="name"
-                        validate={
+                        component="sub-form"
+                        fields={
                           Array [
                             Object {
-                              "type": "required",
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 255,
+                              "name": "name",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "id": "provision_type",
+                              "includeEmpty": true,
+                              "label": "Type",
+                              "name": "provision_type",
+                              "options": Array [
+                                Object {
+                                  "label": "Host",
+                                  "value": "host",
+                                },
+                                Object {
+                                  "label": "VM and Instance",
+                                  "value": "vm",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
                             },
                           ]
                         }
-                      />,
-                      <SingleField
-                        component="select"
-                        id="provision_type"
-                        includeEmpty={true}
-                        label="Type"
-                        name="provision_type"
-                        options={
-                          Array [
-                            Object {
-                              "label": "Host",
-                              "value": "host",
-                            },
-                            Object {
-                              "label": "VM and Instance",
-                              "value": "vm",
-                            },
-                          ]
-                        }
-                        placeholder="<Choose>"
+                        id="basic-information"
+                        name="basic-information"
+                        title="Basic Information"
                       />,
                       <SingleField
                         component="spy-field"
@@ -1811,34 +2117,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                     Object {
                       "fields": Array [
                         Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "label": "Name",
-                          "maxLength": 255,
-                          "name": "name",
-                          "validate": Array [
+                          "component": "sub-form",
+                          "fields": Array [
                             Object {
-                              "type": "required",
+                              "component": "text-field",
+                              "id": "name",
+                              "label": "Name",
+                              "maxLength": 255,
+                              "name": "name",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "id": "provision_type",
+                              "includeEmpty": true,
+                              "label": "Type",
+                              "name": "provision_type",
+                              "options": Array [
+                                Object {
+                                  "label": "Host",
+                                  "value": "host",
+                                },
+                                Object {
+                                  "label": "VM and Instance",
+                                  "value": "vm",
+                                },
+                              ],
+                              "placeholder": "<Choose>",
                             },
                           ],
-                        },
-                        Object {
-                          "component": "select",
-                          "id": "provision_type",
-                          "includeEmpty": true,
-                          "label": "Type",
-                          "name": "provision_type",
-                          "options": Array [
-                            Object {
-                              "label": "Host",
-                              "value": "host",
-                            },
-                            Object {
-                              "label": "VM and Instance",
-                              "value": "vm",
-                            },
-                          ],
-                          "placeholder": "<Choose>",
+                          "id": "basic-information",
+                          "name": "basic-information",
+                          "title": "Basic Information",
                         },
                         Object {
                           "component": "spy-field",
@@ -1867,22 +2181,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                       >
                          
                         <SingleField
-                          component="text-field"
-                          id="name"
-                          key="name"
-                          label="Name"
-                          maxLength={255}
-                          name="name"
-                          validate={
+                          component="sub-form"
+                          fields={
                             Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ]
-                          }
-                        >
-                          <FormConditionWrapper
-                            field={
                               Object {
                                 "component": "text-field",
                                 "id": "name",
@@ -1894,107 +2195,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     "type": "required",
                                   },
                                 ],
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
-                              <TextField
-                                component="text-field"
-                                id="name"
-                                label="Name"
-                                maxLength={255}
-                                name="name"
-                                validate={
-                                  Array [
-                                    Object {
-                                      "type": "required",
-                                    },
-                                  ]
-                                }
-                              >
-                                <ForwardRef(TextInput)
-                                  disabled={false}
-                                  helperText=""
-                                  id="name"
-                                  inline={false}
-                                  invalid={false}
-                                  invalidText=""
-                                  key="name"
-                                  labelText="Name"
-                                  light={false}
-                                  maxLength={255}
-                                  name="name"
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  type="text"
-                                  value="foo"
-                                  warn={false}
-                                  warnText=""
-                                >
-                                  <div
-                                    className="bx--form-item bx--text-input-wrapper"
-                                  >
-                                    <label
-                                      className="bx--label"
-                                      htmlFor="name"
-                                    >
-                                      Name
-                                    </label>
-                                    <div
-                                      className="bx--text-input__field-outer-wrapper"
-                                    >
-                                      <div
-                                        className="bx--text-input__field-wrapper"
-                                        data-invalid={null}
-                                      >
-                                        <input
-                                          className="bx--text-input bx--text__input"
-                                          disabled={false}
-                                          id="name"
-                                          maxLength={255}
-                                          name="name"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onClick={[Function]}
-                                          onFocus={[Function]}
-                                          type="text"
-                                          value="foo"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </ForwardRef(TextInput)>
-                              </TextField>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <SingleField
-                          component="select"
-                          id="provision_type"
-                          includeEmpty={true}
-                          key="provision_type"
-                          label="Type"
-                          name="provision_type"
-                          options={
-                            Array [
-                              Object {
-                                "label": "Host",
-                                "value": "host",
                               },
-                              Object {
-                                "label": "VM and Instance",
-                                "value": "vm",
-                              },
-                            ]
-                          }
-                          placeholder="<Choose>"
-                        >
-                          <FormConditionWrapper
-                            field={
                               Object {
                                 "component": "select",
                                 "id": "provision_type",
@@ -2012,44 +2213,38 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                   },
                                 ],
                                 "placeholder": "<Choose>",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
-                              <SelectWithOnChange
-                                component="select"
-                                id="provision_type"
-                                includeEmpty={true}
-                                label="Type"
-                                name="provision_type"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "Host",
-                                      "value": "host",
-                                    },
-                                    Object {
-                                      "label": "VM and Instance",
-                                      "value": "vm",
-                                    },
-                                  ]
-                                }
-                                placeholder="<Choose>"
-                              >
-                                <Select
-                                  component="select"
-                                  id="provision_type"
-                                  label="Type"
-                                  loadingMessage="Loading..."
-                                  name="provision_type"
-                                  options={
-                                    Array [
+                              },
+                            ]
+                          }
+                          id="basic-information"
+                          key="basic-information"
+                          name="basic-information"
+                          title="Basic Information"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "sub-form",
+                                "fields": Array [
+                                  Object {
+                                    "component": "text-field",
+                                    "id": "name",
+                                    "label": "Name",
+                                    "maxLength": 255,
+                                    "name": "name",
+                                    "validate": Array [
                                       Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
+                                        "type": "required",
                                       },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "select",
+                                    "id": "provision_type",
+                                    "includeEmpty": true,
+                                    "label": "Type",
+                                    "name": "provision_type",
+                                    "options": Array [
                                       Object {
                                         "label": "Host",
                                         "value": "host",
@@ -2058,30 +2253,186 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                         "label": "VM and Instance",
                                         "value": "vm",
                                       },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
+                                    ],
+                                    "placeholder": "<Choose>",
+                                  },
+                                ],
+                                "id": "basic-information",
+                                "name": "basic-information",
+                                "title": "Basic Information",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SubForm
+                                DescriptionElement="p"
+                                TitleElement="h3"
+                                component="sub-form"
+                                fields={
+                                  Array [
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "name",
+                                      "label": "Name",
+                                      "maxLength": 255,
+                                      "name": "name",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                    Object {
+                                      "component": "select",
+                                      "id": "provision_type",
+                                      "includeEmpty": true,
+                                      "label": "Type",
+                                      "name": "provision_type",
+                                      "options": Array [
+                                        Object {
+                                          "label": "Host",
+                                          "value": "host",
+                                        },
+                                        Object {
+                                          "label": "VM and Instance",
+                                          "value": "vm",
+                                        },
+                                      ],
+                                      "placeholder": "<Choose>",
+                                    },
+                                  ]
+                                }
+                                id="basic-information"
+                                name="basic-information"
+                                title="Basic Information"
+                              >
+                                <div
+                                  className=""
+                                  id="basic-information"
+                                  name="basic-information"
                                 >
-                                  <Select
-                                    SelectComponent={[Function]}
-                                    id="provision_type"
-                                    invalid={false}
-                                    invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
-                                    labelText="Type"
-                                    loadOptionsChangeCounter={1}
-                                    loadingMessage="Loading..."
-                                    name="provision_type"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    options={
+                                  <div>
+                                    <h3>
+                                      Basic Information
+                                    </h3>
+                                  </div>
+                                  <SingleField
+                                    component="text-field"
+                                    id="name"
+                                    key="name"
+                                    label="Name"
+                                    maxLength={255}
+                                    name="name"
+                                    validate={
                                       Array [
                                         Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
+                                          "type": "required",
                                         },
+                                      ]
+                                    }
+                                  >
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "name",
+                                          "label": "Name",
+                                          "maxLength": 255,
+                                          "name": "name",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        }
+                                      }
+                                    >
+                                      <FormFieldHideWrapper
+                                        hideField={false}
+                                      >
+                                        <TextField
+                                          component="text-field"
+                                          id="name"
+                                          label="Name"
+                                          maxLength={255}
+                                          name="name"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <TextInput
+                                            disabled={false}
+                                            helperText=""
+                                            id="name"
+                                            inline={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            key="name"
+                                            labelText="Name"
+                                            light={false}
+                                            maxLength={255}
+                                            name="name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            type="text"
+                                            value="foo"
+                                            warn={false}
+                                            warnText=""
+                                          >
+                                            <div
+                                              className="bx--form-item bx--text-input-wrapper"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                htmlFor="name"
+                                              >
+                                                Name
+                                              </label>
+                                              <div
+                                                className="bx--text-input__field-outer-wrapper"
+                                              >
+                                                <div
+                                                  className="bx--text-input__field-wrapper"
+                                                  data-invalid={null}
+                                                >
+                                                  <input
+                                                    className="bx--text-input"
+                                                    disabled={false}
+                                                    id="name"
+                                                    maxLength={255}
+                                                    name="name"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="text"
+                                                    value="foo"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </TextInput>
+                                        </TextField>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                  <SingleField
+                                    component="select"
+                                    id="provision_type"
+                                    includeEmpty={true}
+                                    key="provision_type"
+                                    label="Type"
+                                    name="provision_type"
+                                    options={
+                                      Array [
                                         Object {
                                           "label": "Host",
                                           "value": "host",
@@ -2093,178 +2444,284 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       ]
                                     }
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
-                                    simpleValue={false}
-                                    value="host"
                                   >
-                                    <ClearedSelect
-                                      className=""
-                                      closeMenuOnSelect={true}
-                                      hideSelectedOptions={false}
-                                      id="provision_type"
-                                      invalidText=""
-                                      isClearable={false}
-                                      isFetching={false}
-                                      isSearchable={false}
-                                      labelText="Type"
-                                      name="provision_type"
-                                      noOptionsMessage={[Function]}
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onInputChange={[Function]}
-                                      options={
-                                        Array [
-                                          Object {
-                                            "label": "<Choose>",
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ]
+                                    <FormConditionWrapper
+                                      field={
+                                        Object {
+                                          "component": "select",
+                                          "id": "provision_type",
+                                          "includeEmpty": true,
+                                          "label": "Type",
+                                          "name": "provision_type",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Host",
+                                              "value": "host",
+                                            },
+                                            Object {
+                                              "label": "VM and Instance",
+                                              "value": "vm",
+                                            },
+                                          ],
+                                          "placeholder": "<Choose>",
+                                        }
                                       }
-                                      placeholder="<Choose>"
-                                      value="host"
                                     >
-                                      <Select
-                                        className=""
-                                        disabled={false}
-                                        helperText=""
-                                        id="provision_type"
-                                        inline={false}
-                                        invalid={false}
-                                        invalidText=""
-                                        labelText="Type"
-                                        light={false}
-                                        name="provision_type"
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        value="host"
+                                      <FormFieldHideWrapper
+                                        hideField={false}
                                       >
-                                        <div
-                                          className="bx--form-item"
+                                        <SelectWithOnChange
+                                          component="select"
+                                          id="provision_type"
+                                          includeEmpty={true}
+                                          label="Type"
+                                          name="provision_type"
+                                          options={
+                                            Array [
+                                              Object {
+                                                "label": "Host",
+                                                "value": "host",
+                                              },
+                                              Object {
+                                                "label": "VM and Instance",
+                                                "value": "vm",
+                                              },
+                                            ]
+                                          }
+                                          placeholder="<Choose>"
                                         >
-                                          <div
-                                            className="bx--select"
+                                          <Select
+                                            component="select"
+                                            id="provision_type"
+                                            label="Type"
+                                            loadingMessage="Loading..."
+                                            name="provision_type"
+                                            options={
+                                              Array [
+                                                Object {
+                                                  "label": "<Choose>",
+                                                  "value": undefined,
+                                                },
+                                                Object {
+                                                  "label": "Host",
+                                                  "value": "host",
+                                                },
+                                                Object {
+                                                  "label": "VM and Instance",
+                                                  "value": "vm",
+                                                },
+                                              ]
+                                            }
+                                            placeholder="<Choose>"
                                           >
-                                            <label
-                                              className="bx--label"
-                                              htmlFor="provision_type"
+                                            <Select
+                                              SelectComponent={[Function]}
+                                              id="provision_type"
+                                              invalid={false}
+                                              invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
+                                              labelText="Type"
+                                              loadOptionsChangeCounter={1}
+                                              loadingMessage="Loading..."
+                                              name="provision_type"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "<Choose>",
+                                                    "value": undefined,
+                                                  },
+                                                  Object {
+                                                    "label": "Host",
+                                                    "value": "host",
+                                                  },
+                                                  Object {
+                                                    "label": "VM and Instance",
+                                                    "value": "vm",
+                                                  },
+                                                ]
+                                              }
+                                              placeholder="<Choose>"
+                                              pluckSingleValue={true}
+                                              simpleValue={false}
+                                              value="host"
                                             >
-                                              Type
-                                            </label>
-                                            <div
-                                              className="bx--select-input__wrapper"
-                                              data-invalid={null}
-                                            >
-                                              <select
-                                                className="bx--select-input"
+                                              <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
                                                 id="provision_type"
+                                                invalidText=""
+                                                isClearable={false}
+                                                isFetching={false}
+                                                isSearchable={false}
+                                                labelText="Type"
                                                 name="provision_type"
+                                                noOptionsMessage={[Function]}
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onInputChange={[Function]}
+                                                options={
+                                                  Array [
+                                                    Object {
+                                                      "label": "<Choose>",
+                                                      "value": undefined,
+                                                    },
+                                                    Object {
+                                                      "label": "Host",
+                                                      "value": "host",
+                                                    },
+                                                    Object {
+                                                      "label": "VM and Instance",
+                                                      "value": "vm",
+                                                    },
+                                                  ]
+                                                }
+                                                placeholder="<Choose>"
                                                 value="host"
                                               >
-                                                <SelectItem
+                                                <Select
+                                                  className=""
                                                   disabled={false}
-                                                  hidden={false}
-                                                  key="0"
-                                                  label="<Choose>"
-                                                  text="<Choose>"
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="<Choose>"
-                                                    value=""
-                                                  >
-                                                    &lt;Choose&gt;
-                                                  </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="host"
-                                                  label="Host"
-                                                  text="Host"
+                                                  helperText=""
+                                                  id="provision_type"
+                                                  inline={false}
+                                                  invalid={false}
+                                                  invalidText=""
+                                                  labelText="Type"
+                                                  light={false}
+                                                  name="provision_type"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
                                                   value="host"
                                                 >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="Host"
-                                                    value="host"
+                                                  <div
+                                                    className="bx--form-item"
                                                   >
-                                                    Host
-                                                  </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="vm"
-                                                  label="VM and Instance"
-                                                  text="VM and Instance"
-                                                  value="vm"
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    label="VM and Instance"
-                                                    value="vm"
-                                                  >
-                                                    VM and Instance
-                                                  </option>
-                                                </SelectItem>
-                                              </select>
-                                              <ForwardRef(ChevronDown16)
-                                                className="bx--select__arrow"
-                                              >
-                                                <Icon
-                                                  className="bx--select__arrow"
-                                                  fill="currentColor"
-                                                  height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
-                                                  viewBox="0 0 16 16"
-                                                  width={16}
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="bx--select__arrow"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height={16}
-                                                    preserveAspectRatio="xMidYMid meet"
-                                                    viewBox="0 0 16 16"
-                                                    width={16}
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                  >
-                                                    <path
-                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                    />
-                                                  </svg>
-                                                </Icon>
-                                              </ForwardRef(ChevronDown16)>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </Select>
-                                    </ClearedSelect>
-                                  </Select>
-                                </Select>
-                              </SelectWithOnChange>
+                                                    <div
+                                                      className="bx--select"
+                                                    >
+                                                      <label
+                                                        className="bx--label"
+                                                        htmlFor="provision_type"
+                                                      >
+                                                        Type
+                                                      </label>
+                                                      <div
+                                                        className="bx--select-input__wrapper"
+                                                        data-invalid={null}
+                                                      >
+                                                        <select
+                                                          className="bx--select-input"
+                                                          id="provision_type"
+                                                          name="provision_type"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          value="host"
+                                                        >
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="0"
+                                                            label="<Choose>"
+                                                            text="<Choose>"
+                                                            value=""
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="<Choose>"
+                                                              value=""
+                                                            >
+                                                              &lt;Choose&gt;
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="host"
+                                                            label="Host"
+                                                            text="Host"
+                                                            value="host"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="Host"
+                                                              value="host"
+                                                            >
+                                                              Host
+                                                            </option>
+                                                          </SelectItem>
+                                                          <SelectItem
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            key="vm"
+                                                            label="VM and Instance"
+                                                            text="VM and Instance"
+                                                            value="vm"
+                                                          >
+                                                            <option
+                                                              className="bx--select-option"
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              label="VM and Instance"
+                                                              value="vm"
+                                                            >
+                                                              VM and Instance
+                                                            </option>
+                                                          </SelectItem>
+                                                        </select>
+                                                        <ForwardRef(ChevronDown16)
+                                                          className="bx--select__arrow"
+                                                        >
+                                                          <Icon
+                                                            className="bx--select__arrow"
+                                                            fill="currentColor"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <svg
+                                                              aria-hidden={true}
+                                                              className="bx--select__arrow"
+                                                              fill="currentColor"
+                                                              focusable="false"
+                                                              height={16}
+                                                              preserveAspectRatio="xMidYMid meet"
+                                                              viewBox="0 0 16 16"
+                                                              width={16}
+                                                              xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                              <path
+                                                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                              />
+                                                            </svg>
+                                                          </Icon>
+                                                        </ForwardRef(ChevronDown16)>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </Select>
+                                              </ClearedSelect>
+                                            </Select>
+                                          </Select>
+                                        </SelectWithOnChange>
+                                      </FormFieldHideWrapper>
+                                    </FormConditionWrapper>
+                                  </SingleField>
+                                </div>
+                              </SubForm>
                             </FormFieldHideWrapper>
                           </FormConditionWrapper>
                         </SingleField>
@@ -2322,38 +2779,44 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                             formFields={
                               Array [
                                 <SingleField
-                                  component="text-field"
-                                  id="name"
-                                  label="Name"
-                                  maxLength={255}
-                                  name="name"
-                                  validate={
+                                  component="sub-form"
+                                  fields={
                                     Array [
                                       Object {
-                                        "type": "required",
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 255,
+                                        "name": "name",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "select",
+                                        "id": "provision_type",
+                                        "includeEmpty": true,
+                                        "label": "Type",
+                                        "name": "provision_type",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
                                       },
                                     ]
                                   }
-                                />,
-                                <SingleField
-                                  component="select"
-                                  id="provision_type"
-                                  includeEmpty={true}
-                                  label="Type"
-                                  name="provision_type"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "Host",
-                                        "value": "host",
-                                      },
-                                      Object {
-                                        "label": "VM and Instance",
-                                        "value": "vm",
-                                      },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
+                                  id="basic-information"
+                                  name="basic-information"
+                                  title="Basic Information"
                                 />,
                                 <SingleField
                                   component="spy-field"
@@ -2448,34 +2911,42 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                               Object {
                                 "fields": Array [
                                   Object {
-                                    "component": "text-field",
-                                    "id": "name",
-                                    "label": "Name",
-                                    "maxLength": 255,
-                                    "name": "name",
-                                    "validate": Array [
+                                    "component": "sub-form",
+                                    "fields": Array [
                                       Object {
-                                        "type": "required",
+                                        "component": "text-field",
+                                        "id": "name",
+                                        "label": "Name",
+                                        "maxLength": 255,
+                                        "name": "name",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "select",
+                                        "id": "provision_type",
+                                        "includeEmpty": true,
+                                        "label": "Type",
+                                        "name": "provision_type",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Host",
+                                            "value": "host",
+                                          },
+                                          Object {
+                                            "label": "VM and Instance",
+                                            "value": "vm",
+                                          },
+                                        ],
+                                        "placeholder": "<Choose>",
                                       },
                                     ],
-                                  },
-                                  Object {
-                                    "component": "select",
-                                    "id": "provision_type",
-                                    "includeEmpty": true,
-                                    "label": "Type",
-                                    "name": "provision_type",
-                                    "options": Array [
-                                      Object {
-                                        "label": "Host",
-                                        "value": "host",
-                                      },
-                                      Object {
-                                        "label": "VM and Instance",
-                                        "value": "vm",
-                                      },
-                                    ],
-                                    "placeholder": "<Choose>",
+                                    "id": "basic-information",
+                                    "name": "basic-information",
+                                    "title": "Basic Information",
                                   },
                                   Object {
                                     "component": "spy-field",
@@ -2503,7 +2974,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     variant="primary"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="primary"
                                       size="default"
                                       tabIndex={0}
@@ -2513,8 +2986,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       variant="primary"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--primary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="submit"
                                         variant="primary"
@@ -2532,7 +3012,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={true}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -2542,9 +3024,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary bx--btn--disabled"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >
@@ -2560,7 +3048,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
+                                      dangerDescription="danger"
                                       disabled={false}
+                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
                                       size="default"
@@ -2570,9 +3060,15 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                       type="button"
                                     >
                                       <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
                                         className="bx--btn bx--btn--secondary"
                                         disabled={false}
+                                        onBlur={[Function]}
                                         onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
                                         tabIndex={0}
                                         type="button"
                                       >

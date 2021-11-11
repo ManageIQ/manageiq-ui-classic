@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Network Router form component should render add form 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  canSubmit={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "ems_id",
+              "isDisabled": false,
+              "isRequired": true,
+              "label": "Network Manager",
+              "loadOptions": [Function],
+              "name": "ems_id",
+              "onChange": [Function],
+              "placeholder": "<Choose>",
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+              "validateOnMount": true,
+            },
+          ],
+          "id": "network-provider",
+          "name": "network-provider",
+          "title": "Network Management Provider",
+        },
+        Object {
+          "clearOnUnmount": true,
+          "component": "select",
+          "condition": Object {
+            "and": Array [
+              Object {
+                "is": true,
+                "when": "enable",
+              },
+              Object {
+                "isNotEmpty": true,
+                "when": "cloud_network_id",
+              },
+            ],
+          },
+          "id": "cloud_subnet_id",
+          "includeEmpty": true,
+          "key": "subnet-",
+          "label": "Fixed IPs Subnet",
+          "name": "cloud_subnet_id",
+          "options": Array [],
+          "placeholder": "<Choose>",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router form component should render edit variant 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;

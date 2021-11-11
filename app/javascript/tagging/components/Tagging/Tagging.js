@@ -1,6 +1,7 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col } from 'patternfly-react';
+import { Grid, Row, Column } from 'carbon-components-react';
 import TagModifier from '../InnerComponents/TagModifier';
 import TagView from '../InnerComponents/TagView';
 import CategoryModifier from '../InnerComponents/CategoryModifier';
@@ -8,20 +9,24 @@ import ValueModifier from '../InnerComponents/ValueModifier';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class Tagging extends React.Component {
+  // eslint-disable-next-line react/sort-comp
   onTagValueChange = (selectedTagValue) => {
+    const {
+      selectedTagCategory, options,
+    } = this.props;
     const action = {
-      tagCategory: this.props.selectedTagCategory,
+      tagCategory: selectedTagCategory,
       tagValue: selectedTagValue,
     };
 
-    if (this.props.options && this.props.options.onlySingleTag) {
-      this.props.onSingleTagValueChange(action, this.props.options);
+    if (options && options.onlySingleTag) {
+      this.props.onSingleTagValueChange(action, options);
     } else {
-      this.props.onTagValueChange(action, this.props.options);
+      this.props.onTagValueChange(action, options);
     }
   };
 
-  onTagCategoryChange = selectedTagCategory =>
+  onTagCategoryChange = (selectedTagCategory) =>
     this.props.onTagCategoryChange(selectedTagCategory);
 
   onTagDeleteClick = (tagCategory, tagValue) => {
@@ -29,53 +34,65 @@ class Tagging extends React.Component {
   };
 
   getCategoryValues = () =>
-    (this.findSelectedTag(this.props.selectedTagCategory) &&
-      this.findSelectedTag(this.props.selectedTagCategory).values) ||
-    [];
+    (this.findSelectedTag(this.props.selectedTagCategory)
+      && this.findSelectedTag(this.props.selectedTagCategory).values)
+    || [];
 
   getSelectedCategoryValues = () =>
-    this.props.assignedTags.find(tag => tag.id === this.props.selectedTagCategory.id) ||
-    { values: [] };
+    this.props.assignedTags.find((tag) => tag.id === this.props.selectedTagCategory.id)
+    || { values: [] };
 
   findSelectedTag = (selectedTagCategory = { id: undefined }) =>
-    this.props.tags.find(tag => tag.id === selectedTagCategory.id);
+    this.props.tags.find((tag) => tag.id === selectedTagCategory.id);
 
-  isMulti = selectedTagCategory =>
-    this.findSelectedTag(selectedTagCategory) &&
-    this.findSelectedTag(selectedTagCategory).singleValue === false;
+  isMulti = (selectedTagCategory) => {
+    const selectedCategory = this.findSelectedTag(selectedTagCategory);
+    if (selectedCategory && selectedCategory.singleValue) {
+      return !selectedCategory.singleValue;
+    }
+    return true;
+  }
 
-  tagCategories = this.props.tags.map(tag => ({
+  // eslint-disable-next-line react/destructuring-assignment
+  tagCategories = this.props.tags.map((tag) => ({
     description: tag.description,
     id: tag.id,
     singleValue: tag.singleValue,
   })) || [];
 
   render() {
+    const {
+      options, selectedTagCategory, onTagCategoryChange, assignedTags,
+    } = this.props;
+    const isDisabled = options && options.isDisabled;
     return (
-      <Grid fluid>
+      <Grid>
         <Row>
-          <Col xs={12} md={8} lg={6}>
-            <TagModifier hideHeader={this.props.options && this.props.options.hideHeaders}>
+          <Column xs={12} md={8} lg={6}>
+            <TagModifier hideHeader={options && options.hideHeaders}>
               <CategoryModifier
-                selectedTagCategory={this.props.selectedTagCategory}
-                onTagCategoryChange={this.props.onTagCategoryChange}
+                selectedTagCategory={selectedTagCategory}
+                onTagCategoryChange={onTagCategoryChange}
                 tagCategories={this.tagCategories}
+                isDisabled={isDisabled}
               />
               <ValueModifier
                 onTagValueChange={this.onTagValueChange}
                 selectedTagValues={this.getSelectedCategoryValues().values}
-                multiValue={this.isMulti(this.props.selectedTagCategory)}
+                multiValue={this.isMulti(selectedTagCategory)}
                 values={this.getCategoryValues()}
+                isDisabled={isDisabled}
               />
             </TagModifier>
-          </Col>
-          <Col xs={12} md={4} lg={6}>
+          </Column>
+          <Column xs={12} md={4} lg={6}>
             <TagView
-              hideHeader={this.props.options && this.props.options.hideHeaders}
-              assignedTags={this.props.assignedTags}
-              onTagDeleteClick={this.onTagDeleteClick}
+              hideHeader={options && options.hideHeaders}
+              assignedTags={assignedTags}
+              onTagDeleteClick={isDisabled ? () => {} : this.onTagDeleteClick}
+              showCloseButton={!isDisabled}
             />
-          </Col>
+          </Column>
         </Row>
       </Grid>
     );
@@ -93,13 +110,18 @@ Tagging.propTypes = {
   options: PropTypes.shape({
     onlySingleTag: PropTypes.bool,
     hideHeaders: PropTypes.bool,
+    isDisabled: PropTypes.bool,
   }),
 };
 
 Tagging.defaultProps = {
+  selectedTagCategory: {},
+  tags: [],
+  assignedTags: [],
   options: {
     onlySingleTag: false,
     hideHeaders: false,
+    isDisabled: false,
   },
 };
 

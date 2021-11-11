@@ -22,10 +22,6 @@ class MiqActionController < ApplicationController
   def edit
     @_params[:pressed] ||= 'miq_action_edit'
     case params[:button]
-    when "cancel"
-      miq_action_cancel
-    when "save", "add"
-      miq_action_save_add
     when "reset", nil # displaying edit from for actions: new, edit or copy
       @_params[:id] ||= find_checked_items[0]
       @redirect_id = params[:id] if params[:id]
@@ -174,47 +170,6 @@ class MiqActionController < ApplicationController
                         :flash_warning => true) if params[:button] == "reset"
   end
 
-  def miq_action_cancel
-    @action = MiqAction.find_by(:id => params[:id])
-    if @action.present?
-      flash_msg = _("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description}
-    else
-      flash_msg = _("Add of new Action was cancelled by the user")
-    end
-    @edit = session[:edit] = nil # clean out the saved info
-    session[:changed] = false
-    javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
-  end
-
-  def miq_action_save_add
-    assert_privileges("miq_action_#{params[:id] ? "edit" : "new"}")
-    return unless load_edit("miq_action_edit__#{params[:id] ? "#{params[:id]}" : "new"}")
-
-    action = @edit[:action_id].blank? ? MiqAction.new : MiqAction.find_by(:id => @edit[:action_id]) # Get new or existing record
-    # set email "from" to default value if it's not present
-    if @edit[:new][:action_type] == "email" && @edit[:new][:options][:from].nil?
-      @edit[:new][:options][:from] = "cfadmin@cfserver.com"
-    end
-
-    action_set_record_vars(action)
-    if action_valid_record?(action) && !@flash_array && action.save
-      AuditEvent.success(build_saved_audit(action, @edit))
-      if params[:button] == "save"
-        flash_msg = _("Action \"%{name}\" was saved") % {:name => @edit[:new][:description]}
-      else
-        flash_msg = _("Action \"%{name}\" was added") % {:name => @edit[:new][:description]}
-      end
-      @edit = session[:edit] = nil # clean out the saved info
-      session[:changed] = @changed = false
-      javascript_redirect(:controller => 'miq_action', :action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
-    else
-      action.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
-      end
-      javascript_flash
-    end
-  end
-
   def action_build_snmp_variables
     @edit[:new][:options][:snmp_version] = "v1" if @edit[:new][:action_type] == "snmp_trap" && @edit[:new][:options][:snmp_version].blank?
     @edit[:snmp_var_types] = MiqSnmp.available_types
@@ -332,6 +287,7 @@ class MiqActionController < ApplicationController
   # Build the alert choice hash for evaluate_alerts action_type
   def action_build_alert_choices
     @edit[:choices] = MiqAlert.all.each_with_object({}) { |a, h| h[a.description] = a.guid } # Build the hash of alert choices
+    @edit[:allAlertChoices] = @edit[:choices].dup
     @edit[:new][:alerts] = {} # Clear out the alerts hash
   end
 

@@ -1,5 +1,41 @@
-.table-hover > tbody > .simple-row:hover > td, .table-hover > tbody > tr:hover > th {
-    background-color: transparent;
-    border-bottom-color: inherit;
-    cursor: auto;
+.table-hover > tbody > .simple-row:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: transparent;
+  border-bottom-color: inherit;
+  cursor: auto;
+}
+
+#text_summary_button {
+  .bx--btn--ghost {
+    color: #161616;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
+  .bx--btn {
+    font-size: 0.75rem;
+  }
+
+  .bx--btn--sm {
+    min-height: 1rem;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+}
+
+#text_summary_button_link {
+  .bx--btn--ghost {
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
+  .bx--btn {
+    font-size: 0.75rem;
+  }
+
+  .bx--btn--sm {
+    min-height: 1rem;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
 }

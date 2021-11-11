@@ -14,193 +14,327 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
   }
 >
   <ToastList>
-    <ToastNotificationList
-      className=""
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onMouseOver={[Function]}
+    <div
+      className="toast-notification"
+      id="toastnotification"
     >
-      <div
-        className="toast-notifications-list-pf"
-        onFocus={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
+      <FeatureToggle(ToastNotification)
+        caption=""
+        key="10000000003625"
+        kind="error"
+        lowContrast={true}
+        onClick={[Function]}
+        subtitle="Plan has completed with errors"
+        timeout={8000}
+        title=""
       >
-        <TimedToastNotification
-          className=""
-          key=".$10000000003625"
-          onDismiss={[Function]}
-          paused={false}
-          persistent={true}
-          timerdelay={8000}
-          type="error"
+        <ToastNotification
+          caption=""
+          hideCloseButton={false}
+          iconDescription="closes notification"
+          kind="error"
+          lowContrast={true}
+          notificationType="toast"
+          onClick={[Function]}
+          onCloseButtonClick={[Function]}
+          role="alert"
+          subtitle="Plan has completed with errors"
+          timeout={8000}
+          title=""
         >
-          <ToastNotification
-            className=""
-            onDismiss={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            type="error"
+          <div
+            className="bx--toast-notification bx--toast-notification--low-contrast bx--toast-notification--error"
+            kind="error"
+            onClick={[Function]}
+            role="alert"
           >
-            <Alert
-              className="toast-pf"
-              onDismiss={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
-              type="error"
+            <NotificationIcon
+              iconDescription="error icon"
+              kind="error"
+              notificationType="toast"
+            >
+              <ForwardRef(ErrorFilled20)
+                className="bx--toast-notification__icon"
+              >
+                <Icon
+                  className="bx--toast-notification__icon"
+                  fill="currentColor"
+                  height={20}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 20 20"
+                  width={20}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="bx--toast-notification__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height={20}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 20 20"
+                    width={20}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                    />
+                    <path
+                      d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"
+                      data-icon-path="inner-path"
+                      opacity="0"
+                    />
+                    <title>
+                      error icon
+                    </title>
+                  </svg>
+                </Icon>
+              </ForwardRef(ErrorFilled20)>
+            </NotificationIcon>
+            <NotificationTextDetails
+              caption=""
+              notificationType="toast"
+              subtitle="Plan has completed with errors"
+              title=""
             >
               <div
-                className="alert toast-pf alert-danger alert-dismissable"
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
+                className="bx--toast-notification__details"
               >
-                <Button
-                  active={false}
-                  aria-hidden="true"
-                  block={false}
-                  bsClass="close"
-                  bsStyle="default"
-                  disabled={false}
-                  onClick={[Function]}
+                <h3
+                  className="bx--toast-notification__title"
+                />
+                <div
+                  className="bx--toast-notification__subtitle"
                 >
-                  <button
-                    aria-hidden="true"
-                    className="close close-default"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    <Icon
-                      name="close"
-                      type="pf"
-                    >
-                      <PatternflyIcon
-                        className=""
-                        name="close"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="pficon pficon-close"
-                        />
-                      </PatternflyIcon>
-                    </Icon>
-                  </button>
-                </Button>
-                <Icon
-                  name="error-circle-o"
-                  type="pf"
-                >
-                  <PatternflyIcon
-                    className=""
-                    name="error-circle-o"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="pficon pficon-error-circle-o"
-                    />
-                  </PatternflyIcon>
-                </Icon>
+                  Plan has completed with errors
+                </div>
                 <div
                   className="pull-right toast-pf-action"
                 >
-                  <a
-                    href="#"
-                    onClick={[Function]}
+                  <Link
+                    href="http://localhost:3000/api/notifications/10000000003624"
                   >
-                    View details
-                  </a>
+                    <a
+                      className="bx--link"
+                      href="http://localhost:3000/api/notifications/10000000003624"
+                      rel={null}
+                    >
+                      View details
+                    </a>
+                  </Link>
                 </div>
-                <span>
-                  Plan has completed with errors
-                </span>
+                <span />
               </div>
-            </Alert>
-          </ToastNotification>
-        </TimedToastNotification>
-        <TimedToastNotification
-          className=""
-          key=".$10000000003624"
-          onDismiss={[Function]}
-          paused={false}
-          persistent={false}
-          timerdelay={8000}
-          type="success"
+            </NotificationTextDetails>
+            <NotificationButton
+              ariaLabel="close notification"
+              iconDescription="closes notification"
+              notificationType="toast"
+              onClick={[Function]}
+              renderIcon={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                }
+              }
+              type="button"
+            >
+              <button
+                aria-label="closes notification"
+                className="bx--toast-notification__close-button"
+                onClick={[Function]}
+                title="closes notification"
+                type="button"
+              >
+                <ForwardRef(Close20)
+                  aria-label="close notification"
+                  className="bx--toast-notification__close-icon"
+                >
+                  <Icon
+                    aria-label="close notification"
+                    className="bx--toast-notification__close-icon"
+                    fill="currentColor"
+                    height={20}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={20}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-label="close notification"
+                      className="bx--toast-notification__close-icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(Close20)>
+              </button>
+            </NotificationButton>
+          </div>
+        </ToastNotification>
+      </FeatureToggle(ToastNotification)>
+      <FeatureToggle(ToastNotification)
+        caption=""
+        key="10000000003624"
+        kind="success"
+        lowContrast={true}
+        onClick={[Function]}
+        subtitle="Plan has completed successfully"
+        timeout={8000}
+        title=""
+      >
+        <ToastNotification
+          caption=""
+          hideCloseButton={false}
+          iconDescription="closes notification"
+          kind="success"
+          lowContrast={true}
+          notificationType="toast"
+          onClick={[Function]}
+          onCloseButtonClick={[Function]}
+          role="alert"
+          subtitle="Plan has completed successfully"
+          timeout={8000}
+          title=""
         >
-          <ToastNotification
-            className=""
-            onDismiss={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            type="success"
+          <div
+            className="bx--toast-notification bx--toast-notification--low-contrast bx--toast-notification--success"
+            kind="success"
+            onClick={[Function]}
+            role="alert"
           >
-            <Alert
-              className="toast-pf"
-              onDismiss={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
-              type="success"
+            <NotificationIcon
+              iconDescription="success icon"
+              kind="success"
+              notificationType="toast"
+            >
+              <ForwardRef(CheckmarkFilled20)
+                className="bx--toast-notification__icon"
+              >
+                <Icon
+                  className="bx--toast-notification__icon"
+                  fill="currentColor"
+                  height={20}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 20 20"
+                  width={20}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="bx--toast-notification__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height={20}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 20 20"
+                    width={20}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10,1c-4.9,0-9,4.1-9,9s4.1,9,9,9s9-4,9-9S15,1,10,1z M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                    />
+                    <path
+                      d="M8.7,13.5l-3.2-3.2l1-1l2.2,2.2l4.8-4.8l1,1L8.7,13.5z"
+                      data-icon-path="inner-path"
+                      fill="none"
+                      opacity="0"
+                    />
+                    <title>
+                      success icon
+                    </title>
+                  </svg>
+                </Icon>
+              </ForwardRef(CheckmarkFilled20)>
+            </NotificationIcon>
+            <NotificationTextDetails
+              caption=""
+              notificationType="toast"
+              subtitle="Plan has completed successfully"
+              title=""
             >
               <div
-                className="alert toast-pf alert-success alert-dismissable"
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
+                className="bx--toast-notification__details"
               >
-                <Button
-                  active={false}
-                  aria-hidden="true"
-                  block={false}
-                  bsClass="close"
-                  bsStyle="default"
-                  disabled={false}
-                  onClick={[Function]}
+                <h3
+                  className="bx--toast-notification__title"
+                />
+                <div
+                  className="bx--toast-notification__subtitle"
                 >
-                  <button
-                    aria-hidden="true"
-                    className="close close-default"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    <Icon
-                      name="close"
-                      type="pf"
-                    >
-                      <PatternflyIcon
-                        className=""
-                        name="close"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="pficon pficon-close"
-                        />
-                      </PatternflyIcon>
-                    </Icon>
-                  </button>
-                </Button>
-                <Icon
-                  name="ok"
-                  type="pf"
-                >
-                  <PatternflyIcon
-                    className=""
-                    name="ok"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="pficon pficon-ok"
-                    />
-                  </PatternflyIcon>
-                </Icon>
-                <span>
                   Plan has completed successfully
-                </span>
+                </div>
+                <span />
               </div>
-            </Alert>
-          </ToastNotification>
-        </TimedToastNotification>
-      </div>
-    </ToastNotificationList>
+            </NotificationTextDetails>
+            <NotificationButton
+              ariaLabel="close notification"
+              iconDescription="closes notification"
+              notificationType="toast"
+              onClick={[Function]}
+              renderIcon={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                }
+              }
+              type="button"
+            >
+              <button
+                aria-label="closes notification"
+                className="bx--toast-notification__close-button"
+                onClick={[Function]}
+                title="closes notification"
+                type="button"
+              >
+                <ForwardRef(Close20)
+                  aria-label="close notification"
+                  className="bx--toast-notification__close-icon"
+                >
+                  <Icon
+                    aria-label="close notification"
+                    className="bx--toast-notification__close-icon"
+                    fill="currentColor"
+                    height={20}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={20}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-label="close notification"
+                      className="bx--toast-notification__close-icon"
+                      fill="currentColor"
+                      focusable="false"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(Close20)>
+              </button>
+            </NotificationButton>
+          </div>
+        </ToastNotification>
+      </FeatureToggle(ToastNotification)>
+    </div>
   </ToastList>
 </Provider>
 `;

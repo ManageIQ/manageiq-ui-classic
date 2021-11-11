@@ -1,6 +1,5 @@
 .bundle/
 .yardoc
-yarn.lock
 package-lock.json
 Gemfile.lock
 Gemfile.dev.rb
@@ -16,9 +15,17 @@ tmp/
 .idea/
 .vscode/
 .ruby-version
-node_modules/
 config/webpack/paths.json
 *.sw[po]
 cypress/screenshots
 cypress/videos
 .DS_Store
+
+/node_modules/
+/.pnp.*
+/.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks
+!/.yarn/versions

@@ -17,7 +17,8 @@
   border-color: #bbb;
   background-color: transparent;
   color: #4d5258;
-  &:hover{
+
+  &:hover {
     color: #4d5258;
     background-color: transparent;
   }
@@ -27,6 +28,13 @@
       fill: #39a5dc;
     }
   }
+}
+
+#toastnotification {
+  position: fixed;
+  z-index: 900;
+  right: 50px;
+  top: 50px;
 }
 
 #breadcrumbs .breadcrumb {
@@ -40,6 +48,7 @@
   height: 20px;
   width: 20px;
   text-align: center;
+
   i {
     align-self: center;
     color: #fff;
@@ -51,7 +60,6 @@
   border: 1px solid #d1d1d1;
   -webkit-box-shadow: 0 6px 12px rgb(3 3 3 / 18%);
   box-shadow: 0 6px 12px rgb(3 3 3 / 18%);
-  overflow-y: auto;
   position: absolute;
   right: 0;
   width: 450px;
@@ -61,23 +69,28 @@
   overflow-y: hidden;
   top: 38px;
   height: calc(100% - 44px);
+
   .panel-header {
     background-color: #fafafa;
     border-bottom: 1px solid #d1d1d1;
     position: absolute;
-    width: 100%; 
+    width: 100%;
     background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 100%);
+
     .closeIcon {
-      right: 0px;
+      right: 0;
     }
+
     .collapsed {
-      left: 0px;
+      left: 0;
       padding-left: 5px;
     }
+
     .expanded {
-      left: 0px;
+      left: 0;
       padding-left: 5px;
     }
+
     .heading-icon {
       color: #252525;
       cursor: pointer;
@@ -86,69 +99,79 @@
       background: none;
     }
   }
-  
+
   .bx--accordion--start .bx--accordion__heading {
     background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 100%);
   }
-  
+
   .bx--accordion__content {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     flex: 1 1 auto;
     overflow-y: hidden;
     flex-direction: column;
-    min-height: 0px; 
+    min-height: 0;
+
     .bx--inline-notification {
-      margin-top: 0px;
-      padding-top: 0px; 
-      margin-bottom: 0px;
+      margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 0;
       min-height: 100px;
       height: auto;
-      .bx--btn--ghost:hover, .bx--btn--ghost:active {
+
+      .bx--btn--ghost:hover,
+      .bx--btn--ghost:active {
         background-color: inherit;
       }
+
       .bx--inline-notification__text-wrapper {
         flex-wrap: unset;
+
         .notification-time {
           left: 55px;
           position: absolute;
           bottom: 3px;
         }
+
         .bx--inline-notification__title {
           margin-bottom: 20px;
         }
+
         .subtitle-div {
           height: 100%;
+
           .subtitle-div-notification-menu {
             height: 80%;
           }
+
           .subtitle-div-notification-time {
             height: 20%;
           }
         }
       }
     }
-  
+
     .read {
       .bx--inline-notification__title {
         font-weight: 400;
       }
+
       .bx--inline-notification__subtitle {
         font-weight: 200;
       }
     }
   }
-     
 }
-
 
 .notification-module {
   display: inline;
+  margin: 5px 0;
 }
 
 .notification-title {
   margin-left: 100px;
-}    
+}
+
 .notification-content {
   display: flex;
   flex-direction: column;
@@ -158,62 +181,68 @@
   position: absolute;
   top: 47px;
   width: 100%;
-} 
+}
 
 .events-count {
   display: flex;
   flex-direction: column;
 }
-  
+
 .maxnotifications-text {
   margin-left: 60px;
   margin-top: 15px;
   display: flex;
   flex-direction: column;
+
   button {
-    background: none!important;
+    background: none !important;
     border: none;
-    padding: 0!important;
+    padding: 0 !important;
     font-family: arial, sans-serif;
     text-decoration: none;
     cursor: pointer;
     color: #0f62fe;
   }
 }
-  
+
 @media (min-width: 767px) {
   .notification-drawer.notification-drawer-expanded {
     left: 480px;
     width: inherit;
+
     .bx--inline-notification {
       max-width: inherit;
     }
+
     .notification-footer {
       width: 100%;
       padding-left: 450px;
     }
-    .notification-time {
-      padding-top: 0px !important;
-    } 
 
+    .notification-time {
+      padding-top: 0 !important;
+    }
   }
 }
 
 .notification-accordion-content {
   overflow-y: auto;
   height: 100%;
+
   .notification-content-messages {
     position: absolute;
     overflow-y: scroll;
     height: calc(100% - 115px);
   }
+
   .notification-footer {
     bottom: -65px;
     position: absolute;
     width: 450px;
     height: 115px;
     border-top: 1px solid #d1d1d1;
-    Button {
+
+    button {
       width: 225px;
       padding: calc(0.875rem - 3px) 35px;
     }
@@ -222,10 +251,12 @@
 
 .refresh-notifications {
   display: flex;
+
   .last-refresh-notification {
-    margin-top: 0px;
+    margin-top: 0;
     margin-left: 10px;
   }
+
   .date-notification {
     margin-left: 20px;
   }

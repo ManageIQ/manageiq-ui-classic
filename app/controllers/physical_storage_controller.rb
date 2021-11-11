@@ -17,8 +17,22 @@ class PhysicalStorageController < ApplicationController
 
   def new
     @in_a_form = true
+    if params[:storage_manager_id]
+      @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
+    end
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
+  end
+
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("physical_storage_edit")
+    @storage = find_record_with_rbac(PhysicalStorage, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Physical Storage \"%{name}\"") % {:name => @storage.name},
+      :url  => "/physical_storage/edit/#{@storage.id}"
+    )
   end
 
   def self.table_name
@@ -73,6 +87,8 @@ class PhysicalStorageController < ApplicationController
     case pressed
     when 'physical_storage_new'
       javascript_redirect(:action => 'new')
+    when 'physical_storage_edit'
+      javascript_redirect(:action => 'edit', :id => checked_item_id)
     else
       return false
     end

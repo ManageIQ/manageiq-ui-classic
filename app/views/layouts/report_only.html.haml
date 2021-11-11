@@ -5,7 +5,6 @@
     %title
       = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @report_title}
     = miq_favicon_link_tag
-    = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
     = javascript_dependencies
     = render :partial => 'layouts/i18n_js'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
+import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-form.schema';
 import { API } from '../../http_api';
@@ -122,7 +122,7 @@ class CatalogForm extends Component {
     if (!isLoaded) return null;
 
     return (
-      <Grid fluid>
+      <Grid>
         <MiqFormRenderer
           initialValues={initialValues}
           schema={schema}

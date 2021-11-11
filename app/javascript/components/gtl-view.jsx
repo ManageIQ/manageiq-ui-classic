@@ -5,7 +5,6 @@ import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 import { http } from '../http_api';
-
 import { StaticGTLView } from './gtl';
 import { NoRecordsFound } from './gtl/utils';
 
@@ -52,7 +51,6 @@ const generateConfig = (
     config,
     additionalOptions && additionalOptions !== null && { additional_options: additionalOptions },
   );
-
   return config;
 };
 
@@ -65,8 +63,12 @@ const getData = (
   settings, // ?: any,
   records, // ?: any,
   additionalOptions, // ?: any): ng.IPromise<IRowsColsResponse> {
+  namedScope,
 ) => {
   dispatch({ type: 'isLoading', isLoading: true });
+  if (additionalOptions.persistentNamedScope) {
+    additionalOptions.named_scope = additionalOptions.persistentNamedScope;
+  }
   http.post( // FIXME: window
     `/${ManageIQ.controller}/report_data`,
     generateConfig(
@@ -301,20 +303,28 @@ const GtlView = ({
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
-  }, []);
+  }, [state.namedScope]);
 
   useEffect(() => {
+    const newAdditional = additionalOptions;
+    newAdditional.persistentNamedScope = state.namedScope;
     getData(
       dispatch,
       modelName,
       activeTree,
       parentId,
       isExplorer,
-      {}, // settings, // FIXME
+      settings,
       records,
-      additionalOptions,
       {
+        ...additionalOptions,
         named_scope: state.namedScope,
+        persistentNamedScope: state.namedScope,
+      },
+      {
+        ...additionalOptions,
+        named_scope: state.namedScope,
+        persistentNamedScope: state.namedScope,
       },
     );
 
@@ -464,7 +474,6 @@ const GtlView = ({
 
     return false;
   };
-
   return (
     <div id="miq-gtl-view">
       { (rows.length === 0) ? (

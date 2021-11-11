@@ -45,13 +45,6 @@ describe ContainerProjectController do
         is_expected.to have_http_status 200
       end
 
-      it "renders topology view" do
-        get :show, :params => { :id => @project.id, :display => 'topology' }
-        expect(response.status).to eq(200)
-        expect(response.body).to_not be_empty
-        expect(response).to render_template('container_topology/show')
-      end
-
       it "renders dashboard view" do
         get :show, :params => { :id => @project.id, :display => 'dashboard' }
         expect(response.status).to eq(200)

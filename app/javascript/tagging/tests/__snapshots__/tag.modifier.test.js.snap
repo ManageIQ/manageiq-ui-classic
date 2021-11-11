@@ -2,28 +2,21 @@
 
 exports[`Tagging modifier match snapshot 1`] = `
 <Fragment>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      componentClass="div"
+  <Row>
+    <Column
       lg={12}
     >
       <h2>
         Add/Modify tag
       </h2>
-    </Col>
+    </Column>
   </Row>
   <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}
+    horizontal="true"
   >
     <CategoryModifier
       categoryLabel="Category"
+      isDisabled={false}
       onTagCategoryChange={[Function]}
       selectedTagCategory={
         Object {
@@ -53,6 +46,7 @@ exports[`Tagging modifier match snapshot 1`] = `
       }
     />
     <ValueModifier
+      isDisabled={false}
       multiValue={false}
       onTagValueChange={[Function]}
       selectedTagValue={
@@ -61,6 +55,7 @@ exports[`Tagging modifier match snapshot 1`] = `
           "id": 1,
         }
       }
+      selectedTagValues={Object {}}
       valueLabel="Value"
       values={
         Array [

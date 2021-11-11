@@ -28,12 +28,6 @@ module Mixins
       @showtype = @display
     end
 
-    def show_topology
-      @showtype = "topology"
-      drop_breadcrumb(:name => @record.name + _(" (Topology)"),
-                      :url  => show_link(@record, :display => "topology"))
-    end
-
     def update_session_for_compliance_history
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, @sb, true, :root => @record)
     end

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Grid, Row, Col } from 'patternfly-react';
+import { Grid, Row, Column } from 'carbon-components-react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -25,20 +25,15 @@ const IconList = ({
 }) => {
   const icons = useMemo(() => findIcons(type), [type]);
 
-  // Short path for not rendering the icons if the tab isn't active
-  if (activeTab !== type) {
-    return <div />;
-  }
-
   return (
-    <Grid fluid>
+    <Grid>
       <Row>
         { icons.map((icon) => (
-          <Col xs={1} key={icon} className="fonticon" onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}>
+          <Column key={icon} className="fonticon" onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}>
             <span className={classNames({ active: icon === activeIcon })}>
               <i className={icon} title={icon.replace(' ', '.')} />
             </span>
-          </Col>
+          </Column>
         )) }
       </Row>
     </Grid>

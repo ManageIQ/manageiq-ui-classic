@@ -111,6 +111,11 @@ ChargebackReportController:
 - render_pdf
 - render_txt
 - report_data
+CloudDatabaseController:
+- index
+- render_csv
+- render_pdf
+- render_txt
 CloudNetworkController:
 - compare_cancel
 - compare_choose_base
@@ -206,9 +211,6 @@ CloudTenantController:
 - sections_field_changed
 - wait_for_task
 CloudTenantDashboardController:
-- report_data
-CloudTopologyController:
-- index
 - report_data
 CloudVolumeBackupController:
 - dynamic_checkbox_refresh
@@ -368,9 +370,6 @@ ContainerProjectController:
 - open_url_after_dialog
 - sections_field_changed
 - wait_for_task
-ContainerProjectTopologyController:
-- index
-- report_data
 ContainerReplicatorController:
 - dynamic_checkbox_refresh
 - index
@@ -397,9 +396,6 @@ ContainerTemplateController:
 - open_url_after_dialog
 - sections_field_changed
 - service_dialog_from_ct_submit
-ContainerTopologyController:
-- index
-- report_data
 DashboardController:
 - authenticate
 - change_group
@@ -685,6 +681,8 @@ HostController:
 - wait_for_task
 HostInitiatorController:
 - index
+HostInitiatorGroupController:
+- index
 InfraNetworkingController:
 - dialog_field_changed
 - dialog_form_button_pressed
@@ -701,11 +699,6 @@ InfraNetworkingController:
 - tree_select
 - x_history
 - x_search_by_name
-InfraTopologyController:
-- index
-- report_data
-MigrationController:
-- index
 MiqActionController:
 - action_field_changed
 - index
@@ -877,10 +870,8 @@ NetworkRouterController:
 - sections_field_changed
 - wait_for_task
 NetworkServiceController:
-- wait_for_task
-NetworkTopologyController:
 - index
-- report_data
+- wait_for_task
 OpsController:
 - accordion_select
 - dialog_field_changed
@@ -947,9 +938,6 @@ PhysicalChassisController:
 - protect
 - quick_search
 PhysicalInfraOverviewController:
-- index
-- report_data
-PhysicalInfraTopologyController:
 - index
 - report_data
 PhysicalNetworkPortController:
@@ -1054,6 +1042,7 @@ SecurityPolicyController:
 - dynamic_date_refresh
 - dynamic_radio_button_refresh
 - dynamic_text_box_refresh
+- index
 - open_url_after_dialog
 - wait_for_task
 SecurityPolicyRuleController:
@@ -1064,6 +1053,7 @@ SecurityPolicyRuleController:
 - dynamic_date_refresh
 - dynamic_radio_button_refresh
 - dynamic_text_box_refresh
+- index
 - open_url_after_dialog
 - wait_for_task
 ServiceController:
@@ -1178,7 +1168,6 @@ VmCloudController:
 - html5_console
 - index
 - kernel_drivers
-- launch_cockpit
 - launch_html5_console
 - launch_vmrc_console
 - linux_initprocesses
@@ -1271,7 +1260,6 @@ VmInfraController:
 - html5_console
 - index
 - kernel_drivers
-- launch_cockpit
 - launch_html5_console
 - launch_native_console
 - launch_vmrc_console

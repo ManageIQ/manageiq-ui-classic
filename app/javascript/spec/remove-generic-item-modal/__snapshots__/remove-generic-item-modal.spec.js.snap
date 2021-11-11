@@ -2,9 +2,7 @@
 
 exports[`RemoveGenericItemModal should correctly render modal for multiple items 1`] = `
 <ModalBody
-  bsClass="modal-body"
   className="warning-modal-body"
-  componentClass="div"
 >
   <div>
     <h4>
@@ -36,9 +34,7 @@ exports[`RemoveGenericItemModal should correctly render modal for multiple items
 
 exports[`RemoveGenericItemModal should correctly render modal for single item 1`] = `
 <ModalBody
-  bsClass="modal-body"
   className="warning-modal-body"
-  componentClass="div"
 >
   <div>
     <h4>

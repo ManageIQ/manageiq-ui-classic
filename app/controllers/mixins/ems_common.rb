@@ -30,7 +30,7 @@ module Mixins
     def textual_group_list
       [
         %i[properties status],
-        %i[compliance relationships topology smart_management]
+        %i[compliance relationships smart_management]
       ]
     end
 
@@ -64,6 +64,7 @@ module Mixins
       def display_methods
         %w[
           availability_zones
+          cloud_databases
           cloud_networks
           cloud_object_store_containers
           cloud_object_store_objects
@@ -193,9 +194,9 @@ module Mixins
     def block_storage_manager_id(provider_id)
       manager = find_record_with_rbac(ExtManagementSystem, provider_id)
       return nil unless manager
-      return manager.id unless manager.respond_to?(:storage_managers)
+      return manager.id unless manager.supports?(:storage_manager)
 
-      manager.storage_managers.detect(&:supports_block_storage?)&.id
+      manager.block_storage_manager&.id
     end
 
     # handle buttons pressed on the button bar
@@ -268,6 +269,7 @@ module Mixins
         when "storage_scan"                     then scanstorage
         when "storage_tag"                      then tag(Storage)
         when "physical_storage_new"             then javascript_redirect(:action => 'new', :controller => 'physical_storage', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "physical_storage_edit"            then javascript_redirect(:action => "edit", :controller => "physical_storage", :id => checked_or_params)
         when "host_initiator_new"               then javascript_redirect(:action => 'new', :controller => 'host_initiator', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "volume_mapping_new"               then javascript_redirect(:action => 'new', :controller => 'volume_mapping', :storage_manager_id => block_storage_manager_id(params[:id]))
 

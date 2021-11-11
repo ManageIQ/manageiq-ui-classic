@@ -7,7 +7,8 @@
       margin-top: -6px;
       margin-left: -1px;
 
-      &:after, &:before {
+      &::after,
+      &::before {
         border: none;
       }
 
@@ -26,17 +27,19 @@
     padding: 0 3rem 0 1rem;
     max-width: 30rem;
     font-size: 14px;
+
     .toolbar-overflow {
       span {
-        font-size: .875rem;
+        font-size: 0.875rem;
         font-weight: 400;
         line-height: 1.29;
-        letter-spacing: .16px;
+        letter-spacing: 0.16px;
         overflow: hidden;
         color: #161616;
         white-space: nowrap;
-        text-overflow: ellipsis; 
+        text-overflow: ellipsis;
       }
+
       svg {
         right: 15px;
         position: absolute;
@@ -44,6 +47,7 @@
       }
     }
   }
+
   .form-group {
     margin-top: 10px;
     padding-left: 20px;
@@ -51,17 +55,21 @@
     padding-right: 15px; /* adjusted to account for button margin */
     white-space: nowrap;
     height: 40px;
-    .toolbar-button { 
-        background-color: inherit;
-        border: none;
-        background-image: none;
-        box-shadow: none;
-        &:hover {
-          background-color: #e5e5e5;
-        }
+
+    .toolbar-button {
+      background-color: inherit;
+      border: none;
+      background-image: none;
+      box-shadow: none;
+
+      &:hover {
+        background-color: #e5e5e5;
+      }
     }
+
     .btn { /* margin for buttons (not part of Patternfly) */
       margin-right: 5px;
+
       i {
         margin-right: 2px;
         margin-left: 2px;
@@ -87,32 +95,34 @@
 }
 
 .bx--overflow-menu-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
-    font-size: 12px;
-    text-align: left;
-    list-style: none;
-    width:auto;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #bbb;
-    border: 1px solid #bbb;
-    border-radius: 1px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    & :after {
-      top:unset;
-    }
-    .bx--overflow-menu-options__option {
-      height: unset;
-    }
-    .bx--overflow-menu-options__btn {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 12px;
+  text-align: left;
+  list-style: none;
+  width: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bbb;
+  border-radius: 1px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
+  & ::after {
+    top: unset;
+  }
+
+  .bx--overflow-menu-options__option {
+    height: unset;
+  }
+
+  .bx--overflow-menu-options__btn {
     display: block;
     clear: both;
     font-weight: 400;
@@ -124,12 +134,24 @@
     border-width: 1px 0;
     padding: 1px 10px;
     max-width: unset;
-    }
-    .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn {
-      color: #c6c6c6;
-      pointer-events: inherit;
-    }
-    
+  }
+
+  .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn {
+    color: #c6c6c6;
+    pointer-events: inherit;
+  }
+
+  .bx--side-nav__menu-item {
+    list-style: none;
+  }
+
+  .bx--side-nav__menu {
+    padding-left: 0;
+  }
+
+  .bx--side-nav__item.bx--side-nav__item--icon a.bx--side-nav__link {
+    padding-left: 2rem;
+  }
 }
 
 .bx--overflow-menu-options[data-floating-menu-direction=bottom]::after {
@@ -141,33 +163,36 @@
   span {
     color: #c6c6c6 !important;
   }
+
   svg {
     fill: #c6c6c6 !important;
   }
+
   outline: none;
   cursor: not-allowed;
   pointer-events: none;
   background-color: transparent;
+
   &:hover {
     background-color: transparent;
   }
-
 }
 
 #dropdown-custom-2 {
   svg {
-    position:absolute;
-    top:10px;
+    position: absolute;
+    top: 10px;
     margin-left: 15px;
   }
 }
 
 .refresh_button {
-  margin-left:20px;
+  margin-left: 20px;
   background-color: inherit;
   border: none;
   background-image: none;
   box-shadow: none;
+
   &:hover {
     background-color: #e5e5e5;
   }
@@ -178,39 +203,22 @@
   max-height: 610px !important;
 }
 
-.topology_refresh {
-  background-color: inherit;
-  border: none;
-  background-image: none;
-  box-shadow: none;
-  bottom: 1px;
-  position: relative;
-}
-
-.search-topology-button {
-    background-color: #f1f1f1;
-    position: absolute;
-    right: -29px;
-    top: 0px;
-    width: 25px;
-    height: 26px;
-}
-
-.topology_toolbar {
-  margin-bottom: 20px;
-  .text {
-    padding-left: 0px !important;
-  }
-  .topology-checkbox {
-    padding-top: 8px;
-  }
-  .search-pf-input-group {
-    margin-top: 5px;
-  }
-}
-
 .bx--overflow-menu--divider { 
   .scrollable-menu {
     display: none;
   }
+}
+
+.btn-toolbar {
+  .bx--btn-set {
+    margin-right: 400px;
+  }
+
+  .bx--btn {
+    margin-left: 10px;
+  }
+}
+
+.hr-tag {
+  margin-top: 80px;
 }

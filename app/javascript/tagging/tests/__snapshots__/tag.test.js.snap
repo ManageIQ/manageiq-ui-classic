@@ -5,14 +5,11 @@ exports[`Tag Component match snapshot 1`] = `
   className="tag"
   key="1"
 >
-  <Label
-    bsStyle="primary"
+  <FormLabel
     className="tagColor"
     id="tag_value_1"
     key="1"
-    onRemoveClick={[Function]}
     title="duck"
-    type="default"
   />
 </li>
 `;

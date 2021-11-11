@@ -13,8 +13,8 @@ ManageIQ.angular.app.component('logCollectionForm', {
 
 });
 
-logCollectionFormController.$inject = ['$http', '$scope', 'miqService', 'miqDBBackupService'];
-function logCollectionFormController($http, $scope, miqService, miqDBBackupService) {
+logCollectionFormController.$inject = ['$http', '$scope', 'miqService'];
+function logCollectionFormController($http, $scope, miqService) {
   var vm = this;
   var init = function() {
     vm.logCollectionModel = {
@@ -30,7 +30,6 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
     vm.modelCopy = angular.copy( vm.logCollectionModel );
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
-    vm.miqDBBackupService = miqDBBackupService;
     ManageIQ.angular.scope = $scope;
 
     if (vm.recordId === 'new') {
@@ -59,7 +58,6 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    miqDBBackupService.resetAll(vm.logCollectionModel);
     vm.logCollectionModel.uri_prefix = vm.uriPrefixes[vm.logCollectionModel.log_protocol];
     $scope.$broadcast('reactiveFocus');
     miqService.sparkleOff();

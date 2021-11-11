@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown } from 'carbon-components-react';
 import TaggingPropTypes from '../TaggingPropTypes';
-import { PfSelect } from '../../../pf-select/pf-select';
 
 class TagSelector extends React.Component {
-  handleChange = (selectedOption) => {
-    this.props.onTagCategoryChange({
-      id: selectedOption.value,
-      description: this.props.tagCategories.find(category => category.id === selectedOption.value).description,
-    });
+  // eslint-disable-next-line react/sort-comp
+  handleChange = (val) => {
+    const { onTagCategoryChange, tagCategories } = this.props;
+    const selectedOption = val.selectedItem;
+    if (selectedOption) {
+      onTagCategoryChange({
+        id: selectedOption.value,
+        description: tagCategories.find((category) => category.id === selectedOption.value).description,
+      });
+    }
   };
-
 
   labelWithIcon = (description, infoText) => (
     <div>
@@ -31,30 +35,40 @@ class TagSelector extends React.Component {
     </div>
   );
 
-  tagCategories = this.props.tagCategories.map(category => ({
+  // eslint-disable-next-line react/destructuring-assignment
+  tagCategories = this.props.tagCategories.map((category) => ({
     keyWord: category.description.toLowerCase(),
     value: category.id,
     label: category.singleValue
+      // eslint-disable-next-line react/destructuring-assignment
       ? this.labelWithIcon(category.description, this.props.infoText)
       : category.description,
   }));
 
+  getOptions = (values) => {
+    const options = [];
+    values.forEach((item) => (
+      options.push(
+        { key: item.value, value: item.value, label: item.label }
+      )
+    ));
+    return options;
+  }
 
   render() {
-    const value = this.props.selectedOption.id ? { label: this.props.selectedOption.description, value: this.props.selectedOption.id } : null;
+    const { selectedOption, isDisabled } = this.props;
+    let value = selectedOption.id ? { label: selectedOption.description, value: selectedOption.id } : null;
+    if (value === null) {
+      value = { value: -1 };
+    }
     return (
-      <PfSelect
-        meta={{}}
-        options={this.tagCategories}
-        input={{ onChange: this.handleChange, name: 'form-field-name', value }}
-        filterOption={(option, filter) =>
-          option.data.keyWord.includes(filter.toLowerCase())
-        }
-        placeholder={__('Select tag category')}
-        id="tag_cat"
-        // clearable={false}
-        simpleValue={false}
-        searchable
+      <Dropdown
+        className="tag-select"
+        id="tag-select"
+        label={`${__('Select tag category')}`}
+        disabled={isDisabled}
+        onChange={(val) => this.handleChange(val)}
+        items={this.getOptions(this.tagCategories)}
       />
     );
   }
@@ -64,11 +78,13 @@ TagSelector.propTypes = {
   selectedOption: TaggingPropTypes.value,
   onTagCategoryChange: PropTypes.func.isRequired,
   infoText: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 TagSelector.defaultProps = {
   infoText: __('Only a single value can be assigned from these categories'),
   selectedOption: {},
+  isDisabled: false,
 };
 
 export default TagSelector;

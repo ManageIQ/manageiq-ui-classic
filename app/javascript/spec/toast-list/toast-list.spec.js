@@ -58,7 +58,7 @@ describe('Toast list tests', () => {
       </Provider>,
     );
     await act(async() => {
-      wrapper.find('button.close.close-default').first().simulate('click');
+      wrapper.find('svg.bx--toast-notification__close-icon').first().simulate('click');
     });
     const expectedPayload = {
       payload: '10000000003625',
@@ -66,27 +66,5 @@ describe('Toast list tests', () => {
     };
     expect(store.getActions()).toEqual([expectedPayload]);
     done();
-  });
-
-  it('should dispatch removeToastNotification after delay', () => {
-    jest.useFakeTimers();
-    const store = mockStore({
-      ...initialState,
-      notificationReducer: {
-        ...initialState.notificationReducer,
-        toastNotifications: notifications,
-      },
-    });
-    mount(
-      <Provider store={store}>
-        <ToastList />
-      </Provider>,
-    );
-    const expectedPayload = {
-      payload: '10000000003624',
-      type: REMOVE_TOAST_NOTIFICATION,
-    };
-    jest.runAllTimers();
-    expect(store.getActions()).toEqual([expectedPayload]);
   });
 });

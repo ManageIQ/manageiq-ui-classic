@@ -2,12 +2,11 @@ namespace :update do
   task :yarn do
     asset_engines.each do |engine|
       Dir.chdir engine.path do
-        next unless File.file? 'package.json'
-
         if ENV['TEST_SUITE'] == 'spec'
           warn "Skipping yarn install for #{engine.name} on travis #{ENV['TEST_SUITE']}"
           next
         end
+        puts "== #{engine.name} =="
         system("which yarn >/dev/null") || abort("\n== You have to install yarn ==")
         system("yarn") || abort("\n== yarn failed in #{engine.path} ==")
       end
@@ -15,11 +14,6 @@ namespace :update do
   end
 
   task :clean do
-    # clean up old bower packages
-    # FIXME: remove 2018-11 or so, hammer/no
-    FileUtils.rm_rf(ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower_components'))
-    FileUtils.rm_rf(ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower'))
-
     # clean up old webpack packs to prevent stale packs now that we're hashing the filenames
     FileUtils.rm_rf(Rails.root.join('public', 'packs'))
   end

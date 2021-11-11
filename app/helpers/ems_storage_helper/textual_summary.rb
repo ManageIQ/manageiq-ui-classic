@@ -27,9 +27,6 @@ module EmsStorageHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
-  def textual_group_topology
-  end
-
   #
   # Items
   #
@@ -43,8 +40,7 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_ipaddress
-    return nil if @record.ipaddress.blank?
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
+    @record.ipaddress.present? ? {:label => _("Discovered IP Address"), :value => @record.ipaddress} : nil
   end
 
   def textual_type
@@ -52,7 +48,7 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_port
-    @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+    @record.port.present? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
   def textual_guid

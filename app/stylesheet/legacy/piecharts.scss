@@ -1,0 +1,45 @@
+.piechart {
+  $chart-empty: #92d400 !default; // pf-light-green-400
+  $chart-fill: #cc0000 !default; // pf-red-100
+  $chart-size: 20px;
+
+  width: $chart-size;
+  height: $chart-size;
+  border-radius: 50%;
+  background: $chart-empty;
+  background-image: linear-gradient(to right, transparent 50%, $chart-fill 0);
+
+  &.invert {
+    background: $chart-fill;
+    background-image: linear-gradient(to right, transparent 50%, $chart-empty 0);
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    margin-left: 50%;
+    height: 100%;
+    border-radius: 0 100% 100% 0 / 50%;
+    background-color: inherit;
+    transform-origin: left;
+  }
+
+  @for $i from 0 through 10 {
+    &.fill-#{$i}::before {
+      transform: rotate(#{$i / 20}turn);
+    }
+  }
+
+  @for $i from 11 through 20 {
+    &.fill-#{$i} {
+      &::before {
+        background: $chart-fill;
+        transform: rotate(#{($i - 10) / 20}turn);
+      }
+
+      &.invert::before {
+        background: $chart-empty;
+      }
+    }
+  }
+}

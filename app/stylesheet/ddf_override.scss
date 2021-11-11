@@ -24,6 +24,7 @@
 
   .bx--btn-set {
     margin-bottom: 48px;
+
     .bx--btn--secondary {
       margin-left: 10px;
     }
@@ -32,10 +33,12 @@
 
 #CheckboxDays,
 #CheckboxHours {
-  margin-bottom: 0px;
+  margin-bottom: 0;
+
   .bx--fieldset {
     display: inline-flex;
-    margin-bottom: 0px;
+    margin-bottom: 0;
+
     .bx--checkbox-label-text {
       padding-left: 2px;
       padding-right: 20px;
@@ -46,6 +49,16 @@
 #hoursWarning {
   color: #da1e28;
   font-size: 14px;
+}
+
+#dateWarning {
+  color: #da1e28;
+  font-size: 14px;
+}
+
+#dateInfo {
+  margin-top: -25px;
+  margin-bottom: 25px;
 }
 
 #networkWarning {
@@ -65,6 +78,7 @@
     .file-upload-input {
       display: none;
     }
+
     .file-upload-label {
       margin: 0;
       font-size: 0.875rem;
@@ -81,6 +95,7 @@
       border: 10px solid #f4f4f4;
       border-bottom: 1px solid #8d8d8d;
     }
+
     .file-button {
       color: #ffffff;
       background-color: #0f62fe;
@@ -92,6 +107,7 @@
       min-width: fit-content;
       text-align: center;
       border: 10px solid #0f62fe;
+
       .file-button-label {
         -webkit-box-shadow: none;
         box-shadow: none;
@@ -100,25 +116,30 @@
         border-color: transparent;
         border-style: solid;
         border-width: 1px;
-        padding: 0px;
-        border: 0px;
+        padding: 0;
+        border: 0;
         background-image: none;
       }
     }
+
     .file-button:hover {
       background-color: $hover-primary;
       border-color: $hover-primary;
+
       .file-button-label {
         background-color: $hover-primary;
       }
     }
+
     .file-button:active {
       background-color: $active-primary;
       border-color: $active-primary;
+
       .file-button-label {
         background-color: $active-primary;
       }
     }
+
     .file-button:focus {
       outline: 1px solid #ffffff;
       outline-offset: -3px;
@@ -126,15 +147,30 @@
   }
 }
 
+#subform-4,
+#alert-profile {
+  #move-right,
+  #move-all-right,
+  #move-all-left,
+  #move-left {
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: content-box;
+    width: 50%;
+  }
+}
+
 #edit_section {
   .edit-div {
     position: relative;
+
     .edit-image {
       margin-right: 2px;
       max-width: 125px;
       max-height: 125px;
       object-fit: contain;
     }
+
     .edit-button {
       position: absolute;
       bottom: 0;
@@ -142,9 +178,87 @@
   }
 }
 
+.tasks-form {
+  form > div {
+    margin-bottom: 32px;
+  }
+
+  #TaskStatus {
+    margin-bottom: 0;
+
+    .bx--fieldset {
+      display: inline-flex;
+
+      .bx--form-item {
+        .bx--checkbox-label-text {
+          #icon {
+            span {
+              padding-left: 5px;
+            }
+          }
+
+          padding-left: 2px;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+
+  .custom-button-wrapper {
+    margin-top: 10px;
+
+    #submit {
+      margin-right: 8px;
+    }
+
+    #reset {
+      margin-right: 8px;
+    }
+  }
+}
+
+.service-request-form {
+  form > div {
+    margin-bottom: 32px;
+  }
+
+  #approval_state {
+    margin-bottom: 0;
+
+    .bx--fieldset {
+      display: inline-flex;
+
+      .bx--form-item {
+        .bx--checkbox-label-text {
+          #icon {
+            span {
+              padding-left: 5px;
+            }
+          }
+
+          padding-left: 2px;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+
+  .custom-button-wrapper {
+    margin-top: 10px;
+
+    #submit {
+      margin-right: 8px;
+    }
+
+    #reset {
+      margin-right: 8px;
+    }
+  }
+}
+
 .ddorg__carbon-dual-list-body {
   .bx--structured-list-td {
-    padding-top : 0.5rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
 }
@@ -152,13 +266,35 @@
 .buttonWrapper-0-2-7 {
   .bx--btn--primary {
     width: 150px;
-    padding-right:20px;
+    padding-right: 20px;
   }
 }
 
 .dualListBody-0-2-6 {
   .bx--structured-list-td {
-    padding-top :12px;
+    padding-top: 12px;
     padding-bottom: 12px;
+  }
+}
+
+.loadingSpinner {
+  margin-left: 15rem;
+}
+
+#provider-modal {
+  .bx--modal-container {
+    .bx--modal-footer {
+      .modal-pull-right {
+        display: inline-flex;
+
+        .Cancel {
+          background-color: #393939;
+        }
+
+        .Delete {
+          background-color: #da1e28;
+        }
+      }
+    }
   }
 }
