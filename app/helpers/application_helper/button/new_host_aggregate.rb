@@ -1,7 +1,6 @@
 class ApplicationHelper::Button::NewHostAggregate < ApplicationHelper::Button::ButtonNewDiscover
   def supports_button_action?
-    supported_types = HostAggregate.descendants.select { |klass| klass.supports?(:create) }.map(&:module_parent).map(&:name)
-    Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager.where(:type => supported_types)).any?
+    Rbac::Filterer.filtered(HostAggregate.providers_supporting(:create)).any?
   end
 
   def disabled?
