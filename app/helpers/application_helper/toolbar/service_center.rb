@@ -43,6 +43,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
       nil,
       t = N_('Policy'),
       t,
+      :enabled => false,
+      :onwhen  => "1+",
       :items => [
         button(
           :service_tag,
@@ -50,7 +52,9 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           N_('Edit Tags for this Service'),
           N_('Edit Tags'),
           :url_parms    => "main_div",
-          :send_checked => true),
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

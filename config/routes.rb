@@ -2741,6 +2741,7 @@ Rails.application.routes.draw do
         download_data
         reconfigure_form_fields
         retire
+        button
         service_form_fields
         show
         edit
@@ -2748,6 +2749,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         ownership_update
+        ownership
       ),
       :post => %w(
         listnav_search_selected
@@ -2757,10 +2759,13 @@ Rails.application.routes.draw do
         edit
         service_ownership
         show
+        button
         show_list
         tagging_edit
         show
+        ownership
         wait_for_task
+
       ) +
                dialog_runner_post +
                adv_search_post +

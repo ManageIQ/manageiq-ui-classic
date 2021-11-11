@@ -44,6 +44,18 @@ class ServiceController < ApplicationController
 #     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
 #   end
 
+def button
+    p "button pressssss------> #{params[:pressed]} #{self.class.model}"
+    case params[:pressed]
+    when 'service_tag'
+        p "taaaaaaaaa"
+        tag(self.class.model)
+    # when "custom_button"
+    #   @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
+    end
+  end
+
+
   def title
     _("My Services")
   end
@@ -213,10 +225,6 @@ class ServiceController < ApplicationController
   end
   helper_method :textual_tower_job_group_list
 
-  def service_tag_edit
-    assert_privileges('service_tag')
-    service_tag
-  end
 
   def service_retire
     assert_privileges('service_retire')
