@@ -1,34 +1,46 @@
 describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
-  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {}, {}) }
+  include Spec::Support::SupportsHelper
 
-  def setup_ems(supports)
-    ems = FactoryBot.create(:ems_cloud)
-    allow(ManageIQ::Providers::CloudManager).to receive(:where).and_return(supports ? [ems] : [])
-  end
+  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {}, {}) }
+  let(:ems)    { FactoryBot.create(:ems_cloud) }
+
+  before { stub_supports(ems.class::AuthKeyPair, :create, :supported => supported) }
 
   describe '#disabled?' do
-    it "when the create action is supported, then the button is not disabled" do
-      setup_ems(true)
-      expect(button.disabled?).to be false
+    context 'when the create action is supported' do
+      let(:supported) { true }
+
+      it 'then the button is enabled' do
+        expect(button.disabled?).to be false
+      end
     end
 
-    it "when the create action is not supported, then the button is disabled" do
-      setup_ems(false)
-      expect(button.disabled?).to be true
+    context 'when the create action is not supported' do
+      let(:supported) { false }
+
+      it 'then the button is disabled' do
+        expect(button.disabled?).to be true
+      end
     end
   end
 
   describe '#calculate_properties' do
-    it "when the create action is not supported, then the button has the error in the title" do
-      setup_ems(false)
-      button.calculate_properties
-      expect(button[:title]).to eq("No cloud providers support key pair import or creation.")
+    context "when the create action is not supported" do
+      let(:supported) { false }
+
+      it "then the button has the error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to eq("No cloud providers support key pair import or creation.")
+      end
     end
 
-    it "when the create action is supported, then the button has no error in the title" do
-      setup_ems(true)
-      button.calculate_properties
-      expect(button[:title]).to be nil
+    context "when the create action is supported" do
+      let(:supported) { true }
+
+      it "then the button has no error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to be nil
+      end
     end
   end
 end
