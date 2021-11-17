@@ -173,9 +173,9 @@ module OpsController::Diagnostics
     assert_privileges("fetch_production_log")
     disable_client_cache
     send_data($rails_log.contents(nil, nil),
-              :filename => "#{@sb[:rails_log].downcase}.log")
+              :filename => "#{Rails.env}.log")
     AuditEvent.success(:userid  => session[:userid],
-                       :event   => "download_#{@sb[:rails_log].downcase}_log",
+                       :event   => "download_#{Rails.env}_log",
                        :message => "#{@sb[:rails_log]} log downloaded")
   end
 

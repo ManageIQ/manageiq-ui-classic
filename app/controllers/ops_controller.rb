@@ -183,7 +183,7 @@ class OpsController < ApplicationController
 
     tree_selected_model
 
-    @sb[:rails_log] = $rails_log.filename.to_s.include?("production.log") ? N_("Production") : N_("Development")
+    @sb[:rails_log] = Rails.env.production? ? N_("Production") : N_("Development")
 
     if !params[:no_refresh]
       @sb[:good] = nil
