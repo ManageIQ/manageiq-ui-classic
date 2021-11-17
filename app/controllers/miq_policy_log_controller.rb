@@ -12,7 +12,7 @@ class MiqPolicyLogController < ApplicationController
     flash_to_session
     assert_privileges('policy_log')
     @breadcrumbs = []
-    @log = $policy_log.contents(nil, 1000)
+    @log = Vmdb::Loggers.contents($policy_log)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     @lastaction = "policy_logs"
     @layout = "miq_policy_logs"
@@ -38,7 +38,7 @@ class MiqPolicyLogController < ApplicationController
 
   def refresh_log
     assert_privileges('policy_log')
-    @log = $policy_log.contents(nil, 1000)
+    @log = Vmdb::Loggers.contents($policy_log)
     @server = MiqServer.my_server
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     replace_main_div(:partial => "layouts/log_viewer")
@@ -48,7 +48,7 @@ class MiqPolicyLogController < ApplicationController
   def fetch_log
     assert_privileges('policy_log')
     disable_client_cache
-    send_data($policy_log.contents(nil, nil),
+    send_data(Vmdb::Loggers.contents($policy_log, nil),
               :filename => "policy.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_policy_log",
