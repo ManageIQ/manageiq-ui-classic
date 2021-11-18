@@ -350,31 +350,6 @@ module OpsController::Diagnostics
 
   private ############################
 
-  # Build the Utilization screen for a server
-  def diagnostics_build_perf
-    @record = MiqServer.find(@sb[:selected_server_id])
-    if @record&.vm
-      s, e = @record.vm.first_and_last_capture
-      unless s.nil? || e.nil?
-        @sb[:record_class] = @record.class.to_s
-        @sb[:record_id] = @record.id
-        perf_gen_init_options('y') # Intialize perf chart options, charts will be generated async
-      end
-    end
-  end
-
-  # Build the Timeline screen for a server
-  def diagnostics_build_timeline
-    @record = MiqServer.find(@sb[:selected_server_id])
-    if @record&.vm
-      @sb[:record_class] = @record.class.to_s
-      @sb[:record_id] = @record.id
-      session[:tl_record_id] = @record.vm.id
-      @timeline = true
-      tl_build_timeline # Create the timeline report
-    end
-  end
-
   def cu_repair_set_form_vars
     @timezone_offset = get_timezone_offset
     @in_a_form = true
@@ -691,10 +666,6 @@ module OpsController::Diagnostics
         elsif @sb[:active_tab] == "diagnostics_workers"
           pm_get_workers
           @record = @selected_server
-        elsif @sb[:active_tab] == "diagnostics_utilization"
-          diagnostics_build_perf
-        elsif @sb[:active_tab] == "diagnostics_timelines"
-          diagnostics_build_timeline
         else
           @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)
           @sb[:selected_server_id] = @selected_server.id
@@ -704,19 +675,11 @@ module OpsController::Diagnostics
         if @sb[:active_tab] == "diagnostics_workers"
           pm_get_workers
           @record = @selected_server
-        elsif @sb[:active_tab] == "diagnostics_utilization"
-          diagnostics_build_perf
-        elsif @sb[:active_tab] == "diagnostics_timelines"
-          diagnostics_build_timeline
         else
           @selected_server = MiqServer.find(x_node.split("-").last.to_i)
           @sb[:selected_server_id] = @selected_server.id
           @sb[:selected_typ] = "miq_server"
         end
-      elsif @sb[:active_tab] == "diagnostics_utilization"
-        diagnostics_build_perf
-      elsif @sb[:active_tab] == "diagnostics_timelines"
-        diagnostics_build_timeline
       else
         @sb[:active_tab] = "diagnostics_collect_logs" # setting it to show collect logs tab as first tab for the servers that are not started
         @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)

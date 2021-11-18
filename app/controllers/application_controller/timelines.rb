@@ -4,7 +4,7 @@ module ApplicationController::Timelines
   # Process changes to timeline selection
   def tl_chooser
     @record = identify_tl_or_perf_record
-    @tl_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @tl_record = @record # Use related server vm record
     tl_build_timeline
     @tl_options.date.update_from_params(params)
 
@@ -47,7 +47,7 @@ module ApplicationController::Timelines
   end
 
   def tl_build_init_options(refresh = nil)
-    @tl_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @tl_record = @record # Use related server vm record
     if @tl_options.nil? ||
        (refresh != "n" && params[:refresh] != "n" && @tl_options[:model] != @tl_record.class.base_class.to_s)
       @tl_options = Options.new
