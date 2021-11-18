@@ -125,13 +125,15 @@ class GtlFormatter
                 :text  => text}.compact
       elsif COLUMN_WITH_TIME.include?(col)
         celltext = format_time_for_display(row, col)
-      elsif COLUMN_WITH_OS_ICON.key?(col)
-        @osicon = send(COLUMN_WITH_OS_ICON[col], record)
-        @ostext = format_col_for_display(view, row, col).presence || _("Unknown")
       elsif COLUMN_WITH_OS_TEXT.include?(col)
+        osicon_col = view.col_order.detect { |c| COLUMN_WITH_OS_ICON.key?(c) }
+        if osicon_col
+          osicon = send(COLUMN_WITH_OS_ICON[osicon_col], record)
+          ostext = format_col_for_display(view, row, osicon_col).presence || _("Unknown")
+        end
         name = format_col_for_display(view, row, col)
-        text = name.presence || @ostext
-        image = @osicon || ''
+        text = name.presence || ostext
+        image = osicon || ''
         item = {:title => text,
                 :image => ActionController::Base.helpers.image_path(image.to_s),
                 :text  => text}.compact
