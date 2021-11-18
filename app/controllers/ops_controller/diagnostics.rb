@@ -152,7 +152,7 @@ module OpsController::Diagnostics
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data($log.contents(nil, nil),
+    send_data(Vmdb::Loggers.contents($log, nil),
               :filename => "evm.log")
     AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
@@ -161,7 +161,7 @@ module OpsController::Diagnostics
   def fetch_audit_log
     assert_privileges("fetch_audit_log")
     disable_client_cache
-    send_data($audit_log.contents(nil, nil),
+    send_data(Vmdb::Loggers.contents($audit_log, nil),
               :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
@@ -172,7 +172,7 @@ module OpsController::Diagnostics
   def fetch_production_log
     assert_privileges("fetch_production_log")
     disable_client_cache
-    send_data($rails_log.contents(nil, nil),
+    send_data(Vmdb::Loggers.contents($rails_log, nil),
               :filename => "#{Rails.env}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{Rails.env}_log",
@@ -181,7 +181,7 @@ module OpsController::Diagnostics
 
   def refresh_log
     assert_privileges("refresh_log")
-    @log = $log.contents(nil, 1000)
+    @log = Vmdb::Loggers.contents($log)
     @selected_server = MiqServer.find(x_node.split("-").last.to_i)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
@@ -193,7 +193,7 @@ module OpsController::Diagnostics
 
   def refresh_audit_log
     assert_privileges("refresh_audit_log")
-    @log = $audit_log.contents(nil, 1000)
+    @log = Vmdb::Loggers.contents($audit_log)
     @selected_server = MiqServer.find(x_node.split("-").last.to_i)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
@@ -205,7 +205,7 @@ module OpsController::Diagnostics
 
   def refresh_production_log
     assert_privileges("refresh_production_log")
-    @log = $rails_log.contents(nil, 1000)
+    @log = Vmdb::Loggers.contents($rails_log)
     @selected_server = MiqServer.find(x_node.split("-").last.to_i)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
@@ -669,19 +669,19 @@ module OpsController::Diagnostics
       @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = $log.contents(nil, 1000)
+          @log = Vmdb::Loggers.contents($log)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
-          @log = $audit_log.contents(nil, 1000)
+          @log = Vmdb::Loggers.contents($audit_log)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
-          @log = $rails_log.contents(nil, 1000)
+          @log = Vmdb::Loggers.contents($rails_log)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"

@@ -32,7 +32,7 @@ class MiqAeToolsController < ApplicationController
   def log
     assert_privileges("fetch_log")
     @breadcrumbs = []
-    @log = ae_logger_contents
+    @log = Vmdb::Loggers.contents($miq_ae_logger)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     @lastaction = "log"
     @layout = "miq_ae_logs"
@@ -44,7 +44,7 @@ class MiqAeToolsController < ApplicationController
 
   def refresh_log
     assert_privileges("refresh_log")
-    @log = ae_logger_contents
+    @log = Vmdb::Loggers.contents($miq_ae_logger)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     replace_main_div(:partial => "layouts/log_viewer",
                      :locals  => {:legend_text => _("Last 1000 lines from the Automation log")})
@@ -54,7 +54,7 @@ class MiqAeToolsController < ApplicationController
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    log = ae_logger_contents(:full => true)
+    log = Vmdb::Loggers.contents($miq_ae_logger, nil)
     send_data(log, :filename => "automation.log") if log
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_automation_log",
@@ -334,14 +334,6 @@ Methods updated/added: %{method_stats}") % stat_options)
   end
 
   private ###########################
-
-  def ae_logger_contents(full: false)
-    return unless $miq_ae_logger
-
-    contents = full ? $miq_ae_logger.contents(nil, nil) : $miq_ae_logger.contents
-    contents = nil if contents.start_with?("# Logfile created on") && !contents.include?("\n")
-    contents
-  end
 
   def automate_import_json_serializer
     @automate_import_json_serializer ||= AutomateImportJsonSerializerService.new
