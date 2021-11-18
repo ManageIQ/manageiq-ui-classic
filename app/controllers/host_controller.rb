@@ -375,6 +375,17 @@ class HostController < ApplicationController
     render :json => host_hash
   end
 
+  def features
+    [
+      {
+        :role     => "infra_networking",
+        :role_any => true,
+        :name     => :infra_networking,
+        :title    => _("Switches")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
+  end
+
   private
 
   def record_class
