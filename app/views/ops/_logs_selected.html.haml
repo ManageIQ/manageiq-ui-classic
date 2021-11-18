@@ -4,6 +4,8 @@
 - last_collection_time = last_time.blank? ? _("Never") : format_timezone(last_time.to_time, Time.zone, "gtl")
 
 #selected_div
+  - if @sb[:selected_server_id] != my_server.id && @selected_server.started? == false
+    %h2= _("Collect Logs")
   %h3= _("Basic Info")
   .form-horizontal
     .form-group

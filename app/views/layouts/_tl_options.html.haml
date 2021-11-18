@@ -10,10 +10,7 @@
                  :novalidate     => true}
     - if @timeline
       %h3
-        - if @record != @tl_record
-          = _("Options %{model}: %{name}") % {:model => ui_lookup(:model => @tl_record.class.to_s), :name => @tl_record.name}
-        - else
-          = _("Options")
+        = _("Options")
       .toolbar-pf
         .row
           .col-sm-12.toolbar-pf-actions.timeline-toolbar
