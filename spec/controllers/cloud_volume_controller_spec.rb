@@ -354,4 +354,5 @@ describe CloudVolumeController do
   end
 
   include_examples '#download_summary_pdf', :cloud_volume
+  it_behaves_like "Set Default in search bar"
 end

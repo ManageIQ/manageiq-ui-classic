@@ -9,17 +9,19 @@
           = render :partial => "/layouts/tabs"
         = miq_toolbar toolbar_from_hash
   %div{:class => "row max-height content-focus-order #{left_div_classname}"}
-    .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
-      -# listnav_div
-      = render :partial => "layouts/listnav"
-    .col-sm-8.col-md-9.col-sm-push-4.col-md-push-3.max-height
+    .col-sm-12.col-md-12.col-sm-push-12.col-md-push-3.max-height
       #main-content.row.miq-layout-center_div_with_listnav
         .col-md-12
           .row
-            .col-md-7
+            .col-md-5
               - if layout_uses_tabs?
                 = render :partial => 'layouts/tabs'
-            .col-md-5
+            .col-md-4
+              - if filters_present?
+                %br
+                = react('FilterDropdown', :defSearches => @def_searches, :mySearches => @my_searches,
+                 :filterSelected => 'listnav_search_selected', :defaultSelected => 'save_default_search', :selectedFilter => @selected_filter)
+            .col-md-3
               %br
               = render :partial => 'layouts/searchbar'
           .row

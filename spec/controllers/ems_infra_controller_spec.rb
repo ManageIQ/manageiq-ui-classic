@@ -488,6 +488,7 @@ describe EmsInfraController do
   include_examples '#download_summary_pdf', :ems_vmware
 
   it_behaves_like "controller with custom buttons"
+  it_behaves_like "Set Default in search bar"
 
   context "hiding tenant column for non admin user" do
     before do
