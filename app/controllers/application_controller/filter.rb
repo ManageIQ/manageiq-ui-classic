@@ -320,13 +320,14 @@ module ApplicationController::Filter
       end
     end
     build_listnav_search_list(@view.db) if @flash_array.blank?
-
     if @flash_array.blank?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace(:listnav_div, :partial => "layouts/listnav")
-        page.replace(:flash_msg_div, :partial => "layouts/flash_msg")
-        page << "miqSparkleOff();"
+      respond_to do |format|
+        format.js do
+          javascript_redirect :action => 'show_list' # Redirect to build the list screen
+        end
+        format.html do
+          redirect_to :action => 'show_list' # Redirect to build the list screen
+        end
       end
     else
       javascript_flash
@@ -745,10 +746,20 @@ module ApplicationController::Filter
 
     temp = MiqSearch.new
     temp.description = _("ALL")
+    temp.name = _("ALL")
     temp.id = 0
     @def_searches = MiqSearch.where(:db => [db, db.constantize.to_s]).visible_to_all.sort_by { |s| s.description.downcase }
     @def_searches = @def_searches.unshift(temp) unless @def_searches.empty?
+
+    @def_searches.each do |search|
+      search.description = search_description(search)
+      @selected_filter = search if def_searches_active_filter?(search) == 'active'
+    end
     @my_searches = MiqSearch.where(:search_type => "user", :search_key => session[:userid], :db => [db, db.constantize.to_s]).sort_by { |s| s.description.downcase }
+    @my_searches.each do |search|
+      @selected_filter = search if (my_searches_active_filter?(search) == 'active' && @selected_filter.nil?)
+      search.description = search_description(search)
+    end
   end
 
   ENABLE_CALENDAR = "miqBuildCalendar();".freeze

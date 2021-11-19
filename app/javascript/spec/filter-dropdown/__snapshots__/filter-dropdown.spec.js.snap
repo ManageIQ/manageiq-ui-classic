@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter Dropdown form should handle cancel 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <FilterDropdown
+    defSearches={
+      Array [
+        Object {
+          "db": null,
+          "description": "ALL (Default)",
+          "filter": null,
+          "id": 0,
+          "name": "ALL",
+        },
+        Object {
+          "db": null,
+          "description": "ALL (Default)",
+          "filter": null,
+          "id": 1,
+          "name": "filter1",
+        },
+        Object {
+          "db": null,
+          "description": "ALL (Default)",
+          "filter": null,
+          "id": 2,
+          "name": "filter2",
+        },
+      ]
+    }
+    defaultSelected="bbb"
+    filterSelected="aaa"
+    mySearches={Array []}
+  >
+    <div
+      className="select_filter"
+    >
+      <Select
+        defaultValue="placeholder-item"
+        disabled={false}
+        helperText=""
+        id="select_filter_dropdown"
+        inline={false}
+        invalid={false}
+        invalidText=""
+        labelText="Select"
+        light={false}
+        noLabel={true}
+        onChange={[Function]}
+      >
+        <div
+          className="bx--form-item"
+        >
+          <div
+            className="bx--select"
+          >
+            <div
+              className="bx--select-input__wrapper"
+              data-invalid={null}
+            >
+              <select
+                className="bx--select-input"
+                defaultValue="placeholder-item"
+                id="select_filter_dropdown"
+                onChange={[Function]}
+              >
+                <SelectItem
+                  disabled={true}
+                  hidden={true}
+                  text="Choose a Filter"
+                  value="placeholder-item"
+                >
+                  <option
+                    className="bx--select-option"
+                    disabled={true}
+                    hidden={true}
+                    value="placeholder-item"
+                  >
+                    Choose a Filter
+                  </option>
+                </SelectItem>
+                <SelectItemGroup
+                  disabled={false}
+                  label="Global Filters"
+                >
+                  <optgroup
+                    className="bx--select-optgroup"
+                    disabled={false}
+                    label="Global Filters"
+                  >
+                    <SelectItem
+                      disabled={false}
+                      hidden={false}
+                      key="0"
+                      text="ALL (Default)"
+                      value={0}
+                    >
+                      <option
+                        className="bx--select-option"
+                        disabled={false}
+                        hidden={false}
+                        value={0}
+                      >
+                        ALL (Default)
+                      </option>
+                    </SelectItem>
+                    <SelectItem
+                      disabled={false}
+                      hidden={false}
+                      key="1"
+                      text="ALL (Default)"
+                      value={1}
+                    >
+                      <option
+                        className="bx--select-option"
+                        disabled={false}
+                        hidden={false}
+                        value={1}
+                      >
+                        ALL (Default)
+                      </option>
+                    </SelectItem>
+                    <SelectItem
+                      disabled={false}
+                      hidden={false}
+                      key="2"
+                      text="ALL (Default)"
+                      value={2}
+                    >
+                      <option
+                        className="bx--select-option"
+                        disabled={false}
+                        hidden={false}
+                        value={2}
+                      >
+                        ALL (Default)
+                      </option>
+                    </SelectItem>
+                  </optgroup>
+                </SelectItemGroup>
+              </select>
+              <ForwardRef(ChevronDown16)
+                className="bx--select__arrow"
+              >
+                <Icon
+                  className="bx--select__arrow"
+                  fill="currentColor"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="bx--select__arrow"
+                    fill="currentColor"
+                    focusable="false"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                    />
+                  </svg>
+                </Icon>
+              </ForwardRef(ChevronDown16)>
+            </div>
+          </div>
+        </div>
+      </Select>
+      <Button
+        className="default_button"
+        dangerDescription="danger"
+        disabled={false}
+        id="set_default"
+        isExpressive={false}
+        kind="primary"
+        onClick={[Function]}
+        size="sm"
+        tabIndex={0}
+        title={"Select a filter to set it as my default"}
+        tooltipAlignment="center"
+        tooltipPosition="top"
+        type="submit"
+      >
+        <button
+          aria-describedby={null}
+          aria-pressed={null}
+          className="default_button bx--btn bx--btn--sm bx--btn--primary"
+          disabled={false}
+          id="set_default"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          tabIndex={0}
+          title={"Select a filter to set it as my default"}
+          type="submit"
+        >
+          Set Default
+        </button>
+      </Button>
+    </div>
+  </FilterDropdown>
+</Provider>
+`;

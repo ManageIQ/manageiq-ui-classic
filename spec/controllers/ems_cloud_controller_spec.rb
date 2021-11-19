@@ -156,6 +156,7 @@ describe EmsCloudController do
   include_examples '#download_summary_pdf', :ems_amazon
 
   it_behaves_like "controller with custom buttons"
+  it_behaves_like "Set Default in search bar"
 
   describe "#sync_users" do
     let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
@@ -211,18 +212,6 @@ describe EmsCloudController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-    end
-
-    it "renders 'Set Default' button when a user defined search exists" do
-      FactoryBot.create(:ems_amazon)
-      MiqSearch.create(:db          => 'EmsCloud',
-                       :search_type => "user",
-                       :description => 'abc',
-                       :name        => 'abc',
-                       :search_key  => session[:userid])
-      get :show_list
-      expect(response.status).to eq(200)
-      expect(response.body).to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
     end
 
     it "renders a welcoming page when no provider exists" do

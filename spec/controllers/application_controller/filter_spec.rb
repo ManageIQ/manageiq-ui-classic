@@ -97,24 +97,6 @@ describe ApplicationController, "::Filter" do
     end
   end
 
-  describe "#save_default_search" do
-    let(:user) { FactoryBot.create(:user_with_group, :settings => {:default_search => {}}) }
-    it "saves settings" do
-      search = FactoryBot.create(:miq_search, :name => 'sds')
-
-      login_as user
-      controller.instance_variable_set(:@settings, {})
-      controller.instance_variable_set(:@_response, double.as_null_object)
-      controller.params = {:id => search.id}
-      session[:view] = controller.send(:get_db_view, Host)
-
-      controller.send(:save_default_search)
-      user.reload
-
-      expect(user.settings).to eq(:default_search => {:Host => search.id})
-    end
-  end
-
   describe "#quick_search_cancel_click" do
     let(:edit) do
       {:expression                 => {:selected        => {},

@@ -194,4 +194,5 @@ describe FloatingIpController do
       end
     end
   end
+  it_behaves_like "Set Default in search bar"
 end

@@ -576,4 +576,5 @@ describe HostController do
   end
 
   it_behaves_like "controller with custom buttons"
+  it_behaves_like "Set Default in search bar"
 end
