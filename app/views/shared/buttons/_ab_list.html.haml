@@ -1,62 +1,19 @@
 -# showing list of CIs
 - if @custom_button_entities
   = render :partial => "layouts/flash_msg"
-  %table.table.table-bordered.table-hover.table-striped
-    %thead
-      %th
-        = _('Object Types')
-    %tbody
-      -# CI node level
-      - @custom_button_entities.sort.each do |obj|
-        %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('ab_tree', 'xx-#{obj[1]}')"}
-          %td
-            = obj[0]
-
+  = react 'ObjectTypesList', :list => @custom_button_entities.sort
 - elsif @sb[:button_groups]
   - if @sb[:button_groups].blank?
     %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Items found.")}
   - else
     = render :partial => "layouts/flash_msg"
-    %table.table.table-bordered.table-hover.table-striped
-      %thead
-        %th.table-view-pf-select
-        %th
-          = _('Name')
-        - if x_active_tree == :sandt_tree
-          %th
-            = _('Type')
-        %th
-          = _('Description')
-      %tbody
-        - @sb[:button_groups].each do |obj|
-          - if obj.kind_of?(String)
-            %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('ab_tree', '-ub-#{@nodetype[1]}')"}
-              %td.table-view-pf-select
-                %i{:class => "pficon pficon-folder-close"}
-              %td
-                = obj
-              %td
-                = obj
-          - else
-            - tree_box = x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree'
-            - tree_id = x_node
-            - if obj[:typ] == "CustomButton"
-              - typ = "cb"
-              - rec_type = "Button"
-            - else
-              - typ = "cbg"
-              - rec_type = "Group"
-            %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{obj[:id]}')"}
-              %td.table-view-pf-select
-                %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
-              %td
-                = (obj[:name] || obj["name"]).split("|").first
-              - if x_active_tree == :sandt_tree
-                %td
-                  = rec_type
-              %td
-                = obj[:description] || obj["description"]
+    = react 'ButtonGroupList', :list => @sb[:button_groups],
+                                :nodeKey => "-ub-#{@nodetype[1]}",
+                                :treeBox => x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree',
+                                :treeId => x_node,
+                                :type => 'cbg',
+                                :recType => 'CustomButton'
 - elsif @sb[:buttons]
   -# button node
   = render :partial => "layouts/flash_msg"
@@ -92,24 +49,10 @@
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
   - else
     %hr
-    %table.table.table-bordered.table-hover.table-striped
-      %thead
-        %th.table-view-pf-select
-        %th
-          = _('Name')
-        %th
-          = _('Description')
-      %tbody
-        - @sb[:buttons].each do |obj|
-          - tree_box = x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree'
-          - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{obj[:id]}" : "#{x_node}_cb-#{obj[:id]}"
-          %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
-            %td.table-view-pf-select
-              %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
-            %td
-              = obj[:name] || obj["name"]
-            %td
-              = obj[:description] || obj["description"]
+    = react 'ButtonList', :list => @sb[:buttons],
+                          :treeId => x_node,
+                          :treeBox => x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree',
+                          :nodeType => @nodetype[0]
 - elsif %w(ab_group_edit ab_group_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "group_update")
   = render :partial => 'shared/buttons/group_form'                      
 - elsif %w(ab_button_edit ab_button_new).include?(params[:pressed]) || (params[:button] == "reset" && params[:action] == "button_update") || (params[:button] == "paste" && params[:action] == "resolve")

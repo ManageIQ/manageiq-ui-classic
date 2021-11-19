@@ -5,8 +5,8 @@ import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 import { http } from '../http_api';
-import { StaticGTLView } from './gtl';
-import { NoRecordsFound } from './gtl/utils';
+import { StaticGTLView } from './data-tables/gtl';
+import { NoRecordsFound } from './data-tables/gtl/utils';
 
 const generateParamsFromSettings = (settings) => {
   const params = {};
@@ -143,13 +143,13 @@ const broadcastSelectedItem = (item) => {
   }
 
   const { ManageIQ } = window;
+  const index = ManageIQ.gridChecks.indexOf(item.id);
   if (item.checked) {
-    ManageIQ.gridChecks.push(item.id);
-  } else {
-    const index = ManageIQ.gridChecks.indexOf(item.id);
-    if (index !== -1) {
-      ManageIQ.gridChecks.splice(index, 1);
+    if (index === -1) {
+      ManageIQ.gridChecks.push(item.id);
     }
+  } else if (index !== -1) {
+    ManageIQ.gridChecks.splice(index, 1);
   }
 };
 
@@ -382,6 +382,18 @@ const GtlView = ({
     additionalOptions,
   );
 
+  /** Function execution when a page or perPage is changed in carbon pagination events. */
+  const onPageChange = (page, perPage) => getData(
+    dispatch,
+    modelName,
+    activeTree,
+    parentId,
+    isExplorer,
+    setPaging(settings, (page - 1) * perPage, perPage),
+    records,
+    additionalOptions,
+  );
+
   const setSort = (settings, headerId, isAscending) => ({
     ...settings,
     sort_dir: isAscending ? 'DESC' : 'ASC',
@@ -390,7 +402,7 @@ const GtlView = ({
     sort_header_text: head.filter((column) => column.col_idx === headerId)[0].text,
   });
 
-  const onSort = ({ headerId, isAscending }) => () => {
+  const onSort = ({ headerId, isAscending }) => {
     getData(
       dispatch,
       modelName,
@@ -406,13 +418,6 @@ const GtlView = ({
   const inEditMode = () => additionalOptions.in_a_form;
   const noCheckboxes = () => additionalOptions.no_checkboxes;
   const showPagination = () => additionalOptions.show_pagination;
-
-  const onItemButtonClick = (item) => (ev) => {
-    ev.stopPropagation();
-    ev.preventDefault();
-    miqOrderService(item.id);
-    return false;
-  };
 
   const onItemClick = (item, event) => {
     // If custom_action is specified, send and RxJS message with actionType set
@@ -492,11 +497,11 @@ const GtlView = ({
               onPageSet={onPageSet}
               onPerPageSelect={onPerPageSelect}
               onItemSelect={onItemSelect}
-              onItemButtonClick={onItemButtonClick}
               onItemClick={onItemClick}
-              onSort={onSort}
               onSelectAll={onSelectAll}
+              onSort={(headerItem) => onSort(headerItem)}
               showPagination={showPagination}
+              onPageChange={onPageChange}
             />
           )
       )}

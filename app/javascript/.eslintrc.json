@@ -14,7 +14,10 @@
     "miqCheckForChanges": true,
     "miqSparkleOff": true,
     "miqSparkleOn": true,
-    "miqToggleUserOptions": true
+    "miqToggleUserOptions": true,
+    "miqTreeActivateNode": true,
+    "miqOrderService": true,
+    "miqQueueReport": true
   },
   "extends": ["airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],

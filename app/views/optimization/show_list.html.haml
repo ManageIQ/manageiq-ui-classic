@@ -2,5 +2,5 @@
   = render :partial => "layouts/flash_msg"
   = react 'OptimizationList', {:columns     => @table[0],
                                :rows        => @table[1],
-                               :refresh_url => url_for_only_path(:action => 'json_list',
+                               :refreshUrl => url_for_only_path(:action => 'json_list',
                                                                  :id     => params[:id])}
