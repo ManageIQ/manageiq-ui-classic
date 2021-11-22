@@ -81,7 +81,7 @@ module ApplicationController::Timelines
     end
 
     def group_levels
-      EmsEvent::GROUP_LEVELS
+      EmsEvent.group_levels
     end
   end
 
