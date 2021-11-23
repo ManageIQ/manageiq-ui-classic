@@ -1,0 +1,6 @@
+= render :partial => "layouts/flash_msg"
+
+- if @storage_manager
+  = react 'HostInitiatorGroupForm', :redirect => previous_breadcrumb_url, :storageManagerId => @storage_manager.id.to_s
+- else
+  = react 'HostInitiatorGroupForm', :redirect => previous_breadcrumb_url

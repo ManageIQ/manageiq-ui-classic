@@ -2313,8 +2313,10 @@ Rails.application.routes.draw do
         download_summary_pdf
         show
         show_list
+        new
       ],
       :post => %w[
+        button
         listnav_search_selected
         quick_search
         show_list
