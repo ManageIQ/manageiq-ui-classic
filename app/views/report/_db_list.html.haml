@@ -1,56 +1,15 @@
 - if x_active_tree == :db_tree
-  - if @sb[:nodes].nil? || (@sb[:nodes] && @sb[:nodes].length == 1)
+  - is_dashboard = @sb[:nodes].nil? || (@sb[:nodes] && @sb[:nodes].length == 1)
+  - is_group = @sb[:nodes] && @sb[:nodes].last == "g" && !@in_a_form
+  - is_widget = @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g" && !@in_a_form
+  - if is_dashboard || is_group || is_widget
     = render :partial => "layouts/flash_msg"
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th.table-view-pf-select
-          %th
-            = _('Type')
-      %tbody
-        - @db_nodes_order.each do |node|
-          %tr{:title => _("Click to view '%{title}'") % {:title => @db_nodes[node][:title]},
-            :onclick => "miqTreeActivateNode('#{@sb[:active_tree]}', '#{@db_nodes[node][:id]}');"}
-            %td.table-view-pf-select{:nowrap => 1}
-              %i{:class => @db_nodes[node][:glyph]}
-            %td
-              = h(@db_nodes[node][:text])
-  - elsif @sb[:nodes] && @sb[:nodes].last == "g" && !@in_a_form
-    = render :partial => "layouts/flash_msg"
-    -# All Groups node is selected
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th.table-view-pf-select
-          %th
-            = _('Description')
-      %tbody
-        - @miq_groups.sort_by(&:description).each do |g|
-          %tr{:onclick => remote_function(:loading => "miqSparkle(true);", :complete => "miqSparkle(false);",
-              :url => {:action => 'tree_select', :id => "xx-g_g-#{g.id}"}), :title => _("Click to view %{group} ") % {:group => g.description}, :class => "icon"}
-            %td.table-view-pf-select
-              %i.ff.ff-group
-            %td
-              = h(g.description)
-  - elsif @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g" && !@in_a_form
-    = render :partial => "layouts/flash_msg"
-    - if @widgetsets.empty?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Dashboards are defined for this group. Default dashboard will be shown.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %thead
-          %tr
-            %th.table-view-pf-select
-            %th
-              = _('Description')
-        %tbody
-          - @widgetsets.sort_by { |widgetset| widgetset.name.downcase }.each do |ws|
-            %tr{:onclick => remote_function(:loading => "miqSparkle(true);", :complete => "miqSparkle(false);", :url => {:action => 'tree_select',
-                :id => "xx-g_g-#{@sb[:nodes][2]}_-#{ws.id}"}), :title => _("Click to view '%{widgetset_description} (%{widgetset_name})'") % {:widgetset_description => ws.description, :widgetset_name => ws.name}, :class => "icon"}
-              %td.table-view-pf-select
-                %i.fa.fa-dashboard{:title => ws.description}
-              %td
-                = "#{h(ws.description)} (#{h(ws.name)})"
+    = react('DbList', {:nodes => @sb[:nodes],
+                        :activeTree => @sb[:active_tree],
+                        :dashboards => @db_nodes,
+                        :groups => @miq_groups && @miq_groups.sort_by(&:description),
+                        :widgets => @widgetsets && @widgetsets.sort_by { |widgetset| widgetset.name.downcase }},
+                        :initialData => @db_data)
   - elsif @dashboard && !@in_a_form
     = render :partial => "layouts/flash_msg"
     = render :partial => "db_show", :locals => {:widget => @dashboard}

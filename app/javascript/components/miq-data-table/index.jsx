@@ -138,7 +138,7 @@ const MiqDataTable = ({
                 return (
                   <TableRow
                     {...getRowProps({ row })}
-                    title={__('Click to view details')}
+                    title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
                     tabIndex={(item && item.clickable === false) ? '' : '0'}
                     onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}

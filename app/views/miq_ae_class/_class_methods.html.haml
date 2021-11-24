@@ -2,30 +2,7 @@
   - if !@in_a_form && !@angular_form
     %h3= _('Methods')
     - if @record.ae_methods.present?
-      %table#class_methods_grid.table.table-striped.table-bordered.table-hover.table-clickable.table-checkable
-        %thead
-          %th.table-view-pf-select
-            %input.checkall{:type => 'checkbox', :title => _('Check All')}
-          %th
-          %th
-        %tbody{'data-click-url' => '/miq_ae_class/tree_select/'}
-          - @record.ae_methods.order(:name).each do |record|
-            - next if record.name == '$'
-            - cls_cid = "#{class_prefix(record.class)}-#{record.id}"
-            %tr{'data-click-id' => cls_cid}
-              %td.table-view-pf-select.noclick
-                %input{:type => 'checkbox', :value => cls_cid}
-              %td.table-view-pf-select
-                - if record.decorate.try(:fileicon)
-                  %img{:src => ActionController::Base.helpers.image_path(record.decorate.fileicon)}
-                - else
-                  %i{:class => record.decorate.fonticon}
-              %td
-                = record_name(record)
-      :javascript
-        $(function () {
-          $('#class_methods_grid').miqGrid();
-        });
+      = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:methods], :data => @record.ae_methods.order(:name)}
     - else
       = render :partial => "layouts/info_msg",
                :locals  => {:message => _("No methods found")}

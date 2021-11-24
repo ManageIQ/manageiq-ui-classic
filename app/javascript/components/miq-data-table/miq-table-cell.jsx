@@ -26,10 +26,14 @@ const MiqTableCell = ({
     </div>
   );
 
-  /** Fuction to render an icon in cell. */
+  /** Fuction to render icon(s) in cell. */
   const renderIcon = (icon, style, showText) => (
     <div className={cellClass}>
-      <i className={classNames('fa-lg', 'icon', icon)} style={style} />
+      {
+        typeof (icon) === 'string'
+          ? <i className={classNames('fa-lg', 'icon', icon)} style={style} />
+          : icon.map((i, index) => <i className={classNames('fa-lg', 'icon', i)} key={index.toString()} />)
+      }
       {showText && truncateText}
     </div>
   );
@@ -40,7 +44,7 @@ const MiqTableCell = ({
       const iconStyle = item.background ? { background: item.background, color: '#FFF' } : { color: '#000' };
       return renderIcon(item.icon, iconStyle, showText);
     }
-    const { className, style } = item.props;
+    const { className, style } = item.props ? item.props : { className: item.icon, style: null };
     return renderIcon(className, style, showText);
   };
 
