@@ -19,7 +19,7 @@ module OpsController::OpsRbac
       options[:feature] = MiqProductFeature.tenant_identifier(options[:feature], id)
     end
 
-    super(options)
+    super(**options)
   end
 
   # Edit user or group tags
