@@ -5,6 +5,7 @@ import fetchMock from 'fetch-mock';
 import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
+import '../helpers/miqAjaxButton';
 import '../helpers/sprintf';
 import { mount } from '../helpers/mountForm';
 
@@ -140,6 +141,84 @@ describe('OrcherstrationTemplate form', () => {
       },
     }));
     expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+    done();
+  });
+});
+
+describe('Orcherstration Stack form', () => {
+  let initialProps;
+  let submitSpyMiqSparkleOn;
+  let submitSpyMiqSparkleOff;
+  let spyMiqAjaxButton;
+
+  beforeEach(() => {
+    initialProps = {
+      managers: [['foo', 'bar']],
+    };
+    submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
+    submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
+    spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
+  });
+
+  afterEach(() => {
+    fetchMock.reset();
+    submitSpyMiqSparkleOn.mockRestore();
+    submitSpyMiqSparkleOff.mockRestore();
+    spyMiqAjaxButton.mockRestore();
+  });
+
+  it('should render copy variant', async(done) => {
+    const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
+    fetchMock.postOnce('/api/orchestration_templates/123', {});
+    fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
+      name: 'foo',
+      content: 'content',
+    });
+
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OrcherstrationTemplateForm {...initialProps} isStack otId={123} copy />);
+    });
+    wrapper.update();
+
+    await act(async() => {
+      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'bar' } });
+      /**
+           * manually change content value
+           * Code component is not standard input element
+           * Two first parameters are codemirror element and data
+           */
+      wrapper.find(CodeEditor).find('Controlled').props().onChange(null, null, 'updated content');
+      wrapper.find('form').simulate('submit');
+    });
+
+    expect(fetchMock.lastCall()).toBeTruthy();
+    expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+    expect(wrapper).toMatchSnapshot();
+    done();
+  });
+
+  it('should call submit function', async(done) => {
+    const addContent = {
+      templateId: 123,
+      templateName: 'template_name',
+      templateDescription: 'template_description',
+      templateDraft: 'true',
+      templateContent: 'template_content',
+    };
+
+    miqAjaxButton(`/orchestration_stack/stacks_ot_copy?button=add`, addContent);
+    expect(spyMiqAjaxButton).toHaveBeenCalledWith('/orchestration_stack/stacks_ot_copy?button=add', addContent);
+    done();
+  });
+
+  it('should call cancel function', async(done) => {
+    const cancelMessage = __('Copy of Orchestration Template was cancelled by the user');
+    miqRedirectBack(cancelMessage, 'success', `/orchestration_stack/show/${123}?display=stack_orchestration_template#/`);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      cancelMessage, 'success', `/orchestration_stack/show/${123}?display=stack_orchestration_template#/`
+    );
     done();
   });
 });
