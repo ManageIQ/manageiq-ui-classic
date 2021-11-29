@@ -37,7 +37,7 @@ class HostInitiatorGroupController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Storage")},
-        {:title => _("Hosts Cluster Initiators"), :url => controller_url},
+        {:title => _("Host Initiator Groups"), :url => controller_url},
       ],
     }
   end
