@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  ButtonGroup,
-  Icon,
-} from 'patternfly-react';
+import { Button } from 'carbon-components-react';
+import { ChevronDown32 } from '@carbon/icons-react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -33,14 +30,9 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
 
   return (
     <div className="fonticon-picker">
-      <ButtonGroup>
-        <Button className="icon-picker-btn" onClick={show}>
-          { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
-        </Button>
-        <Button onClick={show}>
-          <Icon type="fa" name="angle-down" />
-        </Button>
-      </ButtonGroup>
+      <Button onClick={show} kind="tertiary" renderIcon={ChevronDown32} className="icon-button">
+        { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
+      </Button>
       <IconModal
         showModal={showModal}
         hide={hide}
