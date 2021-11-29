@@ -115,7 +115,7 @@ module ApplicationHelper
       end
     end
 
-    Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
+    Rbac.role_allows?(:user => User.current_user, **options) rescue false
   end
 
   module_function :role_allows?
