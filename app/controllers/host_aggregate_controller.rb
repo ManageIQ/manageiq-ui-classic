@@ -28,9 +28,8 @@ class HostAggregateController < ApplicationController
     @host_aggregate = HostAggregate.new
     @in_a_form = true
 
-    supported_types = HostAggregate.descendants.select { |klass| klass.supports?(:create) }.map(&:module_parent).map(&:name)
     @ems_choices = Rbac::Filterer.filtered(
-      ManageIQ::Providers::CloudManager.where(:type => supported_types)
+      ManageIQ::Providers::CloudManager.where(:type => HostAggregate.providers_supporting(:create))
     ).pluck(:name, :id).to_h
 
     drop_breadcrumb(
