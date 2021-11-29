@@ -26,14 +26,28 @@ const copyTemplate = (values, message, otId) => API.post(`/api/orchestration_tem
 }).then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
   .catch(() => miqSparkleOff());
 
-const OrcherstrationTemplateForm = ({ otId, copy }) => {
+const copyStack = (values, message, otId) => {
+  const resources = {};
+  resources.templateId = otId;
+  resources.templateName = values.name;
+  resources.templateDescription = values.description;
+  resources.templateDraft = values.draft;
+  resources.templateContent = values.content;
+  miqAjaxButton(`/orchestration_stack/stacks_ot_copy?button=add`, resources);
+};
+
+const OrcherstrationTemplateForm = ({ isStack, otId, copy }) => {
   const [initialValues, setinItialValues] = useState({});
   const [submitAction, setSubmitAction] = useState();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    // eslint-disable-next-line no-nested-ternary
-    setSubmitAction(() => (copy ? copyTemplate : otId ? updateTemplate : submitNewTemplate));
+    if (isStack) {
+      setSubmitAction(() => copyStack);
+    } else {
+      // eslint-disable-next-line no-nested-ternary
+      setSubmitAction(() => (copy ? copyTemplate : otId ? updateTemplate : submitNewTemplate));
+    }
     if (otId) {
       API.get(`/api/orchestration_templates/${otId}?attributes=name,description,type,ems_id,draft,content`)
         .then((data) => {
@@ -49,19 +63,32 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
 
   const onSubmit = ({ href: _href, id: _id, ...values }) => {
     miqSparkleOn();
-    const successMessage = otId
-      ? sprintf(__('Orchestration Template %s was saved'), values.name)
-      : sprintf(__('Orchestration Template %s was successfully created'), values.name);
+    let successMessage;
+    if (isStack) {
+      successMessage = `Orchestration Template "${values.name}" was saved`;
+    } else {
+      successMessage = otId ? sprintf(__('Orchestration Template %s was saved'), values.name)
+        : sprintf(__('Orchestration Template %s was successfully created'), values.name);
+    }
     return submitAction(values, successMessage, otId);
+  };
+
+  const onCancel = () => {
+    let cancelMessage;
+    if (isStack) {
+      cancelMessage = __('Copy of Orchestration Template was cancelled by the user');
+      miqRedirectBack(cancelMessage, 'success', `/orchestration_stack/show/${otId}?display=stack_orchestration_template#/`);
+    } else {
+      cancelMessage = otId
+        ? sprintf(__('Edit of Orchestration Template %s was cancelled by the user'), initialValues.name)
+        : __('Creation of a new Orchestration Template was cancelled by the user');
+      miqRedirectBack(cancelMessage, 'success', '/catalog/explorer');
+    }
   };
 
   if (isLoading) {
     return null;
   }
-
-  const cancelMessage = otId
-    ? sprintf(__('Edit of Orchestration Template %s was cancelled by the user'), initialValues.name)
-    : __('Creation of a new Orchestration Template was cancelled by the user');
 
   return (
     <Grid>
@@ -69,7 +96,7 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
         schema={schema}
         onSubmit={onSubmit}
         initialValues={initialValues}
-        onCancel={() => miqRedirectBack(cancelMessage, 'success', '/catalog/explorer')}
+        onCancel={onCancel}
         canReset={!!otId && !copy}
         buttonsLabels={{
           submitLabel: otId && !copy ? __('Save') : __('Add'),
@@ -80,11 +107,13 @@ const OrcherstrationTemplateForm = ({ otId, copy }) => {
 };
 
 OrcherstrationTemplateForm.propTypes = {
+  isStack: PropTypes.bool,
   otId: PropTypes.number,
   copy: PropTypes.bool,
 };
 
 OrcherstrationTemplateForm.defaultProps = {
+  isStack: false,
   otId: undefined,
   copy: false,
 };

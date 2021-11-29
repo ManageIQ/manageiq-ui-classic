@@ -105,32 +105,6 @@ describe OrchestrationStackController do
     end
   end
 
-  describe "#stacks_ot_copy" do
-    let(:record) { FactoryBot.create(:orchestration_stack_cloud_with_template) }
-
-    it "correctly cancels the orchestration template copying form" do
-      post :stacks_ot_copy, :params => {:id => record.id, :button => "cancel"}
-      expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => "layouts/_flash_msg")
-      expect(assigns(:flash_array).first[:message]).to include('was cancelled')
-      expect(response).to render_template(:partial => "orchestration_stack/_stack_orchestration_template")
-    end
-
-    it "correctly redirects to catalog controller after template copy submission" do
-      post :stacks_ot_copy, :params => {
-        :button              => "add",
-        :templateId          => record.orchestration_template.id,
-        :templateName        => "new name",
-        :templateDescription => "new description",
-        :templateDraft       => "true",
-        :templateContent     => "orchestration template test content"
-      }
-      expect(response.status).to eq(200)
-      expect(response.body).to include("window.location.href")
-      expect(response.body).to include("/catalog/ot_show/")
-    end
-  end
-
   describe "#button" do
     let(:non_orderable_template) do
       stub_const('OrchestrationTemplateTest', Class.new(OrchestrationTemplate) do

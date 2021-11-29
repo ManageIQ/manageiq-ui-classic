@@ -39,7 +39,6 @@ require('./mixins/charts-mixin.js');
 require('./network_router/network_router_form_controller.js');
 require('./ops/pglogical_replication_form_controller.js');
 require('./ops/tenant_quota_form_controller.js');
-require('./orchestration_template/orchestration_template_copy_controller.js');
 require('./playbook-reusable-code-mixin.js');
 require('./reconfigure/reconfigure_form_controller.js');
 require('./schedule/schedule_form_controller.js');
