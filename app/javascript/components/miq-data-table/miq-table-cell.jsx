@@ -11,8 +11,7 @@ const MiqTableCell = ({
 }) => {
   const truncateText = <span title={cell.value} className="bx--front-line">{cell.value}</span>;
   const truncateClass = ((cell.value).length > 40) ? 'truncate_cell' : '';
-  const cellClass = classNames('cell', truncateClass);
-
+  const cellClass = classNames('cell', truncateClass, cell.data.style_class);
   const cellText = () => (
     <div className={cellClass}>
       {truncateText}
@@ -29,7 +28,7 @@ const MiqTableCell = ({
 
   /** Fuction to render an icon in cell. */
   const renderIcon = (icon, style, showText) => (
-    <div className={classNames(cellClass, (!showText ? 'only_icon' : ''))}>
+    <div className={cellClass}>
       <i className={classNames('fa-lg', 'icon', icon)} style={style} />
       {showText && truncateText}
     </div>
@@ -62,33 +61,31 @@ const MiqTableCell = ({
   );
 
   /** Determines which component has to be rendered inside a cell.
-    * Also to determine if a click event necesseary for a cell or its component . */
+   * Also to determine if a click event necesseary for a cell or its component . */
   const cellComponent = () => {
     const { data } = cell;
     const keys = Object.keys(data);
+    const content = { component: '', cellClick: true, showText: true };
     if (isObject(data)) {
-      if (hasImage(keys, data)) {
-        return { component: cellImage(data), cellClick: true };
-      }
-      const { showIcon, showText } = hasIcon(keys, data);
-      if (showIcon) {
-        return { component: cellIcon(data, showText), cellClick: true };
-      }
-      if (hasButton(keys)) {
-        return { component: cellButton(data), cellClick: false };
-      }
-      return { component: cellText(), cellClick: true };
-    }
+      if (hasImage(keys, data)) return { ...content, component: cellImage(data) };
 
-    return { component: cellText(), cellClick: true };
+      const { showIcon, showText } = hasIcon(keys, data);
+      if (showIcon) return { ...content, component: cellIcon(data, showText), showText };
+
+      if (hasButton(keys)) return { ...content, component: cellButton(data), cellClick: false };
+
+      return { ...content, component: cellText() };
+    }
+    return { ...content, component: cellText() };
   };
 
-  const { component, cellClick } = cellComponent();
+  const { component, cellClick, showText } = cellComponent();
 
   return (
     <TableCell
       key={cell.id}
       onClick={(event) => cellClick && onCellClick(row, CellAction.itemClick, event)}
+      className={classNames(showText ? '' : 'no_text')}
     >
       {component}
     </TableCell>

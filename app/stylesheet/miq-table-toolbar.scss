@@ -1,0 +1,17 @@
+.report-table-toolbar {
+  .bx--table-toolbar {
+    overflow: visible;
+    z-index: 300;
+
+    .bx--toolbar-content {
+      justify-content: flex-start;
+
+      .bx--dropdown__wrapper {
+        .bx--dropdown {
+          min-height: 48px;
+          min-width: 185px;
+        }
+      }
+    }
+  }
+}

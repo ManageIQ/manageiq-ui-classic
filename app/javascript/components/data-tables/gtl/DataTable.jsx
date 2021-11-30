@@ -79,7 +79,7 @@ export const DataTable = ({
       pageOptions={pageOptions}
       mode="static-gtl-view"
       gridChecks={ManageIQ.gridChecks}
-      onSort={(colIdx) => onSort({ headerId: colIdx, isAscending: settings.sort_dir === 'ASC' })}
+      onSort={(headerItem) => onSort({ headerId: headerItem.col_idx, isAscending: settings.sort_dir === 'ASC' })}
     />
   );
 

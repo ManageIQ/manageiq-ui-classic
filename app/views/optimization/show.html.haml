@@ -1,3 +1,6 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-  = react 'ReportDataTable', {:reportResultId => @record.id, :perPageOptions => pp_options, :perPageDefault => @settings[:perpage][:reports]}
+  = react('ReportDataTable', {:reportResultId => @record.id,
+                              :perPageOptions => pp_options,
+                              :perPageDefault => @settings[:perpage][:reports],
+                              :reportType => 'data'})

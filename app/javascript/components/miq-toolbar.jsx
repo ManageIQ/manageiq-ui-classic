@@ -235,6 +235,26 @@ const initState = {
   toolbars: [],
 };
 
+/** Function to check if the report is of type saved report. */
+const isSavedRepots = (toolbars) => {
+  const pageId = 'saved_report_vmdb_choice';
+  if (toolbars && toolbars[0] && toolbars[0][0]) {
+    return toolbars[0][0].id === pageId;
+  }
+  return false;
+};
+
+/** Function to remove restricted icons from reports toolbar.
+ * If the list has only one item, then do not show any icons in toolbar. */
+const removeViews = (toolbars, views) => {
+  const restricted = ['view_graph', 'view_tabular'];
+  const savedRepots = isSavedRepots(toolbars);
+  if (!savedRepots) return views;
+  const remaining = views.filter((item) => !restricted.includes(item.id));
+  if (remaining.length === 1) return [];
+  return remaining;
+};
+
 /* Wrapper class for generic toolbars and special toolbars. */
 const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
   const [state, dispatch] = useReducer(toolbarReducer, { ...initState, toolbars: sanitizeToolbars(initToolbars) });
@@ -255,13 +275,14 @@ const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
     const all = separateItems(toolbars.filter((item) => !!item));
     const views = filterViews(all);
     const groups = filterNonViews(all);
+    const restrictedViews = removeViews(toolbars, views);
 
     return (
       <Toolbar
         kebabLimit={kebabLimit}
         count={count}
         groups={groups}
-        views={views}
+        views={restrictedViews}
         onClick={onClick}
         onViewClick={onViewClick}
       />

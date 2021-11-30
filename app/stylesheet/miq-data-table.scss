@@ -1,4 +1,6 @@
 .miq-data-table {
+  margin-top: 20px;
+
   .bx--data-table-content {
     overflow-x: visible;
   }
@@ -61,6 +63,10 @@
           min-width: 100px;
         }
       }
+    }
+
+    td.no_text {
+      width: 50px;
     }
 
     td .bx--front-line {
