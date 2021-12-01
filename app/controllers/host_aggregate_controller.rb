@@ -29,7 +29,7 @@ class HostAggregateController < ApplicationController
     @in_a_form = true
 
     @ems_choices = Rbac::Filterer.filtered(
-      ManageIQ::Providers::CloudManager.where(:type => HostAggregate.providers_supporting(:create))
+      HostAggregate.providers_supporting(:create)
     ).pluck(:name, :id).to_h
 
     drop_breadcrumb(
