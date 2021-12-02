@@ -30,7 +30,6 @@ const sharedPackages = [
   'jquery',
   'lodash',
   'moment',
-  'patternfly-react',
   'prop-types',
   'react',
   'react-bootstrap',
