@@ -143,6 +143,7 @@ class DashboardController < ApplicationController
       @sb[:active_db_id] = active_tab.id
     end
 
+    # for all the widget sets that came from the group
     records.each do |db|
       @tabs.push([db.id.to_s, db.description])
       # check this only first time when user logs in comes to dashboard show
@@ -346,8 +347,10 @@ class DashboardController < ApplicationController
       @sb[:dashboards][@sb[:active_db]][:minimized].delete(w)
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
       w = MiqWidget.find_by(:id => w)
-      ws.remove_member(w) if w
-      save_user_dashboards
+      if w
+        ws.remove_member(w)
+        save_user_dashboards(ws)
+      end
       javascript_redirect(:action => 'show')
     else
       head :ok
@@ -370,7 +373,7 @@ class DashboardController < ApplicationController
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
       w = MiqWidget.find(w)
       if ws.add_member(w).present?
-        save_user_dashboards
+        save_user_dashboards(ws)
         w.create_initial_content_for_user(session[:userid])
         javascript_redirect(:action => 'show')
       else
@@ -649,8 +652,8 @@ class DashboardController < ApplicationController
   end
 
   # Save dashboards for user
-  def save_user_dashboards
-    ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
+  def save_user_dashboards(ws = nil)
+    ws ||= MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
     ws.set_data = @sb[:dashboards][@sb[:active_db]]
     ws.save
   end
