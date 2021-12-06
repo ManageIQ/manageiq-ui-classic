@@ -2,7 +2,6 @@ require('./alerts/alerts_list_controller.js');
 require('./alerts/alerts_most_recent_controller.js');
 require('./alerts/alerts_overview_controller.js');
 require('./alerts/edit_alert_dialog_controller.js');
-require('./ansible_repository/repository_form_controller.js');
 require('./buttons/button_group_controller.js');
 require('./catalog/catalog_item_form_controller.js');
 require('./cloud_object_store_container/cloud_object_store_container_form_controller.js');
