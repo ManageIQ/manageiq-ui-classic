@@ -32,8 +32,15 @@ const loadHostInitiators = (storage_id) =>
       value: id,
     })));
 
+const loadHostInitiatorGroups = (storage_id) =>
+  API.get(`/api/host_initiator_groups/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
+    .then(({ resources }) => resources.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    })));
+
 const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId,
-  hostInitiatorId, setHostInitiatorId) => ({
+  hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId) => ({
 
   fields: [
     {
@@ -80,6 +87,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
         isNotEmpty: true,
       },
     },
+
     {
       component: componentTypes.SELECT,
       name: 'host_initiator_id',
@@ -92,10 +100,49 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
       key: storageId,
       condition: {
-        when: 'physical_storage_id',
-        isNotEmpty: true,
+        and: [
+          {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'mapping_object', is: "host"}
+        ]
       },
     },
+    {
+      component: componentTypes.SELECT,
+      name: 'host_initiator_group_id',
+      id: 'host_initiator_group_id',
+      label: __('Host Initiator Group:'),
+      isRequired: true,
+      includeEmpty: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
+      onChange: (host_initiator_group_id) => setHostInitiatorGroupId(host_initiator_group_id),
+      key: storageId,
+      condition: {
+        and: [
+          {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'mapping_object', is: "host_group"}
+        ]
+      },
+    },
+    {
+      "component": "radio",
+      "label": "Map directly to Host Initiator, or to a Group?",
+      "name": "mapping_object",
+      "initialValue": "host",
+      condition: {when: 'physical_storage_id', isNotEmpty: true},
+      "options": [
+        {
+          "label": "Host Initiator",
+          "value": "host"
+        },
+        {
+          "label": "Host Initiator Group",
+          "value": "host_group"
+        }
+      ]
+    }
+
+
   ],
 });
 

@@ -10,6 +10,7 @@ const VolumeMappingForm = ({ redirect }) => {
   const [storageId, setStorageId] = useState(undefined);
   const [volumeId, setVolumeId] = useState(undefined);
   const [hostInitiatorId, setHostInitiatorId] = useState(undefined);
+  const [hostInitiatorGroupId, setHostInitiatorGroupId] =  useState(undefined);
 
   const onSubmit = async(values) => {
     miqSparkleOn();
@@ -25,7 +26,7 @@ const VolumeMappingForm = ({ redirect }) => {
 
   return (
     <MiqFormRenderer
-      schema={createSchema(emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId, hostInitiatorId, setHostInitiatorId)}
+      schema={createSchema(emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId, hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId)}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{
