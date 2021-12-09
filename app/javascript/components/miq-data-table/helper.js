@@ -42,7 +42,7 @@ export const hasIcon = (keys, data) => {
     return { showIcon: true, showText: false };
   }
   return {
-    showIcon: keys.includes(CellElements.icon) && data.icon.trim().length > 0,
+    showIcon: keys.includes(CellElements.icon) && data.icon.length > 0,
     showText: true,
   };
 };
@@ -99,11 +99,14 @@ export const headerData = (columns, hasCheckbox) => {
  * The checkbox object is filtered out from the cell object if the data table contains a checkbox. */
 export const rowData = (headerKeys, rows, hasCheckbox) => {
   const rowItems = [];
-  rows.forEach(({ cells, id, clickable }) => {
+  rows.forEach(({
+    cells, id, clickable, clickId,
+  }) => {
     const requiredCells = hasCheckbox ? (cells.filter((c) => !c.is_checkbox)) : cells;
     const reducedItems = requiredCells.reduce((result, item, index) => {
       result[headerKeys[index]] = item;
       result.id = id;
+      if (clickId) result.clickId = clickId;
       result.clickable = clickable;
       return result;
     }, {});
