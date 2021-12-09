@@ -35,7 +35,6 @@ require('./live_metrics/util/metrics-parse-url-factroy.js');
 require('./live_metrics/util/metrics-utils-factory.js');
 require('./miq_ae_class/ae_inline_method_selection_controller.js');
 require('./mixins/charts-mixin.js');
-require('./network_router/network_router_form_controller.js');
 require('./ops/pglogical_replication_form_controller.js');
 require('./ops/tenant_quota_form_controller.js');
 require('./playbook-reusable-code-mixin.js');

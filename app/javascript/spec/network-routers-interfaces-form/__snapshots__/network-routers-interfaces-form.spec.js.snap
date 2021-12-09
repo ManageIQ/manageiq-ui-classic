@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Network Router Interfaces Form Component should add interface 1`] = `
+<Connect(MiqFormRenderer)
+  canReset={true}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "removeInterface",
+          "isRequired": true,
+          "label": "Remove Interface",
+          "name": "interface",
+          "options": Array [
+            Object {
+              "label": "<Choose>",
+              "value": undefined,
+            },
+            Object {
+              "label": "pat-subnwt",
+              "value": 148,
+            },
+            Object {
+              "label": "ext-sub",
+              "value": 50,
+            },
+          ],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should remove interface 1`] = `
+<Connect(MiqFormRenderer)
+  canReset={true}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "removeInterface",
+          "isRequired": true,
+          "label": "Remove Interface",
+          "name": "interface",
+          "options": Array [
+            Object {
+              "label": "<Choose>",
+              "value": undefined,
+            },
+            Object {
+              "label": "pat-subnwt",
+              "value": 148,
+            },
+            Object {
+              "label": "ext-sub",
+              "value": 50,
+            },
+          ],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should render add interface form 1`] = `
+<Connect(MiqFormRenderer)
+  canReset={true}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "addInterface",
+          "isRequired": true,
+          "label": "Add Interface",
+          "name": "interface",
+          "options": Array [
+            Object {
+              "label": "<Choose>",
+              "value": undefined,
+            },
+            Object {
+              "label": "pat-subnwt",
+              "value": 148,
+            },
+            Object {
+              "label": "ext-sub",
+              "value": 50,
+            },
+          ],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should render remove interface form 1`] = `
+<Connect(MiqFormRenderer)
+  canReset={true}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "select",
+          "id": "removeInterface",
+          "isRequired": true,
+          "label": "Remove Interface",
+          "name": "interface",
+          "options": Array [
+            Object {
+              "label": "<Choose>",
+              "value": undefined,
+            },
+            Object {
+              "label": "pat-subnwt",
+              "value": 148,
+            },
+            Object {
+              "label": "ext-sub",
+              "value": 50,
+            },
+          ],
+          "validate": Array [
+            Object {
+              "type": "required",
+            },
+          ],
+        },
+      ],
+    }
+  }
+/>
+`;
