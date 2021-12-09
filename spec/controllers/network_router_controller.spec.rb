@@ -69,69 +69,6 @@ describe NetworkRouterController do
     end
   end
 
-  describe "#new" do
-    let(:feature) { "network_router_new" }
-    let(:user)    { FactoryBot.create(:user, :features => feature) }
-
-    before do
-      bypass_rescue
-      EvmSpecHelper.create_guid_miq_server_zone
-      login_as user
-    end
-
-    it "raises exception when used have not privilege" do
-      expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
-    end
-
-    context "user don't have privilege for cloud tenants" do
-      let(:feature) { %w(network_router_new ems_network_show_list) }
-
-      it "raises exception" do
-        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
-      end
-    end
-  end
-
-  describe "#edit" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @router = FactoryBot.create(:network_router_openstack,
-                                   :ext_management_system => @ems)
-    end
-
-    let(:task_options) do
-      {
-        :action => "updating Network Router for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @router.class.name,
-        :method_name => 'raw_update_network_router',
-        :instance_id => @router.id,
-        :args        => [{:name => "foo2", :external_gateway_info => {}}]
-      }
-    end
-
-    it "builds edit screen" do
-      post :button, :params => { :pressed => "network_router_edit", :format => :js, :id => @router.id }
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :update, :params => {
-        :button => "save",
-        :format => :js,
-        :id     => @router.id,
-        :name   => "foo2"
-      }
-    end
-  end
-
   describe "#add_interface" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -154,12 +91,6 @@ describe NetworkRouterController do
         :instance_id => @router.id,
         :args        => [@subnet.id]
       }
-    end
-
-    it "builds add interface screen" do
-      stub_user(:features => :all)
-      post :button, :params => { :pressed => "network_router_add_interface", :format => :js, :id => @router.id }
-      expect(assigns(:flash_array)).to be_nil
     end
 
     it 'list subnet choices' do
@@ -241,11 +172,6 @@ describe NetworkRouterController do
         :instance_id => @router.id,
         :args        => [@subnet.id]
       }
-    end
-
-    it "builds remove interface screen" do
-      post :button, :params => { :pressed => "network_router_remove_interface", :format => :js, :id => @router.id }
-      expect(assigns(:flash_array)).to be_nil
     end
 
     it "queues the remove interface action" do
