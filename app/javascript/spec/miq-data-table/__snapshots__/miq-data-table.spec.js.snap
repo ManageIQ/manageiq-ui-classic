@@ -1164,6 +1164,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1205,6 +1207,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1246,6 +1250,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1287,6 +1293,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1328,6 +1336,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1369,6 +1379,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1410,6 +1422,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1451,6 +1465,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1492,6 +1508,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1533,6 +1551,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1574,6 +1594,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {

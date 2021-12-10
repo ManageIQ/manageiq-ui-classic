@@ -55,8 +55,13 @@ export const DataTable = ({
 
   defaultHeaders.headerItems = appendSortData(defaultHeaders.headerItems);
 
+  const tempRows = rowData(defaultHeaders.headerKeys, rows, hasCheckbox);
+  const [miqRows] = useState(tempRows.rowItems);
+  if (tempRows.merged) {
+    defaultHeaders.headerKeys.splice(0, 1);
+    defaultHeaders.headerItems.splice(0, 1);
+  }
   const [miqHeaders] = useState(defaultHeaders);
-  const [miqRows] = useState(rowData(miqHeaders.headerKeys, rows, hasCheckbox));
 
   /** Function to execute the row's click event */
   const onCellClick = (selectedRow, cellType, event) => {

@@ -42,8 +42,8 @@ export const hasIcon = (keys, data) => {
     return { showIcon: true, showText: false };
   }
   return {
-    showIcon: keys.includes(CellElements.icon) && data.icon.length > 0,
-    showText: true,
+    showIcon: keys.includes(CellElements.icon) && data.icon.trim().length > 0,
+    showText: hasText(data),
   };
 };
 
@@ -95,15 +95,29 @@ export const headerData = (columns, hasCheckbox) => {
   return { headerItems: header, headerKeys: header.map((h) => h.key) };
 };
 
+/** Function to merge icon only cell with the next cells */
+const mergeIcons = (cells) => {
+  let merged = false;
+  const { showIcon, showText } = hasIcon(Object.keys(cells[0]), cells[0]);
+  if (showIcon && !showText) {
+    merged = true;
+    cells[1] = { ...cells[1], icon: cells[0].icon, image: cells[0].image };
+  }
+  return { mergedCells: cells, merged };
+};
+
 /** Function to generate the row items from 'rows' using the 'headerKeys'.
  * The checkbox object is filtered out from the cell object if the data table contains a checkbox. */
 export const rowData = (headerKeys, rows, hasCheckbox) => {
   const rowItems = [];
+  const mergedStatus = [];
   rows.forEach(({
     cells, id, clickable, clickId,
   }) => {
     const requiredCells = hasCheckbox ? (cells.filter((c) => !c.is_checkbox)) : cells;
-    const reducedItems = requiredCells.reduce((result, item, index) => {
+    const { mergedCells, merged } = mergeIcons(requiredCells);
+    mergedStatus.push(merged);
+    const reducedItems = mergedCells.reduce((result, item, index) => {
       result[headerKeys[index]] = item;
       result.id = id;
       if (clickId) result.clickId = clickId;
@@ -112,5 +126,8 @@ export const rowData = (headerKeys, rows, hasCheckbox) => {
     }, {});
     rowItems.push(reducedItems);
   });
-  return rowItems;
+  return {
+    rowItems,
+    merged: mergedStatus.every((item) => item === true) && (mergedStatus.length === rows.length),
+  };
 };
