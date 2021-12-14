@@ -51,7 +51,6 @@
                     = h([token].flatten.first)
           - else
             = render :partial => 'layouts/info_msg', :locals => {:message => _("A condition must contain a valid expression.")}
-    %hr
 
     -# Notes field
     %h3= _("Notes")
@@ -60,18 +59,5 @@
         = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
       - else
         = text_area_tag("notes", @condition.notes, :readonly => true, :rows => 5)
-        %hr
 
-      %h3= _("Assigned to Policies")
-      - if @condition_policies.empty?
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("This Condition is not assigned to any Policies.")}
-      - else
-        %table.table.table-striped.table-bordered.table-hover
-          %tbody
-            - @condition_policies.each do |p|
-              %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-                  :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
-                %td.table-view-pf-select
-                  %i{:class => p.decorate.fonticon}
-                %td
-                  = p.description
+      = miq_summary_conditions(@condition_policies)

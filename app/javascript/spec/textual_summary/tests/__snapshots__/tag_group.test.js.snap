@@ -64,167 +64,537 @@ exports[`TagGroup renders just fine 1`] = `
   }
   title="Smart Management"
 >
-  <table
-    className="table table-bordered table-hover table-striped table-summary-screen"
+  <MiqStructuredList
+    headers={Array []}
+    mode="tag_group"
+    onClick={[Function]}
+    rows={
+      Array [
+        Object {
+          "hoverClass": "no-hover",
+          "icon": "pficon pficon-zone",
+          "label": "Managed by Zone",
+          "value": "default",
+        },
+        Object {
+          "hoverClass": "no-hover",
+          "label": "My Company X Tags",
+          "value": Array [
+            Object {
+              "icon": "fa fa-tag",
+              "label": "Dan Test",
+              "value": Array [
+                "Test 1",
+              ],
+            },
+            Object {
+              "icon": "fa fa-tag",
+              "label": "Demo bla",
+              "value": Array [
+                "Policy",
+                "2",
+              ],
+            },
+          ],
+        },
+        Object {
+          "label": "Other Tags",
+          "title": "All Other Tags",
+          "value": Array [
+            Object {
+              "icon": "fa fa-tag",
+              "label": "Test",
+              "value": Array [
+                "Test 1",
+              ],
+            },
+            Object {
+              "icon": "fa fa-tag",
+              "label": "Demo 2",
+              "value": Array [
+                "Policy",
+                "2",
+                "3",
+              ],
+            },
+            Object {
+              "link": "You clicked on Demo 3",
+              "title": "Click to display the item",
+              "value": Array [
+                "Demo 3",
+              ],
+            },
+          ],
+        },
+      ]
+    }
+    title="Smart Management"
   >
-    <thead>
-      <tr>
-        <th
-          align="left"
-          colSpan="2"
+    <Accordion
+      align="start"
+      className="miq-structured-list-accordion tag_group"
+    >
+      <ul
+        className="bx--accordion miq-structured-list-accordion tag_group bx--accordion--start"
+      >
+        <AccordionItem
+          open={true}
+          title="Smart Management"
         >
-          Smart Management
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="no-hover"
-        key="0"
-      >
-        <td
-          className="label"
-        >
-          Managed by Zone
-        </td>
-        <td>
-          <IconOrImage
-            background={null}
-            icon="pficon pficon-zone"
-            image={null}
-            title={null}
+          <li
+            className="bx--accordion__item bx--accordion__item--active"
+            onAnimationEnd={[Function]}
           >
-            <i
-              className="pficon pficon-zone"
-              title={null}
-            />
-          </IconOrImage>
-           
-          default
-        </td>
-      </tr>
-      <tr
-        className="no-hover"
-        key="0"
-      >
-        <td
-          className="label"
-          rowSpan={2}
-        >
-          My Company X Tags
-        </td>
-        <td>
-          <IconOrImage
-            background={null}
-            icon="fa fa-tag"
-            image={null}
-            title={null}
-          >
-            <i
-              className="fa fa-tag"
-              title={null}
-            />
-          </IconOrImage>
-          <span>
-             
-            Dan Test: 
-            Test 1
-          </span>
-        </td>
-      </tr>
-      <tr
-        className="no-hover"
-        key="1"
-      >
-        <td>
-          <IconOrImage
-            background={null}
-            icon="fa fa-tag"
-            image={null}
-            title={null}
-          >
-            <i
-              className="fa fa-tag"
-              title={null}
-            />
-          </IconOrImage>
-          <span>
-             
-            Demo bla: 
-            Policy
-            <b>
-               | 
-            </b>
-            2
-          </span>
-        </td>
-      </tr>
-      <tr
-        className="no-hover"
-        key="0"
-      >
-        <td
-          className="label"
-          rowSpan={3}
-          title="All Other Tags"
-        >
-          Other Tags
-        </td>
-        <td>
-          <IconOrImage
-            background={null}
-            icon="fa fa-tag"
-            image={null}
-            title={null}
-          >
-            <i
-              className="fa fa-tag"
-              title={null}
-            />
-          </IconOrImage>
-          <span>
-             
-            Test: 
-            Test 1
-          </span>
-        </td>
-      </tr>
-      <tr
-        className="no-hover"
-        key="1"
-      >
-        <td>
-          <IconOrImage
-            background={null}
-            icon="fa fa-tag"
-            image={null}
-            title={null}
-          >
-            <i
-              className="fa fa-tag"
-              title={null}
-            />
-          </IconOrImage>
-          <span>
-             
-            Demo 2: 
-            Policy
-            <b>
-               | 
-            </b>
-            2
-            <b>
-               | 
-            </b>
-            3
-          </span>
-        </td>
-      </tr>
-      <tr
-        className="no-hover"
-        key="2"
-      />
-    </tbody>
-  </table>
+            <defaultRenderExpando
+              aria-controls="accordion-item-1"
+              aria-expanded={true}
+              className="bx--accordion__heading"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              type="button"
+            >
+              <button
+                aria-controls="accordion-item-1"
+                aria-expanded={true}
+                className="bx--accordion__heading"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                type="button"
+              >
+                <ForwardRef(ChevronRight16)
+                  className="bx--accordion__arrow"
+                >
+                  <Icon
+                    className="bx--accordion__arrow"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      className="bx--accordion__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(ChevronRight16)>
+                <Text
+                  as="div"
+                  className="bx--accordion__title"
+                >
+                  <div
+                    className="bx--accordion__title"
+                    dir="auto"
+                  >
+                    Smart Management
+                  </div>
+                </Text>
+              </button>
+            </defaultRenderExpando>
+            <div
+              className="bx--accordion__content"
+              id="accordion-item-1"
+            >
+              <FeatureToggle(StructuredListWrapper)
+                ariaLabel="Structured list"
+                className="miq-structured-list tag_group"
+              >
+                <StructuredListWrapper
+                  ariaLabel="Structured list"
+                  className="miq-structured-list tag_group"
+                  isCondensed={false}
+                  isFlush={false}
+                  selection={false}
+                >
+                  <div
+                    aria-label="Structured list"
+                    className="bx--structured-list miq-structured-list tag_group"
+                    role="table"
+                  >
+                    <FeatureToggle(StructuredListBody)>
+                      <StructuredListBody
+                        onKeyDown={[Function]}
+                      >
+                        <div
+                          className="bx--structured-list-tbody"
+                          onKeyDown={[Function]}
+                          role="rowgroup"
+                        >
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="0"
+                            onClick={[Function]}
+                            tabIndex={0}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={0}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      Managed by Zone
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <div
+                                        className="content"
+                                      >
+                                        <div
+                                          className="cell icon"
+                                        >
+                                          <i
+                                            className="pficon pficon-zone"
+                                            style={
+                                              Object {
+                                                "background": undefined,
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div
+                                          className="expand wrap_text"
+                                        >
+                                          default
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="1"
+                            onClick={[Function]}
+                            tabIndex={1}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={1}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      My Company X Tags
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <div
+                                        className="content"
+                                      >
+                                        <div
+                                          className="multi_row_cell"
+                                        >
+                                          <div
+                                            className="sub_row_item"
+                                            key="0"
+                                            title=""
+                                          >
+                                            <div
+                                              className="cell icon"
+                                            >
+                                              <i
+                                                className="fa fa-tag"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                              />
+                                            </div>
+                                            <div
+                                              className="sub_label"
+                                              title="Dan Test"
+                                            >
+                                              Dan Test
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Test 1
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="1"
+                                            title=""
+                                          >
+                                            <div
+                                              className="cell icon"
+                                            >
+                                              <i
+                                                className="fa fa-tag"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                              />
+                                            </div>
+                                            <div
+                                              className="sub_label"
+                                              title="Demo bla"
+                                            >
+                                              Demo bla
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Policy,2
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="2"
+                            onClick={[Function]}
+                            tabIndex={2}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={2}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      Other Tags
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <div
+                                        className="content"
+                                      >
+                                        <div
+                                          className="multi_row_cell"
+                                        >
+                                          <div
+                                            className="sub_row_item"
+                                            key="0"
+                                            title=""
+                                          >
+                                            <div
+                                              className="cell icon"
+                                            >
+                                              <i
+                                                className="fa fa-tag"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                              />
+                                            </div>
+                                            <div
+                                              className="sub_label"
+                                              title="Test"
+                                            >
+                                              Test
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Test 1
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="1"
+                                            title=""
+                                          >
+                                            <div
+                                              className="cell icon"
+                                            >
+                                              <i
+                                                className="fa fa-tag"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                              />
+                                            </div>
+                                            <div
+                                              className="sub_label"
+                                              title="Demo 2"
+                                            >
+                                              Demo 2
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Policy,2,3
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="2"
+                                            title="Click to display the item"
+                                          >
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Demo 3
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                        </div>
+                      </StructuredListBody>
+                    </FeatureToggle(StructuredListBody)>
+                  </div>
+                </StructuredListWrapper>
+              </FeatureToggle(StructuredListWrapper)>
+            </div>
+          </li>
+        </AccordionItem>
+      </ul>
+    </Accordion>
+  </MiqStructuredList>
 </TagGroup>
 `;

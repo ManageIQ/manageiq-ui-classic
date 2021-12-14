@@ -292,213 +292,338 @@ exports[`TextualSummary renders just fine 1`] = `
             onClick={[Function]}
             title="Properties"
           >
-            <table
-              className="table table-bordered table-hover table-striped table-summary-screen"
+            <MiqStructuredList
+              headers={Array []}
+              mode="generic_group"
+              onClick={[Function]}
+              rows={
+                Array [
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Region",
+                    "value": "US East (N. Virginia)",
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Type",
+                    "value": "Amazon EC2 Network",
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Management Engine GUID",
+                    "value": null,
+                  },
+                ]
+              }
+              title="Properties"
             >
-              <thead>
-                <tr>
-                  <th
-                    align="left"
-                    colSpan="2"
-                  >
-                    Properties
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Region",
-                      "value": "US East (N. Virginia)",
-                    }
-                  }
-                  key="0"
-                  onClick={[Function]}
+              <Accordion
+                align="start"
+                className="miq-structured-list-accordion generic_group"
+              >
+                <ul
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
                 >
-                  <tr
-                    className="no-hover"
+                  <AccordionItem
+                    open={true}
+                    title="Properties"
                   >
-                    <td
-                      className="label generic-row-label"
+                    <li
+                      className="bx--accordion__item bx--accordion__item--active"
+                      onAnimationEnd={[Function]}
                     >
-                      Region
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
+                      <defaultRenderExpando
+                        aria-controls="accordion-item-1"
+                        aria-expanded={true}
+                        className="bx--accordion__heading"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title={null}
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
+                        <button
+                          aria-controls="accordion-item-1"
+                          aria-expanded={true}
+                          className="bx--accordion__heading"
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
                           type="button"
                         >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
+                          <ForwardRef(ChevronRight16)
+                            className="bx--accordion__arrow"
                           >
-                            <span>
-                               
-                              US East (N. Virginia)
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Type",
-                      "value": "Amazon EC2 Network",
-                    }
-                  }
-                  key="1"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className="no-hover"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Type
-                    </td>
-                    <td>
+                            <Icon
+                              className="bx--accordion__arrow"
+                              fill="currentColor"
+                              height={16}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width={16}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <svg
+                                aria-hidden={true}
+                                className="bx--accordion__arrow"
+                                fill="currentColor"
+                                focusable="false"
+                                height={16}
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width={16}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                                />
+                              </svg>
+                            </Icon>
+                          </ForwardRef(ChevronRight16)>
+                          <Text
+                            as="div"
+                            className="bx--accordion__title"
+                          >
+                            <div
+                              className="bx--accordion__title"
+                              dir="auto"
+                            >
+                              Properties
+                            </div>
+                          </Text>
+                        </button>
+                      </defaultRenderExpando>
                       <div
-                        className="text_summary_button"
-                        id="text_summary_button"
+                        className="bx--accordion__content"
+                        id="accordion-item-1"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title={null}
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
+                        <FeatureToggle(StructuredListWrapper)
+                          ariaLabel="Structured list"
+                          className="miq-structured-list generic_group"
                         >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
+                          <StructuredListWrapper
+                            ariaLabel="Structured list"
+                            className="miq-structured-list generic_group"
+                            isCondensed={false}
+                            isFlush={false}
+                            selection={false}
                           >
-                            <span>
-                               
-                              Amazon EC2 Network
-                            </span>
-                          </button>
-                        </Button>
+                            <div
+                              aria-label="Structured list"
+                              className="bx--structured-list miq-structured-list generic_group"
+                              role="table"
+                            >
+                              <FeatureToggle(StructuredListBody)>
+                                <StructuredListBody
+                                  onKeyDown={[Function]}
+                                >
+                                  <div
+                                    className="bx--structured-list-tbody"
+                                    onKeyDown={[Function]}
+                                    role="rowgroup"
+                                  >
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="0"
+                                      onClick={[Function]}
+                                      tabIndex={0}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={0}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Region
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    US East (N. Virginia)
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="1"
+                                      onClick={[Function]}
+                                      tabIndex={1}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={1}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Type
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    Amazon EC2 Network
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="2"
+                                      onClick={[Function]}
+                                      tabIndex={2}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={2}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Management Engine GUID
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="wrap_text"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                  </div>
+                                </StructuredListBody>
+                              </FeatureToggle(StructuredListBody)>
+                            </div>
+                          </StructuredListWrapper>
+                        </FeatureToggle(StructuredListWrapper)>
                       </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Management Engine GUID",
-                      "value": null,
-                    }
-                  }
-                  key="2"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className="no-hover"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Management Engine GUID
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
-                      >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title={null}
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
-                        >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
-                          >
-                            <span>
-                               
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-              </tbody>
-            </table>
+                    </li>
+                  </AccordionItem>
+                </ul>
+              </Accordion>
+            </MiqStructuredList>
           </GenericGroup>
         </TextualGroup>
         <TextualGroup
@@ -581,339 +706,447 @@ exports[`TextualSummary renders just fine 1`] = `
             onClick={[Function]}
             title="Status"
           >
-            <table
-              className="table table-bordered table-hover table-striped table-summary-screen"
+            <MiqStructuredList
+              headers={Array []}
+              mode="generic_group"
+              onClick={[Function]}
+              rows={
+                Array [
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Default Credentials",
+                    "title": "Ok",
+                    "value": "Valid",
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "SmartState Docker Credentials",
+                    "title": "Ok",
+                    "value": "Valid",
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Last Refresh",
+                    "title": null,
+                    "value": Array [
+                      Object {
+                        "value": "Success - 4 Months Ago",
+                      },
+                      Object {
+                        "value": null,
+                      },
+                    ],
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "label": "Last Refresh Date",
+                    "value": "2018-01-20T23:35:50.908Z",
+                  },
+                ]
+              }
+              title="Status"
             >
-              <thead>
-                <tr>
-                  <th
-                    align="left"
-                    colSpan="2"
-                  >
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Default Credentials",
-                      "title": "Ok",
-                      "value": "Valid",
-                    }
-                  }
-                  key="0"
-                  onClick={[Function]}
+              <Accordion
+                align="start"
+                className="miq-structured-list-accordion generic_group"
+              >
+                <ul
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
                 >
-                  <tr
-                    className="no-hover"
-                    title="Ok"
+                  <AccordionItem
+                    open={true}
+                    title="Status"
                   >
-                    <td
-                      className="label generic-row-label"
+                    <li
+                      className="bx--accordion__item bx--accordion__item--active"
+                      onAnimationEnd={[Function]}
                     >
-                      Default Credentials
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
+                      <defaultRenderExpando
+                        aria-controls="accordion-item-2"
+                        aria-expanded={true}
+                        className="bx--accordion__heading"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title="Ok"
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
+                        <button
+                          aria-controls="accordion-item-2"
+                          aria-expanded={true}
+                          className="bx--accordion__heading"
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
                           type="button"
                         >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
+                          <ForwardRef(ChevronRight16)
+                            className="bx--accordion__arrow"
                           >
-                            <span>
-                               
-                              Valid
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "SmartState Docker Credentials",
-                      "title": "Ok",
-                      "value": "Valid",
-                    }
-                  }
-                  key="1"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className="no-hover"
-                    title="Ok"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      SmartState Docker Credentials
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
-                      >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title="Ok"
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
-                        >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
-                          >
-                            <span>
-                               
-                              Valid
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Last Refresh",
-                      "title": null,
-                      "value": Array [
-                        Object {
-                          "value": "Success - 4 Months Ago",
-                        },
-                        Object {
-                          "value": null,
-                        },
-                      ],
-                    }
-                  }
-                  key="2"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className="no-hover"
-                    title={null}
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Last Refresh
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
-                      >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title={null}
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
-                        >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
-                          >
-                            <table
-                              cellPadding="0"
-                              cellSpacing="0"
+                            <Icon
+                              className="bx--accordion__arrow"
+                              fill="currentColor"
+                              height={16}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width={16}
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <tbody>
-                                <tr
-                                  className="no-hover"
-                                  key="0"
-                                  onClick={[Function]}
-                                >
-                                  <td
-                                    style={
-                                      Object {
-                                        "border": 0,
-                                        "margin": 0,
-                                        "padding": 0,
-                                      }
-                                    }
-                                  >
-                                    <IconOrImage
-                                      background={null}
-                                      icon={null}
-                                      image={null}
-                                      title={null}
-                                    />
-                                    Success - 4 Months Ago
-                                  </td>
-                                </tr>
-                                <tr
-                                  className="no-hover"
-                                  key="1"
-                                  onClick={[Function]}
-                                >
-                                  <td
-                                    style={
-                                      Object {
-                                        "border": 0,
-                                        "margin": 0,
-                                        "padding": 0,
-                                      }
-                                    }
-                                  >
-                                    <IconOrImage
-                                      background={null}
-                                      icon={null}
-                                      image={null}
-                                      title={null}
-                                    />
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "label": "Last Refresh Date",
-                      "value": "2018-01-20T23:35:50.908Z",
-                    }
-                  }
-                  key="3"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className="no-hover"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Last Refresh Date
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
-                      >
-                        <IconOrImage
-                          background={null}
-                          icon={null}
-                          image={null}
-                          title={null}
-                        />
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
-                        >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
+                              <svg
+                                aria-hidden={true}
+                                className="bx--accordion__arrow"
+                                fill="currentColor"
+                                focusable="false"
+                                height={16}
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width={16}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                                />
+                              </svg>
+                            </Icon>
+                          </ForwardRef(ChevronRight16)>
+                          <Text
+                            as="div"
+                            className="bx--accordion__title"
                           >
-                            <span>
-                               
-                              2018-01-20T23:35:50.908Z
-                            </span>
-                          </button>
-                        </Button>
+                            <div
+                              className="bx--accordion__title"
+                              dir="auto"
+                            >
+                              Status
+                            </div>
+                          </Text>
+                        </button>
+                      </defaultRenderExpando>
+                      <div
+                        className="bx--accordion__content"
+                        id="accordion-item-2"
+                      >
+                        <FeatureToggle(StructuredListWrapper)
+                          ariaLabel="Structured list"
+                          className="miq-structured-list generic_group"
+                        >
+                          <StructuredListWrapper
+                            ariaLabel="Structured list"
+                            className="miq-structured-list generic_group"
+                            isCondensed={false}
+                            isFlush={false}
+                            selection={false}
+                          >
+                            <div
+                              aria-label="Structured list"
+                              className="bx--structured-list miq-structured-list generic_group"
+                              role="table"
+                            >
+                              <FeatureToggle(StructuredListBody)>
+                                <StructuredListBody
+                                  onKeyDown={[Function]}
+                                >
+                                  <div
+                                    className="bx--structured-list-tbody"
+                                    onKeyDown={[Function]}
+                                    role="rowgroup"
+                                  >
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="0"
+                                      onClick={[Function]}
+                                      tabIndex={0}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={0}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Default Credentials
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    Valid
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="1"
+                                      onClick={[Function]}
+                                      tabIndex={1}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={1}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                SmartState Docker Credentials
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    Valid
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="2"
+                                      onClick={[Function]}
+                                      tabIndex={2}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={2}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Last Refresh
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="multi_row_cell"
+                                                  >
+                                                    <div
+                                                      className="sub_row_item"
+                                                      key="0"
+                                                      title=""
+                                                    >
+                                                      <div
+                                                        className="sub_value"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Success - 4 Months Ago
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div
+                                                      className="sub_row_item"
+                                                      key="1"
+                                                      title=""
+                                                    >
+                                                      <div
+                                                        className="sub_value"
+                                                      >
+                                                        <div
+                                                          className="wrap_text"
+                                                        />
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="3"
+                                      onClick={[Function]}
+                                      tabIndex={3}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={3}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Last Refresh Date
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    2018-01-20T23:35:50.908Z
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                  </div>
+                                </StructuredListBody>
+                              </FeatureToggle(StructuredListBody)>
+                            </div>
+                          </StructuredListWrapper>
+                        </FeatureToggle(StructuredListWrapper)>
                       </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-              </tbody>
-            </table>
+                    </li>
+                  </AccordionItem>
+                </ul>
+              </Accordion>
+            </MiqStructuredList>
           </GenericGroup>
         </TextualGroup>
       </div>
@@ -1207,727 +1440,957 @@ exports[`TextualSummary renders just fine 1`] = `
             onClick={[Function]}
             title="Relationships"
           >
-            <table
-              className="table table-bordered table-hover table-striped table-summary-screen"
+            <MiqStructuredList
+              headers={Array []}
+              mode="generic_group"
+              onClick={[Function]}
+              rows={
+                Array [
+                  Object {
+                    "hoverClass": "no-hover",
+                    "icon": "pficon pficon-cloud-tenant",
+                    "image": null,
+                    "label": "Cloud Tenants",
+                    "value": "0",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "ff ff-cloud-network",
+                    "image": null,
+                    "label": "Cloud Networks",
+                    "link": "/ems_network/39?display=cloud_networks",
+                    "title": "Show all Cloud Networks",
+                    "value": "1",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "pficon pficon-network",
+                    "image": null,
+                    "label": "Cloud Subnets",
+                    "link": "/ems_network/39?display=cloud_subnets",
+                    "title": "Show all Cloud Subnets",
+                    "value": "6",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "pficon pficon-route",
+                    "image": null,
+                    "label": "Network Routers",
+                    "link": "/ems_network/39?display=network_routers",
+                    "title": "Show all Network Routers",
+                    "value": "1",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "pficon pficon-cloud-security",
+                    "image": null,
+                    "label": "Security Groups",
+                    "link": "/ems_network/39?display=security_groups",
+                    "title": "Show all Security Groups",
+                    "value": "18",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "ff ff-floating-ip",
+                    "image": null,
+                    "label": "Floating IPs",
+                    "link": "/ems_network/39?display=floating_ips",
+                    "title": "Show all Floating IPs",
+                    "value": "14",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "ff ff-network-port",
+                    "image": null,
+                    "label": "Network Ports",
+                    "link": "/ems_network/39?display=network_ports",
+                    "title": "Show all Network Ports",
+                    "value": "26",
+                  },
+                  Object {
+                    "hoverClass": "",
+                    "icon": "ff ff-load-balancer",
+                    "image": null,
+                    "label": "Load Balancers",
+                    "link": "/ems_network/39?display=load_balancers",
+                    "title": "Show all Load Balancers",
+                    "value": "2",
+                  },
+                  Object {
+                    "background": "green",
+                    "hoverClass": "",
+                    "icon": "fa fa-play",
+                    "image": null,
+                    "label": "Power State",
+                    "value": "On",
+                  },
+                ]
+              }
+              title="Relationships"
             >
-              <thead>
-                <tr>
-                  <th
-                    align="left"
-                    colSpan="2"
-                  >
-                    Relationships
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "no-hover",
-                      "icon": "pficon pficon-cloud-tenant",
-                      "image": null,
-                      "label": "Cloud Tenants",
-                      "value": "0",
-                    }
-                  }
-                  key="0"
-                  onClick={[Function]}
+              <Accordion
+                align="start"
+                className="miq-structured-list-accordion generic_group"
+              >
+                <ul
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
                 >
-                  <tr
-                    className="no-hover"
+                  <AccordionItem
+                    open={true}
+                    title="Relationships"
                   >
-                    <td
-                      className="label generic-row-label"
+                    <li
+                      className="bx--accordion__item bx--accordion__item--active"
+                      onAnimationEnd={[Function]}
                     >
-                      Cloud Tenants
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
+                      <defaultRenderExpando
+                        aria-controls="accordion-item-3"
+                        aria-expanded={true}
+                        className="bx--accordion__heading"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
                       >
-                        <IconOrImage
-                          background={null}
-                          icon="pficon pficon-cloud-tenant"
-                          image={null}
-                          title={null}
-                        >
-                          <i
-                            className="pficon pficon-cloud-tenant"
-                            title={null}
-                          />
-                        </IconOrImage>
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
+                        <button
+                          aria-controls="accordion-item-3"
+                          aria-expanded={true}
+                          className="bx--accordion__heading"
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
                           type="button"
                         >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
+                          <ForwardRef(ChevronRight16)
+                            className="bx--accordion__arrow"
                           >
-                            <span>
-                               
-                              0
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "ff ff-cloud-network",
-                      "image": null,
-                      "label": "Cloud Networks",
-                      "link": "/ems_network/39?display=cloud_networks",
-                      "title": "Show all Cloud Networks",
-                      "value": "1",
-                    }
-                  }
-                  key="1"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Cloud Networks"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Cloud Networks
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=cloud_networks"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="ff ff-cloud-network"
-                            image={null}
-                            title="Show all Cloud Networks"
-                          >
-                            <i
-                              className="ff ff-cloud-network"
-                              title="Show all Cloud Networks"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
+                            <Icon
+                              className="bx--accordion__arrow"
+                              fill="currentColor"
+                              height={16}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width={16}
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <span>
-                                 
-                                1
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "pficon pficon-network",
-                      "image": null,
-                      "label": "Cloud Subnets",
-                      "link": "/ems_network/39?display=cloud_subnets",
-                      "title": "Show all Cloud Subnets",
-                      "value": "6",
-                    }
-                  }
-                  key="2"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Cloud Subnets"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Cloud Subnets
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=cloud_subnets"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="pficon pficon-network"
-                            image={null}
-                            title="Show all Cloud Subnets"
+                              <svg
+                                aria-hidden={true}
+                                className="bx--accordion__arrow"
+                                fill="currentColor"
+                                focusable="false"
+                                height={16}
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width={16}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                                />
+                              </svg>
+                            </Icon>
+                          </ForwardRef(ChevronRight16)>
+                          <Text
+                            as="div"
+                            className="bx--accordion__title"
                           >
-                            <i
-                              className="pficon pficon-network"
-                              title="Show all Cloud Subnets"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
+                            <div
+                              className="bx--accordion__title"
+                              dir="auto"
                             >
-                              <span>
-                                 
-                                6
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "pficon pficon-route",
-                      "image": null,
-                      "label": "Network Routers",
-                      "link": "/ems_network/39?display=network_routers",
-                      "title": "Show all Network Routers",
-                      "value": "1",
-                    }
-                  }
-                  key="3"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Network Routers"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Network Routers
-                    </td>
-                    <td>
+                              Relationships
+                            </div>
+                          </Text>
+                        </button>
+                      </defaultRenderExpando>
                       <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
+                        className="bx--accordion__content"
+                        id="accordion-item-3"
                       >
-                        <a
-                          href="/ems_network/39?display=network_routers"
-                          onClick={[Function]}
+                        <FeatureToggle(StructuredListWrapper)
+                          ariaLabel="Structured list"
+                          className="miq-structured-list generic_group"
                         >
-                          <IconOrImage
-                            background={null}
-                            icon="pficon pficon-route"
-                            image={null}
-                            title="Show all Network Routers"
+                          <StructuredListWrapper
+                            ariaLabel="Structured list"
+                            className="miq-structured-list generic_group"
+                            isCondensed={false}
+                            isFlush={false}
+                            selection={false}
                           >
-                            <i
-                              className="pficon pficon-route"
-                              title="Show all Network Routers"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
+                            <div
+                              aria-label="Structured list"
+                              className="bx--structured-list miq-structured-list generic_group"
+                              role="table"
                             >
-                              <span>
-                                 
-                                1
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
+                              <FeatureToggle(StructuredListBody)>
+                                <StructuredListBody
+                                  onKeyDown={[Function]}
+                                >
+                                  <div
+                                    className="bx--structured-list-tbody"
+                                    onKeyDown={[Function]}
+                                    role="rowgroup"
+                                  >
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="0"
+                                      onClick={[Function]}
+                                      tabIndex={0}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={0}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Cloud Tenants
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="cell icon"
+                                                  >
+                                                    <i
+                                                      className="pficon pficon-cloud-tenant"
+                                                      style={
+                                                        Object {
+                                                          "background": undefined,
+                                                        }
+                                                      }
+                                                    />
+                                                  </div>
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    0
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="1"
+                                      onClick={[Function]}
+                                      tabIndex={1}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={1}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Cloud Networks
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=cloud_networks"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Cloud Networks"
+                                                    >
+                                                      <i
+                                                        className="ff ff-cloud-network"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Cloud Networks"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      1
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="2"
+                                      onClick={[Function]}
+                                      tabIndex={2}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={2}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Cloud Subnets
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=cloud_subnets"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Cloud Subnets"
+                                                    >
+                                                      <i
+                                                        className="pficon pficon-network"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Cloud Subnets"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      6
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="3"
+                                      onClick={[Function]}
+                                      tabIndex={3}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={3}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Network Routers
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=network_routers"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Network Routers"
+                                                    >
+                                                      <i
+                                                        className="pficon pficon-route"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Network Routers"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      1
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="4"
+                                      onClick={[Function]}
+                                      tabIndex={4}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={4}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Security Groups
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=security_groups"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Security Groups"
+                                                    >
+                                                      <i
+                                                        className="pficon pficon-cloud-security"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Security Groups"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      18
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="5"
+                                      onClick={[Function]}
+                                      tabIndex={5}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={5}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Floating IPs
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=floating_ips"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Floating IPs"
+                                                    >
+                                                      <i
+                                                        className="ff ff-floating-ip"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Floating IPs"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      14
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="6"
+                                      onClick={[Function]}
+                                      tabIndex={6}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={6}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Network Ports
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=network_ports"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Network Ports"
+                                                    >
+                                                      <i
+                                                        className="ff ff-network-port"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Network Ports"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      26
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="7"
+                                      onClick={[Function]}
+                                      tabIndex={7}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={7}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Load Balancers
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <a
+                                                  className="cell_link"
+                                                  href="/ems_network/39?display=load_balancers"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="cell icon"
+                                                      title="Show all Load Balancers"
+                                                    >
+                                                      <i
+                                                        className="ff ff-load-balancer"
+                                                        style={
+                                                          Object {
+                                                            "background": undefined,
+                                                          }
+                                                        }
+                                                        title="Show all Load Balancers"
+                                                      />
+                                                    </div>
+                                                    <div
+                                                      className="expand wrap_text"
+                                                    >
+                                                      2
+                                                    </div>
+                                                  </div>
+                                                </a>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="8"
+                                      onClick={[Function]}
+                                      tabIndex={8}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={8}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Power State
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="cell icon backgrounded-icon"
+                                                  >
+                                                    <i
+                                                      className="fa fa-play"
+                                                      style={
+                                                        Object {
+                                                          "background": "green",
+                                                        }
+                                                      }
+                                                    />
+                                                  </div>
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    On
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                  </div>
+                                </StructuredListBody>
+                              </FeatureToggle(StructuredListBody)>
+                            </div>
+                          </StructuredListWrapper>
+                        </FeatureToggle(StructuredListWrapper)>
                       </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "pficon pficon-cloud-security",
-                      "image": null,
-                      "label": "Security Groups",
-                      "link": "/ems_network/39?display=security_groups",
-                      "title": "Show all Security Groups",
-                      "value": "18",
-                    }
-                  }
-                  key="4"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Security Groups"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Security Groups
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=security_groups"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="pficon pficon-cloud-security"
-                            image={null}
-                            title="Show all Security Groups"
-                          >
-                            <i
-                              className="pficon pficon-cloud-security"
-                              title="Show all Security Groups"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
-                            >
-                              <span>
-                                 
-                                18
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "ff ff-floating-ip",
-                      "image": null,
-                      "label": "Floating IPs",
-                      "link": "/ems_network/39?display=floating_ips",
-                      "title": "Show all Floating IPs",
-                      "value": "14",
-                    }
-                  }
-                  key="5"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Floating IPs"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Floating IPs
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=floating_ips"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="ff ff-floating-ip"
-                            image={null}
-                            title="Show all Floating IPs"
-                          >
-                            <i
-                              className="ff ff-floating-ip"
-                              title="Show all Floating IPs"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
-                            >
-                              <span>
-                                 
-                                14
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "ff ff-network-port",
-                      "image": null,
-                      "label": "Network Ports",
-                      "link": "/ems_network/39?display=network_ports",
-                      "title": "Show all Network Ports",
-                      "value": "26",
-                    }
-                  }
-                  key="6"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Network Ports"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Network Ports
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=network_ports"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="ff ff-network-port"
-                            image={null}
-                            title="Show all Network Ports"
-                          >
-                            <i
-                              className="ff ff-network-port"
-                              title="Show all Network Ports"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
-                            >
-                              <span>
-                                 
-                                26
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "hoverClass": "",
-                      "icon": "ff ff-load-balancer",
-                      "image": null,
-                      "label": "Load Balancers",
-                      "link": "/ems_network/39?display=load_balancers",
-                      "title": "Show all Load Balancers",
-                      "value": "2",
-                    }
-                  }
-                  key="7"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                    title="Show all Load Balancers"
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Load Balancers
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button_link"
-                        id="text_summary_button_link"
-                      >
-                        <a
-                          href="/ems_network/39?display=load_balancers"
-                          onClick={[Function]}
-                        >
-                          <IconOrImage
-                            background={null}
-                            icon="ff ff-load-balancer"
-                            image={null}
-                            title="Show all Load Balancers"
-                          >
-                            <i
-                              className="ff ff-load-balancer"
-                              title="Show all Load Balancers"
-                            />
-                          </IconOrImage>
-                          <Button
-                            dangerDescription="danger"
-                            disabled={false}
-                            isExpressive={false}
-                            kind="ghost"
-                            size="sm"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
-                          >
-                            <button
-                              aria-describedby={null}
-                              aria-pressed={null}
-                              className="bx--btn bx--btn--sm bx--btn--ghost"
-                              disabled={false}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                              tabIndex={0}
-                              type="button"
-                            >
-                              <span>
-                                 
-                                2
-                              </span>
-                            </button>
-                          </Button>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-                <GenericTableRow
-                  item={
-                    Object {
-                      "background": "green",
-                      "hoverClass": "",
-                      "icon": "fa fa-play",
-                      "image": null,
-                      "label": "Power State",
-                      "value": "On",
-                    }
-                  }
-                  key="8"
-                  onClick={[Function]}
-                >
-                  <tr
-                    className=""
-                  >
-                    <td
-                      className="label generic-row-label"
-                    >
-                      Power State
-                    </td>
-                    <td>
-                      <div
-                        className="text_summary_button"
-                        id="text_summary_button"
-                      >
-                        <IconOrImage
-                          background="green"
-                          icon="fa fa-play"
-                          image={null}
-                          title={null}
-                        >
-                          <div
-                            className="backgrounded-icon"
-                            style={
-                              Object {
-                                "background": "green",
-                              }
-                            }
-                          >
-                            <i
-                              className="fa fa-play"
-                              title={null}
-                            />
-                          </div>
-                        </IconOrImage>
-                        <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
-                          kind="ghost"
-                          size="sm"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
-                          type="button"
-                        >
-                          <button
-                            aria-describedby={null}
-                            aria-pressed={null}
-                            className="bx--btn bx--btn--sm bx--btn--ghost"
-                            disabled={false}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            tabIndex={0}
-                            type="button"
-                          >
-                            <span>
-                               
-                              On
-                            </span>
-                          </button>
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </GenericTableRow>
-              </tbody>
-            </table>
+                    </li>
+                  </AccordionItem>
+                </ul>
+              </Accordion>
+            </MiqStructuredList>
           </GenericGroup>
         </TextualGroup>
         <TextualGroup
@@ -1974,72 +2437,296 @@ exports[`TextualSummary renders just fine 1`] = `
             onClick={[Function]}
             title="Smart Management"
           >
-            <table
-              className="table table-bordered table-hover table-striped table-summary-screen"
+            <MiqStructuredList
+              headers={Array []}
+              mode="tag_group"
+              onClick={[Function]}
+              rows={
+                Array [
+                  Object {
+                    "hoverClass": "no-hover",
+                    "icon": "pficon pficon-zone",
+                    "label": "Managed by Zone",
+                    "value": "Amazon Zone",
+                  },
+                  Object {
+                    "hoverClass": "no-hover",
+                    "icon": "fa fa-tag",
+                    "label": "My Company Tags",
+                    "value": "No My Company Tags have been assigned",
+                  },
+                ]
+              }
+              title="Smart Management"
             >
-              <thead>
-                <tr>
-                  <th
-                    align="left"
-                    colSpan="2"
-                  >
-                    Smart Management
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  className="no-hover"
-                  key="0"
+              <Accordion
+                align="start"
+                className="miq-structured-list-accordion tag_group"
+              >
+                <ul
+                  className="bx--accordion miq-structured-list-accordion tag_group bx--accordion--start"
                 >
-                  <td
-                    className="label"
+                  <AccordionItem
+                    open={true}
+                    title="Smart Management"
                   >
-                    Managed by Zone
-                  </td>
-                  <td>
-                    <IconOrImage
-                      background={null}
-                      icon="pficon pficon-zone"
-                      image={null}
-                      title={null}
+                    <li
+                      className="bx--accordion__item bx--accordion__item--active"
+                      onAnimationEnd={[Function]}
                     >
-                      <i
-                        className="pficon pficon-zone"
-                        title={null}
-                      />
-                    </IconOrImage>
-                     
-                    Amazon Zone
-                  </td>
-                </tr>
-                <tr
-                  className="no-hover"
-                  key="1"
-                >
-                  <td
-                    className="label"
-                  >
-                    My Company Tags
-                  </td>
-                  <td>
-                    <IconOrImage
-                      background={null}
-                      icon="fa fa-tag"
-                      image={null}
-                      title={null}
-                    >
-                      <i
-                        className="fa fa-tag"
-                        title={null}
-                      />
-                    </IconOrImage>
-                     
-                    No My Company Tags have been assigned
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <defaultRenderExpando
+                        aria-controls="accordion-item-4"
+                        aria-expanded={true}
+                        className="bx--accordion__heading"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        type="button"
+                      >
+                        <button
+                          aria-controls="accordion-item-4"
+                          aria-expanded={true}
+                          className="bx--accordion__heading"
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
+                          type="button"
+                        >
+                          <ForwardRef(ChevronRight16)
+                            className="bx--accordion__arrow"
+                          >
+                            <Icon
+                              className="bx--accordion__arrow"
+                              fill="currentColor"
+                              height={16}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width={16}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <svg
+                                aria-hidden={true}
+                                className="bx--accordion__arrow"
+                                fill="currentColor"
+                                focusable="false"
+                                height={16}
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width={16}
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                                />
+                              </svg>
+                            </Icon>
+                          </ForwardRef(ChevronRight16)>
+                          <Text
+                            as="div"
+                            className="bx--accordion__title"
+                          >
+                            <div
+                              className="bx--accordion__title"
+                              dir="auto"
+                            >
+                              Smart Management
+                            </div>
+                          </Text>
+                        </button>
+                      </defaultRenderExpando>
+                      <div
+                        className="bx--accordion__content"
+                        id="accordion-item-4"
+                      >
+                        <FeatureToggle(StructuredListWrapper)
+                          ariaLabel="Structured list"
+                          className="miq-structured-list tag_group"
+                        >
+                          <StructuredListWrapper
+                            ariaLabel="Structured list"
+                            className="miq-structured-list tag_group"
+                            isCondensed={false}
+                            isFlush={false}
+                            selection={false}
+                          >
+                            <div
+                              aria-label="Structured list"
+                              className="bx--structured-list miq-structured-list tag_group"
+                              role="table"
+                            >
+                              <FeatureToggle(StructuredListBody)>
+                                <StructuredListBody
+                                  onKeyDown={[Function]}
+                                >
+                                  <div
+                                    className="bx--structured-list-tbody"
+                                    onKeyDown={[Function]}
+                                    role="rowgroup"
+                                  >
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="0"
+                                      onClick={[Function]}
+                                      tabIndex={0}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={0}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                Managed by Zone
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="cell icon"
+                                                  >
+                                                    <i
+                                                      className="pficon pficon-zone"
+                                                      style={
+                                                        Object {
+                                                          "background": undefined,
+                                                        }
+                                                      }
+                                                    />
+                                                  </div>
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    Amazon Zone
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                    <FeatureToggle(StructuredListRow)
+                                      className=""
+                                      key="1"
+                                      onClick={[Function]}
+                                      tabIndex={1}
+                                      title=""
+                                    >
+                                      <StructuredListRow
+                                        className=""
+                                        head={false}
+                                        label={false}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
+                                        tabIndex={1}
+                                        title=""
+                                      >
+                                        <div
+                                          className="bx--structured-list-row"
+                                          onClick={[Function]}
+                                          role="row"
+                                          title=""
+                                        >
+                                          <FeatureToggle(StructuredListCell)
+                                            className="label_header"
+                                          >
+                                            <StructuredListCell
+                                              className="label_header"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="label_header bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                My Company Tags
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                          <FeatureToggle(StructuredListCell)
+                                            className="content_value object_item"
+                                          >
+                                            <StructuredListCell
+                                              className="content_value object_item"
+                                              head={false}
+                                              noWrap={false}
+                                            >
+                                              <div
+                                                className="content_value object_item bx--structured-list-td"
+                                                role="cell"
+                                              >
+                                                <div
+                                                  className="content"
+                                                >
+                                                  <div
+                                                    className="cell icon"
+                                                  >
+                                                    <i
+                                                      className="fa fa-tag"
+                                                      style={
+                                                        Object {
+                                                          "background": undefined,
+                                                        }
+                                                      }
+                                                    />
+                                                  </div>
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    No My Company Tags have been assigned
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </StructuredListCell>
+                                          </FeatureToggle(StructuredListCell)>
+                                        </div>
+                                      </StructuredListRow>
+                                    </FeatureToggle(StructuredListRow)>
+                                  </div>
+                                </StructuredListBody>
+                              </FeatureToggle(StructuredListBody)>
+                            </div>
+                          </StructuredListWrapper>
+                        </FeatureToggle(StructuredListWrapper)>
+                      </div>
+                    </li>
+                  </AccordionItem>
+                </ul>
+              </Accordion>
+            </MiqStructuredList>
           </TagGroup>
         </TextualGroup>
       </div>

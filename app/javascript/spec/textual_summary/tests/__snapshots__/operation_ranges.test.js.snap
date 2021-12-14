@@ -52,127 +52,468 @@ exports[`Operation Ranges renders just fine... 1`] = `
   }
   title="Operation Ranges"
 >
-  <table
-    className="table table-bordered table-striped table-summary-screen"
+  <MiqStructuredList
+    headers={Array []}
+    mode="operation_ranges"
+    rows={
+      Array [
+        Object {
+          "hoverClass": "no-hover",
+          "label": "CPU",
+          "value": Array [
+            Object {
+              "label": "Max",
+              "value": "Not Available",
+            },
+            Object {
+              "label": "High",
+              "value": "0 MHz",
+            },
+            Object {
+              "label": "Average",
+              "value": "0 MHz",
+            },
+            Object {
+              "label": "Low",
+              "value": "0 MHz",
+            },
+          ],
+        },
+        Object {
+          "hoverClass": "no-hover",
+          "label": "CPU Usage",
+          "value": Array [
+            Object {
+              "label": "Max",
+              "value": "Not Available",
+            },
+            Object {
+              "label": "High",
+              "value": "0.00%",
+            },
+            Object {
+              "label": "Average",
+              "value": "0.00%",
+            },
+            Object {
+              "label": "Low",
+              "value": "0.00%",
+            },
+          ],
+        },
+      ]
+    }
+    title="Operation Ranges"
   >
-    <thead>
-      <tr>
-        <th
-          align="left"
-          colSpan="3"
+    <Accordion
+      align="start"
+      className="miq-structured-list-accordion operation_ranges"
+    >
+      <ul
+        className="bx--accordion miq-structured-list-accordion operation_ranges bx--accordion--start"
+      >
+        <AccordionItem
+          open={true}
+          title="Operation Ranges"
         >
-          Operation Ranges
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td
-          rowSpan={5}
-        >
-          CPU
-        </td>
-        <th>
-           
-        </th>
-        <th>
-           
-        </th>
-      </tr>
-      <tr
-        key="0"
-      >
-        <td>
-          Max
-        </td>
-        <td>
-          Not Available
-        </td>
-      </tr>
-      <tr
-        key="1"
-      >
-        <td>
-          High
-        </td>
-        <td>
-          0 MHz
-        </td>
-      </tr>
-      <tr
-        key="2"
-      >
-        <td>
-          Average
-        </td>
-        <td>
-          0 MHz
-        </td>
-      </tr>
-      <tr
-        key="3"
-      >
-        <td>
-          Low
-        </td>
-        <td>
-          0 MHz
-        </td>
-      </tr>
-      <tr>
-        <td
-          rowSpan={5}
-        >
-          CPU Usage
-        </td>
-        <th>
-           
-        </th>
-        <th>
-           
-        </th>
-      </tr>
-      <tr
-        key="0"
-      >
-        <td>
-          Max
-        </td>
-        <td>
-          Not Available
-        </td>
-      </tr>
-      <tr
-        key="1"
-      >
-        <td>
-          High
-        </td>
-        <td>
-          0.00%
-        </td>
-      </tr>
-      <tr
-        key="2"
-      >
-        <td>
-          Average
-        </td>
-        <td>
-          0.00%
-        </td>
-      </tr>
-      <tr
-        key="3"
-      >
-        <td>
-          Low
-        </td>
-        <td>
-          0.00%
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <li
+            className="bx--accordion__item bx--accordion__item--active"
+            onAnimationEnd={[Function]}
+          >
+            <defaultRenderExpando
+              aria-controls="accordion-item-1"
+              aria-expanded={true}
+              className="bx--accordion__heading"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              type="button"
+            >
+              <button
+                aria-controls="accordion-item-1"
+                aria-expanded={true}
+                className="bx--accordion__heading"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                type="button"
+              >
+                <ForwardRef(ChevronRight16)
+                  className="bx--accordion__arrow"
+                >
+                  <Icon
+                    className="bx--accordion__arrow"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      className="bx--accordion__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(ChevronRight16)>
+                <Text
+                  as="div"
+                  className="bx--accordion__title"
+                >
+                  <div
+                    className="bx--accordion__title"
+                    dir="auto"
+                  >
+                    Operation Ranges
+                  </div>
+                </Text>
+              </button>
+            </defaultRenderExpando>
+            <div
+              className="bx--accordion__content"
+              id="accordion-item-1"
+            >
+              <FeatureToggle(StructuredListWrapper)
+                ariaLabel="Structured list"
+                className="miq-structured-list operation_ranges"
+              >
+                <StructuredListWrapper
+                  ariaLabel="Structured list"
+                  className="miq-structured-list operation_ranges"
+                  isCondensed={false}
+                  isFlush={false}
+                  selection={false}
+                >
+                  <div
+                    aria-label="Structured list"
+                    className="bx--structured-list miq-structured-list operation_ranges"
+                    role="table"
+                  >
+                    <FeatureToggle(StructuredListBody)>
+                      <StructuredListBody
+                        onKeyDown={[Function]}
+                      >
+                        <div
+                          className="bx--structured-list-tbody"
+                          onKeyDown={[Function]}
+                          role="rowgroup"
+                        >
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="0"
+                            onClick={[Function]}
+                            tabIndex={0}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={0}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      CPU
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <div
+                                        className="content"
+                                      >
+                                        <div
+                                          className="multi_row_cell"
+                                        >
+                                          <div
+                                            className="sub_row_item"
+                                            key="0"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Max"
+                                            >
+                                              Max
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Not Available
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="1"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="High"
+                                            >
+                                              High
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0 MHz
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="2"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Average"
+                                            >
+                                              Average
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0 MHz
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="3"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Low"
+                                            >
+                                              Low
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0 MHz
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="1"
+                            onClick={[Function]}
+                            tabIndex={1}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={1}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      CPU Usage
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <div
+                                        className="content"
+                                      >
+                                        <div
+                                          className="multi_row_cell"
+                                        >
+                                          <div
+                                            className="sub_row_item"
+                                            key="0"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Max"
+                                            >
+                                              Max
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                Not Available
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="1"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="High"
+                                            >
+                                              High
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0.00%
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="2"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Average"
+                                            >
+                                              Average
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0.00%
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div
+                                            className="sub_row_item"
+                                            key="3"
+                                            title=""
+                                          >
+                                            <div
+                                              className="sub_label"
+                                              title="Low"
+                                            >
+                                              Low
+                                            </div>
+                                            <div
+                                              className="sub_value"
+                                            >
+                                              <div
+                                                className="expand wrap_text"
+                                              >
+                                                0.00%
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                        </div>
+                      </StructuredListBody>
+                    </FeatureToggle(StructuredListBody)>
+                  </div>
+                </StructuredListWrapper>
+              </FeatureToggle(StructuredListWrapper)>
+            </div>
+          </li>
+        </AccordionItem>
+      </ul>
+    </Accordion>
+  </MiqStructuredList>
 </OperationRanges>
 `;

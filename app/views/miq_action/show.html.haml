@@ -17,7 +17,7 @@
       .col-md-8
         %p.form-control-static
           = h(@record.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@record.action_type]))
-  %hr
+
   - case @record.action_type
   - when "create_snapshot"
     %h3
@@ -248,17 +248,4 @@
           = h(@cats)
     %hr
 
-  %h3= _("Assigned to Policies")
-  - if @action_policies
-    %table.table.table-striped.table-bordered.table-hover
-      %tbody
-        - @action_policies.each do |p|
-          %tr{:title => _("View this %{model} Policy"), :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
-            %td.table-view-pf-select
-              %i{:class => p.decorate.fonticon}
-            %td
-              = p.description
-  - else
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("This Action is not assigned to any Policies.")}
-
-  %hr
+  = miq_summary_action_policies(@action_policies)

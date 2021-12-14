@@ -11,18 +11,6 @@
         %label.control-label.col-md-2= _("Attached to Policy")
         .col-md-10
           %p.form-control-static= h(@policy.description)
-  %hr
+
   - record_policies = @record.miq_policies.sort_by { |p| p.description.downcase }
-  %h3= _("Assigned to Policies")
-  - if record_policies.empty?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("This Event is not assigned to any Policies.")}
-  - else
-    %table.table.table-striped.table-bordered.table-hover
-      %tbody
-        - record_policies.each do |p|
-          %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-              :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
-            %td.table-view-pf-select
-              %i{:class => p.decorate.fonticon}
-            %td
-              = p.description
+  = miq_summary_event_definition(record_policies)

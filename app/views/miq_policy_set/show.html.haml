@@ -10,25 +10,9 @@
         = _("Description")
       .col-md-8
         = h(@record.description)
-  %hr
 
-  %h3= _("Policies")
-  - if profile_policies.empty?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policies are defined.")}
-  - else
-    %table.table.table-striped.table-bordered.table-hover
-      %tbody
-        - profile_policies.each do |p|
-          %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-              :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
-            %td.table-view-pf-select
-              %i{:class => p.decorate.fonticon}
-            %td
-              %b
-                #{ui_lookup(:model => p.towhat)} #{p.mode.capitalize}:
-              &nbsp;
-              = h(p.description)
-    %hr
+  -# Policies field
+  = miq_summary_policy_set(profile_policies)
 
   -# Notes field
   %h3= _("Notes")

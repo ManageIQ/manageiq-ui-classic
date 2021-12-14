@@ -1346,4 +1346,11 @@ module ApplicationHelper
     limit = ::Settings.ui.custom_button_count || 3
     react('MiqToolbar', :kebabLimit => limit, :toolbars => toolbars)
   end
+
+  def miq_structured_list(data)
+    react('MiqStructuredList', {:title => data[:title],
+                                :headers  => data[:headers],
+                                :rows     => data[:rows],
+                                :message  => data[:message], :mode => ["miq_summary", data[:mode]].join(' ')})
+  end
 end
