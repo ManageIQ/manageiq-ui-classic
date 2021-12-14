@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import MiqStructuredList from '../miq-structured-list';
 
 export default function SimpleTable(props) {
   const renderLabel = (label) => {
@@ -38,21 +39,30 @@ export default function SimpleTable(props) {
   const renderRow = (row, i, onClick) => <tr key={i}>{row.map((value, j) => renderValue(value, j, onClick))}</tr>;
 
   const { rows, labels, title } = props;
+  console.log('simple_table=', title, rows);
 
   return (
-    <table className="table table-bordered table-hover table-striped table-summary-screen">
-      <thead>
-        <tr>
-          <th colSpan={labels.length} align="left">{title}</th>
-        </tr>
-        <tr>
-          {labels.map((label, i) => <td style={{ wordBreak: 'initial' }} key={i}><strong>{renderLabel(label)}</strong></td>)}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row, i) => renderRow(row, i, props.onClick))}
-      </tbody>
-    </table>
+    <>
+      <MiqStructuredList
+        headers={labels}
+        rows={rows}
+        title={title}
+        mode="simple_table"
+      />
+      <table className="table table-bordered table-hover table-striped table-summary-screen simple_table">
+        <thead>
+          <tr>
+            <th colSpan={labels.length} align="left">{title}</th>
+          </tr>
+          <tr>
+            {labels.map((label, i) => <td style={{ wordBreak: 'initial' }} key={i}><strong>{renderLabel(label)}</strong></td>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => renderRow(row, i, props.onClick))}
+        </tbody>
+      </table>
+    </>
   );
 }
 

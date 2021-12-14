@@ -281,11 +281,11 @@ module MiqAeClassHelper
 
   def class_properties_data(name, record)
     @initial_data = [
-      {:label => _('Fully Qualified Name'), :text => h(name)},
-      {:label => _('Name'), :text => record.name},
-      {:label => _('Display Name'), :text => record.display_name},
-      {:label => _('Description'), :text => record.try(:description)},
-      {:label => _('Instances'), :text => h(record.ae_instances.length)},
+      {:label => _('Fully Qualified Name'), :value => h(name)},
+      {:label => _('Name'), :value => record.name},
+      {:label => _('Display Name'), :value => record.display_name},
+      {:label => _('Description'), :value => record.try(:description)},
+      {:label => _('Instances'), :value => h(record.ae_instances.length)},
     ]
   end
 

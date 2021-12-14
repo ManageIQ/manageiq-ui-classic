@@ -19,8 +19,169 @@ exports[`GenericGroup renders just fine 1`] = `
   onClick={[Function]}
   title="Foo Bar"
 >
+  <MiqStructuredList
+    headers={Array []}
+    mode="generic_group"
+    onClick={[Function]}
+    rows={
+      Array [
+        Object {
+          "hoverClass": "bar",
+          "label": "foo",
+          "value": "bar",
+        },
+        Object {
+          "hoverClass": "bar",
+          "label": "mrkef?",
+          "value": "v zime!",
+        },
+      ]
+    }
+    title="Foo Bar"
+  >
+    <h3>
+      Foo Bar
+    </h3>
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list generic_group"
+    >
+      <StructuredListWrapper
+        ariaLabel="Structured list"
+        className="miq-structured-list generic_group"
+        isCondensed={false}
+        isFlush={false}
+        selection={false}
+      >
+        <div
+          aria-label="Structured list"
+          className="bx--structured-list miq-structured-list generic_group"
+          role="table"
+        >
+          <FeatureToggle(StructuredListBody)>
+            <StructuredListBody
+              onKeyDown={[Function]}
+            >
+              <div
+                className="bx--structured-list-tbody"
+                onKeyDown={[Function]}
+                role="rowgroup"
+              >
+                <FeatureToggle(StructuredListRow)
+                  key="0"
+                  tabIndex={0}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={0}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            foo
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value"
+                      >
+                        <StructuredListCell
+                          className="content_value"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              bar
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="1"
+                  tabIndex={1}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={1}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            mrkef?
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value"
+                      >
+                        <StructuredListCell
+                          className="content_value"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              v zime!
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+              </div>
+            </StructuredListBody>
+          </FeatureToggle(StructuredListBody)>
+        </div>
+      </StructuredListWrapper>
+    </FeatureToggle(StructuredListWrapper)>
+  </MiqStructuredList>
   <table
-    className="table table-bordered table-hover table-striped table-summary-screen"
+    className="table table-bordered table-hover table-striped table-summary-screen generic_groups"
   >
     <thead>
       <tr>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import MiqStructuredList from '../miq-structured-list';
 
 export default function OperationRanges(props) {
   const renderItem = (item, i) => (
@@ -22,16 +23,23 @@ export default function OperationRanges(props) {
   const { title, items } = props;
 
   return (
-    <table className="table table-bordered table-striped table-summary-screen">
-      <thead>
-        <tr>
-          <th colSpan="3" align="left">{title}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((item, i) => renderItem(item, i))}
-      </tbody>
-    </table>
+    <>
+      <MiqStructuredList
+        rows={items}
+        title={title}
+        mode="operation_ranges"
+      />
+      <table className="table table-bordered table-striped table-summary-screen operation_ranges">
+        <thead>
+          <tr>
+            <th colSpan="3" align="left">{title}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item, i) => renderItem(item, i))}
+        </tbody>
+      </table>
+    </>
   );
 }
 

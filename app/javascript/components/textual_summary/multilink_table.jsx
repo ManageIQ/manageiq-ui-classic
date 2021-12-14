@@ -1,6 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconOrImage from './icon_or_image';
+import MiqStructuredList from '../miq-structured-list';
+import { onClick } from '../breadcrumbs/on-click-functions';
 
 export default function MultilinkTable(props) {
   const renderLink = (sub, i, onClick) => (
@@ -41,16 +43,26 @@ export default function MultilinkTable(props) {
   const { title, items } = props;
 
   return (
-    <table className="table table-bordered table-striped table-summary-screen">
-      <thead>
-        <tr>
-          <th colSpan="100">{title}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((item, i) => renderLine(item, i))}
-      </tbody>
-    </table>
+    <>
+      <MiqStructuredList
+        rows={items}
+        title={title}
+        mode="multilink_table"
+        onClick={(item, event) => onClick(item, event)}
+      />
+      <table className="table table-bordered table-striped table-summary-screen multilink_table">
+        <thead>
+          <tr>
+            <th colSpan="100">
+              {title}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item, i) => renderLine(item, i))}
+        </tbody>
+      </table>
+    </>
   );
 }
 

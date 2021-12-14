@@ -270,8 +270,1833 @@ exports[`MultilinkTable renders just fine 1`] = `
   onClick={[Function]}
   title="Some OpenStack Stuff"
 >
+  <MiqStructuredList
+    headers={Array []}
+    mode="multilink_table"
+    onClick={[Function]}
+    rows={
+      Array [
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=1&status=running",
+              "title": "Show list of running Aodh",
+              "value": "Running (3)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Aodh",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=1&status=all",
+              "title": "Show list of all Aodh",
+              "value": "All (3)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Aodh",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Aodh",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=2&status=running",
+              "title": "Show list of running Ceilometer",
+              "value": "Running (3)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Ceilometer",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=2&status=all",
+              "title": "Show list of all Ceilometer",
+              "value": "All (3)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Ceilometer",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Ceilometer",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=3&status=running",
+              "title": "Show list of running Cinder",
+              "value": "Running (3)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Cinder",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=3&status=all",
+              "title": "Show list of all Cinder",
+              "value": "All (3)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Cinder",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Cinder",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=4&status=running",
+              "title": "Show list of running Glance",
+              "value": "Running (2)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Glance",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=4&status=all",
+              "title": "Show list of all Glance",
+              "value": "All (2)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Glance",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Glance",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=5&status=running",
+              "title": "Show list of running Gnocchi",
+              "value": "Running (2)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Gnocchi",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=5&status=all",
+              "title": "Show list of all Gnocchi",
+              "value": "All (2)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Gnocchi",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Gnocchi",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=6&status=running",
+              "title": "Show list of running Heat",
+              "value": "Running (4)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Heat",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=6&status=all",
+              "title": "Show list of all Heat",
+              "value": "All (4)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Heat",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Heat",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of running Keystone",
+              "value": "Running (0)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Keystone",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=7&status=all",
+              "title": "Show list of all Keystone",
+              "value": "All (1)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Keystone",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Keystone",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=8&status=running",
+              "title": "Show list of running Nova",
+              "value": "Running (5)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Nova",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=8&status=all",
+              "title": "Show list of all Nova",
+              "value": "All (10)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Nova",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Nova",
+        },
+        Object {
+          "sub_items": Array [
+            Object {
+              "icon": "pficon pficon-ok",
+              "link": "/host/host_services/18?db=host&host_service_group=9&status=running",
+              "title": "Show list of running Swift",
+              "value": "Running (14)",
+            },
+            Object {
+              "icon": null,
+              "link": null,
+              "title": "Show list of failed Swift",
+              "value": "Failed (0)",
+            },
+            Object {
+              "icon": "pficon pficon-service",
+              "link": "/host/host_services/18?db=host&host_service_group=9&status=all",
+              "title": "Show list of all Swift",
+              "value": "All (14)",
+            },
+            Object {
+              "icon": "fa fa-file-o",
+              "link": null,
+              "title": "Show list of configuration files of Swift",
+              "value": "Configuration (0)",
+            },
+          ],
+          "value": "Swift",
+        },
+      ]
+    }
+    title="Some OpenStack Stuff"
+  >
+    <h3>
+      Some OpenStack Stuff
+    </h3>
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list multilink_table"
+    >
+      <StructuredListWrapper
+        ariaLabel="Structured list"
+        className="miq-structured-list multilink_table"
+        isCondensed={false}
+        isFlush={false}
+        selection={false}
+      >
+        <div
+          aria-label="Structured list"
+          className="bx--structured-list miq-structured-list multilink_table"
+          role="table"
+        >
+          <FeatureToggle(StructuredListBody)>
+            <StructuredListBody
+              onKeyDown={[Function]}
+            >
+              <div
+                className="bx--structured-list-tbody"
+                onKeyDown={[Function]}
+                role="rowgroup"
+              >
+                <FeatureToggle(StructuredListRow)
+                  key="0"
+                  tabIndex={0}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={0}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Aodh
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=1&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Aodh"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Aodh"
+                                  />
+                                </div>
+                                Running (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=1&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Aodh"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Aodh"
+                                  />
+                                </div>
+                                All (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Aodh"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Aodh"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="1"
+                  tabIndex={1}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={1}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Ceilometer
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=2&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Ceilometer"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Ceilometer"
+                                  />
+                                </div>
+                                Running (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=2&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Ceilometer"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Ceilometer"
+                                  />
+                                </div>
+                                All (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Ceilometer"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Ceilometer"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="2"
+                  tabIndex={2}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={2}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Cinder
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=3&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Cinder"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Cinder"
+                                  />
+                                </div>
+                                Running (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=3&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Cinder"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Cinder"
+                                  />
+                                </div>
+                                All (3)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Cinder"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Cinder"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="3"
+                  tabIndex={3}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={3}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Glance
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=4&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Glance"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Glance"
+                                  />
+                                </div>
+                                Running (2)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=4&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Glance"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Glance"
+                                  />
+                                </div>
+                                All (2)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Glance"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Glance"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="4"
+                  tabIndex={4}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={4}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Gnocchi
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=5&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Gnocchi"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Gnocchi"
+                                  />
+                                </div>
+                                Running (2)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=5&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Gnocchi"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Gnocchi"
+                                  />
+                                </div>
+                                All (2)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Gnocchi"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Gnocchi"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="5"
+                  tabIndex={5}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={5}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Heat
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=6&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Heat"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Heat"
+                                  />
+                                </div>
+                                Running (4)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=6&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Heat"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Heat"
+                                  />
+                                </div>
+                                All (4)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Heat"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Heat"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="6"
+                  tabIndex={6}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={6}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Keystone
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Running (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=7&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Keystone"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Keystone"
+                                  />
+                                </div>
+                                All (1)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Keystone"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Keystone"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="7"
+                  tabIndex={7}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={7}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Nova
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=8&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Nova"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Nova"
+                                  />
+                                </div>
+                                Running (5)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=8&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Nova"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Nova"
+                                  />
+                                </div>
+                                All (10)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Nova"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Nova"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="8"
+                  tabIndex={8}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={8}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Swift
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=9&status=running"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of running Swift"
+                                >
+                                  <i
+                                    className="pficon pficon-ok"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of running Swift"
+                                  />
+                                </div>
+                                Running (14)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              Failed (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <a
+                              className="cell_link"
+                              href="/host/host_services/18?db=host&host_service_group=9&status=all"
+                              onClick={[Function]}
+                            >
+                              <div
+                                className="content"
+                              >
+                                <div
+                                  className="cell icon"
+                                  title="Show list of all Swift"
+                                >
+                                  <i
+                                    className="pficon pficon-service"
+                                    style={
+                                      Object {
+                                        "background": undefined,
+                                      }
+                                    }
+                                    title="Show list of all Swift"
+                                  />
+                                </div>
+                                All (14)
+                              </div>
+                            </a>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value sub_items"
+                      >
+                        <StructuredListCell
+                          className="content_value sub_items"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value sub_items bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="cell icon"
+                                title="Show list of configuration files of Swift"
+                              >
+                                <i
+                                  className="fa fa-file-o"
+                                  style={
+                                    Object {
+                                      "background": undefined,
+                                    }
+                                  }
+                                  title="Show list of configuration files of Swift"
+                                />
+                              </div>
+                              Configuration (0)
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+              </div>
+            </StructuredListBody>
+          </FeatureToggle(StructuredListBody)>
+        </div>
+      </StructuredListWrapper>
+    </FeatureToggle(StructuredListWrapper)>
+  </MiqStructuredList>
   <table
-    className="table table-bordered table-striped table-summary-screen"
+    className="table table-bordered table-striped table-summary-screen multilink_table"
   >
     <thead>
       <tr>

@@ -52,8 +52,328 @@ exports[`Operation Ranges renders just fine... 1`] = `
   }
   title="Operation Ranges"
 >
+  <MiqStructuredList
+    headers={Array []}
+    mode="operation_ranges"
+    rows={
+      Array [
+        Object {
+          "hoverClass": "no-hover",
+          "label": "CPU",
+          "value": Array [
+            Object {
+              "label": "Max",
+              "value": "Not Available",
+            },
+            Object {
+              "label": "High",
+              "value": "0 MHz",
+            },
+            Object {
+              "label": "Average",
+              "value": "0 MHz",
+            },
+            Object {
+              "label": "Low",
+              "value": "0 MHz",
+            },
+          ],
+        },
+        Object {
+          "hoverClass": "no-hover",
+          "label": "CPU Usage",
+          "value": Array [
+            Object {
+              "label": "Max",
+              "value": "Not Available",
+            },
+            Object {
+              "label": "High",
+              "value": "0.00%",
+            },
+            Object {
+              "label": "Average",
+              "value": "0.00%",
+            },
+            Object {
+              "label": "Low",
+              "value": "0.00%",
+            },
+          ],
+        },
+      ]
+    }
+    title="Operation Ranges"
+  >
+    <h3>
+      Operation Ranges
+    </h3>
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list operation_ranges"
+    >
+      <StructuredListWrapper
+        ariaLabel="Structured list"
+        className="miq-structured-list operation_ranges"
+        isCondensed={false}
+        isFlush={false}
+        selection={false}
+      >
+        <div
+          aria-label="Structured list"
+          className="bx--structured-list miq-structured-list operation_ranges"
+          role="table"
+        >
+          <FeatureToggle(StructuredListBody)>
+            <StructuredListBody
+              onKeyDown={[Function]}
+            >
+              <div
+                className="bx--structured-list-tbody"
+                onKeyDown={[Function]}
+                role="rowgroup"
+              >
+                <FeatureToggle(StructuredListRow)
+                  key="0"
+                  tabIndex={0}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={0}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            CPU
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value"
+                      >
+                        <StructuredListCell
+                          className="content_value"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="multi_row_cell"
+                              >
+                                <div
+                                  className="sub_row_item"
+                                  key="0"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Max
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    Not Available
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="1"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    High
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0 MHz
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="2"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Average
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0 MHz
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="3"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Low
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0 MHz
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+                <FeatureToggle(StructuredListRow)
+                  key="1"
+                  tabIndex={1}
+                >
+                  <StructuredListRow
+                    head={false}
+                    label={false}
+                    onKeyDown={[Function]}
+                    tabIndex={1}
+                  >
+                    <div
+                      className="bx--structured-list-row"
+                      role="row"
+                    >
+                      <FeatureToggle(StructuredListCell)
+                        className="label_header"
+                      >
+                        <StructuredListCell
+                          className="label_header"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="label_header bx--structured-list-td"
+                            role="cell"
+                          >
+                            CPU Usage
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                      <FeatureToggle(StructuredListCell)
+                        className="content_value"
+                      >
+                        <StructuredListCell
+                          className="content_value"
+                          head={false}
+                          noWrap={false}
+                        >
+                          <div
+                            className="content_value bx--structured-list-td"
+                            role="cell"
+                          >
+                            <div
+                              className="content"
+                            >
+                              <div
+                                className="multi_row_cell"
+                              >
+                                <div
+                                  className="sub_row_item"
+                                  key="0"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Max
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    Not Available
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="1"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    High
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0.00%
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="2"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Average
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0.00%
+                                  </div>
+                                </div>
+                                <div
+                                  className="sub_row_item"
+                                  key="3"
+                                >
+                                  <div
+                                    className="sub_label"
+                                  >
+                                    Low
+                                  </div>
+                                  <div
+                                    className="sub_value"
+                                  >
+                                    0.00%
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </StructuredListCell>
+                      </FeatureToggle(StructuredListCell)>
+                    </div>
+                  </StructuredListRow>
+                </FeatureToggle(StructuredListRow)>
+              </div>
+            </StructuredListBody>
+          </FeatureToggle(StructuredListBody)>
+        </div>
+      </StructuredListWrapper>
+    </FeatureToggle(StructuredListWrapper)>
+  </MiqStructuredList>
   <table
-    className="table table-bordered table-striped table-summary-screen"
+    className="table table-bordered table-striped table-summary-screen operation_ranges"
   >
     <thead>
       <tr>

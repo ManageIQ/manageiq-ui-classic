@@ -37,7 +37,7 @@ exports[`TableListView renders just fine... 1`] = `
   }
 >
   <table
-    className="table table-bordered table-hover table-striped table-summary-screen"
+    className="table table-bordered table-hover table-striped table-summary-screen table_list_view"
   >
     <thead>
       <tr>

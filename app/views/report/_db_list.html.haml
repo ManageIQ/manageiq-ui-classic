@@ -4,6 +4,7 @@
   - is_widget = @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g" && !@in_a_form
   - if is_dashboard || is_group || is_widget
     = render :partial => "layouts/flash_msg"
+    = @miq_groups.inspect
     = react('DbList', {:nodes => @sb[:nodes],
                         :activeTree => @sb[:active_tree],
                         :dashboards => @db_nodes,
