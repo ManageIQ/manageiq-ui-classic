@@ -76,20 +76,19 @@ const MiqDataTable = ({
   };
 
   /** Function to render the header cells. */
-  const renderHeaders = (getHeaderProps) => (
-    headers.map((header) => {
-      const { sortHeader, sortDirection } = headerSortingData(header);
-      return (
-        <TableHeader
-          {...getHeaderProps({ header, isSortHeader: { sortable } })}
-          onClick={() => sortable && onSort(header)}
-          isSortHeader={sortHeader}
-          sortDirection={sortDirection}
-        >
-          {headerLabel(header.header)}
-        </TableHeader>
-      );
-    })
+  const renderHeaders = (getHeaderProps) => (headers.map((header) => {
+    const { sortHeader, sortDirection } = headerSortingData(header);
+    return (
+      <TableHeader
+        {...getHeaderProps({ header, isSortHeader: { sortable } })}
+        onClick={() => sortable && onSort(header)}
+        isSortHeader={sortHeader}
+        sortDirection={sortDirection}
+      >
+        {headerLabel(header.header)}
+      </TableHeader>
+    );
+  })
   );
 
   /** Function to render the cells of each row. */

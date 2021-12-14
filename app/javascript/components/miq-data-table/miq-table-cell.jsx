@@ -41,10 +41,11 @@ const MiqTableCell = ({
   /** Fuction to render an icon in cell based on the 'type' in 'item'. */
   const cellIcon = (item, showText) => {
     if (showText) {
-      const iconStyle = item.background ? { background: item.background, color: '#FFF' } : { color: '#000' };
+      const color = item.props ? item.props.style : {};
+      const iconStyle = item.background ? { background: item.background, color: '#FFF' } : color;
       return renderIcon(item.icon, iconStyle, showText);
     }
-    const { className, style } = item.props ? item.props : { className: item.icon, style: null };
+    const { className, style } = item.props ? item.props : { className: item.icon, style: { color: '#000' } };
     return renderIcon(className, style, showText);
   };
 

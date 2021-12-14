@@ -94,7 +94,7 @@ export const containerNodesData = () => {
   const hasCheckbox = true;
   const { headerKeys, headerItems } = headerData(columns, hasCheckbox);
   const miqRows = rowData(headerKeys, rows, hasCheckbox);
-  return { headerItems, miqRows };
+  return { headerItems, miqRows: miqRows.rowItems };
 };
 
 /** Table data with checkboxes, images and icons. */
@@ -215,7 +215,7 @@ export const hostData = () => {
   const hasCheckbox = true;
   const { headerKeys, headerItems } = headerData(columns, hasCheckbox);
   const miqRows = rowData(headerKeys, rows, hasCheckbox);
-  return { headerItems, miqRows };
+  return { headerItems, miqRows: miqRows.rowItems };
 };
 
 /** Table data with icons and buttons. */
@@ -307,5 +307,5 @@ export const catalogData = () => {
   const hasCheckbox = false;
   const { headerKeys, headerItems } = headerData(columns, hasCheckbox);
   const miqRows = rowData(headerKeys, rows, hasCheckbox);
-  return { headerItems, miqRows };
+  return { headerItems, miqRows: miqRows.rowItems };
 };

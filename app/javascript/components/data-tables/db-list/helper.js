@@ -1,5 +1,3 @@
-import React from 'react';
-import classNames from 'classnames';
 import textualSummaryGenericClick from '../../../react/textual_summary_click';
 
 const DashboardTypes = {
@@ -40,10 +38,9 @@ const isWidget = (nodes) => nodes.length === 3 && nodes[1] === 'g_g';
 /** Function to generate the dashboard list data */
 const dashboardList = (dashboards) => {
   const rows = Object.entries(dashboards).map(([key, value]) => ({ key, value }));
-  const headers = [{ key: 'icon', header: '' }, { key: 'type', header: 'Type' }];
+  const headers = [{ key: 'type', header: 'Type' }];
   rows.forEach((item) => {
-    item.icon = <i className={classNames('fa-lg', item.value.glyph)} />;
-    item.type = item.value.text;
+    item.type = { text: item.value.text, icon: item.value.glyph };
     item.id = item.value.id;
     item.clickable = true;
   });
@@ -52,10 +49,10 @@ const dashboardList = (dashboards) => {
 
 /** Function to generate the group list data */
 const groupList = (groups) => {
-  const headers = [{ key: 'icon', header: '' }, { key: 'description', header: 'Description' }];
+  const headers = [{ key: 'description', header: 'Description' }];
   groups.forEach((item) => {
     item.id = item.id.toString();
-    item.icon = <i className={classNames('fa fa-lg', 'ff ff-group')} />;
+    item.description = { text: item.description, icon: 'fa fa-lg ff ff-group' };
     item.clickable = true;
   });
   return { headers, rows: groups, type: DashboardTypes.GROUP };
@@ -63,11 +60,10 @@ const groupList = (groups) => {
 
 /** Function to generate the widgets data */
 const widgetList = (widgets) => {
-  const headers = [{ key: 'icon', header: '' }, { key: 'description', header: 'Description' }];
+  const headers = [{ key: 'description', header: 'Description' }];
   widgets.forEach((item) => {
     item.id = item.id.toString();
-    item.icon = <i className={classNames('fa fa-lg', 'fa-dashboard')} />;
-    item.description = `${item.description} (${item.name})`;
+    item.description = { text: `${item.description} (${item.name})`, icon: 'fa fa-lg fa-dashboard' };
     item.clickable = true;
   });
   return { headers, rows: widgets, type: DashboardTypes.WIDGET };
