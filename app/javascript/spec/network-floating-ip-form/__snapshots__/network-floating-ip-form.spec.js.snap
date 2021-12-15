@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Floating Ips Profile Form Component should render correctly 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "ems_id",
+              "includeEmpty": true,
+              "isDisabled": false,
+              "label": "Network Manager",
+              "name": "ems_id",
+              "onChange": [Function],
+              "options": Array [],
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+              "validateOnMount": true,
+            },
+          ],
+          "id": "network-management-provider",
+          "name": "network-management-provider",
+          "title": "Network Management Provider",
+        },
+      ],
+    }
+  }
+/>
+`;
