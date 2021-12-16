@@ -89,11 +89,6 @@ describe FloatingIpController do
       post :button, :params => { :pressed => "floating_ip_new", :format => :js }
       expect(assigns(:flash_array)).to be_nil
     end
-
-    it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :create, :params => { :button => "add", :format => :js, :name => 'test', :tenant_id => 'id', :ems_id => ems.id }
-    end
   end
 
   describe "#edit" do
@@ -115,11 +110,6 @@ describe FloatingIpController do
     it "builds edit screen" do
       post :button, :params => { :pressed => "floating_ip_edit", :format => :js, :id => floating_ip.id }
       expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :update, :params => { :button => "save", :format => :js, :id => floating_ip.id, :network_port => {:ems_ref => ""}}
     end
   end
 
