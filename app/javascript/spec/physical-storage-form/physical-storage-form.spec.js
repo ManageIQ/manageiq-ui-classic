@@ -55,6 +55,8 @@ describe('Physical storage form component', () => {
       {"id":"2","name":"xiv","version":"1.1","ems_id":"2","ems_ref":"b91e94ab-8056-4c61-bec6-00430e9c1e4c","created_at":"2021-08-29T10:40:21Z","updated_at":"2021-08-29T10:40:21Z"}
     ]};
 
+  const create_ph_storage_hash = require('../../../../spec/javascripts/fixtures/json/physical_storage.json');
+
   beforeEach(() => {
 
   });
@@ -64,8 +66,20 @@ describe('Physical storage form component', () => {
     fetchMock.restore();
   });
 
+  // this will check the create physical storage form fields against the end2end json file containing the required values
   it('should render adding form variant', (done) => {
     const wrapper = shallow(<PhysicalStorageForm />);
+
+    let ph_storage_fields_arr = toJson(wrapper)["props"]["schema"]["fields"]
+    let parsed_ph_storage_fields_arr = []
+    for (var i = 0; i < ph_storage_fields_arr.length; i++) {
+      parsed_ph_storage_fields_arr.push(ph_storage_fields_arr[i]["name"])
+    }
+
+    let required_create_ph_storage_fields = Object.keys(create_ph_storage_hash)
+    for (var i = 0; i < required_create_ph_storage_fields.length; i++) {
+      expect(parsed_ph_storage_fields_arr.includes(required_create_ph_storage_fields[i])).toBe(true);
+    }
 
     setImmediate(() => {
       wrapper.update();

@@ -1,3 +1,5 @@
+require 'json'
+
 describe PhysicalStorageController do
   render_views
 
@@ -12,6 +14,18 @@ describe PhysicalStorageController do
     EvmSpecHelper.local_miq_server
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryBot.create(:user)
+  end
+
+  it "compare end2end create physical storage hash" do
+    end2end_json_path = Rails.root.join("spec", "fixtures", "end2end", "physical_storage.json").to_s
+    end2end_json_file = File.read(end2end_json_path)
+    end2end_create_ph_storage_hash = JSON.parse(end2end_json_file)
+
+    ui_classic_json_path = File.join(File.dirname(__FILE__), '../javascripts/fixtures/json/physical_storage.json')
+    ui_classic_json_file = File.read(ui_classic_json_path)
+    ui_classic_create_ph_storage_hash = JSON.parse(ui_classic_json_file)
+
+    expect(end2end_create_ph_storage_hash).to eq(ui_classic_create_ph_storage_hash)
   end
 
   describe "#show_list" do
