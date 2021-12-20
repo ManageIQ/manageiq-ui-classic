@@ -19,6 +19,13 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupsCenter < ApplicationHelper:
             :confirm => N_("Refresh relationships and power states for all items related to these Host Initiators Cluster?"),
             :options => {:feature => :refresh}
           ),
+          button(
+            :host_initiator_group_new,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Add new host initiator group'),
+            t,
+            :klass => ApplicationHelper::Button::HostInitiatorGroupNew
+          ),
         ]
       ),
     ]

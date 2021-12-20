@@ -1488,7 +1488,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -2313,8 +2312,10 @@ Rails.application.routes.draw do
         download_summary_pdf
         show
         show_list
+        new
       ],
       :post => %w[
+        button
         listnav_search_selected
         quick_search
         show_list
