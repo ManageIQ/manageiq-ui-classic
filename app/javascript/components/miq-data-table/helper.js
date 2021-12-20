@@ -31,7 +31,7 @@ export const ReportSortDirections = {
 export const DefaultKey = 'defaultKey';
 export const isObject = (data) => typeof (data) === 'object';
 export const isNull = (data) => (data === null);
-export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image.trim().length > 0;
+export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.trim().length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');
@@ -42,7 +42,7 @@ export const hasIcon = (keys, data) => {
     return { showIcon: true, showText: false };
   }
   return {
-    showIcon: keys.includes(CellElements.icon) && data.icon.trim().length > 0,
+    showIcon: keys.includes(CellElements.icon) && data.icon && data.icon.length > 0,
     showText: hasText(data),
   };
 };

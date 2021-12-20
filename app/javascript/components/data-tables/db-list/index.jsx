@@ -7,8 +7,6 @@ const DbList = ({
   nodes, activeTree, dashboards, groups, widgets,
 }) => {
   const { headers, rows, type } = tableData(nodes, dashboards, groups, widgets);
-  console.log(headers);
-  console.log(rows);
 
   /** Function to execute the row's click event */
   const onSelect = (selectedRow) => onSelectRender(type, selectedRow, activeTree, nodes, rows);

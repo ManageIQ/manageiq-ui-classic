@@ -2,7 +2,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconOrImage from './icon_or_image';
-import MiqStructuredList from '../miq-structured-list';
 
 /**
  * Render a group of tags in a table.
@@ -15,25 +14,25 @@ export default class TagGroup extends React.Component {
     <tr key={item.key} className={item.link ? '' : 'no-hover'}>
       <td className="label">{item.label}</td>
       {(item.link && this.props.onClick)
-          && (
-            <td title={item.title}>
-              <a href={item.link} onClick={(e) => this.props.onClick(item, e)}>
-                <IconOrImage icon={item.icon} image={item.image} title={item.title} />
-                {' '}
-                {item.value}
-              </a>
-            </td>
-          )}
+      && (
+        <td title={item.title}>
+          <a href={item.link} onClick={(e) => this.props.onClick(item, e)}>
+            <IconOrImage icon={item.icon} image={item.image} title={item.title} />
+            {' '}
+            {item.value}
+          </a>
+        </td>
+      )}
       {(item.link === undefined)
-          && (
-            <td title={item.title}>
-              <IconOrImage icon={item.icon} image={item.image} title={item.title} />
-              {' '}
-              {item.value}
-            </td>
-          )}
+      && (
+        <td title={item.title}>
+          <IconOrImage icon={item.icon} image={item.image} title={item.title} />
+          {' '}
+          {item.value}
+        </td>
+      )}
     </tr>
-  )
+  );
 
   /**
    * Render a list of values joined with "<b> | </b>", with or without label
@@ -102,24 +101,16 @@ export default class TagGroup extends React.Component {
 
   render() {
     return (
-      <>
-        <MiqStructuredList
-          rows={this.props.items}
-          title={this.props.title}
-          mode="tag_group"
-          onClick={(item, event) => this.props.onClick(item, event)}
-        />
-        <table className="table table-bordered table-hover table-striped table-summary-screen tag_group">
-          <thead>
-            <tr>
-              <th colSpan="2" align="left">{this.props.title}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.items.map((item, i) => this.renderTagRow({ key: i, ...item }))}
-          </tbody>
-        </table>
-      </>
+      <table className="table table-bordered table-hover table-striped table-summary-screen">
+        <thead>
+          <tr>
+            <th colSpan="2" align="left">{this.props.title}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.items.map((item, i) => this.renderTagRow({ key: i, ...item }))}
+        </tbody>
+      </table>
     );
   }
 }

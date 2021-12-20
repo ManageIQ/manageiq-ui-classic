@@ -14,6 +14,9 @@ const Datastore = ({
     miqHeaders, miqRows, hasCheckbox, nodeTree,
   } = tableData(type, hasOptions, initialData, datastoreTypes);
 
+  if (miqRows.merged) {
+    miqHeaders.splice(0, 1);
+  }
   /** Function to find an item from initialData. */
   const findItem = (item) => initialData.find((row) => row.id.toString() === item.id.toString());
 
@@ -91,7 +94,7 @@ const Datastore = ({
 
   return (
     <MiqDataTable
-      rows={miqRows}
+      rows={miqRows.rowItems}
       headers={miqHeaders}
       onCellClick={(selectedRow, cellType, event) => onCellClick(selectedRow, cellType, event)}
       rowCheckBox={hasCheckbox}

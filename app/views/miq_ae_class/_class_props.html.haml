@@ -1,8 +1,9 @@
 #class_props_div
   - if x_node.split('-')[0] == "aec" || params[:pressed] || ["field_select","field_accept","field_delete"].include?(params[:action]) || (x_node.split('-')[0] == "aen" && params[:button] == "reset")
     - if !@in_a_form_props
+      %h3= _('Properties')
       - class_properties_data(@sb[:namespace_path], @ae_class)
-      = react('MiqStructuredList', {:title => 'Properties', :rows => @initial_data, :mode => "class_props"})
+      = react('MiqStructuredList', {:type => 'class_props', :rows => @initial_data})
       = render :partial => "domain_overrides", :locals  => {:node_prefix => "aec", :model => "Class"}
     - else
       #form_div

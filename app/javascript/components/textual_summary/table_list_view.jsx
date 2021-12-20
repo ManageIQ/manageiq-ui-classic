@@ -22,10 +22,9 @@ const renderRow = (row, i, colOrder, rowLabel, onClick) => (
 
 export default function TableListView(props) {
   const { headers, values, title } = props;
-  console.log('values===', values);
 
   return (
-    <table className="table table-bordered table-hover table-striped table-summary-screen table_list_view">
+    <table className="table table-bordered table-hover table-striped table-summary-screen">
       <thead>
         <tr>
           <th colSpan={headers.length} align="left">{title}</th>

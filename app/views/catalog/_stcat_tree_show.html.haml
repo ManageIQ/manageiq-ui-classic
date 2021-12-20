@@ -16,8 +16,6 @@
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Catalog Items found.")}
   - else
     %hr
-    - catalog_data(@record_service_templates)
-    = @initial_data.inspect
     %table.table.table-bordered.table-striped.table-hover
       %thead
         %th
