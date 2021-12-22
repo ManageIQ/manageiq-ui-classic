@@ -11,6 +11,7 @@ TextualListview = Struct.new(:title, :headers, :col_order, :value) do
   end
 
   def self.new_from_hash(h)
+    h ||= {:title => "Variables", :headers => ["Name", "Value"], :col_order => ["name", "value"], :value => []}
     new(*h.values_at(*members))
   end
 
