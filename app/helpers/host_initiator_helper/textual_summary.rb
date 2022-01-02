@@ -13,6 +13,8 @@ module HostInitiatorHelper::TextualSummary
         ems
         physical_storage
         cloud_volumes
+        host_initiator_group
+        indirect_cloud_volumes
       ]
     )
   end
@@ -45,13 +47,30 @@ module HostInitiatorHelper::TextualSummary
     textual_link(@record.physical_storage)
   end
 
+  def textual_host_initiator_group
+    textual_link(@record.host_initiator_group)
+  end
+
   def textual_cloud_volumes
     num   = @record.number_of(:cloud_volumes)
-    h     = {:label => _('Cloud Volumes'), :value => num, :icon => "pficon pficon-volume"}
+    h     = {:label => _('Directly Attached Cloud Volumes'), :value => num, :icon => "pficon pficon-volume"}
     if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
       h[:title] = _("Show volumes mapped to this host initiator")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volumes')
     end
     h
+  end
+
+  def textual_indirect_cloud_volumes
+    group = @record.host_initiator_group
+    if group
+      num   = group.number_of(:cloud_volumes)
+      h     = {:label => _('Volumes Attached Through Host Initiator Group'), :value => num, :icon => "pficon pficon-volume"}
+      if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
+        h[:title] = _("Show volumes mapped to this host initiator")
+        h[:link]  = url_for_only_path(:controller => 'host_initiator_group',:action => 'show', :id => group, :display => 'cloud_volumes')
+      end
+      h
+    end
   end
 end

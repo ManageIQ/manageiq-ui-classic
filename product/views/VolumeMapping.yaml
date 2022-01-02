@@ -27,6 +27,9 @@ include:
   host_initiator:
     columns:
     - name
+  host_initiator_group:
+    columns:
+      - name
   physical_storage:
     columns:
     - name
@@ -46,7 +49,7 @@ col_order:
 - physical_storage.name
 - cloud_volume.name
 - host_initiator.name
-
+- host_initiator_group.name
 
 # Column titles, in order
 headers:
@@ -54,6 +57,7 @@ headers:
 - Storage
 - Volume
 - Host Initiator
+- Host Initiator Group
 
 # Condition(s) string for the SQL query
 conditions:

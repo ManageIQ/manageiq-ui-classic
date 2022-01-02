@@ -36,7 +36,7 @@ class HostInitiatorGroupController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties san_addresses], %i[tags]]
+    [%i[properties host_initiators san_addresses ], %i[tags]]
   end
   helper_method :textual_group_list
 
