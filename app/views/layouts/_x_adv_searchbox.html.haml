@@ -1,3 +1,4 @@
 -# If set, don't show advanced search and add nameonly class to name fields
 - nameonly ||= false
-= react('SearchBar', :searchText => @search_text, :action => 'x_search_by_name', :advancedSearch => !nameonly)
+#adv_searchbox_div{:style => "display: none;"}
+    = react('SearchBar', :searchText => @search_text, :action => 'x_search_by_name', :advancedSearch => !nameonly)
