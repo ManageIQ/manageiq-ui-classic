@@ -63,103 +63,129 @@ const createSchema = (initialValues = {}, edit, promise) => {
         validate: [{ type: validatorTypes.REQUIRED }],
       },
       {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'attributes',
-        id: 'attributes',
-        label: __('Attributes'),
-        noItemsMessage: __('None'),
-        buttonLabels: {
-          add: __('Add'),
-          remove: __('Remove'),
-        },
-        AddButtonProps: {
-          size: 'small',
-        },
-        RemoveButtonProps: {
-          size: 'small',
-        },
+        component: componentTypes.SUB_FORM,
+        id: 'generic-objects-field-array-attributes',
+        key: 'generic-objects-field-array-attributes',
+        name: 'generic-objects-field-array-attributes',
         fields: [
           {
-            component: componentTypes.TEXT_FIELD,
-            name: 'attributes_name',
-            label: __('Name'),
-            validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
-          },
-          {
-            component: componentTypes.SELECT,
-            name: 'type',
-            label: __('Type'),
-            placeholder: __('<Choose>'),
-            includeEmpty: true,
-            loadOptions: () => promise.then(({ data: { allowed_types } }) =>
-              Object.keys(allowed_types).map((key) => ({
-                value: key,
-                label: __(allowed_types[key]),
-              }))),
-            validate: [{ type: validatorTypes.REQUIRED }],
+            component: componentTypes.FIELD_ARRAY,
+            name: 'attributes',
+            id: 'attributes',
+            label: __('Attributes'),
+            noItemsMessage: __('None'),
+            buttonLabels: {
+              add: __('Add'),
+              remove: __('Remove'),
+            },
+            AddButtonProps: {
+              size: 'small',
+            },
+            RemoveButtonProps: {
+              size: 'small',
+            },
+            fields: [
+              {
+                component: componentTypes.TEXT_FIELD,
+                name: 'attributes_name',
+                label: __('Name'),
+                validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+              },
+              {
+                component: componentTypes.SELECT,
+                name: 'type',
+                label: __('Type'),
+                placeholder: __('<Choose>'),
+                includeEmpty: true,
+                loadOptions: () => promise.then(({ data: { allowed_types } }) =>
+                  Object.keys(allowed_types).map((key) => ({
+                    value: key,
+                    label: __(allowed_types[key]),
+                  }))),
+                validate: [{ type: validatorTypes.REQUIRED }],
+              },
+            ],
           },
         ],
       },
       {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'associations',
-        id: 'associations',
-        label: __('Associations'),
-        noItemsMessage: __('None'),
-        buttonLabels: {
-          add: __('Add'),
-          remove: __('Remove'),
-        },
-        AddButtonProps: {
-          size: 'small',
-        },
-        RemoveButtonProps: {
-          size: 'small',
-        },
+        component: componentTypes.SUB_FORM,
+        id: 'generic-objects-field-array-associations',
+        key: 'generic-objects-field-array-associations',
+        name: 'generic-objects-field-array-associations',
         fields: [
           {
-            component: componentTypes.TEXT_FIELD,
-            name: 'associations_name',
-            label: __('Name'),
-            validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
-          },
-          {
-            component: componentTypes.SELECT,
-            name: 'class',
-            label: __('Class'),
-            placeholder: __('<Choose>'),
-            isSearchable: true,
-            loadOptions: () => promise.then(({ data: { allowed_association_types } }) =>
-              Object.keys(allowed_association_types).map((key) => ({
-                value: key,
-                label: __(allowed_association_types[key]),
-              }))),
-            validate: [{ type: validatorTypes.REQUIRED }],
+            component: componentTypes.FIELD_ARRAY,
+            name: 'associations',
+            id: 'associations',
+            label: __('Associations'),
+            noItemsMessage: __('None'),
+            buttonLabels: {
+              add: __('Add'),
+              remove: __('Remove'),
+            },
+            AddButtonProps: {
+              size: 'small',
+            },
+            RemoveButtonProps: {
+              size: 'small',
+            },
+            fields: [
+              {
+                component: componentTypes.TEXT_FIELD,
+                name: 'associations_name',
+                label: __('Name'),
+                validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+              },
+              {
+                component: componentTypes.SELECT,
+                name: 'class',
+                id: 'class',
+                label: __('Class'),
+                className: 'class',
+                placeholder: __('<Choose>'),
+                isSearchable: true,
+                loadOptions: () => promise.then(({ data: { allowed_association_types } }) =>
+                  Object.keys(allowed_association_types).map((key) => ({
+                    value: key,
+                    label: __(allowed_association_types[key]),
+                  }))),
+                validate: [{ type: validatorTypes.REQUIRED }],
+              },
+            ],
           },
         ],
       },
       {
-        component: componentTypes.FIELD_ARRAY,
-        name: 'methods',
-        id: 'methods',
-        label: __('Methods'),
-        noItemsMessage: __('None'),
-        buttonLabels: {
-          add: __('Add'),
-          remove: __('Remove'),
-        },
-        AddButtonProps: {
-          size: 'small',
-        },
-        RemoveButtonProps: {
-          size: 'small',
-        },
+        component: componentTypes.SUB_FORM,
+        id: 'generic-objects-field-array-methods',
+        key: 'generic-objects-field-array-methods',
+        name: 'generic-objects-field-array-methods',
         fields: [
           {
-            component: componentTypes.TEXT_FIELD,
-            name: 'methods_name',
-            label: __('Name'),
-            validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+            component: componentTypes.FIELD_ARRAY,
+            name: 'methods',
+            id: 'methods',
+            label: __('Methods'),
+            noItemsMessage: __('None'),
+            buttonLabels: {
+              add: __('Add'),
+              remove: __('Remove'),
+            },
+            AddButtonProps: {
+              size: 'small',
+            },
+            RemoveButtonProps: {
+              size: 'small',
+            },
+            fields: [
+              {
+                component: componentTypes.TEXT_FIELD,
+                name: 'methods_name',
+                label: __('Name'),
+                validate: [{ type: validatorTypes.REQUIRED }, { type: 'syntax' }],
+              },
+            ],
           },
         ],
       },
