@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Network Router Interfaces Form Component should add security group 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  canSubmit={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "ems_id",
+              "isDisabled": false,
+              "isRequired": true,
+              "label": "Network Manager",
+              "loadOptions": [Function],
+              "name": "ems_id",
+              "onChange": [Function],
+              "placeholder": "<Choose>",
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+              "validateOnMount": true,
+            },
+          ],
+          "id": "network-provider",
+          "name": "network-provider",
+          "title": "Network Management Provider",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should edit security group 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should edit security group firewall rules 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should render add security group form 1`] = `
+<Connect(MiqFormRenderer)
+  buttonsLabels={
+    Object {
+      "submitLabel": "Add",
+    }
+  }
+  canReset={false}
+  canSubmit={false}
+  onCancel={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "ems_id",
+              "isDisabled": false,
+              "isRequired": true,
+              "label": "Network Manager",
+              "loadOptions": [Function],
+              "name": "ems_id",
+              "onChange": [Function],
+              "placeholder": "<Choose>",
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+              "validateOnMount": true,
+            },
+          ],
+          "id": "network-provider",
+          "name": "network-provider",
+          "title": "Network Management Provider",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Network Router Interfaces Form Component should render edit security group form 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
