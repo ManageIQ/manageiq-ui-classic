@@ -299,7 +299,20 @@
   }
 }
 
-#generic-objects-field-array-methods, #generic-objects-field-array-attributes {
+#firewall_rules {
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+    margin-bottom: 100px;
+  }
+}
+
+#generic-objects-field-array-methods,
+#generic-objects-field-array-attributes {
   .bx--form-item {
     display: inline-flex;
     margin-right: 2rem;

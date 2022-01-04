@@ -39,7 +39,6 @@ require('./ops/tenant_quota_form_controller.js');
 require('./playbook-reusable-code-mixin.js');
 require('./reconfigure/reconfigure_form_controller.js');
 require('./schedule/schedule_form_controller.js');
-require('./security_group/security_group_form_controller.js');
 require('./timeline/timeline_options_controller.js');
 require('./tree_view_controller.js');
 require('./vm_cloud/vm_cloud_associate_floating_ip_form_controller.js');
