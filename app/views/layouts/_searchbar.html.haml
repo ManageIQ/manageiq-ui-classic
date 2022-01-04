@@ -1,3 +1,4 @@
 - if @lastaction == 'show_list' && !session[:menu_click] && !@in_a_form
   = render :partial => 'layouts/quick_search' if display_adv_search?
-  = react('SearchBar', :searchText => @search_text, :action => 'show_list', :advancedSearch => display_adv_search?)
+  #searchbox
+    = react('SearchBar', :searchText => @search_text, :action => 'show_list', :advancedSearch => display_adv_search?)
