@@ -10,15 +10,7 @@
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(binf, textual_iso_datastore_basicinfo), @record)
         - unless @isd.iso_images.empty?
           %h3= _('ISO Images')
-          %table.table.table-bordered.table-striped.table-hover
-            %thead
-              %tr
-                %th= _('Name')
-            %tbody
-              - @isd.iso_images.sort_by { |a| a.name.downcase }.each do |i|
-                %tr{:title => _("View this ISO Image"), :onclick => "miqTreeActivateNode('iso_datastores_tree', 'isi-#{i.id}');"}
-                  %td
-                    = h(i.name)
+          = react('ISODatastoreTable', { :initialData => @isd.iso_images.sort_by { |a| a.name.downcase } })
 
   - if @img
     -# PXE Image is selected

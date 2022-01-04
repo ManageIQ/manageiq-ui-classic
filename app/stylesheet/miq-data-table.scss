@@ -83,3 +83,13 @@
     }
   }
 }
+
+#iso_datastore_details_div {
+  tbody tr {
+    .cell {
+      &.truncate_cell {
+        max-width: 1000px;
+      }
+    }
+  }
+}
