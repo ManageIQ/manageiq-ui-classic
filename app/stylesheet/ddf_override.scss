@@ -298,3 +298,38 @@
     }
   }
 }
+
+#generic-objects-field-array-methods, #generic-objects-field-array-attributes {
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+    width: 400px;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+  }
+}
+
+#generic-objects-field-array-associations {
+  .bx--list-box__wrapper {
+    width: 400px;
+    display: inline-flex;
+
+    .bx--combo-box {
+      margin-top: 1.5rem;
+      margin-left: -2rem;
+    }
+  }
+
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+    width: 400px;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+    margin-left: 32px;
+  }
+}
