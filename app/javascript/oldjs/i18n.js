@@ -1,6 +1,7 @@
 require('./locale/');
 require('gettext_i18n_rails_js/vendor/assets/javascripts/gettext/jed.js');
 require('gettext_i18n_rails_js/lib/assets/javascripts/gettext/all.js');
+require('./miq_global.js');
 
 $(function() {
   // set in layouts/i18n_js

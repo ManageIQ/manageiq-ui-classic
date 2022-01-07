@@ -3,6 +3,8 @@
 // MIQ specific JS functions
 
 // Things to be done on page loads
+require('./miq_global.js');
+
 window.miqOnLoad = function() {
   // controller to be used in url in miqDropComplete method
   ManageIQ.widget.dashboardUrl = 'dashboard/widget_dd_done';
