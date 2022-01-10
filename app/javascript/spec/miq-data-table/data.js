@@ -1,4 +1,5 @@
 import { headerData, rowData } from '../../components/miq-data-table/helper';
+import { tableData as chargebackTableData } from '../../components/data-tables/chargeback-rate/helper';
 
 /** Table with text data. */
 export const simpleData = () => {
@@ -340,4 +341,34 @@ export const catalogData = () => {
   const { headerKeys, headerItems } = headerData(columns, hasCheckbox);
   const miqRows = rowData(headerKeys, rows, hasCheckbox);
   return { headerItems, miqRows: miqRows.rowItems };
+};
+
+/** Table data with multiple rows within a cell, ie 'text' contains an array or a string.
+ * Usage eg: Overview / Chargeback / Rates / Item (Summary)
+ */
+export const chargebackRateData = () => {
+  const cells = [
+    { text: 'CPU' },
+    { text: ['Allocated CPU Count', 'vCPUs Allocated over Time Period'] },
+    { text: [0, 100] },
+    { text: [100, 'Infinity'] },
+    { text: [1.5, 0.5], align: 'right' },
+    { text: [0], align: 'right' },
+    { text: '€ [Euro] / Hour / Cpu' },
+  ];
+  const initialData = [
+    { id: '0', clickable: false, cells },
+    { id: '1', clickable: false, cells },
+    { id: '2', clickable: false, cells },
+    { id: '3', clickable: false, cells },
+    { id: '4', clickable: false, cells },
+    { id: '5', clickable: false, cells },
+    { id: '6', clickable: false, cells },
+    { id: '7', clickable: false, cells },
+    { id: '8', clickable: false, cells },
+    { id: '9', clickable: false, cells },
+  ];
+
+  const { headers, rows } = chargebackTableData(initialData, true);
+  return { headers, rows };
 };

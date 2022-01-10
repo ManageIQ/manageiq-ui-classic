@@ -29,6 +29,16 @@
         max-width: 250px;
       }
 
+      .array_list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .list_row {
+          padding: 0.5rem 0;
+        }
+      }
+
       .image {
         width: 30px;
         height: 30px;
@@ -92,4 +102,8 @@
       }
     }
   }
+}
+
+.chargeback-rate table tbody tr td {
+  vertical-align: top !important;
 }

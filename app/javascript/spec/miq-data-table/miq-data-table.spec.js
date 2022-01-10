@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { shallow } from 'enzyme';
 import MiqDataTable from '../../components/miq-data-table';
 import {
-  simpleData, containerNodesData, hostData, catalogData, timeProfileReportsData,
+  simpleData, containerNodesData, hostData, catalogData, timeProfileReportsData, chargebackRateData,
 } from './data';
 
 describe('Data table component', () => {
@@ -129,6 +129,16 @@ describe('Data table component', () => {
       pageOptions={pageOptions}
       mode="static-gtl-view"
       gridChecks={[]}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render a data table with cells which have multiple rows or single row', () => {
+    const { headers, rows } = chargebackRateData;
+    const wrapper = shallow(<MiqDataTable
+      headers={headers}
+      rows={rows}
+      mode="chargeback-rate"
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

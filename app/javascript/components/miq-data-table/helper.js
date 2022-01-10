@@ -29,12 +29,20 @@ export const ReportSortDirections = {
 };
 
 export const DefaultKey = 'defaultKey';
+const dataType = (data) => (data ? data.constructor.name.toString() : undefined);
 export const isObject = (data) => typeof (data) === 'object';
+export const isArray = (item) => dataType(item) === 'Array';
+export const isNumber = (data) => typeof (data) === 'number';
 export const isNull = (data) => (data === null);
 export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.trim().length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');
+
+export const decimalCount = (value) => {
+  if ((value % 1 !== 0)) { return value.toString().split('.')[1].length; }
+  return 0;
+};
 
 /* Function to determin if only the icon needs to be printed, else, print its text along with the icon. */
 export const hasIcon = (keys, data) => {
