@@ -70,7 +70,7 @@ const MiqTableCell = ({
   const cellComponent = () => {
     const { data } = cell;
     const keys = Object.keys(data);
-    const content = { component: '', cellClick: true, showText: true };
+    const content = { component: '', cellClick: !!onCellClick, showText: true };
     if (isObject(data)) {
       if (hasImage(keys, data)) return { ...content, component: cellImage(data) };
 
