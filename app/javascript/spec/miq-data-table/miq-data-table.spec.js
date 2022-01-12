@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { shallow } from 'enzyme';
 import MiqDataTable from '../../components/miq-data-table';
 import {
-  simpleData, containerNodesData, hostData, catalogData,
+  simpleData, containerNodesData, hostData, catalogData, timeProfileReportsData,
 } from './data';
 
 describe('Data table component', () => {
@@ -14,6 +14,16 @@ describe('Data table component', () => {
       headers={miqHeaders}
       rows={miqRows}
       onCellClick={onSelect}
+      mode="list"
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render a simple non-clickable data table', () => {
+    const { miqHeaders, miqRows } = timeProfileReportsData();
+    const wrapper = shallow(<MiqDataTable
+      headers={miqHeaders}
+      rows={miqRows}
       mode="list"
     />);
     expect(toJson(wrapper)).toMatchSnapshot();

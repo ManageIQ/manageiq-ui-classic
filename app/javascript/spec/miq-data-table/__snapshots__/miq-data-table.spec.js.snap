@@ -90,6 +90,65 @@ exports[`Data table component should render a simple data table 1`] = `
 </div>
 `;
 
+exports[`Data table component should render a simple non-clickable data table 1`] = `
+<div
+  className="miq-data-table list"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={
+      Array [
+        Object {
+          "header": "Name",
+          "key": "name",
+        },
+        Object {
+          "header": "Title",
+          "key": "title",
+        },
+      ]
+    }
+    isSortable={false}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "id": "0",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "CPU Wait Time (by VM)",
+          },
+          "title": "CPU Wait/Ready Time (by VM)",
+        },
+        Object {
+          "id": "1",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "test",
+          },
+          "title": "test",
+        },
+        Object {
+          "id": "2",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "zReport1",
+          },
+          "title": "zReport1",
+        },
+      ]
+    }
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+</div>
+`;
+
 exports[`Data table component should render a static-gtl-view data table with checkboxes and icon 1`] = `
 <div
   className="miq-data-table static-gtl-view"

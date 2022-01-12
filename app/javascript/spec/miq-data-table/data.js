@@ -32,6 +32,38 @@ export const simpleData = () => {
   return { miqHeaders, miqRows };
 };
 
+/** Table with text data. */
+export const timeProfileReportsData = () => {
+  const miqHeaders = [
+    {
+      key: 'name',
+      header: 'Name',
+    },
+    {
+      key: 'title',
+      header: 'Title',
+    },
+  ];
+  const miqRows = [
+    {
+      id: '0',
+      name: { text: 'CPU Wait Time (by VM)', icon: 'fa fa-file-text-o' },
+      title: 'CPU Wait/Ready Time (by VM)',
+    },
+    {
+      id: '1',
+      name: { text: 'test', icon: 'fa fa-file-text-o' },
+      title: 'test',
+    },
+    {
+      id: '2',
+      name: { text: 'zReport1', icon: 'fa fa-file-text-o' },
+      title: 'zReport1',
+    },
+  ];
+  return { miqHeaders, miqRows };
+};
+
 /** Table data with checkboxes and icons. */
 export const containerNodesData = () => {
   const columns = [
