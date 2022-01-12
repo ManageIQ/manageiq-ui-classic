@@ -1,30 +1,3 @@
-%form.form-horizontal#form_div{:name           => "angularForm",
-                               'ng-controller' => "timeProfileFormController as vm",
-                               "miq-form"      => true,
-                               'ng-show'       => "vm.afterGet",
-                               'ng-cloak'      => "",
-                               "model"         => "vm.timeProfileModel",
-                               "model-copy"    => 'vm.modelCopy',
-                               'form-changed'  => true,
-                               :novalidate     => true}
-  %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
-    %hr
-    %h3= _('Reports Currently Using This Time Profile')
-    %table.table.table-striped.table-bordered
-      %thead
-        %tr
-          %th.table-view-pf-select
-          %th= _('Name')
-          %th= _('Title')
-      %tbody
-        - @timeprofile.miq_reports.sort_by { |a| a.name.downcase }.each do |r|
-          %tr
-            %td.table-view-pf-select
-              %i.fa.fa-file-text-o
-            %td= r.name
-            %td= r.title
-
-:javascript
-  ManageIQ.angular.app.value('timeProfileFormId', '#{@timeprofile.id || "new"}');
-  ManageIQ.angular.app.value('timeProfileFormAction', '#{@timeprofile_action}');
-  miq_bootstrap('#form_div');
+- if @initial_reports_table_data.length() > 0
+  %h3= _('Reports Currently Using This Time Profile')
+  = react('TimeProfileReportsTable', {:initialData => @initial_reports_table_data})

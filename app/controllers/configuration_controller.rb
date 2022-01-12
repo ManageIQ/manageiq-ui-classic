@@ -157,6 +157,7 @@ class ConfigurationController < ApplicationController
                       TimeProfile.in_my_region.for_user(session[:userid]).ordered_by_desc
                     end
     timeprofile_set_days_hours
+    @initial_table_data = table_data
     drop_breadcrumb(:name => _("Time Profiles"), :url => "/configuration/change_tab/?tab=4")
   end
 
@@ -227,6 +228,7 @@ class ConfigurationController < ApplicationController
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.find(params[:id])
     @timeprofile_action = "timeprofile_edit"
+    @initial_reports_table_data = reports_table_data
 
     if @timeprofile.profile_type == "global" && !report_admin_user?
       @tp_restricted = true
@@ -317,6 +319,43 @@ class ConfigurationController < ApplicationController
   end
 
   private
+
+  def table_data
+    rows = []
+    @timeprofiles.each do |timeprofile|
+      cells = []
+      row = {}
+      row[:clickId] = timeprofile.id.to_s
+      row[:clickable] = true
+      row[:id] = timeprofile.id.to_s
+      cells.push({:is_checkbox => true})
+      cells.push({:text => timeprofile.description})
+      cells.push({:text => timeprofile.profile_type})
+      cells.push({:text => timeprofile.profile_key})
+      cells.push({:text => @timeprofile_details[timeprofile.description][:days].join(", ")})
+      cells.push({:text => @timeprofile_details[timeprofile.description][:hours].join(", ")})
+      cells.push({:text => @timeprofile_details[timeprofile.description][:tz]})
+      cells.push({:text => timeprofile.rollup_daily_metrics.to_s.capitalize})
+      row[:cells] = cells
+      rows.push(row)
+    end
+    rows
+  end
+
+  def reports_table_data
+    rows = []
+    @timeprofile.miq_reports.sort_by { |a| a.name.downcase }.each do |report|
+      cells = []
+      row = {}
+      row[:clickable] = false
+      row[:id] = report.id.to_s
+      cells.push({:text => report.name, :icon => 'fa fa-file-text-o'})
+      cells.push({:text => report.title})
+      row[:cells] = cells
+      rows.push(row)
+    end
+    rows
+  end
 
   # copy single selected Object
   def edit_record
