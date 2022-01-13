@@ -67,6 +67,7 @@ exports[`Physical storage form component should render adding form variant 1`] =
           "component": "text-field",
           "hideField": true,
           "id": "edit",
+          "initialValue": "",
           "label": "edit",
           "name": "edit",
         },
@@ -246,6 +247,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
               "component": "text-field",
               "hideField": true,
               "id": "edit",
+              "initialValue": "",
               "label": "edit",
               "name": "edit",
             },
@@ -436,6 +438,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                 "component": "text-field",
                 "hideField": true,
                 "id": "edit",
+                "initialValue": "",
                 "label": "edit",
                 "name": "edit",
               },
@@ -618,6 +621,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                   "component": "text-field",
                   "hideField": true,
                   "id": "edit",
+                  "initialValue": "",
                   "label": "edit",
                   "name": "edit",
                 },
@@ -809,6 +813,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                     component="text-field"
                     hideField={true}
                     id="edit"
+                    initialValue=""
                     label="edit"
                     name="edit"
                   />,
@@ -972,6 +977,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                       "component": "text-field",
                       "hideField": true,
                       "id": "edit",
+                      "initialValue": "",
                       "label": "edit",
                       "name": "edit",
                     },
@@ -1138,6 +1144,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                       component="text-field"
                       hideField={true}
                       id="edit"
+                      initialValue=""
                       label="edit"
                       name="edit"
                     />,
@@ -1307,6 +1314,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                         "component": "text-field",
                         "hideField": true,
                         "id": "edit",
+                        "initialValue": "",
                         "label": "edit",
                         "name": "edit",
                       },
@@ -1488,6 +1496,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                         component="text-field"
                         hideField={true}
                         id="edit"
+                        initialValue=""
                         label="edit"
                         name="edit"
                       />,
@@ -1657,6 +1666,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                           "component": "text-field",
                           "hideField": true,
                           "id": "edit",
+                          "initialValue": "",
                           "label": "edit",
                           "name": "edit",
                         },
@@ -2194,6 +2204,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                           component="text-field"
                           hideField={true}
                           id="edit"
+                          initialValue=""
                           key="edit"
                           label="edit"
                           name="edit"
@@ -2203,6 +2214,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                               Object {
                                 "component": "text-field",
                                 "id": "edit",
+                                "initialValue": "",
                                 "label": "edit",
                                 "name": "edit",
                               }
@@ -2217,6 +2229,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 <TextField
                                   component="text-field"
                                   id="edit"
+                                  initialValue=""
                                   label="edit"
                                   name="edit"
                                 >
@@ -2727,6 +2740,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   component="text-field"
                                   hideField={true}
                                   id="edit"
+                                  initialValue=""
                                   label="edit"
                                   name="edit"
                                 />,
@@ -2879,7 +2893,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 },
                                 "hasSubmitErrors": false,
                                 "hasValidationErrors": false,
-                                "initialValues": Object {},
+                                "initialValues": Object {
+                                  "edit": "",
+                                },
                                 "invalid": false,
                                 "modified": Object {},
                                 "modifiedSinceLastSubmit": false,
@@ -2892,7 +2908,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 "touched": Object {},
                                 "valid": true,
                                 "validating": false,
-                                "values": Object {},
+                                "values": Object {
+                                  "edit": "",
+                                },
                                 "visited": Object {},
                               }
                             }
@@ -2955,6 +2973,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     "component": "text-field",
                                     "hideField": true,
                                     "id": "edit",
+                                    "initialValue": "",
                                     "label": "edit",
                                     "name": "edit",
                                   },

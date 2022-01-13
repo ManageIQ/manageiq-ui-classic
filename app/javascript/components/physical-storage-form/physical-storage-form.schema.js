@@ -63,6 +63,7 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
         id: 'edit',
         label: 'edit',
         hideField: true,
+        initialValue: '',
       },
       {
         component: componentTypes.CHECKBOX,
