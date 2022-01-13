@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Data table component should render a data table with cells which have multiple rows or single row 1`] = `
+<div
+  className="miq-data-table chargeback-rate"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={false}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={Array []}
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+</div>
+`;
+
 exports[`Data table component should render a simple data tabe with pagination and sorting 1`] = `
 <div
   className="miq-data-table list"
