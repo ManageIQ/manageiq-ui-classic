@@ -106,9 +106,13 @@ const MiqDataTable = ({
   /** Function to identify if the row is clickable or not and the returns a class name */
   const classNameRow = (item) => {
     if (item) {
-      const { clickable } = item;
+      const { clickable, id } = item;
       if (clickable === false) return 'simple-row';
-      if (clickable === true || clickable === null) return 'clickable-row';
+      if (clickable === true || clickable === null) {
+        return (gridChecks.includes(id)
+          ? 'clickable-row bx--data-table--selected'
+          : 'clickable-row');
+      }
     }
     return '';
   };
