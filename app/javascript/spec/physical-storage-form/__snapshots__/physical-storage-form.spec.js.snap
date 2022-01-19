@@ -2338,7 +2338,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     "name": "edit_authentication",
                                   }
                                 }
-                                values={Object {}}
+                                values={
+                                  Object {
+                                    "edit": "",
+                                  }
+                                }
                               />
                             </FormSpy>
                           </FormConditionWrapper>
@@ -2432,8 +2436,96 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     ],
                                   }
                                 }
-                                values={Object {}}
-                              />
+                                values={
+                                  Object {
+                                    "edit": "",
+                                  }
+                                }
+                              >
+                                <FormFieldHideWrapper
+                                  hideField={false}
+                                >
+                                  <TextField
+                                    component="text-field"
+                                    id="management_ip"
+                                    isRequired={true}
+                                    label="Management IP:"
+                                    name="management_ip"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <ForwardRef(TextInput)
+                                      disabled={false}
+                                      helperText=""
+                                      id="management_ip"
+                                      inline={false}
+                                      invalid={false}
+                                      invalidText=""
+                                      key="management_ip"
+                                      labelText={
+                                        <IsRequired>
+                                          Management IP:
+                                        </IsRequired>
+                                      }
+                                      light={false}
+                                      name="management_ip"
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                      warn={false}
+                                      warnText=""
+                                    >
+                                      <div
+                                        className="bx--form-item bx--text-input-wrapper"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="management_ip"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required"
+                                            >
+                                              *
+                                            </span>
+                                            Management IP:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--text-input__field-outer-wrapper"
+                                        >
+                                          <div
+                                            className="bx--text-input__field-wrapper"
+                                            data-invalid={null}
+                                          >
+                                            <input
+                                              className="bx--text-input bx--text__input"
+                                              disabled={false}
+                                              id="management_ip"
+                                              name="management_ip"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              type="text"
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </ForwardRef(TextInput)>
+                                  </TextField>
+                                </FormFieldHideWrapper>
+                              </Component>
                             </FormSpy>
                           </FormConditionWrapper>
                         </SingleField>
@@ -2526,8 +2618,96 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     ],
                                   }
                                 }
-                                values={Object {}}
-                              />
+                                values={
+                                  Object {
+                                    "edit": "",
+                                  }
+                                }
+                              >
+                                <FormFieldHideWrapper
+                                  hideField={false}
+                                >
+                                  <TextField
+                                    component="text-field"
+                                    id="user"
+                                    isRequired={true}
+                                    label="User:"
+                                    name="user"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <ForwardRef(TextInput)
+                                      disabled={false}
+                                      helperText=""
+                                      id="user"
+                                      inline={false}
+                                      invalid={false}
+                                      invalidText=""
+                                      key="user"
+                                      labelText={
+                                        <IsRequired>
+                                          User:
+                                        </IsRequired>
+                                      }
+                                      light={false}
+                                      name="user"
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                      warn={false}
+                                      warnText=""
+                                    >
+                                      <div
+                                        className="bx--form-item bx--text-input-wrapper"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="user"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required"
+                                            >
+                                              *
+                                            </span>
+                                            User:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--text-input__field-outer-wrapper"
+                                        >
+                                          <div
+                                            className="bx--text-input__field-wrapper"
+                                            data-invalid={null}
+                                          >
+                                            <input
+                                              className="bx--text-input bx--text__input"
+                                              disabled={false}
+                                              id="user"
+                                              name="user"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              type="text"
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </ForwardRef(TextInput)>
+                                  </TextField>
+                                </FormFieldHideWrapper>
+                              </Component>
                             </FormSpy>
                           </FormConditionWrapper>
                         </SingleField>
@@ -2623,8 +2803,97 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     ],
                                   }
                                 }
-                                values={Object {}}
-                              />
+                                values={
+                                  Object {
+                                    "edit": "",
+                                  }
+                                }
+                              >
+                                <FormFieldHideWrapper
+                                  hideField={false}
+                                >
+                                  <TextField
+                                    component="text-field"
+                                    id="physical_storage_password"
+                                    isRequired={true}
+                                    label="Password:"
+                                    name="password"
+                                    type="password"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <ForwardRef(TextInput)
+                                      disabled={false}
+                                      helperText=""
+                                      id="physical_storage_password"
+                                      inline={false}
+                                      invalid={false}
+                                      invalidText=""
+                                      key="password"
+                                      labelText={
+                                        <IsRequired>
+                                          Password:
+                                        </IsRequired>
+                                      }
+                                      light={false}
+                                      name="password"
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      type="password"
+                                      value=""
+                                      warn={false}
+                                      warnText=""
+                                    >
+                                      <div
+                                        className="bx--form-item bx--text-input-wrapper"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="physical_storage_password"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required"
+                                            >
+                                              *
+                                            </span>
+                                            Password:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--text-input__field-outer-wrapper"
+                                        >
+                                          <div
+                                            className="bx--text-input__field-wrapper"
+                                            data-invalid={null}
+                                          >
+                                            <input
+                                              className="bx--text-input bx--text__input"
+                                              disabled={false}
+                                              id="physical_storage_password"
+                                              name="password"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              type="password"
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </ForwardRef(TextInput)>
+                                  </TextField>
+                                </FormFieldHideWrapper>
+                              </Component>
                             </FormSpy>
                           </FormConditionWrapper>
                         </SingleField>
