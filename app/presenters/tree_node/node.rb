@@ -77,8 +77,8 @@ module TreeNode
 
           if result.nil?
             if block_given?
-              args = [@object, @parent_id].take(block.arity.abs)
-              result = instance_exec(*args, &block)
+              # All blocks here are either to_procs that only take the receiver or a block with no arguments.
+              result = instance_exec(@object, &block)
             else
               result = value
             end
