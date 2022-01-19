@@ -33,11 +33,11 @@ const loadHostInitiators = (storage_id) =>
     })));
 
 const loadHostInitiatorGroups = (storage_id) =>
-  API.get(`/api/host_initiator_groups/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
-    .then(({ resources }) => resources.map(({ name, id }) => ({
-      label: name,
-      value: id,
-    })));
+  API.get(`/api/host_initiators/?expand=resources&attributes=host_cluster_name,host_initiator_group_id&filter[]=host_initiator_group_id!=null&filter[]=physical_storage.id=${storage_id}`)
+    .then(({ resources }) => [...new Map(resources.map((item) => [item.host_initiator_group_id, ({
+      label: item.host_cluster_name,
+      value: item.host_initiator_group_id,
+    })])).values()]);
 
 const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId,
   hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId) => ({
@@ -112,6 +112,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       id: 'host_initiator_group_id',
       label: __('Host Initiator Group:'),
       isRequired: true,
+      helperText: __("Note! Volume can't be mapped to an empty host-initiator-group (host-cluster). Empty host-initiator-groups are not listed."),
       includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
