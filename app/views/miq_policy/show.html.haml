@@ -28,11 +28,11 @@
 
     -# Scope
     %h3= _("Scope")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-        .col-md-8
-          - if !expression_table.nil?
+    - if !expression_table.nil?
+      .form-horizontal
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
             - expression_table.each do |token|
               - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
                 = h([token].flatten.first)
@@ -40,86 +40,14 @@
                 %font{:color => "black"}
                   %b
                     = h([token].flatten.first)
-          - else
-            = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
-      %hr
+    - else
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
 
     -# Conditions for this policy
-    %h3= _("Conditions")
-    - if policy_conditions.empty?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No conditions defined. This policy is unconditional and will ALWAYS return true.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %thead
-          %tr
-            %th.table-view-pf-select
-            %th= _("Description")
-            %th= _("Scopes / Expressions")
-        %tbody
-          - policy_conditions.each do |c|
-            %tr{:title => _("View this Condition"),
-              :onclick => "DoNav('/condition/show/#{c.id}');"}
-              %td.table-view-pf-select
-                %i{:class => c.decorate.fonticon}
-              %td
-                = c.description
-              %td
-                - if c.applies_to_exp.present?
-                  %strong
-                    = _("Scope")
-                  %div
-                    = h(MiqExpression.to_human(c.applies_to_exp))
-                  %br
-
-                %strong
-                  = _("Expression")
-                %div
-                  = h(MiqExpression.to_human(c.expression))
-    %hr
+    = miq_summary_policy_conditions(policy_conditions)
 
     -# Events for this policy
-    %h3= _("Events")
-    - if policy_events.empty?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("This policy does not currently respond to any Events.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %thead
-          %tr
-            %th.table-view-pf-select
-            %th= _("Description")
-            %th= _("Actions")
-        %tbody
-          - policy_events.each do |e|
-            %tr
-              %td.table-view-pf-select{:title => _("View this Event"),
-              :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"}
-                %i{:class => e.decorate.try(:fonticon)}
-              %td{:title => _("View this Event"),
-              :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"}
-                = h(e.description)
-              %td
-                - ta = @record.actions_for_event(e, :success)
-                - fa = @record.actions_for_event(e, :failure)
-                - if ta.empty? && fa.empty?
-                  = _("* No Actions are configured for this Event.")
-                - else
-                  - unless ta.empty?
-                    %table
-                      %tbody
-                        - ta.each do |a|
-                          %tr
-                            %td{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{a.id}');"}
-                              %span.pficon.pficon-ok
-                              = h(a.description)
-                  - unless fa.empty?
-                    %table
-                      %tbody
-                        - fa.each do |a|
-                          %tr
-                            %td{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{a.id}');"}
-                              %span.pficon.pficon-close
-                              = h(a.description)
-      %hr
+    = miq_summary_policy_events(policy_events, @record)
 
     -# Notes field
     %h3= _("Notes")
@@ -129,17 +57,5 @@
       = text_area_tag("notes", @record.notes, :readonly => true, :rows => 4)
 
     -# Profiles policy is assigned to
-    %h3= _("Belongs to Profiles")
-    - if policy_profiles.empty?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("This Policy is not assigned to any Profiles.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          - policy_profiles.each do |pp|
-            %tr{:title => _("View this Policy Profile"),
-              :onclick => "DoNav('/miq_policy_set/show/#{pp.id}');"}
-              %td.table-view-pf-select
-                %i{:class => pp.decorate.fonticon}
-              %td
-                = pp.description
+    = miq_summary_profiles(policy_profiles)
 %br

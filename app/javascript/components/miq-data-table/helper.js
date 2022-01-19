@@ -34,7 +34,7 @@ export const isObject = (data) => typeof (data) === 'object';
 export const isArray = (item) => dataType(item) === 'Array';
 export const isNumber = (data) => typeof (data) === 'number';
 export const isNull = (data) => (data === null);
-export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.trim().length > 0;
+export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');

@@ -14,19 +14,7 @@
         = MiqAlertSet::ALERT_SET_MODES[@alert_profile.mode]
 
   - unless @assign
-    %h3= _('Alerts')
-    - if @alert_profile_alerts.empty?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Alerts are defined.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          - @alert_profile_alerts.each do |a|
-            %tr{:title => _("View this Alert"), :onclick => "DoNav('/miq_alert/show/#{a.id}');"}
-              %td.table-view-pf-select
-                %i.pficon.pficon-warning-triangle-o
-              %td
-                = h(a.description)
-    %hr
+    = miq_summary_alert_set(@alert_profile_alerts)
 
   -# Notes field
   %h3

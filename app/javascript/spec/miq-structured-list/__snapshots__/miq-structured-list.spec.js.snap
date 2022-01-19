@@ -1,0 +1,2058 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Structured list component should render a miq_policy_set table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_policy_set"
+>
+  <AccordionItem
+    open={true}
+    title=""
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_policy_set"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title="View this Container Image Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title="View this Container Image Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title="View this Container Image Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="3"
+          onClick={[Function]}
+          tabIndex={3}
+          title="View this Container Node Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="4"
+          onClick={[Function]}
+          tabIndex={4}
+          title="View this VM and Instance Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a multilink_list table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion multilink_table"
+>
+  <AccordionItem
+    open={true}
+    title="Some OpenStack Stuff"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list bordered-list multilink_table"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Aodh
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=1&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Aodh"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Aodh"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=1&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Aodh"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Aodh"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Aodh"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Aodh"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Ceilometer
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=2&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Ceilometer"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Ceilometer"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=2&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Ceilometer"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Ceilometer"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Ceilometer"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Ceilometer"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Cinder
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=3&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Cinder"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Cinder"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=3&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Cinder"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Cinder"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (3)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Cinder"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Cinder"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="3"
+          onClick={[Function]}
+          tabIndex={3}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Glance
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=4&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Glance"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Glance"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (2)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=4&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Glance"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Glance"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (2)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Glance"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Glance"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="4"
+          onClick={[Function]}
+          tabIndex={4}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Gnocchi
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=5&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Gnocchi"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Gnocchi"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (2)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=5&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Gnocchi"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Gnocchi"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (2)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Gnocchi"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Gnocchi"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="5"
+          onClick={[Function]}
+          tabIndex={5}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Heat
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=6&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Heat"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Heat"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (4)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=6&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Heat"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Heat"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (4)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Heat"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Heat"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="6"
+          onClick={[Function]}
+          tabIndex={6}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Keystone
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Running (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=7&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Keystone"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Keystone"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (1)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Keystone"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Keystone"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="7"
+          onClick={[Function]}
+          tabIndex={7}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Nova
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=8&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Nova"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Nova"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (5)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=8&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Nova"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Nova"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (10)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Nova"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Nova"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="8"
+          onClick={[Function]}
+          tabIndex={8}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Swift
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="0"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=9&status=running"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of running Swift"
+                >
+                  <i
+                    className="pficon pficon-ok"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of running Swift"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  Running (14)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="1"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Failed (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="2"
+          >
+            <a
+              className="cell_link"
+              href="/host/host_services/18?db=host&host_service_group=9&status=all"
+              onClick={[Function]}
+            >
+              <div
+                className="content"
+              >
+                <div
+                  className="cell icon"
+                  title="Show list of all Swift"
+                >
+                  <i
+                    className="pficon pficon-service"
+                    style={
+                      Object {
+                        "background": undefined,
+                      }
+                    }
+                    title="Show list of all Swift"
+                  />
+                </div>
+                <div
+                  className="expand wrap_text"
+                >
+                  All (14)
+                </div>
+              </div>
+            </a>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value sub_items"
+            key="3"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="Show list of configuration files of Swift"
+              >
+                <i
+                  className="fa fa-file-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                  title="Show list of configuration files of Swift"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                Configuration (0)
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a operation_range table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion operation_ranges"
+>
+  <AccordionItem
+    open={true}
+    title="Operation Ranges"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list operation_ranges"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            CPU
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="multi_row_cell"
+              >
+                <div
+                  className="sub_row_item"
+                  key="0"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Max"
+                  >
+                    Max
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Not Available
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="1"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="High"
+                  >
+                    High
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0 MHz
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="2"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Average"
+                  >
+                    Average
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0 MHz
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="3"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Low"
+                  >
+                    Low
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0 MHz
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            CPU Usage
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="multi_row_cell"
+              >
+                <div
+                  className="sub_row_item"
+                  key="0"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Max"
+                  >
+                    Max
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Not Available
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="1"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="High"
+                  >
+                    High
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0.00%
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="2"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Average"
+                  >
+                    Average
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0.00%
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="3"
+                  title=""
+                >
+                  <div
+                    className="sub_label"
+                    title="Low"
+                  >
+                    Low
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      0.00%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a simple_table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion simple_table"
+>
+  <AccordionItem
+    open={true}
+    title="Firewall Rules"
+  >
+    <NotificationMessage
+      message="No entries found for firewall rules"
+      type="info"
+    />
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a simple_table with generic data 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion simple_table"
+>
+  <AccordionItem
+    open={true}
+    title="Foo Bar"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list bordered-list simple_table"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            foo
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                bar
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            mrkef?
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                v zime!
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a simple_table with sortable and expandable data 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion simple_table"
+>
+  <AccordionItem
+    open={true}
+    title="Build Instances"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list bordered-list simple_table"
+    >
+      <MiqStructuredListHeader
+        headers={
+          Array [
+            "Name",
+            "Phase",
+            "Message",
+            "Reason",
+            "Pod",
+            "Output Image",
+            "Start Timestamp",
+            Object {
+              "sortable": "desc",
+              "value": "Completion Timestamp",
+            },
+            "Duration",
+          ]
+        }
+      />
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="0"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              cart-1
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="1"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              Complete
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="2"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+              <div
+                className="pull-right"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="3"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="wrap_text"
+            />
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="4"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              No Pod
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="5"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                docker-registry.default.svc:5000/coolstore/cart:latest
+              </div>
+              <div
+                className="pull-right"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="6"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              2018-01-13T23:53:59Z
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="7"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              2018-01-13T23:57:57Z
+            </div>
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value array_item"
+            key="8"
+            onClick={[Function]}
+            title=""
+          >
+            <div
+              className="expand wrap_text"
+            >
+              3m58s
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a table_list_view table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion table_list_view"
+>
+  <AccordionItem
+    open={true}
+    title="Tables with the Most Rows"
+  >
+    <NotificationMessage
+      message="No entries found for tables with the most rows"
+      type="info"
+    />
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`Structured list component should render a tag_group table 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion tag_group"
+>
+  <AccordionItem
+    open={true}
+    title="Smart Management"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list tag_group"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Managed by Zone
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+              >
+                <i
+                  className="pficon pficon-zone"
+                  style={
+                    Object {
+                      "background": undefined,
+                    }
+                  }
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                default
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            My Company X Tags
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="multi_row_cell"
+              >
+                <div
+                  className="sub_row_item"
+                  key="0"
+                  title=""
+                >
+                  <div
+                    className="cell icon"
+                  >
+                    <i
+                      className="fa fa-tag"
+                      style={
+                        Object {
+                          "background": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="sub_label"
+                    title="Dan Test"
+                  >
+                    Dan Test
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Test 1
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="1"
+                  title=""
+                >
+                  <div
+                    className="cell icon"
+                  >
+                    <i
+                      className="fa fa-tag"
+                      style={
+                        Object {
+                          "background": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="sub_label"
+                    title="Demo bla"
+                  >
+                    Demo bla
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Policy,2
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Other Tags
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="multi_row_cell"
+              >
+                <div
+                  className="sub_row_item"
+                  key="0"
+                  title=""
+                >
+                  <div
+                    className="cell icon"
+                  >
+                    <i
+                      className="fa fa-tag"
+                      style={
+                        Object {
+                          "background": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="sub_label"
+                    title="Test"
+                  >
+                    Test
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Test 1
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="1"
+                  title=""
+                >
+                  <div
+                    className="cell icon"
+                  >
+                    <i
+                      className="fa fa-tag"
+                      style={
+                        Object {
+                          "background": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="sub_label"
+                    title="Demo 2"
+                  >
+                    Demo 2
+                  </div>
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Policy,2,3
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="2"
+                  title="Click to display the item"
+                >
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      Demo 3
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
