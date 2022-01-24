@@ -6,42 +6,10 @@
   #policy_info_div
     = render :partial => "layouts/flash_msg"
     -# Description and active fields
-    %h3= _('Basic Information')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2= _('Active')
-        .col-md-8
-          %p.form-control-static= h(@record.active ? _("Yes") : _("No"))
-      .form-group
-        %label.control-label.col-md-2= _('Created')
-        .col-md-8
-          %p.form-control-static
-            = h(_("By Username %{username} %{created_on}") % {:username => @record.created_by || _("N/A"), :created_on => format_timezone(@record.created_on, session[:user_tz], "gtl")})
-
-      - if @record.created_on != @record.updated_on
-        .form-group
-          %label.control-label.col-md-2= _("Last Updated")
-          .col-md-8
-            %p.form-control-static
-              = h(_("By Username %{username} %{updated_on}") % {:username => @record.updated_by || _("N/A"), :updated_on => format_timezone(@record.updated_on, session[:user_tz], "gtl")})
-    %hr
+    = miq_summary_policy_basic_information(@record)
 
     -# Scope
-    %h3= _("Scope")
-    - if !expression_table.nil?
-      .form-horizontal
-        .form-group
-          %label.control-label.col-md-2
-          .col-md-8
-            - expression_table.each do |token|
-              - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                = h([token].flatten.first)
-              - else
-                %font{:color => "black"}
-                  %b
-                    = h([token].flatten.first)
-    - else
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
+    = miq_summary_policy_scope(expression_table)
 
     -# Conditions for this policy
     = miq_summary_policy_conditions(policy_conditions)
@@ -50,11 +18,7 @@
     = miq_summary_policy_events(policy_events, @record)
 
     -# Notes field
-    %h3= _("Notes")
-    - if @record.notes.blank?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-    - else
-      = text_area_tag("notes", @record.notes, :readonly => true, :rows => 4)
+    = miq_summary_policy_notes(@record)
 
     -# Profiles policy is assigned to
     = miq_summary_profiles(policy_profiles)

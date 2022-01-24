@@ -6,6 +6,36 @@ module MiqPolicyHelper
   (1..4).each { |a| SNAPSHOT_AGES[a.weeks.to_i] = (a.to_s + (a < 2 ? _(" Week") : _(" Weeks"))) }
   SNAPSHOT_AGES.freeze
 
+  def miq_summary_policy_basic_information(record)
+    rows = []
+    data = {:title => _('Basic Information'), :mode => "miq_policy_basic_information"}
+    rows.push({:cells => {:label => _('Active'), :value => h(record.active ? _("Yes") : _("No"))}})
+    rows.push({:cells => {:label => _('Created'), :value => h(_("By Username %{username} %{created_on}") % {:username => record.created_by || _("N/A"), :created_on => format_timezone(record.created_on, session[:user_tz], "gtl")})}})
+    if @record.created_on != @record.updated_on
+      rows.push({:cells => {:label => _("Last Updated"), :value => h(_("By Username %{username} %{updated_on}") % {:username => record.updated_by || _("N/A"), :updated_on => format_timezone(record.updated_on, session[:user_tz], "gtl")})}})
+    end
+    data[:rows] = rows
+    miq_structured_list(data)
+  end
+
+  def miq_summary_policy_scope(expression_table)
+    rows = []
+    data = {:title => _('Scope'), :mode => "miq_policy_scope"}
+    if !expression_table.nil?
+      expression_table.each do |token|
+        if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+          rows.push({:cells => {:label => _(''), :value => h([token].flatten.first)}})
+        else
+          rows.push({:cells => {:label => _(''), :value => h([token].flatten.first)}})
+        end
+      end
+    else
+      data[:message] = _("No Policy scope defined, the scope of this policy includes all elements.")
+    end
+    data[:rows] = rows
+    miq_structured_list(data)
+  end
+
   def miq_summary_policy_conditions(policy_conditions)
     rows = []
     data = {:title => _("Conditions"), :mode => "miq_policy_conditions"}
@@ -69,6 +99,18 @@ module MiqPolicyHelper
         obj['cells'].push(values)
         rows.push(obj)
       end
+    end
+    data[:rows] = rows
+    miq_structured_list(data)
+  end
+
+  def miq_summary_policy_notes(record)
+    rows = []
+    data = {:title => _('Notes'), :mode => "miq_policy_notes"}
+    if record.notes.blank?
+      data[:message] = _("No notes have been entered.")
+    else
+      rows.push({:cells => {:value => {:input => "text_area", :text=> record.notes, :readonly => true, :rows => 4 }}})
     end
     data[:rows] = rows
     miq_structured_list(data)
