@@ -9,10 +9,11 @@ import {
   StructuredListCell,
   Accordion,
   AccordionItem,
+  TextArea,
 } from 'carbon-components-react';
 import MiqStructuredListHeader from './miq-structured-list-header';
 import {
-  rowClickEvent, isObject, isArray, isSubItem, hasClickEvents,
+  rowClickEvent, isObject, isArray, isSubItem, hasClickEvents, hasInput,
 } from './helpers';
 import NotificationMessage from '../notification-message';
 
@@ -87,13 +88,22 @@ const MiqStructuredList = ({
     </div>
   );
 
-  /** Function render an item with or without a link. */
-  const renderRowItem = (row) => {
+  const renderInputContent = (row) => {
+    if (row.value.input === 'text_area') {
+      return (<TextArea value={row.value.text} labelText="" />);
+    }
+    return null;
+  };
+
+  const renderMultiContents = (row) => {
     const content = renderContent(row);
     return row.link
       ? <a href={row.link} onClick={(e) => onClick(row, e)} className="cell_link">{content}</a>
       : content;
   };
+
+  /** Function render an item with or without a link. */
+  const renderRowItem = (row) => (hasInput(row.value) ? renderInputContent(row) : renderMultiContents(row));
 
   /** Usage eg: Automation / Embeded Automate / Generic Objects / item
    * Properties has no links & Relationships have links */
