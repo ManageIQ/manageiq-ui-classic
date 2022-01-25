@@ -24,6 +24,19 @@
   }
 }
 
+.chart-holder {
+  .bx--cc--chart-wrapper {
+    .layout-svg-wrapper {
+      width: 90%;
+      left: 5%;
+      position: relative;
+    }
+    svg {
+      overflow: visible !important;
+    }
+  }
+}
+
 .bx--cc--pie {
   overflow: visible !important;
 }
