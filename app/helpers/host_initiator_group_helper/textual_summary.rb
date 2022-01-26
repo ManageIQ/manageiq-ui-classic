@@ -17,6 +17,18 @@ module HostInitiatorGroupHelper::TextualSummary
     )
   end
 
+  def textual_group_host_initiators
+    initiators = @record.host_initiators.map do |i|
+      [textual_link(i), i.v_total_addresses]
+    end
+
+    TextualMultilabel.new(
+      _("Host Initiators"),
+      :labels => [_("Name"), _("Addresses")],
+      :values => initiators
+    )
+  end
+
   def textual_group_san_addresses
     san_addresses_values = @record.san_addresses.map do |san_address|
       [san_address.class.display_name, san_address.address_value]
@@ -48,7 +60,7 @@ module HostInitiatorGroupHelper::TextualSummary
   def textual_cloud_volumes
     num   = @record.number_of(:cloud_volumes)
     h     = {:label => _('Cloud Volumes'), :value => num, :icon => "pficon pficon-volume"}
-    if num > 0 && role_allows?(:feature => "cloud_volumes_show_list")
+    if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
       h[:title] = _("Show volumes mapped to this host initiator")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volumes')
     end

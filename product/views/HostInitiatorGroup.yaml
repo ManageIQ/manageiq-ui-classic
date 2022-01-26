@@ -29,7 +29,6 @@ cols:
 - name
 - v_total_addresses
 - status
-- host_cluster_name
 
 
 # Included tables and columns for query performance
