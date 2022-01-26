@@ -29,7 +29,7 @@ include:
     - name
   host_initiator_group:
     columns:
-      - name
+    - name
   physical_storage:
     columns:
     - name

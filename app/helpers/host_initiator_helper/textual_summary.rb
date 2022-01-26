@@ -68,7 +68,7 @@ module HostInitiatorHelper::TextualSummary
       h     = {:label => _('Volumes Attached Through Host Initiator Group'), :value => num, :icon => "pficon pficon-volume"}
       if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
         h[:title] = _("Show volumes mapped to this host initiator")
-        h[:link]  = url_for_only_path(:controller => 'host_initiator_group',:action => 'show', :id => group, :display => 'cloud_volumes')
+        h[:link]  = url_for_only_path(:controller => 'host_initiator_group', :action => 'show', :id => group, :display => 'cloud_volumes')
       end
       h
     end
