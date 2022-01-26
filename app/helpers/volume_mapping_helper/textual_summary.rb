@@ -72,7 +72,7 @@ module VolumeMappingHelper::TextualSummary
       {
         :label => _("Host Initiator Group"),
         :icon  => "pficon pficon-zone",
-        :title => _("Navigate to Host Initiator Group #{group.name}"),
+        :title => _("Navigate to Host Initiator Group %{group_name}") % {:group_name => group.name},
         :value => group.name,
         :link  => url_for_only_path(:controller => 'host_initiator_group', :action => 'show', :id => group.id)
       }
