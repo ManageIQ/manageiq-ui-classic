@@ -8,6 +8,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     widgetTitle: '@',
     widgetLastRun: '@',
     widgetNextRun: '@',
+    widgetDragDrop: '<',
   },
   controllerAs: 'vm',
   controller: ['$http', 'miqService', '$sce', 'API', function($http, miqService, $sce, API) {
@@ -87,8 +88,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
           <div class="card-pf-heading-kebab">
             <dropdown-menu widget-id="{{vm.widgetId}}"
                            buttons-data="vm.parsedButtons"></dropdown-menu>
-            <h2 class="card-pf-title sortable-handle ui-sortable-handle"
-                style="cursor:move">
+            <h2 ng-class="{'sortable-handle ui-sortable-handle': vm.widgetDragDrop}" class="card-pf-title"
+                ng-style="vm.widgetDragDrop && {'cursor':'move'}">
               {{vm.widgetTitle}}
             </h2>
           </div>
