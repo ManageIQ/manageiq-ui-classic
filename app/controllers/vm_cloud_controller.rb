@@ -263,7 +263,6 @@ class VmCloudController < ApplicationController
   menu_section :clo
   feature_for_actions %w[instances_filter_accord images_filter_accord], *ADV_SEARCH_ACTIONS
   feature_for_actions 'vm_show', :groups, :users, :patches
-  feature_for_actions ['instance_edit', 'image_edit'], :edit_vm
   feature_for_actions ['instance_protect', 'image_protect'], :protect
   feature_for_actions ['instance_timeline', 'image_timeline'], :tl_chooser
   feature_for_actions ['instance_perf', 'image_perf'], :perf_top_chart

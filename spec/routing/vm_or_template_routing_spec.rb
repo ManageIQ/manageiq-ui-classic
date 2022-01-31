@@ -57,11 +57,9 @@ describe VmOrTemplateController do
     drift_history
     drift_mode
     drift_same
-    edit_vm
     event_logs
     filesystem_drivers
     filesystems
-    form_field_changed
     groups
     guest_applications
     kernel_drivers

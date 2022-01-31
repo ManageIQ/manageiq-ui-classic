@@ -22,8 +22,6 @@ describe VmOrTemplateController do
   end
 
   %w(
-    edit_vm
-    form_field_changed
     ownership
     ownership_update
     policy_sim
