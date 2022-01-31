@@ -139,7 +139,6 @@ class HostController < ApplicationController
       @in_a_form = true
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
-      @title = _("Info/Settings")
     else # if editing credentials for multi host
       drop_breadcrumb(:name => _('Edit Hosts'), :url => '/host/edit/')
       @title = _("Credentials/Settings")
