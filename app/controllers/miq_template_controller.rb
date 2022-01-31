@@ -1,5 +1,3 @@
-require "rexml/document"
-
 class MiqTemplateController < ApplicationController
   include VmCommon
   include Mixins::GenericListMixin
@@ -47,7 +45,6 @@ class MiqTemplateController < ApplicationController
   end
 
   has_custom_buttons
-  feature_for_actions 'miq_template_edit', :edit_vm
   feature_for_actions 'miq_template_timeline', :tl_chooser
   feature_for_actions 'miq_template_perf', :perf_top_chart
 end

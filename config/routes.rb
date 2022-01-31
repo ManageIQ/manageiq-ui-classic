@@ -2243,8 +2243,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         edit
-        edit_vm
-        form_field_changed
         show
       ) +
                ownership_post
@@ -2861,8 +2859,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        edit_vm
-        form_field_changed
         policy_sim
         policy_sim_add
         policy_sim_cancel
@@ -2924,14 +2920,12 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
-        edit_vm
         resize_vm
         event_logs
         explorer
         launch_html5_console
         filesystems
         filesystem_drivers
-        form_field_changed
         guest_applications
         groups
         html5_console
@@ -3013,12 +3007,10 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
-        edit_vm
         event_logs
         explorer
         filesystems
         filesystem_drivers
-        form_field_changed
         guest_applications
         groups
         kernel_drivers
@@ -3098,12 +3090,10 @@ Rails.application.routes.draw do
         drift_history
         drift_mode
         drift_same
-        edit_vm
         event_logs
         explorer
         filesystem_drivers
         filesystems
-        form_field_changed
         groups
         guest_applications
         kernel_drivers
