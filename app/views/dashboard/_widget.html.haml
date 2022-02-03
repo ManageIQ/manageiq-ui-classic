@@ -1,11 +1,12 @@
 %div{:id => "ww_#{presenter.widget.id}"}
   - last_run, next_run = last_next_run(presenter.widget)
-  %widget-wrapper{"widget-id"       => presenter.widget.id,
-                  "widget-type"     => presenter.widget.content_type,
-                  "widget-buttons"  => presenter.widget_buttons,
-                  "widget-last-run" => last_run,
-                  "widget-next-run" => next_run,
-                  "widget-title"    => _(presenter.widget.title)}
+  %widget-wrapper{"widget-id"        => presenter.widget.id,
+                  "widget-type"      => presenter.widget.content_type,
+                  "widget-buttons"   => presenter.widget_buttons,
+                  "widget-last-run"  => last_run,
+                  "widget-next-run"  => next_run,
+                  "widget-title"     => _(presenter.widget.title),
+                  "widget-drag-drop" => presenter.role_allows?(:feature => "dashboard_add")}
 
 :javascript
   miq_bootstrap("#ww_#{presenter.widget.id}");
