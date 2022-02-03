@@ -1,4 +1,4 @@
 plugins:
-  postcss-smart-import: {}
+  postcss-import: {}
   precss: {}
   autoprefixer: {}
