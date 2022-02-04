@@ -66,14 +66,6 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :options   => {:feature => :performance, :entity => N_('Provider')},
           :url_parms => "?display=performance"),
         button(
-          :ems_container_ad_hoc_metrics,
-          'fa fa-tachometer fa-1xplus',
-          N_('Show Ad hoc Metrics for this Provider'),
-          N_('Ad hoc Metrics'),
-          :klass     => ApplicationHelper::Button::GenericFeatureButton,
-          :options   => {:feature => :ad_hoc_metrics},
-          :url_parms => "?display=ad_hoc_metrics"),
-        button(
           :ems_container_launch_external_logging,
           'ff ff-monitoring fa-lg',
           N_('Open a new browser window with the External Logging Presentation UI. ' \
