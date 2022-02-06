@@ -4,7 +4,6 @@ package-lock.json
 Gemfile.lock
 Gemfile.dev.rb
 _yardoc/
-bin/*
 coverage/
 doc/
 pkg/
