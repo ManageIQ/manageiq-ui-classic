@@ -1,5 +1,6 @@
 module ReportController::Dashboards
   extend ActiveSupport::Concern
+  include DashboardHelper
 
   def db_seq_edit
     assert_privileges("db_seq_edit")
@@ -325,9 +326,7 @@ module ReportController::Dashboards
       @sb[:new][:description] = @dashboard.description
       @sb[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : true
       @sb[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : true
-      @sb[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
-      @sb[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
-      @sb[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
+      @sb[:new][:col1], @sb[:new][:col2], @sb[:new][:col3] = override_columns(@dashboard[:set_data])
     end
   end
 
@@ -348,10 +347,7 @@ module ReportController::Dashboards
 
       if params[:widget] # Make sure we got a widget in
         w = params[:widget].to_i
-        if @edit[:new][:col3].length < @edit[:new][:col1].length &&
-           @edit[:new][:col3].length < @edit[:new][:col2].length
-          @edit[:new][:col3].insert(0, w)
-        elsif @edit[:new][:col2].length < @edit[:new][:col1].length
+        if @edit[:new][:col2].length < @edit[:new][:col1].length
           @edit[:new][:col2].insert(0, w)
         else
           @edit[:new][:col1].insert(0, w)
@@ -421,9 +417,7 @@ module ReportController::Dashboards
     @edit[:new][:description] = @dashboard.description
     @edit[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : false
     @edit[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : false
-    @edit[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
-    @edit[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
-    @edit[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
+    @edit[:new][:col1], @edit[:new][:col2], @edit[:new][:col3] = override_columns(@dashboard[:set_data])
     db_available_widgets_options
     @edit[:current] = copy_hash(@edit[:new])
   end
