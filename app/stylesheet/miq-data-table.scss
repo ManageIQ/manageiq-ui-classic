@@ -111,3 +111,14 @@
 .time-profile-reports {
   padding-bottom: 20px;
 }
+
+.report-data-table {
+  table tr td {
+    padding: 0 !important;
+
+    .cell {
+      min-height: 47px;
+      padding-left: 10px;
+    }
+  }
+}
