@@ -98,7 +98,7 @@ class RemoveGenericItemModal extends React.Component {
     const {
       recordId, gridChecks, modalData, dispatch,
     } = this.props;
-    const itemsIds = recordId ? [recordId] : _.uniq(gridChecks);
+    const itemsIds = gridChecks && Array.isArray(gridChecks) && gridChecks.length > 0 ? _.uniq(gridChecks) : [recordId];
     const {
       ajax_reload,
       api_url,
