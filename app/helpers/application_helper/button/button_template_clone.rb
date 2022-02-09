@@ -2,11 +2,7 @@ class ApplicationHelper::Button::ButtonTemplateClone < ApplicationHelper::Button
   needs :@record
 
   def disabled?
-    if @record.type.eql?("ManageIQ::Providers::IbmPowerHmc::InfraManager") then
-      true
-    else
-      false
-    end
+    @error_message = _('Template cannot be cloned') if @record.type.eql?("ManageIQ::Providers::IbmPowerHmc::InfraManager")
+    @error_message.present?
   end
 end
-
