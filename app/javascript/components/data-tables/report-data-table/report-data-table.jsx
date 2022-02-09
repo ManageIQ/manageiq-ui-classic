@@ -285,7 +285,7 @@ const ReportDataTable = (props) => {
   return (
     <>
       {
-        state.total > 0 && hasSearch && renderToolBar()
+        hasSearch && renderToolBar()
       }
       {state.total > 0 && (
         <MiqDataTable

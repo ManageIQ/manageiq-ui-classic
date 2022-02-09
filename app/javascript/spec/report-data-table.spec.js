@@ -62,7 +62,7 @@ limit=${limit}&offset=${offset}`;
     wrapper.update();
 
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(0);
+    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(1);
     expect(wrapper.find('div.report-data-table')).toHaveLength(0);
     expect(wrapper.find('div.miq-pagination')).toHaveLength(0);
     expect(wrapper.find('div.no-records-found')).toHaveLength(1);
