@@ -12,8 +12,6 @@ class ContainerDashboardController < ApplicationController
   def data
     assert_privileges("container_dashboard_view")
 
-    return data_live if params[:live] == 'true'
-
     render :json => {:data => collect_data(params[:id])}
   end
 
@@ -51,10 +49,6 @@ class ContainerDashboardController < ApplicationController
     assert_privileges("container_dashboard_view")
 
     render :json => {:data => collect_refresh_status_data(params[:id])}
-  end
-
-  def data_live
-    render :json => collect_live_data(params[:id], params[:query])
   end
 
   def project_data
@@ -107,16 +101,6 @@ class ContainerDashboardController < ApplicationController
 
   def collect_refresh_status_data(provider_id)
     ContainerDashboardService.new(provider_id, self).refresh_status_data
-  end
-
-  def collect_live_data(provider_id, query)
-    ems = ExtManagementSystem.find(provider_id)
-
-    if ems && ems.connection_configurations.prometheus.try(:endpoint)
-      PrometheusProxyService.new(provider_id, self).data(query)
-    else
-      HawkularProxyService.new(provider_id, self).data(query)
-    end
   end
 
   def collect_project_data(project_id)

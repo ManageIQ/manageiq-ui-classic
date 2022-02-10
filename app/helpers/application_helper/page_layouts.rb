@@ -47,7 +47,6 @@ module ApplicationHelper::PageLayouts
     ].include?(@layout)
 
     return false if %w[
-      ad_hoc_metrics
       consumption
       dashboard
       dialog_provision
