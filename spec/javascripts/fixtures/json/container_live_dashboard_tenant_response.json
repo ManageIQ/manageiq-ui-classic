@@ -1,8 +1,0 @@
-{
-  "tenants":
-    [
-      {"label": "System", "value": "_system"},
-      {"label": "Operations", "value": "_ops"},
-      {"label": "Default", "value": "default"}
-    ]
-}
