@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StackedBarChart } from '@carbon/charts-react';
 
-const StackBarChartGraph = ({ data }) => {
+const StackBarChartGraph = ({ data, title }) => {
   const options = {
+    title,
     axes: {
       left: {
         mapsTo: 'value',
@@ -29,10 +30,12 @@ const StackBarChartGraph = ({ data }) => {
 
 StackBarChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
+  title: PropTypes.string,
 };
 
 StackBarChartGraph.defaultProps = {
   data: null,
+  title: '',
 };
 
 export default StackBarChartGraph;
