@@ -8,7 +8,7 @@
               %h2.card-pf-title= _(charts[chart_index][:title])
             .overlay-container{"style" => "position: relative"}
               .card-pf-body
-                = react('PerformanceChartWidget',:data => chart_data[chart_index][:data], :id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'400px')
+                = react('PerformanceChartWidget',:data => chart_data[chart_index][:data], :id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'400px', :title => charts[chart_index][:title])
                 .overlay{"style" => "display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 500"}
           %ul.dropdown-menu{"role"            => "menu",
                           "aria-labelledby" => "miq_chart_#{chart_set}_#{chart_index}",
@@ -23,7 +23,7 @@
           %div
             .overlay-container{"style" => "position: relative"}
               .card-pf-body
-                = react('PerformanceChartWidget',:data => chart_data[chart_index][:data2], :id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'150px')
+                = react('PerformanceChartWidget',:data => chart_data[chart_index][:data2], :id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'150px', :title => charts[chart_index][:title])
                 .overlay{"style" => "display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 500"}
                   %div
           %ul.dropdown-menu{"role"            => "menu",
@@ -43,7 +43,7 @@
           %h2.card-pf-title= _(charts[chart_index][:title])
         .card-pf-body
           .overlay-container{"style" => "position: relative"}
-            = react('PerformanceChartWidget',:data => chart_data[chart_index][:data],:id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'400px')
+            = react('PerformanceChartWidget',:data => chart_data[chart_index][:data],:id => "miq_chart_#{chart_set}_#{chart_index}", :size =>'400px', :title => charts[chart_index][:title])
             .overlay{"style" => "display: none; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 500"}
             %div
       %ul.dropdown-menu{"role"            => "menu",
