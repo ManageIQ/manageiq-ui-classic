@@ -280,15 +280,14 @@ module MiqAeClassHelper
   end
 
   def class_properties_data(name, record)
-    data = {:title => _("Properties"), :mode => "class_props"}
-    rows = [
-      {:label => _('Fully Qualified Name'), :value => h(name)},
-      {:label => _('Name'), :value => record.name},
-      {:label => _('Display Name'), :value => record.display_name},
-      {:label => _('Description'), :value => record.try(:description)},
-      {:label => _('Instances'), :value => h(record.ae_instances.length)},
+    data = {:title => _("Properties"), :mode => "class_props", :clickable => false}
+    data[:rows] = [
+      {:cells => {:label => _('Fully Qualified Name'), :value => h(name)}},
+      {:cells => {:label => _('Name'), :value => record.name}},
+      {:cells => {:label => _('Display Name'), :value => record.display_name}},
+      {:cells => {:label => _('Description'), :value => record.try(:description)}},
+      {:cells => {:label => _('Instances'), :value => h(record.ae_instances.length)}},
     ]
-    data[:rows] = rows
     miq_structured_list(data)
   end
 
