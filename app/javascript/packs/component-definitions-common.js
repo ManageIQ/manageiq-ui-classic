@@ -5,6 +5,7 @@ import { Quadicon } from '../components/quadicon';
 import { Toolbar } from '../components/toolbar';
 
 import ActionForm from '../components/action-form';
+import AddRemoveSecurityGroupForm from '../components/vm-cloud-add-remove-security-group-form';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
 import AnsibleRepositoryForm from '../components/ansible-repository-form';
@@ -116,6 +117,7 @@ import ZoneForm from '../components/zone-form';
 */
 
 ManageIQ.component.addReact('ActionForm', ActionForm);
+ManageIQ.component.addReact('AddRemoveSecurityGroupForm', AddRemoveSecurityGroupForm);
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('AnsibleRepositoryForm', AnsibleRepositoryForm);
