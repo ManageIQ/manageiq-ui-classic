@@ -31,6 +31,13 @@
       left: 5%;
       position: relative;
     }
+
+    .bx--cc--title {
+      .title {        
+        display: none;
+      }
+    }
+
     svg {
       overflow: visible !important;
     }
