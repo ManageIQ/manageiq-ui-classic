@@ -5,4 +5,4 @@
 - chart_index = WidgetPresenter.chart_data.length - 1
 - chart_data = ManageIQ::Reporting::Charting.deserialized(datum)
 
-= react('DashboardWidget',:data => chart_data, :id => "miq_widgetchart_#{chart_index}".html_safe)
+= react('DashboardWidget', :data => chart_data, :id => "miq_widgetchart_#{chart_index}".html_safe, :title => widget.title)

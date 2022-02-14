@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GroupedBarChart } from '@carbon/charts-react';
 
-const GroupBarChart = ({ data }) => {
+const GroupBarChart = ({ data, title }) => {
   const options = {
+    title,
     axes: {
       left: {
         mapsTo: 'value',
@@ -28,10 +29,12 @@ const GroupBarChart = ({ data }) => {
 
 GroupBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
+  title: PropTypes.string,
 };
 
 GroupBarChart.defaultProps = {
   data: null,
+  title: '',
 };
 
 export default GroupBarChart;

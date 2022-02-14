@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AreaChart } from '@carbon/charts-react';
 
-const AreaChartGraph = ({ data }) => {
+const AreaChartGraph = ({ data, title }) => {
   const options = {
+    title,
     axes: {
       bottom: {
         mapsTo: 'key',
@@ -29,10 +30,12 @@ const AreaChartGraph = ({ data }) => {
 
 AreaChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
+  title: PropTypes.string,
 };
 
 AreaChartGraph.defaultProps = {
   data: null,
+  title: '',
 };
 
 export default AreaChartGraph;
