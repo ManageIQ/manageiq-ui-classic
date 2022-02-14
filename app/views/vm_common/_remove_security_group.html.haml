@@ -1,9 +1,1 @@
-- @angular_form = true
-
-= render :partial => "layouts/flash_msg"
-
-%vm-cloud-remove-security-group{"record-id"    => @record.id,
-                                "redirect-url" => "/#{controller_name}/explorer",}
-
-:javascript
-  miq_bootstrap('vm-cloud-remove-security-group');
+= react('AddRemoveSecurityGroupForm', {:recordId => @record.id.to_s, :redirectURL => "/#{controller_name}/explorer", :isAdd => false})
