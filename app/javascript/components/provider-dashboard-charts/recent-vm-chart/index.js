@@ -27,7 +27,7 @@ const RecentVmGraph = ({
         <h2 className="card-pf-title">{title}</h2>
       </div>
       <div className="card-pf-body">
-        <VmAreaChart data={data.vms} config={chartConfig[config]} dataPoint={dataPoint} />
+        <VmAreaChart data={data.vms} config={chartConfig[config]} dataPoint={dataPoint} title={title} />
       </div>
     </div>
   );
