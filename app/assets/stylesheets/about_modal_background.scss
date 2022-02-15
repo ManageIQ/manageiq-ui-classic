@@ -3,7 +3,7 @@
 /* 'About' modal background image */
 
 .about-modal-pf {
-  background: #101010 image-url($modal-about-pf-bg-img) repeat-x 50% 0;
+  background: image-url($modal-about-pf-bg-img) repeat-x 50% 0;
   background-color: $modal-about-pf-bg-color;
   background-image: image-url($modal-about-pf-bg-img);
 }
