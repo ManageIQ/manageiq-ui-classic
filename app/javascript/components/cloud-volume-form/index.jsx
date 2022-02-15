@@ -68,7 +68,7 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   const validation = (values) => {
     const errors = {};
     if (values.ems_id === '-1') {
-      errors.ems_id = __('Please select a storage manager.');
+      errors.ems_id = __('Required');
     }
     return errors;
   };

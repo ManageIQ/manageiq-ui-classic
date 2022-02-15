@@ -1,15 +1,11 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { API } from '../../http_api';
 
-let showError = false;
-
 function changeValue(value, loadSchema, emptySchema) {
   if (value === '-1') {
     emptySchema();
-    showError = true;
   } else {
     API.options(`/api/cloud_networks?ems_id=${value}`).then(loadSchema());
-    showError = false;
   }
 }
 
@@ -37,14 +33,6 @@ function createSchema(ems, cloudNetworkId, loadSchema, emptySchema, providerFiel
       options: providers.map(({ id, name }) => ({ label: name, value: id })),
     }],
   },
-  ...(showError ? [
-    {
-      id: 'networkWarning',
-      component: componentTypes.PLAIN_TEXT,
-      name: 'networkWarning',
-      label: __('Please select a network manager.'),
-    },
-  ] : []),
   ...providerFields,
   ];
   return { fields };
