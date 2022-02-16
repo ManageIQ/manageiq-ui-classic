@@ -92,11 +92,20 @@ const NetworkFloatingIPsForm = ({
     miqRedirectBack(message, 'warning', url);
   };
 
+  const validation = (values) => {
+    const errors = {};
+    if (values.ems_id === '-1') {
+      errors.ems_id = __('Required');
+    }
+    return errors;
+  };
+
   return !isLoading && (
     <MiqFormRenderer
       schema={createSchema(ems, !!recordId, loadSchema, emptySchema, fields)}
       initialValues={initialValues}
       canReset={!!recordId}
+      validate={validation}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{ submitLabel }}

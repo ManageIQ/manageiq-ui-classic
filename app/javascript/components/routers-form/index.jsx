@@ -123,18 +123,16 @@ const RoutersForm = ({ routerId }) => {
   const onSubmit = (values) => {
     const resources = getSubmitData(values);
 
-    if (values.ems_id !== '-1') {
-      miqSparkleOn();
-      const request = routerId ? API.patch(`/api/network_routers/${routerId}`, resources) : API.post('/api/network_routers', resources);
-      const url = routerId ? `/network_router/show/${routerId}` : '/network_router';
-      request.then(() => {
-        const message = sprintf(routerId
-          ? __('Editing of Network Router %s has been successfully queued')
-          : __('Adding of Network Router %s has been successfully queued.'),
-        resources.name);
-        miqRedirectBack(message, 'success', url);
-      }).catch(miqSparkleOff);
-    }
+    miqSparkleOn();
+    const request = routerId ? API.patch(`/api/network_routers/${routerId}`, resources) : API.post('/api/network_routers', resources);
+    const url = routerId ? `/network_router/show/${routerId}` : '/network_router';
+    request.then(() => {
+      const message = sprintf(routerId
+        ? __('Editing of Network Router %s has been successfully queued')
+        : __('Adding of Network Router %s has been successfully queued.'),
+      resources.name);
+      miqRedirectBack(message, 'success', url);
+    }).catch(miqSparkleOff);
   };
 
   const onCancel = () => {
@@ -150,12 +148,21 @@ const RoutersForm = ({ routerId }) => {
     miqRedirectBack(message, 'warning', url);
   };
 
+  const validation = (values) => {
+    const errors = {};
+    if (values.ems_id === '-1') {
+      errors.ems_id = __('Required');
+    }
+    return errors;
+  };
+
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
   return !isLoading && (
     <MiqFormRenderer
       schema={createSchema(!!routerId, fields, subnets, loadSchema, emptySchema)}
       initialValues={initialValues}
       canReset={!!routerId}
+      validate={validation}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{ submitLabel }}

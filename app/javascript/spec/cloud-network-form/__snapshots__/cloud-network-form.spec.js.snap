@@ -78,6 +78,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
         ],
       }
     }
+    validate={[Function]}
   />
 </Grid>
 `;
@@ -161,6 +162,7 @@ exports[`Cloud Network form component should render form 1`] = `
         ],
       }
     }
+    validate={[Function]}
   />
 </Grid>
 `;

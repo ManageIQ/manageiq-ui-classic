@@ -10,7 +10,6 @@ const networkManagers = () => API.get(emsUrl).then(({ resources }) => {
 });
 
 let empty = true;
-let showError = false;
 
 const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
   fields: [
@@ -23,11 +22,9 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         if (value !== '-1') {
           API.options(`/api/cloud_subnets?ems_id=${value}`).then(loadSchema());
           empty = false;
-          showError = false;
         } else {
           emptySchema();
           empty = true;
-          showError = true;
         }
       },
       loadOptions: networkManagers,
@@ -84,14 +81,6 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
           when: 'ems_id',
           isNotEmpty: true,
         },
-      },
-    ] : []),
-    ...(showError ? [
-      {
-        id: 'networkWarning',
-        component: componentTypes.PLAIN_TEXT,
-        name: 'networkWarning',
-        label: __('Please select a network manager.'),
       },
     ] : []),
     ...fields,

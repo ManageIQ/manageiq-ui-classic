@@ -19,12 +19,16 @@ exports[`Floating Ips Profile Form Component should render correctly 1`] = `
             Object {
               "component": "select",
               "id": "ems_id",
-              "includeEmpty": true,
               "isDisabled": false,
               "label": "Network Manager",
               "name": "ems_id",
               "onChange": [Function],
-              "options": Array [],
+              "options": Array [
+                Object {
+                  "label": "<Choose>",
+                  "value": "-1",
+                },
+              ],
               "validate": Array [
                 Object {
                   "message": "Required",
@@ -41,5 +45,6 @@ exports[`Floating Ips Profile Form Component should render correctly 1`] = `
       ],
     }
   }
+  validate={[Function]}
 />
 `;

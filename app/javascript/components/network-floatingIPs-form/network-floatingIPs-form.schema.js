@@ -1,20 +1,18 @@
 /* eslint-disable no-restricted-syntax */
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 
-let showError = false;
-
 function changeValue(value, loadSchema, emptySchema) {
   if (value === '-1') {
     emptySchema();
-    showError = true;
   } else {
     API.options(`/api/floating_ips?ems_id=${value}`).then(loadSchema(), value);
-    showError = false;
   }
 }
 
 function createSchema(ems, recordId, loadSchema, emptySchema, providerFields = []) {
   const providers = ems.filter((tenant) => tenant.type !== 'ManageIQ::Providers::Nuage::NetworkManager');
+  const providerOptions = providers.map(({ id, name }) => ({ label: name, value: id }));
+  providerOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
 
   const fields = [
     {
@@ -29,25 +27,16 @@ function createSchema(ems, recordId, loadSchema, emptySchema, providerFields = [
           name: 'ems_id',
           label: __('Network Manager'),
           isDisabled: !!recordId,
-          includeEmpty: true,
           validateOnMount: true,
           onChange: (value) => changeValue(value, loadSchema, emptySchema),
           validate: [{
             type: validatorTypes.REQUIRED,
             message: __('Required'),
           }],
-          options: providers.map(({ id, name }) => ({ label: name, value: id })),
+          options: providerOptions,
         },
       ],
     },
-    ...(showError ? [
-      {
-        id: 'networkWarning',
-        component: componentTypes.PLAIN_TEXT,
-        name: 'networkWarning',
-        label: __('Please select a network manager.'),
-      },
-    ] : []),
     ...providerFields,
   ];
   return { fields };
