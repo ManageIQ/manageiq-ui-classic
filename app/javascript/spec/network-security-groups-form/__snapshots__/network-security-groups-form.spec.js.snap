@@ -43,6 +43,7 @@ exports[`Network Router Interfaces Form Component should add security group 1`] 
       ],
     }
   }
+  validate={[Function]}
 />
 `;
 
@@ -109,6 +110,7 @@ exports[`Network Router Interfaces Form Component should render add security gro
       ],
     }
   }
+  validate={[Function]}
 />
 `;
 

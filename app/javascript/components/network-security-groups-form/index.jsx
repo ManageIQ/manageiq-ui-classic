@@ -93,12 +93,21 @@ const NetworkSecurityGroupsForm = ({ securityGroupId }) => {
     miqRedirectBack(message, 'warning', url);
   };
 
+  const validation = (values) => {
+    const errors = {};
+    if (values.ems_id === '-1') {
+      errors.ems_id = __('Required');
+    }
+    return errors;
+  };
+
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
   return !isLoading && (
     <MiqFormRenderer
       schema={createSchema(securityGroupId, fields, subnets, loadSchema, emptySchema)}
       initialValues={initialValues}
       canReset={!!securityGroupId}
+      validate={validation}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{ submitLabel }}

@@ -1,7 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { API } from '../../http_api';
 
-let showError = false;
 let showSubnets = false;
 
 const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_create_network_router,type&filter[]=supports_create_network_router=true';
@@ -9,7 +8,6 @@ const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_crea
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
     emptySchema();
-    showError = true;
   } else {
     API.options(`/api/network_routers?ems_id=${value}`).then(loadSchema({}, value));
 
@@ -21,7 +19,6 @@ const changeValue = (value, loadSchema, emptySchema) => {
         }
       });
     });
-    showError = false;
   }
 };
 
@@ -56,14 +53,6 @@ function createSchema(routerId, providerFields = [], subnets, loadSchema, emptyS
       loadOptions: networkManagers,
     }],
   },
-  ...(showError ? [
-    {
-      id: 'networkWarning',
-      component: componentTypes.PLAIN_TEXT,
-      name: 'networkWarning',
-      label: __('Please select a network manager.'),
-    },
-  ] : []),
   ...providerFields,
   ...(showSubnets ? [
     {
