@@ -25,7 +25,6 @@ require('./ems_storage_dashboard/heatmap_controller.js');
 require('./error_modal_controller.js');
 require('./fonticon_picker_controller.js');
 require('./host/host_form_controller.js');
-require('./host_aggregate/host_aggregate_form_controller.js');
 require('./miq_ae_class/ae_inline_method_selection_controller.js');
 require('./mixins/charts-mixin.js');
 require('./ops/pglogical_replication_form_controller.js');

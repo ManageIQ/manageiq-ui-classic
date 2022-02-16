@@ -4,6 +4,7 @@ import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import HostAggregateForm from '../../components/host-aggregate-form';
+import AddRemoveHostAggregateForm from '../../components/host-aggregate-form/add-remove-host-aggregate-form'
 import { mount } from '../helpers/mountForm';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
@@ -61,6 +62,44 @@ describe('Host aggregate form component', () => {
     });
     wrapper.find('button').last().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Host Aggregate was canceled by the user.', 'warning', '/host_aggregate/show_list');
+    done();
+  });
+
+  it('should render add host form', (done) => {
+    const wrapper = shallow(<AddRemoveHostAggregateForm />);
+    setImmediate(() => {
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it('should render add host form variant (remvove host)', (done) => {
+    const wrapper = mount(<AddRemoveHostAggregateForm isAdd={false} />);
+    setImmediate(() => {
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it('should call miqRedirectBack when canceling add host form', async(done) => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<AddRemoveHostAggregateForm />);
+    });
+    wrapper.find('button').last().simulate('click');
+    expect(miqRedirectBack).toHaveBeenCalledWith('Addition of Host was cancelled by the user.', 'warning', '/host_aggregate/show_list');
+    done();
+  });
+
+  it('should call miqRedirectBack when canceling remove host form', async(done) => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<AddRemoveHostAggregateForm isAdd={false} />);
+    });
+    wrapper.find('button').last().simulate('click');
+    expect(miqRedirectBack).toHaveBeenCalledWith('Removal of Host was cancelled by the user.', 'warning', '/host_aggregate/show_list');
     done();
   });
 });
