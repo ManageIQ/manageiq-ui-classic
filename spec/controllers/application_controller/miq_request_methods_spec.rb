@@ -85,7 +85,7 @@ describe MiqRequestController do
       let(:kls) { 'infra' }
 
       it 'returns proper template klass' do
-        expect(subject).to eq(ManageIQ::Providers::InfraManager::Template)
+        expect(subject).to eq(ManageIQ::Providers::CloudManager::Template)
       end
     end
 
@@ -104,6 +104,15 @@ describe MiqRequestController do
 
       it 'returns proper template klass' do
         expect(subject).to eq(ManageIQ::Providers::CloudManager::Template)
+      end
+    end
+
+    context 'provisioning instances displayed through details page of infra provider' do
+      let(:ctrl) { 'vm_infra' }
+      let(:kls) { 'infra' }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::InfraManager::Template)
       end
     end
 
