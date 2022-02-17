@@ -28,7 +28,7 @@
           = _("Authentication")
         = miq_tab_header("settings_workers", @sb[:active_tab]) do
           = _("Workers")
-        - if cur_svr_id == my_server.id
+        - if cur_svr_id == my_server.id && !MiqEnvironment::Command.is_podified?
           = miq_tab_header("settings_custom_logos", @sb[:active_tab]) do
             = _("Custom Logos")
         = miq_tab_header("settings_advanced", @sb[:active_tab]) do
