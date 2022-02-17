@@ -1,3 +1,5 @@
+import { listenToRx } from '../../miq_observable';
+
 ErrorModalController.$inject = ['$timeout'];
 function ErrorModalController($timeout) {
   var $ctrl = this;
