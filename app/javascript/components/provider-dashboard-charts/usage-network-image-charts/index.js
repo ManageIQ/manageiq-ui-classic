@@ -32,7 +32,7 @@ const UsageTrendChart = ({
         <h2 className="card-pf-title">{title}</h2>
       </div>
       <div className="card-pf-body">
-        {resultData[dataPoint].dataAvailable ? <UsageAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} />
+        {resultData[dataPoint].dataAvailable ? <UsageAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} title={title} />
           : <EmptyChart /> }
       </div>
     </div>

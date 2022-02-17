@@ -4,9 +4,12 @@ import { AreaChart } from '@carbon/charts-react';
 import { getConvertedData, getLatestValue } from '../helpers';
 import EmptyChart from '../emptyChart';
 
-const UsageAreaChart = ({ data, config, dataPoint }) => {
+const UsageAreaChart = ({
+  data, config, dataPoint, title,
+}) => {
   const usageData = data[dataPoint];
   const areaOptions = {
+    title,
     grid: {
       x: {
         enabled: false,
@@ -70,6 +73,7 @@ const UsageAreaChart = ({ data, config, dataPoint }) => {
 UsageAreaChart.propTypes = {
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   dataPoint: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   config: PropTypes.shape({
     units: PropTypes.string.isRequired,
     timeFrame: PropTypes.string.isRequired,
