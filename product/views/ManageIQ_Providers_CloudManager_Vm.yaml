@@ -67,7 +67,7 @@ col_order:
 headers:
 - Name
 - Power State
-- Provider
+- Cloud Provider
 - Availability Zone
 - Flavor
 - IP Addresses
