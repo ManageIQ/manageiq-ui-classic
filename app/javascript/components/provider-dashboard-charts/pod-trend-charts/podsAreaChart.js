@@ -7,6 +7,7 @@ import EmptyChart from '../emptyChart';
 const PodsAreaChart = ({ data, config, dataPoint }) => {
   const usageData = data[dataPoint];
   const areaOptions = {
+    title: config.headTitle,
     grid: {
       x: {
         enabled: false,
