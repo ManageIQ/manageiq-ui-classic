@@ -110,10 +110,7 @@
 
   .wrap_text {
     width: 100%;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: pre-wrap;
-    overflow: hidden;
+    word-break: break-all;
   }
 
   &.bordered-list {
@@ -130,6 +127,11 @@
 }
 
 .miq-structured-list-accordion {
+  li .bx--accordion__content {
+    padding: 0.5rem 0 0 0 !important;
+    margin: 0 !important;
+  }
+
   li:last-child {
     border-bottom: 0;
   }
