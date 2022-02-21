@@ -10,7 +10,7 @@ jobs:
         ruby-version:
         - '2.7'
         node-version:
-        - 12
+        - 16
         test-suite:
         - spec
         - spec:compile
@@ -20,7 +20,7 @@ jobs:
         - spec:routes
         include:
         - ruby-version: '2.6'
-          node-version: 12
+          node-version: 16
           test-suite: spec
     services:
       postgres:
