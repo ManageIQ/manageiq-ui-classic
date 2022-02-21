@@ -1028,7 +1028,7 @@ module ApplicationHelper
   end
 
   def pdf_page_size_style
-    "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
+    "#{@options[:page_layout]}"
   end
 
   DOWNLOAD_VIEW_LAYOUTS = %w[action
