@@ -26,7 +26,7 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
 
   const onSubmit = async(values) => {
     miqSparkleOn();
-    const message = __('Host initiator define');
+    const message = sprintf(__('Defining of Host initiator "%s" has been successfully queued.'), values.name);
     API.post('/api/host_initiators', { action: 'create', resource: values })
       .then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
   };
