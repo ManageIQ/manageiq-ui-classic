@@ -14,7 +14,7 @@ const VolumeMappingForm = ({ redirect }) => {
 
   const onSubmit = async(values) => {
     miqSparkleOn();
-    const message = __('Volume mapping define');
+    const message = __('Defining of a new Volume mapping has been successfully queued.');
     API.post('/api/volume_mappings', { action: 'create', resource: values })
       .then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
   };
