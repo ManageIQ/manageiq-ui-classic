@@ -582,9 +582,11 @@ module VmCommon
     @edit ||= {}
     @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
     @explorer = true if @edit[:explorer]
-
-    drop_breadcrumb(:name => _("Edit VM '%{name}'") % {:name => @record.name}, :url => "/vm/edit") unless @explorer
-
+    @in_a_form = true
+    @title = _("Editing %{vm_or_template} \"%{name}\"") % {:name => @record.name, :vm_or_template => model_for_vm(@record).display_name}
+    @right_cell_text = @title
+    drop_breadcrumb(:name => @title, :url => "/vm/edit") unless @explorer
+    @lastaction = "show_list"
     @refresh_partial = "vm_common/form"
   end
 
