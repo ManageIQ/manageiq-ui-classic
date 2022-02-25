@@ -106,7 +106,7 @@ module OpsController::Diagnostics
           depot = @record.log_file_depot.instance_of?(protocols[log_protocol]) ? @record.log_file_depot : @record.build_log_file_depot(:type => log_protocol)
           depot.update(:uri => new_uri, :name => params[:depot_name])
           creds = set_credentials
-          depot.update_authentication(creds) if type.try(:requires_credentials?)
+          depot.update_authentication(creds) if protocols[log_protocol].try(:requires_credentials?)
           @record.save!
         end
       rescue => bang
