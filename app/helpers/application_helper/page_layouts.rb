@@ -108,8 +108,6 @@ module ApplicationHelper::PageLayouts
                !%w[new create edit copy update explorer].include?(controller.action_name)
              when 'timeline'
                @in_a_form
-             when 'vm'
-               controller.action_name != 'edit'
              else
                true
              end
@@ -120,7 +118,6 @@ module ApplicationHelper::PageLayouts
                else
                  true
                end
-
     layout && showtype
   end
 
