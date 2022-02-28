@@ -76,7 +76,7 @@ angular.module('miq.error', [])
     // inlining the template because it may be harder to GET when the server is down
     template: [
       '<div id="errorModal" ng-class="{ ' + "'modal-open'" + ': $ctrl.error }">',
-      '  <div class="modal" ng-class="{ show: $ctrl.error }">',
+      '  <div class="modal" ng-if="$ctrl.error" ng-class="{ show: $ctrl.error }">',
       '    <div class="modal-dialog">',
       '      <div class="modal-content error-modal-miq">',
       '        <div class="modal-header">',
