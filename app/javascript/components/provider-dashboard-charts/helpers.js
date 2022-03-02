@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getConvertedData = (data, units) => {
   if (data && data.xData && data.yData) {
     const columnsData = data.xData;
@@ -7,7 +9,7 @@ export const getConvertedData = (data, units) => {
       columnsData.forEach((item, i) => {
         const obj = {};
         obj.group = units;
-        obj.date = item;
+        obj.date = moment(item).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss z')
         obj.value = rowsData[i];
         arr.push(obj);
       });
