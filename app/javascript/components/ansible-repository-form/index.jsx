@@ -5,7 +5,6 @@ import { Loading } from 'carbon-components-react';
 import createSchema from './ansible-repository-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
-import { urlValidation } from './helpers';
 
 const AnsibleRepositoryForm = ({ repositoryId }) => {
   const [{
@@ -112,7 +111,6 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
       onSubmit={onSubmit}
       onCancel={onCancel}
       canSubmit={false}
-      validate={urlValidation}
     />
   );
 };

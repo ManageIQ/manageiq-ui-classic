@@ -42,6 +42,11 @@ function createSchema(repositoryId) {
         type: validatorTypes.REQUIRED,
         message: __('Required'),
       },
+      {
+        type: validatorTypes.URL,
+        message:
+        __('URL must include a protocol (http://, https:// or file://) or be a valid SSH path (user@server:path or ssh://user@address:port/path)'),
+      },
       ],
     },
     {
