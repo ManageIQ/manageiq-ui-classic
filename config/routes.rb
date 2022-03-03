@@ -2947,6 +2947,7 @@ Rails.application.routes.draw do
         sections_field_changed
         security_groups
         sort_template_grid
+        sort_vm_grid
         floating_ips
         network_routers
         network_ports
