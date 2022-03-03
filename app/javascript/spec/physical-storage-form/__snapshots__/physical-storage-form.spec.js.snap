@@ -33,15 +33,11 @@ exports[`Physical storage form component should render adding form variant 1`] =
         },
         Object {
           "component": "text-field",
+          "hideField": true,
           "id": "name",
-          "isRequired": true,
+          "isDisabled": true,
           "label": "Name:",
           "name": "name",
-          "validate": Array [
-            Object {
-              "type": "required",
-            },
-          ],
         },
         Object {
           "component": "select",
@@ -213,15 +209,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
             },
             Object {
               "component": "text-field",
+              "hideField": false,
               "id": "name",
-              "isRequired": true,
+              "isDisabled": true,
               "label": "Name:",
               "name": "name",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
             },
             Object {
               "component": "select",
@@ -408,15 +400,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
               },
               Object {
                 "component": "text-field",
+                "hideField": false,
                 "id": "name",
-                "isRequired": true,
+                "isDisabled": true,
                 "label": "Name:",
                 "name": "name",
-                "validate": Array [
-                  Object {
-                    "type": "required",
-                  },
-                ],
               },
               Object {
                 "component": "select",
@@ -595,15 +583,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                 },
                 Object {
                   "component": "text-field",
+                  "hideField": false,
                   "id": "name",
-                  "isRequired": true,
+                  "isDisabled": true,
                   "label": "Name:",
                   "name": "name",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
                 },
                 Object {
                   "component": "select",
@@ -782,17 +766,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                   />,
                   <SingleField
                     component="text-field"
+                    hideField={false}
                     id="name"
-                    isRequired={true}
+                    isDisabled={true}
                     label="Name:"
                     name="name"
-                    validate={
-                      Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ]
-                    }
                   />,
                   <SingleField
                     component="select"
@@ -951,15 +929,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                     },
                     Object {
                       "component": "text-field",
+                      "hideField": false,
                       "id": "name",
-                      "isRequired": true,
+                      "isDisabled": true,
                       "label": "Name:",
                       "name": "name",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
                     },
                     Object {
                       "component": "select",
@@ -1113,17 +1087,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                     />,
                     <SingleField
                       component="text-field"
+                      hideField={false}
                       id="name"
-                      isRequired={true}
+                      isDisabled={true}
                       label="Name:"
                       name="name"
-                      validate={
-                        Array [
-                          Object {
-                            "type": "required",
-                          },
-                        ]
-                      }
                     />,
                     <SingleField
                       component="select"
@@ -1288,15 +1256,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                       },
                       Object {
                         "component": "text-field",
+                        "hideField": false,
                         "id": "name",
-                        "isRequired": true,
+                        "isDisabled": true,
                         "label": "Name:",
                         "name": "name",
-                        "validate": Array [
-                          Object {
-                            "type": "required",
-                          },
-                        ],
                       },
                       Object {
                         "component": "select",
@@ -1465,17 +1429,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                       />,
                       <SingleField
                         component="text-field"
+                        hideField={false}
                         id="name"
-                        isRequired={true}
+                        isDisabled={true}
                         label="Name:"
                         name="name"
-                        validate={
-                          Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ]
-                        }
                       />,
                       <SingleField
                         component="select"
@@ -1640,15 +1598,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                         },
                         Object {
                           "component": "text-field",
+                          "hideField": false,
                           "id": "name",
-                          "isRequired": true,
+                          "isDisabled": true,
                           "label": "Name:",
                           "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
                         },
                         Object {
                           "component": "select",
@@ -2014,32 +1968,21 @@ exports[`Physical storage form component should render editing form variant 1`] 
                         </SingleField>
                         <SingleField
                           component="text-field"
+                          hideField={false}
                           id="name"
-                          isRequired={true}
+                          isDisabled={true}
                           key="name"
                           label="Name:"
                           name="name"
-                          validate={
-                            Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ]
-                          }
                         >
                           <FormConditionWrapper
                             field={
                               Object {
                                 "component": "text-field",
                                 "id": "name",
-                                "isRequired": true,
+                                "isDisabled": true,
                                 "label": "Name:",
                                 "name": "name",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
                               }
                             }
                           >
@@ -2049,30 +1992,19 @@ exports[`Physical storage form component should render editing form variant 1`] 
                               <TextField
                                 component="text-field"
                                 id="name"
-                                isRequired={true}
+                                isDisabled={true}
                                 label="Name:"
                                 name="name"
-                                validate={
-                                  Array [
-                                    Object {
-                                      "type": "required",
-                                    },
-                                  ]
-                                }
                               >
                                 <TextInput
-                                  disabled={false}
+                                  disabled={true}
                                   helperText=""
                                   id="name"
                                   inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="name"
-                                  labelText={
-                                    <IsRequired>
-                                      Name:
-                                    </IsRequired>
-                                  }
+                                  labelText="Name:"
                                   light={false}
                                   name="name"
                                   onBlur={[Function]}
@@ -2088,18 +2020,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                     className="bx--form-item bx--text-input-wrapper"
                                   >
                                     <label
-                                      className="bx--label"
+                                      className="bx--label bx--label--disabled"
                                       htmlFor="name"
                                     >
-                                      <IsRequired>
-                                        <span
-                                          aria-hidden="true"
-                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                        >
-                                          *
-                                        </span>
-                                        Name:
-                                      </IsRequired>
+                                      Name:
                                     </label>
                                     <div
                                       className="bx--text-input__field-outer-wrapper"
@@ -2110,7 +2034,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       >
                                         <input
                                           className="bx--text-input"
-                                          disabled={false}
+                                          disabled={true}
                                           id="name"
                                           name="name"
                                           onBlur={[Function]}
@@ -3673,17 +3597,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 />,
                                 <SingleField
                                   component="text-field"
+                                  hideField={false}
                                   id="name"
-                                  isRequired={true}
+                                  isDisabled={true}
                                   label="Name:"
                                   name="name"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
                                 />,
                                 <SingleField
                                   component="select"
@@ -3911,15 +3829,11 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   },
                                   Object {
                                     "component": "text-field",
+                                    "hideField": false,
                                     "id": "name",
-                                    "isRequired": true,
+                                    "isDisabled": true,
                                     "label": "Name:",
                                     "name": "name",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
                                   },
                                   Object {
                                     "component": "select",

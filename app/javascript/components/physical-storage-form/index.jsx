@@ -37,7 +37,7 @@ const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
       const message = sprintf(
         recordId
           ? __('Modification of Physical Storage "%s" has been successfully queued.')
-          : __('Add of Physical Storage "%s" has been successfully queued.'),
+          : __('Add of Physical Storage has been successfully queued.'),
         values.name,
       );
       miqRedirectBack(message, undefined, '/physical_storage/show_list');
