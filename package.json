@@ -68,7 +68,6 @@
     "d3-7.0.0": "npm:d3@^7.0.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "es6-shim": "~0.35.3",
-    "git-url-parse": "^11.6.0",
     "history": "^4.7.2",
     "jquery": "~2.2.4",
     "jquery-ui": "~1.13.0",
