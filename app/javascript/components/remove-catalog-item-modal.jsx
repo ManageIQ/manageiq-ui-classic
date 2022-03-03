@@ -84,13 +84,14 @@ class RemoveCatalogItemModal extends React.Component {
       }));
 
     // Buttons setup
-    const { data } = this.state;
     dispatch({
       type: 'FormButtons.init',
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeCatalogItems(data),
+        // used this.state.data to get updated value from promise (whenever state updates)
+        // eslint-disable-next-line react/destructuring-assignment
+        addClicked: () => removeCatalogItems(this.state.data),
       },
     });
     dispatch({
