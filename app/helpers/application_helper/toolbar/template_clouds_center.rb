@@ -66,16 +66,6 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           :confirm      => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
           :enabled      => false,
           :onwhen       => "1+"),
-        separator,
-        button(
-          :image_right_size,
-          'ff ff-database-squeezed fa-lg',
-          N_('CPU/Memory Recommendations of selected item'),
-          N_('Right-Size Recommendations'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1"),
       ]
     ),
   ])
