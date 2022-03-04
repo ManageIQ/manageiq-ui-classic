@@ -341,7 +341,7 @@ class DashboardController < ApplicationController
     if params[:widget] # Make sure we got a widget in
       w = params[:widget].to_i
       dashboard = @sb[:dashboards][@sb[:active_db]]
-      [:col1, :col2, :col3, :minimized].each { |column| column_data(dashboard, column).delete(w) }
+      [:col1, :col2, :col3, :minimized].each { |column| dashboard[column].delete(w) }
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
       w = MiqWidget.find_by(:id => w)
       ws.remove_member(w) if w
