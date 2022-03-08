@@ -101,18 +101,18 @@ class CloudVolumeController < ApplicationController
   def attach_finished
     task_id = session[:async][:params][:task_id]
     volume_id = session[:async][:params][:id]
-    volume_name = session[:async][:params][:name]
     vm_id = session[:async][:params][:vm_id]
     vm = find_record_with_rbac(VmCloud, vm_id)
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
-        :volume_name => volume_name,
+        :volume_name => volume.name,
         :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
-        :volume_name => volume_name,
+        :volume_name => volume.name,
         :vm_name     => vm.name,
         :details     => task.message
       }, :error)
@@ -156,18 +156,18 @@ class CloudVolumeController < ApplicationController
   def detach_finished
     task_id = session[:async][:params][:task_id]
     volume_id = session[:async][:params][:id]
-    volume_name = session[:async][:params][:name]
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     vm_id = session[:async][:params][:vm_id]
     vm = find_record_with_rbac(VmCloud, vm_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
-        :volume_name => volume_name,
+        :volume_name => volume.name,
         :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
-        :volume_name => volume_name,
+        :volume_name => volume.name,
         :vm_name     => vm.name,
         :details     => task.message
       }, :error)
