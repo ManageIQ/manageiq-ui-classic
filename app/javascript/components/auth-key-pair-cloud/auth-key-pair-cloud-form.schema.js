@@ -28,6 +28,7 @@ const createSchema = () => ({
       placeholder: `<${__('Choose')}>`,
       loadOptions: providerOptions,
       isRequired: true,
+      includeEmpty: true,
       validate: [{ type: validatorTypes.REQUIRED }],
     },
   ],
