@@ -10,7 +10,7 @@
         %img{:src => ::Settings.server.custom_brand ? '/upload/custom_brand.png' : image_path("layout/brand.svg"), :alt => "ManageIQ"}
 
     .col-md-6.col-lg-5.login
-      .form-horizontal#login_div
+      %form.form-horizontal#login_div
         = render(:partial => "layouts/spinner",
                  :locals  => {:login => true})
 
