@@ -81,6 +81,9 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        :url_parms    => 'main_div',
                        :send_checked => true,
                        :enabled      => false,
+                       :klass     => ApplicationHelper::Button::PolymorphicConditionalButton,
+                       :options   => {:feature      => :update,
+                                      :parent_class => "CloudVolume"},
                        :onwhen       => '1'
                      ),
                      button(
