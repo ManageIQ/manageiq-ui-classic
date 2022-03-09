@@ -62,6 +62,8 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :url_parms    => 'main_div',
                        :send_checked => true,
+                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options   => {:feature => :update},
                      ),
                      button(
                        :cloud_volume_delete,
