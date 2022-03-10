@@ -10,6 +10,3 @@
     .col-xs-12.col-sm-12.col-md-6
       = react('RecentVmGraph', :providerId => '', :title => _('Recent Servers'),
        :config => 'recentServersConfig', :apiUrl => 'ems_physical_infra_dashboard/recent_servers_data', :dataPoint => 'recentServers')
-
-  :javascript
-    miq_bootstrap('.ems-physical-infra-dashboard');

@@ -9,6 +9,3 @@
     .col-xs-12.col-sm-12.col-md-6
       = react('RecentVmGraph', :providerId => @record.id.to_s, :title => _('Recent Images'),
        :config => 'recentImagesConfig', :apiUrl => 'ems_cloud_dashboard/recent_images_data', :dataPoint => 'recentResources')
-  :javascript
-    ManageIQ.angular.app.value('providerId', '#{@record.id}');
-    miq_bootstrap('.ems-cloud-dashboard');
