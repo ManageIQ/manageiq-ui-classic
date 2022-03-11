@@ -1,28 +1,22 @@
 module Menu
   class YamlLoader
-    include Singleton
-
-    def self.load
-      instance.load_custom_items
-    end
-
-    def load_custom_items
-      @sections = []
-      @items    = []
+    def load
+      sections = []
+      items    = []
       Dir.glob(Rails.root.join('product/menubar/*.yml')).each do |f|
-        load_custom_item(f)
+        load_custom_item(f, sections, items)
       end
-      [@sections, @items]
+      [sections, items]
     end
 
     private
 
-    def load_custom_item(file_name)
+    def load_custom_item(file_name, sections, items)
       properties = YAML.load(File.read(file_name))
       if properties['type'] == 'section'
-        @sections << create_custom_menu_section(properties)
+        sections << create_custom_menu_section(properties)
       else
-        @items << create_custom_menu_item(properties)
+        items << create_custom_menu_item(properties)
       end
     end
 
