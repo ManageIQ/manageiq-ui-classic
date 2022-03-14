@@ -14,9 +14,7 @@ module Menu
       sections = []
       items = []
 
-      engines.map do |engine|
-        engine.try(:menu)
-      end.compact.flatten.each do |item|
+      engines.flat_map { |engine| engine.try(:menu) || [] }.each do |item|
         case item
         when Menu::Section
           sections << item
