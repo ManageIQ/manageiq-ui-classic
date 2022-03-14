@@ -162,6 +162,12 @@ const addSchema = (formValues) => {
           options: injectOption(rangeNine, formValues.ui_worker.count, true),
           label: __('Count'),
           helperText: __('Changing the UI Workers Count will immediately restart the webserver'),
+        }, {
+          component: componentTypes.SELECT,
+          id: 'ui_worker.memory_threshold',
+          name: 'ui_worker.memory_threshold',
+          options: injectOption(basicOptions, formValues.ui_worker.memory_threshold),
+          label: __('Memory threshold'),
         },
       ],
     },

@@ -59,6 +59,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
             count: wb.queue_worker_base.smart_proxy_worker.count || queueCount,
           },
           ui_worker: {
+            memory_threshold: parseWorker(wb.ui_worker).bytes || baseMem,
             count: wb.ui_worker.count || baseCount,
           },
           reporting_worker: {
@@ -137,6 +138,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
         count: isDifferent('web_service_worker.count'),
       },
       ui_worker: {
+        memory_threshold: toRubyMethod(isDifferent('ui_worker.memory_threshold')),
         count: isDifferent('ui_worker.count'),
       },
       event_catcher: {
