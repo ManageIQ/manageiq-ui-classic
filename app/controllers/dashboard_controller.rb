@@ -196,9 +196,7 @@ class DashboardController < ApplicationController
     @sb[:dashboards][@sb[:active_db]][:minimized] ||= [] # Init minimized widgets array
 
     # Build the available widgets for the pulldown
-    dashboard = @sb[:dashboards][@sb[:active_db]]
-    dashboard[:col1], dashboard[:col2], dashboard[:col3] = override_columns(dashboard)
-    col_widgets = [:col1, :col2, :col3].map { |column| dashboard[column] }.flatten.uniq.compact
+    col_widgets = column_widgets(@sb[:dashboards][@sb[:active_db]]).flatten.uniq.compact
 
     # Build widget_list to load the widget dropdown list toolbar
     widget_list = []
@@ -320,15 +318,13 @@ class DashboardController < ApplicationController
   # A widget has been dropped
   def widget_dd_done
     assert_privileges("dashboard_add")
-    if params[:col1] || params[:col2] || params[:col3]
+    if params[:col1] || params[:col2]
       if params[:col1] && params[:col1] != [""]
         @sb[:dashboards][@sb[:active_db]][:col1] = param_widgets(params[:col1])
         @sb[:dashboards][@sb[:active_db]][:col2].delete_if { |w| @sb[:dashboards][@sb[:active_db]][:col1].include?(w) }
-        @sb[:dashboards][@sb[:active_db]][:col3].delete_if { |w| @sb[:dashboards][@sb[:active_db]][:col1].include?(w) }
       elsif params[:col2] && params[:col2] != [""]
         @sb[:dashboards][@sb[:active_db]][:col2] = param_widgets(params[:col2])
         @sb[:dashboards][@sb[:active_db]][:col1].delete_if { |w| @sb[:dashboards][@sb[:active_db]][:col2].include?(w) }
-        @sb[:dashboards][@sb[:active_db]][:col3].delete_if { |w| @sb[:dashboards][@sb[:active_db]][:col2].include?(w) }
       end
       save_user_dashboards
     end
@@ -340,8 +336,9 @@ class DashboardController < ApplicationController
     assert_privileges("dashboard_view")
     if params[:widget] # Make sure we got a widget in
       w = params[:widget].to_i
-      dashboard = @sb[:dashboards][@sb[:active_db]]
-      [:col1, :col2, :col3, :minimized].each { |column| dashboard[column].delete(w) }
+      @sb[:dashboards][@sb[:active_db]][:col1].delete(w)
+      @sb[:dashboards][@sb[:active_db]][:col2].delete(w)
+      @sb[:dashboards][@sb[:active_db]][:minimized].delete(w)
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
       w = MiqWidget.find_by(:id => w)
       ws.remove_member(w) if w

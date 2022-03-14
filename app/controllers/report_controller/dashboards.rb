@@ -235,7 +235,6 @@ module ReportController::Dashboards
     w = params[:widget].to_i
     @edit[:new][:col1].delete(w) if @edit[:new][:col1].include?(w)
     @edit[:new][:col2].delete(w) if @edit[:new][:col2].include?(w)
-    @edit[:new][:col3].delete(w) if @edit[:new][:col3].include?(w)
     db_available_widgets_options
     @in_a_form = true
     render :update do |page|
@@ -255,19 +254,13 @@ module ReportController::Dashboards
   private
 
   def set_edit_new_cols
-    if params[:col1] || params[:col2] || params[:col3]
+    if params[:col1] || params[:col2]
       if params[:col1] && params[:col1] != [""]
         @edit[:new][:col1] = params[:col1].collect { |w| w.split("_").last.to_i }
         @edit[:new][:col2].delete_if { |w| @edit[:new][:col1].include?(w) }
-        @edit[:new][:col3].delete_if { |w| @edit[:new][:col1].include?(w) }
       elsif params[:col2] && params[:col2] != [""]
         @edit[:new][:col2] = params[:col2].collect { |w| w.split("_").last.to_i }
         @edit[:new][:col1].delete_if { |w| @edit[:new][:col2].include?(w) }
-        @edit[:new][:col3].delete_if { |w| @edit[:new][:col2].include?(w) }
-      elsif params[:col3] && params[:col3] != [""]
-        @edit[:new][:col3] = params[:col3].collect { |w| w.split("_").last.to_i }
-        @edit[:new][:col1].delete_if { |w| @edit[:new][:col3].include?(w) }
-        @edit[:new][:col2].delete_if { |w| @edit[:new][:col3].include?(w) }
       end
     end
   end
@@ -326,7 +319,7 @@ module ReportController::Dashboards
       @sb[:new][:description] = @dashboard.description
       @sb[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : true
       @sb[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : true
-      @sb[:new][:col1], @sb[:new][:col2], @sb[:new][:col3] = override_columns(@dashboard[:set_data])
+      @sb[:new][:col1], @sb[:new][:col2] = column_widgets(@dashboard[:set_data])
     end
   end
 
@@ -365,16 +358,14 @@ module ReportController::Dashboards
     @dashboard.set_data = {} unless @dashboard.set_data
     @dashboard.set_data[:col1] = [] if !@dashboard.set_data[:col1] && !@edit[:new][:col1].empty?
     @dashboard.set_data[:col2] = [] if !@dashboard.set_data[:col2] && !@edit[:new][:col2].empty?
-    @dashboard.set_data[:col3] = [] if !@dashboard.set_data[:col3] && !@edit[:new][:col3].empty?
     @dashboard.set_data[:col1] = @edit[:new][:col1]
     @dashboard.set_data[:col2] = @edit[:new][:col2]
-    @dashboard.set_data[:col3] = @edit[:new][:col3]
     @dashboard.set_data[:locked] = @edit[:new][:locked]
     @dashboard.set_data[:reset_upon_login] = @edit[:new][:reset_upon_login]
   end
 
   def db_save_members
-    widget_ids = %i[col1 col2 col3].collect { |key| @dashboard.set_data[key] }.flatten
+    widget_ids = %i[col1 col2].collect { |key| @dashboard.set_data[key] }.flatten
     widgets = Array(MiqWidget.where(:id => widget_ids))
 
     @dashboard.replace_children(widgets)
@@ -397,7 +388,7 @@ module ReportController::Dashboards
         end
       end
     end
-    if @edit[:new][:col1].empty? && @edit[:new][:col2].empty? && @edit[:new][:col3].empty?
+    if @edit[:new][:col1].empty? && @edit[:new][:col2].empty?
       add_flash(_("One widget must be selected"), :error)
       return
     end
@@ -417,7 +408,7 @@ module ReportController::Dashboards
     @edit[:new][:description] = @dashboard.description
     @edit[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : false
     @edit[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : false
-    @edit[:new][:col1], @edit[:new][:col2], @edit[:new][:col3] = override_columns(@dashboard[:set_data])
+    @edit[:new][:col1], @edit[:new][:col2] = column_widgets(@dashboard[:set_data])
     db_available_widgets_options
     @edit[:current] = copy_hash(@edit[:new])
   end
@@ -453,8 +444,7 @@ module ReportController::Dashboards
   def db_available_widgets_options
     # Build the available widgets for the pulldown
     col_widgets = @edit[:new][:col1] +
-                  @edit[:new][:col2] +
-                  @edit[:new][:col3]
+                  @edit[:new][:col2]
     if @sb[:nodes].length == 2 && @sb[:nodes][1] != "g"
       # default dashboard selected
       @available_widgets = MiqWidget.available_for_all_roles.to_a
