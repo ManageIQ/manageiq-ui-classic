@@ -1029,9 +1029,6 @@ Rails.application.routes.draw do
         widget_add
         widget_close
         widget_dd_done
-        widget_refresh
-        widget_toggle_minmax
-        widget_zoom
       )
     },
 

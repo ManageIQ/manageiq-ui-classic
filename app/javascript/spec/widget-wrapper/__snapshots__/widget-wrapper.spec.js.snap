@@ -1,0 +1,607 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Widget wrapper component should render a widget wrapper with a chart 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <WidgetWrapper
+    widgetButtons="[{\\"id\\":\\"w_1_close\\",\\"title\\":\\"Remove from Dashboard\\",\\"name\\":\\"Remove Widget\\",\\"confirm\\":\\"Are you sure you want to remove 'Guest OS Information'from the Dashboard?\\",\\"dataRemote\\":true,\\"sparkleOn\\":true,\\"href\\":\\"/dashboard/widget_close?widget=1\\",\\"fonticon\\":\\"fa fa-times fa-fw\\",\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_1_minmax\\",\\"title\\":\\"Minimize\\",\\"name\\":\\"Minimize\\",\\"confirm\\":false,\\"dataRemote\\":true,\\"href\\":\\"/dashboard/widget_toggle_minmax?widget=1\\",\\"fonticon\\":\\"fa fa-caret-square-o-up fa-fw\\",\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_1_fullscreen\\",\\"title\\":\\"Open the chart and full report in a new window\\",\\"name\\":\\"Full Screen\\",\\"confirm\\":\\"This will show the chart and the entire report (all rows) in your browser. Do you want to proceed?\\",\\"href\\":\\"/dashboard/report_only?rr_id=12686&type=hybrid\\",\\"fonticon\\":\\"fa fa-arrows-alt fa-fw\\",\\"target\\":\\"_blank\\"},{\\"id\\":\\"w_1_pdf\\",\\"title\\":\\"Print the full report (all rows) or export it as a PDF file\\",\\"name\\":\\"Print or export to PDF\\",\\"href\\":\\"/dashboard/widget_to_pdf?rr_id=12686\\",\\"target\\":\\"_blank\\",\\"fonticon\\":\\"pficon pficon-print fa-fw\\"},{\\"id\\":\\"w_1_zoom\\",\\"title\\":\\"Zoom in on this chart\\",\\"name\\":\\"Zoom in\\",\\"href\\":\\"/dashboard/widget_zoom?widget=1\\",\\"fonticon\\":\\"fa fa-plus fa-fw\\",\\"dataRemote\\":true,\\"sparkleOn\\":true,\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_1_refresh\\",\\"title\\":\\"Refresh this Widget\\",\\"name\\":\\"Refresh\\",\\"fonticon\\":\\"fa fa-refresh fa-fw\\",\\"refresh\\":true}]"
+    widgetId={1}
+    widgetLastRun="April 06, 2019 12:00"
+    widgetNextRun="March 07, 2022 01:00"
+    widgetTitle="Guest OS Information"
+    widgetType="chart"
+  >
+    <div
+      className="card-pf card-pf-view"
+    >
+      <div
+        className="card-pf-body"
+      >
+        <div
+          className="card-pf-heading-kebab"
+        >
+          <FeatureToggle(OverflowMenu)
+            className="widget-overflow-menu"
+            flipped={true}
+            id="1-menu"
+          >
+            <ForwardRef(OverflowMenu)
+              className="widget-overflow-menu"
+              flipped={true}
+              id="1-menu"
+            >
+              <OverflowMenu
+                ariaLabel="open and close list of options"
+                className="widget-overflow-menu"
+                direction="bottom"
+                flipped={true}
+                iconDescription="open and close list of options"
+                id="1-menu"
+                innerRef={null}
+                light={false}
+                menuOffset={[Function]}
+                menuOffsetFlip={[Function]}
+                onClick={[Function]}
+                onClose={[Function]}
+                onKeyDown={[Function]}
+                onOpen={[Function]}
+                open={false}
+                renderIcon={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+              >
+                <ClickListener
+                  onClickOutside={[Function]}
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-haspopup={true}
+                    aria-label="open and close list of options"
+                    className="widget-overflow-menu bx--overflow-menu"
+                    id="1-menu"
+                    onClick={[Function]}
+                    onClose={[Function]}
+                    onKeyDown={[Function]}
+                    open={false}
+                    type="button"
+                  >
+                    <ForwardRef(OverflowMenuVertical16)
+                      aria-label="open and close list of options"
+                      className="bx--overflow-menu__icon"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                    >
+                      <Icon
+                        aria-label="open and close list of options"
+                        className="bx--overflow-menu__icon"
+                        fill="currentColor"
+                        height={16}
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={16}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <svg
+                          aria-label="open and close list of options"
+                          className="bx--overflow-menu__icon"
+                          fill="currentColor"
+                          focusable="false"
+                          height={16}
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
+                          preserveAspectRatio="xMidYMid meet"
+                          role="img"
+                          viewBox="0 0 32 32"
+                          width={16}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="16"
+                            cy="8"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="16"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="24"
+                            r="2"
+                          />
+                          <title>
+                            open and close list of options
+                          </title>
+                        </svg>
+                      </Icon>
+                    </ForwardRef(OverflowMenuVertical16)>
+                  </button>
+                </ClickListener>
+              </OverflowMenu>
+            </ForwardRef(OverflowMenu)>
+          </FeatureToggle(OverflowMenu)>
+          <h2
+            className="card-pf-title sortable-handle ui-sortable-handle"
+          >
+            Guest OS Information
+          </h2>
+        </div>
+      </div>
+      <div
+        id="dd_w1_box"
+      >
+        <div
+          className="loadingSpinner"
+        >
+          <Loading
+            active={true}
+            className="export-spinner"
+            description="Active loading indicator"
+            small={true}
+            withOverlay={false}
+          >
+            <div
+              aria-atomic="true"
+              aria-labelledby="loading-id-3"
+              aria-live="assertive"
+              className="export-spinner bx--loading bx--loading--small"
+            >
+              <label
+                className="bx--visually-hidden"
+                id="loading-id-3"
+              >
+                Active loading indicator
+              </label>
+              <svg
+                className="bx--loading__svg"
+                viewBox="0 0 100 100"
+              >
+                <title>
+                  Active loading indicator
+                </title>
+                <circle
+                  className="bx--loading__background"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+                <circle
+                  className="bx--loading__stroke"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+              </svg>
+            </div>
+          </Loading>
+        </div>
+      </div>
+    </div>
+  </WidgetWrapper>
+</Provider>
+`;
+
+exports[`Widget wrapper component should render a widget wrapper with a menu 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <WidgetWrapper
+    widgetButtons="[{\\"id\\":\\"w_83_close\\",\\"title\\":\\"Remove from Dashboard\\",\\"name\\":\\"Remove Widget\\",\\"confirm\\":\\"Are you sure you want to remove 'Links'from the Dashboard?\\",\\"dataRemote\\":true,\\"sparkleOn\\":true,\\"href\\":\\"/dashboard/widget_close?widget=83\\",\\"fonticon\\":\\"fa fa-times fa-fw\\",\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_83_minmax\\",\\"title\\":\\"Minimize\\",\\"name\\":\\"Minimize\\",\\"confirm\\":false,\\"dataRemote\\":true,\\"href\\":\\"/dashboard/widget_toggle_minmax?widget=83\\",\\"fonticon\\":\\"fa fa-caret-square-o-up fa-fw\\",\\"dataMethod\\":\\"post\\"}]"
+    widgetId={83}
+    widgetLastRun="March 04, 2022 03:55"
+    widgetNextRun="March 07, 2022 01:00"
+    widgetTitle="Links"
+    widgetType="menu"
+  >
+    <div
+      className="card-pf card-pf-view"
+    >
+      <div
+        className="card-pf-body"
+      >
+        <div
+          className="card-pf-heading-kebab"
+        >
+          <FeatureToggle(OverflowMenu)
+            className="widget-overflow-menu"
+            flipped={true}
+            id="83-menu"
+          >
+            <ForwardRef(OverflowMenu)
+              className="widget-overflow-menu"
+              flipped={true}
+              id="83-menu"
+            >
+              <OverflowMenu
+                ariaLabel="open and close list of options"
+                className="widget-overflow-menu"
+                direction="bottom"
+                flipped={true}
+                iconDescription="open and close list of options"
+                id="83-menu"
+                innerRef={null}
+                light={false}
+                menuOffset={[Function]}
+                menuOffsetFlip={[Function]}
+                onClick={[Function]}
+                onClose={[Function]}
+                onKeyDown={[Function]}
+                onOpen={[Function]}
+                open={false}
+                renderIcon={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+              >
+                <ClickListener
+                  onClickOutside={[Function]}
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-haspopup={true}
+                    aria-label="open and close list of options"
+                    className="widget-overflow-menu bx--overflow-menu"
+                    id="83-menu"
+                    onClick={[Function]}
+                    onClose={[Function]}
+                    onKeyDown={[Function]}
+                    open={false}
+                    type="button"
+                  >
+                    <ForwardRef(OverflowMenuVertical16)
+                      aria-label="open and close list of options"
+                      className="bx--overflow-menu__icon"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                    >
+                      <Icon
+                        aria-label="open and close list of options"
+                        className="bx--overflow-menu__icon"
+                        fill="currentColor"
+                        height={16}
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={16}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <svg
+                          aria-label="open and close list of options"
+                          className="bx--overflow-menu__icon"
+                          fill="currentColor"
+                          focusable="false"
+                          height={16}
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
+                          preserveAspectRatio="xMidYMid meet"
+                          role="img"
+                          viewBox="0 0 32 32"
+                          width={16}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="16"
+                            cy="8"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="16"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="24"
+                            r="2"
+                          />
+                          <title>
+                            open and close list of options
+                          </title>
+                        </svg>
+                      </Icon>
+                    </ForwardRef(OverflowMenuVertical16)>
+                  </button>
+                </ClickListener>
+              </OverflowMenu>
+            </ForwardRef(OverflowMenu)>
+          </FeatureToggle(OverflowMenu)>
+          <h2
+            className="card-pf-title sortable-handle ui-sortable-handle"
+          >
+            Links
+          </h2>
+        </div>
+      </div>
+      <div
+        id="dd_w83_box"
+      >
+        <div
+          className="loadingSpinner"
+        >
+          <Loading
+            active={true}
+            className="export-spinner"
+            description="Active loading indicator"
+            small={true}
+            withOverlay={false}
+          >
+            <div
+              aria-atomic="true"
+              aria-labelledby="loading-id-2"
+              aria-live="assertive"
+              className="export-spinner bx--loading bx--loading--small"
+            >
+              <label
+                className="bx--visually-hidden"
+                id="loading-id-2"
+              >
+                Active loading indicator
+              </label>
+              <svg
+                className="bx--loading__svg"
+                viewBox="0 0 100 100"
+              >
+                <title>
+                  Active loading indicator
+                </title>
+                <circle
+                  className="bx--loading__background"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+                <circle
+                  className="bx--loading__stroke"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+              </svg>
+            </div>
+          </Loading>
+        </div>
+      </div>
+    </div>
+  </WidgetWrapper>
+</Provider>
+`;
+
+exports[`Widget wrapper component should render a widget wrapper with a report 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <WidgetWrapper
+    widgetButtons="[{\\"id\\":\\"w_19_close\\",\\"title\\":\\"Remove from Dashboard\\",\\"name\\":\\"Remove Widget\\",\\"confirm\\":\\"Are you sure you want to remove 'EVM: Recently Discovered Hosts'from the Dashboard?\\",\\"dataRemote\\":true,\\"sparkleOn\\":true,\\"href\\":\\"/dashboard/widget_close?widget=19\\",\\"fonticon\\":\\"fa fa-times fa-fw\\",\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_19_minmax\\",\\"title\\":\\"Minimize\\",\\"name\\":\\"Minimize\\",\\"confirm\\":false,\\"dataRemote\\":true,\\"href\\":\\"/dashboard/widget_toggle_minmax?widget=19\\",\\"fonticon\\":\\"fa fa-caret-square-o-up fa-fw\\",\\"dataMethod\\":\\"post\\"},{\\"id\\":\\"w_19_fullscreen\\",\\"title\\":\\"Open the full report in a new window\\",\\"name\\":\\"Full Screen\\",\\"confirm\\":\\"This will show the entire report (all rows) in your browser. Do you want to proceed?\\",\\"href\\":\\"/dashboard/report_only?rr_id=19618&type=tabular\\",\\"fonticon\\":\\"fa fa-arrows-alt fa-fw\\",\\"target\\":\\"_blank\\"},{\\"id\\":\\"w_19_pdf\\",\\"title\\":\\"Print the full report (all rows) or export it as a PDF file\\",\\"name\\":\\"Print or export to PDF\\",\\"href\\":\\"/dashboard/widget_to_pdf?rr_id=19618\\",\\"target\\":\\"_blank\\",\\"fonticon\\":\\"pficon pficon-print fa-fw\\"},{\\"id\\":\\"w_19_refresh\\",\\"title\\":\\"Refresh this Widget\\",\\"name\\":\\"Refresh\\",\\"fonticon\\":\\"fa fa-refresh fa-fw\\",\\"refresh\\":true}]"
+    widgetId={19}
+    widgetLastRun="March 04, 2022 03:55"
+    widgetNextRun="March 07, 2022 01:00"
+    widgetTitle="EVM: Recently Discovered Hosts"
+    widgetType="report"
+  >
+    <div
+      className="card-pf card-pf-view"
+    >
+      <div
+        className="card-pf-body"
+      >
+        <div
+          className="card-pf-heading-kebab"
+        >
+          <FeatureToggle(OverflowMenu)
+            className="widget-overflow-menu"
+            flipped={true}
+            id="19-menu"
+          >
+            <ForwardRef(OverflowMenu)
+              className="widget-overflow-menu"
+              flipped={true}
+              id="19-menu"
+            >
+              <OverflowMenu
+                ariaLabel="open and close list of options"
+                className="widget-overflow-menu"
+                direction="bottom"
+                flipped={true}
+                iconDescription="open and close list of options"
+                id="19-menu"
+                innerRef={null}
+                light={false}
+                menuOffset={[Function]}
+                menuOffsetFlip={[Function]}
+                onClick={[Function]}
+                onClose={[Function]}
+                onKeyDown={[Function]}
+                onOpen={[Function]}
+                open={false}
+                renderIcon={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+              >
+                <ClickListener
+                  onClickOutside={[Function]}
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-haspopup={true}
+                    aria-label="open and close list of options"
+                    className="widget-overflow-menu bx--overflow-menu"
+                    id="19-menu"
+                    onClick={[Function]}
+                    onClose={[Function]}
+                    onKeyDown={[Function]}
+                    open={false}
+                    type="button"
+                  >
+                    <ForwardRef(OverflowMenuVertical16)
+                      aria-label="open and close list of options"
+                      className="bx--overflow-menu__icon"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                    >
+                      <Icon
+                        aria-label="open and close list of options"
+                        className="bx--overflow-menu__icon"
+                        fill="currentColor"
+                        height={16}
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={16}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <svg
+                          aria-label="open and close list of options"
+                          className="bx--overflow-menu__icon"
+                          fill="currentColor"
+                          focusable="false"
+                          height={16}
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
+                          preserveAspectRatio="xMidYMid meet"
+                          role="img"
+                          viewBox="0 0 32 32"
+                          width={16}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="16"
+                            cy="8"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="16"
+                            r="2"
+                          />
+                          <circle
+                            cx="16"
+                            cy="24"
+                            r="2"
+                          />
+                          <title>
+                            open and close list of options
+                          </title>
+                        </svg>
+                      </Icon>
+                    </ForwardRef(OverflowMenuVertical16)>
+                  </button>
+                </ClickListener>
+              </OverflowMenu>
+            </ForwardRef(OverflowMenu)>
+          </FeatureToggle(OverflowMenu)>
+          <h2
+            className="card-pf-title sortable-handle ui-sortable-handle"
+          >
+            EVM: Recently Discovered Hosts
+          </h2>
+        </div>
+      </div>
+      <div
+        id="dd_w19_box"
+      >
+        <div
+          className="loadingSpinner"
+        >
+          <Loading
+            active={true}
+            className="export-spinner"
+            description="Active loading indicator"
+            small={true}
+            withOverlay={false}
+          >
+            <div
+              aria-atomic="true"
+              aria-labelledby="loading-id-1"
+              aria-live="assertive"
+              className="export-spinner bx--loading bx--loading--small"
+            >
+              <label
+                className="bx--visually-hidden"
+                id="loading-id-1"
+              >
+                Active loading indicator
+              </label>
+              <svg
+                className="bx--loading__svg"
+                viewBox="0 0 100 100"
+              >
+                <title>
+                  Active loading indicator
+                </title>
+                <circle
+                  className="bx--loading__background"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+                <circle
+                  className="bx--loading__stroke"
+                  cx="50%"
+                  cy="50%"
+                  r="44"
+                />
+              </svg>
+            </div>
+          </Loading>
+        </div>
+      </div>
+    </div>
+  </WidgetWrapper>
+</Provider>
+`;

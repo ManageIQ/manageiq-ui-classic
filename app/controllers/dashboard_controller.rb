@@ -100,7 +100,7 @@ class DashboardController < ApplicationController
                 end.map do |shortcut|
                   {:description => shortcut.description, :href => shortcut.miq_shortcut.url}
                 end
-    render :json => {:shortcuts => shortcuts,
+    render :json => {:content   => shortcuts,
                      :minimized => widget_minimized?(params[:id]),
                      :blank     => false}
   end
@@ -253,62 +253,8 @@ class DashboardController < ApplicationController
     javascript_redirect(:action => 'show')
   end
 
-  # Toggle dashboard item size
-  def widget_toggle_minmax
-    assert_privileges("dashboard_view")
-    unless params[:widget] # Make sure we got a widget in
-      head :ok
-      return
-    end
-
-    w = params[:widget].to_i
-    render :update do |page|
-      page << javascript_prologue
-      if @sb[:dashboards][@sb[:active_db]][:minimized].include?(w)
-        page << javascript_show("dd_w#{w}_box")
-        page << "$('#w_#{w}_minmax').prop('title', ' ' + __('Minimize'));"
-        page << "$('#w_#{w}_minmax').text(' ' + __('Minimize'));"
-        page << javascript_prepend_span("w_#{w}_minmax", "fa fa-caret-square-o-up fa-fw")
-        @sb[:dashboards][@sb[:active_db]][:minimized].delete(w)
-      else
-        page << javascript_hide("dd_w#{w}_box")
-        page << "$('#w_#{w}_minmax').prop('title', ' ' + __('Maximize'));"
-        page << "$('#w_#{w}_minmax').text(' ' + __('Maximize'));"
-        page << javascript_prepend_span("w_#{w}_minmax", "fa fa-caret-square-o-down fa-fw")
-        @sb[:dashboards][@sb[:active_db]][:minimized].push(w)
-      end
-    end
-    save_user_dashboards
-  end
-
-  # Zoom in on chart widget
-  def widget_zoom
-    assert_privileges("dashboard_view")
-    unless params[:widget] # Make sure we got a widget in
-      head :ok
-      return
-    end
-
-    widget = MiqWidget.find(params[:widget].to_i)
-    # Save the rr id for rendering
-    session[:report_result_id] = widget.contents_for_user(current_user).miq_report_result_id
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html("lightbox_div", :partial => "zoomed_chart", :locals => {:widget => widget})
-      page << "$('#lightbox-panel').fadeIn(300);"
-    end
-  end
-
-  def widget_refresh
-    assert_privileges("dashboard_view")
-    w = MiqWidget.find(params[:widget])
-    task_id = w.queue_generate_content
-    if task_id
-      render :json => {:task_id => task_id.to_s}, :status => 200
-    else
-      render :json => {:error => {:message => _("There was an error during refresh.")}}, :status => 400
-    end
+  def param_widgets(column)
+    column.collect { |w| w.split("_").last.to_i }
   end
 
   def param_widgets(column)
@@ -342,8 +288,7 @@ class DashboardController < ApplicationController
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
       w = MiqWidget.find_by(:id => w)
       ws.remove_member(w) if w
-      save_user_dashboards
-      javascript_redirect(:action => 'show')
+      render :json => {:message => _("Widget \"#{w.title}\" removed")}, :status => save_user_dashboards ? 200 : 400
     else
       head :ok
     end
