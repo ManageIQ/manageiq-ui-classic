@@ -43,14 +43,21 @@ col_order:
 - logical_free
 - logical_total
 
+col_formats:
+-
+-
+-
+- :bytes_human
+- :bytes_human
+
 # Column titles, in order
 headers:
 - Name
 - EMS Name
 - Storage System Name
 #- Usage (%)
-- Free Space (Bytes)
-- Total Size (Bytes)
+- Free Space
+- Total Size
 
 # Condition(s) string for the SQL query
 conditions:

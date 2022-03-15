@@ -28,10 +28,10 @@ module StorageResourceHelper::TextualSummary
   end
 
   def textual_logical_free
-    {:label => _("Used"), :value => @record.logical_free}
+    {:label => _("Free Space"), :value => number_to_human_size(@record.logical_free, :precision => 2)}
   end
 
   def textual_logical_total
-    {:label => _("Total Size"), :value => @record.logical_total}
+    {:label => _("Total Size"), :value => number_to_human_size(@record.logical_total, :precision => 2)}
   end
 end
