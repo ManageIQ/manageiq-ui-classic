@@ -26,6 +26,24 @@ export const getLatestValue = (data) => {
   return 0;
 };
 
+export const getHeatMapData = (data) => {
+  if (data) {
+    const arr = [];
+    data.forEach((item) => {
+      const obj = {};
+      obj.percent = item.percent;
+      obj.total = item.total;
+      obj.provider = item.provider;
+      obj.node = item.node;
+      obj.value = item.percent * 100;
+      obj.unit = item.unit;
+      arr.push(obj);
+    });
+    return arr;
+  }
+  return [];
+};
+
 export const getPodsData = (data, createdlabel, deletedLabel) => {
   if (data && data.xData && data.yCreated && data.yDeleted) {
     const columnsData = data.xData;

@@ -4,8 +4,8 @@
     = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_storage'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "heatmap"
+      = react('HeatChart', :providerId => @record.id.to_s,
+        :apiUrl => 'ems_storage_dashboard/resources_capacity_data', :dataPoint1 => 'resourceUsage', :dataPointAvailable => false, :title => _('Used capacity [%]'))
 
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record.id}');
-    miq_bootstrap('.ems-storage-dashboard');

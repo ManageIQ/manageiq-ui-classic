@@ -67,3 +67,19 @@
     margin-bottom: 2px;
   }
 }
+
+.heatmap_charts_div {
+  display: inline-flex;
+  .chart-holder {
+    margin-right: 55px;
+  }
+  .heat-chart-pf {
+    margin-bottom: 50px;
+    width: 300px;
+  }
+}
+
+.heatmap_charts_section {
+  display: inline-flex;
+  flex-direction: column;
+}
