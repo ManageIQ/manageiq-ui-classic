@@ -7,7 +7,8 @@
       = react('UtilizationChartGraph', :providerId => @record.id.to_s, :title => _('Global Utilization'), :cpuConfig => 'cpuUsageConfig',
        :memoryConfig => 'memoryUsageConfig', :dashboard => 'ems_infra_dashboard')
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "heatmap"
+      = react('HeatChart', :providerId => @record.id.to_s,
+        :apiUrl => 'ems_infra_dashboard/cluster_metrics_data', :dataPoint1 => 'clusterCpuUsage', :dataPoint2 => 'clusterMemoryUsage', :title => _('Cluster Utilization'))
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       = react('RecentHostGraph', :providerId => @record.id.to_s)
@@ -17,4 +18,3 @@
 
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record.id}');
-    miq_bootstrap('.ems-infra-dashboard');
