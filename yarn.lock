@@ -1363,7 +1363,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^10.32.0, @carbon/icons-react@npm:^10.41.0":
+"@carbon/icon-helpers@npm:^10.28.0":
+  version: 10.28.0
+  resolution: "@carbon/icon-helpers@npm:10.28.0"
+  checksum: c21b2572443bf1c6f76c562751cd0da43c4cac77409c404ef331cd4a59c379fbf13bf9b46a455023679508d13c325ee3e6c724a9d449a221cf9598b889c58228
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^10.32.0":
   version: 10.43.0
   resolution: "@carbon/icons-react@npm:10.43.0"
   dependencies:
@@ -1373,6 +1380,19 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: 3c571e0ad80af054b5847edf82642df4982f8f1c9427d3d3afd1f7f2746e252cc4d36a4a006473b6c3aa674d5b06ce68fe4152fb84ae66ef50014c299525bf02
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^10.41.0":
+  version: 10.47.0
+  resolution: "@carbon/icons-react@npm:10.47.0"
+  dependencies:
+    "@carbon/icon-helpers": ^10.28.0
+    "@carbon/telemetry": 0.0.0-alpha.6
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16"
+  checksum: 8e22f00a101b1db8212b4d57f4b609e8861dd113b9f18e8a136b65f19caa5e669dcfabb82864a2a17160b3a135e08d1f0b2c1c5323d27883fa0841de9ce660f8
   languageName: node
   linkType: hard
 

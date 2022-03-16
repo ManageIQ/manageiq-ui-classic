@@ -1,0 +1,40 @@
+.widget-wrapper {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.card-pf-heading-kebab {
+  .card-pf-title {
+    cursor: move;
+    display: block;
+  }
+  
+  .bx--overflow-menu {
+    display: inline-block;
+    float: right;
+    margin-top: -10px;
+  }
+}
+
+.card-pf {
+  .loadingSpinner {
+    padding-bottom: 2rem;
+  } 
+}
+
+#empty-widget {
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+#error-widget {
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+.closeButton {
+  float: right;
+  margin-top: -20px;
+}

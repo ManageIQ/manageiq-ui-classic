@@ -146,16 +146,4 @@ describe 'routes for DashboardController' do
       expect(post("/dashboard/widget_dd_done")).to route_to("dashboard#widget_dd_done")
     end
   end
-
-  describe "#widget_toggle_minmax" do
-    it "routes with POST" do
-      expect(post("/dashboard/widget_toggle_minmax")).to route_to("dashboard#widget_toggle_minmax")
-    end
-  end
-
-  describe "#widget_zoom" do
-    it "routes with POST" do
-      expect(post("/dashboard/widget_zoom")).to route_to("dashboard#widget_zoom")
-    end
-  end
 end
