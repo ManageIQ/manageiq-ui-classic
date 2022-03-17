@@ -1,16 +1,6 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-  %h3= _("Basic Information")
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2= _("Event Group")
-      .col-md-10
-        %p.form-control-static= h(@record.memberof.first.description)
-    - if @policy
-      .form-group
-        %label.control-label.col-md-2= _("Attached to Policy")
-        .col-md-10
-          %p.form-control-static= h(@policy.description)
+  = miq_summary_event_definition_info(@record, @policy)
 
   - record_policies = @record.miq_policies.sort_by { |p| p.description.downcase }
-  = miq_summary_event_definition(record_policies)
+  = miq_summary_event_definition_policies(record_policies)
