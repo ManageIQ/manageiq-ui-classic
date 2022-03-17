@@ -174,7 +174,7 @@ window.miqOnCheckSections = function(key, checked, tree) {
 
 // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
 window.miqOnCheckGenealogy = function(key, checked, tree) {
-  var selectedKeys = getSelectedKeys(tree);
+  var selectedKeys = miqGetSelectedKeys(tree);
 
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
