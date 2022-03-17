@@ -21,6 +21,11 @@ cols:
 
 
 include:
+  asset_detail:
+    columns:
+    - product_name
+    - manufacturer
+    - location_led_state
 
 
 include_for_find:
