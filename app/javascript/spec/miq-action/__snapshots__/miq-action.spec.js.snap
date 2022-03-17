@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiqActionStructuredList should render action info structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_action_info"
+>
+  <AccordionItem
+    open={true}
+    title={"Basic Information"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_action_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                bar
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Default
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`MiqActionStructuredList should render action policies structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_action"
+>
+  <AccordionItem
+    open={true}
+    title={"Assigned to Policies"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_action"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title="View this Alert"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`MiqActionStructuredList should render action type 1 structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_action_info"
+>
+  <AccordionItem
+    open={true}
+    title={"Snapshot Settings"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_action_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Snapshot name
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`MiqActionStructuredList should render action type 2 structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_action_info"
+>
+  <AccordionItem
+    open={true}
+    title={"Custom Automation"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_action_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Message
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Request
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="3"
+          onClick={[Function]}
+          tabIndex={3}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="multi_row_cell"
+              >
+                <div
+                  className="sub_row_item"
+                  key="0"
+                  title=""
+                >
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      pair1
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="1"
+                  title=""
+                >
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      pair2
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="sub_row_item"
+                  key="2"
+                  title=""
+                >
+                  <div
+                    className="sub_value"
+                  >
+                    <div
+                      className="expand wrap_text"
+                    >
+                      pair3
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`MiqActionStructuredList should render action type 3 structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_action_info"
+>
+  <AccordionItem
+    open={true}
+    title={"Alerts to Evaluate"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_action_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title="View this Alert"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
