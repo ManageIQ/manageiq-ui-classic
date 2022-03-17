@@ -1,70 +1,14 @@
-#alert_profile_details_div
+#alert-profile-details-div
+
   = render :partial => "layouts/flash_msg"
-  %h3= _('Basic Information')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2= _("Description")
-      .col-md-8
-        %p.form-control-static= h(@alert_profile.description)
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _("Mode")
-      .col-md-8
-        = MiqAlertSet::ALERT_SET_MODES[@alert_profile.mode]
+  = miq_summary_alert_set_info(@alert_profile)
 
   - unless @assign
-    = miq_summary_alert_set(@alert_profile_alerts)
+    = miq_summary_alert_set_alerts(@alert_profile_alerts)
 
   -# Notes field
-  %h3
-    = _('Notes')
-  - if @alert_profile.notes.blank?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-  - else
-    = text_area_tag("notes", @alert_profile.notes, :readonly => true, :rows => 4)
-  %hr
+  = miq_summary_alert_set_notes(@alert_profile)
 
   -# Show assignments
-  %h3= _('Assigned To')
-  - aa = @alert_profile.get_assigned_tos
-  - if !aa[:objects].empty?
-    -# Objects are assigned
-    - if aa[:objects].first.kind_of?(MiqEnterprise)
-      -# Assigned to Enterprise object
-      = _('The Enterprise')
-    - else
-      -# Assigned to CIs
-      .form-horizontal
-        .form-group
-          %label.control-label.col-md-2
-            = ui_lookup(:models => aa[:objects].first.class.to_s)
-          .col-md-8
-            %table
-              %tbody
-                - objs = []
-                - aa[:objects].each do |o|
-                  - if o.kind_of?(EmsFolder)
-                    - objs.push("#{o.ext_management_system.name}/#{o.folder_path(:exclude_root_folder => true, :exclude_non_display_folders => true)}")
-                  - elsif o.kind_of?(ResourcePool)
-                    - objs.push(o.absolute_path(:exclude_hidden => true))
-                  - else
-                    - objs.push(o.name)
-                - objs.sort_by(&:downcase).each do |obj|
-                  %tr
-                    %td
-                      = h(obj)
-  - elsif !aa[:tags].empty?
-    -# Tags are assigned
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("%{alert_profiles} with %{type} Tags") % {:alert_profiles => ui_lookup(:tables => aa[:tags].first.last), :type => @alert_profile_tag.description}
-        .col-md-8
-          - aa[:tags].sort_by { |a| a.first.description.downcase }.each do |tag|
-            = h(tag.first.description)
-            %br
-  - else
-    = _('Nothing')
-  %hr
-
+  = miq_summary_alert_set_assigned(@alert_profile.get_assigned_tos, @alert_profile_tag)
+  
