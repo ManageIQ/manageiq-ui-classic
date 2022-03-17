@@ -38,8 +38,8 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
         name: 'name',
         id: 'name',
         label: __('Name:'),
-        isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        isDisabled: true,
+        hideField: !edit,
       },
       {
         component: componentTypes.SELECT,
