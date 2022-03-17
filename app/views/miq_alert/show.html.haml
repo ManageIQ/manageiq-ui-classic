@@ -1,205 +1,28 @@
-#alert_details_div
+#alert-details-div
+
   = render :partial => "layouts/flash_msg"
-  %h3= _('Info')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _("Description")
-      .col-md-8
-        = @alert.description
-
-    .form-group
-      %label.control-label.col-md-2
-        = _("Active")
-      .col-md-8
-        %p.form-control-static
-          = @alert.enabled ? _("Yes") : _("No")
-
-    .form-group
-      %label.control-label.col-md-2
-        = _("Severity")
-      .col-md-8
-        %p.form-control-static
-          = _(controller.class::SEVERITIES[@alert.severity])
-
-    -# Based on (model)
-    .form-group
-      %label.control-label.col-md-2
-        = _("Based On")
-      .col-md-8
-        %p.form-control-static
-          = h(ui_lookup(:model => @alert.db))
-
-    -# Eval Method
-    .form-group
-      %label.control-label.col-md-2
-        = _("What to Evaluate")
-      .col-md-8
-        %p.form-control-static
-          - if @alert.expression.kind_of?(MiqExpression)
-            -# Expression is an MiqExpression
-            = _('Expression')
-          - else
-            = h(_(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]]))
-
-    -# Expression driving event
-    - if (@alert.expression.kind_of?(MiqExpression) || @alert.expression[:eval_method] == "nothing") && !%w(ContainerNode ContainerProject).include?(@alert.db)
-      .form-group
-        %label.control-label.col-md-2
-          = _("Driving Event")
-        .col-md-8
-          %p.form-control-static
-            = h(@event)
-
-    -# Repeat Time
-    .form-group.notification-frequency
-      %label.control-label.col-md-2
-        = _("Notification Frequency")
-      - hide = false
-      .col-md-8
-        %p.form-control-static
-          - if @alert.options[:notifications][:delay_next_evaluation].blank?
-            = _('10 Minutes')
-          - elsif @alert.options[:notifications][:delay_next_evaluation].zero?
-            - hide = true
-          - else
-            = h(@sb[:alert][:repeat_times][@alert.options[:notifications][:delay_next_evaluation]])
-      %hr
-      - if hide
-        :javascript
-          $(".notification-frequency").hide();
+  = miq_summary_alert_info(@alert, @event, @sb)
+  
   -# Expression
   - if @alert.expression.kind_of?(MiqExpression)
-    %h3
-      = _('Expression')
-    - if !@expression_table.nil?
-      - @expression_table.each do |token|
-        - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-          = h([token].flatten.first)
-        - else
-          %font{:color => "black"}
-            %b
-              = h([token].flatten.first)
-    - else
-      = _('An alert must contain a valid expression.')
-    %hr
-  - else
-    - if @alert.expression[:eval_method] != "nothing"
-      %h3
-        = h(_(MiqAlert.expression_types(@alert.db)[@alert.expression[:eval_method]]))
-        = _('Parameters')
-      .form-horizontal
-        - MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
-          = render :partial => "alert_builtin_exp", :locals  => {:option => eo}
-      %hr
+    = miq_summary_alert_expression(@expression_table)
+
+  - elsif @alert.expression[:eval_method] != "nothing"
+    = miq_summary_alert_parameters(@alert, @expression_options, @sb, @perf_column_unit, @ems)
 
   -# E-mail, SNMP, Timeline Event, Mgmt Event show
-  - if @alert.options && @alert.options[:notifications] && !@alert.options[:notifications][:email].blank?
-    %h3
-      = _('Send E-mail')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("From")
-        .col-md-8
-          %p.form-control-static
-            - if @alert.options[:notifications][:email][:from].blank?
-              = _("(Default: %{email_from})") % {:email_from => h(::Settings.smtp.from)}
-            - else
-              = h(@alert.options[:notifications][:email][:from])
-      .form-group
-        %label.control-label.col-md-2
-          = _("To")
-        .col-md-8
-          - unless @email_to.blank?
-            %p.form-control-static
-              = h(@email_to.join(';'))
-    %hr
-  - if @alert.options && @alert.options[:notifications] && !@alert.options[:notifications][:snmp].blank?
-    %h3
-      = _('Send SNMP Trap')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Host")
-        .col-md-8
-          - @alert.options[:notifications][:snmp][:host].each do |host|
-            %p.form-control-static
-              = h(host)
-              %br
-      - snmp_version = @alert.options[:notifications][:snmp][:snmp_version]
-      .form-group
-        %label.control-label.col-md-2
-          = _("Version")
-        .col-md-8
-          %p.form-control-static
-            = h(snmp_version)
+  = miq_summary_alert_send_email(@alert, @email_to)
 
-      .form-group
-        %label.control-label.col-md-2
-          = snmp_version == "v1" || snmp_version.nil? ? _("Trap Number") : _("Trap Object ID")
-        .col-md-8
-          %p.form-control-static
-            = h(@alert.options[:notifications][:snmp][:trap_id])
-    - if @alert.options[:notifications][:snmp].key?(:variables)
-      %br
-      %table.table.table-striped.table-bordered.table-hover
-        %thead
-          %tr
-            %th= _('Variable Object ID')
-            %th= _('Type')
-            %th= _('Value')
-        %tbody
-          - @alert.options[:notifications][:snmp][:variables].each do |var|
-            - unless var[:oid].blank?
-              %tr
-                %td
-                  = h(var[:oid])
-                %td
-                  = h(var[:var_type])
-                %td
-                  = h(var[:value])
-    %hr
-  - if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:evm_event]
-    %h3
-      = _('Timeline Event')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Show on Timeline")
-        .col-md-8
-          %p.form-control-static
-            = _('True')
-    %hr
-  - if @alert.options && @alert.options[:notifications] && !@alert.options[:notifications][:automate].blank?
-    %h3
-      = _('Send Management Event')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Event Name")
-        .col-md-8
-          %p.form-control-static
-            = h(@alert.options[:notifications][:automate][:event_name])
-    %hr
+  - if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:snmp].present?
+    = miq_summary_alert_send_sms(@alert)
+    = miq_summary_alert_variable(@alert)
+
+  = miq_summary_alert_timeline_event(@alert)
+
+  = miq_summary_alert_management_event(@alert)
+
   -# Alert Profiles alert is assigned to
   = miq_summary_belongs_to_alert_profile(@alert_profiles)
 
   -# Show any owning actions
-  - unless @alert.owning_miq_actions.empty?
-    %tr
-      %td
-        %h3= _('Referenced by Actions')
-        - if @alert.owning_miq_actions.empty?
-          = render :partial => 'layouts/info_msg', :locals => {:message => _("This Alert is not referenced by any Actions.")}
-        - else
-          %table.table.table-striped.table-bordered.table-hover
-            %tbody
-              - @alert.owning_miq_actions.each do |oa|
-                %tr{:title => _("View this Action"), :onclick => "DoNav('/miq_action/show/#{oa.id}');"}
-                  %td.table-view-pf-select
-                    %i{:class => oa.decorate.fonticon}
-                  %td.table-view-pf-select
-                    = oa.description
-  %hr
-
+  = miq_summary_alert_referenced(@alert)
