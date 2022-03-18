@@ -441,6 +441,7 @@ EmsCloudController:
 - dynamic_radio_button_refresh
 - dynamic_text_box_refresh
 - index
+- launch_console
 - open_url_after_dialog
 - sections_field_changed
 - tl_chooser
