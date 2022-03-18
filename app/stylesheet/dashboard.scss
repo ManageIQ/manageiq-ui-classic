@@ -51,4 +51,20 @@
       }
     }
   }
+
+  .miq_dashboard {
+    thead,
+    tbody {
+      font-size: 0.75rem;
+
+      tr td {
+        word-break: break-all;
+        text-align: left !important;
+      }
+    }
+
+    &.clickable tbody tr {
+      cursor: pointer;
+    }
+  }
 }

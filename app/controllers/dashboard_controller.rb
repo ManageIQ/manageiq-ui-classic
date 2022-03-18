@@ -115,7 +115,7 @@ class DashboardController < ApplicationController
     widget = find_record_with_rbac(MiqWidget, params[:id])
     widget_content = widget.contents_for_user(current_user)
     blank = widget_content.blank?
-    content = blank ? nil : widget_content.contents
+    content = blank ? nil : update_content(widget_content.contents)
     render :json => {
       :blank     => blank,
       :content   => content,

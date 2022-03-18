@@ -1,4 +1,11 @@
 module DashboardHelper
+  REPORT_LABELS = {
+    :striped   => "table table-striped table-bordered table-hover",
+    :carbon    => "bx--data-table bx--data-table--normal bx--data-table--no-border miq-data-table miq_dashboard",
+    :clickable => "clickable",
+    :blank     => "No records found"
+  }.freeze
+
   def ext_auth?(auth_option = nil)
     return false unless ::Settings.authentication.mode == 'httpd'
 
@@ -15,5 +22,30 @@ module DashboardHelper
 
   def column_widgets(dashboard)
     [:col1, :col2].map { |column| dashboard.key?(column) ? dashboard[column].uniq : [] }
+  end
+
+  # Method to replace the old table classname to react carbon class name.
+  def update_content(content)
+    if label(content, :striped)
+      return content.gsub!(REPORT_LABELS[:striped], carbon_class(content))
+    end
+
+    content
+  end
+
+  def column_data(dashboard, column)
+    dashboard.key?(column) ? dashboard[column].uniq : []
+  end
+
+  private
+
+  # Method to find if content has a string specified in REPORT_LABELS.
+  def label(content, type)
+    content.include?(REPORT_LABELS[type])
+  end
+
+  # Method which returns a clickable carbon class if data exists.
+  def carbon_class(content)
+    label(content, :blank) ? REPORT_LABELS[:carbon] : [REPORT_LABELS[:carbon], REPORT_LABELS[:clickable]].join(' ')
   end
 end
