@@ -1060,6 +1060,7 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         wait_for_task
+        launch_console
       ) +
                adv_search_post +
                compare_post +

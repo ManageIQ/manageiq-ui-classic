@@ -92,7 +92,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
           :keepSpinner => true,
           :url         => "launch_console",
           :confirm     => N_("Open management console for this provider"),
-          :klass       => ApplicationHelper::Button::PhysicalInfraConsole,
+          :klass       => ApplicationHelper::Button::NativeConsole,
           :options     => {:feature => :console})
       ]
     ),

@@ -27,7 +27,7 @@ class ApplicationHelper::Toolbar::ConfiguredSystemCenter < ApplicationHelper::To
           N_('Open the Configured System console'),
           N_('Configured System console'),
           :url   => "launch_configured_system_console",
-          :klass => ApplicationHelper::Button::ConfiguredSystemConsole
+          :klass => ApplicationHelper::Button::NativeConsole
         ),
       ]
     ),

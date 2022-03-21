@@ -551,5 +551,11 @@ module Mixins
         @refresh_partial = "layouts/gtl"
       end
     end
+
+    def open_console(identifier)
+      assert_privileges(identifier)
+      @ems = find_record_with_rbac(model, params[:id])
+      javascript_open_window(@ems.console_url.to_s)
+    end
   end
 end

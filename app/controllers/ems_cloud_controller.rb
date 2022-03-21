@@ -42,6 +42,10 @@ class EmsCloudController < ApplicationController
     true
   end
 
+  def launch_console
+    open_console('ems_native_console')
+  end
+
   menu_section :clo
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
   has_custom_buttons
