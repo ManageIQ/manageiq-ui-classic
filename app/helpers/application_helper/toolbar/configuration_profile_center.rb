@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::ConfigurationProfileCenter < ApplicationHelper
           N_('Open the Configuration Profile console'),
           N_('Configuration Profile console'),
           :url   => "launch_configuration_profile_console",
-          :klass => ApplicationHelper::Button::ConfigurationProfileConsole
+          :klass => ApplicationHelper::Button::NativeConsole
         ),
       ]
     ),
