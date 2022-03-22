@@ -111,7 +111,7 @@
         = _('Parameters')
       .form-horizontal
         - @edit[:expression_options].each do |eo|
-          = render :partial => "alert_builtin_exp", :locals  => {:option => eo}
+          = render :partial => "alert_builtin_exp", :locals => {:option => eo, :alert => @alert, :edit => @edit, :sb_alert => @sb[:alert]}
   %hr
 
   -# E-mail, SNMP, Timeline Event, Mgmt Event edit
