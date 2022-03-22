@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiqEventDefinitionStructuredList should render event definition info structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_event_definition_info"
+>
+  <AccordionItem
+    open={true}
+    title={"Basic Information"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_event_definition_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                bar
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          />
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                policy description
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
+exports[`MiqEventDefinitionStructuredList should render event definition policy structured list 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_event_definition_policy"
+>
+  <AccordionItem
+    open={true}
+    title={"Assigned to Policies"}
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_event_definition_policy"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title="View this Model Alert"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="wrap_text"
+              />
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
