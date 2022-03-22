@@ -289,6 +289,7 @@ const GtlView = ({
   hideSelect,
   showUrl,
   pages,
+  noFlashDiv,
 }) => {
   // const { settings, data } = props;
   const initState = {
@@ -302,7 +303,9 @@ const GtlView = ({
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
-    flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
+    if (!noFlashDiv) {
+      flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
+    }
   }, [state.namedScope]);
 
   useEffect(() => {
