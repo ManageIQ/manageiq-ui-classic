@@ -1149,6 +1149,7 @@ Rails.application.routes.draw do
         scaledown
         open_admin_ui
         open_admin_ui_done
+        launch_console
       ) +
                adv_search_post +
                compare_post +

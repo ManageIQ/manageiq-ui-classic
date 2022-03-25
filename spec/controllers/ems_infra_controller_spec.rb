@@ -512,4 +512,15 @@ describe EmsInfraController do
 
     include_examples 'hiding tenant column for non admin user', :name => "Name", :hostname => "Hostname"
   end
+
+  describe "When the console button is pressed" do
+    before do
+      allow(controller).to receive(:launch_console).and_return(true)
+    end
+
+    it "redirects to new url" do
+      post :launch_console
+      expect(response.status).to eq(302)
+    end
+  end
 end
