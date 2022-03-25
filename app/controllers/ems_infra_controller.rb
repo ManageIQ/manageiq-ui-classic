@@ -210,6 +210,10 @@ class EmsInfraController < ApplicationController
     true
   end
 
+  def launch_console
+    open_console('ems_native_console')
+  end
+
   def download_data
     assert_privileges('ems_infra_show_list')
     super
