@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {
   AreaChartGraph, DonutChartGraph, GroupBarChart, LineChartGraph, PieChartGraph,
   StackAreaChart, StackBarChartGraph, StackHorizontalChart,
-} from '../carbon-charts';
-import { getConvertedData } from '../carbon-charts/helpers';
+} from '../../carbon-charts';
+import { getConvertedData } from '../../carbon-charts/helpers';
 import EmptyChart from './emptyChart';
 
 // eslint-disable-next-line no-unused-vars
