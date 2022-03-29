@@ -2,26 +2,11 @@
 #profile_info_div
   = render :partial => "layouts/flash_msg"
   -# Don't show basic info box with description only unless in edit mode
-  %h3
-    = _("Basic Information")
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _("Description")
-      .col-md-8
-        = h(@record.description)
+  = miq_summary_policy_set_info(@record)
 
   -# Policies field
   = miq_summary_policy_set(profile_policies)
 
   -# Notes field
-  %h3= _("Notes")
-  - if @record.set_data.present? && (@record.set_data[:notes] || @record.set_data["notes"])
-    - if @record.set_data[:notes].blank? && @record.set_data["notes"].blank?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-    - else
-      = text_area_tag("notes", @record.set_data[:notes] || @record.set_data["notes"] , :readonly => true, :rows => 4)
-  - else
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-  %hr
+  = miq_summary_policy_set_notes(@record)
 

@@ -8,7 +8,6 @@ import { operationRangesData } from '../textual_summary/data/operation_ranges';
 import { simpleTableData, buildInstance } from '../textual_summary/data/simple_table';
 import { tableListViewData } from '../textual_summary/data/table_list_view';
 import { tagGroupData } from '../textual_summary/data/tag_group';
-import { miqPolicySetData } from '../textual_summary/data/miq_policy_set';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -85,17 +84,6 @@ describe('Structured list component', () => {
       rows={tableListViewData.items}
       title={tableListViewData.title}
       mode="table_list_view"
-      onClick={onClick}
-    />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
-
-  it('should render a miq_policy_set table', () => {
-    const onClick = jest.fn();
-    const wrapper = shallow(<MiqStructuredList
-      rows={miqPolicySetData}
-      title=""
-      mode="miq_policy_set"
       onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
