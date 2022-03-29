@@ -157,6 +157,14 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
       t,
       :items => [
         button(
+          :instance_publish,
+          'pficon pficon-export fa-lg',
+          N_('Publish this Instance to a Template'),
+          N_('Publish to a Template'),
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :options => {:feature => :publish}
+        ),
+        button(
           :instance_retire,
           'fa fa-clock-o fa-lg',
           N_('Set Retirement Dates for this Instance'),
