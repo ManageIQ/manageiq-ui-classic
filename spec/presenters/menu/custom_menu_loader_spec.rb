@@ -6,7 +6,7 @@ describe Menu::YamlLoader do
     begin
       expect(Dir).to receive(:glob).and_return([temp_file.path])
 
-      sections, items = described_class.load
+      sections, items = described_class.new.load
       expect(sections.length).to be(1)
       expect(items.length).to be(0)
 
@@ -23,7 +23,7 @@ describe Menu::YamlLoader do
     begin
       expect(Dir).to receive(:glob).and_return([temp_file2.path, temp_file.path])
 
-      sections, items = described_class.load
+      sections, items = described_class.new.load
       expect(sections.length).to be(1)
       expect(items.length).to be(1)
 
