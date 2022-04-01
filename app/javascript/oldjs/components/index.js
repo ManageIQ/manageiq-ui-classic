@@ -1,6 +1,5 @@
 require('./ae_resolve_options/ae-resolve-options.js');
 require('./auth-credentials.js');
-require('./cloud_volume_backup/cloud-volume-backup-form.js');
 require('./datetime-delay-picker.js');
 require('./generic_object/assign-buttons.js');
 require('./generic_object/custom-button-group-form.js');
