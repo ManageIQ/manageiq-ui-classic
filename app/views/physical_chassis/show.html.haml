@@ -1,14 +1,6 @@
 #main_div
   - if %w(physical_rack physical_servers physical_storages).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
-    - if %w(physical_servers).include?(@display)
-      %physical-server-toolbar#ems_physical_infra_show_list_form
-      :javascript
-        miq_bootstrap('#ems_physical_infra_show_list_form')
-    - if %w(physical_storages).include?(@display)
-      %physical-storage-toolbar#ems_physical_infra_show_list_form
-      :javascript
-        miq_bootstrap('#ems_physical_infra_show_list_form')
   - else
     - case @showtype
     - when "main"
