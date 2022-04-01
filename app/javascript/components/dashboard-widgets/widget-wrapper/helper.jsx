@@ -3,14 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { OverflowMenuItem, Loading } from 'carbon-components-react';
 import classNames from 'classnames';
-import miqRedirectBack from '../../helpers/miq-redirect-back';
+import miqRedirectBack from '../../../helpers/miq-redirect-back';
 import WidgetChart from '../widget-chart';
 import WidgetError from '../widget-error';
 import WidgetFooter from '../widget-footer';
 import WidgetMenu from '../widget-menu';
 import WidgetReport from '../widget-report';
 import WidgetZoom from '../widget-zoom';
-import { http } from '../../http_api';
+import { http } from '../../../http_api';
 
 const widgetUrl = (widgetId, widgetType) => {
   const widgetTypeUrl = {

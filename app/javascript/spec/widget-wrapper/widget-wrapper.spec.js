@@ -3,7 +3,7 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { mount } from '../helpers/mountForm';
-import WidgetWrapper from '../../components/widget-wrapper';
+import WidgetWrapper from '../../components/dashboard-widgets/widget-wrapper';
 
 describe('Widget wrapper component', () => {
   const widgetButtonsReport = `[{"id":"w_19_close","title":"Remove from Dashboard","name":"Remove Widget","confirm":"Are you sure you want to remove 'EVM: Recently Discovered Hosts'from the Dashboard?","dataRemote":true,"sparkleOn":true,"href":"/dashboard/widget_close?widget=19","fonticon":"fa fa-times fa-fw","dataMethod":"post"},{"id":"w_19_minmax","title":"Minimize","name":"Minimize","confirm":false,"dataRemote":true,"href":"/dashboard/widget_toggle_minmax?widget=19","fonticon":"fa fa-caret-square-o-up fa-fw","dataMethod":"post"},{"id":"w_19_fullscreen","title":"Open the full report in a new window","name":"Full Screen","confirm":"This will show the entire report (all rows) in your browser. Do you want to proceed?","href":"/dashboard/report_only?rr_id=19618\u0026type=tabular","fonticon":"fa fa-arrows-alt fa-fw","target":"_blank"},{"id":"w_19_pdf","title":"Print the full report (all rows) or export it as a PDF file","name":"Print or export to PDF","href":"/dashboard/widget_to_pdf?rr_id=19618","target":"_blank","fonticon":"pficon pficon-print fa-fw"},{"id":"w_19_refresh","title":"Refresh this Widget","name":"Refresh","fonticon":"fa fa-refresh fa-fw","refresh":true}]`;

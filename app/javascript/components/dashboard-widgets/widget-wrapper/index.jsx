@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { OverflowMenu } from 'carbon-components-react';
-import debouncePromise from '../../helpers/promise-debounce';
+import debouncePromise from '../../../helpers/promise-debounce';
 import { getOverflowButtons, getWidget } from './helper';
 
 const WidgetWrapper = ({
