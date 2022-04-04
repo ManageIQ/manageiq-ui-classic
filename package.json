@@ -66,6 +66,7 @@
     "connected-react-router": "~6.7.0",
     "create-react-context": "~0.3.0",
     "d3-7.0.0": "npm:d3@^7.0.0",
+    "dompurify": "^2.3.6",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "es6-shim": "~0.35.3",
     "history": "^4.7.2",
