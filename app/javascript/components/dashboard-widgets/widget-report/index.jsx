@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DOMPurify from 'dompurify';
 
 const WidgetReport = ({ widgetModel }) => {
   let widget;
   if (widgetModel) {
     // eslint-disable-next-line react/no-danger
-    widget = (<div dangerouslySetInnerHTML={{ __html: widgetModel }} />);
+    widget = (<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(widgetModel) }} />);
   } else {
     widget = (
       <h1 id="empty-widget">
