@@ -3953,19 +3953,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:~8.1.0":
-  version: 8.1.0
-  resolution: "babel-loader@npm:8.1.0"
+"babel-loader@npm:~8.2.0":
+  version: 8.2.4
+  resolution: "babel-loader@npm:8.2.4"
   dependencies:
-    find-cache-dir: ^2.1.0
-    loader-utils: ^1.4.0
-    mkdirp: ^0.5.3
-    pify: ^4.0.1
+    find-cache-dir: ^3.3.1
+    loader-utils: ^2.0.0
+    make-dir: ^3.1.0
     schema-utils: ^2.6.5
   peerDependencies:
     "@babel/core": ^7.0.0
     webpack: ">=2"
-  checksum: fdbcae91cc43366206320a1cbe40d358a64ba2dfaa561fbd690efe0db6256c9d27ab7600f7c84041fbc4c2a6f0279175b1f8d1fa5ed17ec30bbd734da84a1bc0
+  checksum: 4968251fc4af4279c8e44adba523ed4ad18942f04b37061298e81640d09a570f66e6d53948e39a7d3c3d24ca2b025f0a07c606fadd8e3fbffa8912fd789fd4f0
   languageName: node
   linkType: hard
 
@@ -11720,7 +11719,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"make-dir@npm:^3.0.0, make-dir@npm:^3.0.2":
+"make-dir@npm:^3.0.0, make-dir@npm:^3.0.2, make-dir@npm:^3.1.0":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
   dependencies:
@@ -11805,7 +11804,7 @@ fsevents@^1.2.7:
     awesome-debounce-promise: ^2.1.0
     babel-eslint: ~10.1.0
     babel-jest: ~25.1.0
-    babel-loader: ~8.1.0
+    babel-loader: ~8.2.0
     bootstrap-filestyle: ~1.2.1
     bootstrap-switch: 3.3.4
     carbon-components: ~10.46.0
@@ -11856,7 +11855,7 @@ fsevents@^1.2.7:
     moment-duration-format: ~2.2.2
     moment-strftime: ~0.5.0
     moment-timezone: ~0.5.21
-    ng-annotate-loader: ~0.6.1
+    ng-annotate-loader: ~0.7.0
     node-fetch: ~2.6.1
     numeral: ~2.0.6
     path-complete-extname: ~0.1.0
@@ -12531,16 +12530,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"ng-annotate-loader@npm:~0.6.1":
-  version: 0.6.1
-  resolution: "ng-annotate-loader@npm:0.6.1"
+"ng-annotate-loader@npm:~0.7.0":
+  version: 0.7.0
+  resolution: "ng-annotate-loader@npm:0.7.0"
   dependencies:
     clone: ^2.1.1
     loader-utils: 1.1.0
     ng-annotate: 1.2.1
     normalize-path: 2.0.1
     source-map: 0.5.6
-  checksum: 83a52b5b979b90e05db53d01365fdc324c207c6f20010786c75c45bc7531851a983bbd1fc943256b6ccc1e28081826fc1b4bf66cd10bf09ade527cfbb8d37c77
+  checksum: 1007bcd962033e9cb1fec2e684608baf22dcf680c0a195532574fdf8bd7a4443bff4057ee7f4483cac6fbbe84f69fd9eb34cc79c19e01f4d0076f7c5525d9f30
   languageName: node
   linkType: hard
 
