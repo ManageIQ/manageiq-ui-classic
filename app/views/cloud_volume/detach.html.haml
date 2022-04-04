@@ -1,41 +1,4 @@
-%form#form_div{:name           => "angularForm",
-               'ng-controller' => "cloudVolumeFormController as vm",
-               "ng-show"       => "vm.afterGet",
-               "ng-cloak"      => "",
-               "miq-form"      => true,
-               "model"         => "vm.cloudVolumeModel",
-               "model-copy"    => "vm.modelCopy"}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Detach Volume')
-  .form-horizontal
-    .form-group{"ng-class" => "{'has-error': angularForm.vm_id.$invalid}"}
-      %label.col-md-2.control-label{"for" => "vm_id"}
-        = _('Instance')
-      .col-md-8
-        = select_tag("vm_id",
-                      options_for_select([["<#{_('Choose')}>", nil]] + @vm_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                      "ng-model"    => "vm.cloudVolumeModel.vm_id",
-                      "required"    => true,
-                      :checkchange  => true,
-                      "miq-select"  => true)
-
-  .clearfix
-  .pull-right.button-group.edit_buttons
-    %miq-button{:name      => t = _("Detach"),
-                :title     => t,
-                :alt       => t,
-                :enabled   => "vm.saveable(angularForm)",
-                'on-click' => "vm.detachClicked(angularForm)",
-                :primary   => 'true'}
-    %miq-button{:name      => t = _("Cancel"),
-                :title     => t,
-                :alt       => t,
-                :enabled   => "true",
-                'on-click' => "vm.cancelDetachClicked(angularForm)"}
-
-:javascript
-  ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
-  ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id.to_s}');
-  ManageIQ.angular.app.value('cloudVolumeFormOperation', 'DETACH');
-  miq_bootstrap('#form_div');
+= render :partial => "layouts/flash_msg"
+.col-md-12
+  = react 'AttachDetachCloudVolumeForm', :recordId => @volume.id.to_s, :storageManagerId => @volume.ext_management_system.id.to_s, 
+                                         :isAttach => false, :vmChoices => @vm_choices.sort, :deviceMountpointRequired => false

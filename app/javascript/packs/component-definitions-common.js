@@ -19,6 +19,7 @@ import CatalogResouce from '../components/data-tables/catalog-resource';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form';
 import CloudVolumeForm from '../components/cloud-volume-form';
+import AttachDetachCloudVolumeForm from '../components/cloud-volume-form/attach-detach-cloud-volume-form'
 import ProviderForm from '../components/provider-form';
 import ChargebackRate from '../components/data-tables/chargeback-rate';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
@@ -140,6 +141,7 @@ ManageIQ.component.addReact('CatalogItemsTable', CatalogItemsTable);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('CloudVolumeForm', CloudVolumeForm);
+ManageIQ.component.addReact('AttachDetachCloudVolumeForm', AttachDetachCloudVolumeForm);
 ManageIQ.component.addReact('ProviderForm', ProviderForm);
 ManageIQ.component.addReact('CatalogResource', CatalogResouce);
 ManageIQ.component.addReact('ChargebackRate', ChargebackRate);
