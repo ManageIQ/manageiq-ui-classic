@@ -8,10 +8,6 @@
   - arr = (controller_name.camelize + "Controller").constantize.display_methods
   - if arr.include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@ems.id}"}
-    - if %w(physical_servers).include?(@display)
-      %physical-server-toolbar#ems_physical_infra_show_list_form
-      :javascript
-        miq_bootstrap('#ems_physical_infra_show_list_form')
   - elsif @showtype == "details"
     = render(:partial => "layouts/gtl", :locals => {:action_url => @lastaction})
   - elsif @showtype ==  "item"
