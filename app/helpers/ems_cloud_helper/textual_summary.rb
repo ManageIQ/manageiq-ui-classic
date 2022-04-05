@@ -19,7 +19,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
+        security_groups placement_groups instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
         custom_button_events tenant
       ]
     )
@@ -117,6 +117,16 @@ module EmsCloudHelper::TextualSummary
     if num.positive? && role_allows?(:feature => "ems_storage_show_list")
       h[:title] = _("Show all Storage Managers")
       h[:link] = ems_cloud_path(@record.id, :display => 'storage_managers')
+    end
+    h
+  end
+
+  def textual_placement_groups
+    num   = @record.try(:placement_groups) ? @record.number_of(:placement_groups) : 0
+    h     = {:label => _('Placement Groups'), :icon => "fa fa-database", :value => num}
+    if num.positive?
+      h[:title] = _("Show all Placement Groups")
+      h[:link] = ems_cloud_path(@record.id, :display => 'placement_groups')
     end
     h
   end

@@ -103,6 +103,7 @@ module Mixins
           physical_servers_with_host
           physical_switches
           physical_storages
+          placement_groups
           security_groups
           security_policies
           security_policy_rules

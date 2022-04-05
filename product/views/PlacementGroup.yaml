@@ -1,0 +1,64 @@
+#
+# This is an MIQ Report configuration file
+#   Single value parameters are specified as:
+#     single_value_parm: value
+#   Multiple value parameters are specified as:
+#     multi_value_parm:
+#       - value 1
+#       - value 2
+#
+
+# Report title
+title: Placement Group
+
+# Menu name
+name: PlacementGroup
+
+# Main DB table report is based on
+db: PlacementGroup
+
+# Columns to fetch from the main table
+cols:
+- name
+- id
+- total_vms
+
+# Included tables (joined, has_one, has_many) and columns
+include:
+  ext_management_system:
+    columns:
+    - name
+  cloud_tenant:
+    columns:
+    - name
+
+# Included tables and columns for query performance
+include_for_find:
+
+# Order of columns (from all tables)
+col_order:
+- name
+- id
+- total_vms
+
+# Column titles, in order
+headers:
+- Name
+- ID
+- Total VMs
+
+# Condition(s) string for the SQL query
+conditions:
+
+# Order string for the SQL query
+order: Ascending
+
+# Columns to sort the report on, in order
+sortby:
+- name
+
+# Group rows (y=yes,n=no,c=count)
+group: n
+
+graph:
+dims:
