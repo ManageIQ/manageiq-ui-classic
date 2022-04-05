@@ -28,7 +28,7 @@ const ServiceDetailStdout = ({ taskid }) => {
         <>
           <p>
             {' '}
-            {_('Error loading data:')}
+            {__('Error loading data:')}
           </p>
           <p>
             {' '}
@@ -38,7 +38,7 @@ const ServiceDetailStdout = ({ taskid }) => {
       )}
       {Taskresults && (
         <>
-          <h3>{ _('Standard Output:')}</h3>
+          <h3>{__('Standard Output:')}</h3>
           <div className="content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(Taskresults) }} />
         </>
       )}
