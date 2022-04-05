@@ -26,11 +26,3 @@
         = _('Image')
       .col-md-8
         %span{:class => @record.options[:button_icon], :style => @record.options.key?(:button_color) ? "color: #{@record.options[:button_color]};" : nil}
-
-  %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
-                                                                         'entity'       => _('Custom Button'),
-                                                                         'entity-name'  => @record.name,
-                                                                         'redirect-url' => "/generic_object_definition",}
-:javascript
-  miq_bootstrap('#generic_object_definition_show_form');
-  $('#searchbox').hide();

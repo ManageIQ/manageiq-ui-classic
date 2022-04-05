@@ -27,13 +27,16 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove this Generic Object Definitions from Inventory'),
-          :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => {:type => "delete", :controller => "genericObjectDefinitionToolbarController", :entity => "Generic Object Definition"}},
-          :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonDelete,
-          :confirm => N_("Warning: This Generic Object Definition will be permanently removed!")
+          :data => {'function'      => 'sendDataWithRx',
+                    'function-data' => {:controller     => 'provider_dialogs',
+                                        :modal_title    => N_('Delete Generic Object Definition'),
+                                        :modal_text     => N_('Warning: This Generic Object Definition will be permanently removed!'),
+                                        :api_url        => 'generic_object_definitions',
+                                        :async_delete   => false,
+                                        :redirect_url   => '/generic_object_definition/',
+                                        :component_name => 'RemoveGenericItemModal'}}
         ),
       ]
     )
-
   ])
 end

@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionButtonCenter < Applicat
           :url => 'custom_button_edit',
         ),
         button(
-          :custom_button_delete,
+          :ab_button_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove this Button from Inventory'),
           :confirm => N_("Warning: This Button will be permanently removed!"),

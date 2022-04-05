@@ -26,10 +26,15 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t = N_('Remove selected Generic Object Definitions from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => {:type => "delete", :controller => "genericObjectDefinitionToolbarController", :entity => "Generic Object Definitions"}},
-          :enabled                     => false,
-          :onwhen                      => "1+",
-          :confirm => N_("Warning: This Generic Object Definition will be permanently removed!")
+                       'function-data' => {:controller     => 'provider_dialogs',
+                                           :modal_title    => N_('Delete Generic Object Definition'),
+                                           :modal_text     => N_('Warning: This Generic Object Definition will be permanently removed!'),
+                                           :api_url        => 'generic_object_definitions',
+                                           :async_delete   => false,
+                                           :redirect_url   => '/generic_object_definition/show_list/',
+                                           :component_name => 'RemoveGenericItemModal'}},
+          :enabled => false,
+          :onwhen  => "1+"
         ),
       ]
     )

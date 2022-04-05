@@ -23,12 +23,12 @@
                   = react('FilterDropdown', :defSearches => @def_searches, :mySearches => @my_searches,
                    :filterSelected => 'listnav_search_selected', :defaultSelected => 'save_default_search', :selectedFilter => @selected_filter)
               .col-md-3
-                %br
-                = render :partial => 'layouts/searchbar'
+                - if show_search?
+                  %br
+                  = render :partial => 'layouts/searchbar'
             .row
               .col-md-12
                 = yield
-        .row#paging_div{:style => @in_a_form ? '' : 'display: none'}
     - else
       .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
         -# listnav_div
@@ -41,9 +41,9 @@
                 - if layout_uses_tabs?
                   = render :partial => 'layouts/tabs'
               .col-md-5
-                %br
-                = render :partial => 'layouts/searchbar'
+                - if show_search?
+                  %br
+                  = render :partial => 'layouts/searchbar'
             .row
               .col-md-12
                 = yield
-        .row#paging_div{:style => @in_a_form ? '' : 'display: none'}
