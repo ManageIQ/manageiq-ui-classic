@@ -34,7 +34,6 @@ module ApplicationHelper::PageLayouts
       miq_policy_set
       monitor_alerts_overview
       monitor_alerts_list
-      monitor_alerts_most_recent
       my_tasks
       ops
       physical_infra_overview
@@ -102,7 +101,7 @@ module ApplicationHelper::PageLayouts
 
     layout = case @layout
              when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview',
-                  'monitor_alerts_list', 'monitor_alerts_most_recent', 'monitor_alerts_overview'
+                  'monitor_alerts_list', 'monitor_alerts_overview'
                false
              when 'report'
                !%w[new create edit copy update explorer].include?(controller.action_name)

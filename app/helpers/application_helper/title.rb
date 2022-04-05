@@ -49,8 +49,6 @@ module ApplicationHelper
         _("Servers")
       when "monitor_alerts_list"
         _("Monitor Alerts")
-      when "monitor_alerts_most_recent"
-        _("Most Recent Monitor Alerts")
       when "monitor_alerts_overview"
         _("Monitor Alerts Overview")
       when "services"
