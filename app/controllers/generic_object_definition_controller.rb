@@ -166,8 +166,8 @@ class GenericObjectDefinitionController < ApplicationController
                        end
     generic_object_definition = find_record_with_rbac(GenericObjectDefinition, params[:generic_object_definition_id])
     unassigned_buttons = generic_object_definition.custom_buttons
-    assigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
-    unassigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
+    assigned_buttons = assigned_buttons.map { |button| {:name => button.name, :id => button.id} }
+    unassigned_buttons = unassigned_buttons.map { |button| {:name => button.name, :id => button.id} }
     render :json => {:assigned_buttons => assigned_buttons, :unassigned_buttons => unassigned_buttons}
   end
 
@@ -227,6 +227,7 @@ class GenericObjectDefinitionController < ApplicationController
     presenter[:right_cell_text] = title
     presenter.update(:main_div, r[:partial => form_partial])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     presenter[:lock_sidebar] = true
     presenter.set_visibility(false, :toolbar)
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
@@ -246,6 +247,7 @@ class GenericObjectDefinitionController < ApplicationController
     god_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_center_tb")]
   end
 
@@ -253,6 +255,7 @@ class GenericObjectDefinitionController < ApplicationController
     custom_button_group_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_group_center_tb")]
   end
 
@@ -260,6 +263,7 @@ class GenericObjectDefinitionController < ApplicationController
     custom_button_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_center_tb")]
   end
 

@@ -140,7 +140,7 @@ describe GenericObjectDefinitionController do
 
       post :custom_button_edit, :params => {:id => custom_button.id, :format => :js}
       expect(response.status).to eq(200)
-      expect(response.body).to include('"setVisibility":{"paging_div":false,"toolbar":false}')
+      expect(response.body).to include('"setVisibility":{"paging_div":false,"searchbox":false,"toolbar":false}')
     end
   end
 end

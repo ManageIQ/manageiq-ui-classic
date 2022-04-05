@@ -162,7 +162,7 @@ module ApplicationHelper::PageLayouts
 
   def show_search?
     # Layouts with Advanced Search have the Search, too
-    controller.try(:show_searchbar?) || display_adv_search?
+    controller.try(:show_searchbar?) || display_adv_search? || @root_node
   end
 
   def show_advanced_search?
@@ -208,7 +208,6 @@ module ApplicationHelper::PageLayouts
       ems_storage
       flavor
       floating_ip
-      generic_object_definition
       host
       host_aggregate
       load_balancer

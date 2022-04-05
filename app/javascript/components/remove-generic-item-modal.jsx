@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Loading, ModalBody } from 'carbon-components-react';
 import { API } from '../http_api';
+import miqRedirectBack from '../helpers/miq-redirect-back';
 
 const apiTransformFunctions = {
   buttonGroup: (item) => ({
@@ -40,7 +41,14 @@ export const removeItems = (items, force, {
   if (force) {
     items.forEach((item) => {
       apiPromises.push(API.post(`/api/${apiUrl}/${item.id}`, { action: 'delete' }, { skipErrors: [400, 500] })
-        .then((apiResult) => ({ result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name }))
+        .then((apiResult) => {
+          if (apiUrl === 'generic_object_definitions') {
+            const message = __(`Generic object definition ${item.name} was successfully deleted`);
+            miqRedirectBack(message, 'success', redirectUrl);
+            return null;
+          }
+          return { result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name };
+        })
         .catch((apiResult) => ({ result: 'error', data: apiResult, name: item.name })));
     });
   } else {
@@ -53,33 +61,38 @@ export const removeItems = (items, force, {
 
   Promise.all(apiPromises)
     .then((apiData) => {
-      if (items.length === 1 && apiData[0].result === 'error') {
-        add_flash(sprintf(__('Error deleting item "%s": %s'), apiData[0].name, parseApiError(apiData[0].data)), 'error');
-        miqSparkleOff();
-      } else {
-        apiData.forEach((item) => {
-          let flash = {};
-          if (item.result === 'success') {
-            flash = { message: sprintf(deleteMessage, item.name), level: 'success' };
-          } else if (item.result === 'error' && items.length > 1) {
-            flash = { message: sprintf(__('Error deleting item "%s": %s'), item.name, parseApiError(item.data)), level: 'error' };
-          }
-          // eslint-disable-next-line no-undef
-          miqFlashLater(flash);
-        });
-      }
-      return apiData;
-    })
-    .then((apiData) => {
-      if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
-        if (!treeSelect && !ajaxReload) {
-          window.location.href = redirectUrl;
+      if (apiData[0] != null) {
+        if (items.length === 1 && apiData[0].result === 'error') {
+          add_flash(sprintf(__('Error deleting item "%s": %s'), apiData[0].name, parseApiError(apiData[0].data)), 'error');
           miqSparkleOff();
         } else {
-          sendDataWithRx({ type: 'gtlUnselectAll' });
-          miqAjax(treeSelect ? `tree_select?id=${treeSelect}` : `reload?deleted=true`)
+          apiData.forEach((item) => {
+            let flash = {};
+            if (item.result === 'success') {
+              flash = { message: sprintf(deleteMessage, item.name), level: 'success' };
+            } else if (item.result === 'error' && items.length > 1) {
+              flash = { message: sprintf(__('Error deleting item "%s": %s'), item.name, parseApiError(item.data)), level: 'error' };
+            }
             // eslint-disable-next-line no-undef
-            .then(() => miqFlashSaved());
+            miqFlashLater(flash);
+          });
+        }
+        return apiData;
+      }
+      return null;
+    })
+    .then((apiData) => {
+      if (apiData) {
+        if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
+          if (!treeSelect && !ajaxReload) {
+            window.location.href = redirectUrl;
+            miqSparkleOff();
+          } else {
+            sendDataWithRx({ type: 'gtlUnselectAll' });
+            miqAjax(treeSelect ? `tree_select?id=${treeSelect}` : `reload?deleted=true`)
+              // eslint-disable-next-line no-undef
+              .then(() => miqFlashSaved());
+          }
         }
       }
     });
@@ -216,7 +229,7 @@ class RemoveGenericItemModal extends React.Component {
 
 RemoveGenericItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recordId: PropTypes.number,
+  recordId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   gridChecks: PropTypes.arrayOf(PropTypes.any),
   modalData: PropTypes.objectOf(PropTypes.any).isRequired,
 };

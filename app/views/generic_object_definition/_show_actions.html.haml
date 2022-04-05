@@ -21,5 +21,3 @@
               = obj[:description]
 - if @record.custom_buttons.present?
   = render :partial => 'table_button' , :locals => {:buttons =>  @record.custom_buttons.sort_by{ |button| button.name.downcase }}
-:javascript
-  $('#searchbox').hide();
