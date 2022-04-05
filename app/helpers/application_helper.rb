@@ -616,7 +616,6 @@ module ApplicationHelper
       miq_policy_export
       miq_policy_rsop
       monitor_alerts_list
-      monitor_alerts_most_recent
       monitor_alerts_overview
       ops
       pxe
@@ -1037,7 +1036,6 @@ module ApplicationHelper
                              availability_zone
                              alerts_overview
                              alerts_list
-                             alerts_most_recent
                              cloud_database
                              cloud_network
                              cloud_object_store_container
@@ -1091,7 +1089,6 @@ module ApplicationHelper
                              miq_template
                              monitor_alerts_overview
                              monitor_alerts_list
-                             monitor_alerts_most_recent
                              network_port
                              network_router
                              network_service

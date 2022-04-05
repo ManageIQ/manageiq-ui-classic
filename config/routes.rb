@@ -984,12 +984,6 @@ Rails.application.routes.draw do
       )
     },
 
-    :alerts_most_recent      => {
-      :get => %w(
-        show
-      )
-    },
-
     :dashboard                => {
       :get  => %w(
         auth_error
