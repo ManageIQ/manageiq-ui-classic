@@ -391,6 +391,9 @@ module ApplicationHelper
     when "MiqAeInstance"
       controller = "miq_ae_class"
       action = "show_details"
+    when "PlacementGroup"
+      controller = "placement_group"
+      action = "show"
     when "SecurityGroup"
       controller = "security_group"
       action = "show"
@@ -777,6 +780,7 @@ module ApplicationHelper
        orchestration_stack
        persistent_volume
        physical_server
+       placement_group
        provider_foreman
        resource_pool
        retired
@@ -1092,6 +1096,7 @@ module ApplicationHelper
                              physical_storage
                              physical_server
                              persistent_volume
+                             placement_group
                              policy
                              policy_group
                              security_policy

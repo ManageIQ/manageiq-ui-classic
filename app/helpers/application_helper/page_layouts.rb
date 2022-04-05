@@ -221,6 +221,7 @@ module ApplicationHelper::PageLayouts
       persistent_volume
       physical_server
       physical_storage
+      placement_group
       resource_pool
       retired
       security_group

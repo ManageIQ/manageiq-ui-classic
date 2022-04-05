@@ -358,6 +358,10 @@ module VmCommon
     show_association('floating_ips', _('Floating IPs'), :floating_ips, FloatingIp)
   end
 
+  def placement_group
+    show_association('placement_groups', _('Placement Groups'), :placement_groups, PlacementGroup)
+  end
+
   def cloud_subnets
     show_association('cloud_subnets', _('Subnets'), :cloud_subnets, CloudSubnet)
   end

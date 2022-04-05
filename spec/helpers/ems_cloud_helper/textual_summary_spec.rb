@@ -47,6 +47,7 @@ describe EmsCloudHelper::TextualSummary do
       orchestration_stacks
       storage_managers
       cloud_databases
+      placement_groups
       custom_button_events
       tenant
     )
