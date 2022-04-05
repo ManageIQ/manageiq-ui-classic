@@ -247,7 +247,37 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             :enabled      => false,
             :onwhen       => "1+",
             :klass     => ApplicationHelper::Button::PhysicalServerProvision
-          )
+          ),
+          api_button(
+            :physical_server_decommission,
+            nil,
+            N_('Decommission server'),
+            N_('Decommission'),
+            :icon    => "pficon pficon-off fa-lg",
+            :api     => {
+              :action => 'decommission_server',
+              :entity => 'physical_server'
+            },
+            :confirm => N_("Decommission this server?"),
+            :enabled => true,
+	    :onwhen  => "1+",
+            :options => {:feature => :decommission}
+          ),
+          api_button(
+            :physical_server_recommission,
+            nil,
+            N_('Recommission server'),
+            N_('Recommission'),
+            :icon    => "pficon pficon-off fa-lg",
+            :api     => {
+              :action => 'recommission_server',
+              :entity => 'physical_server'
+            },
+            :confirm => N_("Recommission this server?"),
+            :enabled => true,
+	    :onwhen  => "1+",
+            :options => {:feature => :recommission}
+          ),
         ]
       )
     ]
