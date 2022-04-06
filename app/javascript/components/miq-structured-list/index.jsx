@@ -10,6 +10,7 @@ import {
   Accordion,
   AccordionItem,
   TextArea,
+  Link,
 } from 'carbon-components-react';
 import MiqStructuredListHeader from './miq-structured-list-header';
 import {
@@ -98,7 +99,7 @@ const MiqStructuredList = ({
   const renderMultiContents = (row) => {
     const content = renderContent(row);
     return row.link
-      ? <a href={row.link} onClick={(e) => onClick(row, e)} className="cell_link">{content}</a>
+      ? <Link to={row.link} onClick={(e) => onClick(row, e)} className="cell_link">{content}</Link>
       : content;
   };
 

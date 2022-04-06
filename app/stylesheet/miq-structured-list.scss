@@ -56,6 +56,8 @@
     .cell_link {
       display: flex;
       color: $link-01;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .multi_row_cell {

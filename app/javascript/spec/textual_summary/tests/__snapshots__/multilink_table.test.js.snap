@@ -702,35 +702,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=1&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=1&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=1&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Aodh"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Aodh"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Aodh"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -772,35 +779,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=1&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=1&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=1&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Aodh"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Aodh"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Aodh"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -905,35 +919,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=2&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=2&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=2&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Ceilometer"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Ceilometer"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Ceilometer"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -975,35 +996,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=2&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=2&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=2&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Ceilometer"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Ceilometer"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Ceilometer"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1108,35 +1136,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=3&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=3&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=3&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Cinder"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Cinder"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Cinder"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1178,35 +1213,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=3&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=3&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=3&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Cinder"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Cinder"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Cinder"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (3)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (3)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1311,35 +1353,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=4&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=4&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=4&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Glance"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Glance"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Glance"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (2)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (2)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1381,35 +1430,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=4&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=4&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=4&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Glance"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Glance"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Glance"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (2)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (2)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1514,35 +1570,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=5&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=5&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=5&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Gnocchi"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Gnocchi"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Gnocchi"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (2)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (2)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1584,35 +1647,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=5&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=5&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=5&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Gnocchi"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Gnocchi"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Gnocchi"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (2)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (2)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1717,35 +1787,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=6&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=6&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=6&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Heat"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Heat"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Heat"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (4)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (4)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1787,35 +1864,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=6&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=6&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=6&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Heat"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Heat"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Heat"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (4)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (4)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -1970,35 +2054,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=7&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=7&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=7&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Keystone"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Keystone"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Keystone"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (1)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (1)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -2103,35 +2194,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=8&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=8&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=8&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Nova"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Nova"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Nova"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (5)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (5)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -2173,35 +2271,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=8&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=8&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=8&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Nova"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Nova"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Nova"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (10)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (10)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -2306,35 +2411,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=9&status=running"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=9&status=running"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=9&status=running"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of running Swift"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-ok"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of running Swift"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-ok"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of running Swift"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              Running (14)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            Running (14)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -2376,35 +2488,42 @@ exports[`MultilinkTable renders just fine 1`] = `
                                       className="content_value sub_items bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="/host/host_services/18?db=host&host_service_group=9&status=all"
                                         onClick={[Function]}
+                                        to="/host/host_services/18?db=host&host_service_group=9&status=all"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="/host/host_services/18?db=host&host_service_group=9&status=all"
                                         >
                                           <div
-                                            className="cell icon"
-                                            title="Show list of all Swift"
+                                            className="content"
                                           >
-                                            <i
-                                              className="pficon pficon-service"
-                                              style={
-                                                Object {
-                                                  "background": undefined,
-                                                }
-                                              }
+                                            <div
+                                              className="cell icon"
                                               title="Show list of all Swift"
-                                            />
+                                            >
+                                              <i
+                                                className="pficon pficon-service"
+                                                style={
+                                                  Object {
+                                                    "background": undefined,
+                                                  }
+                                                }
+                                                title="Show list of all Swift"
+                                              />
+                                            </div>
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              All (14)
+                                            </div>
                                           </div>
-                                          <div
-                                            className="expand wrap_text"
-                                          >
-                                            All (14)
-                                          </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
