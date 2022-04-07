@@ -1757,35 +1757,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=cloud_networks"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=cloud_networks"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=cloud_networks"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Cloud Networks"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="ff ff-cloud-network"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Cloud Networks"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="ff ff-cloud-network"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Cloud Networks"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        1
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      1
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -1842,35 +1849,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=cloud_subnets"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=cloud_subnets"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=cloud_subnets"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Cloud Subnets"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="pficon pficon-network"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Cloud Subnets"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="pficon pficon-network"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Cloud Subnets"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        6
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      6
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -1927,35 +1941,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=network_routers"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=network_routers"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=network_routers"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Network Routers"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="pficon pficon-route"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Network Routers"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="pficon pficon-route"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Network Routers"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        1
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      1
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -2012,35 +2033,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=security_groups"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=security_groups"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=security_groups"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Security Groups"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="pficon pficon-cloud-security"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Security Groups"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="pficon pficon-cloud-security"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Security Groups"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        18
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      18
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -2097,35 +2125,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=floating_ips"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=floating_ips"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=floating_ips"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Floating IPs"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="ff ff-floating-ip"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Floating IPs"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="ff ff-floating-ip"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Floating IPs"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        14
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      14
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -2182,35 +2217,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=network_ports"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=network_ports"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=network_ports"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Network Ports"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="ff ff-network-port"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Network Ports"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="ff ff-network-port"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Network Ports"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        26
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      26
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
@@ -2267,35 +2309,42 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
                                               >
-                                                <a
+                                                <Link
                                                   className="cell_link"
-                                                  href="/ems_network/39?display=load_balancers"
                                                   onClick={[Function]}
+                                                  to="/ems_network/39?display=load_balancers"
                                                 >
-                                                  <div
-                                                    className="content"
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="/ems_network/39?display=load_balancers"
                                                   >
                                                     <div
-                                                      className="cell icon"
-                                                      title="Show all Load Balancers"
+                                                      className="content"
                                                     >
-                                                      <i
-                                                        className="ff ff-load-balancer"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                          }
-                                                        }
+                                                      <div
+                                                        className="cell icon"
                                                         title="Show all Load Balancers"
-                                                      />
+                                                      >
+                                                        <i
+                                                          className="ff ff-load-balancer"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                            }
+                                                          }
+                                                          title="Show all Load Balancers"
+                                                        />
+                                                      </div>
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        2
+                                                      </div>
                                                     </div>
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      2
-                                                    </div>
-                                                  </div>
-                                                </a>
+                                                  </a>
+                                                </Link>
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>

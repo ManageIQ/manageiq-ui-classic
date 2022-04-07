@@ -781,33 +781,40 @@ exports[`Simple Table renders just fine... 1`] = `
                                       role="cell"
                                       title=""
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="some_link"
                                         onClick={[Function]}
+                                        to="some_link"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="some_link"
                                         >
                                           <div
-                                            className="multi_row_cell"
+                                            className="content"
                                           >
                                             <div
-                                              className="sub_row_item"
-                                              key="0"
-                                              title=""
+                                              className="multi_row_cell"
                                             >
                                               <div
-                                                className="sub_value"
+                                                className="sub_row_item"
+                                                key="0"
+                                                title=""
                                               >
                                                 <div
-                                                  className="wrap_text"
-                                                />
+                                                  className="sub_value"
+                                                >
+                                                  <div
+                                                    className="wrap_text"
+                                                  />
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
