@@ -10,7 +10,40 @@ const AttachDetachCloudVolumeForm = ({ recordId, storageManagerId, isAttach, vmC
 
   const [{ isLoading, deviceMountpointRequired }, setState] = useState({ isLoading: true, deviceMountpointRequired: true });
 
+  // const [{
+  //   initialValues, fields, isLoading, deviceMountpointRequired
+  // }, setState] = useState({ });
+
+  const loadSchema = (appendState = {}) => (value) => {
+    // miqSparkleOff();
+    // setState({
+    //   ...appendState,
+    //   fields,
+    // });
+    
+    console.log("values")
+    console.log(value)
+    // { data: { form_schema: { fields } } }
+  };
+
+  // const emptySchema = (appendState = {}) => {
+  //   const fields = [];
+  //   setState((state) => ({
+  //     ...state,
+  //     ...appendState,
+  //     fields,
+  //   }));
+  // };
+
   useEffect(() => {
+
+    // this bottom one does id and ems but goes into the id section of the thing in the API code
+    // API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
+    //   API.options(`/api/cloud_volumes/${recordId}?ems_id_attach=${initialValues.ems_id}`).then(loadSchema()); //{ initialValues, isLoading: false }
+    // });
+    API.options(`/api/cloud_volumes?ems_id_attach=${storageManagerId}`).then(loadSchema());
+
+    
     if (isLoading) {
 
       API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
