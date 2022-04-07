@@ -38,10 +38,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=1&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=1&status=running"
             >
               <div
                 className="content"
@@ -66,7 +66,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -86,10 +86,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=1&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=1&status=all"
             >
               <div
                 className="content"
@@ -114,7 +114,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -169,10 +169,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=2&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=2&status=running"
             >
               <div
                 className="content"
@@ -197,7 +197,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -217,10 +217,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=2&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=2&status=all"
             >
               <div
                 className="content"
@@ -245,7 +245,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -300,10 +300,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=3&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=3&status=running"
             >
               <div
                 className="content"
@@ -328,7 +328,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -348,10 +348,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=3&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=3&status=all"
             >
               <div
                 className="content"
@@ -376,7 +376,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (3)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -431,10 +431,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=4&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=4&status=running"
             >
               <div
                 className="content"
@@ -459,7 +459,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (2)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -479,10 +479,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=4&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=4&status=all"
             >
               <div
                 className="content"
@@ -507,7 +507,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (2)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -562,10 +562,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=5&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=5&status=running"
             >
               <div
                 className="content"
@@ -590,7 +590,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (2)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -610,10 +610,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=5&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=5&status=all"
             >
               <div
                 className="content"
@@ -638,7 +638,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (2)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -693,10 +693,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=6&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=6&status=running"
             >
               <div
                 className="content"
@@ -721,7 +721,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (4)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -741,10 +741,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=6&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=6&status=all"
             >
               <div
                 className="content"
@@ -769,7 +769,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (4)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -852,10 +852,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=7&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=7&status=all"
             >
               <div
                 className="content"
@@ -880,7 +880,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (1)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -935,10 +935,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=8&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=8&status=running"
             >
               <div
                 className="content"
@@ -963,7 +963,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (5)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -983,10 +983,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=8&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=8&status=all"
             >
               <div
                 className="content"
@@ -1011,7 +1011,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (10)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -1066,10 +1066,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="0"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=9&status=running"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=9&status=running"
             >
               <div
                 className="content"
@@ -1094,7 +1094,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   Running (14)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"
@@ -1114,10 +1114,10 @@ exports[`Structured list component should render a multilink_list table 1`] = `
             className="content_value sub_items"
             key="2"
           >
-            <a
+            <Link
               className="cell_link"
-              href="/host/host_services/18?db=host&host_service_group=9&status=all"
               onClick={[Function]}
+              to="/host/host_services/18?db=host&host_service_group=9&status=all"
             >
               <div
                 className="content"
@@ -1142,7 +1142,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
                   All (14)
                 </div>
               </div>
-            </a>
+            </Link>
           </FeatureToggle(StructuredListCell)>
           <FeatureToggle(StructuredListCell)
             className="content_value sub_items"

@@ -290,21 +290,28 @@ exports[`TableListView renders just fine... 1`] = `
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                         onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                         >
                                           <div
-                                            className="expand wrap_text"
+                                            className="content"
                                           >
-                                            676,150
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              676,150
+                                            </div>
                                           </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -361,21 +368,28 @@ exports[`TableListView renders just fine... 1`] = `
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
                                     >
-                                      <a
+                                      <Link
                                         className="cell_link"
-                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                         onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                       >
-                                        <div
-                                          className="content"
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                         >
                                           <div
-                                            className="expand wrap_text"
+                                            className="content"
                                           >
-                                            280,848
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              280,848
+                                            </div>
                                           </div>
-                                        </div>
-                                      </a>
+                                        </a>
+                                      </Link>
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
