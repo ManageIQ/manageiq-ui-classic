@@ -9,7 +9,7 @@ import {
 import IconList from './icon-list';
 
 const IconModal = ({
-  showModal, hide, activeTab, activeIcon, iconTypes, onModalApply, setState,
+  showModal, hide, activeIcon, iconTypes, onModalApply, setState,
 }) =>
 
   (
@@ -26,7 +26,6 @@ const IconModal = ({
         <div className="fonticon-picker-modal">
           <Tabs
             id="font-icon-tabs"
-            onClick={(activeTab) => setState((state) => ({ ...state, activeTab }))}
           >
             { Object.keys(iconTypes).map((type) => (
               <Tab key={type} label={iconTypes[type]}>
@@ -34,7 +33,6 @@ const IconModal = ({
                   {...{
                     type,
                     activeIcon,
-                    activeTab,
                     setState,
                   }}
                 />

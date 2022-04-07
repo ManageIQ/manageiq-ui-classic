@@ -21,7 +21,7 @@ const findIcons = (family) => _.chain(document.styleSheets)
   .map((icon) => `${family} ${icon}`);
 
 const IconList = ({
-  type, activeIcon, activeTab, setState,
+  type, activeIcon, setState,
 }) => {
   const icons = useMemo(() => findIcons(type), [type]);
 
@@ -29,7 +29,7 @@ const IconList = ({
     <Grid>
       <Row>
         { icons.map((icon) => (
-          <Column key={icon} className="fonticon" onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}>
+          <Column key={`${icon}-${Math.random()}`} className="fonticon" onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}>
             <span className={classNames({ active: icon === activeIcon })}>
               <i className={icon} title={icon.replace(' ', '.')} />
             </span>
@@ -43,13 +43,11 @@ const IconList = ({
 IconList.propTypes = {
   type: PropTypes.string.isRequired,
   activeIcon: PropTypes.string,
-  activeTab: PropTypes.string,
   setState: PropTypes.func.isRequired,
 };
 
 IconList.defaultProps = {
   activeIcon: undefined,
-  activeTab: undefined,
 };
 
 export default IconList;
