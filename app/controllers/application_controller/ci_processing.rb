@@ -35,6 +35,8 @@ module ApplicationController::CiProcessing
     db = params[:db] if params[:db]
 
     case params[:pressed]
+    when "cloud_tenant_edit"
+      @redirect_controller = "cloud_tenant"
     when "miq_template_edit"
       @redirect_controller = "miq_template"
     when "image_edit", "instance_edit", "vm_edit"
@@ -44,7 +46,6 @@ module ApplicationController::CiProcessing
       session[:host_items] = obj.length > 1 ? obj : nil
     end
     @redirect_id = obj[0] if obj.length == 1 # not redirecting to an id if multi host are selected for credential edit
-
     @refresh_partial = case db
                        when 'ScanItemSet'
                          ScanItemSet.find(obj[0]).read_only ? 'show_list_set' : 'edit'
@@ -758,6 +759,11 @@ module ApplicationController::CiProcessing
   def deletehosts
     assert_privileges("host_delete")
     delete_elements(Host, :process_hosts)
+  end
+
+  def delete_cloud_tenant
+    assert_privileges("cloud_tenant_delete")
+    delete_elements(CloudTenant, :process_cloud_tenants)
   end
 
   # Delete all selected or single displayed stack(s)
