@@ -434,11 +434,11 @@ describe ServiceController do
 
       let(:new_expression) do
         ApplicationController::Filter::Expression.new.tap do |e|
-          e.expression = {'???' => '???', :token => 3}
+          e.expression = {'???' => '???', :token => 2}
           e.exp_key = '???'
           e.exp_orig_key = '???'
-          e.exp_table = [['???', 3]]
-          e.exp_token = 3
+          e.exp_table = [['???', 2]]
+          e.exp_token = 2
           e.history = ApplicationController::Filter::ExpressionEditHistory.new([{'???' => '???'}])
           e.selected = {:id => 0, :description => 'All'}
           e.val1 = e.val2 = {:type => nil}
@@ -458,11 +458,6 @@ describe ServiceController do
         controller.send(:get_node_info, 'xx-asrv')
         expect(controller.session[:edit][:expression]).to eq(new_expression)
         expect(controller.session[:edit]).to eq(controller.session[:adv_search]["Service"])
-      end
-
-      it 'calls listnav_search_selected' do
-        expect(controller).to receive(:listnav_search_selected).with(0)
-        controller.send(:get_node_info, 'xx-rsrv')
       end
     end
   end
