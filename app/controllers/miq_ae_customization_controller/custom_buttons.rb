@@ -45,7 +45,7 @@ module MiqAeCustomizationController::CustomButtons
       uri = CustomButton.buttons_for(nodeid[2]).includes(:custom_button_sets).sort_by(&:name)
       if uri.present?
         uri.each do |b|
-          next if b.custom_button_sets.blank?
+          next if b.custom_button_sets.present?
 
           button = {
             :name         => b.name,
