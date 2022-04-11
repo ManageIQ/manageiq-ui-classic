@@ -1,0 +1,2785 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cloud Object Store Container form component should add Amazon cloud object store container 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudObjectStoreContainerForm>
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "storage_manager_id",
+              "isRequired": true,
+              "label": "Storage Manager",
+              "loadOptions": [Function],
+              "name": "storage_manager_id",
+              "onChange": [Function],
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Add",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "storage_manager_id",
+                "isRequired": true,
+                "label": "Storage Manager",
+                "loadOptions": [Function],
+                "name": "storage_manager_id",
+                "onChange": [Function],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+        validate={[Function]}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "storage_manager_id",
+                  "isRequired": true,
+                  "label": "Storage Manager",
+                  "loadOptions": [Function],
+                  "name": "storage_manager_id",
+                  "onChange": [Function],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+          validate={[Function]}
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+            validate={[Function]}
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="storage_manager_id"
+                    isRequired={true}
+                    label="Storage Manager"
+                    loadOptions={[Function]}
+                    name="storage_manager_id"
+                    onChange={[Function]}
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "storage_manager_id",
+                      "isRequired": true,
+                      "label": "Storage Manager",
+                      "loadOptions": [Function],
+                      "name": "storage_manager_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="storage_manager_id"
+                      isRequired={true}
+                      label="Storage Manager"
+                      loadOptions={[Function]}
+                      name="storage_manager_id"
+                      onChange={[Function]}
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "storage_manager_id",
+                        "isRequired": true,
+                        "label": "Storage Manager",
+                        "loadOptions": [Function],
+                        "name": "storage_manager_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Add"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="storage_manager_id"
+                        isRequired={true}
+                        label="Storage Manager"
+                        loadOptions={[Function]}
+                        name="storage_manager_id"
+                        onChange={[Function]}
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "storage_manager_id",
+                          "isRequired": true,
+                          "label": "Storage Manager",
+                          "loadOptions": [Function],
+                          "name": "storage_manager_id",
+                          "onChange": [Function],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Add"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="select"
+                          id="storage_manager_id"
+                          isRequired={true}
+                          key="storage_manager_id"
+                          label="Storage Manager"
+                          loadOptions={[Function]}
+                          name="storage_manager_id"
+                          onChange={[Function]}
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "storage_manager_id",
+                                "isRequired": true,
+                                "label": "Storage Manager",
+                                "loadOptions": [Function],
+                                "name": "storage_manager_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="storage_manager_id"
+                                isRequired={true}
+                                label="Storage Manager"
+                                loadOptions={[Function]}
+                                name="storage_manager_id"
+                                onChange={[Function]}
+                                placeholder="<Choose>"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <Select
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  loadingMessage="Loading..."
+                                  name="storage_manager_id"
+                                  placeholder="<Choose>"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="storage_manager_id"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText={
+                                      <IsRequired>
+                                        Storage Manager
+                                      </IsRequired>
+                                    }
+                                    loadOptions={[Function]}
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="storage_manager_id"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={Array []}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      id="storage_manager_id"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isDisabled={true}
+                                      isFetching={true}
+                                      isSearchable={false}
+                                      labelText={
+                                        <IsRequired>
+                                          Storage Manager
+                                        </IsRequired>
+                                      }
+                                      name="storage_manager_id"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      options={Array []}
+                                      placeholder="Loading..."
+                                    >
+                                      <Select
+                                        disabled={false}
+                                        helperText=""
+                                        id="storage_manager_id"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText={
+                                          <IsRequired>
+                                            Storage Manager
+                                          </IsRequired>
+                                        }
+                                        light={false}
+                                        name="storage_manager_id"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="storage_manager_id"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Storage Manager
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="storage_manager_id"
+                                                name="storage_manager_id"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  text="Loading..."
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    value=""
+                                                  >
+                                                    Loading...
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  name="storage_manager_id"
+                                  onChange={[Function]}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "storage_manager_id": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {},
+                                "invalid": true,
+                                "modified": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {
+                                  "storage_manager_id": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "storage_manager_id",
+                                    "isRequired": true,
+                                    "label": "Storage Manager",
+                                    "loadOptions": [Function],
+                                    "name": "storage_manager_id",
+                                    "onChange": [Function],
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Add"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Add"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={true}
+                                      isExpressive={false}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Add
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={false}
+                                      isExpressive={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </CloudObjectStoreContainerForm>
+</Provider>
+`;
+
+exports[`Cloud Object Store Container form component should add Openstack cloud object store container 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudObjectStoreContainerForm>
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "storage_manager_id",
+              "isRequired": true,
+              "label": "Storage Manager",
+              "loadOptions": [Function],
+              "name": "storage_manager_id",
+              "onChange": [Function],
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Add",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "storage_manager_id",
+                "isRequired": true,
+                "label": "Storage Manager",
+                "loadOptions": [Function],
+                "name": "storage_manager_id",
+                "onChange": [Function],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+        validate={[Function]}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "storage_manager_id",
+                  "isRequired": true,
+                  "label": "Storage Manager",
+                  "loadOptions": [Function],
+                  "name": "storage_manager_id",
+                  "onChange": [Function],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+          validate={[Function]}
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+            validate={[Function]}
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="storage_manager_id"
+                    isRequired={true}
+                    label="Storage Manager"
+                    loadOptions={[Function]}
+                    name="storage_manager_id"
+                    onChange={[Function]}
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "storage_manager_id",
+                      "isRequired": true,
+                      "label": "Storage Manager",
+                      "loadOptions": [Function],
+                      "name": "storage_manager_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="storage_manager_id"
+                      isRequired={true}
+                      label="Storage Manager"
+                      loadOptions={[Function]}
+                      name="storage_manager_id"
+                      onChange={[Function]}
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "storage_manager_id",
+                        "isRequired": true,
+                        "label": "Storage Manager",
+                        "loadOptions": [Function],
+                        "name": "storage_manager_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Add"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="storage_manager_id"
+                        isRequired={true}
+                        label="Storage Manager"
+                        loadOptions={[Function]}
+                        name="storage_manager_id"
+                        onChange={[Function]}
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "storage_manager_id",
+                          "isRequired": true,
+                          "label": "Storage Manager",
+                          "loadOptions": [Function],
+                          "name": "storage_manager_id",
+                          "onChange": [Function],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Add"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="select"
+                          id="storage_manager_id"
+                          isRequired={true}
+                          key="storage_manager_id"
+                          label="Storage Manager"
+                          loadOptions={[Function]}
+                          name="storage_manager_id"
+                          onChange={[Function]}
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "storage_manager_id",
+                                "isRequired": true,
+                                "label": "Storage Manager",
+                                "loadOptions": [Function],
+                                "name": "storage_manager_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="storage_manager_id"
+                                isRequired={true}
+                                label="Storage Manager"
+                                loadOptions={[Function]}
+                                name="storage_manager_id"
+                                onChange={[Function]}
+                                placeholder="<Choose>"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <Select
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  loadingMessage="Loading..."
+                                  name="storage_manager_id"
+                                  placeholder="<Choose>"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="storage_manager_id"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText={
+                                      <IsRequired>
+                                        Storage Manager
+                                      </IsRequired>
+                                    }
+                                    loadOptions={[Function]}
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="storage_manager_id"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={Array []}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      id="storage_manager_id"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isDisabled={true}
+                                      isFetching={true}
+                                      isSearchable={false}
+                                      labelText={
+                                        <IsRequired>
+                                          Storage Manager
+                                        </IsRequired>
+                                      }
+                                      name="storage_manager_id"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      options={Array []}
+                                      placeholder="Loading..."
+                                    >
+                                      <Select
+                                        disabled={false}
+                                        helperText=""
+                                        id="storage_manager_id"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText={
+                                          <IsRequired>
+                                            Storage Manager
+                                          </IsRequired>
+                                        }
+                                        light={false}
+                                        name="storage_manager_id"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="storage_manager_id"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Storage Manager
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="storage_manager_id"
+                                                name="storage_manager_id"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  text="Loading..."
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    value=""
+                                                  >
+                                                    Loading...
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  name="storage_manager_id"
+                                  onChange={[Function]}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "storage_manager_id": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {},
+                                "invalid": true,
+                                "modified": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {
+                                  "storage_manager_id": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "storage_manager_id",
+                                    "isRequired": true,
+                                    "label": "Storage Manager",
+                                    "loadOptions": [Function],
+                                    "name": "storage_manager_id",
+                                    "onChange": [Function],
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Add"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Add"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={true}
+                                      isExpressive={false}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Add
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={false}
+                                      isExpressive={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </CloudObjectStoreContainerForm>
+</Provider>
+`;
+
+exports[`Cloud Object Store Container form component should render add cloud object store container form 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudObjectStoreContainerForm>
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "storage_manager_id",
+              "isRequired": true,
+              "label": "Storage Manager",
+              "loadOptions": [Function],
+              "name": "storage_manager_id",
+              "onChange": [Function],
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    >
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Add",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "storage_manager_id",
+                "isRequired": true,
+                "label": "Storage Manager",
+                "loadOptions": [Function],
+                "name": "storage_manager_id",
+                "onChange": [Function],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+          }
+        }
+        showFormControls={true}
+        validate={[Function]}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "storage_manager_id",
+                  "isRequired": true,
+                  "label": "Storage Manager",
+                  "loadOptions": [Function],
+                  "name": "storage_manager_id",
+                  "onChange": [Function],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
+          validate={[Function]}
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+            validate={[Function]}
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="storage_manager_id"
+                    isRequired={true}
+                    label="Storage Manager"
+                    loadOptions={[Function]}
+                    name="storage_manager_id"
+                    onChange={[Function]}
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "storage_manager_id",
+                      "isRequired": true,
+                      "label": "Storage Manager",
+                      "loadOptions": [Function],
+                      "name": "storage_manager_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="storage_manager_id"
+                      isRequired={true}
+                      label="Storage Manager"
+                      loadOptions={[Function]}
+                      name="storage_manager_id"
+                      onChange={[Function]}
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "storage_manager_id",
+                        "isRequired": true,
+                        "label": "Storage Manager",
+                        "loadOptions": [Function],
+                        "name": "storage_manager_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Add"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="storage_manager_id"
+                        isRequired={true}
+                        label="Storage Manager"
+                        loadOptions={[Function]}
+                        name="storage_manager_id"
+                        onChange={[Function]}
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "storage_manager_id",
+                          "isRequired": true,
+                          "label": "Storage Manager",
+                          "loadOptions": [Function],
+                          "name": "storage_manager_id",
+                          "onChange": [Function],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Add"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="select"
+                          id="storage_manager_id"
+                          isRequired={true}
+                          key="storage_manager_id"
+                          label="Storage Manager"
+                          loadOptions={[Function]}
+                          name="storage_manager_id"
+                          onChange={[Function]}
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "storage_manager_id",
+                                "isRequired": true,
+                                "label": "Storage Manager",
+                                "loadOptions": [Function],
+                                "name": "storage_manager_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="storage_manager_id"
+                                isRequired={true}
+                                label="Storage Manager"
+                                loadOptions={[Function]}
+                                name="storage_manager_id"
+                                onChange={[Function]}
+                                placeholder="<Choose>"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <Select
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  loadingMessage="Loading..."
+                                  name="storage_manager_id"
+                                  placeholder="<Choose>"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="storage_manager_id"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText={
+                                      <IsRequired>
+                                        Storage Manager
+                                      </IsRequired>
+                                    }
+                                    loadOptions={[Function]}
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="storage_manager_id"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={Array []}
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      id="storage_manager_id"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isDisabled={true}
+                                      isFetching={true}
+                                      isSearchable={false}
+                                      labelText={
+                                        <IsRequired>
+                                          Storage Manager
+                                        </IsRequired>
+                                      }
+                                      name="storage_manager_id"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      options={Array []}
+                                      placeholder="Loading..."
+                                    >
+                                      <Select
+                                        disabled={false}
+                                        helperText=""
+                                        id="storage_manager_id"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText={
+                                          <IsRequired>
+                                            Storage Manager
+                                          </IsRequired>
+                                        }
+                                        light={false}
+                                        name="storage_manager_id"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="storage_manager_id"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Storage Manager
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="storage_manager_id"
+                                                name="storage_manager_id"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  text="Loading..."
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    value=""
+                                                  >
+                                                    Loading...
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="storage_manager_id"
+                                  isRequired={true}
+                                  label="Storage Manager"
+                                  loadOptions={[Function]}
+                                  name="storage_manager_id"
+                                  onChange={[Function]}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "storage_manager_id": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {},
+                                "invalid": true,
+                                "modified": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "storage_manager_id": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {
+                                  "storage_manager_id": false,
+                                },
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "storage_manager_id",
+                                    "isRequired": true,
+                                    "label": "Storage Manager",
+                                    "loadOptions": [Function],
+                                    "name": "storage_manager_id",
+                                    "onChange": [Function],
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Add"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Add"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={true}
+                                      isExpressive={false}
+                                      kind="primary"
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Add
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      dangerDescription="danger"
+                                      disabled={false}
+                                      isExpressive={false}
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      size="default"
+                                      tabIndex={0}
+                                      tooltipAlignment="center"
+                                      tooltipPosition="top"
+                                      type="button"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
+  </CloudObjectStoreContainerForm>
+</Provider>
+`;

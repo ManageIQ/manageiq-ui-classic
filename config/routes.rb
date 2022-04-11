@@ -429,7 +429,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        create
         wait_for_task
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
