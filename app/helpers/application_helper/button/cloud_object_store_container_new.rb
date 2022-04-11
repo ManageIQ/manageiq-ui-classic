@@ -7,6 +7,6 @@ class ApplicationHelper::Button::CloudObjectStoreContainerNew < ApplicationHelpe
   end
 
   def disabled?
-    !ExtManagementSystem.any? { |ems| ems.supports?(:cloud_object_store_container_create) }
+    CloudObjectStoreContainer.providers_supporting(:create).none?
   end
 end
