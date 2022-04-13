@@ -1,59 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import MiqFormRenderer from '@@ddf';
+import MiqFormRenderer, { componentTypes } from '@@ddf';
 import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const AttachDetachCloudVolumeForm = ({ recordId, storageManagerId, isAttach, vmChoices }) => {
                                                 // TODO is storageManagerId neeeded?
 
-  const [{ isLoading, deviceMountpointRequired }, setState] = useState({ isLoading: true, deviceMountpointRequired: true });
+  const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
 
-  // const [{
-  //   initialValues, fields, isLoading, deviceMountpointRequired
-  // }, setState] = useState({ });
-
-  const loadSchema = (appendState = {}) => (value) => {
-    // miqSparkleOff();
-    // setState({
-    //   ...appendState,
-    //   fields,
-    // });
-    
-    console.log("values")
-    console.log(value)
-    // { data: { form_schema: { fields } } }
+  const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
+    var finalFields = fields ? fields : 
+    [{
+      component: componentTypes.TEXT_FIELD,
+      id: 'device_mountpoint',
+      name: 'device_mountpoint',
+      label: __('Device Mountpoint'),
+      isRequired: false,
+    }]; 
+    setState((state) => ({
+      ...state,
+      ...appendState,
+      fields: isAttach ? finalFields : [],
+      isLoading: false,
+    }));
   };
 
-  // const emptySchema = (appendState = {}) => {
-  //   const fields = [];
-  //   setState((state) => ({
-  //     ...state,
-  //     ...appendState,
-  //     fields,
-  //   }));
-  // };
-
   useEffect(() => {
-
-    // this bottom one does id and ems but goes into the id section of the thing in the API code
-    // API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
-    //   API.options(`/api/cloud_volumes/${recordId}?ems_id_attach=${initialValues.ems_id}`).then(loadSchema()); //{ initialValues, isLoading: false }
-    // });
-    API.options(`/api/cloud_volumes?ems_id_attach=${storageManagerId}`).then(loadSchema());
-
-    
-    if (isLoading) {
-
-      API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
-        console.log(initialValues)
-        setState((state) => ({
-          ...state,
-          isLoading: false,
-          deviceMountpointRequired: (initialValues.type === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') ? true : false,
-        }));
-      });
+    if(isLoading) {
+      API.options(`/api/cloud_volumes/${recordId}?action=attach&option_action=attach`).then(loadSchema());
     }
   });
 
@@ -95,14 +71,14 @@ const AttachDetachCloudVolumeForm = ({ recordId, storageManagerId, isAttach, vmC
 
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(isAttach, vmOptions, deviceMountpointRequired)}
+      schema={createSchema(vmOptions, fields)}
       onSubmit={onSubmit}
       onCancel={onCancel}
       canReset
       buttonsLabels={{ submitLabel: isAttach ? __('Attach') : __('Detach') }}
     />
   );
-};
+}; // TODO: the not requirered device mountpoint, on change, makes the attach button blue, needs to fix that
 
 AttachDetachCloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
