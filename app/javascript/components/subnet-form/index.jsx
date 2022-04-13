@@ -12,11 +12,6 @@ const SubnetForm = ({ recordId }) => {
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
-    if (!!recordId && appendState.initialValues.type === 'ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet') {
-      Object.assign(fields[0], { isDisabled: true });
-      Object.assign(fields[1], { isDisabled: true });
-      Object.assign(fields[4], { isDisabled: true });
-    }
     setState((state) => ({
       ...state,
       ...appendState,
@@ -42,7 +37,9 @@ const SubnetForm = ({ recordId }) => {
         if (typeof initialValues.cloud_tenant_id === 'string') {
           initialValues.cloud_tenant_id = Number(initialValues.cloud_tenant_id);
         }
-        API.options(`/api/cloud_subnets?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
+        miqSparkleOn();
+        API.options(`/api/cloud_subnets/${recordId}`).then(loadSchema({ initialValues, isLoading: false }));
+        miqSparkleOff();
       });
     }
   }, [recordId]);

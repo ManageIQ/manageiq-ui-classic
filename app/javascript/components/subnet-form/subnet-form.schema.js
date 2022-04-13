@@ -68,6 +68,7 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         },
         fields: [{ // TODO: pattern for validating IPv4 or IPv6
           component: componentTypes.TEXT_FIELD,
+          label: __('IP Address'),
         }],
       },
     ] : []),
