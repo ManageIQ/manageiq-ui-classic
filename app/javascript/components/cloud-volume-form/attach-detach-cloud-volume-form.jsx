@@ -72,13 +72,15 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
   };
 
   return !isLoading && (
-    <MiqFormRenderer
-      schema={createSchema(vmOptions, fields)}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-      FormTemplate={(props) => <FormTemplate {...props} isAttach={isAttach} fields={fields} />}
-      canReset
-    />
+    <div className="tasks-form">
+      <MiqFormRenderer
+        schema={createSchema(vmOptions, fields)}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        FormTemplate={(props) => <FormTemplate {...props} isAttach={isAttach} fields={fields} />}
+        canReset
+      />
+    </div>
   );
 };
 
@@ -111,6 +113,7 @@ const FormTemplate = ({
               kind="primary"
               className="btnRight"
               type="submit"
+              id="submit"
               variant="contained"
             >
               {submitLabel}
@@ -123,6 +126,7 @@ const FormTemplate = ({
               variant="contained"
               onClick={onReset}
               type="button"
+              id="reset"
             >
               { __('Reset')}
             </Button>
