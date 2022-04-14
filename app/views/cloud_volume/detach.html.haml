@@ -1,4 +1,3 @@
 = render :partial => "layouts/flash_msg"
 .col-md-12
-  = react 'AttachDetachCloudVolumeForm', :recordId => @volume.id.to_s, :storageManagerId => @volume.ext_management_system.id.to_s, 
-                                         :isAttach => false, :vmChoices => @vm_choices.sort, :deviceMountpointRequired => false
+  = react 'AttachDetachCloudVolumeForm', :recordId => @volume.id.to_s, :isAttach => false, :vmChoices => @vm_choices.sort, :deviceMountpointRequired => false

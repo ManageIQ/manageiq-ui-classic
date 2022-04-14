@@ -1,35 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import MiqFormRenderer, { componentTypes } from '@@ddf';
+import MiqFormRenderer, { componentTypes, validatorTypes, useFormApi } from '@@ddf';
 import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { FormSpy } from '@data-driven-forms/react-form-renderer';
+import { Button } from 'carbon-components-react';
 
-const AttachDetachCloudVolumeForm = ({ recordId, storageManagerId, isAttach, vmChoices }) => {
-                                                // TODO is storageManagerId neeeded?
+const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
 
   const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
-    var finalFields = fields ? fields : 
+    var finalFields = fields ? fields :
     [{
       component: componentTypes.TEXT_FIELD,
       id: 'device_mountpoint',
       name: 'device_mountpoint',
       label: __('Device Mountpoint'),
       isRequired: false,
+      validate: [{ type: validatorTypes.REQUIRED }],
     }]; 
     setState((state) => ({
       ...state,
       ...appendState,
-      fields: isAttach ? finalFields : [],
+      fields: finalFields,
       isLoading: false,
     }));
   };
 
   useEffect(() => {
     if(isLoading) {
-      API.options(`/api/cloud_volumes/${recordId}?action=attach&option_action=attach`).then(loadSchema());
+      API.options(`/api/cloud_volumes/${recordId}?option_action=attach`).then(loadSchema());
     }
   });
 
@@ -74,11 +76,66 @@ const AttachDetachCloudVolumeForm = ({ recordId, storageManagerId, isAttach, vmC
       schema={createSchema(vmOptions, fields)}
       onSubmit={onSubmit}
       onCancel={onCancel}
+      FormTemplate={(props) => <FormTemplate {...props} isAttach={isAttach} fields={fields} />}
       canReset
-      buttonsLabels={{ submitLabel: isAttach ? __('Attach') : __('Detach') }}
     />
   );
-}; // TODO: the not requirered device mountpoint, on change, makes the attach button blue, needs to fix that
+};
+
+const verifyIsDisabled = (values, fields) => {
+  var isDisabled = true;
+  if (values.vm_id && fields[0].isRequired && values.device_mountpoint) {
+    isDisabled = false
+  } else if (values.vm_id && !fields[0].isRequired) {
+    isDisabled = false
+  }
+  return isDisabled;
+};
+
+const FormTemplate = ({
+  isAttach, fields, formFields,
+}) => {
+  const {
+    handleSubmit, onReset, onCancel, getState,
+  } = useFormApi();
+  const { valid, pristine } = getState();
+  const submitLabel = isAttach ? __('Attach') : __('Detach');
+  return (
+    <form onSubmit={handleSubmit}>
+      {formFields}
+      <FormSpy>
+        {({ values }) => (
+          <div className="custom-button-wrapper">
+            <Button
+              disabled={verifyIsDisabled(values, fields)}
+              kind="primary"
+              className="btnRight"
+              type="submit"
+              variant="contained"
+            >
+              {submitLabel}
+            </Button>
+
+            <Button
+              disabled={!valid && pristine}
+              kind="secondary"
+              className="btnRight"
+              variant="contained"
+              onClick={onReset}
+              type="button"
+            >
+              { __('Reset')}
+            </Button>
+
+            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
+              { __('Cancel')}
+            </Button>
+          </div>
+        )}
+      </FormSpy>
+    </form>
+  );
+};
 
 AttachDetachCloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
