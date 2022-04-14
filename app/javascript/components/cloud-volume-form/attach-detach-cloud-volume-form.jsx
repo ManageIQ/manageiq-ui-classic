@@ -30,8 +30,13 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
   };
 
   useEffect(() => {
-    if(isLoading) {
+    if(isLoading && isAttach) {
       API.options(`/api/cloud_volumes/${recordId}?option_action=attach`).then(loadSchema());
+    } else if (isLoading) {
+      setState((state) => ({
+        ...state,
+        isLoading: false,
+      }));
     }
   });
 
