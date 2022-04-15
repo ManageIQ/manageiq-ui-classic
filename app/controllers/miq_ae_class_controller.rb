@@ -1028,7 +1028,7 @@ class MiqAeClassController < ApplicationController
 
     if %w[ansible_job_template ansible_workflow_template].include?(location)
       # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
-      list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager
+      list_of_managers = ManageIQ::Providers::ExternalAutomationManager
                          .where(:enabled => true)
                          .pluck(:id, :name)
                          .map { |r| {:id => r[0], :name => r[1]} }
