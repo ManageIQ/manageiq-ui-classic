@@ -31,7 +31,7 @@ module TreeNode
       else
         base_class = @object.class.base_model.name # i.e. Vm or MiqTemplate
         base_class = "Datacenter" if base_class == "EmsFolder" && @object.kind_of?(::Datacenter)
-        base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
+        base_class = "ManageIQ::Providers::ExternalAutomationManager" if @object.kind_of?(ManageIQ::Providers::ExternalAutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)
         cid = @object.id
         "#{@tree.try(:options).try(:[], :full_ids) && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
