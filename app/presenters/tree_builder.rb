@@ -427,7 +427,7 @@ class TreeBuilder
     "az"   => "AvailabilityZone",
     "azu"  => "ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate",
     "azs"  => "ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate",
-    "at"   => "ManageIQ::Providers::AnsibleTower::AutomationManager",
+    "at"   => "ManageIQ::Providers::ExternalAutomationManager",
     "cl"   => "Classification",
     "cfp"  => "ConfigurationScriptPayload",
     "cw"   => "ConfigurationWorkflow",

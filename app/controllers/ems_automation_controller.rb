@@ -52,7 +52,7 @@ class EmsAutomationController < ApplicationController
   private
 
   def concrete_model
-    ManageIQ::Providers::AnsibleTower::AutomationManager
+    ManageIQ::Providers::ExternalAutomationManager
   end
 
   def self.model_to_name(_provmodel)
@@ -101,7 +101,6 @@ class EmsAutomationController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Ansible Tower")},
         {:title => _("Providers"), :url => controller_url},
       ],
       :record_info => @ems,
