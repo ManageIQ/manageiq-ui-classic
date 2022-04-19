@@ -59,9 +59,10 @@ describe CloudVolumeSnapshotController do
 
     context "#delete" do
       let(:task_options) do
+        userid = controller.current_user.userid
         {
-          :action => "deleting volume snapshot #{@snapshot.inspect} in #{@ems.inspect}",
-          :userid => controller.current_user.userid
+          :action => "deleting volume snapshot for #{userid} in #{@ems.name}",
+          :userid => userid
         }
       end
       let(:queue_options) do
