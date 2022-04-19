@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   end
 
   def allow_websocket
-    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin])
+    override_content_security_policy_directives(:connect_src => ["'self'", 'https://fonts.gstatic.com', websocket_origin])
   end
   private :allow_websocket
 
