@@ -25,7 +25,7 @@ describe('Subnet form component', () => {
       resources: [{ label: 'foo', value: 1 }],
     });
     fetchMock.getOnce('/api/cloud_subnets/1', { name: 'foo', ems_id: 1 });
-    fetchMock.mock('/api/cloud_subnets?ems_id=1', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
+    fetchMock.mock('/api/cloud_subnets/1', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
     let wrapper;
     await act(async() => {
       wrapper = mount(<SubnetForm recordId="1" />);
