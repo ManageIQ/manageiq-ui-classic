@@ -21,6 +21,7 @@ import CloudObjectStoreContainerForm from '../components/cloud-object-store-cont
 import CloudTenantForm from '../components/cloud-tenant-form';
 import CloudVolumeActions from '../components/cloud-volume-actions-form';
 import CloudVolumeForm from '../components/cloud-volume-form';
+import AttachDetachCloudVolumeForm from '../components/cloud-volume-form/attach-detach-cloud-volume-form'
 import ProviderForm from '../components/provider-form';
 import ChargebackRate from '../components/data-tables/chargeback-rate';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
@@ -144,6 +145,7 @@ ManageIQ.component.addReact('CloudObjectStoreContainerForm', CloudObjectStoreCon
 ManageIQ.component.addReact('CloudVolumeActions', CloudVolumeActions);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('CloudVolumeForm', CloudVolumeForm);
+ManageIQ.component.addReact('AttachDetachCloudVolumeForm', AttachDetachCloudVolumeForm);
 ManageIQ.component.addReact('ProviderForm', ProviderForm);
 ManageIQ.component.addReact('CatalogResource', CatalogResouce);
 ManageIQ.component.addReact('ChargebackRate', ChargebackRate);

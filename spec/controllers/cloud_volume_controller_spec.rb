@@ -317,16 +317,6 @@ describe CloudVolumeController do
       controller.params = {:button => 'cancel', :id => volume.id}
     end
 
-    it 'calls flash_and_redirect for canceling attaching Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:attach_volume)
-    end
-
-    it 'calls flash_and_redirect for canceling detaching Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:detach_volume)
-    end
-
     it 'calls flash_and_redirect for adding new Cloud Volume' do
       expect(controller).to receive(:flash_and_redirect).with(_("Add of new Cloud Volume was cancelled by the user"))
       controller.send(:create)

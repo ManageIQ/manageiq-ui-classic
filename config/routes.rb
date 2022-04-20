@@ -514,8 +514,6 @@ Rails.application.routes.draw do
       ) +
         compare_get,
       :post => %w(
-        attach_volume
-        detach_volume
         backup_create
         backup_restore
         snapshot_create
