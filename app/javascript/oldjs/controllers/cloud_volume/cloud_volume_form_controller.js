@@ -43,26 +43,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  vm.backupCreateClicked = function() {
-    var url = '/cloud_volume/backup_create/' + cloudVolumeFormId + '?button=create';
-    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
-  };
-
-  vm.cancelBackupCreateClicked = function() {
-    var url = '/cloud_volume/backup_create/' + cloudVolumeFormId + '?button=cancel';
-    miqService.miqAjaxButton(url);
-  };
-
-  vm.backupRestoreClicked = function() {
-    var url = '/cloud_volume/backup_restore/' + cloudVolumeFormId + '?button=restore';
-    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
-  };
-
-  vm.cancelBackupRestoreClicked = function() {
-    var url = '/cloud_volume/backup_restore/' + cloudVolumeFormId + '?button=cancel';
-    miqService.miqAjaxButton(url);
-  };
-
   vm.snapshotCreateClicked = function() {
     var url = '/cloud_volume/snapshot_create/' + cloudVolumeFormId + '?button=create';
     miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
