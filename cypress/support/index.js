@@ -47,5 +47,4 @@ import './commands/search.js'
 import './commands/toolbar.js'
 
 // Assertions
-import './assertions/expect_explorer_title.js'
-import './assertions/expect_show_list_title.js'
+import './assertions/expect_title.js'
