@@ -43,9 +43,8 @@ class CloudVolumeBackupController < ApplicationController
       volume_id = params[:volume].try(:fetch, :ems_ref, nil)
       new_volume_name = params[:name]
       task_id = @backup.restore_queue(session[:userid], volume_id, new_volume_name)
-
       if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "backup_restore_finished")
+        backup_restore_finished(@backup, task_id)
       else
         add_flash(_("Cloud volume restore failed: Task start failed"), :error)
         javascript_flash(:spinner_off => true)
@@ -53,23 +52,24 @@ class CloudVolumeBackupController < ApplicationController
     end
   end
 
-  def backup_restore_finished
-    task = MiqTask.find(session[:async][:params][:task_id])
-    @backup = find_record_with_rbac(CloudVolumeBackup, session[:async][:params][:id])
-
-    if task.results_ready?
-      add_flash(_("Restoring Cloud Volume \"%{name}\"") % {:name => @backup.name})
-    else
-      add_flash(_("Unable to restore Cloud Volume \"%{name}\": %{details}") % {
-        :name    => @backup.name,
-        :details => task.message
-      }, :error)
-    end
-
+  def backup_restore_finished(backup, task_id)
     @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect(:action => "show", :id => @backup.id)
+
+    task = MiqTask.find(task_id)
+
+    if task.results_ready?
+      render :json => {
+        :status   => true,
+        :messages => _("Restoring Cloud Volume \"%{name}\"") % {:name => backup.name}
+      }
+    else
+      render :json => {
+        :status   => false,
+        :messages => _("Unable to restore Cloud Volume \"%{name}\": %{details}") % {:name => backup.name, :details => task.message}
+      }
+    end
   end
 
   def button

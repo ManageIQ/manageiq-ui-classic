@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cloud Volume backup form component should render the restore cloud volume backup form 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudVolumeBackupForm
+    name="Cloud volume name"
+    recordId="23"
+    type="restore"
+  />
+</Provider>
+`;
+
+exports[`Cloud Volume backup form component when restoring cloud volume from backup 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudVolumeBackupForm
+    name="Cloud volume name"
+    recordId="23"
+    type="restore"
+  />
+</Provider>
+`;
