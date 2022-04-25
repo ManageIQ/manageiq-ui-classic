@@ -3,8 +3,3 @@ Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join
 Rails.application.config.assets.precompile << proc do |filename, path|
   path =~ %r{app/assets} && !%w(.js .css).include?(File.extname(filename))
 end
-
-Rails.application.config.assets.precompile += %w(
-  print.scss
-  report_colors.scss
-)
