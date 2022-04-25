@@ -514,8 +514,6 @@ Rails.application.routes.draw do
       ) +
         compare_get,
       :post => %w(
-        backup_create
-        backup_restore
         snapshot_create
         button
         create

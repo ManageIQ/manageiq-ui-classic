@@ -224,55 +224,6 @@ class CloudVolumeController < ApplicationController
     )
   end
 
-  def backup_create
-    assert_privileges("cloud_volume_backup_create")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
-
-    when "create"
-      options = {}
-      options[:name] = params[:backup_name] if params[:backup_name]
-      options[:incremental] = true if params[:incremental] == "true"
-      options[:force] = true if params[:force] == "true"
-
-      task_id = @volume.backup_create_queue(session[:userid], options)
-
-      if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "backup_create_finished")
-      else
-        javascript_flash(
-          :text        => _("Cloud volume backup creation failed: Task start failed: ID [%{id}]") %
-            {:id => task_id.to_s},
-          :severity    => :error,
-          :spinner_off => true
-        )
-      end
-    end
-  end
-
-  def backup_create_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Backup for Cloud Volume \"%{name}\" created") % {:name => @volume.name})
-    else
-      add_flash(_("Unable to create backup for Cloud Volume \"%{name}\": %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
-  end
-
   def backup_select
     assert_privileges("cloud_volume_backup_restore")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
@@ -285,51 +236,6 @@ class CloudVolumeController < ApplicationController
       :name => _("Restore Cloud Volume \"%{name}\" from a Backup") % {:name => @volume.name},
       :url  => "/cloud_volume/backup_select/#{@volume.id}"
     )
-  end
-
-  def backup_restore
-    assert_privileges("cloud_volume_backup_restore")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
-
-    when "restore"
-      @backup = find_record_with_rbac(CloudVolumeBackup, params[:backup_id])
-      task_id = @volume.backup_restore_queue(session[:userid], @backup.ems_ref)
-
-      unless task_id.kind_of?(Integer)
-        add_flash(_("Cloud volume restore failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
-      end
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "backup_restore_finished")
-      end
-    end
-  end
-
-  def backup_restore_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Restoring Cloud Volume \"%{name}\" from backup") % {:name => @volume.name})
-    else
-      add_flash(_("Unable to restore Cloud Volume \"%{name}\" from backup: %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
   end
 
   def snapshot_new
