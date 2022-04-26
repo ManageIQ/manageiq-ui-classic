@@ -1,9 +1,0 @@
-- @angular_form = true
-
-= render :partial => "layouts/flash_msg"
-
-%generic-object-definition{"record-id"    => @generic_object_definition.try(:id),
-                           "redirect-url" => "/#{controller_name}/show_list",}
-
-:javascript
-  miq_bootstrap('generic-object-definition');
