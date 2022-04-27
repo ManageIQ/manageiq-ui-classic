@@ -46,69 +46,6 @@ describe MiqAeCustomizationController do
     end
   end
 
-  describe "#group_form_field_changed" do
-    before do
-      allow(controller).to receive(:load_edit).and_return(true)
-      controller.instance_variable_set(:@edit, :new => {:fields => [['value', 100], ['value1', 101], ['value2', 102], ['value3', 103]]})
-    end
-
-    context "assign buttons" do
-      it "moves button up" do
-        post :group_form_field_changed, :params => { 'selected_fields' => ['101'], :button => 'up' }
-        expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value1', 101], ['value', 100], ['value2', 102], ['value3', 103]]})
-      end
-
-      it "moves button down" do
-        post :group_form_field_changed, :params => { 'selected_fields' => ['101'], :button => 'down' }
-        expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value', 100], ['value2', 102], ['value1', 101], ['value3', 103]]})
-      end
-
-      it "moves button to the top" do
-        post :group_form_field_changed, :params => { 'selected_fields' => ['101'], :button => 'top' }
-        expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value1', 101], ['value', 100], ['value2', 102], ['value3', 103]]})
-      end
-
-      it "moves button to the bottom" do
-        post :group_form_field_changed, :params => { 'selected_fields' => ['101'], :button => 'bottom' }
-        expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value', 100], ['value2', 102], ['value3', 103], ['value1', 101]]})
-      end
-
-      context "no selected button" do
-        it "moves up and display error message" do
-          post :group_form_field_changed, :params => { :button => 'up' }
-          expect(response.body).to include("flash")
-        end
-
-        it "moves down and display error message" do
-          post :group_form_field_changed, :params => { :button => 'down' }
-          expect(response.body).to include("flash")
-        end
-
-        it "moves up and display error message" do
-          post :group_form_field_changed, :params => { :button => 'top' }
-          expect(response.body).to include("flash")
-        end
-
-        it "moves down and display error message" do
-          post :group_form_field_changed, :params => { :button => 'bottom' }
-          expect(response.body).to include("flash")
-        end
-      end
-
-      context "all buttons selected" do
-        it "moves to the top and nothing happen" do
-          post :group_form_field_changed, :params => { :button => 'top', 'selected_fields' => ['100', '101', '102', '103'] }
-          expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value', 100], ['value1', 101], ['value2', 102], ['value3', 103]]})
-        end
-
-        it "moves to the bottom and nothing happen" do
-          post :group_form_field_changed, :params => { :button => 'bottom', 'selected_fields' => ['100', '101', '102', '103'] }
-          expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['value', 100], ['value1', 101], ['value2', 102], ['value3', 103]]})
-        end
-      end
-    end
-  end
-
   describe 'x_button' do
     before do
       ApplicationController.handle_exceptions = true

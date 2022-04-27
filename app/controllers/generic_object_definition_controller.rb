@@ -121,6 +121,8 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_new
     assert_privileges('generic_object_definition_ab_button_new')
     @right_cell_text = _("Add a new Custom Button")
+    @distinct_instances_across_domains = MiqAeClass.find_distinct_instances_across_domains(User.current_user, "SYSTEM/PROCESS").pluck(:name).sort
+    @templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
     if node_type(x_node || params[:id]) == :button_group
       @custom_button_group = CustomButtonSet.find(params[:id])
       @generic_object_definition = GenericObjectDefinition.find(@custom_button_group.set_data[:applies_to_id])
@@ -134,6 +136,8 @@ class GenericObjectDefinitionController < ApplicationController
     assert_privileges('generic_object_definition_ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
     @right_cell_text = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
+    @distinct_instances_across_domains = MiqAeClass.find_distinct_instances_across_domains(User.current_user, "SYSTEM/PROCESS").pluck(:name).sort
+    @templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
     render_form(@right_cell_text, 'custom_button_form')
   end
 

@@ -1,9 +1,9 @@
-.button-group-form {
+.button-form {
   form > div {
     margin-bottom: 32px;
   }
 
-  #button-group-name-wrapper {
+  #name-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     }
   }
 
-  #button_group_button_color {
+  #color-select {
     padding: 0 2px;
     border: 1px solid #d3d3d3;
   }
@@ -42,6 +42,10 @@
         }
       }
     }
+  }
+
+  .bx--multi-select__wrapper {
+    padding-top: 20px;
   }
 
   .custom-button-wrapper {

@@ -25,7 +25,6 @@ describe MiqAeCustomizationController do
     dialog_list
     explorer
     group_create
-    group_form_field_changed
     group_reorder_field_changed
     group_update
     import_service_dialogs

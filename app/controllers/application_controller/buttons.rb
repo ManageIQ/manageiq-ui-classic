@@ -182,27 +182,6 @@ module ApplicationController::Buttons
     end
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def group_form_field_changed
-    assert_privileges(params[:id] == 'new' ? 'ab_group_new' : 'ab_group_edit')
-    return unless load_edit("bg_edit__#{params[:id]}", "replace_cell__explorer")
-
-    group_get_form_vars
-    @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
-    @changed = (@edit[:new] != @edit[:current])
-    valid = group_form_valid
-    render :update do |page|
-      page << javascript_prologue
-      page.replace(@refresh_div, :partial => "shared/buttons/#{@refresh_partial}") if @refresh_div
-      if @flash_array
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-      else
-        page << javascript_for_miq_button_visibility(@changed && valid)
-      end
-    end
-  end
-
   def open_url_after_dialog
     external_url = ExternalUrl.find_by(
       :resource_id   => params[:targetId],
@@ -373,16 +352,6 @@ module ApplicationController::Buttons
     replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
   end
 
-  def group_button_reset
-    group_set_form_vars
-    @changed = session[:changed] = false
-    add_flash(_("All changes have been reset"), :warning)
-    @in_a_form = true
-    @lastaction = "automate_button"
-    @layout     = "miq_ae_automate_button"
-    replace_right_cell(:nodetype => "group_edit")
-  end
-
   def group_create_update(typ)
     @edit = session[:edit]
     @record = @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
@@ -390,7 +359,6 @@ module ApplicationController::Buttons
     case params[:button]
     when 'cancel'      then group_button_cancel(typ)
     when 'add', 'save' then group_button_add_save(typ)
-    when 'reset'       then group_button_reset
     end
   end
 
@@ -691,20 +659,6 @@ module ApplicationController::Buttons
                   .collect { |u| [u.name, u.id] }
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
-  end
-
-  def group_get_form_vars
-    case params[:button]
-    when 'right'  then move_cols_left_right('right')
-    when 'left'   then move_cols_left_right('left')
-    when 'up'     then move_cols_up
-    when 'down'   then move_cols_down
-    when 'top'    then move_cols_top
-    when 'bottom' then move_cols_bottom
-    else
-      @edit[:new][:display] = params[:display] == "1" if params.key?(:display)
-      copy_params_if_set(@edit[:new], params, %i[name description button_icon button_color])
-    end
   end
 
   def move_cols_top
@@ -1013,21 +967,6 @@ module ApplicationController::Buttons
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
     @changed = session[:changed] = (@edit[:new] != @edit[:current])
-  end
-
-  # Set user record variables to new values
-  def group_set_record_vars(group)
-    group.description = @edit[:new][:description]
-    applies_to_id = @sb[:applies_to_id].to_i if x_active_tree == :sandt_tree
-    group.name = "#{@edit[:new][:name]}|#{@edit[:new][:applies_to_class]}|#{applies_to_id}" if @edit[:new][:name].present?
-    group.set_data ||= {}
-    group.set_data[:button_order] = @edit[:new][:fields].collect { |field| field[1] }
-    group.set_data[:button_icon] = @edit[:new][:button_icon] if @edit[:new][:button_icon].present?
-    group.set_data[:button_color] = @edit[:new][:button_color] if @edit[:new][:button_color].present?
-    group.set_data[:display] = @edit[:new][:display]
-    group.set_data[:applies_to_class] ||= {}
-    group.set_data[:applies_to_class] = @edit[:new][:applies_to_class]
-    group.set_data[:applies_to_id] = applies_to_id.to_i if applies_to_id
   end
 
   def buttons_get_node_info(node)

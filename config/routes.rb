@@ -297,7 +297,6 @@ Rails.application.routes.draw do
         playbook_options_field_changed
         explorer
         group_create
-        group_form_field_changed
         group_reorder_field_changed
         group_update
         ot_tags_edit
@@ -1956,7 +1955,6 @@ Rails.application.routes.draw do
         dialog_list
         explorer
         group_create
-        group_form_field_changed
         group_reorder_field_changed
         group_update
         import_service_dialogs
