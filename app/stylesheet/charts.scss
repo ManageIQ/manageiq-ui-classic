@@ -83,3 +83,19 @@
   display: inline-flex;
   flex-direction: column;
 }
+
+.empty-chart-contents {
+  margin-bottom: 10px;
+  span {
+    vertical-align: middle;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+.card-pf-aggregate-status-title {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
