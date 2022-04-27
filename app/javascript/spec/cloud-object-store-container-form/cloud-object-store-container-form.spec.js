@@ -52,8 +52,6 @@ describe('Cloud Object Store Container form component', () => {
       name: 'test',
       ems_id: '6',
       cloud_tenant_id: '1',
-      emsType: 'ManageIQ::Providers::Openstack::StorageManager::SwiftManager',
-      parent_emstype: 'ManageIQ::Providers::Openstack::CloudManager',
     };
     fetchMock.get(
       // eslint-disable-next-line max-len
@@ -77,8 +75,6 @@ describe('Cloud Object Store Container form component', () => {
       name: 'test',
       ems_id: '87',
       providerRegion: 'us-gov-west-1',
-      emsType: 'ManageIQ::Providers::Amazon::StorageManager::S3',
-      parent_emstype: 'ManageIQ::Providers::Amazon::CloudManager',
     };
     fetchMock.get(
       // eslint-disable-next-line max-len

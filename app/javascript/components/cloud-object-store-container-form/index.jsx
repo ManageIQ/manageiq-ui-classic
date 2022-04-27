@@ -42,20 +42,13 @@ const CloudObjectStoreContainerForm = () => {
       submitData.cloud_tenant_id = values.cloud_tenant_id;
     }
     miqSparkleOn();
-    API.get(`/api/providers/${values.storage_manager_id}?attributes=type,parent_manager.type`)
-      .then((data) => {
-        submitData.emsType = data.type;
-        submitData.parent_emstype = data.parent_manager.type;
-      })
-      .then(() => {
-        API.post('/api/cloud_object_store_containers/', submitData).then(() => {
-          const message = __(`Add of Cloud Object Store Container ${values.name} has been successfully queued.`);
-          miqRedirectBack(message, 'success', url);
-        })
-          .catch((error) => {
-            const message = __(`Add of Cloud Object Store Container ${values.name} has failed with error: ${error.data.error.message}`);
-            miqRedirectBack(message, 'warning', url);
-          });
+    API.post('/api/cloud_object_store_containers/', submitData).then(() => {
+      const message = __(`Add of Cloud Object Store Container ${values.name} has been successfully queued.`);
+      miqRedirectBack(message, 'success', url);
+    })
+      .catch((error) => {
+        const message = __(`Add of Cloud Object Store Container ${values.name} has failed with error: ${error.data.error.message}`);
+        miqRedirectBack(message, 'warning', url);
       });
   };
 
