@@ -1,10 +1,6 @@
 require('./ae_resolve_options/ae-resolve-options.js');
 require('./auth-credentials.js');
 require('./datetime-delay-picker.js');
-require('./generic_object/assign-buttons.js');
-require('./generic_object/custom-button-group-form.js');
-require('./generic_object/main-custom-button-form.js');
-require('./generic_object/main-custom-button-group-form.js');
 require('./index.js');
 require('./miq-button.js');
 require('./miq_ae_class/namespace-form.js');

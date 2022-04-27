@@ -1,10 +1,7 @@
-- @angular_form = true
-
 = render :partial => "layouts/flash_msg"
 
-%main-custom-button-group-form{"generic-object-defn-record-id" => @generic_object_definition.try(:id),
-                               "custom-button-group-record-id" => @custom_button_group.try(:id),
-                               "redirect-url"                  => "/#{controller_name}/show_list",}
-
-:javascript
-  miq_bootstrap('main-custom-button-group-form');
+= react 'GroupForm', :recId => @custom_button_group.try(:id),
+                     :url => "/#{controller_name}/",
+                     :appliesToId => @generic_object_definition.try(:id),
+                     :appliesToClass => 'GenericObjectDefinition',
+                     :isGenericObject => true

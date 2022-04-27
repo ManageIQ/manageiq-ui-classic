@@ -4,10 +4,14 @@ import { Button, Loading } from 'carbon-components-react';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './group-form.schema';
-import { formatButton, formatName, formatSetData } from './helper';
+import {
+  formatButton, formatName, formatSetData, getGenericObjectButtonList,
+} from './helper';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { API } from '../../http_api';
 
 const GroupForm = ({
-  recId, availableFields, fields, url, appliesToClass, appliesToId,
+  recId, availableFields, fields, url, appliesToClass, appliesToId, isGenericObject,
 }) => {
   const [{
     isLoading, initialValues, buttonIcon, options,
@@ -21,17 +25,39 @@ const GroupForm = ({
   const cancelUrl = `${actionType}/${recId}?button=cancel`;
   const buttonOptions = formatButton(availableFields.concat(fields));
 
-  useEffect(() => {
-    if (recId) {
-      API.get(`/api/custom_button_sets/${recId}`).then((initialValues) => {
+  const getInitialValues = (buttons = []) => {
+    API.get(`/api/custom_button_sets/${recId}`)
+      .then((initialValues) => {
         setState((state) => ({
           ...state,
           initialValues: { ...initialValues, name: formatName(initialValues.name) },
           buttonIcon: (initialValues && initialValues.set_data) ? initialValues.set_data.button_icon : '',
-          options: buttonOptions,
+          options: isGenericObject ? buttons : buttonOptions,
           isLoading: false,
         }));
       });
+  };
+
+  useEffect(() => {
+    if (isGenericObject) {
+      API.get(`/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=${appliesToId}`)
+        .then((data) => {
+          API.get(`/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=${appliesToId}`)
+            .then((buttonGroups) => {
+              const buttons = getGenericObjectButtonList(buttonGroups, data, recId);
+              if (recId) {
+                getInitialValues(buttons);
+              } else {
+                setState((state) => ({
+                  ...state,
+                  options: buttons,
+                  isLoading: false,
+                }));
+              }
+            });
+        });
+    } else if (recId) {
+      getInitialValues();
     } else {
       setState((state) => ({
         ...state,
@@ -54,12 +80,23 @@ const GroupForm = ({
       values.owner_id = appliesToId;
     }
     values.owner_type = appliesToClass;
-    values.set_data = formatSetData(values.set_data, buttonIcon, appliesToClass);
+    values.set_data = formatSetData(values.set_data, buttonIcon, appliesToClass, appliesToId);
+    if (values.set_data.display === undefined) {
+      values.set_data.display = false;
+    }
+
     const request = recId
       ? API.patch(`/api/custom_button_sets/${recId}`, values, { skipErrors: [400, 500] })
       : API.post('/api/custom_button_sets', values, { skipErrors: [400, 500] });
     request.then(({ results }) => {
-      miqAjaxButton(`${actionType}/${recId || results[0].id}?button=${buttonType}`, values);
+      const saveMsg = recId ? __(`Custom Button Group "${values.name}" has been successfully saved.`)
+        : __(`Custom Button Group "${values.name}" has been successfully added.`);
+      if (isGenericObject) {
+        miqRedirectBack(saveMsg, 'success', url);
+        miqSparkleOff();
+      } else {
+        miqAjaxButton(`${actionType}/${recId || results[0].id}?button=${buttonType}`, values);
+      }
     }).catch(({ data: { error: { message } } }) => {
       const errorMessage = message ? message.split(': ')[1] : __('Please try again');
       add_flash(errorMessage, 'error');
@@ -68,7 +105,15 @@ const GroupForm = ({
   };
 
   const onCancel = () => {
-    miqAjaxButton(cancelUrl);
+    if (isGenericObject) {
+      if (recId) {
+        miqRedirectBack(__(`Edit of Custom Button Group "${initialValues.name}" was canceled by the user.`), 'warn', url);
+      } else {
+        miqRedirectBack(__(`Creation of new Custom Button Group was canceled by the user.`), 'warn', url);
+      }
+    } else {
+      miqAjaxButton(cancelUrl);
+    }
   };
 
   const onFormReset = () => {
@@ -82,7 +127,7 @@ const GroupForm = ({
 
   if (isLoading || (options === undefined)) return <Loading className="export-spinner" withOverlay={false} small />;
   return (!isLoading && options) && (
-    <div className="col-md-12 button-group-form">
+    <div className="col-md-12 button-form">
       <MiqFormRenderer
         schema={createSchema(buttonIcon, options, url, setState)}
         initialValues={initialValues}
@@ -149,7 +194,8 @@ GroupForm.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.any),
   url: PropTypes.string,
   appliesToClass: PropTypes.string,
-  appliesToId: PropTypes.string,
+  appliesToId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isGenericObject: PropTypes.bool,
 };
 
 GroupForm.defaultProps = {
@@ -159,6 +205,7 @@ GroupForm.defaultProps = {
   url: '',
   appliesToClass: '',
   appliesToId: undefined,
+  isGenericObject: false,
 };
 
 FormTemplate.propTypes = {

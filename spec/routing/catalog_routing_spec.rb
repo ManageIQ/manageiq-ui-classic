@@ -32,7 +32,6 @@ describe 'routes for CatalogController' do
     button_update
     explorer
     group_create
-    group_form_field_changed
     group_reorder_field_changed
     group_update
     ot_tags_edit
