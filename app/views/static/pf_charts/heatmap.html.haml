@@ -1,9 +1,0 @@
-.heatmap-pf-container
-  .h3
-    {{$ctrl.chartTitle}}
-  %div{:class => "heatmap-container", "ng-style" => "$ctrl.containerStyles"}
-    %svg{:class => "heatmap-pf-svg"}
-
-  %pf-empty-chart{"ng-if" => "$ctrl.chartDataAvailable === false", "chart-height" => "$ctrl.height"}
-  %div{"ng-if" => "!$ctrl.loadingDone", :class => "spinner spinner-lg loading"}
-  %pf-heatmap-legend{"ng-if" => "$ctrl.showLegend", "legend" => "$ctrl.legendLabels", "legend-colors" => "$ctrl.heatmapColorPattern"}

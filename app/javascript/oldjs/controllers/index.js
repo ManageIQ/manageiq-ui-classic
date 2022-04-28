@@ -6,7 +6,6 @@ require('./catalog/catalog_item_form_controller.js');
 require('./cloud_volume/cloud_volume_form_controller.js');
 require('./configuration_manager_form_controller.js');
 require('./container_dashboard/card/card-module.js');
-require('./container_dashboard/card/heatmaps/heatmaps-card-directive.js');
 require('./container_dashboard/container_project_dashboard_controller.js');
 require('./container_dashboard/util.js');
 require('./container_dashboard/util/dashboard-utils-factory.js');
