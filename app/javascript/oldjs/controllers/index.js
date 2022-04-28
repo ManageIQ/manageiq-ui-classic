@@ -15,7 +15,6 @@ require('./dialog_editor/dialog_editor_controller.js');
 require('./dialog_user/dialog_user_controller.js');
 require('./dialog_user/dialog_user_reconfigure_controller.js');
 require('./ems_common/aggregate_status_card_controller.js');
-require('./ems_container_dashboard/aggregate_status_card_controller.js');
 require('./ems_keypair/ems_keypair_controller.js');
 require('./error_modal_controller.js');
 require('./fonticon_picker_controller.js');

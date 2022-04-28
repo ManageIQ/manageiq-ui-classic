@@ -5,7 +5,7 @@
       = react('RefreshDataNotification', :providerId => @record.id.to_s, 
        :apiUrl => 'container_dashboard/refresh_status_data')
   .row.row-tile-pf
-    = render :partial => "ems_container/aggregate-status-card"
+    = react('ContainerDashboardCards', :providerId => @record.id.to_s)
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       - if @record
@@ -40,7 +40,3 @@
       - else
         = react('PodsTrendChart', :providerId => '', :config => 'PodUsageConfig',
          :apiUrl => 'container_dashboard/pod_metrics_data', :dataPoint => 'pod_metrics')
-
-  :javascript
-    ManageIQ.angular.app.value('providerId', '#{@record ? @record.id : ''}');
-    miq_bootstrap('.containers-dashboard');
