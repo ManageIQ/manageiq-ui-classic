@@ -65,7 +65,7 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
       onChange: (new_storage_id) => setStorageId(new_storage_id),
-      key: emsId,
+      key: `physical_storage_id-${emsId}`,
       condition: {
         when: 'ems_id',
         isNotEmpty: true,
@@ -81,10 +81,12 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadCloudVolumes(storageId) : Promise.resolve([])),
       onChange: (cloud_volume_id) => setVolumeId(cloud_volume_id),
-      key: storageId,
+      key: `cloud_volume_id-${storageId}`,
       condition: {
-        when: 'physical_storage_id',
-        isNotEmpty: true,
+        and: [
+          {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'ems_id', isNotEmpty: true,},
+        ]
       },
     },
 
@@ -98,10 +100,11 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadHostInitiators(storageId) : Promise.resolve([])),
       onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
-      key: storageId,
+      key: `host_initiator_id-${storageId}`,
       condition: {
         and: [
           {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'ems_id', isNotEmpty: true,},
           {when: 'mapping_object', is: "host"}
         ]
       },
@@ -117,10 +120,11 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
       onChange: (host_initiator_group_id) => setHostInitiatorGroupId(host_initiator_group_id),
-      key: storageId,
+      key: `host_initiator_group_id-${storageId}`,
       condition: {
         and: [
           {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'ems_id', isNotEmpty: true,},
           {when: 'mapping_object', is: "host_group"}
         ]
       },
@@ -130,7 +134,12 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
       "label": "Map directly to Host Initiator, or to a Group?",
       "name": "mapping_object",
       "initialValue": "host",
-      condition: {when: 'physical_storage_id', isNotEmpty: true},
+      condition: {
+        and: [
+          {when: 'physical_storage_id', isNotEmpty: true,},
+          {when: 'ems_id', isNotEmpty: true,},
+        ]
+      },
       "options": [
         {
           "label": "Host Initiator",
