@@ -39,7 +39,7 @@ const createSchema = (options, catalogId) => ({
     },
     {
       component: componentTypes.SUB_FORM,
-      id: 'dual-list-sub-form',
+      id: 'dual-list-sub-form-catalog',
       name: 'dual-list-sub-form',
       fields: [
         {
