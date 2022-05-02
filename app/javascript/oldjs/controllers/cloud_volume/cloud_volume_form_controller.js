@@ -43,22 +43,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  vm.snapshotCreateClicked = function() {
-    var url = '/cloud_volume/snapshot_create/' + cloudVolumeFormId + '?button=create';
-    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
-  };
-
-  vm.cancelSnapshotCreateClicked = function() {
-    var url = '/cloud_volume/snapshot_create/' + cloudVolumeFormId + '?button=cancel';
-    miqService.miqAjaxButton(url);
-  };
-
-  vm.resetClicked = function(angularForm) {
-    vm.cloudVolumeModel = angular.copy(vm.modelCopy);
-    angularForm.$setPristine(true);
-    miqService.miqFlash('warn', __('All changes have been reset'));
-  };
-
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
     return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,volume_availability_zones,cloud_tenants,cloud_volume_snapshots,cloud_volume_types,storage_services,supports_storage_services')

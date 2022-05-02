@@ -3,25 +3,16 @@ import React from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { formData } from './helper';
+import { CloudVolumeActionTypes, formData, handleError } from './helper';
 
 const CloudVolumeActions = ({ recordId, name, type }) => {
   const data = formData(recordId, name, type);
+  const isCreateSnapshot = type === CloudVolumeActionTypes.CREATE_SNAPSHOT;
 
   /** On cancel click event handler */
   const onCancel = () => {
     const { message, url } = data.cancel;
     miqRedirectBack(message, 'success', url);
-  };
-
-  /** Function to extract the error message. */
-  const handleError = (message) => {
-    // Cannot be parsed to JSON due to error in message data.
-    const cleared = message.replace(/[^a-zA-Z :]/g, '');
-    return cleared.substring(
-      cleared.indexOf('message:') + 9,
-      cleared.lastIndexOf(':cookies')
-    );
   };
 
   /** On submit click event handler */
@@ -30,16 +21,18 @@ const CloudVolumeActions = ({ recordId, name, type }) => {
     const {
       action, message, postUrl, successUrl,
     } = data.save;
+    const formParams = isCreateSnapshot ? values : { action, resources: values };
 
-    API.post(postUrl, { action, resources: values }).then((result) => {
-      const { task_id, success } = result;
+    API.post(postUrl, formParams).then((response) => {
+      const responseData = isCreateSnapshot ? response.results[0] : response;
+      const { task_id, success } = responseData;
       if (success) {
         API.wait_for_task(task_id)
           .then(() => miqRedirectBack(message, 'success', successUrl))
-          .catch((error) => miqRedirectBack(handleError(error.message), 'error', successUrl))
+          .catch((error) => miqRedirectBack(handleError(error), 'error', successUrl))
           .then(() => API.delete(`/api/tasks/${task_id}`));
       } else {
-        Promise.reject(result);
+        Promise.reject(responseData);
       }
     });
   };
