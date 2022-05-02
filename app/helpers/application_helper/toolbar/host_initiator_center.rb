@@ -19,6 +19,21 @@ class ApplicationHelper::Toolbar::HostInitiatorCenter < ApplicationHelper::Toolb
             :confirm => N_("Refresh relationships and power states for all items related to this Host Initiator?"),
             :options => {:feature => :refresh}
           ),
+          api_button(
+            :host_initiator_delete,
+            nil,
+            t = N_('Delete the Host Initiator'),
+            t,
+            :icon         => "pficon pficon-delete fa-lg",
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete},
+            :api          => {
+              :action => 'delete',
+              :entity => 'host_initiators'
+            },
+            :confirm      => N_("Are you sure you want to delete this host initiator?"),
+            :send_checked => true
+          ),
         ]
       ),
     ]
