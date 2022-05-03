@@ -8,7 +8,6 @@ describe "routing for OpsController" do
     fetch_audit_log
     fetch_log
     fetch_production_log
-    log_collection_form_fields
     schedule_form_fields
   ).each do |task|
     describe "##{task}" do
@@ -50,7 +49,6 @@ describe "routing for OpsController" do
     label_tag_mapping_edit
     label_tag_mapping_update
     label_tag_mapping_field_changed
-    log_depot_edit
     log_depot_validate
     orphaned_records_delete
     perf_chart_chooser

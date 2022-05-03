@@ -114,8 +114,6 @@
           = _("Servers by Roles")
         = miq_tab_header("diagnostics_server_list", @sb[:active_tab]) do
           = _("Servers")
-        = miq_tab_header("diagnostics_collect_logs", @sb[:active_tab]) do
-          = _("Collect Logs")
         = miq_tab_header("diagnostics_cu_repair", @sb[:active_tab]) do
           = _("C & U Gap Collection")
       .tab-content
@@ -125,8 +123,6 @@
           = render :partial => "diagnostics_servers_roles_tab"
         = miq_tab_content("diagnostics_server_list", @sb[:active_tab]) do
           = render :partial => "diagnostics_server_list_tab"
-        = miq_tab_content("diagnostics_collect_logs", @sb[:active_tab]) do
-          = render :partial => "diagnostics_collect_logs_tab"
         = miq_tab_content("diagnostics_cu_repair", @sb[:active_tab]) do
           = render :partial => "diagnostics_cu_repair_tab"
     - elsif x_node.split("-")[0] == "svr"
@@ -136,8 +132,6 @@
             = _("Summary")
           = miq_tab_header("diagnostics_workers", @sb[:active_tab]) do
             = _("Workers")
-        = miq_tab_header("diagnostics_collect_logs", @sb[:active_tab]) do
-          = _("Collect Logs")
         - if @sb[:selected_server_id] == my_server.id
           = miq_tab_header("diagnostics_evm_log", @sb[:active_tab]) do
             = _("%{product} Log") % {:product => Vmdb::Appliance.PRODUCT_NAME}
@@ -152,8 +146,6 @@
             = render :partial => "diagnostics_summary_tab"
           = miq_tab_content("diagnostics_workers", @sb[:active_tab]) do
             = render :partial => "diagnostics_workers_tab"
-        = miq_tab_content("diagnostics_collect_logs", @sb[:active_tab]) do
-          = render :partial => "diagnostics_collect_logs_tab"
         - if @sb[:selected_server_id] == my_server.id
           = miq_tab_content("diagnostics_evm_log", @sb[:active_tab]) do
             = render :partial => "diagnostics_evm_log_tab"

@@ -94,25 +94,6 @@ describe OpsController do
     end
   end
 
-  context "#log_collection_form_fields" do
-    it "renders log_collection_form_fields" do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
-
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      file_depot = FileDepotNfs.create(:name => "abc", :uri => "nfs://abc")
-      @miq_server.update(:log_file_depot_id => file_depot.id)
-
-      session[:sandboxes] = {"ops" => {:active_tree        => :diagnostics_tree,
-                                       :selected_typ       => "miq_server",
-                                       :selected_server_id => @miq_server.id}}
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      get :log_collection_form_fields, :params => { :id => @miq_server.id }
-      expect(response.status).to eq(200)
-    end
-  end
-
   context "#set_credentials" do
     it "uses params[:log_password] to set the creds hash if it exists" do
       stub_user(:features => :all)
@@ -316,30 +297,6 @@ describe OpsController do
       context "Zone" do
         let(:active_node) { "z-#{@zone.id}" }
         include_examples "logs_collect", "zone"
-      end
-    end
-
-    context "#log_depot_edit" do
-      it "renders validate button" do
-        server_id = @miq_server.id
-        sb_hash = {
-          :selected_server_id => server_id,
-          :selected_typ       => "miq_server"
-        }
-        edit = {
-          :new => {},
-          :key => "logdepot_edit__#{server_id}"
-        }
-        session[:edit] = edit
-        controller.instance_variable_set(:@sb, sb_hash)
-        allow(controller).to receive(:set_credentials)
-          .and_return(:default => {:userid => "testuser", :password => 'password'})
-        controller.params = {:log_userid => "default_user",
-                             :button     => "validate",
-                             :id         => server_id}
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:log_depot_edit)
       end
     end
   end

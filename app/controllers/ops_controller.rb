@@ -67,7 +67,6 @@ class OpsController < ApplicationController
     'fetch_audit_log'           => :fetch_audit_log,
     'fetch_log'                 => :fetch_log,
     'fetch_production_log'      => :fetch_production_log,
-    'log_depot_edit'            => :log_depot_edit,
     'promote_server'            => :promote_server,
     'rbac_group_add'            => :rbac_group_add,
     'rbac_group_edit'           => :rbac_group_edit,
@@ -108,7 +107,6 @@ class OpsController < ApplicationController
     'zone_collect_current_logs' => :collect_current_logs,
     'zone_delete_server'        => :delete_server,
     'zone_demote_server'        => :demote_server,
-    'zone_log_depot_edit'       => :log_depot_edit,
     'zone_promote_server'       => :promote_server,
     'zone_role_start'           => :role_start,
     'zone_role_suspend'         => :role_suspend,
@@ -470,9 +468,6 @@ class OpsController < ApplicationController
         locals[:submit_text] = _("Select Start date and End date to Collect C & U Data")
         locals[:no_reset] = true
         locals[:no_cancel] = true
-      elsif @sb[:active_tab] == "diagnostics_collect_logs"
-        action_url = "log_depot_edit"
-        record_id = @record && @record.id ? @record.id : "new"
       else
         action_url = "old_dialogs_update"
         record_id = my_server.id
@@ -570,11 +565,17 @@ class OpsController < ApplicationController
     region_text = _("[Region: %{description} [%{region}]]") % {:description => MiqRegion.my_region.description,
                                                                :region      => MiqRegion.my_region.region}
     @right_cell_text ||= case x_active_tree
-                         when :diagnostics_tree then _("Diagnostics %{text}") % {:text => region_text}
+                         when :diagnostics_tree then diagnostics_tree_header_text(region_text)
                          when :settings_tree    then _("Settings %{text}") % {:text => region_text}
                          when :rbac_tree        then _("Access Control %{text}") % {:text => region_text}
                          end
     {:view => @view, :pages => @pages}
+  end
+
+  def diagnostics_tree_header_text(region_text)
+    non_empty = @sb[:selected_server_id] == my_server.id || @selected_server.try(:started?)
+    diagnostics_tree_header_text = non_empty ? _("Diagnostics %{text} 121212") % {:text => region_text} : ""
+    diagnostics_tree_header_text
   end
 
   # replace_trees can be an array of tree symbols to be replaced
@@ -625,9 +626,6 @@ class OpsController < ApplicationController
     if %w[accordion_select change_tab explorer tree_select].include?(params[:action]) ||
        %w[diagnostics_roles_servers diagnostics_servers_roles].include?(@sb[:active_tab])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
-    elsif nodetype == "log_depot_edit"
-      @right_cell_text = _("Editing Log Depot settings")
-      presenter.update(:diagnostics_collect_logs, r[:partial => "ops/log_collection"])
     else
       presenter.update(@sb[:active_tab], r[:partial => "#{@sb[:active_tab]}_tab"])
     end
@@ -791,7 +789,7 @@ class OpsController < ApplicationController
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
-        if ["log_depot_edit", "ze"].include?(nodetype)
+        if ["ze"].include?(nodetype)
           presenter.hide(:form_buttons_div)
         else
           presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
