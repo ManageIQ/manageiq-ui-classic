@@ -105,8 +105,6 @@
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                  :locals  => {:ng_show           => "credsProtocol()",
                               :ng_model          => "scheduleModel",
-                              :ng_reqd_userid    => "credsRequired(scheduleModel.log_userid)",
-                              :ng_reqd_password  => "credsRequired(scheduleModel.log_password)",
                               :userid_disabled   => "scheduleModel.uri_prefix == 'nfs'",
                               :password_disabled => "scheduleModel.uri_prefix == 'nfs'",
                               :validate_url      => "log_depot_validate",

@@ -2,16 +2,13 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   var init = function() {
     $scope.scheduleModel = {
       action_typ: '',
-      depot_name: '',
       filter_typ: '',
-      log_userid: '',
       log_aws_region: '',
       openstack_region: '',
       keystone_api_version: '',
       v3_domain_ident: '',
       swift_api_port: 5000,
       security_protocol: '',
-      log_protocol: '',
       description: '',
       enabled: '',
       name: '',
@@ -63,10 +60,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       var data = response.data;
 
       $scope.scheduleModel.action_typ   = data.action_type;
-      $scope.scheduleModel.depot_name   = data.depot_name;
       $scope.scheduleModel.filter_typ   = data.filter_type;
-      $scope.scheduleModel.log_userid   = data.log_userid;
-      $scope.scheduleModel.log_protocol = data.protocol;
       $scope.scheduleModel.description  = data.schedule_description;
       $scope.scheduleModel.enabled      = data.schedule_enabled == 1 ? true : false;
       $scope.scheduleModel.name         = data.schedule_name;
@@ -112,11 +106,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       if (data.filter_type === null &&
         (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3' && data.protocol !== 'OpenStack Swift')) {
         $scope.scheduleModel.filter_typ = 'all';
-      }
-
-      $scope.scheduleModel.log_password = '';
-      if ($scope.scheduleModel.log_userid !== '') {
-        $scope.scheduleModel.log_password = miqService.storedPasswordPlaceholder;
       }
 
       if ($scope.automateRequest()) {
@@ -299,20 +288,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
   };
 
-  $scope.logProtocolChanged = function() {
-    $scope.scheduleModel.uri_prefix = uriPrefixes[$scope.scheduleModel.log_protocol];
-
-    if (['FileDepotNfs', 'FileDepotSwift', 'FileDepotS3'].includes($scope.scheduleModel.log_protocol)) {
-      $scope.updateLogProtocol();
-    }
-  };
-
-  $scope.updateLogProtocol = function() {
-    $scope.$broadcast('resetClicked');
-    $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-    $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
-  };
-
   $scope.filterValueChanged = function() {
   };
 
@@ -364,13 +339,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return !$scope.filterValuesEmpty && !value;
   };
 
-  $scope.isBasicInfoValid = function() {
-    return ($scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid);
-  };
-
   $scope.setTimerType = function() {
     $scope.timerTypeOnce = $scope.scheduleModel.timer_typ === 'Once';
   };
@@ -381,21 +349,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     } else if ($scope[watchValue] === 'NO-OP') {
       $scope[watchValue] = initialValue;
     }
-  };
-
-  $scope.canValidate = function() {
-    return $scope.isBasicInfoValid() && $scope.validateFieldsDirty();
-  };
-
-  $scope.canValidateBasicInfo = function() {
-    return $scope.isBasicInfoValid();
-  };
-
-  $scope.validateFieldsDirty = function() {
-    return ($scope.angularForm.depot_name.$dirty ||
-        $scope.angularForm.uri.$dirty ||
-        $scope.angularForm.log_userid.$dirty ||
-        $scope.angularForm.log_password.$dirty);
   };
 
   $scope.setInstanceName = function(instanceName) {

@@ -118,8 +118,6 @@ module OpsController::Settings::Schedules
       depot                 = @schedule.file_depot
       full_uri, _query      = depot.try(:uri)&.split('?')
       @uri_prefix, @uri     = full_uri.to_s.split('://')
-      @log_userid           = depot.try(:authentication_userid)
-      @log_password         = depot.try(:authentication_password)
       @log_aws_region       = depot.try(:aws_region)
       @openstack_region     = depot.try(:openstack_region)
       @keystone_api_version = depot.try(:keystone_api_version)
@@ -163,11 +161,9 @@ module OpsController::Settings::Schedules
 
     schedule_hash = {
       :action_type          => action_type,
-      :depot_name           => depot_name,
       :filter_type          => filter_type,
       :filter_value         => filter_value,
       :filtered_item_list   => filtered_item_list,
-      :log_userid           => log_userid || "",
       :protocol             => protocol,
       :schedule_description => schedule.description,
       :schedule_enabled     => schedule.enabled ? "1" : "0",
@@ -272,26 +268,6 @@ module OpsController::Settings::Schedules
   def schedule_disable
     assert_privileges("schedule_disable")
     schedule_toggle(false)
-  end
-
-  def log_depot_validate
-    assert_privileges("schedule_admin")
-
-    if params[:log_password]
-      file_depot = FileDepot.new
-    else
-      id = params[:id] || params[:backup_schedule_type]
-      file_depot = MiqSchedule.find(id).file_depot
-    end
-    uri_settings = build_uri_settings(file_depot)
-    begin
-      MiqSchedule.new.verify_file_depot(uri_settings)
-    rescue => bang
-      add_flash(_("Error during 'Validate': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_('Depot Settings successfuly validated'))
-    end
-    javascript_flash
   end
 
   private
@@ -756,28 +732,5 @@ module OpsController::Settings::Schedules
     schedule.run_at[:interval] ||= {}
     schedule.run_at[:interval][:unit] = params[:timer_typ].downcase
     schedule.run_at[:interval][:value] = params[:timer_value]
-  end
-
-  def build_uri_settings(file_depot)
-    uri_settings = {}
-    type = FileDepot.supported_protocols[params[:uri_prefix]]
-    raise _("Invalid or unsupported file depot type.") if type.nil?
-
-    protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
-    if protocols[type].try(:requires_credentials?)
-      log_password = params[:log_password] || file_depot.try(:authentication_password)
-      uri_settings = {:username => params[:log_userid], :password => log_password}
-    end
-    uri_settings[:uri]                  = "#{params[:uri_prefix]}://#{params[:uri]}"
-    uri_settings[:uri_prefix]           = params[:uri_prefix]
-    uri_settings[:log_protocol]         = params[:log_protocol]
-    uri_settings[:aws_region]           = params[:log_aws_region]
-    uri_settings[:openstack_region]     = params[:openstack_region]
-    uri_settings[:keystone_api_version] = params[:keystone_api_version]
-    uri_settings[:v3_domain_ident]      = params[:v3_domain_ident]
-    uri_settings[:security_protocol]    = params[:security_protocol]
-    uri_settings[:swift_api_port]       = params[:swift_api_port]
-    uri_settings[:type] = type
-    uri_settings
   end
 end

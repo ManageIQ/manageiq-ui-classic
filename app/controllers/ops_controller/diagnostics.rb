@@ -202,28 +202,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def build_log_depot_json(log_depot)
-    prefix, uri = log_depot[:uri].to_s.split('://')
-    klass = @record.log_file_depot.try(:class)
-
-    log_depot_json = {:depot_name   => log_depot[:name],
-                      :uri          => uri,
-                      :uri_prefix   => prefix,
-                      :log_userid   => log_depot.authentication_userid,
-                      :log_protocol => klass.to_s}
-    log_depot_json
-  end
-
-  def build_empty_log_depot_json
-    log_depot_json = {:depot_name   => '',
-                      :uri          => '',
-                      :uri_prefix   => '',
-                      :log_userid   => '',
-                      :log_password => '',
-                      :log_protocol => ''}
-    log_depot_json
-  end
-
   # to delete orphaned records for user that was delete from db
   def orphaned_records_delete
     assert_privileges("ops_diagnostics")
@@ -294,31 +272,6 @@ module OpsController::Diagnostics
     if @edit[:new][:start_date] != "" && (@edit[:new][:end_date] == "" || @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time)
       @edit[:new][:end_date] = @edit[:new][:start_date]
     end
-  end
-
-  # Collect the current logs from the selected zone or server
-  def logs_collect(options = {})
-    options[:support_case] = params[:support_case] if params[:support_case]
-    obj, id = x_node.split("-")
-    assert_privileges("#{obj == "z" ? "zone_" : ""}collect_logs")
-    klass = obj == "svr" ? MiqServer : Zone
-    instance = @selected_server = klass.find(id.to_i)
-    if !instance.active?
-      add_flash(_("Cannot start log collection, requires a started server"), :error)
-    elsif instance.log_collection_active_recently?
-      add_flash(_("Cannot start log collection, a log collection is already in progress within this scope"), :error)
-    else
-      begin
-        options[:context] = klass.name
-        instance.synchronize_logs(session[:userid], options)
-      rescue => bang
-        add_flash(_("Log collection error returned: %{error_message}") % {:error_message => bang.message}, :error)
-      else
-        add_flash(_("Log collection for %{product} %{object_type} %{name} has been initiated") % {:product => Vmdb::Appliance.PRODUCT_NAME, :object_type => klass.name, :name => instance.display_name})
-      end
-    end
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node)
   end
 
   # Reload the selected node and redraw the screen via ajax
@@ -599,7 +552,7 @@ module OpsController::Diagnostics
           @sb[:selected_typ] = "miq_server"
         end
       else
-        @sb[:active_tab] = "diagnostics_collect_logs" # setting it to show collect logs tab as first tab for the servers that are not started
+        @sb[:active_tab] = "diagnostics_collect_logs" # setting it to show collect logs tab as first tab for the servers that are not started 
         @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)
         @sb[:selected_server_id] = @selected_server.id
         @sb[:selected_typ] = "miq_server"
@@ -664,14 +617,5 @@ module OpsController::Diagnostics
     supported_depots = FileDepot.supported_depots.reject { |model, _desc| not_supported_depots.include?(model) }
     @uri_prefixes = supported_depots.keys.map { |model| [model, model.constantize.uri_prefix] }.to_h
     @supported_depots_for_select = {'' => _('<No Depot>')}.merge(supported_depots)
-  end
-
-  def set_credentials
-    creds = {}
-    if params[:log_userid]
-      log_password = params[:log_password] || @record.log_file_depot.authentication_password
-      creds[:default] = {:userid => params[:log_userid], :password => log_password}
-    end
-    creds
   end
 end

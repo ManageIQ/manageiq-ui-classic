@@ -59,8 +59,6 @@ class OpsController < ApplicationController
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
-    'collect_logs'              => :logs_collect,
-    'collect_current_logs'      => :collect_current_logs,
     'custom_button'             => :custom_buttons,
     'delete_server'             => :delete_server,
     'demote_server'             => :demote_server,
@@ -103,8 +101,6 @@ class OpsController < ApplicationController
     'ap_host_edit'              => :ap_host_edit,
     'ap_vm_edit'                => :ap_vm_edit,
     'ap_copy'                   => :ap_copy,
-    'zone_collect_logs'         => :logs_collect,
-    'zone_collect_current_logs' => :collect_current_logs,
     'zone_delete_server'        => :delete_server,
     'zone_demote_server'        => :demote_server,
     'zone_promote_server'       => :promote_server,
@@ -121,11 +117,6 @@ class OpsController < ApplicationController
     'schedule_disable'          => :schedule_disable,
     'schedule_run_now'          => :schedule_run_now
   }.freeze
-
-  def collect_current_logs
-    assert_privileges("#{x_node.split('-').first == "z" ? "zone_" : ""}collect_current_logs")
-    logs_collect(:only_current => true)
-  end
 
   # handle buttons pressed on the center buttons toolbar
   def x_button
