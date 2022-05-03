@@ -51,18 +51,6 @@ describe('scheduleFormController', function() {
       expect($scope.scheduleModel.action_typ).toEqual('actionType');
     });
 
-    it('sets the depot name', function() {
-      expect($scope.scheduleModel.depot_name).toEqual('depotName');
-    });
-
-    it('sets the logUserid to the log_userid returned from the http request', function() {
-      expect($scope.scheduleModel.log_userid).toEqual('logUserId');
-    });
-
-    it('sets the logPassword to the log_password returned from the http request', function() {
-      expect($scope.scheduleModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
     it('sets the scheduleName to the name returned from the http request', function() {
       expect($scope.scheduleModel.name).toEqual('scheduleName');
     });
@@ -174,12 +162,10 @@ describe('scheduleFormController', function() {
     describe('when the scheduleFormId is an id', function() {
       var scheduleFormResponse = {
         action_type: 'actionType',
-        depot_name: 'depotName',
         filter_type: 'all',
         filtered_item_list: ['lol', 'lol2'],
         filter_value: 'filterValue',
         protocol: 'protocol',
-        log_userid: 'logUserId',
         schedule_name: 'scheduleName',
         schedule_description: 'scheduleDescription',
         schedule_enabled: true,
@@ -231,10 +217,6 @@ describe('scheduleFormController', function() {
 
         it('sets the filterValuesEmpty to true', function() {
           expect($scope.filterValuesEmpty).toBe(true);
-        });
-
-        it('sets the log protocol', function() {
-          expect($scope.scheduleModel.log_protocol).toBe('protocol')
         });
       });
 
@@ -542,30 +524,6 @@ describe('scheduleFormController', function() {
     });
   });
 
-  describe('#logProtocolChanged', function() {
-    describe('when the log protocol is samba', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.log_protocol = 'FileDepotSmb';
-      });
-
-      it('sets the uriPrefix to smb', function() {
-        $scope.logProtocolChanged();
-        expect($scope.scheduleModel.uri_prefix).toEqual('smb');
-      });
-    });
-
-    describe('when the log protocol is network file system', function() {
-      beforeEach(function() {
-        $scope.scheduleModel.log_protocol = 'FileDepotNfs';
-      });
-
-      it('sets the uriPrefix to nfs', function() {
-        $scope.logProtocolChanged();
-        expect($scope.scheduleModel.uri_prefix).toEqual('nfs');
-      });
-    });
-  });
-
   describe('#actionTypeChanged', function() {
     describe('when the action type is automation_request', function() {
       var data = {
@@ -665,37 +623,6 @@ describe('scheduleFormController', function() {
       it('returns true', function() {
         expect($scope.timerNotOnce()).toBe(true);
       });
-    });
-  });
-
-  describe('Validates credential fields', function() {
-    beforeEach(inject(function($compile, miqService) {
-      var angularForm;
-      var element = angular.element(
-        '<form name="angularForm">' +
-        '<input ng-model="scheduleModel.depot_name" name="depot_name" required" text />' +
-        '<input ng-model="scheduleModel.uri" name="uri" required text />' +
-        '<input ng-model="scheduleModel.log_userid" name="log_userid" required text />' +
-        '<input ng-model="scheduleModel.log_password" name="log_password" required text />' +
-        '</form>'
-      );
-
-      $compile(element)($scope);
-      $scope.$digest();
-      angularForm = $scope.angularForm;
-
-      $scope.angularForm.depot_name.$setViewValue('abc');
-      $scope.angularForm.uri.$setViewValue('abc');
-      $scope.angularForm.log_userid.$setViewValue('abcuser');
-      $scope.angularForm.log_password.$setViewValue('abcpassword');
-    }));
-
-    it('returns true if all the Validation fields are filled in', function() {
-      expect($scope.canValidateBasicInfo()).toBe(true);
-    });
-
-    it('returns true if all the Validation fields are filled in and dirty', function() {
-      expect($scope.canValidate()).toBe(true);
     });
   });
 });

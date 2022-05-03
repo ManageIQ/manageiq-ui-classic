@@ -551,11 +551,6 @@ module OpsController::Diagnostics
           @sb[:selected_server_id] = @selected_server.id
           @sb[:selected_typ] = "miq_server"
         end
-      else
-        @sb[:active_tab] = "diagnostics_collect_logs" # setting it to show collect logs tab as first tab for the servers that are not started 
-        @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)
-        @sb[:selected_server_id] = @selected_server.id
-        @sb[:selected_typ] = "miq_server"
       end
       @right_cell_text = if my_server.id == @sb[:selected_server_id]
                            _("Diagnostics %{model} \"%{name}\" (current) 44444") %
