@@ -131,13 +131,24 @@ module Mixins
           end
         end
 
-        def process_hosts_generic(hosts, task, display_name)
+        def process_hosts_compliance(hosts, task, display_name)
           each_host(hosts, display_name) do |host|
             if host.supports?(task.to_sym)
               host.send(task.to_sym)
               add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
             else
               add_flash(_("\"%{task}\": not available for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
+            end
+          end
+        end
+
+        def process_hosts_generic(hosts, task, display_name)
+          each_host(hosts, display_name) do |host|
+            if host.supports?(task.to_sym)
+              host.send(task.to_sym)
+              add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+            else
+              add_flash(host.unsupported_reason(task), :error)
             end
           end
         end
@@ -158,6 +169,8 @@ module Mixins
           when 'manageable'         then process_hosts_manageable(hosts, display_name)
           when 'introspect'         then process_hosts_introspect(hosts, display_name)
           when 'provide'            then process_hosts_provide(hosts, display_name)
+          when 'check_compliance_queue', 'scan_and_check_compliance_queue'
+            process_hosts_compliance(hosts, task, display_name)
           else                           process_hosts_generic(hosts, task, display_name)
           end
         end
