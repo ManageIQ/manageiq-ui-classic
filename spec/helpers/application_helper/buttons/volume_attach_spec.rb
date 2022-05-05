@@ -1,10 +1,10 @@
 describe ApplicationHelper::Button::VolumeAttach do
   include Spec::Support::SupportsHelper
 
-  let (:volume_name)  { "TestVolume" }
-  let (:cloud_volume) { CloudVolume.new(:name => volume_name) }
-  let (:unsupported_reason) { "Reasons" }
-  let (:button) do
+  let(:volume_name)  { "TestVolume" }
+  let(:cloud_volume) { CloudVolume.new(:name => volume_name) }
+  let(:unsupported_reason) { "Reasons" }
+  let(:button) do
     view_context = setup_view_context_with_sandbox({})
     described_class.new(
       view_context, {}, {"record" => cloud_volume}, {}
@@ -28,8 +28,7 @@ describe ApplicationHelper::Button::VolumeAttach do
     it "when the attach action is unavailable the button has the error in the title" do
       stub_supports_not(cloud_volume.class, :attach, unsupported_reason)
       button.calculate_properties
-      expect(button[:title]).to eq("Cloud Volume \"#{volume_name}\" cannot be attached because #{unsupported_reason}"
-)
+      expect(button[:title]).to eq("Cloud Volume \"#{volume_name}\" cannot be attached because #{unsupported_reason}")
     end
 
     it "when the volume.status is available and the attach action is available, the button has no error in the title" do
