@@ -1,34 +1,33 @@
 describe ApplicationHelper::Button::VolumeDetach do
-  def setup_button(supports)
-    volume = object_double(CloudVolume.new)
-    allow(volume).to receive(:supports?).with(:detach_volume).and_return(supports)
-    allow(volume).to receive(:unsupported_reason).with(:detach_volume).and_return("unavailable")
+  include Spec::Support::SupportsHelper
+
+  let(:button) do
     described_class.new(
-      setup_view_context_with_sandbox({}), {}, {"record" => volume}, {}
+      setup_view_context_with_sandbox({}), {}, {"record" => CloudVolume.new}, {}
     )
   end
 
   describe '#disabled?' do
     it "when the detach action is supported, then the button is enabled" do
-      button = setup_button(true)
+      stub_supports(CloudVolume, :detach)
       expect(button.disabled?).to be false
     end
 
     it "when the detach action is not supported, then the button is disabled" do
-      button = setup_button(false)
+      stub_supports_not(CloudVolume, :detach, "unavailable")
       expect(button.disabled?).to be true
     end
   end
 
   describe '#calculate_properties' do
     it "when the detach action is not supported, then the button has the error in the title" do
-      button = setup_button(false)
+      stub_supports_not(CloudVolume, :detach, "unavailable")
       button.calculate_properties
       expect(button[:title]).to eq("unavailable")
     end
 
     it "when the detach action is not supported, the button has no error in the title" do
-      button = setup_button(true)
+      stub_supports(CloudVolume, :detach)
       button.calculate_properties
       expect(button[:title]).to be nil
     end
