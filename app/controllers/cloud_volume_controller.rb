@@ -16,8 +16,8 @@ class CloudVolumeController < ApplicationController
   end
 
   BUTTON_TO_ACTION_MAPPING = {
-    'cloud_volume_attach'          => [:attach_volume,   'attach'],
-    'cloud_volume_detach'          => [:detach_volume,   'detach'],
+    'cloud_volume_attach'          => [:attach,   'attach'],
+    'cloud_volume_detach'          => [:detach,   'detach'],
     'cloud_volume_edit'            => [:update,           'edit'],
     'cloud_volume_new'             => [nil,              'new'],
     'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],

@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = (isAttach, vmOptions, deviceMountpointRequired) => ({
+const createSchema = (vmOptions, dynamicFields) => ({
   fields: [
     {
       component: componentTypes.SELECT,
@@ -11,15 +11,7 @@ const createSchema = (isAttach, vmOptions, deviceMountpointRequired) => ({
       includeEmpty: true,
       options: vmOptions,
     },
-    ...(isAttach
-      ? [{
-        component: componentTypes.TEXT_FIELD,
-        id: 'device_mountpoint',
-        name: 'device_mountpoint',
-        label: deviceMountpointRequired ? __('Device Mountpoint') : __('Device Mountpoint (Optional)'),
-        isRequired: deviceMountpointRequired,
-      }] : []
-    ),
+    dynamicFields,
   ],
 });
 
