@@ -91,13 +91,20 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                   },
                 ],
               },
-              Object {
-                "component": "text-field",
-                "id": "device_mountpoint",
-                "isRequired": false,
-                "label": "Device Mountpoint (Optional)",
-                "name": "device_mountpoint",
-              },
+              Array [
+                Object {
+                  "component": "text-field",
+                  "id": "device_mountpoint",
+                  "isRequired": true,
+                  "label": "Device Mountpoint",
+                  "name": "device_mountpoint",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+              ],
             ],
           }
         }
@@ -182,13 +189,20 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                     },
                   ],
                 },
-                Object {
-                  "component": "text-field",
-                  "id": "device_mountpoint",
-                  "isRequired": false,
-                  "label": "Device Mountpoint (Optional)",
-                  "name": "device_mountpoint",
-                },
+                Array [
+                  Object {
+                    "component": "text-field",
+                    "id": "device_mountpoint",
+                    "isRequired": true,
+                    "label": "Device Mountpoint",
+                    "name": "device_mountpoint",
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                ],
               ],
             }
           }
@@ -265,13 +279,20 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                       },
                     ],
                   },
-                  Object {
-                    "component": "text-field",
-                    "id": "device_mountpoint",
-                    "isRequired": false,
-                    "label": "Device Mountpoint (Optional)",
-                    "name": "device_mountpoint",
-                  },
+                  Array [
+                    Object {
+                      "component": "text-field",
+                      "id": "device_mountpoint",
+                      "isRequired": true,
+                      "label": "Device Mountpoint",
+                      "name": "device_mountpoint",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                  ],
                   Object {
                     "component": "spy-field",
                     "initialize": undefined,
@@ -349,13 +370,22 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                         ]
                       }
                     />,
-                    <SingleField
-                      component="text-field"
-                      id="device_mountpoint"
-                      isRequired={false}
-                      label="Device Mountpoint (Optional)"
-                      name="device_mountpoint"
-                    />,
+                    Array [
+                      <SingleField
+                        component="text-field"
+                        id="device_mountpoint"
+                        isRequired={true}
+                        label="Device Mountpoint"
+                        name="device_mountpoint"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                    ],
                     <SingleField
                       component="spy-field"
                       name="spy-field"
@@ -395,13 +425,20 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                           },
                         ],
                       },
-                      Object {
-                        "component": "text-field",
-                        "id": "device_mountpoint",
-                        "isRequired": false,
-                        "label": "Device Mountpoint (Optional)",
-                        "name": "device_mountpoint",
-                      },
+                      Array [
+                        Object {
+                          "component": "text-field",
+                          "id": "device_mountpoint",
+                          "isRequired": true,
+                          "label": "Device Mountpoint",
+                          "name": "device_mountpoint",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                      ],
                       Object {
                         "component": "spy-field",
                         "initialize": undefined,
@@ -412,7 +449,22 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                 }
               >
                 <FormTemplate
-                  fields={Array []}
+                  fields={
+                    Array [
+                      Object {
+                        "component": "text-field",
+                        "id": "device_mountpoint",
+                        "isRequired": true,
+                        "label": "Device Mountpoint",
+                        "name": "device_mountpoint",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                    ]
+                  }
                   formFields={
                     Array [
                       <SingleField
@@ -447,13 +499,22 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                           ]
                         }
                       />,
-                      <SingleField
-                        component="text-field"
-                        id="device_mountpoint"
-                        isRequired={false}
-                        label="Device Mountpoint (Optional)"
-                        name="device_mountpoint"
-                      />,
+                      Array [
+                        <SingleField
+                          component="text-field"
+                          id="device_mountpoint"
+                          isRequired={true}
+                          label="Device Mountpoint"
+                          name="device_mountpoint"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        />,
+                      ],
                       <SingleField
                         component="spy-field"
                         name="spy-field"
@@ -494,13 +555,20 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                             },
                           ],
                         },
-                        Object {
-                          "component": "text-field",
-                          "id": "device_mountpoint",
-                          "isRequired": false,
-                          "label": "Device Mountpoint (Optional)",
-                          "name": "device_mountpoint",
-                        },
+                        Array [
+                          Object {
+                            "component": "text-field",
+                            "id": "device_mountpoint",
+                            "isRequired": true,
+                            "label": "Device Mountpoint",
+                            "name": "device_mountpoint",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                        ],
                         Object {
                           "component": "spy-field",
                           "initialize": undefined,
@@ -960,19 +1028,31 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                     <SingleField
                       component="text-field"
                       id="device_mountpoint"
-                      isRequired={false}
+                      isRequired={true}
                       key="device_mountpoint"
-                      label="Device Mountpoint (Optional)"
+                      label="Device Mountpoint"
                       name="device_mountpoint"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
                     >
                       <FormConditionWrapper
                         field={
                           Object {
                             "component": "text-field",
                             "id": "device_mountpoint",
-                            "isRequired": false,
-                            "label": "Device Mountpoint (Optional)",
+                            "isRequired": true,
+                            "label": "Device Mountpoint",
                             "name": "device_mountpoint",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
                           }
                         }
                       >
@@ -982,9 +1062,16 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                           <TextField
                             component="text-field"
                             id="device_mountpoint"
-                            isRequired={false}
-                            label="Device Mountpoint (Optional)"
+                            isRequired={true}
+                            label="Device Mountpoint"
                             name="device_mountpoint"
+                            validate={
+                              Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ]
+                            }
                           >
                             <TextInput
                               disabled={false}
@@ -994,7 +1081,11 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                               invalid={false}
                               invalidText=""
                               key="device_mountpoint"
-                              labelText="Device Mountpoint (Optional)"
+                              labelText={
+                                <IsRequired>
+                                  Device Mountpoint
+                                </IsRequired>
+                              }
                               light={false}
                               name="device_mountpoint"
                               onBlur={[Function]}
@@ -1013,7 +1104,15 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                                   className="bx--label"
                                   htmlFor="device_mountpoint"
                                 >
-                                  Device Mountpoint (Optional)
+                                  <IsRequired>
+                                    <span
+                                      aria-hidden="true"
+                                      className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                    >
+                                      *
+                                    </span>
+                                    Device Mountpoint
+                                  </IsRequired>
                                 </label>
                                 <div
                                   className="bx--text-input__field-outer-wrapper"
@@ -1115,7 +1214,7 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                         <Button
                           className="btnRight"
                           dangerDescription="danger"
-                          disabled={false}
+                          disabled={true}
                           id="reset"
                           isExpressive={false}
                           kind="secondary"
@@ -1130,8 +1229,8 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                           <button
                             aria-describedby={null}
                             aria-pressed={null}
-                            className="btnRight bx--btn bx--btn--secondary"
-                            disabled={false}
+                            className="btnRight bx--btn bx--btn--secondary bx--btn--disabled"
+                            disabled={true}
                             id="reset"
                             onBlur={[Function]}
                             onClick={[Function]}
@@ -1280,6 +1379,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                   },
                 ],
               },
+              Array [],
             ],
           }
         }
@@ -1364,6 +1464,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                     },
                   ],
                 },
+                Array [],
               ],
             }
           }
@@ -1440,6 +1541,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                       },
                     ],
                   },
+                  Array [],
                   Object {
                     "component": "spy-field",
                     "initialize": undefined,
@@ -1517,6 +1619,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                         ]
                       }
                     />,
+                    Array [],
                     <SingleField
                       component="spy-field"
                       name="spy-field"
@@ -1556,6 +1659,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                           },
                         ],
                       },
+                      Array [],
                       Object {
                         "component": "spy-field",
                         "initialize": undefined,
@@ -1601,6 +1705,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                           ]
                         }
                       />,
+                      Array [],
                       <SingleField
                         component="spy-field"
                         name="spy-field"
@@ -1641,6 +1746,7 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                             },
                           ],
                         },
+                        Array [],
                         Object {
                           "component": "spy-field",
                           "initialize": undefined,

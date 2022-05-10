@@ -15,13 +15,26 @@ describe('Attach / Detach form component', () => {
     ['server5', 5],
   ];
 
-  const initialValues = {
-    type: 'test',
+  const response = {
+    data: {
+      form_schema: {
+        fields: [
+          {
+            component: 'text-field',
+            name: 'device_mountpoint',
+            id: 'device_mountpoint',
+            label: _('Device Mountpoint'),
+            isRequired: true,
+            validate: [{ type: 'required' }],
+          },
+        ],
+      },
+    },
   };
 
   beforeEach(() => {
     fetchMock
-      .mock('/api/cloud_volumes/1', initialValues);
+      .once('/api/cloud_volumes/1?option_action=attach', response);
   });
 
   afterEach(() => {

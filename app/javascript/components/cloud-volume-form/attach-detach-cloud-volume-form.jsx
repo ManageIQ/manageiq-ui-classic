@@ -8,17 +8,26 @@ import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
-  const [{ isLoading, fields, deviceMountpointRequired }, setState] = useState({ isLoading: true, fields: [], deviceMountpointRequired: true });
+  const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
+
+  const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
+    setState((state) => ({
+      ...state,
+      ...appendState,
+      fields,
+      isLoading: false,
+    }));
+  };
 
   useEffect(() => {
-    if (isLoading) {
-      API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
-        setState((state) => ({
-          ...state,
-          isLoading: false,
-          deviceMountpointRequired: (initialValues.type === 'ManageIQ::Providers::Amazon::StorageManager::Ebs'),
-        }));
-      });
+    if (isLoading && isAttach) {
+      API.options(`/api/cloud_volumes/${recordId}?option_action=attach`)
+        .then(loadSchema());
+    } else if (isLoading) {
+      setState((state) => ({
+        ...state,
+        isLoading: false,
+      }));
     }
   });
 
@@ -60,7 +69,7 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
   return !isLoading && (
     <div className="tasks-form">
       <MiqFormRenderer
-        schema={createSchema(isAttach, vmOptions, deviceMountpointRequired)}
+        schema={createSchema(vmOptions, fields)}
         onSubmit={onSubmit}
         onCancel={onCancel}
         canReset
