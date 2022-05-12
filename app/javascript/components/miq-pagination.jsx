@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from 'carbon-components-react';
 
-const getItemRangeText = (min, max, totalItems) => `${min}-${max} ${__('of')} ${totalItems} ${__('items')}`;
+const getItemRangeText = (min, max, totalItems) => __(`${min}-${max} of ${totalItems} items`);
 
-const getPageRangeText = (current, total) => `${__('of')} ${total} ${total === 1 ? __('page') : __('pages')}`;
+// eslint-disable-next-line no-undef
+const getPageRangeText = (_current, total) => n__(`of ${total} page`, `of ${total} pages`, total);
 
 const MiqPagination = ({
   pageOptions: {
