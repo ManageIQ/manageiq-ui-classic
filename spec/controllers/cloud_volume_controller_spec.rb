@@ -80,44 +80,6 @@ describe CloudVolumeController do
     end
   end
 
-  describe "#snapshot_create" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_cinder)
-      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
-      @snapshot = FactoryBot.create(:cloud_volume_snapshot)
-    end
-
-    let(:task_options) do
-      {
-        :action => "creating volume snapshot in #{@ems.inspect} for #{@volume.inspect} with #{{:name => "snapshot_name"}.inspect}",
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @volume.class.name,
-        :instance_id => @volume.id,
-        :method_name => 'create_volume_snapshot',
-        :args        => [{:name => "snapshot_name"}]
-      }
-    end
-
-    it "builds create snapshot screen" do
-      post :button, :params => {:pressed => "cloud_volume_snapshot_create", :format => :js, :id => @volume.id}
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the create cloud snapshot action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :snapshot_create, :params => {:button        => "create",
-                                         :format        => :js,
-                                         :id            => @volume.id,
-                                         :snapshot_name => 'snapshot_name'}
-    end
-  end
-
   describe "#create" do
     before do
       stub_user(:features => :all)
@@ -249,11 +211,6 @@ describe CloudVolumeController do
     it 'calls flash_and_redirect for canceling editing Cloud Volume' do
       expect(controller).to receive(:flash_and_redirect).with(_("Edit of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
       controller.send(:update)
-    end
-
-    it 'calls flash_and_redirect for canceling creating Snapshot of Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:snapshot_create)
     end
   end
 
