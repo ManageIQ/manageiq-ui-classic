@@ -513,7 +513,6 @@ Rails.application.routes.draw do
       ) +
         compare_get,
       :post => %w(
-        snapshot_create
         button
         create
         dynamic_checkbox_refresh

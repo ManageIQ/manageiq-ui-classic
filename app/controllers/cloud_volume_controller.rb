@@ -250,51 +250,6 @@ class CloudVolumeController < ApplicationController
     )
   end
 
-  def snapshot_create
-    assert_privileges("cloud_volume_snapshot_create")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {
-        :name => @volume.name
-      })
-    when "create"
-      options = {}
-      options[:name] = params[:snapshot_name] if params[:snapshot_name]
-      task_id = @volume.create_volume_snapshot_queue(session[:userid], options)
-      unless task_id.kind_of?(Integer)
-        add_flash(_("Cloud volume snapshot creation failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
-      end
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "snapshot_create_finished")
-      end
-    end
-  end
-
-  def snapshot_create_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Snapshot for Cloud Volume \"%{name}\" created") % {
-        :name => @volume.name
-      })
-    else
-      add_flash(_("Unable to create snapshot for Cloud Volume \"%{name}\": %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
-  end
-
   def download_data
     assert_privileges('cloud_volume_view')
     super
