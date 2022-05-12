@@ -234,10 +234,10 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_assigned_server_profile
-    {:label => _("Assigned Server Profile"), :value => @record.assigned_server_profile&.name }
+    {:label => _("Assigned Server Profile"), :value => @record.assigned_server_profile&.name}
   end
 
   def textual_associated_server_profile
-    {:label => _("Associated Server Profile"), :value => @record.associated_server_profile&.name }
+    {:label => _("Associated Server Profile"), :value => @record.associated_server_profile&.name}
   end
 end
