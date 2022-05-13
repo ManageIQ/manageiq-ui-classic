@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container Project component should render the dashboard 1`] = `
+<div>
+  <div
+    id="column-1"
+  >
+    <div>
+      <div
+        className="card-wrapper"
+        id="containers"
+      >
+        <PfAggregateStatusCard
+          altLayout={false}
+          className={null}
+          data={
+            Object {
+              "count": 0,
+              "iconClass": "fa fa-cube",
+              "title": "Containers",
+            }
+          }
+          layout="mini"
+          showTopBorder={true}
+        />
+      </div>
+      <div
+        className="card-wrapper"
+        id="images"
+      >
+        <PfAggregateStatusCard
+          altLayout={false}
+          className={null}
+          data={
+            Object {
+              "count": 0,
+              "iconClass": "pficon pficon-image",
+              "title": "Images",
+            }
+          }
+          layout="mini"
+          showTopBorder={true}
+        />
+      </div>
+      <div
+        className="card-wrapper"
+        id="services"
+      >
+        <PfAggregateStatusCard
+          altLayout={false}
+          className={null}
+          data={
+            Object {
+              "count": 0,
+              "iconClass": "pficon pficon-service",
+              "title": "Services",
+            }
+          }
+          layout="mini"
+          showTopBorder={true}
+        />
+      </div>
+    </div>
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="CPU Utilization"
+    />
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="Memory Utilization"
+    />
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="Network Utilization Trend"
+    />
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="Pod Creation and Deletion Trends"
+    />
+  </div>
+  <div
+    id="column-2"
+  >
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="Quotas"
+    />
+    <ChartCard
+      chartData={Array []}
+      chartType=""
+      config={Object {}}
+      isLoading={true}
+      options={Object {}}
+      title="Pods"
+    />
+  </div>
+</div>
+`;

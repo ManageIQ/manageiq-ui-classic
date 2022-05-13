@@ -5,7 +5,7 @@ import { http } from '../../../http_api';
 import { chartConfig } from '../charts_config';
 
 const PodsTrendChart = ({
-  providerId, config, apiUrl, dataPoint,
+  providerId, config, apiUrl, dataPoint, toolbarEnabled,
 }) => {
   const [data, setCardData] = useState({ loading: true });
 
@@ -30,7 +30,7 @@ const PodsTrendChart = ({
         <h2 className="card-pf-title">{chartConfig[configName].headTitle}</h2>
       </div>
       <div className="card-pf-body">
-        <PodsAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} />
+        <PodsAreaChart data={data.vms} config={chartConfig[configName]} dataPoint={dataPoint} toolbarEnabled={toolbarEnabled} />
       </div>
     </div>
   );
@@ -41,6 +41,11 @@ PodsTrendChart.propTypes = {
   config: PropTypes.string.isRequired,
   apiUrl: PropTypes.string.isRequired,
   dataPoint: PropTypes.string.isRequired,
+  toolbarEnabled: PropTypes.bool,
+};
+
+PodsTrendChart.defaultProps = {
+  toolbarEnabled: true,
 };
 
 export default PodsTrendChart;

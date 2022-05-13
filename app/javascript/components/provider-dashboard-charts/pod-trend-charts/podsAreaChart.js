@@ -4,7 +4,9 @@ import { AreaChart } from '@carbon/charts-react';
 import { getPodsData, getLatestValue } from '../helpers';
 import EmptyChart from '../emptyChart';
 
-const PodsAreaChart = ({ data, config, dataPoint }) => {
+const PodsAreaChart = ({
+  data, config, dataPoint, toolbarEnabled,
+}) => {
   const usageData = data[dataPoint];
   const areaOptions = {
     title: config.headTitle,
@@ -31,13 +33,14 @@ const PodsAreaChart = ({ data, config, dataPoint }) => {
     legend: {
       enabled: true,
       alignment: 'center',
-
     },
     height: config.size.height || '150px',
     tooltip: {
       customHTML: config.tooltipFn(data),
     },
-
+    toolbar: {
+      enabled: toolbarEnabled,
+    },
   };
 
   const areaData = getPodsData(usageData.xy_data, config.createdLabel, config.deletedLabel);
@@ -82,6 +85,7 @@ PodsAreaChart.propTypes = {
       height: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  toolbarEnabled: PropTypes.bool.isRequired,
 };
 
 export default PodsAreaChart;
