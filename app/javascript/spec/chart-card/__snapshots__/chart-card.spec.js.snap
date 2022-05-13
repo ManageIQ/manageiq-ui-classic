@@ -1,0 +1,422 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chart Card component should render the area chart card 1`] = `
+<AreaChartCard
+  chartData={
+    Array [
+      Object {
+        "date": "2022-05-09T23:00:00.000Z",
+        "value": 0.01,
+      },
+      Object {
+        "date": "2022-05-10T00:00:00.000Z",
+        "value": 0.02,
+      },
+      Object {
+        "date": "2022-05-10T01:00:00.000Z",
+        "value": 0.02,
+      },
+      Object {
+        "date": "2022-05-10T02:00:00.000Z",
+        "value": 0.02,
+      },
+      Object {
+        "date": "2022-05-10T03:00:00.000Z",
+        "value": 0.01,
+      },
+    ]
+  }
+  options={
+    Object {
+      "axes": Object {
+        "bottom": Object {
+          "mapsTo": "date",
+          "scaleType": "time",
+          "visible": false,
+        },
+        "left": Object {
+          "mapsTo": "value",
+          "scaleType": "linear",
+          "visible": false,
+        },
+      },
+      "grid": Object {
+        "x": Object {
+          "enabled": false,
+        },
+        "y": Object {
+          "enabled": false,
+        },
+      },
+      "height": "50px",
+      "legend": Object {
+        "enabled": false,
+      },
+      "points": Object {
+        "enabled": false,
+      },
+      "toolbar": Object {
+        "enabled": false,
+      },
+      "tooltip": Object {
+        "customHTML": [Function],
+        "truncation": Object {
+          "type": "none",
+        },
+      },
+    }
+  }
+  textNumber={0.02}
+  textTitle="CPU Utilization"
+  textUnit="Cores"
+  title="CPU Utilization"
+/>
+`;
+
+exports[`Chart Card component should render the empty card 1`] = `
+<EmptyCard
+  title="Pods"
+/>
+`;
+
+exports[`Chart Card component should render the loading card 1`] = `
+<div
+  className="card-pf card-pf-aggregate-status card-pf-accented chart-card"
+>
+  <h2
+    className="card-title"
+  >
+    Pods
+  </h2>
+  <div
+    className="card-pf-body"
+  >
+    <Loading
+      active={true}
+      className="export-spinner"
+      description="Active loading indicator"
+      small={true}
+      withOverlay={false}
+    />
+  </div>
+</div>
+`;
+
+exports[`Chart Card component should render the pods table card 1`] = `
+<TableCard
+  chartData={
+    Object {
+      "headers": Array [
+        Object {
+          "header": "Name",
+          "key": "name",
+        },
+        Object {
+          "header": "Status",
+          "key": "phase",
+        },
+        Object {
+          "header": "Ready Status",
+          "key": "ready_condition_status",
+        },
+        Object {
+          "header": "Ready Containers",
+          "key": "running_containers_summary",
+        },
+      ],
+      "rows": Array [
+        Object {
+          "id": "0.03272110141753015",
+          "name": "test0",
+          "phase": "Succeeded",
+          "ready_condition_status": "False",
+          "running_containers_summary": "0/1",
+        },
+        Object {
+          "id": "0.548571332866931",
+          "name": "test1",
+          "phase": "Running",
+          "ready_condition_status": "True",
+          "running_containers_summary": "1/1",
+        },
+        Object {
+          "id": "0.988113698073033",
+          "name": "test2",
+          "phase": "Running",
+          "ready_condition_status": "True",
+          "running_containers_summary": "1/1",
+        },
+      ],
+    }
+  }
+  title="Pods"
+/>
+`;
+
+exports[`Chart Card component should render the pods trend chart card 1`] = `
+<TrendChartCard
+  chartData={
+    Object {
+      "pod_metrics": Object {
+        "dataAvailable": true,
+        "interval_name": "hourly",
+        "xy_data": Object {
+          "dataAvailable": true,
+          "xData": Array [
+            "2022-05-09T23:00:00.000Z",
+            "2022-05-10T00:00:00.000Z",
+            "2022-05-10T01:00:00.000Z",
+          ],
+          "yCreated": Array [
+            1,
+            0,
+            0,
+          ],
+          "yDeleted": Array [
+            0,
+            0,
+            1,
+          ],
+        },
+      },
+    }
+  }
+  config={
+    Object {
+      "chartId": "podUsageHourlyChart",
+      "createdLabel": "Created",
+      "deletedLabel": "Deleted",
+      "grid": Object {
+        "y": Object {
+          "show": false,
+        },
+      },
+      "headTitle": "Pod Creation and Deletion Trends",
+      "point": Object {
+        "r": 1,
+      },
+      "setAreaChart": true,
+      "size": Object {
+        "height": "145px",
+      },
+      "timeFrame": "Last 24 hours",
+      "tooltipFn": [Function],
+    }
+  }
+  title="Pod Creation and Deletion Trends"
+/>
+`;
+
+exports[`Chart Card component should render the quotas chart card 1`] = `
+<BarChartCard
+  chartData={
+    Array [
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "cpu - 0.3 Cores Used",
+                "value": 1.5,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        20,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "memory - 0 GB Used",
+                "value": 0,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        1,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "pods - 4  Used",
+                "value": 40,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        10,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "replicationcontrollers - 7  Used",
+                "value": 140,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        5,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "resourcequotas - 1  Used",
+                "value": 100,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        1,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+      <div
+        className="quota-chart"
+      >
+        <e
+          data={
+            Array [
+              Object {
+                "group": "services - 4  Used",
+                "value": 80,
+              },
+            ]
+          }
+          options={
+            Object {
+              "height": "75px",
+              "meter": Object {
+                "status": Object {
+                  "ranges": Array [
+                    Object {
+                      "range": Array [
+                        0,
+                        5,
+                      ],
+                    },
+                  ],
+                },
+              },
+              "toolbar": Object {
+                "enabled": false,
+              },
+            }
+          }
+        />
+      </div>,
+    ]
+  }
+  title="Quotas"
+/>
+`;

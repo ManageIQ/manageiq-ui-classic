@@ -11,19 +11,19 @@ const dailyPodTimeTooltip = () => (data) => {
 
   if (data[1]) {
     return `<div class="tooltip-inner">
-  ${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group}, ${data[1].value} ${data[1].group} </div>`;
+  ${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${__(data[0].group)}, ${data[1].value} ${__(data[1].group)} </div>`;
   }
-  return `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group} </div>`;
+  return `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${__(data[0].group)} </div>`;
 };
 
 const hourlyPodTimeTooltip = () => (data) => {
   const theMoment = moment(data[0].date);
   if (data[1]) {
     return `<div class="tooltip-inner">
-  ${theMoment.format('h:mm A')}  ${data[0].value} ${data[0].name}, ${data[1].value} ${data[1].name} </div>`;
+  ${theMoment.format('h:mm A')}  ${data[0].value} ${__(data[0].group)}, ${data[1].value} ${__(data[1].group)} </div>`;
   }
   return `<div class="tooltip-inner">
-  ${theMoment.format('h:mm A')}  ${data[0].value} ${data[0].name}} </div>`;
+  ${theMoment.format('h:mm A')}  ${data[0].value} ${__(data[0].group)} </div>`;
 };
 
 const hourlyTimeTooltip = () => (data) => {
@@ -178,14 +178,6 @@ export const chartConfig = {
     legendRightText: '',
     numDays: 30,
 
-  },
-  serversHealthUsagePieConfig: {
-    chartId: 'serverHealthPieChart_',
-    color: {
-      Valid: $.pfPaletteColors.green,
-      Warning: $.pfPaletteColors.orange,
-      Critical: $.pfPaletteColors.red,
-    },
   },
   recentServersConfig: {
     chartId: 'recentServersChart',
