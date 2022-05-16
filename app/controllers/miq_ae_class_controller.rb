@@ -781,7 +781,6 @@ class MiqAeClassController < ApplicationController
                        else
                          _("Editing Automate Method \"%{name}\"") % {:name => @ae_method.name}
                        end
-    session[:log_depot_default_verify_status] = false
     session[:edit] = @edit
     session[:changed] = @changed = false
   end
@@ -1002,14 +1001,9 @@ class MiqAeClassController < ApplicationController
         end
         @edit[:new][:fields][f[1].to_i]['default_value'] = nil
       end
-      if @edit[:default_verify_status] != session[:log_depot_default_verify_status]
-        session[:log_depot_default_verify_status] = @edit[:default_verify_status]
-        page << if @edit[:default_verify_status]
-                  "miqValidateButtons('show', 'default_');"
-                else
-                  "miqValidateButtons('hide', 'default_');"
-                end
-      end
+      page << if @edit[:default_verify_status]
+                "miqValidateButtons('show', 'default_');"
+              end
       page << javascript_for_miq_button_visibility_changed(@changed)
       page << "miqSparkle(false)"
     end
