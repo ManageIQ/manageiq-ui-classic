@@ -1,6 +1,6 @@
 class ApplicationHelper::Button::NetworkServiceEntryNew < ApplicationHelper::Button::ButtonNewDiscover
   def supports_button_action?
-    ::EmsNetwork.all.any? { |ems| NetworkServiceEntry.class_by_ems(ems).supports_create? }
+    ::EmsNetwork.all.any? { |ems| NetworkServiceEntry.class_by_ems(ems).supports?(:create) }
   end
 
   def role_allows_feature?

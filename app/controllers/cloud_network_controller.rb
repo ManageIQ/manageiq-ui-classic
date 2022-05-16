@@ -45,7 +45,7 @@ class CloudNetworkController < ApplicationController
     when "add"
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      if CloudNetwork.class_by_ems(ems).supports_create?
+      if CloudNetwork.class_by_ems(ems).supports?(:create)
         options.delete(:ems_id)
         task_id = ems.create_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
