@@ -144,7 +144,7 @@ class CloudNetworkController < ApplicationController
       flash_and_redirect(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => @network.name})
 
     when "save"
-      if @network.supports_update?
+      if @network.supports?(:update)
         task_id = @network.update_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
           add_flash(_("Cloud Network update failed: Task start failed"), :error)

@@ -146,7 +146,7 @@ class SecurityGroupController < ApplicationController
       })
 
     when "save"
-      if @security_group.supports_update?
+      if @security_group.supports?(:update)
         @tasks = []
         sg_params = form_params
 
