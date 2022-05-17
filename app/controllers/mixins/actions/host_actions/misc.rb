@@ -133,7 +133,7 @@ module Mixins
 
         def process_hosts_generic(hosts, task, display_name)
           each_host(hosts, display_name) do |host|
-            if host.respond_to?(task) && host.is_available?(task)
+            if host.supports?(task.to_sym)
               host.send(task.to_sym)
               add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
             else
