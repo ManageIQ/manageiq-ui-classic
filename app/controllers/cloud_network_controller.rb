@@ -87,7 +87,7 @@ class CloudNetworkController < ApplicationController
     networks = find_records_with_rbac(CloudNetwork, checked_or_params)
     networks_to_delete = []
     networks.each do |network|
-      if network.supports_delete?
+      if network.supports?(:delete)
         networks_to_delete.push(network)
       else
         add_flash(_("Couldn't initiate deletion of Network \"%{name}\": %{details}") % {

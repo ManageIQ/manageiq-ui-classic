@@ -1,4 +1,5 @@
 describe SecurityGroupController do
+  include Spec::Support::SupportsHelper
   include_examples :shared_examples_for_security_group_controller, %w(openstack azure google amazon)
 
   let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
@@ -63,7 +64,7 @@ describe SecurityGroupController do
       controller.instance_variable_set(:@lastaction, "show")
       controller.instance_variable_set(:@layout, 'security_group')
       allow(controller).to receive(:checked_or_params).and_return(SecurityGroup.all.ids)
-      allow_any_instance_of(SecurityGroup).to receive(:supports_delete?).and_return(true)
+      stub_supports(security_group.class, :delete)
       allow_any_instance_of(SecurityGroup).to receive(:delete_security_group_queue)
     end
 

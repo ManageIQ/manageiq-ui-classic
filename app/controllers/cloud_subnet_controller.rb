@@ -52,7 +52,7 @@ class CloudSubnetController < ApplicationController
     subnets.each do |subnet|
       if subnet.nil?
         add_flash(_("Cloud Subnet no longer exists."), :error)
-      elsif subnet.supports_delete?
+      elsif subnet.supports?(:delete)
         subnets_to_delete.push(subnet)
       end
     end
