@@ -1,4 +1,6 @@
 describe VmInfraController do
+  include Spec::Support::SupportsHelper
+
   let(:host_1x1)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB)) }
   let(:host_2x2)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu2x2, :ram1GB)) }
   let(:vm_vmware) { FactoryBot.create(:vm_vmware) }
@@ -330,7 +332,9 @@ describe VmInfraController do
   end
 
   it 'can set retirement date' do
-    allow_any_instance_of(Vm).to receive(:supports_retire?).and_return(true)
+    # allow the other supports (from other buttons) to still work:
+    allow_any_instance_of(Vm).to receive(:supports?).and_call_original
+    stub_supports(Vm, :retire)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
