@@ -74,7 +74,7 @@ module Mixins
         def evacuate_handle_submit_button
           @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
           @evacuate_items.each do |vm|
-            if vm.supports_evacuate?
+            if vm.supports?(:evacuate)
               options = {
                 :hostname          => params['auto_select_host']  == 'true' ? nil : params['destination_host'],
                 :on_shared_storage => params['on_shared_storage'] == 'true',

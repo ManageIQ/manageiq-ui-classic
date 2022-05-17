@@ -20,7 +20,7 @@ class ApplicationHelper::Button::EmsCaptureMetrics < ApplicationHelper::Button::
   end
 
   def check_endpoint
-    @error_message ||= _("Metrics endpoint is not set") unless @record.supports_metrics?
+    @error_message ||= _("Metrics endpoint is not set") unless @record.supports?(:metrics)
   end
 
   def check_role
