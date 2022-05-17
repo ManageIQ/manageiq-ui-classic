@@ -5,7 +5,7 @@ class ApplicationHelper::Button::EmsTimeline < ApplicationHelper::Button::Basic
   end
 
   def visible?
-    @record.supports_timeline?
+    @record.supports?(:timeline)
   end
 
   def disabled?

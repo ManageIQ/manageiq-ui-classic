@@ -5,7 +5,7 @@ class ApplicationHelper::Button::PhysicalServerTimeline < ApplicationHelper::But
   end
 
   def visible?
-    @record.supports_timeline?
+    @record.supports?(:timeline)
   end
 
   def disabled?
