@@ -8,14 +8,14 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
 
   describe '#disabled?' do
     context "when the disassociate ip action is available and the instance has floating ips" do
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => true) }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
       it "is enabled" do
         expect(button.disabled?).to be false
       end
     end
 
     context "when the disassociate floating ip action is unavailable" do
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => false) }
+      before { stub_supports_not(record.class, :disassociate_floating_ip) }
       it "is disabled" do
         expect(button.disabled?).to be true
       end
@@ -23,7 +23,7 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
 
     context "when the instance is not associated to any floating ips" do
       let(:floating_ips) { [] }
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => true) }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
       it "is disabled" do
         expect(button.disabled?).to be true
       end
@@ -32,7 +32,7 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
 
   describe '#calculate_properties' do
     context "when the disassociate floating ip action is unavailable" do
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => false) }
+      before { stub_supports_not(record.class, :disassociate_floating_ip) }
       it "has the error in the title" do
         button.calculate_properties
         expect(button[:title]).to eq("Feature not available/supported")
@@ -41,7 +41,7 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
 
     context "when there are no floating ips" do
       let(:floating_ips) { [] }
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => true) }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
       it "has the error in the title" do
         button.calculate_properties
         expect(button[:title]).to eq("Instance \"#{record.name}\" does not have any associated Floating IPs")
@@ -49,18 +49,11 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
     end
 
     context "when there are instances to detach from and the action is available" do
-      before { temp_stub_supports(record, :disassociate_floating_ip, :supports => true) }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
       it "has no error in the title" do
         button.calculate_properties
         expect(button[:title]).to be nil
       end
     end
-  end
-
-  private
-
-  def temp_stub_supports(record, feature, supports: true)
-    allow(record).to receive("supports_#{feature}?").and_return(supports)
-    allow(record).to receive(:unsupported_reason).and_return("Feature not available/supported") unless supports
   end
 end
