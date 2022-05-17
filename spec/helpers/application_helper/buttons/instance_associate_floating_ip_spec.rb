@@ -1,75 +1,67 @@
 describe ApplicationHelper::Button::InstanceAssociateFloatingIp do
+  include Spec::Support::SupportsHelper
+
+  let(:floating_ips) { FactoryBot.build_list(:floating_ip, 1) }
+  let(:cloud_tenant) { FactoryBot.build(:cloud_tenant, :floating_ips => floating_ips) }
+  let(:record)       { FactoryBot.build(:vm_cloud, :cloud_tenant => cloud_tenant) }
+  let(:view_context) { setup_view_context_with_sandbox({}) }
+  let(:button)       { described_class.new(view_context, {}, {"record" => record}, {}) }
+
   describe '#disabled?' do
-    it "when the associate floating ip action is available then the button is not disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      tenant = object_double(CloudTenant.new, :floating_ips => [1])
-      vm = object_double(VmCloud.new, :cloud_tenant => tenant, :supports_associate_floating_ip? => true)
-      button = described_class.new(
-        view_context, {}, {"record" => vm}, {}
-      )
-      expect(button.disabled?).to be false
+    context "when the associate floating ip action is available" do
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => true) }
+      it "is not disabled" do
+        expect(button.disabled?).to be false
+      end
     end
 
-    it "when the associate floating ip action is unavailable then the button is disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {},
-        {"record" => object_double(VmCloud.new, :supports_associate_floating_ip? => false,
-                                                :unsupported_reason              => "unavailable")}, {}
-      )
-      expect(button.disabled?).to be true
+    context "when the associate floating ip action is unavailable" do
+      let(:cloud_tenant) { nil }
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => true) }
+      it " is disabled" do
+        expect(button.disabled?).to be true
+      end
     end
 
-    it "when the there are no floating ips available then the button is disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      tenant = object_double(CloudTenant.new, :floating_ips => [])
-      vm = object_double(VmCloud.new, :cloud_tenant => tenant, :supports_associate_floating_ip? => true)
-      button = described_class.new(
-        view_context, {}, {"record" => vm}, {}
-      )
-      expect(button.disabled?).to be true
+    context "when the there are no floating ips available" do
+      let(:floating_ips) { [] }
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => true) }
+      it "is disabled" do
+        expect(button.disabled?).to be true
+      end
     end
   end
 
   describe '#calculate_properties' do
-    it "when the associate floating ip action is unavailable the button has the error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      tenant = object_double(CloudTenant.new, :number_of => 1)
-      vm = object_double(VmCloud.new,
-                         :supports_associate_floating_ip? => false,
-                         :cloud_tenant                    => tenant,
-                         :unsupported_reason              => "unavailable")
-      button = described_class.new(
-        view_context, {}, {"record" => vm}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to eq("unavailable")
+    context "when the associate floating ip action is unavailable" do
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => false) }
+      it "has the error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to eq("Feature not available/supported")
+      end
+    end
+    context "when there are no floating ips available" do
+      let(:floating_ips) { [] }
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => true) }
+      it "has the error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to eq("There are no Floating IPs available to this Instance.")
+      end
     end
 
-    it "when there are no floating ips available the button has the error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      tenant = object_double(CloudTenant.new, :floating_ips => [])
-      vm = object_double(VmCloud.new,
-                         :cloud_tenant                    => tenant,
-                         :supports_associate_floating_ip? => true)
-      button = described_class.new(
-        view_context, {}, {"record" => vm}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to eq("There are no Floating IPs available to this Instance.")
+    context "when the action is available" do
+      before { temp_stub_supports(record, :associate_floating_ip, :supports => true) }
+      it "has no error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to be nil
+      end
     end
+  end
 
-    it "when the action is available, the button has no error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      tenant = object_double(CloudTenant.new, :floating_ips => [1])
-      vm = object_double(VmCloud.new,
-                         :cloud_tenant                    => tenant,
-                         :supports_associate_floating_ip? => true)
-      button = described_class.new(
-        view_context, {}, {"record" => vm}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to be nil
-    end
+  private
+
+  def temp_stub_supports(record, feature, supports: true)
+    allow(record).to receive("supports_#{feature}?").and_return(supports)
+    allow(record).to receive(:unsupported_reason).and_return("Feature not available/supported") unless supports
   end
 end
