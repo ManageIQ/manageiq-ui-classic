@@ -7,6 +7,7 @@ class ApplicationHelper::Button::InstanceMiqRequestNew < ApplicationHelper::Butt
   private
 
   def provisioning_supported?
-    EmsCloud.all.any?(&:supports_provisioning?)
+    # TODO: EmsCloud.supporting(:provisioning).any?
+    EmsCloud.all.any? { |ems| ems.supports?(:provisioning) }
   end
 end

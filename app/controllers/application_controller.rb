@@ -1568,7 +1568,7 @@ class ApplicationController < ActionController::Base
           set_pre_prov_vars
           template = find_record_with_rbac(VmOrTemplate, checked_or_params)
 
-          render_flash_not_applicable_to_model("provisioning") unless template.supports_provisioning?
+          render_flash_not_applicable_to_model("provisioning") unless template.supports?(:provisioning)
           return if performed?
 
           @edit[:src_vm_id] = template
