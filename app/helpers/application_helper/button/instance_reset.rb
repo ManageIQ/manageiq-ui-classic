@@ -2,6 +2,6 @@ class ApplicationHelper::Button::InstanceReset < ApplicationHelper::Button::Basi
   needs :@record
 
   def visible?
-    @record.supports_reset?
+    @record.supports?(:reset)
   end
 end
