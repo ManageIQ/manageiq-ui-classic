@@ -14,10 +14,12 @@ cols:
 - type
 - health_state
 - power_state
-- asset_detail
-
 
 include:
+  asset_detail:
+    columns:
+    - product_name
+    - manufacturer
 
 
 include_for_find:
