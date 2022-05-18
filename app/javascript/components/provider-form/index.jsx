@@ -162,7 +162,11 @@ const ProviderForm = ({
       const { endpoints: _endpoints = { default: {} }, authentications: _authentications = {}, ...rest } = pick(_data, toSubmit);
       // Convert endpoints and authentications back to an array
       const endpoints = Object.keys(_endpoints).map((key) => ({ role: key, ..._endpoints[key] }));
-      const authentications = Object.keys(_authentications).map((key) => ({ authtype: key, ..._authentications[key] }));
+      let authentications = Object.keys(_authentications).map((key) => ({ authtype: key, ..._authentications[key] }));
+
+      if (authentications.length === 0) {
+        authentications = Object.keys(initialValues.authentications).map((key) => ({ authtype: key }));
+      }
 
       // Construct the full form data with all the necessary items
       const data = {
