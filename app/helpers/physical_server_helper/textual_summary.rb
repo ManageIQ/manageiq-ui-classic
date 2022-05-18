@@ -44,6 +44,13 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
+  def textual_group_server_profiles
+    TextualGroup.new(
+      _("Server Profile"),
+      %i[assigned_server_profile associated_server_profile]
+    )
+  end
+
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[tags])
   end
@@ -224,5 +231,13 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_compliance_status
     {:label => _("Status"), :value => @record.ems_compliance_status }
+  end
+
+  def textual_assigned_server_profile
+    {:label => _("Assigned Server Profile"), :value => @record.assigned_server_profile&.name}
+  end
+
+  def textual_associated_server_profile
+    {:label => _("Associated Server Profile"), :value => @record.associated_server_profile&.name}
   end
 end
