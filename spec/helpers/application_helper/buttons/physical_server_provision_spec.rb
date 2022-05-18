@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::PhysicalServerProvision do
       end
 
       it "does not disable the Provision button" do
-        allow_any_instance_of(EmsPhysicalInfra).to receive(:supports_provisioning?).and_return(true)
+        allow_any_instance_of(EmsPhysicalInfra).to receive(:supports?).with(:provisioning).and_return(true)
         view_context = setup_view_context_with_sandbox({})
         button = described_class.new(view_context, {}, {}, {})
         expect(button.disabled?).to be_falsey

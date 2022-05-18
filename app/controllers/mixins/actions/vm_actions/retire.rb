@@ -21,7 +21,7 @@ module Mixins
           @edit[:object_ids] = selected_items
           session[:edit] = @edit
           if !%w[orchestration_stack service].include?(request.parameters["controller"]) && !%w[orchestration_stacks].include?(params[:display]) &&
-             VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
+             VmOrTemplate.find(selected_items).any? { |vm| !vm.supports?(:retire) }
             add_flash(_("Set Retirement Date does not apply to selected VM Template"), :error)
             javascript_flash
             return

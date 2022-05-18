@@ -1,71 +1,59 @@
 describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
+  include Spec::Support::SupportsHelper
+
+  let(:floating_ips) { FactoryBot.build_list(:floating_ip, 1) }
+  let(:record)       { FactoryBot.build(:vm_cloud, :floating_ips => floating_ips) }
+  let(:view_context) { setup_view_context_with_sandbox({}) }
+  let(:button)       { described_class.new(view_context, {}, {"record" => record}, {}) }
+
   describe '#disabled?' do
-    it "when the disassociate ip action is available and the instance has floating ips then the button is enabled" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {}, {"record" => object_double(VmCloud.new, :supports_disassociate_floating_ip? => true,
-                                                                  :number_of                          => 1)}, {}
-      )
-      expect(button.disabled?).to be false
+    context "when the disassociate ip action is available and the instance has floating ips" do
+      before { stub_supports(record.class, :disassociate_floating_ip) }
+      it "is enabled" do
+        expect(button.disabled?).to be false
+      end
     end
 
-    it "when the disassociate floating ip action is unavailable then the button is disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {},
-        {"record" => object_double(VmCloud.new, :supports_disassociate_floating_ip? => false,
-                                                :number_of                          => 1,
-                                                :unsupported_reason                 => "unavailable")}, {}
-      )
-      expect(button.disabled?).to be true
+    context "when the disassociate floating ip action is unavailable" do
+      before { stub_supports_not(record.class, :disassociate_floating_ip) }
+      it "is disabled" do
+        expect(button.disabled?).to be true
+      end
     end
 
-    it "when the instance is not associated to any floating ips then the button is disabled" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {}, {"record" => object_double(VmCloud.new,
-                                                     :supports_disassociate_floating_ip? => true,
-                                                     :number_of                          => 0,
-                                                     :name                               => '')}, {}
-      )
-      expect(button.disabled?).to be true
+    context "when the instance is not associated to any floating ips" do
+      let(:floating_ips) { [] }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
+      it "is disabled" do
+        expect(button.disabled?).to be true
+      end
     end
   end
 
   describe '#calculate_properties' do
-    it "when the disassociate floating ip action is unavailable the button has the error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {}, {"record" => object_double(
-          VmCloud.new, :supports_disassociate_floating_ip? => false,
-                       :number_of                          => 1,
-                       :unsupported_reason                 => "unavailable"
-        )}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to eq("unavailable")
+    context "when the disassociate floating ip action is unavailable" do
+      before { stub_supports_not(record.class, :disassociate_floating_ip) }
+      it "has the error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to eq("Feature not available/supported")
+      end
     end
 
-    it "when there are no floating ips to associate from the button has the error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {}, {"record" => object_double(
-          VmCloud.new, :supports_disassociate_floating_ip? => true, :number_of => 0, :name => "TestVm"
-        )}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to eq("Instance \"TestVm\" does not have any associated Floating IPs")
+    context "when there are no floating ips" do
+      let(:floating_ips) { [] }
+      before { stub_supports(record.class, :disassociate_floating_ip) }
+      it "has the error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to eq("Instance \"#{record.name}\" does not have any associated Floating IPs")
+      end
     end
 
-    it "when there are instances to detach from and the action is available, the button has no error in the title" do
-      view_context = setup_view_context_with_sandbox({})
-      button = described_class.new(
-        view_context, {}, {"record" => object_double(
-          VmCloud.new, :supports_disassociate_floating_ip? => true, :number_of => 1
-        )}, {}
-      )
-      button.calculate_properties
-      expect(button[:title]).to be nil
+    context "when there are instances to detach from and the action is available" do
+      before { stub_supports(record.class, :disassociate_floating_ip) }
+      it "has no error in the title" do
+        button.calculate_properties
+        expect(button[:title]).to be nil
+      end
     end
   end
 end

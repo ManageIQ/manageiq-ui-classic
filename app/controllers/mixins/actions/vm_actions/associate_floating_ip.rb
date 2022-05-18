@@ -6,7 +6,7 @@ module Mixins
           assert_privileges("instance_associate_floating_ip")
           recs = checked_or_params
           @record = find_record_with_rbac(VmCloud, recs.first)
-          if @record.supports_associate_floating_ip? && @record.ext_management_system.present?
+          if @record.supports?(:associate_floating_ip) && @record.ext_management_system.present?
             if @explorer
               associate_floating_ip
               @refresh_partial = "vm_common/associate_floating_ip"
@@ -79,7 +79,7 @@ module Mixins
         end
 
         def associate_handle_submit_button
-          if @record.supports_associate_floating_ip?
+          if @record.supports?(:associate_floating_ip)
             floating_ip = params[:floating_ip][:address]
             begin
               @record.associate_floating_ip_queue(session[:userid], floating_ip)
