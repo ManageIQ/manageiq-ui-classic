@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::VmRetireNow do
-  include Spec::Support::SupportsHelper
-
   describe '#visible?' do
     context "when record is retireable" do
       before do

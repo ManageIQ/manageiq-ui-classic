@@ -1,6 +1,4 @@
 describe VmInfraController do
-  include Spec::Support::SupportsHelper
-
   let(:host_1x1)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB)) }
   let(:host_2x2)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu2x2, :ram1GB)) }
   let(:vm_vmware) { FactoryBot.create(:vm_vmware) }

@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::VmSnapshotRemoveOne do
-  include Spec::Support::SupportsHelper
-
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
   let(:ems) { FactoryBot.create(:ems_redhat, :zone => zone, :name => 'Test EMS') }

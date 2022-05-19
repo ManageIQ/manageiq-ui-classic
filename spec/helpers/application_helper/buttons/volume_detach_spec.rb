@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::VolumeDetach do
-  include Spec::Support::SupportsHelper
-
   let(:button) do
     described_class.new(
       setup_view_context_with_sandbox({}), {}, {"record" => CloudVolume.new}, {}

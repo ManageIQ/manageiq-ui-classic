@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::VolumeAttach do
-  include Spec::Support::SupportsHelper
-
   let(:volume_name)  { "TestVolume" }
   let(:cloud_volume) { CloudVolume.new(:name => volume_name) }
   let(:unsupported_reason) { "Reasons" }

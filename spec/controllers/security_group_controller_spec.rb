@@ -1,5 +1,4 @@
 describe SecurityGroupController do
-  include Spec::Support::SupportsHelper
   include_examples :shared_examples_for_security_group_controller, %w(openstack azure google amazon)
 
   let(:ems) { FactoryBot.create(:ems_openstack).network_manager }

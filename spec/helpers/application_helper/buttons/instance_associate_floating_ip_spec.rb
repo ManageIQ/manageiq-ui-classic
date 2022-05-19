@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::InstanceAssociateFloatingIp do
-  include Spec::Support::SupportsHelper
-
   let(:floating_ips) { FactoryBot.build_list(:floating_ip, 1) }
   let(:cloud_tenant) { FactoryBot.build(:cloud_tenant, :floating_ips => floating_ips) }
   let(:record)       { FactoryBot.build(:vm_cloud, :cloud_tenant => cloud_tenant) }
