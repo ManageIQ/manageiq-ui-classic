@@ -201,13 +201,7 @@ module ApplicationHelper
   #           - false in case the record (or one of many records) does not
   #             support the feature
   def records_support_feature?(records, feature)
-    Array.wrap(records).all? do |record|
-      if record.respond_to?("supports_#{feature}?")
-        record.supports?(feature)
-      else # TODO: remove with deleting AvailabilityMixin module
-        record.is_available?(feature)
-      end
-    end
+    Array.wrap(records).all? { |record| record.supports?(feature.to_sym) }
   end
 
   # Create a url for a record that links to the proper controller

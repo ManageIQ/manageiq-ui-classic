@@ -90,7 +90,7 @@ describe StorageController do
 
         host = FactoryBot.create(:host)
         command = button.split('_', 2)[1]
-        allow_any_instance_of(Host).to receive(:is_available?).with(command).and_return(true)
+        allow_any_instance_of(Host).to receive(:supports?).with(command.to_sym).and_return(true)
 
         controller.params = {:pressed => button, :miq_grid_checks => host.id.to_s}
         controller.instance_variable_set(:@lastaction, "show_list")
