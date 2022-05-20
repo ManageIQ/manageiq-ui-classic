@@ -104,6 +104,7 @@ class RemoveGenericItemModal extends React.Component {
     this.state = {
       data: [],
       loaded: false,
+      force: false,
     };
   }
 
