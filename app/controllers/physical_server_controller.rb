@@ -51,8 +51,8 @@ class PhysicalServerController < ApplicationController
 
   def textual_group_list
     [
-      %i[properties management_networks relationships server_profiles],
-      %i[power_management firmware_compliance firmware_details asset_details smart_management],
+      %i[properties management_networks relationships smart_management],
+      %i[power_management server_profiles firmware_compliance firmware_details asset_details],
     ]
   end
   helper_method(:textual_group_list)
