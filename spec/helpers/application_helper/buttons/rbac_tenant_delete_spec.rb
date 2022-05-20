@@ -3,9 +3,7 @@ describe ApplicationHelper::Button::RbacTenantDelete do
   let(:record) { FactoryBot.create(:tenant, :parent => tenant_parent) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when record is a child tenant' do
       let(:tenant_parent) { FactoryBot.create(:tenant) }
       it_behaves_like 'an enabled button'

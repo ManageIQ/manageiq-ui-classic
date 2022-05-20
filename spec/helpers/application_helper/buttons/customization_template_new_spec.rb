@@ -25,19 +25,14 @@ describe ApplicationHelper::Button::CustomizationTemplateNew do
     end
   end
 
-  describe '#calculate_properties' do
-    before do
-      allow(PxeImageType).to receive(:count).and_return(count)
-      button.calculate_properties
-    end
-
+  describe '#disabled?' do
     context 'when there are no System Image Types available' do
-      let(:count) { 0 }
+      before { allow(PxeImageType).to receive(:count).and_return(0) }
       it_behaves_like 'a disabled button', 'No System Image Types available, Customization Template cannot be added'
     end
 
     context 'when there are System Image Types available' do
-      let(:count) { 1 }
+      before { allow(PxeImageType).to receive(:count).and_return(1) }
       it_behaves_like 'an enabled button'
     end
   end

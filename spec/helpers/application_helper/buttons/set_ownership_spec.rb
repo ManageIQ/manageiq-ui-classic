@@ -9,9 +9,7 @@ describe ApplicationHelper::Button::SetOwnership do
 
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when provider has tenant mapping enabled' do
       let(:tenant_mapping_enabled) { true }
       it_behaves_like 'a disabled button', 'Ownership is controlled by tenant mapping'

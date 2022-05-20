@@ -6,7 +6,6 @@ describe ApplicationHelper::Button::HostCheckCompliance do
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:has_compliance_policies?).and_return(has_compliance_policies) }
-    before { button.calculate_properties }
 
     context 'and record has compliance policies' do
       let(:has_compliance_policies) { true }

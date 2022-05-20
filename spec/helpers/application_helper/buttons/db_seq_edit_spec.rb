@@ -4,9 +4,7 @@ describe ApplicationHelper::Button::DbSeqEdit do
   let(:widgetsets) { Array.new(dashboard_count) { |_i| FactoryBot.create(:miq_widget_set) } }
   let(:button) { described_class.new(view_context, {}, {'widgetsets' => widgetsets}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when there is enough dashboards to edit sequence' do
       it_behaves_like 'an enabled button'
     end

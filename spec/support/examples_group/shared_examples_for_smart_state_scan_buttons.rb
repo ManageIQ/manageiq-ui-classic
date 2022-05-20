@@ -4,11 +4,10 @@ shared_examples_for 'a smart state scan button' do
   let(:smartproxy_role) { FactoryBot.create(:server_role, :name => 'smartproxy') }
   let(:smartscan_role) { FactoryBot.create(:server_role, :name => 'smartstate') }
 
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     before do
       EvmSpecHelper.local_guid_miq_server_zone
       server
-      button.calculate_properties
     end
 
     MiqServer::ServerSmartProxy::SMART_ROLES.each do |role|

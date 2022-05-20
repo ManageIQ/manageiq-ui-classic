@@ -6,7 +6,6 @@ describe ApplicationHelper::Button::HostPerformance do
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:has_perf_data?).and_return(has_perf_data) }
-    before { button.calculate_properties }
 
     context 'and record has performance data' do
       let(:has_perf_data) { true }

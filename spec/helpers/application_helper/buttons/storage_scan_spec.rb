@@ -13,11 +13,7 @@ describe ApplicationHelper::Button::StorageScan do
   end
 
   context 'when feature is supported' do
-    describe '#calculate_properties' do
-      before do
-        button.calculate_properties
-      end
-
+    describe '#disabled?' do
       context 'but no EMSs are present' do
         it_behaves_like 'a disabled button', 'Smartstate Analysis cannot be performed on selected Datastore'
       end

@@ -1,8 +1,7 @@
 shared_examples_for 'a timeline button' do |options|
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     before do
       allow(record).to receive(:has_events?).and_return(has_events)
-      button.calculate_properties
     end
 
     %i(ems_events policy_events).each do |event_type|

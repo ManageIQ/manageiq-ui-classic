@@ -1,9 +1,7 @@
 shared_examples_for 'a check_compliance button' do |entity|
   before { allow(record).to receive(:has_compliance_policies?).and_return(has_policies) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when record has compliance policies' do
       let(:has_policies) { true }
       it_behaves_like 'an enabled button'

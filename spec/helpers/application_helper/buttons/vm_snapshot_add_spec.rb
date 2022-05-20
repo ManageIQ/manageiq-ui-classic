@@ -9,10 +9,9 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
   let(:active) { true }
   let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
 
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     before do
       stub_user(:features => :all)
-      button.calculate_properties
     end
     context 'when creating snapshots is available' do
       let(:current) { 1 }
@@ -47,7 +46,6 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
   describe 'user lacks permissions to create snapshots' do
     before do
       stub_user(:features => :none)
-      button.calculate_properties
     end
     context 'when user lacks permissions to create snapsnots' do
       it_behaves_like 'a disabled button', 'Current user lacks permissions to create a new snapshot for this VM'
