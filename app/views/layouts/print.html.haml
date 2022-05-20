@@ -12,9 +12,6 @@
     %style
       @media all { @page { size: #{pdf_page_size_style}; } }
   %body
-    - if @options[:quadicon]
-      .quadicon
-        = render :partial => 'shared/quadicon', :locals => {:record => @record}
     %h1.center=@options[:title]
     = yield
     .center=@options[:run_date]
