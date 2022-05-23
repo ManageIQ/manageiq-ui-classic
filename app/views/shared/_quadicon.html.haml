@@ -1,6 +1,0 @@
-- uid = unique_html_id("quad")
-%miq-quadicon.center-block{:id => uid}
-:javascript
-  var data = camelizeQuadicon(#{quadicon_hash(record).to_json});
-  document.querySelector("miq-quadicon##{uid}").setAttribute('data', JSON.stringify(data));
-  miq_bootstrap("miq-quadicon##{uid}");

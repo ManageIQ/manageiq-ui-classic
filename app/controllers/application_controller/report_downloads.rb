@@ -221,7 +221,6 @@ module ApplicationController::ReportDownloads
       :page_size   => "us-letter",
       :run_date    => run_time.strftime("%m/%d/%y %l:%m %p %z"),
       :title       => "#{klass} \"#{get_record_display_name(@record)}\"".html_safe,
-      :quadicon    => true
     }
 
     if @display == "download_pdf"

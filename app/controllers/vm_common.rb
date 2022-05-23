@@ -505,7 +505,6 @@ module VmCommon
       :page_layout => "portrait",
       :page_size   => "us-letter",
       :title       => "\"#{@record.name}\"".html_safe,
-      :quadicon    => false
     }
 
     render :template => 'vm_common/_right_size', :layout => '/layouts/print'
