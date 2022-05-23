@@ -17,8 +17,6 @@ describe ApplicationHelper::Button::MiqRequestDelete do
     let(:requester_name) { {:requester_name => current_user.name} }
     let(:resource_type) { 'knedlik' }
 
-    before { button.calculate_properties }
-
     context 'requester is admin' do
       let(:requester_name) { {:requester_name => 'FrantaSkocDoPole'} }
       it_behaves_like 'an enabled button'

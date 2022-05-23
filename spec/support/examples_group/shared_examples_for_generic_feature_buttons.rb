@@ -34,11 +34,10 @@ shared_examples_for 'a generic feature button with disabled' do
 end
 
 shared_examples_for 'GenericFeatureButtonWithDisabled#calculate_properties' do
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     before do
       allow(record).to receive("supports?").with(feature.to_sym).and_return(support)
       allow(record).to receive(:unsupported_reason).with(feature).and_return("Feature not available/supported") if !support
-      button.calculate_properties
     end
 
     context 'when feature is supported' do

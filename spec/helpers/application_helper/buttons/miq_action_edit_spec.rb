@@ -7,7 +7,6 @@ describe ApplicationHelper::Button::MiqActionEdit do
     subject { button[:title] }
     before { allow(record).to receive(:action_type).and_return(action_type) }
     before { allow(view_context).to receive(:x_node).and_return('node') }
-    before { button.calculate_properties }
 
     context 'and record has no policies' do
       let(:action_type) { "Non-default" }

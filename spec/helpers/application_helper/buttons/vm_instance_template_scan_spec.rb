@@ -27,7 +27,7 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
     end
   end
 
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     let(:has_active_proxy?) { true }
     before do
       EvmSpecHelper.local_guid_miq_server_zone
@@ -38,7 +38,6 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
       before do
         roles = %w(smartproxy smartstate).collect { |role| FactoryBot.create(:server_role, :name => role) }
         FactoryBot.create(:miq_server, :zone => MiqServer.my_server.zone, :active_roles => roles)
-        button.calculate_properties
       end
 
       context 'when record has active proxy' do

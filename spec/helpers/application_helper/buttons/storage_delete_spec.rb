@@ -5,9 +5,7 @@ describe ApplicationHelper::Button::StorageDelete do
   let(:record) { FactoryBot.create(:storage, :vms_and_templates => vms, :hosts => hosts) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when with VMs' do
       let(:vms) { [FactoryBot.create(:vm_or_template)] }
       it_behaves_like 'a disabled button', 'Only Datastore without VMs and Hosts can be removed'

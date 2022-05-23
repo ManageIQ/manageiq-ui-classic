@@ -1,8 +1,7 @@
 shared_examples_for 'a performance button' do |entity|
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     before do
       record.metric_rollups << metric_rollup if metric_rollup
-      button.calculate_properties
     end
 
     context 'when performance data has not been collected' do

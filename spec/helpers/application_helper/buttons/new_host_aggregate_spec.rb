@@ -19,7 +19,6 @@ describe ApplicationHelper::Button::NewHostAggregate do
 
     context 'no provider available' do
       let(:provider) { nil }
-      before { button.calculate_properties }
 
       it_behaves_like 'a disabled button', 'No cloud provider supports creating host aggregates.'
     end
@@ -30,15 +29,12 @@ describe ApplicationHelper::Button::NewHostAggregate do
       before do
         entitlement.set_managed_filters([["/managed/environment/prod"]])
         entitlement.set_belongsto_filters([])
-        button.calculate_properties
       end
 
       it_behaves_like 'a disabled button', 'No cloud provider supports creating host aggregates.'
     end
 
     context 'a provider is available' do
-      before { button.calculate_properties }
-
       it_behaves_like 'an enabled button'
     end
   end

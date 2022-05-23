@@ -27,9 +27,7 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
     end
   end
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when reverting to a snapshot is available' do
       it_behaves_like 'an enabled button'
     end
