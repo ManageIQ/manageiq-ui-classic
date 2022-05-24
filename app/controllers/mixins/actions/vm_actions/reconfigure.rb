@@ -298,10 +298,6 @@ module Mixins
            :disk_default_type      => @reconfigureitems.first.try(:disk_default_type) || 'thin'}
         end
 
-        def supports_reconfigure_disks?
-          item_supports?(:reconfigure_disks)
-        end
-
         def build_network_adapters_list(vm)
           network_adapters = []
           vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
@@ -315,18 +311,6 @@ module Mixins
             end
           end
           network_adapters
-        end
-
-        def supports_reconfigure_disksize?
-          item_supports?(:reconfigure_disksize)
-        end
-
-        def supports_reconfigure_network_adapters?
-          item_supports?(:reconfigure_network_adapters)
-        end
-
-        def supports_reconfigure_cdroms?
-          item_supports?(:reconfigure_cdroms)
         end
 
         def filename_string(name)
