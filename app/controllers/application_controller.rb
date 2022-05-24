@@ -1607,6 +1607,7 @@ class ApplicationController < ActionController::Base
   def vm_publish
     prov_redirect("publish")
   end
+  alias instance_publish vm_publish
 
   def get_global_session_data
     # Set the current userid in the User class for this thread for models to use
