@@ -6,7 +6,6 @@ describe CloudObjectStoreObjectController do
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-    allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
     FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => object)
     FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => object)
     stub_user(:features => :all)
@@ -98,6 +97,8 @@ describe CloudObjectStoreObjectController do
     end
 
     it "delete shows expected flash" do
+      stub_supports(CloudObjectStoreObject, :delete)
+
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }

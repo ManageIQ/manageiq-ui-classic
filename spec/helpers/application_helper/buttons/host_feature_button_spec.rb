@@ -24,15 +24,14 @@ describe ApplicationHelper::Button::HostFeatureButton do
     end
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)' do
       let(:record) { FactoryBot.create(:host_openstack_infra) }
-      before { allow(record).to receive(:supports?).and_return(available) }
       context 'and feature is available' do
         let(:feature) { :stop }
-        let(:available) { true }
+        before { stub_supports(record, feature) }
         it { expect(subject).to be_truthy }
       end
       context 'and feature is unavailable' do
         let(:feature) { :shutdown }
-        let(:available) { false }
+        before { stub_supports_not(record, feature) }
         it { expect(subject).to be_falsey }
       end
     end
