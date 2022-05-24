@@ -236,23 +236,29 @@ const MiqStructuredList = ({
     );
   };
 
-  return (
+  const simpleList = () => (list && list.length > 0
+    ? renderList(mode, headers, list)
+    : renderNotification());
+
+  const accordionList = () => (
     <Accordion align="start" className={classNames('miq-structured-list-accordion', mode)}>
       <AccordionItem title={title} open>
-        {
-          list && list.length > 0
-            ? renderList(mode, headers, list)
-            : renderNotification()
-        }
+        {simpleList()}
       </AccordionItem>
     </Accordion>
+  );
+
+  return (
+    title && title.length > 1
+      ? accordionList()
+      : simpleList()
   );
 };
 
 export default MiqStructuredList;
 
 MiqStructuredList.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   headers: PropTypes.arrayOf(PropTypes.any),
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
   onClick: PropTypes.func,
@@ -261,6 +267,7 @@ MiqStructuredList.propTypes = {
 };
 
 MiqStructuredList.defaultProps = {
+  title: '',
   headers: [],
   onClick: undefined,
   message: '' || undefined,
