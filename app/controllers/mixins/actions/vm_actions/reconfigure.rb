@@ -274,11 +274,11 @@ module Mixins
           if @reconfigureitems.size == 1
             vm = @reconfigureitems.first
 
-            if vm.supports_reconfigure_network_adapters?
+            if vm.supports?(:reconfigure_network_adapters)
               network_adapters = build_network_adapters_list(vm)
             end
 
-            if vm.supports_reconfigure_cdroms?
+            if vm.supports?(:reconfigure_cdroms)
               # CD-ROMS
               vmcdroms = build_vmcdrom_list(vm)
             end
@@ -296,10 +296,6 @@ module Mixins
            :vm_type                => @reconfigureitems.first.class.name,
            :orchestration_stack_id => @reconfigureitems.first.try(:orchestration_stack_id),
            :disk_default_type      => @reconfigureitems.first.try(:disk_default_type) || 'thin'}
-        end
-
-        def supports_reconfigure_disks?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
         end
 
         def build_network_adapters_list(vm)
@@ -338,19 +334,13 @@ module Mixins
           end
         end
 
-        def supports_reconfigure_disksize?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disksize? && @reconfigitems.first.supports_reconfigure_disks?
-        end
-
-        def supports_reconfigure_network_adapters?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_network_adapters?
-        end
-
-        def supports_reconfigure_cdroms?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_cdroms?
-        end
-
         private
+
+        def item_supports?(*features)
+          features << :reconfigure_disks if features.include?(:reconfigure_disksize) # special case
+          item = @reconfigitems.first if @reconfigitems&.size == 1
+          item && features.all? { |feature| item.supports?(feature) }
+        end
 
         # 'true' => true
         # 'false' => false

@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::InstanceReset do
-  include Spec::Support::SupportsHelper
-
   describe '#visible?' do
     context "when record is resetable" do
       before do

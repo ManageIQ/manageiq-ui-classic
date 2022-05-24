@@ -45,6 +45,7 @@ RSpec.configure do |config|
     config.example_status_persistence_file_path = Rails.root.join("tmp/rspec_example_store.txt")
   end
 
+  config.include Spec::Support::SupportsHelper
   config.include Spec::Support::AuthHelper, :type => :view
   config.include Spec::Support::ViewHelper, :type => :view
   config.include ApplicationHelper, :type => :view

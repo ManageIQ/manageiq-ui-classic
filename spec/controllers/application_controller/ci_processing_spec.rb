@@ -650,38 +650,34 @@ describe ApplicationController do
     end
   end
 
-  describe "#supports_reconfigure_disks?" do
+  describe "#item_supports? (private)" do
     let(:vm) { FactoryBot.create(:vm_redhat) }
 
     context "when a single is vm selected" do
-      let(:supports_reconfigure_disks) { true }
-
-      before do
-        allow(vm).to receive(:supports_reconfigure_disks?).and_return(supports_reconfigure_disks)
-        controller.instance_variable_set(:@reconfigitems, [vm])
-      end
+      before { controller.instance_variable_set(:@reconfigitems, [vm]) }
 
       context "when vm supports reconfiguring disks" do
+        before { stub_supports(Vm, :reconfigure_disks) }
         it "enables reconfigure disks" do
-          expect(controller.send(:supports_reconfigure_disks?)).to be_truthy
+          expect(controller.send(:item_supports?, :reconfigure_disks)).to be_truthy
         end
       end
 
       context "when vm does not supports reconfiguring disks" do
-        let(:supports_reconfigure_disks) { false }
-
+        before { stub_supports_not(Vm, :reconfigure_disks) }
         it "disables reconfigure disks" do
-          expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
+          expect(controller.send(:item_supports?, :reconfigure_disks)).to be_falsey
         end
       end
     end
 
     context "when multiple vms selected" do
+      before { stub_supports(Vm, :reconfigure_disks) }
       let(:vm1) { FactoryBot.create(:vm_redhat) }
 
       it "disables reconfigure disks" do
         controller.instance_variable_set(:@reconfigitems, [vm, vm1])
-        expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
+        expect(controller.send(:item_supports?, :reconfigure_disks)).to be_falsey
       end
     end
   end

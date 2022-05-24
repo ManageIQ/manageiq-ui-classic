@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::EmsTimeline do
-  include Spec::Support::SupportsHelper
-
   # there are no events. reference event to create it
   let(:event)        { FactoryBot.create(:ems_event, :vm_or_template => record) }
   let(:record)       { FactoryBot.build(:vm_cloud) }

@@ -4,25 +4,23 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    let(:has_proxy?) { true }
     subject { button.visible? }
-    before do
-      allow(record).to receive(:supports?).with(:smartstate_analysis).and_return(supports_feature?)
-      allow(record).to receive(:has_proxy?).and_return(has_proxy?)
-    end
 
     context 'when record supports smartstate analysis' do
-      let(:supports_feature?) { true }
+      before { stub_supports(record, :smartstate_analysis) }
       context 'when record has proxy' do
+        before { allow(record).to receive(:has_proxy?).and_return(true) }
         it { is_expected.to be_truthy }
       end
+
       context 'when record does not have proxy' do
-        let(:has_proxy?) { false }
+        before { allow(record).to receive(:has_proxy?).and_return(false) }
         it { is_expected.to be_falsey }
       end
     end
+
     context 'when record does not support smartstate analysis' do
-      let(:supports_feature?) { false }
+      before { stub_supports_not(record, :smartstate_analysis) }
       it { is_expected.to be_falsey }
     end
   end

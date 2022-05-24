@@ -2,7 +2,6 @@ describe CloudObjectStoreContainerController do
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     @container = FactoryBot.create(:cloud_object_store_container, :name => "cloud-object-store-container-01")
-    allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
   end
 
   describe "#tags_edit" do

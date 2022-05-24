@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
-  include Spec::Support::SupportsHelper
-
   let(:floating_ips) { FactoryBot.build_list(:floating_ip, 1) }
   let(:record)       { FactoryBot.build(:vm_cloud, :floating_ips => floating_ips) }
   let(:view_context) { setup_view_context_with_sandbox({}) }
