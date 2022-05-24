@@ -274,11 +274,11 @@ module Mixins
           if @reconfigureitems.size == 1
             vm = @reconfigureitems.first
 
-            if vm.supports_reconfigure_network_adapters?
+            if vm.supports?(:reconfigure_network_adapters)
               network_adapters = build_network_adapters_list(vm)
             end
 
-            if vm.supports_reconfigure_cdroms?
+            if vm.supports?(:reconfigure_cdroms)
               # CD-ROMS
               vmcdroms = build_vmcdrom_list(vm)
             end
@@ -299,7 +299,7 @@ module Mixins
         end
 
         def supports_reconfigure_disks?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
+          item_supports?(:reconfigure_disks)
         end
 
         def build_network_adapters_list(vm)
@@ -315,6 +315,18 @@ module Mixins
             end
           end
           network_adapters
+        end
+
+        def supports_reconfigure_disksize?
+          item_supports?(:reconfigure_disksize)
+        end
+
+        def supports_reconfigure_network_adapters?
+          item_supports?(:reconfigure_network_adapters)
+        end
+
+        def supports_reconfigure_cdroms?
+          item_supports?(:reconfigure_cdroms)
         end
 
         def filename_string(name)
@@ -338,19 +350,13 @@ module Mixins
           end
         end
 
-        def supports_reconfigure_disksize?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disksize? && @reconfigitems.first.supports_reconfigure_disks?
-        end
-
-        def supports_reconfigure_network_adapters?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_network_adapters?
-        end
-
-        def supports_reconfigure_cdroms?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_cdroms?
-        end
-
         private
+
+        def item_supports?(*features)
+          features << :reconfigure_disks if features.include?(:reconfigure_disksize) # special case
+          item = @reconfigitems.first if @reconfigitems&.size == 1
+          item && features.all? { |feature| item.supports?(feature) }
+        end
 
         # 'true' => true
         # 'false' => false
