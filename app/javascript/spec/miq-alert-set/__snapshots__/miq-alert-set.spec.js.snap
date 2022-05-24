@@ -1,266 +1,226 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqAlertSetStructuredList should render alert set alerts structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_alert_set"
 >
-  <AccordionItem
-    open={true}
-    title={"Alerts"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_alert_set"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title="View this Alert"
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="0"
-          onClick={[Function]}
-          tabIndex={0}
-          title="View this Alert"
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set assigned structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_assigned"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_alert_set_assigned"
 >
-  <AccordionItem
-    open={true}
-    title={"Assigned To"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_alert_set_assigned"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="0"
-          onClick={[Function]}
-          tabIndex={0}
-          title=""
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      />
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header"
+          <div
+            className="wrap_text"
           />
-          <FeatureToggle(StructuredListCell)
-            className="content_value object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="1"
-          onClick={[Function]}
-          tabIndex={1}
-          title=""
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="1"
+      onClick={[Function]}
+      tabIndex={1}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Object class
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header"
-          >
-            Object class
-          </FeatureToggle(StructuredListCell)>
-          <FeatureToggle(StructuredListCell)
-            className="content_value object_item"
+          <div
+            className="multi_row_cell"
           >
             <div
-              className="content"
+              className="sub_row_item"
+              key="0"
+              title=""
             >
               <div
-                className="multi_row_cell"
+                className="sub_value"
               >
                 <div
-                  className="sub_row_item"
-                  key="0"
-                  title=""
+                  className="expand wrap_text"
                 >
-                  <div
-                    className="sub_value"
-                  >
-                    <div
-                      className="expand wrap_text"
-                    >
-                      path1
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sub_row_item"
-                  key="1"
-                  title=""
-                >
-                  <div
-                    className="sub_value"
-                  >
-                    <div
-                      className="expand wrap_text"
-                    >
-                      path2
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sub_row_item"
-                  key="2"
-                  title=""
-                >
-                  <div
-                    className="sub_value"
-                  >
-                    <div
-                      className="expand wrap_text"
-                    >
-                      path3
-                    </div>
-                  </div>
+                  path1
                 </div>
               </div>
             </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+            <div
+              className="sub_row_item"
+              key="1"
+              title=""
+            >
+              <div
+                className="sub_value"
+              >
+                <div
+                  className="expand wrap_text"
+                >
+                  path2
+                </div>
+              </div>
+            </div>
+            <div
+              className="sub_row_item"
+              key="2"
+              title=""
+            >
+              <div
+                className="sub_value"
+              >
+                <div
+                  className="expand wrap_text"
+                >
+                  path3
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set info structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_info"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_alert_set_info"
 >
-  <AccordionItem
-    open={true}
-    title={"Basic Information"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_alert_set_info"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="0"
-          onClick={[Function]}
-          tabIndex={0}
-          title=""
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      />
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header"
-          />
-          <FeatureToggle(StructuredListCell)
-            className="content_value object_item"
+          <div
+            className="expand wrap_text"
           >
-            <div
-              className="content"
-            >
-              <div
-                className="expand wrap_text"
-              >
-                bar
-              </div>
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="1"
-          onClick={[Function]}
-          tabIndex={1}
-          title=""
+            bar
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="1"
+      onClick={[Function]}
+      tabIndex={1}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      />
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header"
-          />
-          <FeatureToggle(StructuredListCell)
-            className="content_value object_item"
+          <div
+            className="expand wrap_text"
           >
-            <div
-              className="content"
-            >
-              <div
-                className="expand wrap_text"
-              >
-                Mode
-              </div>
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+            Mode
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set notes structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_notes"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_alert_set_notes"
 >
-  <AccordionItem
-    open={true}
-    title={"Notes"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_alert_set_notes"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="0"
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <TextArea
+          cols={50}
+          disabled={false}
+          helperText=""
+          invalid={false}
+          invalidText=""
+          labelText=""
+          light={false}
+          onChange={[Function]}
           onClick={[Function]}
-          tabIndex={0}
-          title=""
-        >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <TextArea
-              cols={50}
-              disabled={false}
-              helperText=""
-              invalid={false}
-              invalidText=""
-              labelText=""
-              light={false}
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder=""
-              rows={4}
-              value="text area description"
-            />
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+          placeholder=""
+          rows={4}
+          value="text area description"
+        />
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;

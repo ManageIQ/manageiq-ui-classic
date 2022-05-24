@@ -1,206 +1,176 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqPolicySetStructuredList should render policy set info structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_policy_set_info"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_policy_set_info"
 >
-  <AccordionItem
-    open={true}
-    title={"Basic Information"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_policy_set_info"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="0"
-          onClick={[Function]}
-          tabIndex={0}
-          title=""
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      />
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header"
-          />
-          <FeatureToggle(StructuredListCell)
-            className="content_value object_item"
+          <div
+            className="expand wrap_text"
           >
-            <div
-              className="content"
-            >
-              <div
-                className="expand wrap_text"
-              >
-                bar
-              </div>
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+            bar
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
 
 exports[`MiqPolicySetStructuredList should render policy set notes structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_policy_set_notes"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_policy_set_notes"
 >
-  <AccordionItem
-    open={true}
-    title={"Notes"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_policy_set_notes"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className=""
-          key="0"
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <TextArea
+          cols={50}
+          disabled={false}
+          helperText=""
+          invalid={false}
+          invalidText=""
+          labelText=""
+          light={false}
+          onChange={[Function]}
           onClick={[Function]}
-          tabIndex={0}
-          title=""
-        >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <TextArea
-              cols={50}
-              disabled={false}
-              helperText=""
-              invalid={false}
-              invalidText=""
-              labelText=""
-              light={false}
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder=""
-              rows={4}
-              value="text area description"
-            />
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+          placeholder=""
+          rows={4}
+          value="text area description"
+        />
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
 
 exports[`MiqPolicySetStructuredList should render policy set structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_policy_set"
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_policy_set"
 >
-  <AccordionItem
-    open={true}
-    title={"Policies"}
-  >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_policy_set"
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title="View this Container Image Policy"
     >
-      <FeatureToggle(StructuredListBody)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="0"
-          onClick={[Function]}
-          tabIndex={0}
-          title="View this Container Image Policy"
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="1"
-          onClick={[Function]}
-          tabIndex={1}
-          title="View this Container Image Policy"
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="1"
+      onClick={[Function]}
+      tabIndex={1}
+      title="View this Container Image Policy"
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="2"
-          onClick={[Function]}
-          tabIndex={2}
-          title="View this Container Image Policy"
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="2"
+      onClick={[Function]}
+      tabIndex={2}
+      title="View this Container Image Policy"
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="3"
-          onClick={[Function]}
-          tabIndex={3}
-          title="View this Container Node Policy"
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="3"
+      onClick={[Function]}
+      tabIndex={3}
+      title="View this Container Node Policy"
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-        <FeatureToggle(StructuredListRow)
-          className="clickable"
-          key="4"
-          onClick={[Function]}
-          tabIndex={4}
-          title="View this VM and Instance Policy"
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="4"
+      onClick={[Function]}
+      tabIndex={4}
+      title="View this VM and Instance Policy"
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
         >
-          <FeatureToggle(StructuredListCell)
-            className="label_header object_item"
-          >
-            <div
-              className="content"
-            >
-              <div
-                className="wrap_text"
-              />
-            </div>
-          </FeatureToggle(StructuredListCell)>
-        </FeatureToggle(StructuredListRow)>
-      </FeatureToggle(StructuredListBody)>
-    </FeatureToggle(StructuredListWrapper)>
-  </AccordionItem>
-</Accordion>
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
 `;
