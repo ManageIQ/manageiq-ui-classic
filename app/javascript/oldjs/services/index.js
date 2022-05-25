@@ -1,7 +1,6 @@
 require('./alerts_center_service.js');
 require('./bootstrap_tree_subscription_service.js');
 require('./catalog/catalog_item_data.js');
-require('./configuration_manager_service/configuration_manager_service.js');
 require('./dashboard_service.js');
 require('./dialog_editor_http_service.js');
 require('./dialog_field_refresh_service.js');
