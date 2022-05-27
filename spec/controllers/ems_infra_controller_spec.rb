@@ -85,13 +85,6 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
-    it "when vm_transform_mass is pressed" do
-      ems_infra = FactoryBot.create(:ems_vmware)
-      expect(controller).to receive(:vm_transform_mass)
-      post :button, :params => {:pressed => "vm_transform_mass", :id => ems_infra.id, :format => :js}
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
     context 'operations on Clusters, Orchestration Stacks, Datastores of selected Provider' do
       before do
         controller.params = {:pressed => pressed}
