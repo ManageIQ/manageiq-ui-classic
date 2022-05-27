@@ -1,7 +1,0 @@
-.aggregate_status{"ng-controller" => "aggregateStatusCardController as vm"}
-  .col-xs-12.col-sm-12.col-md-3.col-lg-2
-    %pf-aggregate-status-card{:layout => "{{vm.aggregateLayout}}", :class => "{{vm.aggregateClass}}", :status => "vm.status", :show_top_border => "{{vm.showTopBorder}}"}
-  .col-xs-12.col-sm-12.col-md-9.col-lg-10
-    .row
-      .col-xs-12.col-sm-6.col-md-4.col-lg-3{"ng-repeat" => "status in vm.AggStatus"}
-        %pf-aggregate-status-card{:layout => "mini",'ng-attr-id' => "{{status.id}}", :status => "status", :show_top_border => "true", :class =>"ng-isolate-scope"}
