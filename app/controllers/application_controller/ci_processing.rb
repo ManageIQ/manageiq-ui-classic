@@ -15,7 +15,6 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method(:item_supports?)
     include Mixins::Actions::VmActions::PolicySimulation
-    include Mixins::Actions::VmActions::Transform
 
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
