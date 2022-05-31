@@ -1033,18 +1033,8 @@ module VmCommon
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
         if @sb[:action] == 'dialog_provision'
-          if show_old_dialog_submit_and_cancel_buttons?(params)
-            presenter.update(:form_buttons_div, r[
-              :partial => 'layouts/x_dialog_buttons',
-              :locals  => {
-                :action_url => action,
-                :record_id  => @edit[:rec_id],
-              }
-            ])
-          else
-            presenter.update(:form_buttons_div, '')
-            presenter.remove_paging.hide(:form_buttons_div)
-          end
+          presenter.update(:form_buttons_div, '')
+          presenter.remove_paging.hide(:form_buttons_div)
         elsif @sb[:action] == 'rename'
           presenter.hide(:form_buttons_div)
         elsif %w[chargeback reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
@@ -1096,10 +1086,6 @@ module VmCommon
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs']) if refresh_breadcrumbs
 
     render :json => presenter.for_render
-  end
-
-  def show_old_dialog_submit_and_cancel_buttons?(params)
-    %w[vm_transform vm_transform_mass].include?(params[:pressed])
   end
 
   # get the host that this vm belongs to

@@ -15,12 +15,9 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method(:item_supports?)
     include Mixins::Actions::VmActions::PolicySimulation
-    include Mixins::Actions::VmActions::Transform
 
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
-
-    include Mixins::Actions::ProviderActions::MassTransform
 
     include Mixins::ExplorerShow
   end
@@ -932,8 +929,6 @@ module ApplicationController::CiProcessing
     when "#{pfx}_terminate"                 then terminatevms
     when "instance_add_security_group"      then add_security_group_vms
     when "instance_remove_security_group"   then remove_security_group_vms
-    when "vm_transform"                     then vm_transform
-    when "vm_transform_mass"                then vm_transform_mass
     end
   end
 end
