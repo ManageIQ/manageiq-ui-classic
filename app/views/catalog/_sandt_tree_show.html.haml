@@ -29,12 +29,11 @@
           .col-md-9
             &nbsp;
             = check_box_tag("display", true, @record.display, :disabled => true)
-        - if @record.display
-          .form-group
-            %label.col-md-3.control-label
-              = _('Catalog')
-            .col-md-9
-              = h(@record.service_template_catalog ? @record.service_template_catalog.name : "<#{_('Unassigned')}>")
+        .form-group
+          %label.col-md-3.control-label
+            = _('Catalog')
+          .col-md-9
+            = h(@record.service_template_catalog ? @record.service_template_catalog.name : "<#{_('Unassigned')}>")
         - unless @record.composite?
           .form-group
             %label.col-md-3.control-label
