@@ -201,10 +201,9 @@ class OpsController < ApplicationController
     if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w[settings_import settings_import_tags].include?(@sb[:active_subtab])))
       edit_changed?
     end
-    # do not show buttons, when settings_workers - it uses react form buttons
-    if @sb[:active_tab] == "settings_workers"
-      @x_edit_buttons_locals = nil
-    end
+
+    @x_edit_buttons_locals = nil if react_form(@sb[:active_tab])
+
     render :layout => "application"
   end
 
@@ -318,6 +317,11 @@ class OpsController < ApplicationController
   end
 
   private ############################
+
+  def react_form(active_tab)
+    react_tabs = ["settings_workers", "settings_server"]
+    react_tabs.include?(active_tab)
+  end
 
   def features
     features = [
@@ -695,6 +699,7 @@ class OpsController < ApplicationController
       end
       active_id = x_node.split("-").last
       # server node
+      puts "@sb[:selected_server_id] = #{@sb[:selected_server_id]}"
       if x_node.split("-").first == "svr" && my_server.id == active_id.to_i
         # show all the tabs if on current server node
         @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
@@ -802,9 +807,7 @@ class OpsController < ApplicationController
     else
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
-    if @sb[:active_tab] == "settings_workers"
-      presenter.hide(:form_buttons_div)
-    end
+    presenter.hide(:paging_div).hide(:form_buttons_div) if react_form(@sb[:active_tab])
   end
 
   def replace_explorer_trees(replace_trees, presenter)

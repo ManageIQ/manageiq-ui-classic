@@ -101,4 +101,105 @@ module OpsHelper
     data[:rows] = rows
     miq_structured_list(data)
   end
+
+  def render_basic_information_list(selected_server, vm)
+    data = {:title => _("Basic Information"), :mode => "miq_server_settings"}
+    rows = []
+    rows.push({:cells => {:label => _("Hostname"), :value => selected_server.hostname}})
+    rows.push({:cells => {:label => _("IP Address"), :value => selected_server.ipaddress}})
+    if vm
+      rows.push({
+                  :cells   => {:label => _("Resides on VM"), :icon => "fa fa-desktop pointer", :value => h(vm.name)},
+                  :title   => _("Click to view this VM"),
+                  :onclick => "DoNav('/vm/show/#{vm.id}')"
+                })
+    else
+      rows.push({
+                  :cells => {:label => _("Resides on VM"), :icon => "fa fa-desktop", :value => _("Not Available")},
+                })
+    end
+    data[:rows] = rows
+    miq_structured_list(data)
+  end
+
+  def ops_server_controls(roles, repository_scanning, smartproxy_choices)
+    [
+      server_roles(roles),
+      default_repository(repository_scanning, smartproxy_choices)
+    ]
+  end
+
+  def ops_settings_form_data(server, data, smartproxy_choices, server_zones)
+    {
+      :server            => {:id => server.id, :name => server.name},
+      :basic_information => ops_basic_information(data[:server], server_zones),
+      :server_controls   => ops_server_controls(session[:server_roles], data[:repository_scanning], smartproxy_choices),
+    }
+  end
+
+  #private
+
+  def form_text(label, value, title = "")
+    {:type => :text, :label => label, :value => value, :title => title}
+  end
+
+  def form_select(label, value, title, options, include_blank, name)
+    {
+      :name          => name,
+      :type          => :select,
+      :label         => label,
+      :options       => options,
+      :value         => value,
+      :title         => title,
+      :include_blank => include_blank
+    }
+  end
+
+  def form_checkbox(name, checked)
+    {
+      :type    => :checkbox,
+      :data    => {:on_text => _('On'), :off_text => _('Off'), :size => 'mini'},
+      :name    => name,
+      :checked => checked,
+    }
+  end
+
+  def server_roles(roles)
+    server_controls_data = []
+    session[:server_roles].sort_by { |_name, desc| desc }.each do |name, desc|
+      checked = !session[:selected_roles].nil? && session[:selected_roles].include?(name)
+      server_controls_data.push({:name => name, :checked => checked ,:label => desc})
+    end
+   {:label => _("Server Roles"), :type => :list, :value => server_controls_data}
+  end
+
+  def default_repository(repo, smartproxy_choices)
+    if smartproxy_choices.blank?
+      {:label => _("Default Repository SmartProxy"), :type => :text, :value => _("None Available")}
+    else
+      form_select('Default Repository SmartProxy', repo[:defaultsmartproxy].to_i, '', smartproxy_choices.sort, true, 'repository_scanning_defaultsmartproxy')
+    end
+  end
+
+  def ops_basic_information(server, server_zones)
+
+    options = {
+      :zone           => server_zones.sort,
+      :appliance      => ViewHelper::ALL_TIMEZONES,
+      :default_locale => [_('Client Browser Setting'), 'default'] + FastGettext.human_available_locales
+    }
+
+    basic = {
+      :server_company      => form_text(_("Company Name"), server[:company]),
+      :name                => form_text(_("Appliance Name"), server[:name]),
+      :appliance_time_zone => form_select(_("Appliance Time Zone"), server[:timezone], server_zone_title_text, options[:appliance], false, 'server_timezone'),
+      :default_local       => form_select(_("Default Locale"), server[:locale], server_zone_title_text, options[:default_locale], false, 'locale')
+    }
+    basic[:zone] = if !MiqServer.zone_is_modifiable?
+                     form_text(_("Zone*"), server[:zone], server_zone_title_text, false, 'server_zone')
+                   else
+                     form_select(_("Zone*"), server[:zone], server_zone_title_text, options[:zone], false, 'server_zone')
+                   end
+    basic
+  end
 end

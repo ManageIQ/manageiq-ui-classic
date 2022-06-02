@@ -1,4 +1,8 @@
 - if @sb[:active_tab] == "settings_server"
+  = render_basic_information_list(@selected_server, @vm)
+  - form_data =  ops_settings_form_data(@selected_server, @edit[:new], @smartproxy_choices, server_zones)
+  = react('SettingsServer', {:selected => @selected_server, :formData => form_data})
+  
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h3
     = _("Basic Information")
@@ -91,6 +95,7 @@
   .note
     = _("* Changing the Zone will reset all of this Server's priorities to secondary.")
   %hr
+  = session[:server_roles].inspect
   %h3
     = _("Server Control")
   .form-horizontal

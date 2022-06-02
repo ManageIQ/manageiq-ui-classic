@@ -927,6 +927,8 @@ module OpsController::Settings::Common
       # @sb[:tabform] = "operations_1" if @sb[:selected_server] && @sb[:selected_server].id != nodetype.downcase.split("-").last.to_i #reset tab if server node was changed, current server has 10 tabs, current active tab may not be available for other server nodes.
       #     @sb[:selected_server] = MiqServer.find(nodetype.downcase.split("-").last)
       @selected_server = MiqServer.find(nodes.last)
+      @vm = @selected_server.vm
+      @zone = @selected_server.my_zone
       @sb[:selected_server_id] = @selected_server.id
       settings_set_form_vars
     when "msc"
