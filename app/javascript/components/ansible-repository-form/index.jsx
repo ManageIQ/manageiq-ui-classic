@@ -71,7 +71,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
             message = `${__('Unable to edit Repository ')} "${values.name}". ${response.message}`;
             miqRedirectBack(message, 'warning', url);
           } else {
-            message = __(`Edit of Repository "${values.name}" was successfully initiated.`);
+            message = sprintf(__(`Edit of Repository "%s" was successfully initiated.`), values.name);
             miqRedirectBack(message, 'success', url);
           }
         });
@@ -84,7 +84,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
             message = `${__('Unable to add Repository ')} "${values.name}". ${response.results[0].message}`;
             miqRedirectBack(message, 'warning', url);
           } else {
-            message = __(`Add of Repository "${values.name}" was successfully initiated.`);
+            message = sprintf(__(`Add of Repository "%s" was successfully initiated.`), values.name);
             miqRedirectBack(message, 'success', url);
           }
         });
@@ -95,7 +95,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
     const url = '/ansible_repository/show_list';
     let message = '';
     if (!!repositoryId) {
-      message = __(`Edit of Repository "${initialValues.name}" cancelled by user.`);
+      message = sprintf(__(`Edit of Repository "%s" cancelled by user.`), initialValues.name);
     } else {
       message = __(`Add of Repository cancelled by user.`);
     }

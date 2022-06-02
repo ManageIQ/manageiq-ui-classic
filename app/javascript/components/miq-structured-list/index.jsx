@@ -210,7 +210,7 @@ const MiqStructuredList = ({
 
   /** Function to render the info notification message */
   const renderNotification = () => {
-    const noticeMessage = message || __(`No entries found for ${title.toLowerCase()}`);
+    const noticeMessage = message || sprintf(__('No entries found for %s'), title.toLowerCase());
     return (
       <NotificationMessage type="info" message={noticeMessage} />
     );
