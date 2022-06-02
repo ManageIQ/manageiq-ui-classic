@@ -5,7 +5,7 @@ import { Pagination } from 'carbon-components-react';
 const getItemRangeText = (min, max, totalItems) => __(`${min}-${max} of ${totalItems} items`);
 
 // eslint-disable-next-line no-undef
-const getPageRangeText = (_current, total) => n__(`of ${total} page`, `of ${total} pages`, total);
+const getPageRangeText = (_current, total) => sprintf(n__(`of %d page`, `of %d pages`, total), total);
 
 const MiqPagination = ({
   pageOptions: {
