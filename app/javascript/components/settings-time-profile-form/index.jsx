@@ -23,7 +23,7 @@ const SettingsTimeProfileForm = ({
   const onCancel = () => {
     let message = '';
     if (timeProfileId !== '') {
-      message = __(`Editing of time profile ${initialValues.description} was cancelled by the user.`);
+      message = sprintf(__(`Editing of time profile %s was cancelled by the user.`), initialValues.description);
     } else {
       message = __(`Adding new time profile was cancelled by the user.`);
     }
@@ -53,7 +53,7 @@ const SettingsTimeProfileForm = ({
         const request = API.post(`/api/time_profiles/${timeProfileId}`, data);
         request
           .then(() => {
-            const message = __(`Editing of time profile ${values.description} has been successfully queued`);
+            const message = sprintf(__(`Editing of time profile %s has been successfully queued.`), values.description);
             miqRedirectBack(message, 'success', '/configuration/change_tab/4?uib-tab=4');
           })
           .catch(miqSparkleOff);
@@ -61,7 +61,7 @@ const SettingsTimeProfileForm = ({
         const request = API.post(`/api/time_profiles`, data);
         request
           .then(() => {
-            const message = __(`Creating time profile ${values.description} has been successfully queued`);
+            const message = sprintf(__(`Creating time profile %s has been successfully queued.`), values.description);
             miqRedirectBack(message, 'success', '/configuration/change_tab/4?uib-tab=4');
           })
           .catch(miqSparkleOff);

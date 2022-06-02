@@ -55,6 +55,11 @@ function createSchema(emsId, parentOptions) {
           moveLeftTitle: __('Move selected VMs to left'),
           moveRightTitle: __('Move selected VMs to right'),
           moveAllRightTitle: __('Move all VMs to right'),
+          moveAllLeftTitle: __('Remove All'),
+          noValueTitle: __('No option selected'),
+          noOptionsTitle: __('No available options'),
+          filterOptionsTitle: __('Filter options'),
+          filterValuesTitle: __('Filter values'),
           AddButtonProps: {
             size: 'small',
           },

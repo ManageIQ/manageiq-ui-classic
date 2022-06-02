@@ -36,11 +36,11 @@ module CloudVolumeHelper::TextualSummary
   end
 
   def textual_bootable
-    {:label => _('Bootable'), :value => @record.bootable.to_s}
+    {:label => _('Bootable'), :value => _(@record.bootable.to_s)}
   end
 
   def textual_status
-    {:label => _('Status'), :value => @record.status.to_s}
+    {:label => _('Status'), :value => _(@record.status.to_s)}
   end
 
   def textual_health_state

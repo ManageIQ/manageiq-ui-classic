@@ -26,8 +26,8 @@ class MiqPolicyRsopController < ApplicationController
     rsop_put_objects_in_sb(find_filtered(Host), :hosts)
     rsop_put_objects_in_sb(find_filtered(Vm), :vms)
     rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
-    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [_(e.description), e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [_(e.description), e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
   end
 
   def rsop
@@ -93,8 +93,8 @@ class MiqPolicyRsopController < ApplicationController
     if params[:filter_value]
       @sb[:rsop][:filter_value] = params[:filter_value] == "<Choose>" ? nil : params[:filter_value]
     end
-    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [_(e.description), e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [_(e.description), e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
     render :update do |page|
       page << javascript_prologue
       session[:changed] = !!(@sb[:rsop][:filter_value] && @sb[:rsop][:event_value])
