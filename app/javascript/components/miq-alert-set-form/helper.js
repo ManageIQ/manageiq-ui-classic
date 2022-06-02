@@ -20,7 +20,7 @@ const findLabel = (emsId, mode) => {
 
 const changeTitle = (emsId, mode) => {
   const titleName = findLabel(mode, emsId);
-  const title = _(`Available ${titleName} Alerts`);
+  const title = sprintf(__('Available %s Alerts:'), titleName);
   return title;
 };
 

@@ -518,7 +518,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
               },
             }) =>
               Object.values(action_types).sort().map((key) => ({
-                label: key,
+                label: __(key),
                 value: Object.keys(action_types)[Object.values(action_types).indexOf(key)],
               })),
           ),
