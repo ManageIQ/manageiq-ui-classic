@@ -18,7 +18,7 @@ const ResultItem = ({ item, titles }) => (
 );
 
 // can't use raw p as a descendant of items
-const Count = ({ length }) => <p>{`__${__('Results')} (${length})`}</p>;
+const Count = ({ length }) => <p>{sprintf(__('Results %s'), length)}</p>;
 
 Count.propTypes = {
   length: PropTypes.number.isRequired,
