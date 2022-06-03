@@ -89,8 +89,8 @@ const GroupForm = ({
       ? API.patch(`/api/custom_button_sets/${recId}`, values, { skipErrors: [400, 500] })
       : API.post('/api/custom_button_sets', values, { skipErrors: [400, 500] });
     request.then(({ results }) => {
-      const saveMsg = recId ? __(`Custom Button Group "${values.name}" has been successfully saved.`)
-        : __(`Custom Button Group "${values.name}" has been successfully added.`);
+      const saveMsg = recId ? sprintf(__(`Custom Button Group "%s" has been successfully saved.`), values.name)
+        : sprintf(__(`Custom Button Group "%s" has been successfully added.`), values.name);
       if (isGenericObject) {
         miqRedirectBack(saveMsg, 'success', url);
         miqSparkleOff();
@@ -107,7 +107,7 @@ const GroupForm = ({
   const onCancel = () => {
     if (isGenericObject) {
       if (recId) {
-        miqRedirectBack(__(`Edit of Custom Button Group "${initialValues.name}" was canceled by the user.`), 'warn', url);
+        miqRedirectBack(sprintf(__(`Edit of Custom Button Group "%s" was canceled by the user.`), initialValues.name), 'warn', url);
       } else {
         miqRedirectBack(__(`Creation of new Custom Button Group was canceled by the user.`), 'warn', url);
       }

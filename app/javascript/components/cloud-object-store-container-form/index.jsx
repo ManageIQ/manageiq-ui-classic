@@ -43,11 +43,11 @@ const CloudObjectStoreContainerForm = () => {
     }
     miqSparkleOn();
     API.post('/api/cloud_object_store_containers/', submitData).then(() => {
-      const message = __(`Add of Cloud Object Store Container ${values.name} has been successfully queued.`);
+      const message = sprintf(__(`Add of Cloud Object Store Container "%s" has been successfully queued.`), values.name);
       miqRedirectBack(message, 'success', url);
     })
       .catch((error) => {
-        const message = __(`Add of Cloud Object Store Container ${values.name} has failed with error: ${error.data.error.message}`);
+        const message = sprintf(__(`Add of Cloud Object Store Container "%s" has failed with error: %s`), values.name, error.data.error.message);
         miqRedirectBack(message, 'warning', url);
       });
   };

@@ -58,7 +58,7 @@ const RetirementForm = ({
         }));
 
         API.post(url, { action: 'request_retire', resources }).then(() => {
-          const message = sprintf(__(`Retirement date set to ${tempDate.toLocaleString()}`));
+          const message = sprintf(__(`Retirement date set to %s`), tempDate.toLocaleString());
           miqRedirectBack(message, 'success', redirect);
         }).catch(miqSparkleOff);
       }

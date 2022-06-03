@@ -33,7 +33,7 @@ const ChartCard = ({
     chartData.forEach((resource) => {
       const usedAmount = resource.quota_observed / resource.quota_enforced;
       const chartData = [{
-        group: __(`${resource.resource} - ${resource.quota_observed} ${resource.units} Used`),
+        group: sprintf(__(`%s - %s %s Used`), resource.resource, resource.quota_observed, resource.units),
         value: usedAmount * 100,
       }];
       const options = {

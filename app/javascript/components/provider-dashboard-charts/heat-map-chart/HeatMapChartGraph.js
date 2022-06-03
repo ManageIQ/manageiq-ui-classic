@@ -15,9 +15,9 @@ const HeatMapChartGraph = ({
   const heatmapCpuTooltip = () => (data) => {
     const d1 = heatmapCpuData[0];
     let percent = -1;
-    let tooltip = `${`${__('Cluster: ')}${data[1].value}`}<br>${__('Provider: ')}${d1.provider}`;
+    let tooltip = sprintf(__('Cluster: %s'), data[1].value) + `<br>` + sprintf(__('Provider: %s'), d1.provider)
     if (data[2].value === null || data[1].value === null) {
-      tooltip += `<br> ${__('Usage: Unknown')}`;
+      tooltip += `<br> ` + __('Usage: Unknown');
     } else {
       percent = data[2].value;
       tooltip += '<br>';
@@ -33,9 +33,9 @@ const HeatMapChartGraph = ({
   const heatmapMemoryTooltip = () => (data) => {
     const d1 = heatmapMemoryData[0];
     let percent = -1;
-    let tooltip = `${`${__('Cluster: ')}${data[1].value}`}<br>${__('Provider: ')}${d1.provider}`;
+    let tooltip = sprintf(__('Cluster: %s'), data[1].value) + `<br>` + sprintf(__('Provider: %s'), d1.provider)
     if (data[2].value === null || data[1].value === null) {
-      tooltip += `<br> ${__('Usage: Unknown')}`;
+      tooltip += `<br> ` + __('Usage: Unknown');
     } else {
       percent = data[2].value;
       tooltip += '<br>';

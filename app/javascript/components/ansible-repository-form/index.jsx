@@ -68,7 +68,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
         .then((response) => {
           error = !response.success;
           if (error) {
-            message = `${__('Unable to edit Repository ')} "${values.name}". ${response.message}`;
+            message = sprintf(__(`Unable to edit Repository "%s": %s`), values.name, response.message);
             miqRedirectBack(message, 'warning', url);
           } else {
             message = sprintf(__(`Edit of Repository "%s" was successfully initiated.`), values.name);
@@ -81,7 +81,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
         .then((response) => {
           error = !response.results[0].success;
           if (error) {
-            message = `${__('Unable to add Repository ')} "${values.name}". ${response.results[0].message}`;
+            message = sprintf(__(`Unable to add Repository "%s": %s`), values.name, response.results[0].message);
             miqRedirectBack(message, 'warning', url);
           } else {
             message = sprintf(__(`Add of Repository "%s" was successfully initiated.`), values.name);

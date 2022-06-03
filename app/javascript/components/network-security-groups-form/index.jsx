@@ -83,7 +83,7 @@ const NetworkSecurityGroupsForm = ({ securityGroupId }) => {
     let message;
     let url;
     if (securityGroupId) {
-      message = __(`Edit of Security Group "${initialValues.name}" was cancelled by the user`);
+      message = sprintf(__(`Edit of Security Group "%s" was cancelled by the user`), initialValues.name);
       url = `/security_group/show/${securityGroupId}#`;
     } else {
       message = __('Add of new Security Group was cancelled by the user');

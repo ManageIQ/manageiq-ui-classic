@@ -62,13 +62,13 @@ const AddRemoveSecurityGroupForm = ({
   });
 
   const onSubmit = (values) => {
-    let message = __(`${values.security_group} has been successfully removed.`);
+    let message = sprintf(__(`%s has been successfully removed.`), values.security_group);
     if (isAdd) {
       const saveObject = {
         name: values.security_group,
         action: 'add',
       };
-      message = __(`${values.security_group} has been successfully added.`);
+      message = sprintf(__(`%s has been successfully added.`), values.security_group);
       miqSparkleOn();
       API.post(`/api/instances/${recordId}/security_groups/`, saveObject)
         .then(miqRedirectBack(message, 'success', redirectURL));

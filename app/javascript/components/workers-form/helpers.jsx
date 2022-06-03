@@ -225,7 +225,7 @@ export const injectOption = (options, initialValue, isCount = false) => {
     return [
       ...options,
       {
-        label: isCount ? `${initialValue} (${__('Custom')})` : `${toHumanSize(initialValue)} (${__('Custom')})`,
+        label: isCount ? sprintf(__('%d (Custom)'), initialValue) : sprintf(__('%s (Custom)'), toHumanSize(initialValue)),
         value: initialValue,
       },
     ].sort((a, b) => {
