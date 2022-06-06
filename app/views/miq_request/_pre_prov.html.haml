@@ -1,5 +1,3 @@
-= render :partial => "layouts/flash_msg"
-
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
   %h3
@@ -7,8 +5,12 @@
   %label
     - id = @edit[:req_id] || "new"
     - unless @edit[:hide_deprecated_templates].nil?
+      - hide_depricated_url = url_for_only_path({:action => "vm_pre_prov",
+                                              :template_klass => params[:template_klass],
+                                              :id => id.to_s,
+                                              :hide_deprecated_templates => !@edit[:hide_deprecated_templates]})
       %input{:type => "checkbox",
-             :onclick => "miqAjax('" + url_for_only_path({:action => "vm_pre_prov", :id => id.to_s, :hide_deprecated_templates => !@edit[:hide_deprecated_templates]}) + "')",
+             :onclick => "miqAjax('#{hide_depricated_url}')",
              :checked => @edit[:hide_deprecated_templates]}
         = _('Hide deprecated')
   = render :partial => "layouts/x_gtl"

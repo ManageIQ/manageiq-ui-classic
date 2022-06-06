@@ -164,7 +164,7 @@ module ApplicationController::MiqRequestMethods
   end
 
   def provisioning_is_cloud?
-    params[:template_klass] == 'cloud' || %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud miq_request].include?(params[:controller])
+    params[:template_klass] == 'cloud' || %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud].include?(params[:controller])
   end
 
   def provisioning_is_infra?
