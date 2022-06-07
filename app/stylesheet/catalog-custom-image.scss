@@ -1,0 +1,26 @@
+.catalog-custom-image-wrapper {
+  padding-left: 15px;
+  border-top: 1px solid lightgray;
+
+  .custom-image-title {
+    font-size: 0.875rem;
+    font-weight: 400;
+    padding-bottom: 5px;
+  }
+
+  .custom-image-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .custom-image {
+      height: 100px;
+      min-width: 180px;
+      margin: 0 15px 0 0;
+
+      img {
+        max-height: 100%;
+      }
+    }
+  }
+}

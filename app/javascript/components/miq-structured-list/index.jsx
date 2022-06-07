@@ -10,10 +10,11 @@ import {
   StructuredListCell,
   Accordion,
   AccordionItem,
-  TextArea,
   Link,
 } from 'carbon-components-react';
+
 import MiqStructuredListHeader from './miq-structured-list-header';
+import MiqStructuredListInputs from './miq-structured-list-inputs';
 import {
   rowClickEvent, isObject, isArray, isSubItem, hasClickEvents, hasInput,
 } from './helpers';
@@ -105,12 +106,8 @@ const MiqStructuredList = ({
     </div>
   );
 
-  const renderInputContent = (row) => {
-    if (row.value.input === 'text_area') {
-      return (<TextArea value={row.value.text} labelText="" />);
-    }
-    return null;
-  };
+  /** Function to render textarea / checkbox / react components */
+  const renderInputContent = ({ value }) => <MiqStructuredListInputs value={value} />;
 
   const renderMultiContents = (row) => {
     const content = renderContent(row);
@@ -223,7 +220,6 @@ const MiqStructuredList = ({
 
   /** Table object with key named 'cells' are extracted */
   const list = (clickEvents ? rows.map((item) => item.cells) : rows);
-
   /** Function to render the info notification message */
   const renderNotification = () => {
     const noticeMessage = message || sprintf(__('No entries found for %s'), title.toLowerCase());

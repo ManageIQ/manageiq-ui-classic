@@ -1335,9 +1335,10 @@ module ApplicationHelper
   end
 
   def miq_structured_list(data)
-    react('MiqStructuredList', {:title => data[:title],
-                                :headers  => data[:headers],
-                                :rows     => data[:rows],
-                                :message  => data[:message], :mode => ["miq_summary", data[:mode]].join(' ')})
+    react('MiqStructuredList', {:title   => data[:title],
+                                :headers => data[:headers],
+                                :rows    => data[:rows],
+                                :message => data[:message],
+                                :mode    => "miq_summary #{data[:mode]}"})
   end
 end

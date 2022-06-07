@@ -25,10 +25,6 @@
 
     &.bx--structured-list-th {
       padding: 0.8em 0.5rem 0.5rem 0.3rem;
-
-      &:first-child {
-        padding: 0.8em 0.5rem 0.5rem 0.5rem;
-      }
     }
   }
 
@@ -73,6 +69,7 @@
       &.color_black {
         color: $text-primary;
       }
+
       &.color_red {
         color: $button-danger-primary;
       }
@@ -149,6 +146,12 @@
       .label_header {
         padding-left: 0.3rem;
       }
+    }
+  }
+
+  .react-tree-view {
+    ul li {
+      margin: 10px;
     }
   }
 }
