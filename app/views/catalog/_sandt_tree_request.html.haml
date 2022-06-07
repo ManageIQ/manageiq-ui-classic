@@ -1,0 +1,6 @@
+- if options && options[:wf]
+  %h3
+    = _('Request Info')
+    = render :partial => "miq_request/prov_wf", :locals => {:wf => options[:wf], :show => true}
+- else
+  %span{:style => "color:red"}= no_wf_msg

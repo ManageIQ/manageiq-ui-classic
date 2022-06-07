@@ -1,4 +1,17 @@
 /* eslint-disable no-eval */
+import { TreeViewRedux } from '../tree-view';
+import CatalogResource from '../data-tables/catalog-resource';
+
+export const InputTypes = {
+  TEXTAREA: 'text_area',
+  CHECKBOX: 'checkbox',
+  COMPONENT: 'component',
+};
+
+export const DynamicReactComponents = {
+  TREE_VIEW_REDUX: TreeViewRedux,
+  CATALOG_RESOURCE: CatalogResource,
+};
 
 const dataType = (data) => (data ? data.constructor.name.toString() : undefined);
 
