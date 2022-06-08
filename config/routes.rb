@@ -501,6 +501,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         attach
         detach
+        clone
         backup_new
         backup_select
         snapshot_new

@@ -73,6 +73,18 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        :enabled      => false,
                        :onwhen       => '1'
                      ),
+
+                     button(
+                       :cloud_volume_clone,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Clone selected Cloud Volume'),
+                       t,
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1'
+                     ),
+
                      button(
                        :cloud_volume_edit,
                        'pficon pficon-edit fa-lg',

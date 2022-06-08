@@ -17,6 +17,7 @@ class CloudVolumeController < ApplicationController
 
   BUTTON_TO_ACTION_MAPPING = {
     'cloud_volume_attach'          => [:attach,   'attach'],
+    'cloud_volume_clone'           => [:clone,    'clone'],
     'cloud_volume_detach'          => [:detach,   'detach'],
     'cloud_volume_edit'            => [:update,           'edit'],
     'cloud_volume_new'             => [nil,              'new'],
@@ -54,6 +55,18 @@ class CloudVolumeController < ApplicationController
     drop_breadcrumb(
       :name => _("Attach Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/attach"
+    )
+  end
+
+  def clone
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("cloud_volume_clone")
+    @volume = find_record_with_rbac(CloudVolume, params[:id])
+
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Clone Cloud Volume \"%{name}\"") % {:name => @volume.name},
+      :url  => "/cloud_volume/clone/"
     )
   end
 
