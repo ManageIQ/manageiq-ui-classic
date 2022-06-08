@@ -51,6 +51,11 @@ const AnsibleCredentialsForm = ({ recordId }) => {
   const onSubmit = (values) => {
     miqSparkleOn();
 
+    if (values.options && values.options.become_method) {
+      values.options.become_method = values.options.become_method.value;
+    } else {
+      values.options = { become_method: null };
+    }
     const request = recordId ? API.patch(`/api/authentications/${recordId}`, values) : API.post('/api/authentications', values);
     request.then(() => {
       const message = sprintf(
