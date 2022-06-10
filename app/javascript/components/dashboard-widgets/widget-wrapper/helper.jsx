@@ -168,7 +168,7 @@ const menuItemOnClick = (menuItems, widgetId, dataMethod, href, buttonTitle, wid
   }
   // Handles remove button
   if (dataMethod === 'post') {
-    if (window.confirm(__(`Are you sure you want to remove ${widgetTitle} from the Dashboard?`))) {
+    if (window.confirm(sprintf(__(`Are you sure you want to remove %s from the Dashboard?`), widgetTitle))) {
       http.post(href, {}, { skipErrors: true })
         .then((result) => {
           miqRedirectBack(result.message, 'success', '/dashboard/');

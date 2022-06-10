@@ -36,7 +36,7 @@ const CustomButtonForm = ({
 
   const onSubmit = (values) => {
     const submitValues = prepareSubmitData(values, recId, appliesToClass, appliesToId, initialValues, buttonIcon);
-    let saveMessage = __(`Custom Button ${submitValues.name} has been successfully saved.`);
+    let saveMessage = sprintf(__(`Custom Button %s has been successfully saved.`), submitValues.name);
     if (recId) {
       API.put(`/api/custom_buttons/${recId}`, submitValues, { skipErrors: [400] })
         .then(() => {
@@ -49,9 +49,9 @@ const CustomButtonForm = ({
       miqSparkleOn();
       // eslint-disable-next-line consistent-return
       API.post('/api/custom_buttons/', submitValues, { skipErrors: [400] }).then((response) => {
-        saveMessage = __(`Custom Button ${submitValues.name} has been successfully added.`);
+        saveMessage = sprintf(__(`Custom Button %s has been successfully added.`), submitValues.name);
         if (customButtonGroupId) {
-          saveMessage = __(`Custom Button ${submitValues.name} has been successfully added under the selected button group.`);
+          saveMessage = sprintf(__(`Custom Button %s has been successfully added under the selected button group.`), submitValues.name);
           return http.post(`/generic_object_definition/add_button_in_group/${customButtonGroupId}?button_id=${response.results[0].id}`)
             .then(() => {
               miqRedirectBack(saveMessage, 'success', redirectUrl);
@@ -70,7 +70,7 @@ const CustomButtonForm = ({
 
   const onCancel = () => {
     if (recId) {
-      miqRedirectBack(__(`Edit of Custom Button ${initialValues.name} was canceled by the user.`),
+      miqRedirectBack(sprintf(__(`Edit of Custom Button %s was canceled by the user.`), initialValues.name),
         'warning', redirectUrl);
     } else {
       miqRedirectBack(__('Creation of new Custom Button was canceled by the user.'), 'warning', redirectUrl);

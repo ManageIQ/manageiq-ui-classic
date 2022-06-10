@@ -28,7 +28,7 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
     <SideNavItem className="padded collapse_icon">
       <TooltipIcon
         direction="right"
-        tooltipText={`${__('Current group:')} ${currentOption.label}`}
+        tooltipText={sprintf(__('Current group: %s'), currentOption.label)}
       >
         <Collaborate20 />
       </TooltipIcon>

@@ -43,7 +43,7 @@ export const removeItems = (items, force, {
       apiPromises.push(API.post(`/api/${apiUrl}/${item.id}`, { action: 'delete' }, { skipErrors: [400, 500] })
         .then((apiResult) => {
           if (apiUrl === 'generic_object_definitions') {
-            const message = __(`Generic object definition ${item.name} was successfully deleted`);
+            const message = sprintf(__(`Generic object definition %s was successfully deleted`), item.name);
             miqRedirectBack(message, 'success', redirectUrl);
             return null;
           }

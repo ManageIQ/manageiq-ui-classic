@@ -140,7 +140,7 @@ const RoutersForm = ({ routerId }) => {
     let message = '';
     if (!!routerId) {
       url = `/network_router/show/${routerId}`;
-      message = __(`Editing of Network Router ${initialValues.name} was cancelled by the user.`);
+      message = sprintf(__(`Editing of Network Router %s was cancelled by the user.`), initialValues.name);
     } else {
       url = '/network_router';
       message = __(`Adding of new Network Router was cancelled by the user.`);
