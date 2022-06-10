@@ -1068,7 +1068,6 @@ ServiceController:
 - open_url_after_dialog
 - ownership_update
 - reload
-- report_data
 - tree_autoload
 - tree_select
 - wait_for_task
