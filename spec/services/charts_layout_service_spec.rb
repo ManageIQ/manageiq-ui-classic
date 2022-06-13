@@ -19,6 +19,8 @@ describe ChartsLayoutService do
     end
 
     it "returns layout for fname if specific class does not exist" do
+      allow(host_redhat).to receive(:cpu_percent_available?).and_return(true)
+      allow(host_redhat).to receive(:cpu_mhz_available?).and_return(true)
       chart = ChartsLayoutService.layout(host_redhat, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'Host')
       expect(chart).to eq(host_chart)
     end
@@ -30,6 +32,20 @@ describe ChartsLayoutService do
   end
 
   describe "#layout applies_to_method functionality" do
+    it "shows CPU (Mhz) by default for Host" do
+      chart = ChartsLayoutService.layout(host_redhat, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'Host')
+      expect(chart.count { |x| x[:title] == "CPU (%)" }).to eq(0)
+      expect(chart.count { |x| x[:title] == "CPU (Mhz)" }).to eq(1)
+    end
+
+    it "shows CPU (%) when a Host has cpu_percent_available" do
+      allow(host_redhat).to receive(:cpu_percent_available?).and_return(true)
+      allow(host_redhat).to receive(:cpu_mhz_available?).and_return(false)
+      chart = ChartsLayoutService.layout(host_redhat, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'Host')
+      expect(chart.count { |x| x[:title] == "CPU (%)" }).to eq(1)
+      expect(chart.count { |x| x[:title] == "CPU (Mhz)" }).to eq(0)
+    end
+
     it "shows CPU (%) by default for VmOpenstack" do
       # By default percent is visible and mhz not
       chart = ChartsLayoutService.layout(vm_openstack, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'VmOrTemplate')
