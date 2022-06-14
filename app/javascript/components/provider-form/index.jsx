@@ -122,6 +122,8 @@ const ProviderForm = ({
                 type,
                 endpoints,
                 authentications,
+                metricsEnable: !!endpoints.metrics ? 'enabled' : 'disabled',
+                keypairEnable: !!endpoints.ssh_keypair ? 'enabled' : 'disabled',
               },
             });
           }).then(miqSparkleOff);
@@ -147,6 +149,8 @@ const ProviderForm = ({
 
   const onSubmit = ({ type, ..._data }, { getState }) => {
     if (type !== '-1') {
+      delete _data.metricsEnable;
+      delete _data.keypairEnable;
       miqSparkleOn();
 
       const message = sprintf(__('%s %s was saved'), title, _data.name || initialValues.name);
