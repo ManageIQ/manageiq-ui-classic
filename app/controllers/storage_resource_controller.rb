@@ -19,6 +19,10 @@ class StorageResourceController < ApplicationController
     super
   end
 
+  def breadcrumb_name(_model)
+    _('Storage Resources')
+  end
+
   def download_summary_pdf
     assert_privileges('storage_resource_view')
     super

@@ -15,6 +15,10 @@ class HostInitiatorGroupController < ApplicationController
     %w[cloud_volumes]
   end
 
+  def breadcrumb_name(_model)
+    _('Host Initiator Groups')
+  end
+
   def new
     assert_privileges("host_initiator_group_new")
 

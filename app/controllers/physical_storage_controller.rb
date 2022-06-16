@@ -15,6 +15,10 @@ class PhysicalStorageController < ApplicationController
 
   toolbar :physical_storage, :physical_storages
 
+  def breadcrumb_name(_model)
+    _('Physical Storages')
+  end
+
   def new
     @in_a_form = true
     if params[:storage_manager_id]
