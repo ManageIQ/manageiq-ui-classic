@@ -2914,6 +2914,7 @@ Rails.application.routes.draw do
         guest_applications
         groups
         html5_console
+        management_console
         kernel_drivers
         linux_initprocesses
         ownership_update
@@ -3118,6 +3119,7 @@ Rails.application.routes.draw do
         vmrc_console
         html5_console
         native_console
+        management_console
         wait_for_task
         win32_services
         x_button
