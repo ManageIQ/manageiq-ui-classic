@@ -184,8 +184,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :vm_chargeback,
           'fa fa-file-text-o fa-lg',
           N_('Show Chargeback preview'),
-          N_('Chargeback Preview'),
-          :klass     => ApplicationHelper::Button::VmPerf
+          N_('Chargeback Preview')
         ),
       ]
     ),

@@ -21,7 +21,7 @@ module DashboardHelper
   end
 
   def column_widgets(dashboard)
-    [:col1, :col2].map { |column| dashboard.key?(column) ? dashboard[column].uniq : [] }
+    [:col1, :col2].map { |column| dashboard&.key?(column) ? dashboard[column].uniq : [] }
   end
 
   # Method to replace the old table classname to react carbon class name.
@@ -31,10 +31,6 @@ module DashboardHelper
     end
 
     content
-  end
-
-  def column_data(dashboard, column)
-    dashboard.key?(column) ? dashboard[column].uniq : []
   end
 
   private
