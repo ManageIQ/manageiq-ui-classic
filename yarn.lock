@@ -1301,28 +1301,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/charts-react@npm:^0.54.12":
-  version: 0.54.12
-  resolution: "@carbon/charts-react@npm:0.54.12"
+"@carbon/charts-react@npm:^0.58.0":
+  version: 0.58.2
+  resolution: "@carbon/charts-react@npm:0.58.2"
   dependencies:
-    "@carbon/charts": ^0.54.12
-    "@carbon/icons-react": ^10.32.0
-    "@carbon/telemetry": 0.0.0-alpha.6
+    "@carbon/charts": ^0.58.2
+    "@carbon/icons-react": ^10.49.0
+    "@carbon/telemetry": 0.1.0
   peerDependencies:
-    react: ^16.0.0 || ^17.0.0
-    react-dom: ^16.0.0 || ^17.0.0
-  checksum: 32a4b5c31b549f26f647d225f6668bd088ca81d69ed630863a4fd17d1f1da8d76f14336ffa6b614321b3a13349498a985bfd46089715e1cfd0fbf3b6f777752a
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 19f4cc35e4e4baff2e220a83a8f04472c4680a0c79ebd60147d696064678c060b33bb45c2a3eca3fe76e6f614a08d532ec161c294fe477ef29171450ff622503
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:^0.54.12":
-  version: 0.54.12
-  resolution: "@carbon/charts@npm:0.54.12"
+"@carbon/charts@npm:^0.58.0, @carbon/charts@npm:^0.58.2":
+  version: 0.58.2
+  resolution: "@carbon/charts@npm:0.58.2"
   dependencies:
     "@carbon/colors": 10.29.0
-    "@carbon/telemetry": 0.0.0-alpha.6
+    "@carbon/telemetry": 0.1.0
     "@carbon/utils-position": 1.1.1
-    carbon-components: 10.40.0
+    carbon-components: 10.56.0
     d3-cloud: 1.2.5
     d3-sankey: 0.12.3
     date-fns: 2.8.1
@@ -1331,7 +1331,7 @@ __metadata:
     resize-observer-polyfill: 1.5.0
   peerDependencies:
     d3: 7.x
-  checksum: a4d83a105220f7d68542746981901d437277c137bf8ab6888868087b77905904dccb0ebb5698a6363e81b9e541e69c66bf9120e6d0fce9b6f7a7f93775b0e292
+  checksum: 9e8926fa76e2e1a9a7cc632a94fe626ece6553ce38356dee8da051419c0ec6e352fb7b371e98607a51982447b743b01e820d434830175baf06cd9657f4145bca
   languageName: node
   linkType: hard
 
@@ -1356,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icon-helpers@npm:^10.14.0, @carbon/icon-helpers@npm:^10.25.0":
+"@carbon/icon-helpers@npm:^10.14.0":
   version: 10.25.0
   resolution: "@carbon/icon-helpers@npm:10.25.0"
   checksum: 367c03a1362c02a7a977b94a57277c60e202cebac9de3ff7292911d2a2dbbebedd555cf3e0d1ee9ea4964a496f731316ac9d6532d986be89200134e70c5f1b20
@@ -1370,19 +1370,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^10.32.0":
-  version: 10.43.0
-  resolution: "@carbon/icons-react@npm:10.43.0"
-  dependencies:
-    "@carbon/icon-helpers": ^10.25.0
-    "@carbon/telemetry": 0.0.0-alpha.6
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: ">=16"
-  checksum: 3c571e0ad80af054b5847edf82642df4982f8f1c9427d3d3afd1f7f2746e252cc4d36a4a006473b6c3aa674d5b06ce68fe4152fb84ae66ef50014c299525bf02
-  languageName: node
-  linkType: hard
-
 "@carbon/icons-react@npm:^10.41.0":
   version: 10.47.0
   resolution: "@carbon/icons-react@npm:10.47.0"
@@ -1393,6 +1380,19 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: 8e22f00a101b1db8212b4d57f4b609e8861dd113b9f18e8a136b65f19caa5e669dcfabb82864a2a17160b3a135e08d1f0b2c1c5323d27883fa0841de9ce660f8
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^10.49.0":
+  version: 10.49.0
+  resolution: "@carbon/icons-react@npm:10.49.0"
+  dependencies:
+    "@carbon/icon-helpers": ^10.28.0
+    "@carbon/telemetry": 0.1.0
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16"
+  checksum: dd3aec2718ba80a40100f9015aea60f3cc39aa2e08580c07fa342c36034053f29ee5575446b0641692ef2555ca27a3f305561f271a2de2e0ddab564030d94de7
   languageName: node
   linkType: hard
 
@@ -1439,6 +1439,15 @@ __metadata:
   bin:
     carbon-telemetry: bin/carbon-telemetry.js
   checksum: 2f3cb8c0b6c8513cd3d9c1c0024108145474ad472800133732f382e007e75d926d274f5fca0e557b651616d065f28b7a149fe0f5f132cd6e018f714056a39f76
+  languageName: node
+  linkType: hard
+
+"@carbon/telemetry@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@carbon/telemetry@npm:0.1.0"
+  bin:
+    carbon-telemetry: bin/carbon-telemetry.js
+  checksum: e93039763ed40b612a1cb5c70001d5e7e92ff034f1559676d47ce9a98e6285ba2856f6a59146b03e6349702eb96d61f2fe91349e981ca858e45c4527a3c1e876
   languageName: node
   linkType: hard
 
@@ -4831,15 +4840,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"carbon-components@npm:10.40.0":
-  version: 10.40.0
-  resolution: "carbon-components@npm:10.40.0"
+"carbon-components@npm:10.56.0":
+  version: 10.56.0
+  resolution: "carbon-components@npm:10.56.0"
   dependencies:
-    "@carbon/telemetry": 0.0.0-alpha.6
+    "@carbon/telemetry": 0.1.0
     flatpickr: 4.6.1
     lodash.debounce: ^4.0.8
     warning: ^3.0.0
-  checksum: 61ba98295c6f5b79bbbcb52e04512d6a36471b753ad5b08b37544cc1e7eec15e675884f6874954b0593d3a59d3cd2f106fe1050622c40e764031f06dc9a9eaf4
+  checksum: 399e53d8072c9094230ab83ffe1f2eb2361e029b80efe0332e7ca2503954c7a7b3b5f43427b68c4302377be0f8ed756eb15f3f3a06501137184f367b7c88693c
   languageName: node
   linkType: hard
 
@@ -11707,8 +11716,8 @@ fsevents@^1.2.7:
     "@babel/preset-react": ~7.9.1
     "@babel/register": ~7.9.0
     "@babel/runtime-corejs3": ~7.9.0
-    "@carbon/charts": ^0.54.12
-    "@carbon/charts-react": ^0.54.12
+    "@carbon/charts": ^0.58.0
+    "@carbon/charts-react": ^0.58.0
     "@carbon/icons-react": ~10.26.0
     "@carbon/themes": ~10.28.0
     "@data-driven-forms/carbon-component-mapper": ~3.18.2
