@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import NoRecordsFound from '../../no-recods-found';
+import NoRecordsFound from '../../no-records-found';
 import { API } from '../../../http_api';
 import { tableData, reportSortDirection } from './helper';
 import MiqDataTable from '../../miq-data-table';

@@ -62,7 +62,7 @@ import MiqStructuredListHeader from '../components/miq-structured-list/miq-struc
 import { MainMenu, Navbar } from '../menu';
 import NetworkFloatingIPsForm from '../components/network-floatingIPs-form';
 import NetworkSecurityGroupsForm from '../components/network-security-groups-form';
-import NoRecordsFound from '../components/no-recods-found';
+import NoRecordsFound from '../components/no-records-found';
 import NotificationDrawer from '../components/notification-drawer/notification-drawer';
 import NotificationMessage from '../components/notification-message';
 import ObjectTypesList from '../components/data-tables/object-types-list';

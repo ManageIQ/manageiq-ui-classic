@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 import { http } from '../http_api';
 import { StaticGTLView } from './data-tables/gtl';
-import NoRecordsFound from './no-recods-found';
+import NoRecordsFound from './no-records-found';
 
 const generateParamsFromSettings = (settings) => {
   const params = {};
