@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { tableData, onSelectRender } from './helper';
 import MiqDataTable from '../../miq-data-table';
+import NoRecordsFound from '../../no-recods-found';
 
 const DbList = ({
   nodes, activeTree, dashboards, groups, widgets,
@@ -12,14 +13,14 @@ const DbList = ({
   const onSelect = (selectedRow) => onSelectRender(type, selectedRow, activeTree, nodes, rows);
 
   return (
-    rows.length > 0 && (
+    rows.length > 0 ? (
       <MiqDataTable
         rows={rows}
         headers={headers}
         onCellClick={(selectedRow) => onSelect(selectedRow)}
         mode="db-list"
       />
-    )
+    ) : <NoRecordsFound />
   );
 };
 
