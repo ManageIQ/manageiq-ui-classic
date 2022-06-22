@@ -17,7 +17,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
         className="label_header object_item"
       >
         <div
-          className="content"
+          className="content color"
         >
           <div
             className="expand wrap_text"
@@ -38,7 +38,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
         className="label_header object_item"
       >
         <div
-          className="content"
+          className="content color"
         >
           <div
             className="expand wrap_text"
@@ -59,7 +59,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
         className="label_header object_item"
       >
         <div
-          className="content"
+          className="content color"
         >
           <div
             className="expand wrap_text"
@@ -404,7 +404,7 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
         className="content_value object_item"
       >
         <div
-          className="content"
+          className="content color"
         >
           <div
             className="expand wrap_text"

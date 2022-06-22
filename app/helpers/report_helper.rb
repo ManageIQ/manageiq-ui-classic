@@ -1,6 +1,7 @@
 module ReportHelper
   include_concern 'Editor'
   include ReportInformationHelper
+  include ReportDashboardWidgetHelper
 
   STYLE_CLASSES = {
     :miq_rpt_red_text    => N_("Red Text"),
@@ -148,19 +149,19 @@ module ReportHelper
     end
   end
 
-  private
-
-  def row_data(label, value, style = "")
-    data = {:cells => {:label => label, :value => value}}
-    data[:style] = style if style.present?
-    data
-  end
-
   def report_dictionary(text, type)
     Dictionary.gettext(text, :type => type, :notfound => :titleize)
   end
 
   def report_action_url(type, accord)
     "miqJqueryRequest('/report/x_show/#{type}?accord=#{accord}');"
+  end
+
+  private
+
+  def row_data(label, value, style = "")
+    data = {:cells => {:label => label, :value => value}}
+    data[:style] = style if style.present?
+    data
   end
 end
