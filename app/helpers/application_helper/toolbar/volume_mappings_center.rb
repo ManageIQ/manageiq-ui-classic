@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::VolumeMappingsCenter < ApplicationHelper::Tool
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Define a new volume mapping'),
             t,
-            :url => "/new"
+            :klass => ApplicationHelper::Button::VolumeMappingNew
           ),
           api_button(
             :volume_mapping_delete,

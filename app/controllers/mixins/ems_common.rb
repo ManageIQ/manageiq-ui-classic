@@ -219,7 +219,8 @@ module Mixins
                                        "security_service_rule_",
                                        "storage_",
                                        "vm_",
-                                       "physical_server_")
+                                       "physical_server_",
+                                       "volume_")
 
         case params[:pressed]
         # Clusters

@@ -4,6 +4,7 @@ class VolumeMappingController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
+  include Mixins::GenericButtonMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -14,8 +15,18 @@ class VolumeMappingController < ApplicationController
     assert_privileges("volume_mapping_new")
 
     @in_a_form = true
+    if params[:storage_manager_id]
+      @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
+    end
     drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
+  end
+
+  def show
+    if params[:id].nil?
+      @breadcrumbs.clear
+    end
+    super
   end
 
   private
@@ -45,4 +56,14 @@ class VolumeMappingController < ApplicationController
   feature_for_actions "#{controller_name}_show", :download_summary_pdf
 
   toolbar :volume_mapping, :volume_mappings
+
+  def specific_buttons(pressed)
+    case pressed
+    when 'volume_mapping_new'
+      javascript_redirect(:action => 'new')
+    else
+      return false
+    end
+    true
+  end
 end
