@@ -30,6 +30,7 @@ const createSchema = (emsId, setState) => ({
       labelText: __('Provider'),
       isRequired: true,
       isSearchable: true,
+      simpleValue: true,
       validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => API.get(providerUrl).then(({ resources }) => resources.map(({ id, name }) => ({ value: id, label: name }))),
       onChange: (value) => setState((state) => ({ ...state, emsId: value })),
@@ -112,6 +113,7 @@ const createSchema = (emsId, setState) => ({
       isMulti: true,
       isSearchable: true,
       isClearable: true,
+      simpleValue: true,
       condition: {
         and: [
           {
