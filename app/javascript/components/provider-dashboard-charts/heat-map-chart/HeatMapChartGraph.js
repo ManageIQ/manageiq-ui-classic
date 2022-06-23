@@ -13,7 +13,15 @@ const HeatMapChartGraph = ({
   const heatmapMemoryData = (heatData2 === null) ? [] : getHeatMapData(heatData2);
 
   const heatmapCpuTooltip = () => (data) => {
-    const d1 = heatmapCpuData[0];
+    let d1;
+
+    if (dataPoint1 === 'resourceUsage') {
+      d1 = heatmapCpuData.find((item) => item.node === data[1].value);
+    }
+    else {
+      d1 = heatmapCpuData[0];
+    }
+
     let percent = -1;
     let tooltip = sprintf(__('Cluster: %s'), data[1].value) + `<br>` + sprintf(__('Provider: %s'), d1.provider)
     if (data[2].value === null || data[1].value === null) {
