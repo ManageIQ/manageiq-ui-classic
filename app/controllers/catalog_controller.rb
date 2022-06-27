@@ -956,7 +956,7 @@ class CatalogController < ApplicationController
     end
 
     # for Ansible Tower items, check for Provider first
-    if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+    if @edit[:new][:st_prov_type] == 'generic_ansible_tower' || @edit[:new][:st_prov_type] == 'generic_awx'
       if @edit[:new][:manager_id].blank?
         add_flash(_("Provider is required, please select one from the list"), :error)
       elsif @edit[:new][:template_id].blank?
@@ -1038,7 +1038,7 @@ class CatalogController < ApplicationController
            end
       common_st_record_vars(st)
       add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
-      add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower)
+      add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx)
       st.service_type = "atomic"
 
       if request
@@ -1234,7 +1234,7 @@ class CatalogController < ApplicationController
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
-    available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
+    available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower) || @record.kind_of?(ServiceTemplateAwx)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
@@ -1394,7 +1394,7 @@ class CatalogController < ApplicationController
     end
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
-    fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
+    fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_awx generic_container_template].include?(@edit[:new][:st_prov_type])
     fetch_form_vars_ovf_template if @edit[:new][:st_prov_type] == 'generic_ovf_template'
   end
 
@@ -1447,7 +1447,7 @@ class CatalogController < ApplicationController
         @edit[:new][:manager_id]          = nil
       else
         @edit[:new][:manager_id] = params[:manager_id]
-        available_job_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+        available_job_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_ansible_tower' || @edit[:new][:st_prov_type] == 'generic_awx'
         available_container_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_container_template'
       end
     end
@@ -1478,7 +1478,7 @@ class CatalogController < ApplicationController
   end
 
   def available_container_templates(manager_id)
-    method = @edit[:new][:st_prov_type] == 'generic_ansible_tower' ? 'configuration_scripts' : 'container_templates'
+    method = @edit[:new][:st_prov_type] == 'generic_ansible_tower' || @edit[:new][:st_prov_type] == 'generic_awx' ? 'configuration_scripts' : 'container_templates'
     @edit[:new][:available_templates] =
       ExtManagementSystem.find_by(:id => manager_id).send(method).collect { |t| [t.name, t.id] }.sort
   end
@@ -1497,14 +1497,14 @@ class CatalogController < ApplicationController
 
   def fetch_all_templates(manager_id)
     all_templates = ExtManagementSystem.find_by(:id => manager_id).configuration_scripts.sort_by(&:name)
-    job_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' }.compact
-    workflow_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow' }.compact
+    workflow_templates = all_templates.collect { |t| [t.name, t.id] if t.kind_of?(ManageIQ::Providers::AutomationManager::ConfigurationWorkflow) }.compact
+    job_templates = all_templates.collect { |t| [t.name, t.id] if t.kind_of?(ManageIQ::Providers::AutomationManager::ConfigurationScript) }.compact - workflow_templates
     return job_templates, workflow_templates
   end
 
   def available_ansible_tower_managers
     @edit[:new][:available_managers] =
-      ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
+      ManageIQ::Providers::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
     available_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
