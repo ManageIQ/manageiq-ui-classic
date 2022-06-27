@@ -105,7 +105,7 @@ module ApplicationHelper
     end
 
     # Detect if queried features are missing from the database and possibly invalid
-    if !Rails.env.production? && features.detect { |feature| ! MiqProductFeature.feature_exists?(feature) }
+    if !Rails.env.production? && features.detect { |feature| !MiqProductFeature.feature_exists?(feature) }
       message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
       identifiers = MiqProductFeature.features.keys
       if Rails.env.development?
