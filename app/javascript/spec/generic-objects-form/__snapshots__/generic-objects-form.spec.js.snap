@@ -3799,17 +3799,6 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                 />
                                               </label>
                                             </span>
-                                            <div>
-                                              <span
-                                                style={
-                                                  Object {
-                                                    "color": "red",
-                                                  }
-                                                }
-                                              >
-                                                File is too large, maximum allowed size is 5000000 bytes. Current file has undefined byte
-                                              </span>
-                                            </div>
                                           </div>
                                         </FileUploadComponent>
                                       </FormFieldHideWrapper>
@@ -4093,7 +4082,6 @@ exports[`Generic Object Form Component should render adding a new generic object
                                   "associations": Array [],
                                   "attributes": Array [],
                                   "description": "Required",
-                                  "file_upload": "File is too large, maximum allowed size is 5000000 bytes. Current file has undefined byte",
                                   "methods": Array [],
                                   "name": "Required",
                                 },
@@ -18091,17 +18079,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           />
                                                         </label>
                                                       </span>
-                                                      <div>
-                                                        <span
-                                                          style={
-                                                            Object {
-                                                              "color": "red",
-                                                            }
-                                                          }
-                                                        >
-                                                          File is too large, maximum allowed size is 5000000 bytes. Current file has undefined byte
-                                                        </span>
-                                                      </div>
                                                     </div>
                                                   </FileUploadComponent>
                                                 </FormFieldHideWrapper>
@@ -18431,7 +18408,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             canReset={true}
                             canSubmit={false}
                             cancelLabel="Cancel"
-                            disableSubmit={true}
                             formFields={
                               Array [
                                 <SingleField
@@ -18702,7 +18678,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "errors": Object {
                                   "associations": Array [],
                                   "attributes": Array [],
-                                  "file_upload": "File is too large, maximum allowed size is 5000000 bytes. Current file has undefined byte",
                                   "methods": Array [],
                                 },
                                 "form": Object {
@@ -18740,7 +18715,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {
                                   "associations": Array [
                                     Object {
@@ -18767,7 +18742,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   ],
                                   "name": "Generic Object",
                                 },
-                                "invalid": true,
+                                "invalid": false,
                                 "modified": Object {
                                   "associations": false,
                                   "associations[0].associations_name": false,
@@ -18807,7 +18782,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "methods[0].methods_name": false,
                                   "name": false,
                                 },
-                                "valid": false,
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {
                                   "associations": Array [
@@ -19096,7 +19071,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 >
                                   <Button
                                     buttonType="submit"
-                                    disabled={true}
                                     key="form-submit"
                                     label="Save"
                                     type="submit"
@@ -19104,7 +19078,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   >
                                     <Button
                                       dangerDescription="danger"
-                                      disabled={true}
+                                      disabled={false}
                                       isExpressive={false}
                                       kind="primary"
                                       size="default"
@@ -19117,8 +19091,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
-                                        disabled={true}
+                                        className="bx--btn bx--btn--primary"
+                                        disabled={false}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
