@@ -174,9 +174,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                       "id": "class",
                       "isSearchable": true,
                       "label": "Class",
-                      "loadOptions": [Function],
                       "name": "class",
+                      "options": Array [
+                        Object {
+                          "label": "Bottleneck Event",
+                          "value": "BottleneckEvent",
+                        },
+                        Object {
+                          "label": "Performance - Container Project",
+                          "value": "ContainerProjectPerformance",
+                        },
+                      ],
                       "placeholder": "<Choose>",
+                      "simpleValue": true,
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -428,9 +438,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                         "id": "class",
                         "isSearchable": true,
                         "label": "Class",
-                        "loadOptions": [Function],
                         "name": "class",
+                        "options": Array [
+                          Object {
+                            "label": "Bottleneck Event",
+                            "value": "BottleneckEvent",
+                          },
+                          Object {
+                            "label": "Performance - Container Project",
+                            "value": "ContainerProjectPerformance",
+                          },
+                        ],
                         "placeholder": "<Choose>",
+                        "simpleValue": true,
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -675,9 +695,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                           "id": "class",
                           "isSearchable": true,
                           "label": "Class",
-                          "loadOptions": [Function],
                           "name": "class",
+                          "options": Array [
+                            Object {
+                              "label": "Bottleneck Event",
+                              "value": "BottleneckEvent",
+                            },
+                            Object {
+                              "label": "Performance - Container Project",
+                              "value": "ContainerProjectPerformance",
+                            },
+                          ],
                           "placeholder": "<Choose>",
+                          "simpleValue": true,
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -927,9 +957,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -1132,9 +1172,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -1351,9 +1401,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -1562,9 +1622,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -1796,9 +1866,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -2007,9 +2087,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -2839,9 +2929,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                     "id": "class",
                                     "isSearchable": true,
                                     "label": "Class",
-                                    "loadOptions": [Function],
                                     "name": "class",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Bottleneck Event",
+                                        "value": "BottleneckEvent",
+                                      },
+                                      Object {
+                                        "label": "Performance - Container Project",
+                                        "value": "ContainerProjectPerformance",
+                                      },
+                                    ],
                                     "placeholder": "<Choose>",
+                                    "simpleValue": true,
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -2897,9 +2997,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                         "id": "class",
                                         "isSearchable": true,
                                         "label": "Class",
-                                        "loadOptions": [Function],
                                         "name": "class",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Bottleneck Event",
+                                            "value": "BottleneckEvent",
+                                          },
+                                          Object {
+                                            "label": "Performance - Container Project",
+                                            "value": "ContainerProjectPerformance",
+                                          },
+                                        ],
                                         "placeholder": "<Choose>",
+                                        "simpleValue": true,
                                         "validate": Array [
                                           Object {
                                             "type": "required",
@@ -2959,9 +3069,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -3023,9 +3143,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -3074,9 +3204,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                               "id": "class",
                                               "isSearchable": true,
                                               "label": "Class",
-                                              "loadOptions": [Function],
                                               "name": "class",
+                                              "options": Array [
+                                                Object {
+                                                  "label": "Bottleneck Event",
+                                                  "value": "BottleneckEvent",
+                                                },
+                                                Object {
+                                                  "label": "Performance - Container Project",
+                                                  "value": "ContainerProjectPerformance",
+                                                },
+                                              ],
                                               "placeholder": "<Choose>",
+                                              "simpleValue": true,
                                               "validate": Array [
                                                 Object {
                                                   "type": "required",
@@ -3137,9 +3277,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                 "id": "class",
                                                 "isSearchable": true,
                                                 "label": "Class",
-                                                "loadOptions": [Function],
                                                 "name": "class",
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "Bottleneck Event",
+                                                    "value": "BottleneckEvent",
+                                                  },
+                                                  Object {
+                                                    "label": "Performance - Container Project",
+                                                    "value": "ContainerProjectPerformance",
+                                                  },
+                                                ],
                                                 "placeholder": "<Choose>",
+                                                "simpleValue": true,
                                                 "validate": Array [
                                                   Object {
                                                     "type": "required",
@@ -3982,9 +4132,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -4279,9 +4439,19 @@ exports[`Generic Object Form Component should render adding a new generic object
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -4531,11 +4701,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
           "associations": Array [
             Object {
               "associations_name": "bottle_neck",
-              "class": "Bottleneck Event",
+              "class": "BottleneckEvent",
             },
             Object {
               "associations_name": "project",
-              "class": "Performance - Container Project",
+              "class": "ContainerProjectPerformance",
             },
           ],
           "attributes": Array [
@@ -4676,9 +4846,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                       "id": "class",
                       "isSearchable": true,
                       "label": "Class",
-                      "loadOptions": [Function],
                       "name": "class",
+                      "options": Array [
+                        Object {
+                          "label": "Bottleneck Event",
+                          "value": "BottleneckEvent",
+                        },
+                        Object {
+                          "label": "Performance - Container Project",
+                          "value": "ContainerProjectPerformance",
+                        },
+                      ],
                       "placeholder": "<Choose>",
+                      "simpleValue": true,
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -4843,11 +5023,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
             "associations": Array [
               Object {
                 "associations_name": "bottle_neck",
-                "class": "Bottleneck Event",
+                "class": "BottleneckEvent",
               },
               Object {
                 "associations_name": "project",
-                "class": "Performance - Container Project",
+                "class": "ContainerProjectPerformance",
               },
             ],
             "attributes": Array [
@@ -4988,9 +5168,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                         "id": "class",
                         "isSearchable": true,
                         "label": "Class",
-                        "loadOptions": [Function],
                         "name": "class",
+                        "options": Array [
+                          Object {
+                            "label": "Bottleneck Event",
+                            "value": "BottleneckEvent",
+                          },
+                          Object {
+                            "label": "Performance - Container Project",
+                            "value": "ContainerProjectPerformance",
+                          },
+                        ],
                         "placeholder": "<Choose>",
+                        "simpleValue": true,
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -5146,11 +5336,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
               "associations": Array [
                 Object {
                   "associations_name": "bottle_neck",
-                  "class": "Bottleneck Event",
+                  "class": "BottleneckEvent",
                 },
                 Object {
                   "associations_name": "project",
-                  "class": "Performance - Container Project",
+                  "class": "ContainerProjectPerformance",
                 },
               ],
               "attributes": Array [
@@ -5292,9 +5482,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                           "id": "class",
                           "isSearchable": true,
                           "label": "Class",
-                          "loadOptions": [Function],
                           "name": "class",
+                          "options": Array [
+                            Object {
+                              "label": "Bottleneck Event",
+                              "value": "BottleneckEvent",
+                            },
+                            Object {
+                              "label": "Performance - Container Project",
+                              "value": "ContainerProjectPerformance",
+                            },
+                          ],
                           "placeholder": "<Choose>",
+                          "simpleValue": true,
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -5426,11 +5626,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 "associations": Array [
                   Object {
                     "associations_name": "bottle_neck",
-                    "class": "Bottleneck Event",
+                    "class": "BottleneckEvent",
                   },
                   Object {
                     "associations_name": "project",
-                    "class": "Performance - Container Project",
+                    "class": "ContainerProjectPerformance",
                   },
                 ],
                 "attributes": Array [
@@ -5601,9 +5801,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -5839,9 +6049,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -6085,9 +6305,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -6329,9 +6559,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -6590,9 +6830,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -6834,9 +7084,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -8175,9 +8435,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     "id": "class",
                                     "isSearchable": true,
                                     "label": "Class",
-                                    "loadOptions": [Function],
                                     "name": "class",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Bottleneck Event",
+                                        "value": "BottleneckEvent",
+                                      },
+                                      Object {
+                                        "label": "Performance - Container Project",
+                                        "value": "ContainerProjectPerformance",
+                                      },
+                                    ],
                                     "placeholder": "<Choose>",
+                                    "simpleValue": true,
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -8233,9 +8503,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         "id": "class",
                                         "isSearchable": true,
                                         "label": "Class",
-                                        "loadOptions": [Function],
                                         "name": "class",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Bottleneck Event",
+                                            "value": "BottleneckEvent",
+                                          },
+                                          Object {
+                                            "label": "Performance - Container Project",
+                                            "value": "ContainerProjectPerformance",
+                                          },
+                                        ],
                                         "placeholder": "<Choose>",
+                                        "simpleValue": true,
                                         "validate": Array [
                                           Object {
                                             "type": "required",
@@ -8295,9 +8575,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -8359,9 +8649,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -8410,9 +8710,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                               "id": "class",
                                               "isSearchable": true,
                                               "label": "Class",
-                                              "loadOptions": [Function],
                                               "name": "class",
+                                              "options": Array [
+                                                Object {
+                                                  "label": "Bottleneck Event",
+                                                  "value": "BottleneckEvent",
+                                                },
+                                                Object {
+                                                  "label": "Performance - Container Project",
+                                                  "value": "ContainerProjectPerformance",
+                                                },
+                                              ],
                                               "placeholder": "<Choose>",
+                                              "simpleValue": true,
                                               "validate": Array [
                                                 Object {
                                                   "type": "required",
@@ -8473,9 +8783,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                 "id": "class",
                                                 "isSearchable": true,
                                                 "label": "Class",
-                                                "loadOptions": [Function],
                                                 "name": "class",
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "Bottleneck Event",
+                                                    "value": "BottleneckEvent",
+                                                  },
+                                                  Object {
+                                                    "label": "Performance - Container Project",
+                                                    "value": "ContainerProjectPerformance",
+                                                  },
+                                                ],
                                                 "placeholder": "<Choose>",
+                                                "simpleValue": true,
                                                 "validate": Array [
                                                   Object {
                                                     "type": "required",
@@ -8540,9 +8860,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           "id": "class",
                                                           "isSearchable": true,
                                                           "label": "Class",
-                                                          "loadOptions": [Function],
                                                           "name": "class",
+                                                          "options": Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ],
                                                           "placeholder": "<Choose>",
+                                                          "simpleValue": true,
                                                           "validate": Array [
                                                             Object {
                                                               "type": "required",
@@ -8671,9 +9001,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         isSearchable={true}
                                                         key="associations[0].class"
                                                         label="Class"
-                                                        loadOptions={[Function]}
                                                         name="associations[0].class"
+                                                        options={
+                                                          Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ]
+                                                        }
                                                         placeholder="<Choose>"
+                                                        simpleValue={true}
                                                         validate={
                                                           Array [
                                                             Object {
@@ -8690,9 +9032,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               "id": "class",
                                                               "isSearchable": true,
                                                               "label": "Class",
-                                                              "loadOptions": [Function],
                                                               "name": "associations[0].class",
+                                                              "options": Array [
+                                                                Object {
+                                                                  "label": "Bottleneck Event",
+                                                                  "value": "BottleneckEvent",
+                                                                },
+                                                                Object {
+                                                                  "label": "Performance - Container Project",
+                                                                  "value": "ContainerProjectPerformance",
+                                                                },
+                                                              ],
                                                               "placeholder": "<Choose>",
+                                                              "simpleValue": true,
                                                               "validate": Array [
                                                                 Object {
                                                                   "type": "required",
@@ -8710,9 +9062,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               id="class"
                                                               isSearchable={true}
                                                               label="Class"
-                                                              loadOptions={[Function]}
                                                               name="associations[0].class"
+                                                              options={
+                                                                Array [
+                                                                  Object {
+                                                                    "label": "Bottleneck Event",
+                                                                    "value": "BottleneckEvent",
+                                                                  },
+                                                                  Object {
+                                                                    "label": "Performance - Container Project",
+                                                                    "value": "ContainerProjectPerformance",
+                                                                  },
+                                                                ]
+                                                              }
                                                               placeholder="<Choose>"
+                                                              simpleValue={true}
                                                               validate={
                                                                 Array [
                                                                   Object {
@@ -8727,10 +9091,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 id="class"
                                                                 isSearchable={true}
                                                                 label="Class"
-                                                                loadOptions={[Function]}
                                                                 loadingMessage="Loading..."
                                                                 name="associations[0].class"
+                                                                options={
+                                                                  Array [
+                                                                    Object {
+                                                                      "label": "Bottleneck Event",
+                                                                      "value": "BottleneckEvent",
+                                                                    },
+                                                                    Object {
+                                                                      "label": "Performance - Container Project",
+                                                                      "value": "ContainerProjectPerformance",
+                                                                    },
+                                                                  ]
+                                                                }
                                                                 placeholder="<Choose>"
+                                                                simpleValue={true}
                                                                 validate={
                                                                   Array [
                                                                     Object {
@@ -8748,18 +9124,28 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   isClearable={false}
                                                                   isSearchable={false}
                                                                   labelText="Class"
-                                                                  loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
                                                                   name="associations[0].class"
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
+                                                                  options={
+                                                                    Array [
+                                                                      Object {
+                                                                        "label": "Bottleneck Event",
+                                                                        "value": "BottleneckEvent",
+                                                                      },
+                                                                      Object {
+                                                                        "label": "Performance - Container Project",
+                                                                        "value": "ContainerProjectPerformance",
+                                                                      },
+                                                                    ]
+                                                                  }
                                                                   placeholder="<Choose>"
                                                                   pluckSingleValue={true}
-                                                                  simpleValue={false}
-                                                                  value=""
+                                                                  simpleValue={true}
+                                                                  value="BottleneckEvent"
                                                                 >
                                                                   <ClearedSelectSearchable
                                                                     className="class"
@@ -8790,7 +9176,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       ]
                                                                     }
                                                                     placeholder="<Choose>"
-                                                                    value=""
+                                                                    value={
+                                                                      Array [
+                                                                        Object {
+                                                                          "label": "Bottleneck Event",
+                                                                          "value": "BottleneckEvent",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <ComboBox
                                                                       ariaLabel="Choose an item"
@@ -8798,7 +9191,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       direction="bottom"
                                                                       disabled={false}
                                                                       id="associations[0].class"
-                                                                      initialSelectedItem=""
+                                                                      initialSelectedItem={
+                                                                        Object {
+                                                                          "label": "Bottleneck Event",
+                                                                          "value": "BottleneckEvent",
+                                                                        }
+                                                                      }
                                                                       invalid={false}
                                                                       invalidText=""
                                                                       itemToElement={null}
@@ -8830,7 +9228,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                         defaultIsOpen={false}
                                                                         environment={[Window]}
                                                                         getA11yStatusMessage={[Function]}
-                                                                        initialSelectedItem=""
+                                                                        initialSelectedItem={
+                                                                          Object {
+                                                                            "label": "Bottleneck Event",
+                                                                            "value": "BottleneckEvent",
+                                                                          }
+                                                                        }
                                                                         inputId="associations[0].class"
                                                                         inputValue="Bottleneck Event"
                                                                         itemToString={[Function]}
@@ -9136,9 +9539,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           "id": "class",
                                                           "isSearchable": true,
                                                           "label": "Class",
-                                                          "loadOptions": [Function],
                                                           "name": "class",
+                                                          "options": Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ],
                                                           "placeholder": "<Choose>",
+                                                          "simpleValue": true,
                                                           "validate": Array [
                                                             Object {
                                                               "type": "required",
@@ -9267,9 +9680,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         isSearchable={true}
                                                         key="associations[1].class"
                                                         label="Class"
-                                                        loadOptions={[Function]}
                                                         name="associations[1].class"
+                                                        options={
+                                                          Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ]
+                                                        }
                                                         placeholder="<Choose>"
+                                                        simpleValue={true}
                                                         validate={
                                                           Array [
                                                             Object {
@@ -9286,9 +9711,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               "id": "class",
                                                               "isSearchable": true,
                                                               "label": "Class",
-                                                              "loadOptions": [Function],
                                                               "name": "associations[1].class",
+                                                              "options": Array [
+                                                                Object {
+                                                                  "label": "Bottleneck Event",
+                                                                  "value": "BottleneckEvent",
+                                                                },
+                                                                Object {
+                                                                  "label": "Performance - Container Project",
+                                                                  "value": "ContainerProjectPerformance",
+                                                                },
+                                                              ],
                                                               "placeholder": "<Choose>",
+                                                              "simpleValue": true,
                                                               "validate": Array [
                                                                 Object {
                                                                   "type": "required",
@@ -9306,9 +9741,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               id="class"
                                                               isSearchable={true}
                                                               label="Class"
-                                                              loadOptions={[Function]}
                                                               name="associations[1].class"
+                                                              options={
+                                                                Array [
+                                                                  Object {
+                                                                    "label": "Bottleneck Event",
+                                                                    "value": "BottleneckEvent",
+                                                                  },
+                                                                  Object {
+                                                                    "label": "Performance - Container Project",
+                                                                    "value": "ContainerProjectPerformance",
+                                                                  },
+                                                                ]
+                                                              }
                                                               placeholder="<Choose>"
+                                                              simpleValue={true}
                                                               validate={
                                                                 Array [
                                                                   Object {
@@ -9323,10 +9770,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 id="class"
                                                                 isSearchable={true}
                                                                 label="Class"
-                                                                loadOptions={[Function]}
                                                                 loadingMessage="Loading..."
                                                                 name="associations[1].class"
+                                                                options={
+                                                                  Array [
+                                                                    Object {
+                                                                      "label": "Bottleneck Event",
+                                                                      "value": "BottleneckEvent",
+                                                                    },
+                                                                    Object {
+                                                                      "label": "Performance - Container Project",
+                                                                      "value": "ContainerProjectPerformance",
+                                                                    },
+                                                                  ]
+                                                                }
                                                                 placeholder="<Choose>"
+                                                                simpleValue={true}
                                                                 validate={
                                                                   Array [
                                                                     Object {
@@ -9344,18 +9803,28 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   isClearable={false}
                                                                   isSearchable={false}
                                                                   labelText="Class"
-                                                                  loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
                                                                   name="associations[1].class"
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
+                                                                  options={
+                                                                    Array [
+                                                                      Object {
+                                                                        "label": "Bottleneck Event",
+                                                                        "value": "BottleneckEvent",
+                                                                      },
+                                                                      Object {
+                                                                        "label": "Performance - Container Project",
+                                                                        "value": "ContainerProjectPerformance",
+                                                                      },
+                                                                    ]
+                                                                  }
                                                                   placeholder="<Choose>"
                                                                   pluckSingleValue={true}
-                                                                  simpleValue={false}
-                                                                  value=""
+                                                                  simpleValue={true}
+                                                                  value="ContainerProjectPerformance"
                                                                 >
                                                                   <ClearedSelectSearchable
                                                                     className="class"
@@ -9386,7 +9855,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       ]
                                                                     }
                                                                     placeholder="<Choose>"
-                                                                    value=""
+                                                                    value={
+                                                                      Array [
+                                                                        Object {
+                                                                          "label": "Performance - Container Project",
+                                                                          "value": "ContainerProjectPerformance",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <ComboBox
                                                                       ariaLabel="Choose an item"
@@ -9394,7 +9870,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       direction="bottom"
                                                                       disabled={false}
                                                                       id="associations[1].class"
-                                                                      initialSelectedItem=""
+                                                                      initialSelectedItem={
+                                                                        Object {
+                                                                          "label": "Performance - Container Project",
+                                                                          "value": "ContainerProjectPerformance",
+                                                                        }
+                                                                      }
                                                                       invalid={false}
                                                                       invalidText=""
                                                                       itemToElement={null}
@@ -9426,7 +9907,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                         defaultIsOpen={false}
                                                                         environment={[Window]}
                                                                         getA11yStatusMessage={[Function]}
-                                                                        initialSelectedItem=""
+                                                                        initialSelectedItem={
+                                                                          Object {
+                                                                            "label": "Performance - Container Project",
+                                                                            "value": "ContainerProjectPerformance",
+                                                                          }
+                                                                        }
                                                                         inputId="associations[1].class"
                                                                         inputValue="Performance - Container Project"
                                                                         itemToString={[Function]}
@@ -11067,6 +11553,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             canReset={true}
                             canSubmit={false}
                             cancelLabel="Cancel"
+                            disableSubmit={true}
                             formFields={
                               Array [
                                 <SingleField
@@ -11189,9 +11676,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -11313,16 +11810,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             formSpyProps={
                               Object {
                                 "active": undefined,
-                                "dirty": true,
-                                "dirtyFields": Object {
-                                  "associations": true,
-                                  "associations[0].class": true,
-                                  "associations[1].class": true,
-                                },
+                                "dirty": false,
+                                "dirtyFields": Object {},
                                 "dirtyFieldsSinceLastSubmit": Object {
                                   "associations": true,
                                   "associations[0].associations_name": true,
+                                  "associations[0].class": true,
                                   "associations[1].associations_name": true,
+                                  "associations[1].class": true,
                                   "attributes": true,
                                   "attributes[0].attributes_name": true,
                                   "attributes[0].type": true,
@@ -11379,11 +11874,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "associations": Array [
                                     Object {
                                       "associations_name": "bottle_neck",
-                                      "class": "Bottleneck Event",
+                                      "class": "BottleneckEvent",
                                     },
                                     Object {
                                       "associations_name": "project",
-                                      "class": "Performance - Container Project",
+                                      "class": "ContainerProjectPerformance",
                                     },
                                   ],
                                   "attributes": Array [
@@ -11408,9 +11903,9 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "modified": Object {
                                   "associations": false,
                                   "associations[0].associations_name": false,
-                                  "associations[0].class": true,
+                                  "associations[0].class": false,
                                   "associations[1].associations_name": false,
-                                  "associations[1].class": true,
+                                  "associations[1].class": false,
                                   "attributes": false,
                                   "attributes[0].attributes_name": false,
                                   "attributes[0].type": false,
@@ -11422,7 +11917,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "name": false,
                                 },
                                 "modifiedSinceLastSubmit": false,
-                                "pristine": false,
+                                "pristine": true,
                                 "submitError": undefined,
                                 "submitErrors": undefined,
                                 "submitFailed": false,
@@ -11450,9 +11945,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "associations": Array [
                                     Object {
                                       "associations_name": "bottle_neck",
+                                      "class": "BottleneckEvent",
                                     },
                                     Object {
                                       "associations_name": "project",
+                                      "class": "ContainerProjectPerformance",
                                     },
                                   ],
                                   "attributes": Array [
@@ -11611,9 +12108,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -11736,6 +12243,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 >
                                   <Button
                                     buttonType="submit"
+                                    disabled={true}
                                     key="form-submit"
                                     label="Save"
                                     type="submit"
@@ -11743,7 +12251,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   >
                                     <Button
                                       dangerDescription="danger"
-                                      disabled={false}
+                                      disabled={true}
                                       isExpressive={false}
                                       kind="primary"
                                       size="default"
@@ -11756,8 +12264,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--primary"
-                                        disabled={false}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -11773,7 +12281,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   </Button>
                                   <Button
                                     buttonType="reset"
-                                    disabled={false}
+                                    disabled={true}
                                     key="form-reset"
                                     label="Reset"
                                     onClick={[Function]}
@@ -11781,7 +12289,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   >
                                     <Button
                                       dangerDescription="danger"
-                                      disabled={false}
+                                      disabled={true}
                                       isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
@@ -11794,8 +12302,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
+                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                        disabled={true}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -11926,11 +12434,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
           "associations": Array [
             Object {
               "associations_name": "bottle_neck",
-              "class": "Bottleneck Event",
+              "class": "BottleneckEvent",
             },
             Object {
               "associations_name": "project",
-              "class": "Performance - Container Project",
+              "class": "ContainerProjectPerformance",
             },
           ],
           "attributes": Array [
@@ -12068,9 +12576,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                       "id": "class",
                       "isSearchable": true,
                       "label": "Class",
-                      "loadOptions": [Function],
                       "name": "class",
+                      "options": Array [
+                        Object {
+                          "label": "Bottleneck Event",
+                          "value": "BottleneckEvent",
+                        },
+                        Object {
+                          "label": "Performance - Container Project",
+                          "value": "ContainerProjectPerformance",
+                        },
+                      ],
                       "placeholder": "<Choose>",
+                      "simpleValue": true,
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -12235,11 +12753,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
             "associations": Array [
               Object {
                 "associations_name": "bottle_neck",
-                "class": "Bottleneck Event",
+                "class": "BottleneckEvent",
               },
               Object {
                 "associations_name": "project",
-                "class": "Performance - Container Project",
+                "class": "ContainerProjectPerformance",
               },
             ],
             "attributes": Array [
@@ -12377,9 +12895,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                         "id": "class",
                         "isSearchable": true,
                         "label": "Class",
-                        "loadOptions": [Function],
                         "name": "class",
+                        "options": Array [
+                          Object {
+                            "label": "Bottleneck Event",
+                            "value": "BottleneckEvent",
+                          },
+                          Object {
+                            "label": "Performance - Container Project",
+                            "value": "ContainerProjectPerformance",
+                          },
+                        ],
                         "placeholder": "<Choose>",
+                        "simpleValue": true,
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -12535,11 +13063,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
               "associations": Array [
                 Object {
                   "associations_name": "bottle_neck",
-                  "class": "Bottleneck Event",
+                  "class": "BottleneckEvent",
                 },
                 Object {
                   "associations_name": "project",
-                  "class": "Performance - Container Project",
+                  "class": "ContainerProjectPerformance",
                 },
               ],
               "attributes": Array [
@@ -12678,9 +13206,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                           "id": "class",
                           "isSearchable": true,
                           "label": "Class",
-                          "loadOptions": [Function],
                           "name": "class",
+                          "options": Array [
+                            Object {
+                              "label": "Bottleneck Event",
+                              "value": "BottleneckEvent",
+                            },
+                            Object {
+                              "label": "Performance - Container Project",
+                              "value": "ContainerProjectPerformance",
+                            },
+                          ],
                           "placeholder": "<Choose>",
+                          "simpleValue": true,
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -12812,11 +13350,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                 "associations": Array [
                   Object {
                     "associations_name": "bottle_neck",
-                    "class": "Bottleneck Event",
+                    "class": "BottleneckEvent",
                   },
                   Object {
                     "associations_name": "project",
-                    "class": "Performance - Container Project",
+                    "class": "ContainerProjectPerformance",
                   },
                 ],
                 "attributes": Array [
@@ -12984,9 +13522,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -13222,9 +13770,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               "id": "class",
                               "isSearchable": true,
                               "label": "Class",
-                              "loadOptions": [Function],
                               "name": "class",
+                              "options": Array [
+                                Object {
+                                  "label": "Bottleneck Event",
+                                  "value": "BottleneckEvent",
+                                },
+                                Object {
+                                  "label": "Performance - Container Project",
+                                  "value": "ContainerProjectPerformance",
+                                },
+                              ],
                               "placeholder": "<Choose>",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -13468,9 +14026,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -13712,9 +14280,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "id": "class",
                                 "isSearchable": true,
                                 "label": "Class",
-                                "loadOptions": [Function],
                                 "name": "class",
+                                "options": Array [
+                                  Object {
+                                    "label": "Bottleneck Event",
+                                    "value": "BottleneckEvent",
+                                  },
+                                  Object {
+                                    "label": "Performance - Container Project",
+                                    "value": "ContainerProjectPerformance",
+                                  },
+                                ],
                                 "placeholder": "<Choose>",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -13973,9 +14551,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -14217,9 +14805,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "id": "class",
                                   "isSearchable": true,
                                   "label": "Class",
-                                  "loadOptions": [Function],
                                   "name": "class",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Bottleneck Event",
+                                      "value": "BottleneckEvent",
+                                    },
+                                    Object {
+                                      "label": "Performance - Container Project",
+                                      "value": "ContainerProjectPerformance",
+                                    },
+                                  ],
                                   "placeholder": "<Choose>",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -15558,9 +16156,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     "id": "class",
                                     "isSearchable": true,
                                     "label": "Class",
-                                    "loadOptions": [Function],
                                     "name": "class",
+                                    "options": Array [
+                                      Object {
+                                        "label": "Bottleneck Event",
+                                        "value": "BottleneckEvent",
+                                      },
+                                      Object {
+                                        "label": "Performance - Container Project",
+                                        "value": "ContainerProjectPerformance",
+                                      },
+                                    ],
                                     "placeholder": "<Choose>",
+                                    "simpleValue": true,
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -15616,9 +16224,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         "id": "class",
                                         "isSearchable": true,
                                         "label": "Class",
-                                        "loadOptions": [Function],
                                         "name": "class",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Bottleneck Event",
+                                            "value": "BottleneckEvent",
+                                          },
+                                          Object {
+                                            "label": "Performance - Container Project",
+                                            "value": "ContainerProjectPerformance",
+                                          },
+                                        ],
                                         "placeholder": "<Choose>",
+                                        "simpleValue": true,
                                         "validate": Array [
                                           Object {
                                             "type": "required",
@@ -15678,9 +16296,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -15742,9 +16370,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                           "id": "class",
                                           "isSearchable": true,
                                           "label": "Class",
-                                          "loadOptions": [Function],
                                           "name": "class",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Bottleneck Event",
+                                              "value": "BottleneckEvent",
+                                            },
+                                            Object {
+                                              "label": "Performance - Container Project",
+                                              "value": "ContainerProjectPerformance",
+                                            },
+                                          ],
                                           "placeholder": "<Choose>",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -15793,9 +16431,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                               "id": "class",
                                               "isSearchable": true,
                                               "label": "Class",
-                                              "loadOptions": [Function],
                                               "name": "class",
+                                              "options": Array [
+                                                Object {
+                                                  "label": "Bottleneck Event",
+                                                  "value": "BottleneckEvent",
+                                                },
+                                                Object {
+                                                  "label": "Performance - Container Project",
+                                                  "value": "ContainerProjectPerformance",
+                                                },
+                                              ],
                                               "placeholder": "<Choose>",
+                                              "simpleValue": true,
                                               "validate": Array [
                                                 Object {
                                                   "type": "required",
@@ -15856,9 +16504,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                 "id": "class",
                                                 "isSearchable": true,
                                                 "label": "Class",
-                                                "loadOptions": [Function],
                                                 "name": "class",
+                                                "options": Array [
+                                                  Object {
+                                                    "label": "Bottleneck Event",
+                                                    "value": "BottleneckEvent",
+                                                  },
+                                                  Object {
+                                                    "label": "Performance - Container Project",
+                                                    "value": "ContainerProjectPerformance",
+                                                  },
+                                                ],
                                                 "placeholder": "<Choose>",
+                                                "simpleValue": true,
                                                 "validate": Array [
                                                   Object {
                                                     "type": "required",
@@ -15923,9 +16581,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           "id": "class",
                                                           "isSearchable": true,
                                                           "label": "Class",
-                                                          "loadOptions": [Function],
                                                           "name": "class",
+                                                          "options": Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ],
                                                           "placeholder": "<Choose>",
+                                                          "simpleValue": true,
                                                           "validate": Array [
                                                             Object {
                                                               "type": "required",
@@ -16054,9 +16722,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         isSearchable={true}
                                                         key="associations[0].class"
                                                         label="Class"
-                                                        loadOptions={[Function]}
                                                         name="associations[0].class"
+                                                        options={
+                                                          Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ]
+                                                        }
                                                         placeholder="<Choose>"
+                                                        simpleValue={true}
                                                         validate={
                                                           Array [
                                                             Object {
@@ -16073,9 +16753,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               "id": "class",
                                                               "isSearchable": true,
                                                               "label": "Class",
-                                                              "loadOptions": [Function],
                                                               "name": "associations[0].class",
+                                                              "options": Array [
+                                                                Object {
+                                                                  "label": "Bottleneck Event",
+                                                                  "value": "BottleneckEvent",
+                                                                },
+                                                                Object {
+                                                                  "label": "Performance - Container Project",
+                                                                  "value": "ContainerProjectPerformance",
+                                                                },
+                                                              ],
                                                               "placeholder": "<Choose>",
+                                                              "simpleValue": true,
                                                               "validate": Array [
                                                                 Object {
                                                                   "type": "required",
@@ -16093,9 +16783,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               id="class"
                                                               isSearchable={true}
                                                               label="Class"
-                                                              loadOptions={[Function]}
                                                               name="associations[0].class"
+                                                              options={
+                                                                Array [
+                                                                  Object {
+                                                                    "label": "Bottleneck Event",
+                                                                    "value": "BottleneckEvent",
+                                                                  },
+                                                                  Object {
+                                                                    "label": "Performance - Container Project",
+                                                                    "value": "ContainerProjectPerformance",
+                                                                  },
+                                                                ]
+                                                              }
                                                               placeholder="<Choose>"
+                                                              simpleValue={true}
                                                               validate={
                                                                 Array [
                                                                   Object {
@@ -16110,10 +16812,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 id="class"
                                                                 isSearchable={true}
                                                                 label="Class"
-                                                                loadOptions={[Function]}
                                                                 loadingMessage="Loading..."
                                                                 name="associations[0].class"
+                                                                options={
+                                                                  Array [
+                                                                    Object {
+                                                                      "label": "Bottleneck Event",
+                                                                      "value": "BottleneckEvent",
+                                                                    },
+                                                                    Object {
+                                                                      "label": "Performance - Container Project",
+                                                                      "value": "ContainerProjectPerformance",
+                                                                    },
+                                                                  ]
+                                                                }
                                                                 placeholder="<Choose>"
+                                                                simpleValue={true}
                                                                 validate={
                                                                   Array [
                                                                     Object {
@@ -16131,18 +16845,28 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   isClearable={false}
                                                                   isSearchable={false}
                                                                   labelText="Class"
-                                                                  loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
                                                                   name="associations[0].class"
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
+                                                                  options={
+                                                                    Array [
+                                                                      Object {
+                                                                        "label": "Bottleneck Event",
+                                                                        "value": "BottleneckEvent",
+                                                                      },
+                                                                      Object {
+                                                                        "label": "Performance - Container Project",
+                                                                        "value": "ContainerProjectPerformance",
+                                                                      },
+                                                                    ]
+                                                                  }
                                                                   placeholder="<Choose>"
                                                                   pluckSingleValue={true}
-                                                                  simpleValue={false}
-                                                                  value=""
+                                                                  simpleValue={true}
+                                                                  value="BottleneckEvent"
                                                                 >
                                                                   <ClearedSelectSearchable
                                                                     className="class"
@@ -16173,7 +16897,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       ]
                                                                     }
                                                                     placeholder="<Choose>"
-                                                                    value=""
+                                                                    value={
+                                                                      Array [
+                                                                        Object {
+                                                                          "label": "Bottleneck Event",
+                                                                          "value": "BottleneckEvent",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <ComboBox
                                                                       ariaLabel="Choose an item"
@@ -16181,7 +16912,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       direction="bottom"
                                                                       disabled={false}
                                                                       id="associations[0].class"
-                                                                      initialSelectedItem=""
+                                                                      initialSelectedItem={
+                                                                        Object {
+                                                                          "label": "Bottleneck Event",
+                                                                          "value": "BottleneckEvent",
+                                                                        }
+                                                                      }
                                                                       invalid={false}
                                                                       invalidText=""
                                                                       itemToElement={null}
@@ -16213,7 +16949,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                         defaultIsOpen={false}
                                                                         environment={[Window]}
                                                                         getA11yStatusMessage={[Function]}
-                                                                        initialSelectedItem=""
+                                                                        initialSelectedItem={
+                                                                          Object {
+                                                                            "label": "Bottleneck Event",
+                                                                            "value": "BottleneckEvent",
+                                                                          }
+                                                                        }
                                                                         inputId="associations[0].class"
                                                                         inputValue="Bottleneck Event"
                                                                         itemToString={[Function]}
@@ -16519,9 +17260,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           "id": "class",
                                                           "isSearchable": true,
                                                           "label": "Class",
-                                                          "loadOptions": [Function],
                                                           "name": "class",
+                                                          "options": Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ],
                                                           "placeholder": "<Choose>",
+                                                          "simpleValue": true,
                                                           "validate": Array [
                                                             Object {
                                                               "type": "required",
@@ -16650,9 +17401,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         isSearchable={true}
                                                         key="associations[1].class"
                                                         label="Class"
-                                                        loadOptions={[Function]}
                                                         name="associations[1].class"
+                                                        options={
+                                                          Array [
+                                                            Object {
+                                                              "label": "Bottleneck Event",
+                                                              "value": "BottleneckEvent",
+                                                            },
+                                                            Object {
+                                                              "label": "Performance - Container Project",
+                                                              "value": "ContainerProjectPerformance",
+                                                            },
+                                                          ]
+                                                        }
                                                         placeholder="<Choose>"
+                                                        simpleValue={true}
                                                         validate={
                                                           Array [
                                                             Object {
@@ -16669,9 +17432,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               "id": "class",
                                                               "isSearchable": true,
                                                               "label": "Class",
-                                                              "loadOptions": [Function],
                                                               "name": "associations[1].class",
+                                                              "options": Array [
+                                                                Object {
+                                                                  "label": "Bottleneck Event",
+                                                                  "value": "BottleneckEvent",
+                                                                },
+                                                                Object {
+                                                                  "label": "Performance - Container Project",
+                                                                  "value": "ContainerProjectPerformance",
+                                                                },
+                                                              ],
                                                               "placeholder": "<Choose>",
+                                                              "simpleValue": true,
                                                               "validate": Array [
                                                                 Object {
                                                                   "type": "required",
@@ -16689,9 +17462,21 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               id="class"
                                                               isSearchable={true}
                                                               label="Class"
-                                                              loadOptions={[Function]}
                                                               name="associations[1].class"
+                                                              options={
+                                                                Array [
+                                                                  Object {
+                                                                    "label": "Bottleneck Event",
+                                                                    "value": "BottleneckEvent",
+                                                                  },
+                                                                  Object {
+                                                                    "label": "Performance - Container Project",
+                                                                    "value": "ContainerProjectPerformance",
+                                                                  },
+                                                                ]
+                                                              }
                                                               placeholder="<Choose>"
+                                                              simpleValue={true}
                                                               validate={
                                                                 Array [
                                                                   Object {
@@ -16706,10 +17491,22 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 id="class"
                                                                 isSearchable={true}
                                                                 label="Class"
-                                                                loadOptions={[Function]}
                                                                 loadingMessage="Loading..."
                                                                 name="associations[1].class"
+                                                                options={
+                                                                  Array [
+                                                                    Object {
+                                                                      "label": "Bottleneck Event",
+                                                                      "value": "BottleneckEvent",
+                                                                    },
+                                                                    Object {
+                                                                      "label": "Performance - Container Project",
+                                                                      "value": "ContainerProjectPerformance",
+                                                                    },
+                                                                  ]
+                                                                }
                                                                 placeholder="<Choose>"
+                                                                simpleValue={true}
                                                                 validate={
                                                                   Array [
                                                                     Object {
@@ -16727,18 +17524,28 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   isClearable={false}
                                                                   isSearchable={false}
                                                                   labelText="Class"
-                                                                  loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
                                                                   name="associations[1].class"
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
+                                                                  options={
+                                                                    Array [
+                                                                      Object {
+                                                                        "label": "Bottleneck Event",
+                                                                        "value": "BottleneckEvent",
+                                                                      },
+                                                                      Object {
+                                                                        "label": "Performance - Container Project",
+                                                                        "value": "ContainerProjectPerformance",
+                                                                      },
+                                                                    ]
+                                                                  }
                                                                   placeholder="<Choose>"
                                                                   pluckSingleValue={true}
-                                                                  simpleValue={false}
-                                                                  value=""
+                                                                  simpleValue={true}
+                                                                  value="ContainerProjectPerformance"
                                                                 >
                                                                   <ClearedSelectSearchable
                                                                     className="class"
@@ -16769,7 +17576,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       ]
                                                                     }
                                                                     placeholder="<Choose>"
-                                                                    value=""
+                                                                    value={
+                                                                      Array [
+                                                                        Object {
+                                                                          "label": "Performance - Container Project",
+                                                                          "value": "ContainerProjectPerformance",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <ComboBox
                                                                       ariaLabel="Choose an item"
@@ -16777,7 +17591,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       direction="bottom"
                                                                       disabled={false}
                                                                       id="associations[1].class"
-                                                                      initialSelectedItem=""
+                                                                      initialSelectedItem={
+                                                                        Object {
+                                                                          "label": "Performance - Container Project",
+                                                                          "value": "ContainerProjectPerformance",
+                                                                        }
+                                                                      }
                                                                       invalid={false}
                                                                       invalidText=""
                                                                       itemToElement={null}
@@ -16809,7 +17628,12 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                         defaultIsOpen={false}
                                                                         environment={[Window]}
                                                                         getA11yStatusMessage={[Function]}
-                                                                        initialSelectedItem=""
+                                                                        initialSelectedItem={
+                                                                          Object {
+                                                                            "label": "Performance - Container Project",
+                                                                            "value": "ContainerProjectPerformance",
+                                                                          }
+                                                                        }
                                                                         inputId="associations[1].class"
                                                                         inputValue="Performance - Container Project"
                                                                         itemToString={[Function]}
@@ -18408,6 +19232,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             canReset={true}
                             canSubmit={false}
                             cancelLabel="Cancel"
+                            disableSubmit={true}
                             formFields={
                               Array [
                                 <SingleField
@@ -18530,9 +19355,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -18654,16 +19489,14 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             formSpyProps={
                               Object {
                                 "active": undefined,
-                                "dirty": true,
-                                "dirtyFields": Object {
-                                  "associations": true,
-                                  "associations[0].class": true,
-                                  "associations[1].class": true,
-                                },
+                                "dirty": false,
+                                "dirtyFields": Object {},
                                 "dirtyFieldsSinceLastSubmit": Object {
                                   "associations": true,
                                   "associations[0].associations_name": true,
+                                  "associations[0].class": true,
                                   "associations[1].associations_name": true,
+                                  "associations[1].class": true,
                                   "attributes": true,
                                   "attributes[0].attributes_name": true,
                                   "attributes[0].type": true,
@@ -18720,11 +19553,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "associations": Array [
                                     Object {
                                       "associations_name": "bottle_neck",
-                                      "class": "Bottleneck Event",
+                                      "class": "BottleneckEvent",
                                     },
                                     Object {
                                       "associations_name": "project",
-                                      "class": "Performance - Container Project",
+                                      "class": "ContainerProjectPerformance",
                                     },
                                   ],
                                   "attributes": Array [
@@ -18746,9 +19579,9 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "modified": Object {
                                   "associations": false,
                                   "associations[0].associations_name": false,
-                                  "associations[0].class": true,
+                                  "associations[0].class": false,
                                   "associations[1].associations_name": false,
-                                  "associations[1].class": true,
+                                  "associations[1].class": false,
                                   "attributes": false,
                                   "attributes[0].attributes_name": false,
                                   "attributes[0].type": false,
@@ -18760,7 +19593,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "name": false,
                                 },
                                 "modifiedSinceLastSubmit": false,
-                                "pristine": false,
+                                "pristine": true,
                                 "submitError": undefined,
                                 "submitErrors": undefined,
                                 "submitFailed": false,
@@ -18788,9 +19621,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   "associations": Array [
                                     Object {
                                       "associations_name": "bottle_neck",
+                                      "class": "BottleneckEvent",
                                     },
                                     Object {
                                       "associations_name": "project",
+                                      "class": "ContainerProjectPerformance",
                                     },
                                   ],
                                   "attributes": Array [
@@ -18946,9 +19781,19 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                             "id": "class",
                                             "isSearchable": true,
                                             "label": "Class",
-                                            "loadOptions": [Function],
                                             "name": "class",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Bottleneck Event",
+                                                "value": "BottleneckEvent",
+                                              },
+                                              Object {
+                                                "label": "Performance - Container Project",
+                                                "value": "ContainerProjectPerformance",
+                                              },
+                                            ],
                                             "placeholder": "<Choose>",
+                                            "simpleValue": true,
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -19071,6 +19916,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 >
                                   <Button
                                     buttonType="submit"
+                                    disabled={true}
                                     key="form-submit"
                                     label="Save"
                                     type="submit"
@@ -19078,7 +19924,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   >
                                     <Button
                                       dangerDescription="danger"
-                                      disabled={false}
+                                      disabled={true}
                                       isExpressive={false}
                                       kind="primary"
                                       size="default"
@@ -19091,8 +19937,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--primary"
-                                        disabled={false}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -19108,7 +19954,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   </Button>
                                   <Button
                                     buttonType="reset"
-                                    disabled={false}
+                                    disabled={true}
                                     key="form-reset"
                                     label="Reset"
                                     onClick={[Function]}
@@ -19116,7 +19962,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   >
                                     <Button
                                       dangerDescription="danger"
-                                      disabled={false}
+                                      disabled={true}
                                       isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
@@ -19129,8 +19975,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
+                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                        disabled={true}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
