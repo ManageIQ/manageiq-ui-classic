@@ -20,8 +20,8 @@ const VisualSettingsForm = ({ recordId }) => {
     settings.display.timezone = settings.display.timezone.value ? settings.display.timezone.value : settings.display.timezone;
     miqSparkleOn();
     API.patch(`/api/users/${recordId}`, { settings }).then(() => {
+      window.location.reload();
       add_flash(__('User Interface settings saved'), 'success');
-      miqSparkleOff();
     }).catch(miqSparkleOff);
   };
 
