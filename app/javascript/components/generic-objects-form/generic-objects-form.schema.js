@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { componentTypes, validatorTypes } from '@@ddf';
 
-const createSchema = (initialValues = {}, edit, promise) => {
+const createSchema = (initialValues = {}, edit, promise, classOptions) => {
   const edit_field = [
     {
       component: componentTypes.SUB_FORM,
@@ -145,11 +145,8 @@ const createSchema = (initialValues = {}, edit, promise) => {
                 className: 'class',
                 placeholder: __('<Choose>'),
                 isSearchable: true,
-                loadOptions: () => promise.then(({ data: { allowed_association_types } }) =>
-                  Object.keys(allowed_association_types).map((key) => ({
-                    value: key,
-                    label: __(allowed_association_types[key]),
-                  }))),
+                simpleValue: true,
+                options: classOptions,
                 validate: [{ type: validatorTypes.REQUIRED }],
               },
             ],

@@ -12,7 +12,7 @@ import { FileEditComponent, uniqueNameValidator } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const GenericObjectForm = ({ recordId }) => {
-  const [{ initialValues, isLoading }, setState] = useState({ isLoading: !!recordId });
+  const [{ initialValues, isLoading, classOptions }, setState] = useState({ isLoading: !!recordId });
   const promise = useMemo(() => API.options('/api/generic_object_definitions/'), []);
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
@@ -21,6 +21,11 @@ const GenericObjectForm = ({ recordId }) => {
     ...componentMapper,
     'file-edit': FileEditComponent,
   };
+
+  const getClassOptions = (allowed_association_types) => Object.keys(allowed_association_types).map((key) => ({
+    value: `${key}`,
+    label: __(allowed_association_types[key]),
+  }));
 
   useEffect(() => {
     if (recordId) {
@@ -36,7 +41,7 @@ const GenericObjectForm = ({ recordId }) => {
             initialValues.attributes.push({ attributes_name: attr[0], type: attr[1] });
           });
           Object.entries(initialValues.properties.associations).forEach((attr) => {
-            initialValues.associations.push({ associations_name: attr[0], class: __(allowed_association_types[attr[1]]) });
+            initialValues.associations.push({ associations_name: attr[0], class: attr[1] });
           });
           Object.entries(initialValues.properties.methods).forEach((attr) => {
             initialValues.methods.push({ methods_name: attr[1] });
@@ -45,10 +50,20 @@ const GenericObjectForm = ({ recordId }) => {
           // check to display file upload/edit component depending on whether the generic object being edited already has a custom image or not
           initialValues.image_update = !initialValues.picture;
           delete initialValues.properties;
-          setState({ initialValues, isLoading: false });
+          setState({
+            initialValues,
+            isLoading: false,
+            classOptions: getClassOptions(allowed_association_types),
+          });
         });
       });
       miqSparkleOff();
+    } else {
+      promise.then(({ data: { allowed_association_types } }) => {
+        setState({
+          classOptions: getClassOptions(allowed_association_types),
+        });
+      });
     }
   }, [recordId]);
 
@@ -86,8 +101,8 @@ const GenericObjectForm = ({ recordId }) => {
           if (values.associations) {
             values.associations.forEach((association) => {
               switch (typeof association.class) {
-                case 'object':
-                  values.properties.associations[association.associations_name] = association.class.value;
+                case 'string':
+                  values.properties.associations[association.associations_name] = association.class;
                   break;
                 case 'undefined':
                 // eslint-disable-next-line max-len
@@ -111,7 +126,7 @@ const GenericObjectForm = ({ recordId }) => {
       } else {
         if (values.associations) {
           values.associations.forEach((association) => {
-            values.properties.associations[association.associations_name] = association.class.value;
+            values.properties.associations[association.associations_name] = association.class;
           });
 
           delete values.associations;
@@ -139,7 +154,7 @@ const GenericObjectForm = ({ recordId }) => {
 
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(initialValues, !!recordId, promise)}
+      schema={createSchema(initialValues, !!recordId, promise, classOptions)}
       validate={uniqueNameValidator}
       componentMapper={mapper}
       validatorMapper={validatorMapper}
