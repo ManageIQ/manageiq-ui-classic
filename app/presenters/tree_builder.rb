@@ -316,11 +316,6 @@ class TreeBuilder
     ### Reports
     :cb_reports                      => "TreeBuilderChargebackReports",
 
-    # Services
-    ## My services
-    ### Services
-    :svcs                            => "TreeBuilderServices",
-
     ## Catalogs
     ### Service Catalogs
     :svccat                          => "TreeBuilderServiceCatalog",

@@ -16,6 +16,13 @@ import handleFailure from '../../helpers/handle-failure';
  * @param tenantGroupId If the type is 'group' and the ownershipIds.length is one then the value of the 'No User Group' field will be this value.
  * @returns {*[]}
  */
+
+const OwnershipTypes = {
+  users: 'users',
+  groups: 'groups',
+  templates: 'templates',
+};
+
 const addOptions = (ownershipIds, type, data, tenantGroupId = '') => {
   const ret = [];
   if (ownershipIds.length > 1) {
@@ -23,9 +30,14 @@ const addOptions = (ownershipIds, type, data, tenantGroupId = '') => {
   }
 
   return [...ret, {
-    label: (type === 'user' ? __('No Owner') : __('No User Group')),
+    label: (type === OwnershipTypes.users ? __('No Owner') : __('No User Group')),
     id: (ownershipIds.length === 1 ? tenantGroupId : ''),
   }, ...data];
+};
+
+const getInitialData = (type, field) => {
+  const url = `/api/${type}?expand=resources&attributes=id,${field}&sort_by=${field}&sort_order=ascending`;
+  return API.get(url);
 };
 
 /**
@@ -50,10 +62,9 @@ const getInitialValues = (ownershipItems) => new Promise((resolve) => {
   }
 });
 
-function SetOwnershipForm(props) {
-  const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel`;
+function SetOwnershipForm({ ownershipItems }) {
+  const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel&objectIds=${ownershipItems.map((i) => i.id)}`;
   const submitUrl = `/${ManageIQ.controller}/ownership_update/?button=save`;
-  const { ownershipItems } = props;
 
   const [initialValues, setInitialValues] = useState({});
   const [userOptions, setUserOptions] = useState([]);
@@ -63,10 +74,12 @@ function SetOwnershipForm(props) {
   const loadInitialData = () => {
     miqSparkleOn();
     Promise.all([
-      API.get('/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending'),
-      API.get('/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending'),
+      getInitialData(OwnershipTypes.users, 'name'),
+      getInitialData(OwnershipTypes.groups, 'description'),
       getInitialValues(ownershipItems),
     ]).then(([userOptions, groupOptions, initialValues]) => {
+      const userData = userOptions.resources.map((user, index) => ({ label: user.name, value: user.id, key: `key_${index}` }));
+      const groupData = groupOptions.resources.map((group, index) => ({ label: group.description, value: group.id, key: `key_${index}` }));
       // Checking if the group is tenant group or not
       new Promise((resolve) => {
         if (ownershipItems.length > 1) {
@@ -77,11 +90,8 @@ function SetOwnershipForm(props) {
             .catch(() => resolve(''));
         }
       }).then((tenantGroupId) => {
-        setUserOptions(addOptions(ownershipItems, 'user',
-          userOptions.resources.map((user) => ({ label: user.name, value: user.id }))));
-        setGroupOptions(addOptions(ownershipItems, 'group',
-          groupOptions.resources.map((group) => ({ label: group.description, value: group.id })),
-          tenantGroupId));
+        setUserOptions(addOptions(ownershipItems, OwnershipTypes.users, userData));
+        setGroupOptions(addOptions(ownershipItems, OwnershipTypes.groups, groupData, tenantGroupId));
         setInitialValues(initialValues);
         miqSparkleOff();
       });

@@ -13,7 +13,7 @@ class ApplicationHelper::ToolbarChooser
       'download_view_tb'
     elsif %w[miq_capacity_utilization].include?(@layout)
       'miq_capacity_view_tb'
-    elsif @record && @explorer && (%w[services catalogs].include?(@layout) || %w[performance timeline].include?(@display))
+    elsif @record && @explorer && (%w[catalogs].include?(@layout) || %w[performance timeline].include?(@display))
       nil
     elsif @layout == 'report'
       @report ? "report_view_tb" : nil
@@ -33,7 +33,7 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !%w[all_tasks condition timeline diagnostics miq_action miq_alert miq_alert_set miq_event_definition miq_policy miq_policy_set my_tasks miq_server usage].include?(@layout) &&
+    elsif %w[all_tasks condition timeline diagnostics miq_action miq_alert miq_alert_set miq_event_definition miq_policy miq_policy_set my_tasks miq_server usage services].exclude?(@layout) &&
       !@layout.starts_with?("miq_request") && @display == "main" &&
       @showtype == "main" && !@in_a_form
       'summary_view_tb'
@@ -92,7 +92,7 @@ class ApplicationHelper::ToolbarChooser
       infra_networking_tree_center_tb(x_node_split)
     elsif x_active_tree == :containers_tree
       center_toolbar_filename_containers
-    elsif %i[sandt_tree svccat_tree stcat_tree svcs_tree ot_tree].include?(x_active_tree)
+    elsif %i[sandt_tree svccat_tree stcat_tree ot_tree].include?(x_active_tree)
       center_toolbar_filename_services
     elsif @layout == "chargeback_report"
       center_toolbar_filename_chargeback_report
@@ -182,14 +182,6 @@ class ApplicationHelper::ToolbarChooser
         "servicetemplatecatalog_center_tb"
       else
         "servicetemplatecatalogs_center_tb"
-      end
-    elsif x_active_tree == :svcs_tree
-      if TreeBuilder.get_model_for_prefix(@nodetype) == "Service"
-        "service_center_tb"
-      elsif x_node == 'xx-rsrv'
-        "retired_services_center_tb"
-      else
-        "services_center_tb"
       end
     elsif x_active_tree == :ot_tree
       return nil if x_node == "xx-otovf" || @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate)

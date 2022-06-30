@@ -53,14 +53,14 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
     var apiSubmitEndpoint = '/api/services/' + targetId;
 
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
-      miqService.redirectBack(__('Order Request was Submitted'), 'info', '/service/explorer');
+      miqService.redirectBack(__('Order Request was Submitted'), 'info', '/service');
     }).catch(function(err) {
       return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
     });
   }
 
   function cancelClicked(_event) {
-    miqService.redirectBack(__('Dialog Cancelled'), 'info', '/service/explorer');
+    miqService.redirectBack(__('Dialog Cancelled'), 'info', '/service');
   }
 
   function saveable() {

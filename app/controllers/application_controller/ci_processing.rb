@@ -386,6 +386,7 @@ module ApplicationController::CiProcessing
   alias instance_retire_now retirevms_now
   alias vm_retire_now retirevms_now
   alias orchestration_stack_retire_now retirevms_now
+  alias service_retire_now retirevms_now
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
@@ -639,8 +640,7 @@ module ApplicationController::CiProcessing
   def screen_redirection(options)
     if options[:redirect].present?
       javascript_redirect(:controller => options[:redirect][:controller],
-                          :action     => options[:redirect][:action],
-                          :flash_msg  => @flash_array[0][:message])
+                          :action     => options[:redirect][:action])
       return
     end
     if %w[show_list storage_list storage_pod_list].include?(@lastaction)

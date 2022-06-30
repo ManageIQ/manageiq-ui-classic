@@ -901,8 +901,6 @@ module ApplicationHelper
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
       "ManageIQ::Providers::CloudManager::Template"
-    when :svcs_tree
-      "Service"
     when :vms_filter_tree
       "ManageIQ::Providers::InfraManager::Vm"
     when :templates_filter_tree
@@ -1155,7 +1153,6 @@ module ApplicationHelper
       instances_filter_tree
       providers_tree
       storage_tree
-      svcs_tree
       templates_filter_tree
       templates_images_filter_tree
       vandt_tree

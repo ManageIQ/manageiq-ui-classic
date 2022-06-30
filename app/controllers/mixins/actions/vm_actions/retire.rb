@@ -12,6 +12,7 @@ module Mixins
           elsif request.parameters[:controller] == "service"
             rec_cls =  "service"
             bc_msg = _("Retire Service")
+            @sb[:explorer] = nil
           elsif request.parameters[:controller] == "orchestration_stack" || %w[orchestration_stacks].include?(params[:display])
             rec_cls = "orchestration_stack"
             bc_msg = _("Retire Orchestration Stack")
@@ -20,7 +21,7 @@ module Mixins
           @edit ||= {}
           @edit[:object_ids] = selected_items
           session[:edit] = @edit
-          if !%w[orchestration_stack service].include?(request.parameters["controller"]) && !%w[orchestration_stacks].include?(params[:display]) &&
+          if %w[orchestration_stack service].exclude?(request.parameters["controller"]) && %w[orchestration_stacks].exclude?(params[:display]) &&
              VmOrTemplate.find(selected_items).any? { |vm| !vm.supports?(:retire) }
             add_flash(_("Set Retirement Date does not apply to selected VM Template"), :error)
             javascript_flash
@@ -40,6 +41,7 @@ module Mixins
         alias instance_retire retirevms
         alias vm_retire retirevms
         alias orchestration_stack_retire retirevms
+        alias service_retire retirevms
 
         # Build the retire VMs screen
         def retire
@@ -54,9 +56,7 @@ module Mixins
                 end
           # Check RBAC for all items in session[:retire_items]
           @retireitems = find_records_with_rbac(kls.order(:name), session[:retire_items])
-
-          @redirect_url = @sb[:explorer] ? 'explorer' : previous_breadcrumb_url
-
+          @redirect_url = @sb[:explorer] ? 'explorer' : retire_handle_redirect
           drop_breadcrumb(:name => _("Retire %{name}") % {:name => ui_lookup(:models => kls.to_s)},
                           :url  => "/#{session[:controller]}/retire")
           session[:cat] = nil # Clear current category
@@ -64,6 +64,13 @@ module Mixins
           @view = get_db_view(kls) # Instantiate the MIQ Report view object
           @in_a_form = true
           @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
+        end
+
+        # Passing the selected item id to the previous_breadcrumb_url if its a show page.
+        def retire_handle_redirect
+          object_ids = session[:retire_items].instance_of?(Array) && session[:retire_items].length == 1 ? session[:retire_items].first : session[:retire_items]
+          show_url = "/#{params[:controller]}/show"
+          previous_breadcrumb_url == show_url ? "#{show_url}/#{object_ids}" : previous_breadcrumb_url
         end
       end
     end

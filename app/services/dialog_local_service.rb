@@ -50,7 +50,7 @@ class DialogLocalService
                           god_url = "/service/show/#{display_options[:record_id]}?display=generic_objects"
                           display_options[:display_id] ? "#{god_url}&generic_object_id=#{display_options[:display_id]}" : god_url
                         else
-                          "/service/explorer"
+                          "/service"
                         end
     when /ExtManagementSystem/
       api_collection_name = "providers"
@@ -75,7 +75,7 @@ class DialogLocalService
       cancel_endpoint = "/ops/explorer"
     when /Service/
       api_collection_name = "services"
-      cancel_endpoint = "/service/explorer"
+      cancel_endpoint = "/service"
     when /Storage/
       api_collection_name = "data_stores"
       cancel_endpoint = "/storage/explorer"

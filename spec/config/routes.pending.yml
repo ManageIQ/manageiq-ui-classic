@@ -1057,6 +1057,7 @@ SecurityPolicyRuleController:
 - open_url_after_dialog
 - wait_for_task
 ServiceController:
+- index
 - dialog_field_changed
 - dialog_form_button_pressed
 - dialog_load

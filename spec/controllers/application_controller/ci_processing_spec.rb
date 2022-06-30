@@ -898,37 +898,6 @@ describe HostController do
   end
 end
 
-describe ServiceController do
-  describe "#vm_button_operation" do
-    let(:user) { FactoryBot.create(:user_admin) }
-
-    before do
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      allow(MiqServer).to receive(:my_zone).and_return("default")
-      allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
-      controller.instance_variable_set(:@lastaction, "show_list")
-      login_as user
-      allow(user).to receive(:role_allows?).and_return(true)
-    end
-
-    it "should continue to retire a service and does not render flash message 'xxx does not apply xxx'" do
-      service = FactoryBot.create(:service)
-      template = FactoryBot.create(:template,
-                                    :ext_management_system => FactoryBot.create(:ems_openstack_infra),
-                                    :storage               => FactoryBot.create(:storage))
-      service.update_attribute(:id, template.id)
-      service.reload
-      controller.params = {:miq_grid_checks => service.id.to_s}
-      expect(controller).to receive(:show_list)
-      process_proc = controller.send(:vm_button_action)
-      controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
-      expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to \
-        include("Retirement initiated for 1 Service from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
-    end
-  end
-end
-
 describe MiqTemplateController do
   describe "#vm_button_operation" do
     before do
