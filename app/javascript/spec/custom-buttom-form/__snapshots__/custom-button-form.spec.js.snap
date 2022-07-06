@@ -180,6 +180,7 @@ exports[`Custom Button form component should add a new generic object custom but
             "label": "Dialog",
             "name": "resource_action.dialog_id",
             "options": undefined,
+            "simpleValue": true,
           },
           Object {
             "component": "select",
@@ -638,6 +639,7 @@ exports[`Custom Button form component should render the adding form for generic 
             "label": "Dialog",
             "name": "resource_action.dialog_id",
             "options": undefined,
+            "simpleValue": true,
           },
           Object {
             "component": "select",

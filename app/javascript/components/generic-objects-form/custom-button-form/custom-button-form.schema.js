@@ -128,6 +128,7 @@ const createSchema = (distinctInstancesOptions, ansiblePlaybookOptions, roles, s
       name: 'resource_action.dialog_id',
       label: __('Dialog'),
       isSearchable: true,
+      simpleValue: true,
       options: serviceDialogs,
     },
     {

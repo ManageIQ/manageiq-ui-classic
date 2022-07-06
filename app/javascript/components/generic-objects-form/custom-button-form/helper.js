@@ -30,9 +30,6 @@ const getInitialValues = (recId, setState) => {
   if (recId) {
     API.get(`/api/custom_buttons/${recId}?attributes=resource_action,uri_attributes`)
       .then((initialValues) => {
-        if (initialValues.resource_action) {
-          initialValues.dialog_id = initialValues.resource_action.dialog_id;
-        }
         if (initialValues.options.button_type === 'ansible_playbook') {
           initialValues.uri_attributes.request = 'create';
           if (initialValues.uri_attributes) {
@@ -111,12 +108,9 @@ const prepareSubmitData = (values, recId, appliesToClass, appliesToId, initialVa
     submitValues.visibility.roles = ['_ALL_'];
   }
   if (values.resource_action && values.resource_action.dialog_id) {
-    if (values.resource_action.dialog_id.value) {
-      submitValues.resource_action.dialog_id = values.resource_action.dialog_id.value;
-    } else {
-      submitValues.resource_action.dialog_id = values.resource_action.dialog_id;
-    }
+    submitValues.resource_action.dialog_id = values.resource_action.dialog_id;
   }
+
   submitValues.resource_action = {
     ...submitValues.resource_action,
     ae_class: 'PROCESS',
