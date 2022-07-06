@@ -76,9 +76,11 @@ class EmsStorageDashboardService < EmsDashboardService
       system.storage_resources.each do |resource|
         resource_usage << {
           :id       => resource.id,
-          :resource => resource.name,
+          :node     => resource.name,
           :provider => resource.ext_management_system.name,
-          :percent  => ((resource.logical_total.to_f - resource.logical_free.to_f) / resource.logical_total.to_f).round(2)
+          :percent  => ((resource.logical_total.to_f - resource.logical_free.to_f) / resource.logical_total.to_f).round(2),
+          :total    => number_to_human_size(resource.logical_total, :precision => 2).to_i,
+          :unit     => "GB"
         }
       end
     end
