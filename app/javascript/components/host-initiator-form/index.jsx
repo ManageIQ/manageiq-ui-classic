@@ -36,13 +36,13 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
     miqRedirectBack(message, 'success', redirect);
   };
 
-  const validate=(values) => {
+  const validate = (values) => {
     const errors = {};
-    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)){
-      errors.wwpn = "Please provide at least one WWPN."
+    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
+      errors.wwpn = 'Please provide at least one WWPN.';
     }
     return errors;
-  }
+  };
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
 

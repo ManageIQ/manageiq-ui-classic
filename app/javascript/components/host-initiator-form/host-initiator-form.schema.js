@@ -8,6 +8,7 @@ export const portTypes = [
 
 const loadProviders = () =>
   API.get(
+    // eslint-disable-next-line max-len
     '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_host_initiator=true',
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
@@ -21,13 +22,11 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
 
 const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_candidates`)
   // eslint-disable-next-line camelcase
-  .then(
-    ({wwpn_candidates}) => wwpn_candidates.map(({candidate}) =>
-      ({
-        value: candidate,
-        label: candidate
-      }))
-  );
+  .then(({ wwpn_candidates }) => wwpn_candidates.map(({ candidate }) =>
+    ({
+      value: candidate,
+      label: candidate,
+    })));
 
 const createSchema = (state, setState, ems, initialValues, storageId, setStorageId) => {
   let emsId = state.ems_id;
@@ -85,7 +84,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
         includeEmpty: true,
-        condition: {when: 'physical_storage_id', isNotEmpty: true}
+        condition: { when: 'physical_storage_id', isNotEmpty: true },
       },
       {
         component: componentTypes.TEXT_FIELD,
@@ -120,7 +119,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           and: [{
             when: 'port_type',
             is: 'ISCSI',
-          }, {when: 'chap_authentication', is: true}]
+          }, { when: 'chap_authentication', is: true }],
         },
       },
       {
@@ -134,7 +133,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           and: [{
             when: 'port_type',
             is: 'ISCSI',
-          }, {when: 'chap_authentication', is: true}]
+          }, { when: 'chap_authentication', is: true }],
         },
       },
       {
@@ -157,13 +156,14 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           {
             component: componentTypes.SELECT,
             placeholder: __('<Choose>'),
-            validate: [{type: validatorTypes.REQUIRED}],
+            validate: [{ type: validatorTypes.REQUIRED }],
             loadOptions: () => (storageId ? loadWwpns(storageId) : Promise.resolve([])),
             isSearchable: true,
+            simpleValue: true,
           },
         ],
         condition: {
-          or: [{when: 'port_type', is: 'FC'}, {when: 'port_type', is: 'NVMeFC'}],
+          or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
         },
       },
       {
@@ -186,8 +186,8 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           {
             component: componentTypes.TEXT_FIELD,
             isRequired: true,
-            validate: [{type: validatorTypes.REQUIRED}],
-          }
+            validate: [{ type: validatorTypes.REQUIRED }],
+          },
         ],
         condition: {
           or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
