@@ -13,6 +13,11 @@ module VmRemote
     native_console_launch_task
   end
 
+  def management_console
+    vm = identify_record(params[:id], VmOrTemplate)
+    javascript_open_window(vm.console_url.to_s) if vm
+  end
+
   def launch_native_console
     miq_task = MiqTask.find(params[:task_id])
     results = miq_task.task_results
