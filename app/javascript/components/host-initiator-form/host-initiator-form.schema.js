@@ -185,6 +185,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         fields: [
           {
             component: componentTypes.TEXT_FIELD,
+            label: __('Custom WWPN'),
             isRequired: true,
             validate: [{type: validatorTypes.REQUIRED}],
           }
