@@ -5,19 +5,27 @@ import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 
 const VisualSettingsForm = ({ recordId }) => {
-  const [{ initialValues, isLoading }, setState] = useState({ isLoading: true });
+  const [{ initialValues, timezoneOptions, isLoading }, setState] = useState({ isLoading: true });
 
   useEffect(() => {
-    API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
-      initialValues: settings,
-      isLoading: false,
-    }));
+    API.get('/api').then(({ timezones }) => {
+      const timezoneOptions = [];
+      timezones.forEach((timezone) => {
+        timezoneOptions.push({ value: timezone.name, label: timezone.description });
+      });
+      return timezoneOptions;
+    }).then((timezoneOptions) => {
+      API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
+        initialValues: settings,
+        timezoneOptions,
+        isLoading: false,
+      }));
+    });
   }, [recordId]);
 
   const onSubmit = (settings) => {
     settings.perpage.list = parseInt(settings.perpage.list, 10);
     settings.perpage.reports = parseInt(settings.perpage.reports, 10);
-    settings.display.timezone = settings.display.timezone.value ? settings.display.timezone.value : settings.display.timezone;
     miqSparkleOn();
     API.patch(`/api/users/${recordId}`, { settings }).then(() => {
       window.location.reload();
@@ -27,7 +35,7 @@ const VisualSettingsForm = ({ recordId }) => {
 
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema()}
+      schema={createSchema(timezoneOptions)}
       initialValues={initialValues}
       onSubmit={onSubmit}
       canReset
