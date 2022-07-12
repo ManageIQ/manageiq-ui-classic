@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = () => ({
+const createSchema = (timezoneOptions) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -107,7 +107,8 @@ const createSchema = () => ({
           id: 'display.timezone',
           label: __('Timezone'),
           isSearchable: true,
-          loadOptions: () => API.get('/api').then(({ timezones }) => timezones.map(({ name, description }) => ({ value: name, label: description }))),
+          simpleValue: true,
+          options: timezoneOptions,
         },
         {
           component: componentTypes.SELECT,
