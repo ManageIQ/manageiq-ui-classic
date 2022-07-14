@@ -8,7 +8,7 @@
       %label.control-label
         = _("Type")
       = select_tag('event_typ',
-        options_for_select([["<#{_('Choose')}>", "<Choose>"]] + @rsop_events, @sb[:rsop][:event]),
+        options_for_select([["<#{_('Choose')}>", nil]] + @rsop_events, @sb[:rsop][:event]),
         :class => "selectpicker form-control")
 
       :javascript
@@ -20,7 +20,7 @@
         %label.control-label
           = _("Event")
         = select_tag('event_value',
-          options_for_select([["<#{_('Choose')}>", "<Choose>"]] + @rsop_event_sets, @sb[:rsop][:event_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + @rsop_event_sets, @sb[:rsop][:event_value]),
           :class => "selectpicker form-control")
         :javascript
           miqSelectPickerEvent("event_value", "#{url}");
