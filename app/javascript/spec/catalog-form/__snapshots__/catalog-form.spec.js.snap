@@ -44,6 +44,8 @@ exports[`Catalog form component should render add variant form 1`] = `
                 Object {
                   "allToRight": false,
                   "component": "dual-list-select",
+                  "filterOptionsTitle": "Filter options",
+                  "filterValuesTitle": "Filter values",
                   "id": "service_templates",
                   "label": "Assign Catalog Items",
                   "leftTitle": "Unassigned:",
@@ -52,6 +54,8 @@ exports[`Catalog form component should render add variant form 1`] = `
                   "moveLeftTitle": "Remove",
                   "moveRightTitle": "Add",
                   "name": "service_templates",
+                  "noOptionsTitle": "No available options",
+                  "noValueTitle": "No option selected",
                   "options": Array [
                     Object {
                       "label": "template 44",
@@ -130,6 +134,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 Object {
                   "allToRight": false,
                   "component": "dual-list-select",
+                  "filterOptionsTitle": "Filter options",
+                  "filterValuesTitle": "Filter values",
                   "id": "service_templates",
                   "label": "Assign Catalog Items",
                   "leftTitle": "Unassigned:",
@@ -138,6 +144,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
                   "moveLeftTitle": "Remove",
                   "moveRightTitle": "Add",
                   "name": "service_templates",
+                  "noOptionsTitle": "No available options",
+                  "noValueTitle": "No option selected",
                   "options": Array [
                     Object {
                       "label": "template 44",

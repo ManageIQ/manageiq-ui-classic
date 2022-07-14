@@ -63,6 +63,10 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       moveAllLeftTitle: __('Remove all'),
       moveRightTitle: __('Add'),
       moveAllRightTitle: __('Add all'),
+      noValueTitle: __('No option selected'),
+      noOptionsTitle: __('No available options'),
+      filterOptionsTitle: __('Filter options'),
+      filterValuesTitle: __('Filter values'),
       options,
     },
 

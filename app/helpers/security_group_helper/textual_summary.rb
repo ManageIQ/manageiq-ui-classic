@@ -40,9 +40,9 @@ module SecurityGroupHelper::TextualSummary
       [
         rule.network_protocol,
         rule.host_protocol,
-        rule.direction,
+        _(rule.direction),
         port_range_helper(rule),
-        (rule.source_ip_range || rule.source_security_group.try(:name) || "<None>")
+        (rule.source_ip_range || rule.source_security_group.try(:name) || "<#{_("None")}>")
       ]
     end.sort
 

@@ -286,6 +286,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       },
                       "allToRight": false,
                       "component": "dual-list-select",
+                      "filterOptionsTitle": "Filter options",
+                      "filterValuesTitle": "Filter values",
                       "id": "options.alert_guids",
                       "label": " ",
                       "leftTitle": "Available Alerts:",
@@ -294,6 +296,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "moveLeftTitle": "Remove",
                       "moveRightTitle": "Add",
                       "name": "options.alert_guids",
+                      "noOptionsTitle": "No available options",
+                      "noValueTitle": "No option selected",
                       "options": Array [
                         Object {
                           "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -972,6 +976,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                         },
                         "allToRight": false,
                         "component": "dual-list-select",
+                        "filterOptionsTitle": "Filter options",
+                        "filterValuesTitle": "Filter values",
                         "id": "options.alert_guids",
                         "label": " ",
                         "leftTitle": "Available Alerts:",
@@ -980,6 +986,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                         "moveLeftTitle": "Remove",
                         "moveRightTitle": "Add",
                         "name": "options.alert_guids",
+                        "noOptionsTitle": "No available options",
+                        "noValueTitle": "No option selected",
                         "options": Array [
                           Object {
                             "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -1651,6 +1659,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           },
                           "allToRight": false,
                           "component": "dual-list-select",
+                          "filterOptionsTitle": "Filter options",
+                          "filterValuesTitle": "Filter values",
                           "id": "options.alert_guids",
                           "label": " ",
                           "leftTitle": "Available Alerts:",
@@ -1659,6 +1669,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "moveLeftTitle": "Remove",
                           "moveRightTitle": "Add",
                           "name": "options.alert_guids",
+                          "noOptionsTitle": "No available options",
+                          "noValueTitle": "No option selected",
                           "options": Array [
                             Object {
                               "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -2330,6 +2342,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               },
                               "allToRight": false,
                               "component": "dual-list-select",
+                              "filterOptionsTitle": "Filter options",
+                              "filterValuesTitle": "Filter values",
                               "id": "options.alert_guids",
                               "label": " ",
                               "leftTitle": "Available Alerts:",
@@ -2338,6 +2352,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "moveLeftTitle": "Remove",
                               "moveRightTitle": "Add",
                               "name": "options.alert_guids",
+                              "noOptionsTitle": "No available options",
+                              "noValueTitle": "No option selected",
                               "options": Array [
                                 Object {
                                   "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -2973,6 +2989,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               },
                               "allToRight": false,
                               "component": "dual-list-select",
+                              "filterOptionsTitle": "Filter options",
+                              "filterValuesTitle": "Filter values",
                               "id": "options.alert_guids",
                               "label": " ",
                               "leftTitle": "Available Alerts:",
@@ -2981,6 +2999,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "moveLeftTitle": "Remove",
                               "moveRightTitle": "Add",
                               "name": "options.alert_guids",
+                              "noOptionsTitle": "No available options",
+                              "noValueTitle": "No option selected",
                               "options": Array [
                                 Object {
                                   "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -3627,6 +3647,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 },
                                 "allToRight": false,
                                 "component": "dual-list-select",
+                                "filterOptionsTitle": "Filter options",
+                                "filterValuesTitle": "Filter values",
                                 "id": "options.alert_guids",
                                 "label": " ",
                                 "leftTitle": "Available Alerts:",
@@ -3635,6 +3657,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "moveLeftTitle": "Remove",
                                 "moveRightTitle": "Add",
                                 "name": "options.alert_guids",
+                                "noOptionsTitle": "No available options",
+                                "noValueTitle": "No option selected",
                                 "options": Array [
                                   Object {
                                     "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -4276,6 +4300,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 },
                                 "allToRight": false,
                                 "component": "dual-list-select",
+                                "filterOptionsTitle": "Filter options",
+                                "filterValuesTitle": "Filter values",
                                 "id": "options.alert_guids",
                                 "label": " ",
                                 "leftTitle": "Available Alerts:",
@@ -4284,6 +4310,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "moveLeftTitle": "Remove",
                                 "moveRightTitle": "Add",
                                 "name": "options.alert_guids",
+                                "noOptionsTitle": "No available options",
+                                "noValueTitle": "No option selected",
                                 "options": Array [
                                   Object {
                                     "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -4945,6 +4973,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   },
                                   "allToRight": false,
                                   "component": "dual-list-select",
+                                  "filterOptionsTitle": "Filter options",
+                                  "filterValuesTitle": "Filter values",
                                   "id": "options.alert_guids",
                                   "label": " ",
                                   "leftTitle": "Available Alerts:",
@@ -4953,6 +4983,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   "moveLeftTitle": "Remove",
                                   "moveRightTitle": "Add",
                                   "name": "options.alert_guids",
+                                  "noOptionsTitle": "No available options",
+                                  "noValueTitle": "No option selected",
                                   "options": Array [
                                     Object {
                                       "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -5594,6 +5626,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   },
                                   "allToRight": false,
                                   "component": "dual-list-select",
+                                  "filterOptionsTitle": "Filter options",
+                                  "filterValuesTitle": "Filter values",
                                   "id": "options.alert_guids",
                                   "label": " ",
                                   "leftTitle": "Available Alerts:",
@@ -5602,6 +5636,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   "moveLeftTitle": "Remove",
                                   "moveRightTitle": "Add",
                                   "name": "options.alert_guids",
+                                  "noOptionsTitle": "No available options",
+                                  "noValueTitle": "No option selected",
                                   "options": Array [
                                     Object {
                                       "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -6254,6 +6290,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     },
                                     "allToRight": false,
                                     "component": "dual-list-select",
+                                    "filterOptionsTitle": "Filter options",
+                                    "filterValuesTitle": "Filter values",
                                     "id": "options.alert_guids",
                                     "label": " ",
                                     "leftTitle": "Available Alerts:",
@@ -6262,6 +6300,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "moveLeftTitle": "Remove",
                                     "moveRightTitle": "Add",
                                     "name": "options.alert_guids",
+                                    "noOptionsTitle": "No available options",
+                                    "noValueTitle": "No option selected",
                                     "options": Array [
                                       Object {
                                         "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -6891,6 +6931,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         },
                                         "allToRight": false,
                                         "component": "dual-list-select",
+                                        "filterOptionsTitle": "Filter options",
+                                        "filterValuesTitle": "Filter values",
                                         "id": "options.alert_guids",
                                         "label": " ",
                                         "leftTitle": "Available Alerts:",
@@ -6899,6 +6941,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "moveLeftTitle": "Remove",
                                         "moveRightTitle": "Add",
                                         "name": "options.alert_guids",
+                                        "noOptionsTitle": "No available options",
+                                        "noValueTitle": "No option selected",
                                         "options": Array [
                                           Object {
                                             "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -7532,6 +7576,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           },
                                           "allToRight": false,
                                           "component": "dual-list-select",
+                                          "filterOptionsTitle": "Filter options",
+                                          "filterValuesTitle": "Filter values",
                                           "id": "options.alert_guids",
                                           "label": " ",
                                           "leftTitle": "Available Alerts:",
@@ -7540,6 +7586,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "moveLeftTitle": "Remove",
                                           "moveRightTitle": "Add",
                                           "name": "options.alert_guids",
+                                          "noOptionsTitle": "No available options",
+                                          "noValueTitle": "No option selected",
                                           "options": Array [
                                             Object {
                                               "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9179,6 +9227,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           },
                                           "allToRight": false,
                                           "component": "dual-list-select",
+                                          "filterOptionsTitle": "Filter options",
+                                          "filterValuesTitle": "Filter values",
                                           "id": "options.alert_guids",
                                           "label": " ",
                                           "leftTitle": "Available Alerts:",
@@ -9187,6 +9237,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "moveLeftTitle": "Remove",
                                           "moveRightTitle": "Add",
                                           "name": "options.alert_guids",
+                                          "noOptionsTitle": "No available options",
+                                          "noValueTitle": "No option selected",
                                           "options": Array [
                                             Object {
                                               "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9232,6 +9284,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               },
                                               "allToRight": false,
                                               "component": "dual-list-select",
+                                              "filterOptionsTitle": "Filter options",
+                                              "filterValuesTitle": "Filter values",
                                               "id": "options.alert_guids",
                                               "label": " ",
                                               "leftTitle": "Available Alerts:",
@@ -9240,6 +9294,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               "moveLeftTitle": "Remove",
                                               "moveRightTitle": "Add",
                                               "name": "options.alert_guids",
+                                              "noOptionsTitle": "No available options",
+                                              "noValueTitle": "No option selected",
                                               "options": Array [
                                                 Object {
                                                   "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9285,6 +9341,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 },
                                                 "allToRight": false,
                                                 "component": "dual-list-select",
+                                                "filterOptionsTitle": "Filter options",
+                                                "filterValuesTitle": "Filter values",
                                                 "id": "options.alert_guids",
                                                 "label": " ",
                                                 "leftTitle": "Available Alerts:",
@@ -9293,6 +9351,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "moveLeftTitle": "Remove",
                                                 "moveRightTitle": "Add",
                                                 "name": "options.alert_guids",
+                                                "noOptionsTitle": "No available options",
+                                                "noValueTitle": "No option selected",
                                                 "options": Array [
                                                   Object {
                                                     "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9351,6 +9411,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     },
                                                     "allToRight": false,
                                                     "component": "dual-list-select",
+                                                    "filterOptionsTitle": "Filter options",
+                                                    "filterValuesTitle": "Filter values",
                                                     "id": "options.alert_guids",
                                                     "label": " ",
                                                     "leftTitle": "Available Alerts:",
@@ -9359,6 +9421,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "moveLeftTitle": "Remove",
                                                     "moveRightTitle": "Add",
                                                     "name": "options.alert_guids",
+                                                    "noOptionsTitle": "No available options",
+                                                    "noValueTitle": "No option selected",
                                                     "options": Array [
                                                       Object {
                                                         "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9410,6 +9474,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       },
                                                       "allToRight": false,
                                                       "component": "dual-list-select",
+                                                      "filterOptionsTitle": "Filter options",
+                                                      "filterValuesTitle": "Filter values",
                                                       "id": "options.alert_guids",
                                                       "label": " ",
                                                       "leftTitle": "Available Alerts:",
@@ -9418,6 +9484,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       "moveLeftTitle": "Remove",
                                                       "moveRightTitle": "Add",
                                                       "name": "options.alert_guids",
+                                                      "noOptionsTitle": "No available options",
+                                                      "noValueTitle": "No option selected",
                                                       "options": Array [
                                                         Object {
                                                           "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -9468,6 +9536,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         },
                                                         "allToRight": false,
                                                         "component": "dual-list-select",
+                                                        "filterOptionsTitle": "Filter options",
+                                                        "filterValuesTitle": "Filter values",
                                                         "id": "options.alert_guids",
                                                         "label": " ",
                                                         "leftTitle": "Available Alerts:",
@@ -9476,6 +9546,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         "moveLeftTitle": "Remove",
                                                         "moveRightTitle": "Add",
                                                         "name": "options.alert_guids",
+                                                        "noOptionsTitle": "No available options",
+                                                        "noValueTitle": "No option selected",
                                                         "options": Array [
                                                           Object {
                                                             "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -13417,6 +13489,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             },
                                             "allToRight": false,
                                             "component": "dual-list-select",
+                                            "filterOptionsTitle": "Filter options",
+                                            "filterValuesTitle": "Filter values",
                                             "id": "options.alert_guids",
                                             "label": " ",
                                             "leftTitle": "Available Alerts:",
@@ -13425,6 +13499,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "moveLeftTitle": "Remove",
                                             "moveRightTitle": "Add",
                                             "name": "options.alert_guids",
+                                            "noOptionsTitle": "No available options",
+                                            "noValueTitle": "No option selected",
                                             "options": Array [
                                               Object {
                                                 "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -14140,6 +14216,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             },
                                             "allToRight": false,
                                             "component": "dual-list-select",
+                                            "filterOptionsTitle": "Filter options",
+                                            "filterValuesTitle": "Filter values",
                                             "id": "options.alert_guids",
                                             "label": " ",
                                             "leftTitle": "Available Alerts:",
@@ -14148,6 +14226,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "moveLeftTitle": "Remove",
                                             "moveRightTitle": "Add",
                                             "name": "options.alert_guids",
+                                            "noOptionsTitle": "No available options",
+                                            "noValueTitle": "No option selected",
                                             "options": Array [
                                               Object {
                                                 "label": "CPU Ready > 4000 ms for more than 10 min",
@@ -14897,6 +14977,8 @@ exports[`Action Form Component should render correctly 1`] = `
                   },
                   "allToRight": false,
                   "component": "dual-list-select",
+                  "filterOptionsTitle": "Filter options",
+                  "filterValuesTitle": "Filter values",
                   "id": "options.alert_guids",
                   "label": " ",
                   "leftTitle": "Available Alerts:",
@@ -14905,6 +14987,8 @@ exports[`Action Form Component should render correctly 1`] = `
                   "moveLeftTitle": "Remove",
                   "moveRightTitle": "Add",
                   "name": "options.alert_guids",
+                  "noOptionsTitle": "No available options",
+                  "noValueTitle": "No option selected",
                   "options": Array [
                     Object {
                       "label": "CPU Ready > 4000 ms for more than 10 min",
