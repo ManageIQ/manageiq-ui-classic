@@ -349,9 +349,6 @@ module Mixins
         when "#{table_name}_perf"
           performance_pressed
           return
-        when "#{table_name}_ad_hoc_metrics"
-          ad_hoc_metrics_pressed
-          return
         when 'refresh_server_summary'
           javascript_redirect(:back)
           return
