@@ -186,67 +186,6 @@ describe OpsController do
       end
     end
 
-    describe "#rbac_tenant_manage_quotas" do
-      before do
-        @tenant = FactoryBot.create(:tenant,
-                                    :name      => "OneTenant",
-                                    :parent    => Tenant.root_tenant,
-                                    :domain    => "test",
-                                    :subdomain => "test")
-        sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
-          :active_tree => :rbac_tree,
-          :active_tab  => "rbac_details"
-        }
-        controller.instance_variable_set(:@sb, sb_hash)
-        allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-      end
-
-      it "resets tenant manage quotas" do
-        controller.params = {:id => @tenant.id, :button => "reset"}
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        expect(flash_message[:message]).to include("All changes have been reset")
-        expect(flash_message[:level]).to be(:warning)
-      end
-
-      it "cancels tenant manage quotas" do
-        controller.params = {:id => @tenant.id, :button => "cancel", :divisible => "true"}
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        expect(flash_message[:message])
-          .to include("Manage quotas for Tenant \"#{@tenant.name}\" was cancelled by the user")
-        expect(flash_message[:level]).to be(:success)
-      end
-
-      it "saves tenant quotas record changes" do
-        controller.params = {
-          :name      => "OneTenant",
-          :id        => @tenant.id,
-          :button    => "save",
-          :divisible => "true",
-          :quotas    => {
-            :cpu_allocated => {:value => 1024.0},
-            :mem_allocated => {:value => 4096.0}
-          }
-        }
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        @tenant.reload
-        tenant_quotas = @tenant.get_quotas
-        expect(tenant_quotas[:cpu_allocated][:value]).to be(1024.0)
-        expect(tenant_quotas[:mem_allocated][:value]).to be(4096.0)
-        expect(flash_message[:message]).to include("Quotas for Tenant \"OneTenant\" were saved")
-        expect(flash_message[:level]).to be(:success)
-      end
-    end
-
     describe "#tags_edit" do
       let!(:user) { stub_user(:features => :all) }
 

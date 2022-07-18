@@ -2363,7 +2363,6 @@ Rails.application.routes.draw do
         log_collection_form_fields
         pglogical_subscriptions_form_fields
         schedule_form_fields
-        tenant_quotas_form_fields
       ),
       :post => %w(
         accordion_select
