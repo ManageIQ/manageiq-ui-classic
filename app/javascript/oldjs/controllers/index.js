@@ -15,7 +15,6 @@ require('./error_modal_controller.js');
 require('./host/host_form_controller.js');
 require('./miq_ae_class/ae_inline_method_selection_controller.js');
 require('./ops/pglogical_replication_form_controller.js');
-require('./ops/tenant_quota_form_controller.js');
 require('./playbook-reusable-code-mixin.js');
 require('./reconfigure/reconfigure_form_controller.js');
 require('./schedule/schedule_form_controller.js');
