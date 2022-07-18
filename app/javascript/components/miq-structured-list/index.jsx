@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
+  Button,
   StructuredListWrapper,
   StructuredListBody,
   StructuredListRow,
@@ -38,6 +39,20 @@ const MiqStructuredList = ({
   const renderImage = (row) => (
     <div className="cell image" title={row.title}>
       <img src={row.image} alt={row.image} title={row.title} />
+    </div>
+  );
+
+  /** Function to render a button in the cell. */
+  const renderButton = ({ button: { action, name, disabled } }) => (
+    <div className="cell button_wrapper">
+      <Button
+        kind="primary"
+        title={name}
+        onClick={() => !disabled && eval(action)}
+        disabled={disabled}
+      >
+        {name}
+      </Button>
     </div>
   );
 
@@ -84,6 +99,7 @@ const MiqStructuredList = ({
     <div className={classNames('content', row.bold ? 'label_header' : '')}>
       {row.icon && renderIcon(row)}
       {row.image && renderImage(row)}
+      {row.button && renderButton(row)}
       {renderValues(row)}
       {row.expandable && renderExpand(row)}
     </div>
