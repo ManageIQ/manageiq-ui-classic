@@ -231,7 +231,7 @@ class ChargebackRateController < ApplicationController
       end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = @changed = false
-      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
+      javascript_redirect(:action => @lastaction, :id => @rate[:id], :flash_msg => flash_msg)
     else
       @rate.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
