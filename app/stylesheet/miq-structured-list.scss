@@ -47,6 +47,24 @@
     padding-left: 0;
   }
 
+  .cell {
+    &.image {
+      margin: 20px 0;
+
+      img {
+        max-height: 80px;
+      }
+    }
+
+    &.button_wrapper {
+      margin: 20px 0;
+
+      button {
+        padding: 10px 30px;
+      }
+    }
+  }
+
   .content_value {
     .content {
       display: flex;
