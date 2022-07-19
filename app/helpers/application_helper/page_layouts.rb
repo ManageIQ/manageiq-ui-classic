@@ -146,9 +146,12 @@ module ApplicationHelper::PageLayouts
   def inner_layout_present?
     @inner_layout_present ||=
       begin
-        @explorer || params[:action] == "explorer" ||
-          (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-          params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
+        # @explorer || params[:action] == "explorer" ||
+        #   (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+        # params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
+          @explorer || params[:action] == "explorer" ||
+            (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+           params[:controller] == "utilization"
       end
   end
 

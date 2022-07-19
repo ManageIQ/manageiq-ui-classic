@@ -17,6 +17,8 @@ import CloudNetworkForm from '../components/cloud-network-form/cloud-network-for
 import CloudTenantForm from '../components/cloud-tenant-form';
 import CloudVolumeForm from '../components/cloud-volume-form';
 import ProviderForm from '../components/provider-form';
+import ControlSimulationForm from '../components/control-simulation-form';
+import ControlSimulationPage from '../components/control-simulation-form/control-simulation-page';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import DashboardWidget from '../components/dashboard-charts';
@@ -111,6 +113,8 @@ ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('CloudVolumeForm', CloudVolumeForm);
 ManageIQ.component.addReact('ProviderForm', ProviderForm);
+ManageIQ.component.addReact('ControlSimulationForm', ControlSimulationForm);
+ManageIQ.component.addReact('ControlSimulationPage', ControlSimulationPage);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
 ManageIQ.component.addReact('DashboardWidget', DashboardWidget);

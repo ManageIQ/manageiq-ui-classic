@@ -1,4 +1,9 @@
-- content_for :left do
-  = render :partial => "rsop_options"
+-# - content_for :left do
+-#   = render :partial => "rsop_options"
+-# 
 #main_div
-  = render :partial => "rsop_results"
+  - @eventSelectionTypeList = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
+  - @eventSelectionEventObj = []
+  - @eventSelectionTypeList.each{ | key, value | @eventSelectionEventObj.push({:type_id => value.to_s, :events => MiqEventDefinitionSet.find(value.to_s).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort}) }
+
+  = react('ControlSimulationPage', { :sb_rsop => @sb[:rsop], :eventSelectionEventObj => @eventSelectionEventObj })

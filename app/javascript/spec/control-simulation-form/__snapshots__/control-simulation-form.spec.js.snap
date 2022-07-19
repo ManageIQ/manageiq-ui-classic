@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Control Simulation Form Component should render ControlSimulationForm form 1`] = `
+<Connect(MiqFormRenderer)
+  canReset={true}
+  onReset={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "type",
+              "includeEmpty": true,
+              "isRequired": true,
+              "label": "Type",
+              "name": "type",
+              "onChange": [Function],
+              "options": Array [],
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "select",
+              "condition": Object {
+                "isNotEmpty": true,
+                "when": "type",
+              },
+              "id": "type_event",
+              "includeEmpty": true,
+              "isRequired": true,
+              "key": "type_event-undefined",
+              "label": "Event",
+              "loadOptions": [Function],
+              "name": "type_event",
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+          "id": "event-selection",
+          "name": "event-selection",
+          "title": "Event Selection",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "filter_type",
+              "includeEmpty": true,
+              "isRequired": true,
+              "label": "Filter Type",
+              "name": "filter_type",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "By Cloud/Infrastructure Providers",
+                  "value": "emss",
+                },
+                Object {
+                  "label": "By Clusters",
+                  "value": "clusters",
+                },
+                Object {
+                  "label": "By Host",
+                  "value": "hosts",
+                },
+                Object {
+                  "label": "Single VM/Instance",
+                  "value": "vms",
+                },
+              ],
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "select",
+              "condition": Object {
+                "isNotEmpty": true,
+                "when": "filter_type",
+              },
+              "id": "filter_value",
+              "isRequired": true,
+              "isSearchable": true,
+              "key": "filter_value-undefined",
+              "labelText": "Filter Value",
+              "name": "filter_value",
+              "options": Array [],
+              "validate": Array [
+                Object {
+                  "message": "Required",
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+          "id": "vm-selection",
+          "name": "vm-selection",
+          "title": "VM Selection",
+        },
+      ],
+    }
+  }
+/>
+`;
+
+exports[`Control Simulation Form Component should render ControlSimulationFormResults with results 1`] = `
+<div>
+  <div>
+    Display Options
+    <Checkbox
+      checked={true}
+      id="showOutOfScope"
+      indeterminate={false}
+      labelText="Show out of scope items"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+    Show Policies:
+    <Checkbox
+      checked={true}
+      id="passedPolicies"
+      indeterminate={false}
+      labelText="Passed"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+    <Checkbox
+      checked={true}
+      id="failedPolicies"
+      indeterminate={false}
+      labelText="Failed"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+  </div>
+  <div>
+    <div>
+      * Items in RED do not change the output of the scope or expression
+    </div>
+    <Button
+      dangerDescription="danger"
+      disabled={false}
+      hasIconOnly={true}
+      iconDescription="Collapse All"
+      id="squash_button"
+      isExpressive={false}
+      kind="ghost"
+      onClick={[Function]}
+      renderIcon={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "render": [Function],
+        }
+      }
+      size="sm"
+      tabIndex={0}
+      tooltipAlignment="center"
+      tooltipPosition="top"
+      type="button"
+    />
+  </div>
+  <Connect(TreeView)
+    bs_tree="[{\\"key\\":\\"root\\",\\"text\\":\\"VmOrTemplate - Resultant Set of Policy, Event: [Login failed]\\",\\"icon\\":\\"fa fa-star\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":true},\\"nodes\\":[{\\"key\\":\\"xx-4680\\",\\"text\\":\\"<strong>VM:</strong> ag_destroy_test\\",\\"icon\\":\\"pficon pficon-virtual-machine\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-215\\",\\"text\\":\\"<strong>Profile:</strong> _mels_policy_profile\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-215_xx-60\\",\\"text\\":\\"<strong>Policy:</strong> _mels_policy\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-215_xx-60_xx-39\\",\\"text\\":\\"<strong>Condition:</strong> _mels\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-215_xx-60_xx-39_xx-\\",\\"text\\":\\"<strong>Expression:</strong> <font color=\\\\\\"green\\\\\\">Vm-name INCLUDES test</font>\\",\\"tooltip\\":\\"Vm-name INCLUDES test\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}},{\\"key\\":\\"xx-4680_xx-215_xx-60_xx-2\\",\\"text\\":\\"<strong>Action:</strong> Generate log message\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}},{\\"key\\":\\"xx-4680_xx-215_xx-61\\",\\"text\\":\\"<strong>Policy:</strong> _luds_policy\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-215_xx-61_xx-\\",\\"text\\":\\"<strong>Scope:</strong> <font color=\\\\\\"red\\\\\\">Vm-name INCLUDES luds</font>\\",\\"tooltip\\":\\"Vm-name INCLUDES luds\\",\\"icon\\":\\"pficon pficon-error-circle-o\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}},{\\"key\\":\\"xx-4680_xx-220\\",\\"text\\":\\"<strong>Profile:</strong> _luds_policy_profile\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-220_xx-61\\",\\"text\\":\\"<strong>Policy:</strong> _luds_policy\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-220_xx-61_xx-\\",\\"text\\":\\"<strong>Scope:</strong> <font color=\\\\\\"red\\\\\\">Vm-name INCLUDES luds</font>\\",\\"tooltip\\":\\"Vm-name INCLUDES luds\\",\\"icon\\":\\"pficon pficon-error-circle-o\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}},{\\"key\\":\\"xx-4680_xx-223\\",\\"text\\":\\"<strong>Profile:</strong> _john_policy_profile\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-223_xx-62\\",\\"text\\":\\"<strong>Policy:</strong> _johnPolicy\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-223_xx-62_xx-\\",\\"text\\":\\"<strong>Scope:</strong> <font color=\\\\\\"green\\\\\\">Vm-active = true</font>\\",\\"tooltip\\":\\"Vm-active = true\\",\\"icon\\":\\"pficon pficon-ok\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}},{\\"key\\":\\"xx-4680_xx-223_xx-62_xx-41\\",\\"text\\":\\"<strong>Condition:</strong> _john\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"nodes\\":[{\\"key\\":\\"xx-4680_xx-223_xx-62_xx-41_xx-\\",\\"text\\":\\"<strong>Expression:</strong> Vm.advanced_settings-created_on IS Today and Vm.advanced_settings-name = blue\\",\\"tooltip\\":\\"Vm.advanced_settings-created_on IS Today and Vm.advanced_settings-name = blue\\",\\"icon\\":\\"fa fa-ban\\",\\"class\\":\\"no-cursor\\",\\"selectable\\":false,\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}],\\"state\\":{\\"expanded\\":false}}]}]"
+    select_node="root"
+    tree_id="rsop_treebox"
+    tree_name="rsop_tree"
+  />
+</div>
+`;
+
+exports[`Control Simulation Form Component should render ControlSimulationFormResults without results 1`] = `
+<div>
+  <div>
+    Display Options
+    <Checkbox
+      checked={true}
+      id="showOutOfScope"
+      indeterminate={false}
+      labelText="Show out of scope items"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+    Show Policies:
+    <Checkbox
+      checked={true}
+      id="passedPolicies"
+      indeterminate={false}
+      labelText="Passed"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+    <Checkbox
+      checked={true}
+      id="failedPolicies"
+      indeterminate={false}
+      labelText="Failed"
+      onChange={[Function]}
+      onClick={[Function]}
+    />
+  </div>
+  <div />
+  <div>
+    * Enter Policy Simulation options on the left and press Submit
+  </div>
+</div>
+`;
+
+exports[`Control Simulation Form Component should render control simulation page 1`] = `
+<Grid>
+  <Row>
+    <Column
+      lg={6}
+      md={8}
+      xs={12}
+    >
+      <ControlSimulationForm />
+    </Column>
+    <Column
+      lg={6}
+      md={4}
+      xs={12}
+    >
+      <ControlSimulationFormResults />
+    </Column>
+  </Row>
+</Grid>
+`;
