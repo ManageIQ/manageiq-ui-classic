@@ -2,6 +2,7 @@ module ReportHelper
   include_concern 'Editor'
   include ReportInformationHelper
   include ReportDashboardWidgetHelper
+  include ReportScheduleHelper
 
   STYLE_CLASSES = {
     :miq_rpt_red_text    => N_("Red Text"),
