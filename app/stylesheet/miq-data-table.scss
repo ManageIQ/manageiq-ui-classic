@@ -12,6 +12,7 @@
 
     .bx--table-header-label {
       line-height: 20px;
+      white-space: nowrap;
     }
   }
 
@@ -29,6 +30,16 @@
         max-width: 250px;
       }
 
+      .array_list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .list_row {
+          padding: 0.5rem 0;
+        }
+      }
+
       .image {
         width: 30px;
         height: 30px;
@@ -42,6 +53,10 @@
         align-items: center;
         justify-content: center;
         margin-right: 5px;
+      }
+
+      .icon.fa-ruby {
+        color: #cc0000 !important;
       }
 
       span {
@@ -76,6 +91,35 @@
       white-space: nowrap;
       overflow: hidden;
       padding-top: 6px;
+    }
+  }
+}
+
+#iso_datastore_details_div {
+  tbody tr {
+    .cell {
+      &.truncate_cell {
+        max-width: 1000px;
+      }
+    }
+  }
+}
+
+.chargeback-rate table tbody tr td {
+  vertical-align: top !important;
+}
+
+.time-profile-reports {
+  padding-bottom: 20px;
+}
+
+.report-data-table {
+  table tr td {
+    padding: 0 !important;
+
+    .cell {
+      min-height: 47px;
+      padding-left: 10px;
     }
   }
 }

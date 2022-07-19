@@ -90,6 +90,10 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           moveAllLeftTitle: __('Remove All'),
           moveRightTitle: __('Add'),
           moveAllRightTitle: __('Add All'),
+          noValueTitle: __('No option selected'),
+          noOptionsTitle: __('No available options'),
+          filterOptionsTitle: __('Filter options'),
+          filterValuesTitle: __('Filter values'),
           AddButtonProps: {
             size: 'small',
           },
@@ -518,7 +522,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
               },
             }) =>
               Object.values(action_types).sort().map((key) => ({
-                label: key,
+                label: __(key),
                 value: Object.keys(action_types)[Object.values(action_types).indexOf(key)],
               })),
           ),

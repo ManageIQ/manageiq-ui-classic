@@ -9,18 +9,18 @@ describe "dashboard/login.html.haml" do
 
     it "when authentication is 'database'" do
       render
-      expect(response).to have_selector("div#login_div:has(input#browser_name)")
-      expect(response).to have_selector("div#login_div:has(input#browser_version)")
-      expect(response).to have_selector("div#login_div:has(input#browser_os)")
-      expect(response).to have_selector("div#login_div:has(input#user_TZO)")
+      expect(response).to have_selector("form#login_div:has(input#browser_name)")
+      expect(response).to have_selector("form#login_div:has(input#browser_version)")
+      expect(response).to have_selector("form#login_div:has(input#browser_os)")
+      expect(response).to have_selector("form#login_div:has(input#user_TZO)")
     end
 
     it "when authentication is not 'database'" do
       render
-      expect(response).to have_selector("div#login_div:has(input#browser_name)")
-      expect(response).to have_selector("div#login_div:has(input#browser_version)")
-      expect(response).to have_selector("div#login_div:has(input#browser_os)")
-      expect(response).to have_selector("div#login_div:has(input#user_TZO)")
+      expect(response).to have_selector("form#login_div:has(input#browser_name)")
+      expect(response).to have_selector("form#login_div:has(input#browser_version)")
+      expect(response).to have_selector("form#login_div:has(input#browser_os)")
+      expect(response).to have_selector("form#login_div:has(input#user_TZO)")
     end
   end
 

@@ -4,7 +4,6 @@ import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
 import NetworkRouterForm from '../../components/routers-form/index';
 import * as networkModule from '../../helpers/network-providers';
-import { mount } from '../helpers/mountForm';
 
 require('../helpers/set_fixtures_helper.js');
 require('../helpers/old_js_file_require_helper.js');

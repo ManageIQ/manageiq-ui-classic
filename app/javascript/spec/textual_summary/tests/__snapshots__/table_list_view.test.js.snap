@@ -36,75 +36,377 @@ exports[`TableListView renders just fine... 1`] = `
     ]
   }
 >
-  <table
-    className="table table-bordered table-hover table-striped table-summary-screen"
+  <MiqStructuredList
+    headers={
+      Array [
+        "Name",
+        "Rows",
+      ]
+    }
+    mode="table_list_view"
+    onClick={[Function]}
+    rows={
+      Array [
+        Object {
+          "explorer": true,
+          "label": "vim_performance_states",
+          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+          "name": "vim_performance_states",
+          "title": "vim_performance_states",
+          "value": "676,150",
+        },
+        Object {
+          "explorer": true,
+          "label": "miq_report_result_details",
+          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+          "name": "miq_report_result_details",
+          "title": "miq_report_result_details",
+          "value": "280,848",
+        },
+      ]
+    }
+    title="Tables with the Most Rows"
   >
-    <thead>
-      <tr>
-        <th
-          align="left"
-          colSpan={2}
-        >
-          Tables with the Most Rows
-        </th>
-      </tr>
-      <tr>
-        <th
-          key="0"
-        >
-          Name
-        </th>
-        <th
-          key="1"
-        >
-          Rows
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <a
-        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
-        onClick={[Function]}
+    <Accordion
+      align="start"
+      className="miq-structured-list-accordion table_list_view"
+    >
+      <ul
+        className="bx--accordion miq-structured-list-accordion table_list_view bx--accordion--start"
       >
-        <tr
-          key="0"
+        <AccordionItem
+          open={true}
+          title="Tables with the Most Rows"
         >
-          <td
-            key="0"
-            title="View the table"
+          <li
+            className="bx--accordion__item bx--accordion__item--active"
+            onAnimationEnd={[Function]}
           >
-            vim_performance_states
-          </td>
-          <td
-            key="1"
-            title="View the table"
-          >
-            676,150
-          </td>
-        </tr>
-      </a>
-      <a
-        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
-        onClick={[Function]}
-      >
-        <tr
-          key="1"
-        >
-          <td
-            key="0"
-            title="View the table"
-          >
-            miq_report_result_details
-          </td>
-          <td
-            key="1"
-            title="View the table"
-          >
-            280,848
-          </td>
-        </tr>
-      </a>
-    </tbody>
-  </table>
+            <defaultRenderExpando
+              aria-controls="accordion-item-1"
+              aria-expanded={true}
+              className="bx--accordion__heading"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              type="button"
+            >
+              <button
+                aria-controls="accordion-item-1"
+                aria-expanded={true}
+                className="bx--accordion__heading"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                type="button"
+              >
+                <ForwardRef(ChevronRight16)
+                  className="bx--accordion__arrow"
+                >
+                  <Icon
+                    className="bx--accordion__arrow"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      className="bx--accordion__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                      />
+                    </svg>
+                  </Icon>
+                </ForwardRef(ChevronRight16)>
+                <Text
+                  as="div"
+                  className="bx--accordion__title"
+                >
+                  <div
+                    className="bx--accordion__title"
+                    dir="auto"
+                  >
+                    Tables with the Most Rows
+                  </div>
+                </Text>
+              </button>
+            </defaultRenderExpando>
+            <div
+              className="bx--accordion__content"
+              id="accordion-item-1"
+            >
+              <FeatureToggle(StructuredListWrapper)
+                ariaLabel="Structured list"
+                className="miq-structured-list table_list_view"
+              >
+                <StructuredListWrapper
+                  ariaLabel="Structured list"
+                  className="miq-structured-list table_list_view"
+                  isCondensed={false}
+                  isFlush={false}
+                  selection={false}
+                >
+                  <div
+                    aria-label="Structured list"
+                    className="bx--structured-list miq-structured-list table_list_view"
+                    role="table"
+                  >
+                    <MiqStructuredListHeader
+                      headers={
+                        Array [
+                          "Name",
+                          "Rows",
+                        ]
+                      }
+                    >
+                      <FeatureToggle(StructuredListHead)>
+                        <StructuredListHead>
+                          <div
+                            className="bx--structured-list-thead"
+                            role="rowgroup"
+                          >
+                            <FeatureToggle(StructuredListRow)
+                              head={true}
+                              tabIndex={0}
+                            >
+                              <StructuredListRow
+                                head={true}
+                                label={false}
+                                onKeyDown={[Function]}
+                                tabIndex={0}
+                              >
+                                <div
+                                  className="bx--structured-list-row bx--structured-list-row--header-row"
+                                  role="row"
+                                >
+                                  <FeatureToggle(StructuredListCell)
+                                    className="list_header"
+                                    head={true}
+                                    key="0"
+                                  >
+                                    <StructuredListCell
+                                      className="list_header"
+                                      head={true}
+                                      noWrap={false}
+                                    >
+                                      <div
+                                        className="list_header bx--structured-list-th"
+                                        role="columnheader"
+                                      >
+                                        Name
+                                      </div>
+                                    </StructuredListCell>
+                                  </FeatureToggle(StructuredListCell)>
+                                  <FeatureToggle(StructuredListCell)
+                                    className="list_header"
+                                    head={true}
+                                    key="1"
+                                  >
+                                    <StructuredListCell
+                                      className="list_header"
+                                      head={true}
+                                      noWrap={false}
+                                    >
+                                      <div
+                                        className="list_header bx--structured-list-th"
+                                        role="columnheader"
+                                      >
+                                        Rows
+                                      </div>
+                                    </StructuredListCell>
+                                  </FeatureToggle(StructuredListCell)>
+                                </div>
+                              </StructuredListRow>
+                            </FeatureToggle(StructuredListRow)>
+                          </div>
+                        </StructuredListHead>
+                      </FeatureToggle(StructuredListHead)>
+                    </MiqStructuredListHeader>
+                    <FeatureToggle(StructuredListBody)>
+                      <StructuredListBody
+                        onKeyDown={[Function]}
+                      >
+                        <div
+                          className="bx--structured-list-tbody"
+                          onKeyDown={[Function]}
+                          role="rowgroup"
+                        >
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="0"
+                            onClick={[Function]}
+                            tabIndex={0}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={0}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      vim_performance_states
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <Link
+                                        className="cell_link"
+                                        onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                      >
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                        >
+                                          <div
+                                            className="content"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              676,150
+                                            </div>
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                          <FeatureToggle(StructuredListRow)
+                            className=""
+                            key="1"
+                            onClick={[Function]}
+                            tabIndex={1}
+                            title=""
+                          >
+                            <StructuredListRow
+                              className=""
+                              head={false}
+                              label={false}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              tabIndex={1}
+                              title=""
+                            >
+                              <div
+                                className="bx--structured-list-row"
+                                onClick={[Function]}
+                                role="row"
+                                title=""
+                              >
+                                <FeatureToggle(StructuredListCell)
+                                  className="label_header"
+                                >
+                                  <StructuredListCell
+                                    className="label_header"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="label_header bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      miq_report_result_details
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                                <FeatureToggle(StructuredListCell)
+                                  className="content_value object_item"
+                                >
+                                  <StructuredListCell
+                                    className="content_value object_item"
+                                    head={false}
+                                    noWrap={false}
+                                  >
+                                    <div
+                                      className="content_value object_item bx--structured-list-td"
+                                      role="cell"
+                                    >
+                                      <Link
+                                        className="cell_link"
+                                        onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                      >
+                                        <a
+                                          className="bx--link cell_link"
+                                          onClick={[Function]}
+                                          rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                        >
+                                          <div
+                                            className="content"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              280,848
+                                            </div>
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </StructuredListCell>
+                                </FeatureToggle(StructuredListCell)>
+                              </div>
+                            </StructuredListRow>
+                          </FeatureToggle(StructuredListRow)>
+                        </div>
+                      </StructuredListBody>
+                    </FeatureToggle(StructuredListBody)>
+                  </div>
+                </StructuredListWrapper>
+              </FeatureToggle(StructuredListWrapper)>
+            </div>
+          </li>
+        </AccordionItem>
+      </ul>
+    </Accordion>
+  </MiqStructuredList>
 </TableListView>
 `;

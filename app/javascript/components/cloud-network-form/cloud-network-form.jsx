@@ -60,16 +60,14 @@ class CloudNetworkForm extends Component {
   };
 
   saveClicked = (values) => {
-    if (values.ems_id !== '-1') {
-      const { cloudNetworkId } = this.props;
-      if (cloudNetworkId) {
-        const { cloudTenantName } = this.state;
-        const url = `/cloud_network/update/${cloudNetworkId}?button=save`;
-        miqAjaxButton(url, { ...values, cloud_tenant: { id: values.cloud_tenant, name: cloudTenantName } }, { complete: false });
-      } else {
-        const url = 'create/new?button=add';
-        miqAjaxButton(url, { ...values, vlan_transparent: false, cloud_tenant: { id: values.cloud_tenant } }, { complete: false });
-      }
+    const { cloudNetworkId } = this.props;
+    if (cloudNetworkId) {
+      const { cloudTenantName } = this.state;
+      const url = `/cloud_network/update/${cloudNetworkId}?button=save`;
+      miqAjaxButton(url, { ...values, cloud_tenant: { id: values.cloud_tenant, name: cloudTenantName } }, { complete: false });
+    } else {
+      const url = 'create/new?button=add';
+      miqAjaxButton(url, { ...values, vlan_transparent: false, cloud_tenant: { id: values.cloud_tenant } }, { complete: false });
     }
   };
 
@@ -82,6 +80,14 @@ class CloudNetworkForm extends Component {
   }
 
   render() {
+    const validation = (values) => {
+      const errors = {};
+      if (values.ems_id === '-1') {
+        errors.ems_id = __('Required');
+      }
+      return errors;
+    };
+
     const {
       initialValues, ems, isLoading,
     } = this.state;
@@ -99,6 +105,7 @@ class CloudNetworkForm extends Component {
           initialValues={initialValues}
           schema={createSchema(ems, cloudNetworkId, this.loadSchema, this.emptySchema, fields)}
           onSubmit={this.saveClicked}
+          validate={validation}
           onCancel={this.cancelClicked}
           canReset={!!cloudNetworkId}
           buttonsLabels={{

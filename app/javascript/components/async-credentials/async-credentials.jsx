@@ -91,7 +91,7 @@ const AsyncCredentials = ({
 
             // The field itself is dirty when any of its children is dirty
             const isDirty = Object.keys(dirtyFields).some((field) =>
-              dirtyFields[field] && dependencies.includes(field) && !validationDependencies.includes(field));
+              dirtyFields[field] && dependencies.includes(field));
 
             // The field itself is valid if there are no modifications since the last validation or the initial values
             const isValid = isEqual(currentValues, lastValid) || !isDirty;

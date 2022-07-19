@@ -61,33 +61,6 @@ class NetworkRouterController < ApplicationController
     )
   end
 
-  def update
-    assert_privileges("network_router_edit")
-    @router = find_record_with_rbac(NetworkRouter, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
-
-    when "save"
-      options = form_params(params)
-      if switch_to_bool(params[:external_gateway])
-        options.merge!(form_external_gateway(params))
-      else
-        options.merge!(form_external_gateway({}))
-      end
-      task_id = @router.update_network_router_queue(session[:userid], options)
-
-      add_flash(_("Router update failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
-      end
-    end
-  end
-
   def add_interface_select
     assert_privileges("network_router_add_interface")
     @router = find_record_with_rbac(NetworkRouter, params[:id])
@@ -291,22 +264,6 @@ class NetworkRouterController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def form_external_gateway(params)
-    options = {:external_gateway_info => {}}
-    if params[:cloud_network_id].present?
-      network = find_record_with_rbac(CloudNetwork, params[:cloud_network_id])
-      options[:external_gateway_info][:network_id] = network.ems_ref
-      if params[:cloud_subnet_id].present?
-        subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
-        options[:external_gateway_info][:external_fixed_ips] = [{:subnet_id => subnet.ems_ref}]
-      end
-      if params.fetch_path(:extra_attributes, :external_gateway_info, :enable_snat)
-        options[:external_gateway_info][:enable_snat] = params[:extra_attributes][:external_gateway_info][:enable_snat]
-      end
-    end
-    options
-  end
-
   def form_params(params)
     options = %i[name admin_state_up ems_id cloud_group_id cloud_subnet_id
                  cloud_network_id].each_with_object({}) do |param, opt|
@@ -354,10 +311,6 @@ class NetworkRouterController < ApplicationController
 
   menu_section :net
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
-
-  def switch_to_bool(option)
-    option && option =~ /on|true/i
-  end
 
   has_custom_buttons
 end

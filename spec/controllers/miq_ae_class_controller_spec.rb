@@ -86,7 +86,7 @@ describe MiqAeClassController do
     it "do not replace left side explorer tree when copy form is loaded initially" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
       cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       node = "aec-#{cls1.id}"
@@ -105,11 +105,11 @@ describe MiqAeClassController do
     it "copies class under specified namespace" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
       cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       d2 = FactoryBot.create(:miq_ae_domain, :name => "domain2")
-      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
+      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent => d2)
 
       new = {:domain => d2.id, :namespace => ns2.fqname, :overwrite_location => false}
       selected_items = {cls1.id => cls1.name}
@@ -135,7 +135,7 @@ describe MiqAeClassController do
     it "copy class under same namespace returns error when class exists" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
       cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       new = {:domain => d1.id, :namespace => ns1.fqname, :overwrite_location => false}
@@ -162,11 +162,11 @@ describe MiqAeClassController do
     it "overwrite class under same namespace when class exists" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
       cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       d2 = FactoryBot.create(:miq_ae_domain)
-      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
+      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent => d2)
 
       new = {:domain => d2.id, :namespace => ns2.fqname, :override_existing => true}
       selected_items = {cls1.id => cls1.name}
@@ -191,7 +191,7 @@ describe MiqAeClassController do
     it "copies a class with new name under same domain" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
       cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       new = {:domain => d1.id, :namespace => ns1.fqname, :override_existing => true, :new_name => 'foo'}
@@ -283,8 +283,8 @@ describe MiqAeClassController do
       it "collect namespace info" do
         stub_user(:features => :all)
         d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
-        ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-        FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => ns1.id)
+        ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent => d1)
+        FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent => ns1)
         FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
         node = "aen-#{ns1.id}"
         controller.instance_variable_set(:@sb,

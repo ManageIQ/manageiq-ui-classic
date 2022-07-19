@@ -31,11 +31,6 @@ describe EmsContainerController do
         expect(response.status).to eq(200)
       end
 
-      it "renders ad hoc view" do
-        get :show, :params => { :id => @container.id, :display => 'ad_hoc_metrics' }
-        expect(response.status).to eq(200)
-        expect(response.body).to_not be_empty
-      end
     end
 
     context "render dashboard" do

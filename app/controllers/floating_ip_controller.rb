@@ -40,13 +40,11 @@ class FloatingIpController < ApplicationController
   def create
     assert_privileges("floating_ip_new")
     case params[:button]
-    when "cancel"
-      javascript_redirect(:action => 'show_list', :flash_msg => _("Add of new Floating IP was cancelled by the user"))
     when "add"
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
 
-      if FloatingIp.class_by_ems(ems).supports_create?
+      if FloatingIp.class_by_ems(ems).supports?(:create)
         options.delete(:ems_id)
         task_id = ems.create_floating_ip_queue(session[:userid], options)
 
@@ -118,58 +116,6 @@ class FloatingIpController < ApplicationController
     @floating_ip = FloatingIp.new
     @in_a_form = true
     drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
-  end
-
-  def update
-    assert_privileges("floating_ip_edit")
-    @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Edit of Floating IP \"%{address}\" was cancelled by the user") % {:address => @floating_ip.address})
-
-    when "save"
-      if @floating_ip.supports_update?
-        options = form_params
-        options.delete(:ems_id)
-        task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
-
-        unless task_id.kind_of?(Integer)
-          add_flash(_("Floating IP update failed: Task start failed"), :error)
-        end
-
-        if @flash_array
-          javascript_flash(:spinner_off => true)
-        else
-          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
-        end
-      else
-        add_flash(_("Couldn't initiate update of Floating IP \"%{address}\": %{details}") % {
-          :address => @floating_ip.address,
-          :details => @floating_ip.unsupported_reason(:update)
-        }, :error)
-      end
-    end
-  end
-
-  def update_finished
-    task_id = session[:async][:params][:task_id]
-    floating_ip_id = session[:async][:params][:id]
-    floating_ip_address = session[:async][:params][:floating_ip_address]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Floating IP \"%{address}\" updated") % { :address => floating_ip_address })
-    else
-      add_flash(_("Unable to update Floating IP \"%{address}\": %{details}") % {
-        :address => floating_ip_address,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => floating_ip_id)
   end
 
   def download_data

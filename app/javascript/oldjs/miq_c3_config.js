@@ -102,10 +102,10 @@
 
     Bar: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}, rotated: true},
+        axis: {x: { type: 'category' }, rotated: true},
         data: {type: 'bar'},
         tooltip: {grouped: false},
-        legend: { show: true, position: 'right'},
+        legend: {show: true, position: 'right'},
       },
       c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultBarConfig()
@@ -113,10 +113,10 @@
 
     Column: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}},
+        axis: {x: { type: 'category'}},
         data: {type: 'bar'},
         tooltip: {grouped: false},
-        legend: { show: true, position: 'right'},
+        legend: {show: true, position: 'right'},
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultBarConfig()
 
@@ -124,61 +124,61 @@
 
     StackedBar: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}, rotated: true},
-        data: {type: 'bar'},
-        legend: { show: true, position: 'right'},
+        axis: { x: { type: 'category' }, rotated: true },
+        data: { type: 'bar' },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultGroupedBarConfig()
     ),
 
     StackedColumn: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}},
-        data: {type: 'bar'},
-        legend: { show: true, position: 'right'},
+        axis: { x: { type: 'category' } },
+        data: { type: 'bar' },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultGroupedBarConfig()
     ),
 
     Pie: _.defaultsDeep(
       {
-        data: {type: 'pie'},
-        tooltip: {show: true},
-        legend: { show: true, position: 'right'},
+        data: { type: 'pie' },
+        tooltip: { show: true },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultDonutConfig()
     ),
 
     Donut: _.defaultsDeep(
       {
-        data: {type: 'donut'},
-        tooltip: {show: true},
-        legend: { show: true, position: 'right'},
+        data: { type: 'donut' },
+        tooltip: { show: true },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultDonutConfig()
     ),
 
     Line: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}},
-        data: {type: 'line'},
-        legend: { show: true, position: 'right'},
+        axis: { x: { type: 'category' } },
+        data: { type: 'line' },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultLineConfig()
     ),
     Area: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}},
-        data: {type: 'area'},
-        legend: { show: true, position: 'right'},
+        axis: { x: { type: 'category' } },
+        data: { type: 'area' },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultAreaConfig()
     ),
     StackedArea: _.defaultsDeep(
       {
-        axis: {x: {type: 'category'}},
-        data: {type: 'area'},
-        legend: { show: true, position: 'right'},
+        axis: { x: { type: 'category' } },
+        data: { type: 'area' },
+        legend: { show: true, position: 'right' },
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultAreaConfig()
     ),

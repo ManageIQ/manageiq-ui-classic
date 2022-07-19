@@ -13,4 +13,5 @@ end
 require gem_root.join("spec/manageiq/lib/manageiq/environment").to_s
 ManageIQ::Environment.manageiq_plugin_update(gem_root)
 
+puts "\n== Updating UI assets =="
 ManageIQ::Environment.update_ui

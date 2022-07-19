@@ -26,8 +26,8 @@ class MiqPolicyRsopController < ApplicationController
     rsop_put_objects_in_sb(find_filtered(Host), :hosts)
     rsop_put_objects_in_sb(find_filtered(Vm), :vms)
     rsop_put_objects_in_sb(find_filtered(Storage), :datastores)
-    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [_(e.description), e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [_(e.description), e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
   end
 
   def rsop
@@ -80,21 +80,21 @@ class MiqPolicyRsopController < ApplicationController
   def rsop_option_changed
     assert_privileges('policy_simulation')
     if params[:event_typ]
-      @sb[:rsop][:event] = params[:event_typ] == "<Choose>" ? nil : params[:event_typ]
+      @sb[:rsop][:event] = params[:event_typ].presence
       @sb[:rsop][:event_value] = nil
     end
     if params[:event_value]
-      @sb[:rsop][:event_value] = params[:event_value] == "<Choose>" ? nil : params[:event_value]
+      @sb[:rsop][:event_value] = params[:event_value].presence
     end
     if params[:filter_typ]
-      @sb[:rsop][:filter] = params[:filter_typ] == "<Choose>" ? nil : params[:filter_typ]
+      @sb[:rsop][:filter] = params[:filter_typ].presence
       @sb[:rsop][:filter_value] = nil
     end
     if params[:filter_value]
-      @sb[:rsop][:filter_value] = params[:filter_value] == "<Choose>" ? nil : params[:filter_value]
+      @sb[:rsop][:filter_value] = params[:filter_value].presence
     end
-    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [e.description, e.id.to_s] }.sort
-    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [e.description, e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
+    @rsop_events = MiqEventDefinitionSet.all.collect { |e| [_(e.description), e.id.to_s] }.sort
+    @rsop_event_sets = MiqEventDefinitionSet.find(@sb[:rsop][:event]).miq_event_definitions.collect { |e| [_(e.description), e.id.to_s] }.sort unless @sb[:rsop][:event].nil?
     render :update do |page|
       page << javascript_prologue
       session[:changed] = !!(@sb[:rsop][:filter_value] && @sb[:rsop][:event_value])

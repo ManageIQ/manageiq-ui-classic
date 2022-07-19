@@ -1,6 +1,8 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { API } from '../../http_api';
 
+let empty = true;
+
 const emsUrl = '/api/providers?expand=resources&attributes=id,name,supports_cloud_subnet_create&filter[]=supports_cloud_subnet_create=true';
 const networkManagers = () => API.get(emsUrl).then(({ resources }) => {
   let networkManagersOptions = [];
@@ -8,9 +10,6 @@ const networkManagers = () => API.get(emsUrl).then(({ resources }) => {
   networkManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
   return networkManagersOptions;
 });
-
-let empty = true;
-let showError = false;
 
 const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
   fields: [
@@ -23,11 +22,9 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         if (value !== '-1') {
           API.options(`/api/cloud_subnets?ems_id=${value}`).then(loadSchema());
           empty = false;
-          showError = false;
         } else {
           emptySchema();
           empty = true;
-          showError = true;
         }
       },
       loadOptions: networkManagers,
@@ -35,7 +32,7 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
     },
-    ...(!empty ? [
+    ...(!empty || edit ? [
       {
         component: componentTypes.TEXT_FIELD,
         name: 'name',
@@ -43,10 +40,6 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         label: __('Name'),
         isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
-        condition: {
-          when: 'ems_id',
-          isNotEmpty: true,
-        },
       },
       {
         component: componentTypes.TEXT_FIELD,
@@ -56,10 +49,6 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         isRequired: true,
         isDisabled: edit,
         validate: [{ type: validatorTypes.REQUIRED }], // TODO: pattern for validating IPv4/mask or IPv6/mask
-        condition: {
-          when: 'ems_id',
-          isNotEmpty: true,
-        },
       },
       {
         component: componentTypes.FIELD_ARRAY,
@@ -79,19 +68,8 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
         },
         fields: [{ // TODO: pattern for validating IPv4 or IPv6
           component: componentTypes.TEXT_FIELD,
+          label: __('IP Address'),
         }],
-        condition: {
-          when: 'ems_id',
-          isNotEmpty: true,
-        },
-      },
-    ] : []),
-    ...(showError ? [
-      {
-        id: 'networkWarning',
-        component: componentTypes.PLAIN_TEXT,
-        name: 'networkWarning',
-        label: __('Please select a network manager.'),
       },
     ] : []),
     ...fields,

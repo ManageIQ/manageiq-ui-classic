@@ -55,70 +55,6 @@ class CloudObjectStoreContainerController < ApplicationController
     )
   end
 
-  def create
-    assert_privileges("cloud_object_store_container_new")
-    case params[:button]
-    when "cancel"
-      javascript_redirect(previous_breadcrumb_url)
-    when "add"
-      options = form_params_create
-      ext_management_system = options.delete(:ems)
-
-      # Queue task
-      task_id = CloudObjectStoreContainer.cloud_object_store_container_create_queue(
-        session[:userid],
-        ext_management_system,
-        options
-      )
-
-      if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-      else
-        add_flash(_("Cloud Object Store Container creation failed: Task start failed"), :error)
-        javascript_flash(:spinner_off => true)
-      end
-    end
-  end
-
-  def create_finished
-    task_id = session[:async][:params][:task_id]
-    container_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Object Store Container \"%{name}\" created") % {
-        :name => container_name
-      })
-    else
-      add_flash(_("Unable to create Cloud Object Store Container \"%{name}\": %{details}") % {
-        :name    => container_name,
-        :details => task.message
-      }, :error)
-    end
-
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
-  end
-
-  def form_params_create
-    options = {}
-    options[:name] = params[:name] if params[:name]
-
-    # Depending on the storage manager type, collect required form params.
-    case params[:emstype]
-    when "ManageIQ::Providers::Amazon::StorageManager::S3"
-      if params[:provider_region]
-        options[:create_bucket_configuration] = {
-          :location_constraint => params[:provider_region]
-        }
-      end
-
-      # Get the storage manager.
-      storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
-      options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
-    end
-    options
-  end
-
   def download_data
     # TODO: rename to match others: cloud_object_store_container_view, write migration to update existing
     assert_privileges('cloudobject_store_container_view')
@@ -138,7 +74,7 @@ class CloudObjectStoreContainerController < ApplicationController
   end
 
   def retrieve_provider_regions
-    managers = ManageIQ::Providers::CloudManager.permitted_subclasses.select(&:supports_regions?)
+    managers = ManageIQ::Providers::CloudManager.permitted_subclasses.select { |subclass| subclass.supports?(:regions) }
     managers.each_with_object({}) do |manager, provider_regions|
       regions = manager.module_parent::Regions.all.sort_by { |r| r[:description] }
       provider_regions[manager.name] = regions.map { |region| [region[:description], region[:name]] }

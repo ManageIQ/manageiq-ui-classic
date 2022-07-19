@@ -17,6 +17,15 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
     }));
   };
 
+  const emptySchema = (appendState = {}) => {
+    const fields = [];
+    setState((state) => ({
+      ...state,
+      ...appendState,
+      fields,
+    }));
+  };
+
   useEffect(() => {
     if (recordId) {
       API.get(`/api/cloud_volumes/${recordId}`).then((initialValues) => {
@@ -30,18 +39,20 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   }, [recordId, storageManagerId]);
 
   const onSubmit = ({ edit: _edit, ...values }) => {
-    miqSparkleOn();
+    if (values.ems_id !== '-1') {
+      miqSparkleOn();
 
-    const request = recordId ? API.patch(`/api/cloud_volumes/${recordId}`, values) : API.post('/api/cloud_volumes', values);
-    request.then(() => {
-      const message = sprintf(
-        recordId
-          ? __('Modification of Cloud Volume "%s" has been successfully queued.')
-          : __('Add of Cloud Volume "%s" has been successfully queued.'),
-        values.name,
-      );
-      miqRedirectBack(message, undefined, '/cloud_volume/show_list');
-    }).catch(miqSparkleOff);
+      const request = recordId ? API.patch(`/api/cloud_volumes/${recordId}`, values) : API.post('/api/cloud_volumes', values);
+      request.then(() => {
+        const message = sprintf(
+          recordId
+            ? __('Modification of Cloud Volume "%s" has been successfully queued.')
+            : __('Add of Cloud Volume "%s" has been successfully queued.'),
+          values.name,
+        );
+        miqRedirectBack(message, undefined, '/cloud_volume/show_list');
+      }).catch(miqSparkleOff);
+    }
   };
 
   const onCancel = () => {
@@ -54,11 +65,20 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
     miqRedirectBack(message, 'warning', '/cloud_volume/show_list');
   };
 
+  const validation = (values) => {
+    const errors = {};
+    if (values.ems_id === '-1') {
+      errors.ems_id = __('Required');
+    }
+    return errors;
+  };
+
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(fields, !!recordId, !!storageManagerId, loadSchema)}
+      schema={createSchema(fields, !!recordId, !!storageManagerId, loadSchema, emptySchema)}
       initialValues={initialValues}
       canReset={!!recordId}
+      validate={validation}
       onSubmit={onSubmit}
       onReset={() => add_flash(__('All changes have been reset'), 'warn')}
       onCancel={onCancel}

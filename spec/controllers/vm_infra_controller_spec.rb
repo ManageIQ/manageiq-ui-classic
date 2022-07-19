@@ -330,7 +330,9 @@ describe VmInfraController do
   end
 
   it 'can set retirement date' do
-    allow_any_instance_of(Vm).to receive(:supports_retire?).and_return(true)
+    # allow the other supports (from other buttons) to still work:
+    allow_any_instance_of(Vm).to receive(:supports?).and_call_original
+    stub_supports(Vm, :retire)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
@@ -443,22 +445,6 @@ describe VmInfraController do
 
   context 'Mixins::Actions::VmActions::Ownership' do
     let(:vm) { FactoryBot.create(:vm_vmware) }
-  end
-
-  context 'transform VM dialog' do
-    let(:dialog)           { FactoryBot.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
-    let!(:resource_action) { FactoryBot.create(:resource_action, :dialog => dialog) }
-
-    it 'can Transform selected VM' do
-      get :show, :params => {:id => vm_vmware.id}
-      expect(response).to redirect_to(:action => 'explorer')
-
-      post :explorer
-      expect(response.status).to eq(200)
-
-      post :x_button, :params => {:pressed => 'vm_transform', :id => vm_vmware.id}
-      expect(response.status).to eq(200)
-    end
   end
 
   context 'power operations' do

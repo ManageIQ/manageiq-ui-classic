@@ -58,6 +58,7 @@ export default (miqGroups, name, dashboardId) => {
           label: __('Select Group'),
           placeholder: __('Nothing selected'),
           isSearchable: true,
+          simpleValue: true,
           validate: [{
             type: validatorTypes.REQUIRED,
             message: __('Required'),

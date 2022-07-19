@@ -1,7 +1,6 @@
 describe Menu::CustomLoader do
   before do
     Singleton.__init__(Menu::Manager)
-    Singleton.__init__(Menu::CustomLoader)
   end
 
   after do
@@ -17,7 +16,6 @@ describe Menu::CustomLoader do
   end
 
   def clean
-    Menu::CustomLoader.unload
     Menu::Manager.instance.send(:initialize)
   end
 

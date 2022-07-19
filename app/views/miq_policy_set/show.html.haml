@@ -2,42 +2,11 @@
 #profile_info_div
   = render :partial => "layouts/flash_msg"
   -# Don't show basic info box with description only unless in edit mode
-  %h3
-    = _("Basic Information")
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _("Description")
-      .col-md-8
-        = h(@record.description)
-  %hr
+  = miq_summary_policy_set_info(@record)
 
-  %h3= _("Policies")
-  - if profile_policies.empty?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policies are defined.")}
-  - else
-    %table.table.table-striped.table-bordered.table-hover
-      %tbody
-        - profile_policies.each do |p|
-          %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-              :onclick => "DoNav('/miq_policy/show/#{p.id}');"}
-            %td.table-view-pf-select
-              %i{:class => p.decorate.fonticon}
-            %td
-              %b
-                #{ui_lookup(:model => p.towhat)} #{p.mode.capitalize}:
-              &nbsp;
-              = h(p.description)
-    %hr
+  -# Policies field
+  = miq_summary_policy_set(profile_policies)
 
   -# Notes field
-  %h3= _("Notes")
-  - if @record.set_data.present? && (@record.set_data[:notes] || @record.set_data["notes"])
-    - if @record.set_data[:notes].blank? && @record.set_data["notes"].blank?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-    - else
-      = text_area_tag("notes", @record.set_data[:notes] || @record.set_data["notes"] , :readonly => true, :rows => 4)
-  - else
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
-  %hr
+  = miq_summary_policy_set_notes(@record)
 

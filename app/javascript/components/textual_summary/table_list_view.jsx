@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import MiqStructuredList from '../miq-structured-list';
 
 const simpleRow = (row, i, colOrder) => (
   <tr key={i} className="no-hover">
@@ -9,11 +10,15 @@ const simpleRow = (row, i, colOrder) => (
 );
 
 const clickableRow = (row, i, colOrder, rowLabel, onClick) => (
-  <a href={row.link} onClick={(e) => onClick(row, e)}>
-    <tr key={i}>
-      {colOrder.map((col, j) => <td key={j} title={rowLabel}>{`${row[col]}`}</td>)}
-    </tr>
-  </a>
+  <tr key={i}>
+    {colOrder.map((col, j) => (
+      <td key={j} title={rowLabel}>
+        <a href={row.link} onClick={(e) => onClick(row, e)}>
+          {`${row[col]}`}
+        </a>
+      </td>
+    ))}
+  </tr>
 );
 
 const renderRow = (row, i, colOrder, rowLabel, onClick) => (
@@ -23,20 +28,21 @@ const renderRow = (row, i, colOrder, rowLabel, onClick) => (
 export default function TableListView(props) {
   const { headers, values, title } = props;
 
+  /** Function to generate rows for structured list. */
+  const miqListRows = (list) => {
+    const data = [];
+    list.map((item) => data.push({ ...item, label: item.name }));
+    return data;
+  };
+
   return (
-    <table className="table table-bordered table-hover table-striped table-summary-screen">
-      <thead>
-        <tr>
-          <th colSpan={headers.length} align="left">{title}</th>
-        </tr>
-        <tr>
-          {headers.map((header, i) => <th key={i}>{header}</th>)}
-        </tr>
-      </thead>
-      <tbody>
-        {values.map((row, i) => renderRow(row, i, props.colOrder, props.rowLabel, props.onClick))}
-      </tbody>
-    </table>
+    <MiqStructuredList
+      headers={headers}
+      rows={miqListRows(values)}
+      title={title}
+      mode="table_list_view"
+      onClick={() => props.onClick}
+    />
   );
 }
 
@@ -44,7 +50,5 @@ TableListView.propTypes = {
   title: PropTypes.string.isRequired,
   headers: PropTypes.arrayOf(PropTypes.string).isRequired,
   values: PropTypes.arrayOf(PropTypes.object).isRequired,
-  colOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  rowLabel: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

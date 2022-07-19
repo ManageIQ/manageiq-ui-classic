@@ -29,12 +29,20 @@ export const ReportSortDirections = {
 };
 
 export const DefaultKey = 'defaultKey';
+const dataType = (data) => (data ? data.constructor.name.toString() : undefined);
 export const isObject = (data) => typeof (data) === 'object';
+export const isArray = (item) => dataType(item) === 'Array';
+export const isNumber = (data) => typeof (data) === 'number';
 export const isNull = (data) => (data === null);
-export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image.trim().length > 0;
+export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');
+
+export const decimalCount = (value) => {
+  if ((value % 1 !== 0)) { return value.toString().split('.')[1].length; }
+  return 0;
+};
 
 /* Function to determin if only the icon needs to be printed, else, print its text along with the icon. */
 export const hasIcon = (keys, data) => {
@@ -42,8 +50,8 @@ export const hasIcon = (keys, data) => {
     return { showIcon: true, showText: false };
   }
   return {
-    showIcon: keys.includes(CellElements.icon) && data.icon.trim().length > 0,
-    showText: true,
+    showIcon: keys.includes(CellElements.icon) && data.icon && data.icon.length > 0,
+    showText: hasText(data),
   };
 };
 
@@ -95,19 +103,39 @@ export const headerData = (columns, hasCheckbox) => {
   return { headerItems: header, headerKeys: header.map((h) => h.key) };
 };
 
+/** Function to merge icon only cell with the next cells */
+const mergeIcons = (cells) => {
+  let merged = false;
+  const { showIcon, showText } = hasIcon(Object.keys(cells[0]), cells[0]);
+  if (showIcon && !showText) {
+    merged = true;
+    cells[1] = { ...cells[1], icon: cells[0].icon, image: cells[0].image };
+  }
+  return { mergedCells: cells, merged };
+};
+
 /** Function to generate the row items from 'rows' using the 'headerKeys'.
  * The checkbox object is filtered out from the cell object if the data table contains a checkbox. */
 export const rowData = (headerKeys, rows, hasCheckbox) => {
   const rowItems = [];
-  rows.forEach(({ cells, id, clickable }) => {
+  const mergedStatus = [];
+  rows.forEach(({
+    cells, id, clickable, clickId,
+  }) => {
     const requiredCells = hasCheckbox ? (cells.filter((c) => !c.is_checkbox)) : cells;
-    const reducedItems = requiredCells.reduce((result, item, index) => {
+    const { mergedCells, merged } = mergeIcons(requiredCells);
+    mergedStatus.push(merged);
+    const reducedItems = mergedCells.reduce((result, item, index) => {
       result[headerKeys[index]] = item;
       result.id = id;
+      if (clickId) result.clickId = clickId;
       result.clickable = clickable;
       return result;
     }, {});
     rowItems.push(reducedItems);
   });
-  return rowItems;
+  return {
+    rowItems,
+    merged: mergedStatus.every((item) => item === true) && (mergedStatus.length === rows.length),
+  };
 };

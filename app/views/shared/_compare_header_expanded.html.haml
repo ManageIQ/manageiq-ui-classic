@@ -6,5 +6,3 @@
   - url = "/#{controller_name}/compare_choose_base/#{h["id"]}"
   %a{:title => _("Make %{name} the base") % {:name => h[:name]}, :onclick => "miqJqueryRequest('#{url}', {beforeSend: true, complete: true});", :href => '#'}
     = h[:name]
-.quadicon_grid
-  = render :partial => 'shared/quadicon', :locals => {:record => @sb[:compare_db].constantize.find(vm_id)}

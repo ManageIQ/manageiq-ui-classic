@@ -297,7 +297,6 @@ Rails.application.routes.draw do
         playbook_options_field_changed
         explorer
         group_create
-        group_form_field_changed
         group_reorder_field_changed
         group_update
         ot_tags_edit
@@ -429,7 +428,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        create
         wait_for_task
       ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
@@ -503,6 +501,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         attach
         detach
+        clone
         backup_new
         backup_select
         snapshot_new
@@ -515,11 +514,6 @@ Rails.application.routes.draw do
       ) +
         compare_get,
       :post => %w(
-        attach_volume
-        detach_volume
-        backup_create
-        backup_restore
-        snapshot_create
         button
         create
         dynamic_checkbox_refresh
@@ -984,12 +978,6 @@ Rails.application.routes.draw do
       )
     },
 
-    :alerts_most_recent      => {
-      :get => %w(
-        show
-      )
-    },
-
     :dashboard                => {
       :get  => %w(
         auth_error
@@ -1029,9 +1017,6 @@ Rails.application.routes.draw do
         widget_add
         widget_close
         widget_dd_done
-        widget_refresh
-        widget_toggle_minmax
-        widget_zoom
       )
     },
 
@@ -1063,6 +1048,7 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         wait_for_task
+        launch_console
       ) +
                adv_search_post +
                compare_post +
@@ -1148,6 +1134,7 @@ Rails.application.routes.draw do
         scaledown
         open_admin_ui
         open_admin_ui_done
+        launch_console
       ) +
                adv_search_post +
                compare_post +
@@ -1488,7 +1475,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -1632,7 +1618,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        update
         wait_for_task
       ) +
         adv_search_post +
@@ -1970,7 +1955,6 @@ Rails.application.routes.draw do
         dialog_list
         explorer
         group_create
-        group_form_field_changed
         group_reorder_field_changed
         group_update
         import_service_dialogs
@@ -2245,8 +2229,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         edit
-        edit_vm
-        form_field_changed
         show
       ) +
                ownership_post
@@ -2314,8 +2296,10 @@ Rails.application.routes.draw do
         download_summary_pdf
         show
         show_list
+        new
       ],
       :post => %w[
+        button
         listnav_search_selected
         quick_search
         show_list
@@ -2739,37 +2723,34 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_load
         download_data
-        explorer
         reconfigure_form_fields
         retire
+        button
         service_form_fields
         show
+        show_list
+        edit
+        ownership
         tagging_edit
       ),
       :post => %w(
-        button
-        explorer
         listnav_search_selected
         ownership_update
         quick_search
         reload
-        service_edit
-        service_tag
+        edit
         show
+        button
         show_list
         tagging_edit
-        tree_autoload
-        tree_select
-        x_button
-        x_history
-        x_show
+        show
+        ownership
         wait_for_task
       ) +
                dialog_runner_post +
                adv_search_post +
                exp_post +
-               save_post +
-               x_post
+               save_post
     },
 
     :storage                  => {
@@ -2861,8 +2842,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        edit_vm
-        form_field_changed
         policy_sim
         policy_sim_add
         policy_sim_cancel
@@ -2924,17 +2903,16 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
-        edit_vm
         resize_vm
         event_logs
         explorer
         launch_html5_console
         filesystems
         filesystem_drivers
-        form_field_changed
         guest_applications
         groups
         html5_console
+        management_console
         kernel_drivers
         linux_initprocesses
         ownership_update
@@ -2953,6 +2931,7 @@ Rails.application.routes.draw do
         sections_field_changed
         security_groups
         sort_template_grid
+        sort_vm_grid
         floating_ips
         network_routers
         network_ports
@@ -3013,12 +2992,10 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
-        edit_vm
         event_logs
         explorer
         filesystems
         filesystem_drivers
-        form_field_changed
         guest_applications
         groups
         kernel_drivers
@@ -3098,12 +3075,10 @@ Rails.application.routes.draw do
         drift_history
         drift_mode
         drift_same
-        edit_vm
         event_logs
         explorer
         filesystem_drivers
         filesystems
-        form_field_changed
         groups
         guest_applications
         kernel_drivers
@@ -3142,6 +3117,7 @@ Rails.application.routes.draw do
         vmrc_console
         html5_console
         native_console
+        management_console
         wait_for_task
         win32_services
         x_button

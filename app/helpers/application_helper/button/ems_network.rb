@@ -5,6 +5,6 @@ class ApplicationHelper::Button::EmsNetwork < ApplicationHelper::Button::Basic
     # in config/permissions.yaml.
     return Vmdb::PermissionStores.instance.supported_ems_type?('nuage_network') unless @record # allow add new network manager
 
-    @record.supports?(:ems_network_new) # allow edit of existing manager
+    @record.supports?(:update) # allow edit of existing manager
   end
 end

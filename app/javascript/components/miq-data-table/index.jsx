@@ -76,20 +76,19 @@ const MiqDataTable = ({
   };
 
   /** Function to render the header cells. */
-  const renderHeaders = (getHeaderProps) => (
-    headers.map((header) => {
-      const { sortHeader, sortDirection } = headerSortingData(header);
-      return (
-        <TableHeader
-          {...getHeaderProps({ header, isSortHeader: { sortable } })}
-          onClick={() => sortable && onSort(header)}
-          isSortHeader={sortHeader}
-          sortDirection={sortDirection}
-        >
-          {headerLabel(header.header)}
-        </TableHeader>
-      );
-    })
+  const renderHeaders = (getHeaderProps) => (headers.map((header) => {
+    const { sortHeader, sortDirection } = headerSortingData(header);
+    return (
+      <TableHeader
+        {...getHeaderProps({ header, isSortHeader: { sortable } })}
+        onClick={() => sortable && onSort(header)}
+        isSortHeader={sortHeader}
+        sortDirection={sortDirection}
+      >
+        {headerLabel(header.header)}
+      </TableHeader>
+    );
+  })
   );
 
   /** Function to render the cells of each row. */
@@ -107,9 +106,13 @@ const MiqDataTable = ({
   /** Function to identify if the row is clickable or not and the returns a class name */
   const classNameRow = (item) => {
     if (item) {
-      const { clickable } = item;
+      const { clickable, id } = item;
       if (clickable === false) return 'simple-row';
-      if (clickable === true || clickable === null) return 'clickable-row';
+      if (clickable === true || clickable === null) {
+        return (gridChecks.includes(id)
+          ? 'clickable-row bx--data-table--selected'
+          : 'clickable-row');
+      }
     }
     return '';
   };
@@ -138,7 +141,7 @@ const MiqDataTable = ({
                 return (
                   <TableRow
                     {...getRowProps({ row })}
-                    title={__('Click to view details')}
+                    title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
                     tabIndex={(item && item.clickable === false) ? '' : '0'}
                     onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}

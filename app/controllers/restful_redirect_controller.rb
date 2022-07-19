@@ -8,9 +8,9 @@ class RestfulRedirectController < ApplicationController
       if record
         if record.kind_of?(EmsConfiguration)
           redirect_to(:controller => 'ems_configuration', :action => 'show', :id => params[:id])
-        elsif %w[ManageIQ::Providers::AnsibleTower::AutomationManager].include?(record.type)
+        elsif record.kind_of?(ManageIQ::Providers::ExternalAutomationManager)
           redirect_to(:controller => 'ems_automation', :action => 'show', :id => params[:id])
-        elsif %w[ManageIQ::Providers::EmbeddedAnsible::AutomationManager].include?(record.type)
+        elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager)
           redirect_to(:controller => 'ansible_playbook', :action => 'show_list')
         else
           begin

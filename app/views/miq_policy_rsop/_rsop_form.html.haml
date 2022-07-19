@@ -8,7 +8,7 @@
       %label.control-label
         = _("Type")
       = select_tag('event_typ',
-        options_for_select(["<#{_('Choose')}>"] + @rsop_events, @sb[:rsop][:event]),
+        options_for_select([["<#{_('Choose')}>", nil]] + @rsop_events, @sb[:rsop][:event]),
         :class => "selectpicker form-control")
 
       :javascript
@@ -20,7 +20,7 @@
         %label.control-label
           = _("Event")
         = select_tag('event_value',
-          options_for_select(["<#{_('Choose')}>"] + @rsop_event_sets, @sb[:rsop][:event_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + @rsop_event_sets, @sb[:rsop][:event_value]),
           :class => "selectpicker form-control")
         :javascript
           miqSelectPickerEvent("event_value", "#{url}");
@@ -29,7 +29,7 @@
     .form-group
       %label.control-label
       = select_tag('filter_typ',
-        options_for_select([["<#{_('Choose')}>"],
+        options_for_select([["<#{_('Choose')}>", nil],
           [_("By Cloud/Infrastructure Providers"), "ems"],
           [_("By Clusters"), "cluster"],
           [_("By Host"), "host"],
@@ -42,21 +42,21 @@
       - if @sb[:rsop][:filter] == "host"
 
         = select_tag('filter_value',
-          options_for_select(["<#{_('Choose')}>"] + Array(@sb[:rsop][:hosts].invert).sort, @sb[:rsop][:filter_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + Array(@sb[:rsop][:hosts].invert).sort, @sb[:rsop][:filter_value]),
           :class => "selectpicker form-control")
       - elsif @sb[:rsop][:filter] == "cluster"
 
         = select_tag('filter_value',
-          options_for_select(["<#{_('Choose')}>"] + Array(@sb[:rsop][:clusters].invert).sort, @sb[:rsop][:filter_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + Array(@sb[:rsop][:clusters].invert).sort, @sb[:rsop][:filter_value]),
           :class => "selectpicker form-control")
       - elsif @sb[:rsop][:filter] == "ems"
 
         = select_tag('filter_value',
-          options_for_select(["<#{_('Choose')}>"] + Array(@sb[:rsop][:emss].invert).sort, @sb[:rsop][:filter_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + Array(@sb[:rsop][:emss].invert).sort, @sb[:rsop][:filter_value]),
           :class => "selectpicker form-control")
       - elsif @sb[:rsop][:filter] == "vm"
         = select_tag('filter_value',
-          options_for_select(["<#{_('Choose')}>"] + Array(@sb[:rsop][:vms].invert).sort, @sb[:rsop][:filter_value]),
+          options_for_select([["<#{_('Choose')}>", nil]] + Array(@sb[:rsop][:vms].invert).sort, @sb[:rsop][:filter_value]),
           :class => "selectpicker form-control")
       :javascript
         miqSelectPickerEvent("filter_value", "#{url}");

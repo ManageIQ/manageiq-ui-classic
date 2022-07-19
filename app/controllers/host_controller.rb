@@ -14,7 +14,7 @@ class HostController < ApplicationController
   def self.display_methods
     %w[
       hv_info os_info devices network storage_adapters performance timeline storages
-      resource_pools vms miq_templates compliance_history custom_button_events cloud_networks cloud_subnets
+      resource_pools vms miq_templates compliance_history custom_button_events cloud_networks cloud_subnets cloud_tenants
     ]
   end
 
@@ -139,7 +139,6 @@ class HostController < ApplicationController
       @in_a_form = true
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
-      @title = _("Info/Settings")
     else # if editing credentials for multi host
       drop_breadcrumb(:name => _('Edit Hosts'), :url => '/host/edit/')
       @title = _("Credentials/Settings")
@@ -273,6 +272,8 @@ class HostController < ApplicationController
       case params[:pressed]
       when 'common_drift' then drift_analysis
       when 'custom_button' then custom_buttons
+      when 'cloud_tenant_edit' then edit_record
+      when 'cloud_tenant_delete' then delete_cloud_tenant
       when 'host_analyze_check_compliance' then analyze_check_compliance_hosts
       when 'host_check_compliance' then check_compliance_hosts
       when 'host_cloud_service_scheduling_toggle' then toggleservicescheduling

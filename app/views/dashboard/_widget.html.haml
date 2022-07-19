@@ -1,11 +1,9 @@
 %div{:id => "ww_#{presenter.widget.id}"}
   - last_run, next_run = last_next_run(presenter.widget)
-  %widget-wrapper{"widget-id"       => presenter.widget.id,
-                  "widget-type"     => presenter.widget.content_type,
-                  "widget-buttons"  => presenter.widget_buttons,
-                  "widget-last-run" => last_run,
-                  "widget-next-run" => next_run,
-                  "widget-title"    => _(presenter.widget.title)}
-
-:javascript
-  miq_bootstrap("#ww_#{presenter.widget.id}");
+  = react('WidgetWrapper',
+    :widgetId => presenter.widget.id,
+    :widgetType => presenter.widget.content_type,
+    :widgetButtons => presenter.widget_buttons,
+    :widgetLastRun => last_run,
+    :widgetNextRun => next_run,
+    :widgetTitle => _(presenter.widget.title))

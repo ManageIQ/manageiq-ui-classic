@@ -62,7 +62,7 @@ module Mixins
           when "submit"
             @live_migrate_items = find_records_with_rbac(VmOrTemplate.order(:name), session[:live_migrate_items])
             @live_migrate_items.each do |vm|
-              if vm.supports_live_migrate?
+              if vm.supports?(:live_migrate)
                 options = {
                   :hostname         => params['auto_select_host'] == 'on' ? nil : params['destination_host'],
                   :block_migration  => params['block_migration']   == 'on',

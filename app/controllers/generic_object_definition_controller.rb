@@ -121,6 +121,8 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_new
     assert_privileges('generic_object_definition_ab_button_new')
     @right_cell_text = _("Add a new Custom Button")
+    @distinct_instances_across_domains = MiqAeClass.find_distinct_instances_across_domains(User.current_user, "SYSTEM/PROCESS").pluck(:name).sort
+    @templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
     if node_type(x_node || params[:id]) == :button_group
       @custom_button_group = CustomButtonSet.find(params[:id])
       @generic_object_definition = GenericObjectDefinition.find(@custom_button_group.set_data[:applies_to_id])
@@ -134,6 +136,8 @@ class GenericObjectDefinitionController < ApplicationController
     assert_privileges('generic_object_definition_ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
     @right_cell_text = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
+    @distinct_instances_across_domains = MiqAeClass.find_distinct_instances_across_domains(User.current_user, "SYSTEM/PROCESS").pluck(:name).sort
+    @templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
     render_form(@right_cell_text, 'custom_button_form')
   end
 
@@ -166,8 +170,8 @@ class GenericObjectDefinitionController < ApplicationController
                        end
     generic_object_definition = find_record_with_rbac(GenericObjectDefinition, params[:generic_object_definition_id])
     unassigned_buttons = generic_object_definition.custom_buttons
-    assigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
-    unassigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
+    assigned_buttons = assigned_buttons.map { |button| {:name => button.name, :id => button.id} }
+    unassigned_buttons = unassigned_buttons.map { |button| {:name => button.name, :id => button.id} }
     render :json => {:assigned_buttons => assigned_buttons, :unassigned_buttons => unassigned_buttons}
   end
 
@@ -227,6 +231,7 @@ class GenericObjectDefinitionController < ApplicationController
     presenter[:right_cell_text] = title
     presenter.update(:main_div, r[:partial => form_partial])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     presenter[:lock_sidebar] = true
     presenter.set_visibility(false, :toolbar)
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
@@ -246,6 +251,7 @@ class GenericObjectDefinitionController < ApplicationController
     god_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_center_tb")]
   end
 
@@ -253,6 +259,7 @@ class GenericObjectDefinitionController < ApplicationController
     custom_button_group_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_group_center_tb")]
   end
 
@@ -260,6 +267,7 @@ class GenericObjectDefinitionController < ApplicationController
     custom_button_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
+    presenter.hide(:searchbox)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_center_tb")]
   end
 

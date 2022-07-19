@@ -11,10 +11,10 @@ class ApplicationHelper::Button::HostInitiatorNew < ApplicationHelper::Button::B
   def disabled?
     if @view_context.params["id"]
       current_ems = ExtManagementSystem.where(:id => @view_context.params["id"]).first
-      !"#{current_ems.type}::HostInitiator".safe_constantize.try(:supports_create?)
+      !current_ems.class_by_ems("HostInitiator")&.supports?(:create)
     else
       ExtManagementSystem.none? do |ems|
-        "#{ems.class}::HostInitiator".safe_constantize.try(:supports_create?)
+        ems.class_by_ems("HostInitiator")&.supports?(:create)
       end
     end
   end

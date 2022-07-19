@@ -650,38 +650,34 @@ describe ApplicationController do
     end
   end
 
-  describe "#supports_reconfigure_disks?" do
+  describe "#item_supports? (private)" do
     let(:vm) { FactoryBot.create(:vm_redhat) }
 
     context "when a single is vm selected" do
-      let(:supports_reconfigure_disks) { true }
-
-      before do
-        allow(vm).to receive(:supports_reconfigure_disks?).and_return(supports_reconfigure_disks)
-        controller.instance_variable_set(:@reconfigitems, [vm])
-      end
+      before { controller.instance_variable_set(:@reconfigitems, [vm]) }
 
       context "when vm supports reconfiguring disks" do
+        before { stub_supports(Vm, :reconfigure_disks) }
         it "enables reconfigure disks" do
-          expect(controller.send(:supports_reconfigure_disks?)).to be_truthy
+          expect(controller.send(:item_supports?, :reconfigure_disks)).to be_truthy
         end
       end
 
       context "when vm does not supports reconfiguring disks" do
-        let(:supports_reconfigure_disks) { false }
-
+        before { stub_supports_not(Vm, :reconfigure_disks) }
         it "disables reconfigure disks" do
-          expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
+          expect(controller.send(:item_supports?, :reconfigure_disks)).to be_falsey
         end
       end
     end
 
     context "when multiple vms selected" do
+      before { stub_supports(Vm, :reconfigure_disks) }
       let(:vm1) { FactoryBot.create(:vm_redhat) }
 
       it "disables reconfigure disks" do
         controller.instance_variable_set(:@reconfigitems, [vm, vm1])
-        expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
+        expect(controller.send(:item_supports?, :reconfigure_disks)).to be_falsey
       end
     end
   end
@@ -898,37 +894,6 @@ describe HostController do
                       'scan',
                       "Smartstate Analysis",
                       process_proc)
-    end
-  end
-end
-
-describe ServiceController do
-  describe "#vm_button_operation" do
-    let(:user) { FactoryBot.create(:user_admin) }
-
-    before do
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      allow(MiqServer).to receive(:my_zone).and_return("default")
-      allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
-      controller.instance_variable_set(:@lastaction, "show_list")
-      login_as user
-      allow(user).to receive(:role_allows?).and_return(true)
-    end
-
-    it "should continue to retire a service and does not render flash message 'xxx does not apply xxx'" do
-      service = FactoryBot.create(:service)
-      template = FactoryBot.create(:template,
-                                    :ext_management_system => FactoryBot.create(:ems_openstack_infra),
-                                    :storage               => FactoryBot.create(:storage))
-      service.update_attribute(:id, template.id)
-      service.reload
-      controller.params = {:miq_grid_checks => service.id.to_s}
-      expect(controller).to receive(:show_list)
-      process_proc = controller.send(:vm_button_action)
-      controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
-      expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to \
-        include("Retirement initiated for 1 Service from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 end

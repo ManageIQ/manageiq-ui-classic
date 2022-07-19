@@ -7,9 +7,3 @@
       = render :partial => 'layouts/textual_groups_generic'
     - when "timeline"
       = render :partial => "layouts/tl_show_async"
-
-
-  %physical-server-toolbar#physical_server_show_form{'physical-server-id' => @record.id}
-
-:javascript
-  miq_bootstrap('#physical_server_show_form');

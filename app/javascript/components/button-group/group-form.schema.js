@@ -4,7 +4,7 @@ const createSchema = (buttonIcon, options, url, setState) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
-      id: 'button-group-name-wrapper',
+      id: 'name-wrapper',
       name: 'subform-1',
       fields: [
         {
@@ -46,7 +46,7 @@ const createSchema = (buttonIcon, options, url, setState) => ({
     },
     {
       component: componentTypes.TEXT_FIELD,
-      id: 'button_group_button_color',
+      id: 'color-select',
       name: 'set_data.button_color',
       label: __('Icon color'),
       type: 'color',
@@ -63,6 +63,10 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       moveAllLeftTitle: __('Remove all'),
       moveRightTitle: __('Add'),
       moveAllRightTitle: __('Add all'),
+      noValueTitle: __('No option selected'),
+      noOptionsTitle: __('No available options'),
+      filterOptionsTitle: __('Filter options'),
+      filterValuesTitle: __('Filter values'),
       options,
     },
 

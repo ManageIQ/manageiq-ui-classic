@@ -3,9 +3,7 @@ describe ApplicationHelper::Button::OrchestrationStackRetireNow do
   let(:record) { FactoryBot.create(:orchestration_stack, :retired => retired) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     context 'when Orchestration Stack is retired' do
       let(:retired) { true }
       it_behaves_like 'a disabled button', 'Orchestration Stack is already retired'

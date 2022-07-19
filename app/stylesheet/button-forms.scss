@@ -1,0 +1,58 @@
+.button-form {
+  form > div {
+    margin-bottom: 32px;
+  }
+
+  #name-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .bx--text-input-wrapper {
+      display: flex;
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    div:not([class]) {
+      height: 64px;
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  #color-select {
+    padding: 0 2px;
+    border: 1px solid #d3d3d3;
+  }
+
+  fieldset.bx--fieldset {
+    legend.bx--label {
+      font-size: 0.75rem;
+    }
+
+    .bx--grid .bx--row {
+      [class*="buttonWrapper"] {
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 24px;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .bx--multi-select__wrapper {
+    padding-top: 20px;
+  }
+
+  .custom-button-wrapper {
+    margin-top: 8px;
+
+    .btnRight {
+      margin-right: 8px !important;
+    }
+  }
+}

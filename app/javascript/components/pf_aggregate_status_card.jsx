@@ -30,29 +30,42 @@ const PfAggregateStatusCard = ({
         </a>
       </h2>
       <div className="card-pf-body">
-        <p className="card-pf-aggregate-status-notifications">
-          { notifications.map((notification, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <span key={i} className="card-pf-aggregate-status-notification">
-              <a href={notification.href}>
-                { notification.iconImage && (
-                  <>
-                    <img src={notification.iconImage} alt="" className="card-pf-icon-image" />
-                    <span className={notification.iconClass} />
-                    <span>
-                      {' '}
-                      { notification.count }
-                    </span>
-                  </>
-                )}
-              </a>
-            </span>
-          ))}
-        </p>
+        <div className="card-pf-aggregate-status-notifications">
+          { (data.notifications && data.notifications[0].dataAvailable === false) ? (
+            <div className="empty-chart-contents">
+              <span className="pficon pficon-info" />
+              {' '}
+              <span>{__('No data available')}</span>
+            </div>
+          ) : (
+            notifications.map((notification, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <span key={i} className="card-pf-aggregate-status-notification">
+                <a href={notification.href}>
+                  { notification.iconImage && (
+                    <>
+                      <img src={notification.iconImage} alt="" className="card-pf-icon-image" />
+                      <span className={notification.iconClass} />
+                      <span>
+                        {' '}
+                        { notification.count }
+                      </span>
+                    </>
+                  )}
+                </a>
+              </span>
+            ))) }
+
+          { (data.notifications && data.notifications[0].iconClass) && (
+            <>
+              <span className={data.notifications[0].iconClass} />
+
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
-
   const displayNotification = () =>
     data.notification && (data.notification.iconImage || data.notification.iconClass || data.notification.count);
 
@@ -122,6 +135,7 @@ PfAggregateStatusCard.propTypes = {
       iconImage: PropTypes.string,
       iconClass: PropTypes.string,
       count: PropTypes.number,
+      dataAvailable: PropTypes.bool,
     }),
   }).isRequired,
   showTopBorder: PropTypes.bool.isRequired,

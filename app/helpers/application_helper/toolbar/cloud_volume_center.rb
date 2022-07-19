@@ -55,6 +55,18 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
+
+                     button(
+                       :cloud_volume_clone,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Clone this Cloud Volume'),
+                       t,
+                       :klass        => ApplicationHelper::Button::VolumeClone,
+                       :options      => {:feature => :clone_volume},
+                       :url_parms    => 'main_div',
+                       :send_checked => true
+                     ),
+
                      button(
                        :cloud_volume_edit,
                        'pficon pficon-edit fa-lg',
@@ -62,6 +74,8 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :url_parms    => 'main_div',
                        :send_checked => true,
+                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options   => {:feature => :update},
                      ),
                      button(
                        :cloud_volume_delete,
@@ -69,7 +83,8 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t = N_('Delete this Cloud Volume'),
                        t,
                        :url_parms => 'main_div',
-                       :klass     => ApplicationHelper::Button::CatalogItemButton,
+                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options   => {:feature => :delete},
                        :data      => {'function'      => 'sendDataWithRx',
                                       'function-data' => {:controller      => 'provider_dialogs',
                                                           :modal_title     => N_('Delete Volume'),

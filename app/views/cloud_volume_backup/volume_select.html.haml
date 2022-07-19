@@ -1,4 +1,1 @@
-#main_div
-  %cloud-volume-backup-form{'record-id' => @backup.id}
-:javascript
-  miq_bootstrap('cloud-volume-backup-form');
+= react 'CloudVolumeBackupForm', {:recordId => @backup.id.to_s, :name => @backup.name, :type => 'restore'}

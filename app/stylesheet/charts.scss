@@ -11,7 +11,7 @@
 }
 
 .sparkline-chart {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .empty-chart-content {
@@ -21,6 +21,27 @@
   .pficon {
     font-size: 24px;
     margin-top: 48px;
+  }
+}
+
+.chart-holder {
+  .bx--cc--chart-wrapper {
+    .layout-svg-wrapper {
+      width: 90%;
+      left: 5%;
+      position: relative;
+      margin-top: 6px;
+    }
+
+    .bx--cc--title {
+      .title {
+        display: none;
+      }
+    }
+
+    svg {
+      overflow: visible !important;
+    }
   }
 }
 
@@ -46,3 +67,35 @@
     margin-bottom: 2px;
   }
 }
+
+.heatmap_charts_div {
+  display: inline-flex;
+  .chart-holder {
+    margin-right: 55px;
+  }
+  .heat-chart-pf {
+    margin-bottom: 50px;
+    width: 300px;
+  }
+}
+
+.heatmap_charts_section {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.empty-chart-contents {
+  margin-bottom: 10px;
+  span {
+    vertical-align: middle;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+.card-pf-aggregate-status-title {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+

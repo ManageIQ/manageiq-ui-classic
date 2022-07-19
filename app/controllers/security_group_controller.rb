@@ -55,7 +55,7 @@ class SecurityGroupController < ApplicationController
       @security_group = SecurityGroup.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      if SecurityGroup.class_by_ems(ems).supports_create?
+      if SecurityGroup.class_by_ems(ems).supports?(:create)
         options.delete(:ems_id)
         task_id = ems.create_security_group_queue(session[:userid], options)
 
@@ -98,7 +98,7 @@ class SecurityGroupController < ApplicationController
 
     security_groups_to_delete = []
     security_groups.each do |security_group|
-      if security_group.supports_delete?
+      if security_group.supports?(:delete)
         security_groups_to_delete.push(security_group)
       else
         add_flash(_("Couldn't initiate deletion of Security Group \"%{name}\": %{details}") % {
@@ -146,7 +146,7 @@ class SecurityGroupController < ApplicationController
       })
 
     when "save"
-      if @security_group.supports_update?
+      if @security_group.supports?(:update)
         @tasks = []
         sg_params = form_params
 

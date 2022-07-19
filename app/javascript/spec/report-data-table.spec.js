@@ -26,15 +26,17 @@ describe('<ReportDataTable />', () => {
   });
 
   const requestUrl = () => {
-    const sortBy = '';
-    const sortDirection = '';
-    const limit = 20;
-    const offset = 0;
-    return `/api/results/${initialProps.reportResultId}?\
-expand_value_format=true&\
-hash_attribute=result_set&\
-sort_by=${sortBy}&sort_order=${sortDirection}&\
-limit=${limit}&offset=${offset}`;
+    const data = {
+      sortBy: '',
+      sortDirection: '',
+      limit: 20,
+      offset: 0,
+    };
+    const params = `expand_value_format=true&hash_attribute=result_set`
+    + `&sort_by=${data.sortBy}&sort_order=${data.sortDirection}&`
+    + `limit=${data.limit}&offset=${data.offset}`;
+
+    return `/api/results/${initialProps.reportResultId}?${params}`;
   };
 
   it('should fetch and display report data when instantiated', async(done) => {
@@ -62,7 +64,7 @@ limit=${limit}&offset=${offset}`;
     wrapper.update();
 
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(0);
+    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(1);
     expect(wrapper.find('div.report-data-table')).toHaveLength(0);
     expect(wrapper.find('div.miq-pagination')).toHaveLength(0);
     expect(wrapper.find('div.no-records-found')).toHaveLength(1);

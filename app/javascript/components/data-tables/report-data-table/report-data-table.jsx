@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import NoRecordsFound from '../../no-recods-found';
+import NoRecordsFound from '../../no-records-found';
 import { API } from '../../../http_api';
 import { tableData, reportSortDirection } from './helper';
 import MiqDataTable from '../../miq-data-table';
@@ -111,7 +111,7 @@ const initialState = {
 
 const filterToString = (filter) => (
   filter && filter.field && filter.string
-    ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
+    ? `${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
     : ''
 );
 
@@ -127,21 +127,25 @@ const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, a
     ? filterToString(activeFilters[0])
     : '';
 
-  API.get(`/api/results/${reportResultId}?\
-expand_value_format=true&\
-hash_attribute=result_set&\
-sort_by=${sortBy}&sort_order=${sortDirection}&\
-limit=${limit}&offset=${offset}${filterString}`).then((data) => {
-    dispatch({
-      type: 'dataLoaded',
-      data,
-      sortingColumns,
-      pagination,
-      activeFilters,
-    });
+  if (reportResultId) {
+    const params = `expand_value_format=true&hash_attribute=result_set`
+    + `&sort_by=${sortBy}&sort_order=${sortDirection}&`
+    + `limit=${limit}&offset=${offset}${filterString}`;
 
+    API.get(`/api/results/${reportResultId}?${params}`).then((data) => {
+      dispatch({
+        type: 'dataLoaded',
+        data,
+        sortingColumns,
+        pagination,
+        activeFilters,
+      });
+
+      miqSparkleOff();
+    });
+  } else {
     miqSparkleOff();
-  });
+  }
 };
 
 const ReportDataTable = (props) => {
@@ -285,7 +289,7 @@ const ReportDataTable = (props) => {
   return (
     <>
       {
-        state.total > 0 && hasSearch && renderToolBar()
+        hasSearch && renderToolBar()
       }
       {state.total > 0 && (
         <MiqDataTable

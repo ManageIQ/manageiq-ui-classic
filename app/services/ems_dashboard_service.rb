@@ -11,7 +11,7 @@ class EmsDashboardService < DashboardService
   end
 
   def recent_resources(model, title, label)
-    all_resources = recent_records(model)
+    all_resources = recent_records(model).sort.to_h
     config = {
       :title => title,
       :label => label

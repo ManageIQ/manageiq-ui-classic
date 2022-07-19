@@ -16,9 +16,10 @@ class CloudVolumeController < ApplicationController
   end
 
   BUTTON_TO_ACTION_MAPPING = {
-    'cloud_volume_attach'          => [:attach_volume,   'attach'],
-    'cloud_volume_detach'          => [:detach_volume,   'detach'],
-    'cloud_volume_edit'            => [nil,              'edit'],
+    'cloud_volume_attach'          => [:attach,   'attach'],
+    'cloud_volume_clone'           => [:clone,    'clone'],
+    'cloud_volume_detach'          => [:detach,   'detach'],
+    'cloud_volume_edit'            => [:update,           'edit'],
     'cloud_volume_new'             => [nil,              'new'],
     'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
     'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
@@ -57,6 +58,18 @@ class CloudVolumeController < ApplicationController
     )
   end
 
+  def clone
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("cloud_volume_clone")
+    @volume = find_record_with_rbac(CloudVolume, params[:id])
+
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Clone Cloud Volume \"%{name}\"") % {:name => @volume.name},
+      :url  => "/cloud_volume/clone/"
+    )
+  end
+
   def detach
     params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_volume_detach")
@@ -68,115 +81,6 @@ class CloudVolumeController < ApplicationController
       :name => _("Detach Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/detach"
     )
-  end
-
-  def attach_volume
-    assert_privileges("cloud_volume_attach")
-
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {
-        :name => @volume.name
-      })
-    when "attach"
-      options = form_params
-      vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.supports?(:attach_volume)
-        task_id = @volume.attach_volume_queue(session[:userid], vm.ems_ref, options[:device_path])
-
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "attach_finished")
-        else
-          add_flash(_("Attaching Cloud volume failed: Task start failed"), :error)
-          javascript_flash(:spinner_off => true)
-        end
-      else
-        add_flash(_(volume.unsupported_reason(:attach_volume)), :error)
-        javascript_flash
-      end
-    end
-  end
-
-  def attach_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    volume_name = session[:async][:params][:name]
-    vm_id = session[:async][:params][:vm_id]
-    vm = find_record_with_rbac(VmCloud, vm_id)
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
-        :volume_name => volume_name,
-        :vm_name     => vm.name
-      })
-    else
-      add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
-        :volume_name => volume_name,
-        :vm_name     => vm.name,
-        :details     => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => volume_id)
-  end
-
-  def detach_volume
-    assert_privileges("cloud_volume_detach")
-
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {
-        :name => @volume.name
-      })
-
-    when "detach"
-      options = form_params
-      vm = find_record_with_rbac(VmCloud, options[:vm_id])
-      if @volume.supports?(:detach_volume)
-        task_id = @volume.detach_volume_queue(session[:userid], vm.ems_ref)
-
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "detach_finished")
-        else
-          add_flash(_("Detaching Cloud volume failed: Task start failed"), :error)
-          javascript_flash(:spinner_off => true)
-        end
-      else
-        add_flash(_(@volume.unsupported_reason(:detach_volume)), :error)
-        javascript_flash(:spinner_off => true)
-      end
-    end
-  end
-
-  def detach_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    volume_name = session[:async][:params][:name]
-    vm_id = session[:async][:params][:vm_id]
-    vm = find_record_with_rbac(VmCloud, vm_id)
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
-        :volume_name => volume_name,
-        :vm_name     => vm.name
-      })
-    else
-      add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
-        :volume_name => volume_name,
-        :vm_name     => vm.name,
-        :details     => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => volume_id)
   end
 
   def new
@@ -333,55 +237,6 @@ class CloudVolumeController < ApplicationController
     )
   end
 
-  def backup_create
-    assert_privileges("cloud_volume_backup_create")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
-
-    when "create"
-      options = {}
-      options[:name] = params[:backup_name] if params[:backup_name]
-      options[:incremental] = true if params[:incremental] == "true"
-      options[:force] = true if params[:force] == "true"
-
-      task_id = @volume.backup_create_queue(session[:userid], options)
-
-      if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "backup_create_finished")
-      else
-        javascript_flash(
-          :text        => _("Cloud volume backup creation failed: Task start failed: ID [%{id}]") %
-            {:id => task_id.to_s},
-          :severity    => :error,
-          :spinner_off => true
-        )
-      end
-    end
-  end
-
-  def backup_create_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Backup for Cloud Volume \"%{name}\" created") % {:name => @volume.name})
-    else
-      add_flash(_("Unable to create backup for Cloud Volume \"%{name}\": %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
-  end
-
   def backup_select
     assert_privileges("cloud_volume_backup_restore")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
@@ -396,51 +251,6 @@ class CloudVolumeController < ApplicationController
     )
   end
 
-  def backup_restore
-    assert_privileges("cloud_volume_backup_restore")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
-
-    when "restore"
-      @backup = find_record_with_rbac(CloudVolumeBackup, params[:backup_id])
-      task_id = @volume.backup_restore_queue(session[:userid], @backup.ems_ref)
-
-      unless task_id.kind_of?(Integer)
-        add_flash(_("Cloud volume restore failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
-      end
-
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "backup_restore_finished")
-      end
-    end
-  end
-
-  def backup_restore_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Restoring Cloud Volume \"%{name}\" from backup") % {:name => @volume.name})
-    else
-      add_flash(_("Unable to restore Cloud Volume \"%{name}\" from backup: %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
-  end
-
   def snapshot_new
     assert_privileges("cloud_volume_snapshot_create")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
@@ -451,51 +261,6 @@ class CloudVolumeController < ApplicationController
       },
       :url  => "/cloud_volume/snapshot_new/#{@volume.id}"
     )
-  end
-
-  def snapshot_create
-    assert_privileges("cloud_volume_snapshot_create")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {
-        :name => @volume.name
-      })
-    when "create"
-      options = {}
-      options[:name] = params[:snapshot_name] if params[:snapshot_name]
-      task_id = @volume.create_volume_snapshot_queue(session[:userid], options)
-      unless task_id.kind_of?(Integer)
-        add_flash(_("Cloud volume snapshot creation failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
-      end
-      if @flash_array
-        javascript_flash(:spinner_off => true)
-      else
-        initiate_wait_for_task(:task_id => task_id, :action => "snapshot_create_finished")
-      end
-    end
-  end
-
-  def snapshot_create_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    task = MiqTask.find(task_id)
-    @volume = find_record_with_rbac(CloudVolume, volume_id)
-    if task.results_ready?
-      add_flash(_("Snapshot for Cloud Volume \"%{name}\" created") % {
-        :name => @volume.name
-      })
-    else
-      add_flash(_("Unable to create snapshot for Cloud Volume \"%{name}\": %{details}") % {
-        :name    => @volume.name,
-        :details => task.message
-      }, :error)
-    end
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => @volume.id)
   end
 
   def download_data
@@ -511,7 +276,7 @@ class CloudVolumeController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties relationships], %i[tags]]
+    [%i[properties mappings relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

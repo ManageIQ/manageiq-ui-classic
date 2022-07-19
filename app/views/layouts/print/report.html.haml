@@ -1,9 +1,10 @@
-%table.table.table-striped.table-bordered.breakable
-  %thead
-    %tr
-      - report.headers.each_with_index do |header, i|
-        - unless report.column_is_hidden?(report.col_order[i])
-          %th
-            = h(_(header))
-  %tbody
-    = data.html_safe
+%div{:class => "bx--data-table-content miq_table_pdf"}
+  %table.bx--data-table.bx--data-table--normal.bx--data-table--no-border.miq-data-table.miq_report
+    %thead
+      %tr
+        - report.headers.each_with_index do |header, i|
+          - unless report.column_is_hidden?(report.col_order[i])
+            %th
+              = h(_(header))
+    %tbody
+      = data.html_safe

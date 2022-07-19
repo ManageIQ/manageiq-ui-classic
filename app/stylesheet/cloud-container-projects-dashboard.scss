@@ -1,0 +1,121 @@
+#column-1 {
+  display: inline-block;
+  width: 60%;
+  margin-left: 20px;
+
+  .card-pf {
+    width: 95%;
+  }
+
+  .card-wrapper {
+    display: inline-flex;
+    width: 31.4%;
+  }
+
+  #containers {
+    margin-right: 10px;
+  }
+
+  #images {
+    margin-right: 10px;
+  }
+}
+
+#column-2 {
+  display: inline-block;
+  position: absolute;
+  width: 39%;
+  margin-left: -25px;
+}
+
+.chart-card {
+  .empty-chart-content {
+    height: 10rem;
+
+    .pficon {
+      font-size: 24px;
+      margin-top: 48px;
+    }
+  }
+
+  .area-chart {
+    width: 37.5%;
+    display: inline-flex;
+    position: absolute;
+    margin-left: -10px;
+  }
+
+
+  .quota-chart {
+    margin-left: -25px;
+    margin-right: 25px;
+
+    .bx--cc--meter {
+      .container {
+        width: 100%;
+      }
+    }
+  }
+
+  #quotas {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+  #pods-area-chart {
+    margin-left: -25px;
+    width: 95%;
+  }
+
+  #pods-table {
+    margin-bottom: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    thead,
+    tbody {
+      font-size: 0.75rem;
+
+      tr td {
+        word-break: break-all;
+        text-align: left !important;
+      }
+    }
+  }
+
+  .trend-footer-pf {
+    margin-left: -500px;
+  }
+
+  .card-title {
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 20px 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .card-text {
+    text-align: left;
+    margin-left: -500px;
+    display: inline-table;
+    width: 200px;
+    font-size: 36px;
+    font-weight: 300;
+
+    .card-text-units {
+      font-size: 12px;
+      font-weight: 400;
+      display: inline-flex;
+      margin-left: 5px;
+    }
+
+    .card-text-label {
+      font-size: 12px;
+      font-weight: 400;
+      margin-top: -10px;
+    }
+  }
+}

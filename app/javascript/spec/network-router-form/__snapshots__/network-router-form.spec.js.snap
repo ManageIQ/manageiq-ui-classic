@@ -66,6 +66,7 @@ exports[`Network Router form component should render add form 1`] = `
       ],
     }
   }
+  validate={[Function]}
 />
 `;
 

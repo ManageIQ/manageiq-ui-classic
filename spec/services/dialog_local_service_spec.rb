@@ -198,7 +198,7 @@ describe DialogLocalService do
       let(:obj) { double(:class => GenericObject, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "generic_object", "GenericObject", "generic_objects", "/service/explorer"
+                       "generic_object", "GenericObject", "generic_objects", "/service"
     end
 
     context "when the object is a Host" do
@@ -254,42 +254,42 @@ describe DialogLocalService do
       let(:obj) { double(:class => Service, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a ServiceAnsiblePlaybook" do
       let(:obj) { double(:class => ServiceAnsiblePlaybook, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a ServiceAnsibleTower" do
       let(:obj) { double(:class => ServiceAnsibleTower, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a ServiceContainerTemplate" do
       let(:obj) { double(:class => ServiceContainerTemplate, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a ServiceGeneric" do
       let(:obj) { double(:class => ServiceGeneric, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a ServiceOrchestration" do
       let(:obj) { double(:class => ServiceOrchestration, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "service", "Service", "services", "/service/explorer"
+                       "service", "Service", "services", "/service"
     end
 
     context "when the object is a Storage" do

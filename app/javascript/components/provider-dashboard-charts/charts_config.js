@@ -11,19 +11,19 @@ const dailyPodTimeTooltip = () => (data) => {
 
   if (data[1]) {
     return `<div class="tooltip-inner">
-  ${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group}, ${data[1].value} ${data[1].group} </div>`;
+  ${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${__(data[0].group)}, ${data[1].value} ${__(data[1].group)} </div>`;
   }
-  return `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group} </div>`;
+  return `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${__(data[0].group)} </div>`;
 };
 
 const hourlyPodTimeTooltip = () => (data) => {
   const theMoment = moment(data[0].date);
   if (data[1]) {
     return `<div class="tooltip-inner">
-  ${theMoment.format('h:mm A')}  ${data[0].value} ${data[0].name}, ${data[1].value} ${data[1].name} </div>`;
+  ${theMoment.format('h:mm A')}  ${data[0].value} ${__(data[0].group)}, ${data[1].value} ${__(data[1].group)} </div>`;
   }
   return `<div class="tooltip-inner">
-  ${theMoment.format('h:mm A')}  ${data[0].value} ${data[0].name}} </div>`;
+  ${theMoment.format('h:mm A')}  ${data[0].value} ${__(data[0].group)} </div>`;
 };
 
 const hourlyTimeTooltip = () => (data) => {
@@ -96,7 +96,7 @@ export const chartConfig = {
     units: __('KBps'),
     dataName: __('KBps'),
     tooltipFn: dailyTimeTooltip,
-    size: { height: 83 },
+    size: { height: '150px' },
     createdLabel: __('Network'),
     valueType: 'actual',
   },
@@ -116,7 +116,7 @@ export const chartConfig = {
     deletedLabel: __('Deleted'),
     tooltipFn: dailyPodTimeTooltip,
     point: { r: 1 },
-    size: { height: '80px' },
+    size: { height: '150px' },
     grid: { y: { show: false } },
     setAreaChart: true,
   },
@@ -140,7 +140,7 @@ export const chartConfig = {
     tooltipFn: dailyTimeTooltip,
     units: __('KBps'),
     point: { r: 1 },
-    size: { height: '83px' },
+    size: { height: '150px' },
     grid: { y: { show: false } },
     setAreaChart: true,
   },
@@ -152,7 +152,7 @@ export const chartConfig = {
     tooltipFn: hourlyTimeTooltip,
     units: __('KBps'),
     point: { r: 1 },
-    size: { height: '93px' },
+    size: { height: '150px' },
     grid: { y: { show: false } },
     setAreaChart: true,
   },
@@ -178,14 +178,6 @@ export const chartConfig = {
     legendRightText: '',
     numDays: 30,
 
-  },
-  serversHealthUsagePieConfig: {
-    chartId: 'serverHealthPieChart_',
-    color: {
-      Valid: $.pfPaletteColors.green,
-      Warning: $.pfPaletteColors.orange,
-      Critical: $.pfPaletteColors.red,
-    },
   },
   recentServersConfig: {
     chartId: 'recentServersChart',

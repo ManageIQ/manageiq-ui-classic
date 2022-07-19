@@ -8,9 +8,7 @@ shared_examples_for 'a render_report button' do
   let(:report) { FactoryBot.create(:miq_report, :extras => {:grouping => grouping}) }
   let(:button) { described_class.new(view_context, {}, {'report' => report, 'html' => html, 'render_chart' => render_chart}, {}) }
 
-  describe '#calculate_properties' do
-    before { button.calculate_properties }
-
+  describe '#disabled?' do
     shared_examples_for 'a report with tabular or graph view available' do
       context 'when report has data about records' do
         context 'and total number of records is 0' do

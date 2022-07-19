@@ -5,24 +5,4 @@
       - info_message = @record.class.to_s == 'MiqAeDomain' ? _("The selected domain is empty") : _("The selected Namespace is empty")
       = render :partial => 'layouts/info_msg', :locals => {:message => info_message}
     - else
-      %table#ns_details_grid.table.table-striped.table-bordered.table-hover.table-clickable.table-checkable
-        %thead
-          %th.table-view-pf-select
-            %input.checkall{:type => 'checkbox', :title => _('Check All')}
-          %th
-          %th
-        %tbody{'data-click-url' => '/miq_ae_class/tree_select/'}
-          - @records.each do |record|
-            - next if record.name == '$'
-            - cls_cid = "#{class_prefix(record.class)}-#{record.id}"
-            %tr{'data-click-id' => cls_cid}
-              %td.table-view-pf-select.noclick
-                %input{:type => 'checkbox', :value => cls_cid}
-              %td.table-view-pf-select
-                %i{:class => record.decorate.fonticon}
-              %td
-                = record_name(record)
-      :javascript
-        $(function () {
-          $('#ns_details_grid').miqGrid();
-        });
+      = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:details], :data => @records}

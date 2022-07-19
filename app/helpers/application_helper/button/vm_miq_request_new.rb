@@ -7,6 +7,7 @@ class ApplicationHelper::Button::VmMiqRequestNew < ApplicationHelper::Button::Bu
   private
 
   def provisioning_supported?
-    EmsInfra.all.any?(&:supports_provisioning?)
+    # TODO: EmsCloud.supporting(:provisioning).any?
+    EmsCloud.all.any? { |ems| ems.supports?(:provisioning) }
   end
 end

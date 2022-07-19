@@ -22,6 +22,7 @@ exports[`Flavor form component matches the snapshot 1`] = `
             "loadOptions": [Function],
             "name": "emsId",
             "onChange": [Function],
+            "simpleValue": true,
             "validate": Array [
               Object {
                 "type": "required",
@@ -192,6 +193,7 @@ exports[`Flavor form component matches the snapshot 1`] = `
             "loadOptions": [Function],
             "name": "cloud_tenant_refs",
             "placeholder": "Nothing selected",
+            "simpleValue": true,
           },
         ],
       }

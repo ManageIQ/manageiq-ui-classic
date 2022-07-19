@@ -20,7 +20,7 @@ module Mixins
           end
 
           @record ||= find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
-          if @record.supports_resize?
+          if @record.supports?(:resize)
             if @explorer
               resize
               @refresh_partial = "vm_common/resize"
@@ -69,7 +69,7 @@ module Mixins
             add_flash(_("Reconfigure of Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
             @record = @sb[:action] = nil
           when "submit"
-            if @record.supports_resize?
+            if @record.supports?(:resize)
               begin
                 flavor_id = params['flavor_id']
                 flavor = find_record_with_rbac(Flavor, flavor_id)

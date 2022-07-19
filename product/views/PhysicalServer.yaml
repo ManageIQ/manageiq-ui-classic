@@ -16,9 +16,16 @@ cols:
 - power_state
 - hostname
 - asset_detail
+- assigned_server_profile
+- associated_server_profile
 
 
 include:
+  asset_detail:
+    columns:
+    - product_name
+    - manufacturer
+    - location_led_state
 
 
 include_for_find:
@@ -35,6 +42,8 @@ col_order:
 - hostname
 - asset_detail.product_name
 - asset_detail.manufacturer
+- assigned_server_profile.name
+- associated_server_profile.name
 
 col_formats:
 -
@@ -49,6 +58,8 @@ headers:
 - Hostname
 - Product Name
 - Manufacturer
+- Assigned Profile
+- Associated Profile
 
 
 conditions:

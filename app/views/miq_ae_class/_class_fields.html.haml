@@ -4,39 +4,7 @@
       / Show Schema
       %h3= _('Schema')
       - if @ae_class.ae_fields.present?
-        %table.table.table-striped.table-bordered
-          %thead
-            %tr
-            - [_('Name'), _('Description'), _('Default Value'), _('Collect'), _('Message'), _('On Entry'),
-              _('On Exit'), _('On Error'), _('Max Retries'), _('Max Time')].each do |title|
-              %th
-                = title
-          %tbody
-          - @ae_class.ae_fields.each do |ae_field|
-            - image = ae_field.substitute ? "pficon pficon-ok" : "pficon pficon-close"
-            %tr
-              - %w(name description default_value collect message on_entry on_exit on_error max_retries max_time).each do |fname|
-                %td.text-nowrap
-                  / Name is special processed
-                  - if fname == 'name'
-                    %i.product.fa-lg{:class  => ae_field_fonticon(ae_field.aetype),
-                                      :alt   => (t = "#{_('Type:')} #{ae_field.aetype}"),
-                                      :title => t}
-                    - if !ae_field.datatype.blank? && ae_field.datatype != "string"
-                      %i.product.fa-lg{:class  => ae_field_fonticon(ae_field.datatype),
-                                        :alt   => (t = "#{_('Data Type:')} #{ae_field.datatype}"), :title => t}
-
-                    %i.fa-lg{:class => "#{image}",
-                              :alt   => (t = "#{_('Substitution:')} #{ae_field.substitute}"),
-                              :title => t}
-
-                    = h(ae_field.display_name)
-                    (#{h(ae_field.name)})
-                  - elsif fname == 'default_value'
-                    /-- show astericks if its a password field
-                    = h((ae_field.datatype == "password") ? "********" : ae_field.send(fname))
-                  - else
-                    = h(ae_field.send(fname))
+        = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:schema], :data => @ae_class.ae_fields}
       - else
         = render :partial => "layouts/info_msg",
                  :locals  => {:message => _("No schema found")}

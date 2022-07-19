@@ -25,6 +25,11 @@ describe('Button Group form component', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
+  it('should render the adding form for generic object button groups', () => {
+    const wrapper = shallow(<GroupForm url="/generic_object_definition/" appliesToId={6} appliesToClass="GenericObjectDefinition" isGenericObject />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
   // eslint-disable-next-line jest/no-done-callback
   it('should render the editing form', async(done) => {
     const expectedResult = {
@@ -50,6 +55,43 @@ describe('Button Group form component', () => {
       wrapper = mount(<GroupForm recId={42} availableFields={[]} fields={[]} url="" />);
     });
     expect(fetchMock.called('/api/custom_button_sets/42')).toBe(true);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    done();
+  });
+
+  // eslint-disable-next-line jest/no-done-callback
+  it('should render the editing form for generic object button group', async(done) => {
+    const expectedResult = {
+      description: 'test',
+      group_id: null,
+      id: '219',
+      mode: null,
+      name: 'test group form',
+      set_data: {
+        button_color: 'ffffff',
+        button_icon: 'pficon pficon-applications',
+        button_order: [105, 106, 107],
+        display: true,
+        applies_to_class: 'GenericObjectDefinition',
+        applies_to_id: '6',
+      },
+      set_type: 'CustomButtonSet',
+    };
+    fetchMock.getOnce('api/custom_button_sets/219', {});
+    fetchMock.getOnce('/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=6', {});
+    fetchMock.getOnce('/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=6', {});
+    fetchMock.postOnce('/api/custom_button_sets/219', expectedResult);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<GroupForm
+        url="/generic_object_definition/"
+        recId={219}
+        appliesToId={6}
+        appliesToClass="GenericObjectDefinition"
+        isGenericObject
+      />);
+    });
+    expect(fetchMock.called('/api/custom_button_sets/219')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
   });

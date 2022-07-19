@@ -148,7 +148,7 @@ module TextualMixins::VmCommon
   def textual_snapshots
     num = @record.number_of(:snapshots)
     h = {:label => _("Snapshots"), :icon => "fa fa-camera", :value => (num.zero? ? _("None") : num)}
-    if role_allows?(:feature => "vm_snapshot_show_list") && @record.supports_snapshots?
+    if role_allows?(:feature => "vm_snapshot_show_list") && @record.supports?(:snapshots)
       h[:title] = _("Show the snapshot info for this VM")
       h[:explorer] = true
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'snapshot_info')

@@ -10,13 +10,11 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
   const [{
     showModal,
     selectedIcon,
-    activeTab,
     activeIcon,
   }, setState] = useState({
     showModal: false,
     selectedIcon: selected,
     activeIcon: selected,
-    activeTab: selected ? selected.split(' ')[0] : Object.keys(iconTypes)[0],
   });
 
   const onModalApply = () => {
@@ -36,7 +34,6 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
       <IconModal
         showModal={showModal}
         hide={hide}
-        activeTab={activeTab}
         selectedIcon={selectedIcon}
         activeIcon={activeIcon}
         iconTypes={iconTypes}

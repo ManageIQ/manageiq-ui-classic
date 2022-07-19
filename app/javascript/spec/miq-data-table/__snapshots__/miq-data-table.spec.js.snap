@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Data table component should render a data table with cells which have multiple rows or single row 1`] = `
+<div
+  className="miq-data-table chargeback-rate"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={Array []}
+    isSortable={false}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={Array []}
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+</div>
+`;
+
 exports[`Data table component should render a simple data tabe with pagination and sorting 1`] = `
 <div
   className="miq-data-table list"
@@ -80,6 +101,65 @@ exports[`Data table component should render a simple data table 1`] = `
     locale="en"
     overflowMenuOnHover={true}
     rows={Array []}
+    size="normal"
+    sortDirection="ASC"
+    sortRow={[Function]}
+    translateWithId={[Function]}
+  >
+    <Component />
+  </DataTable>
+</div>
+`;
+
+exports[`Data table component should render a simple non-clickable data table 1`] = `
+<div
+  className="miq-data-table list"
+>
+  <DataTable
+    filterRows={[Function]}
+    headers={
+      Array [
+        Object {
+          "header": "Name",
+          "key": "name",
+        },
+        Object {
+          "header": "Title",
+          "key": "title",
+        },
+      ]
+    }
+    isSortable={false}
+    locale="en"
+    overflowMenuOnHover={true}
+    rows={
+      Array [
+        Object {
+          "id": "0",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "CPU Wait Time (by VM)",
+          },
+          "title": "CPU Wait/Ready Time (by VM)",
+        },
+        Object {
+          "id": "1",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "test",
+          },
+          "title": "test",
+        },
+        Object {
+          "id": "2",
+          "name": Object {
+            "icon": "fa fa-file-text-o",
+            "text": "zReport1",
+          },
+          "title": "zReport1",
+        },
+      ]
+    }
     size="normal"
     sortDirection="ASC"
     sortRow={[Function]}
@@ -1164,6 +1244,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1205,6 +1287,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1246,6 +1330,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1287,6 +1373,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1328,6 +1416,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1369,6 +1459,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1410,6 +1502,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1451,6 +1545,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1492,6 +1588,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1533,6 +1631,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {
@@ -1574,6 +1674,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "text": "VMware Content Library OVF Template",
           },
           "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
             "text": "1111111",
           },
           "Type": Object {

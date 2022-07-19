@@ -13,17 +13,11 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Resize
     include Mixins::Actions::VmActions::RightSize
     include Mixins::Actions::VmActions::Reconfigure
-    helper_method(:supports_reconfigure_disks?)
-    helper_method(:supports_reconfigure_disksize?)
-    helper_method(:supports_reconfigure_network_adapters?)
-    helper_method(:supports_reconfigure_cdroms?)
+    helper_method(:item_supports?)
     include Mixins::Actions::VmActions::PolicySimulation
-    include Mixins::Actions::VmActions::Transform
 
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
-
-    include Mixins::Actions::ProviderActions::MassTransform
 
     include Mixins::ExplorerShow
   end
@@ -35,6 +29,8 @@ module ApplicationController::CiProcessing
     db = params[:db] if params[:db]
 
     case params[:pressed]
+    when "cloud_tenant_edit"
+      @redirect_controller = "cloud_tenant"
     when "miq_template_edit"
       @redirect_controller = "miq_template"
     when "image_edit", "instance_edit", "vm_edit"
@@ -44,7 +40,6 @@ module ApplicationController::CiProcessing
       session[:host_items] = obj.length > 1 ? obj : nil
     end
     @redirect_id = obj[0] if obj.length == 1 # not redirecting to an id if multi host are selected for credential edit
-
     @refresh_partial = case db
                        when 'ScanItemSet'
                          ScanItemSet.find(obj[0]).read_only ? 'show_list_set' : 'edit'
@@ -391,6 +386,7 @@ module ApplicationController::CiProcessing
   alias instance_retire_now retirevms_now
   alias vm_retire_now retirevms_now
   alias orchestration_stack_retire_now retirevms_now
+  alias service_retire_now retirevms_now
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
@@ -644,8 +640,7 @@ module ApplicationController::CiProcessing
   def screen_redirection(options)
     if options[:redirect].present?
       javascript_redirect(:controller => options[:redirect][:controller],
-                          :action     => options[:redirect][:action],
-                          :flash_msg  => @flash_array[0][:message])
+                          :action     => options[:redirect][:action])
       return
     end
     if %w[show_list storage_list storage_pod_list].include?(@lastaction)
@@ -758,6 +753,11 @@ module ApplicationController::CiProcessing
   def deletehosts
     assert_privileges("host_delete")
     delete_elements(Host, :process_hosts)
+  end
+
+  def delete_cloud_tenant
+    assert_privileges("cloud_tenant_delete")
+    delete_elements(CloudTenant, :process_cloud_tenants)
   end
 
   # Delete all selected or single displayed stack(s)
@@ -929,8 +929,6 @@ module ApplicationController::CiProcessing
     when "#{pfx}_terminate"                 then terminatevms
     when "instance_add_security_group"      then add_security_group_vms
     when "instance_remove_security_group"   then remove_security_group_vms
-    when "vm_transform"                     then vm_transform
-    when "vm_transform_mass"                then vm_transform_mass
     end
   end
 end

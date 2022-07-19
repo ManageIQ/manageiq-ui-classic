@@ -4,6 +4,9 @@ import MiqFormRenderer from '@@ddf';
 import { Loading } from 'carbon-components-react';
 import createSchema from './physical-storage-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import mapper from "../../forms/mappers/componentMapper";
+import EditingContext from './editing-context';
+import ValidateStorageCredentials from "./validate-storage-credentials";
 
 const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
   const [state, setState] = useState({});
@@ -37,7 +40,7 @@ const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
       const message = sprintf(
         recordId
           ? __('Modification of Physical Storage "%s" has been successfully queued.')
-          : __('Add of Physical Storage "%s" has been successfully queued.'),
+          : __('Add of Physical Storage has been successfully queued.'),
         values.name,
       );
       miqRedirectBack(message, undefined, '/physical_storage/show_list');
@@ -56,16 +59,28 @@ const PhysicalStorageForm = ({ recordId, storageManagerId }) => {
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
 
-  return !isLoading && (
-    <MiqFormRenderer
-      schema={createSchema(!!recordId, !!storageManagerId, initialValues, state, setState)}
-      initialValues={initialValues}
-      canReset={!!recordId}
-      onSubmit={onSubmit}
-      onReset={() => add_flash(__('All changes have been reset'), 'warn')}
-      onCancel={onCancel}
-      buttonsLabels={{ submitLabel }}
-    />
+  const componentMapper = {
+    ...mapper,
+    'validation-button': ValidateStorageCredentials,
+  };
+
+  return (
+    <div>
+      { !isLoading && (
+        <EditingContext.Provider value={{ storageManagerId, setState }}>
+          <MiqFormRenderer
+            componentMapper={componentMapper}
+            schema={createSchema(!!recordId, !!storageManagerId, initialValues, state, setState)}
+            initialValues={initialValues}
+            canReset={!!recordId}
+            onSubmit={onSubmit}
+            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+            onCancel={onCancel}
+            buttonsLabels={{ submitLabel }}
+          />
+        </EditingContext.Provider>
+      ) }
+    </div>
   );
 };
 

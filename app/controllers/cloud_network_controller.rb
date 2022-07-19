@@ -45,7 +45,7 @@ class CloudNetworkController < ApplicationController
     when "add"
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      if CloudNetwork.class_by_ems(ems).supports_create?
+      if CloudNetwork.class_by_ems(ems).supports?(:create)
         options.delete(:ems_id)
         task_id = ems.create_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
@@ -87,7 +87,7 @@ class CloudNetworkController < ApplicationController
     networks = find_records_with_rbac(CloudNetwork, checked_or_params)
     networks_to_delete = []
     networks.each do |network|
-      if network.supports_delete?
+      if network.supports?(:delete)
         networks_to_delete.push(network)
       else
         add_flash(_("Couldn't initiate deletion of Network \"%{name}\": %{details}") % {
@@ -144,7 +144,7 @@ class CloudNetworkController < ApplicationController
       flash_and_redirect(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => @network.name})
 
     when "save"
-      if @network.supports_update?
+      if @network.supports?(:update)
         task_id = @network.update_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
           add_flash(_("Cloud Network update failed: Task start failed"), :error)

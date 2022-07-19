@@ -1,5 +1,3 @@
-import React from 'react';
-import classNames from 'classnames';
 import { formatName } from '../../button-group/helper';
 
 /** Function to generate a header item */
@@ -8,7 +6,6 @@ const headerItem = (key, header) => ({ key, header });
 /** Function to generate table's header contents */
 const tableHeader = (treeBox) => {
   const header = [];
-  header.push(headerItem('icon', ''));
   header.push(headerItem('name', __('Name')));
   if (treeBox === 'sand_tree') {
     header.push(headerItem('recType', __('Type')));
@@ -19,8 +16,7 @@ const tableHeader = (treeBox) => {
 
 /** Function to add information to row items */
 const rowInfo = (buttonIcon, buttonColor, name, hoverText, nodeKey) => ({
-  icon: <i className={classNames('fa-lg', buttonIcon)} style={{ color: buttonColor }} />,
-  name: formatName(name),
+  name: { text: formatName(name), icon: buttonIcon, props: { style: { color: buttonColor } } },
   hoverText,
   nodeKey,
   clickable: true,

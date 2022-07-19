@@ -744,7 +744,7 @@ describe CatalogController do
       end
 
       before do
-        ems.update_attributes(:inventory_root_groups => [inventory_root_group])
+        ems.update(:inventory_root_groups => [inventory_root_group])
       end
 
       it "returns playbook service template details for provision & retirement tabs for summary screen" do

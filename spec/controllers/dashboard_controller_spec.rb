@@ -253,7 +253,7 @@ describe DashboardController do
       wi = FactoryBot.create(:miq_widget)
       @ws.update(:userid => @user.userid)
       session[:sandboxes] = {"dashboard" => {:active_db  => @ws.name,
-                                             :dashboards => {@ws.name => {:col1 => [], :col2 => [], :col3 => []}}}}
+                                             :dashboards => {@ws.name => {:col1 => [], :col2 => []}}}}
       login_as @user
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow(MiqServer).to receive(:my_zone).and_return('default')
@@ -280,12 +280,11 @@ describe DashboardController do
 
       # get user's copy of dashboard and add widgets
       user_dashboard = MiqWidgetSet.find_by(:name => @ws.name, :userid => @user.userid)
-      user_dashboard.update(:set_data => {:last_group_db_updated => Time.now.utc - 1, :col1 => [1, 2, 3], :col2 => [4], :col3 => [5, 7]})
+      user_dashboard.update(:set_data => {:last_group_db_updated => Time.now.utc - 1, :col1 => [1, 2, 3], :col2 => [4]})
 
       # verify groupd dashboard and user's dashboard has different widgets
       expect(user_dashboard.set_data[:col1]).not_to eq(@ws.set_data[:col1])
       expect(user_dashboard.set_data[:col2]).not_to eq(@ws.set_data[:col2])
-      expect(user_dashboard.set_data[:col3]).not_to eq(@ws.set_data[:col3])
 
       # login again to verify that the user's copy of dashboard gets reset to group dashboard settings
       login_as @user
@@ -294,7 +293,6 @@ describe DashboardController do
       user_dashboard.reload
       expect(user_dashboard.set_data[:col1]).to eq(@ws.set_data[:col1])
       expect(user_dashboard.set_data[:col2]).to eq(@ws.set_data[:col2])
-      expect(user_dashboard.set_data[:col3]).to eq(@ws.set_data[:col3])
     end
   end
 
@@ -367,7 +365,7 @@ describe DashboardController do
       controller.instance_variable_set(
         :@sb,
         :active_db  => wset.name, :active_db_id => wset.id,
-        :dashboards => {wset.name => {:col1 => [widget.id], :col2 => [], :col3 => []}}
+        :dashboards => {wset.name => {:col1 => [widget.id], :col2 => []}}
       )
 
       controller.show

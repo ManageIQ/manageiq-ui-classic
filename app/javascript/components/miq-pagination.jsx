@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from 'carbon-components-react';
 
+const getItemRangeText = (min, max, totalItems) => sprintf(__(`%d-%d of %d items`), min, max, totalItems);
+
+// eslint-disable-next-line no-undef
+const getPageRangeText = (_current, total) => sprintf(n__(`of %d page`, `of %d pages`, total), total);
+
 const MiqPagination = ({
   pageOptions: {
     page, pageSizes, pageSize, totalItems, onPageChange,
@@ -9,6 +14,11 @@ const MiqPagination = ({
 }) => (
   <Pagination
     className="miq-pagination"
+    itemsPerPageText={__('Items per page:')}
+    backwardText={__('Previous page')}
+    forwardText={__('Next page')}
+    itemRangeText={(min, max) => getItemRangeText(min, max, totalItems)}
+    pageRangeText={(current, total) => getPageRangeText(current, total)}
     page={page}
     pageSizes={pageSizes}
     pageSize={pageSize}

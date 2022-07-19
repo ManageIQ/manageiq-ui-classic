@@ -1,6 +1,4 @@
 describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
-  include Spec::Support::SupportsHelper
-
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {}, {}) }
   let(:ems)    { FactoryBot.create(:ems_cloud) }
 

@@ -34,7 +34,6 @@ module ApplicationHelper::PageLayouts
       miq_policy_set
       monitor_alerts_overview
       monitor_alerts_list
-      monitor_alerts_most_recent
       my_tasks
       ops
       physical_infra_overview
@@ -47,7 +46,6 @@ module ApplicationHelper::PageLayouts
     ].include?(@layout)
 
     return false if %w[
-      ad_hoc_metrics
       consumption
       dashboard
       dialog_provision
@@ -103,14 +101,12 @@ module ApplicationHelper::PageLayouts
 
     layout = case @layout
              when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview',
-                  'monitor_alerts_list', 'monitor_alerts_most_recent', 'monitor_alerts_overview'
+                  'monitor_alerts_list', 'monitor_alerts_overview'
                false
              when 'report'
                !%w[new create edit copy update explorer].include?(controller.action_name)
              when 'timeline'
                @in_a_form
-             when 'vm'
-               controller.action_name != 'edit'
              else
                true
              end
@@ -121,7 +117,6 @@ module ApplicationHelper::PageLayouts
                else
                  true
                end
-
     layout && showtype
   end
 
@@ -170,7 +165,7 @@ module ApplicationHelper::PageLayouts
 
   def show_search?
     # Layouts with Advanced Search have the Search, too
-    controller.try(:show_searchbar?) || display_adv_search?
+    controller.try(:show_searchbar?) || display_adv_search? || @root_node
   end
 
   def show_advanced_search?
@@ -216,7 +211,6 @@ module ApplicationHelper::PageLayouts
       ems_storage
       flavor
       floating_ip
-      generic_object_definition
       host
       host_aggregate
       load_balancer

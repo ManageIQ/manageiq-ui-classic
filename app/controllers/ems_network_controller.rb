@@ -25,7 +25,7 @@ class EmsNetworkController < ApplicationController
   def model_feature_for_action(action)
     case action
     when :edit
-      :ems_network_new
+      :update
     end
   end
 

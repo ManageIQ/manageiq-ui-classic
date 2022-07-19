@@ -8,6 +8,19 @@ module CloudVolumeHelper::TextualSummary
     TextualGroup.new(_("Properties"), %i[name size bootable description status health_state])
   end
 
+  def textual_group_mappings
+    mappings = @record.volume_mappings.map do |m|
+      type = m.host_initiator ? "Host Initiator" : "Host Initiator Group"
+      [type, textual_link(m)]
+    end
+
+    TextualMultilabel.new(
+      _("Mapping"),
+      :labels => [_("Type"), _("Details")],
+      :values => mappings
+    )
+  end
+
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
@@ -23,11 +36,11 @@ module CloudVolumeHelper::TextualSummary
   end
 
   def textual_bootable
-    {:label => _('Bootable'), :value => @record.bootable.to_s}
+    {:label => _('Bootable'), :value => _(@record.bootable.to_s)}
   end
 
   def textual_status
-    {:label => _('Status'), :value => @record.status.to_s}
+    {:label => _('Status'), :value => _(@record.status.to_s)}
   end
 
   def textual_health_state

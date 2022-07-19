@@ -47,44 +47,6 @@ describe CloudVolumeController do
     end
   end
 
-  describe "#backup_create" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack)
-      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
-      @backup = FactoryBot.create(:cloud_volume_backup)
-    end
-
-    let(:task_options) do
-      {
-        :action => "creating Cloud Volume Backup for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @volume.class.name,
-        :method_name => "backup_create",
-        :instance_id => @volume.id,
-        :args        => [{:name => "backup_name"}]
-      }
-    end
-
-    it "builds create backup screen" do
-      post :button, :params => {:pressed => "cloud_volume_backup_create", :format => :js, :id => @volume.id}
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the create cloud backup action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :backup_create, :params => {:button      => "create",
-                                       :format      => :js,
-                                       :id          => @volume.id,
-                                       :backup_name => 'backup_name'}
-    end
-  end
-
   describe '#new' do
     let(:product_features) { ['cloud_volume_new', 'cloud_tenant_show_list'] }
     let(:features) { MiqProductFeature.find_all_by_identifier(product_features) }
@@ -115,82 +77,6 @@ describe CloudVolumeController do
           post :new, :params => {:button => "new", :format => :js}
         end.to raise_error(MiqException::RbacPrivilegeException)
       end
-    end
-  end
-
-  describe "#backup_restore" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack)
-      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
-      @backup = FactoryBot.create(:cloud_volume_backup)
-    end
-
-    let(:task_options) do
-      {
-        :action => "restoring Cloud Volume from Backup for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @volume.class.name,
-        :method_name => "backup_restore",
-        :instance_id => @volume.id,
-        :args        => [@backup.ems_ref]
-      }
-    end
-
-    it "builds restore backup screen" do
-      post :button, :params => {:pressed => "cloud_volume_backup_restore", :format => :js, :id => @volume.id}
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues restore from a cloud backup action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :backup_restore, :params => {:button    => "restore",
-                                        :format    => :js,
-                                        :id        => @volume.id,
-                                        :backup_id => @backup.id}
-    end
-  end
-
-  describe "#snapshot_create" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_cinder)
-      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
-      @snapshot = FactoryBot.create(:cloud_volume_snapshot)
-    end
-
-    let(:task_options) do
-      {
-        :action => "creating volume snapshot in #{@ems.inspect} for #{@volume.inspect} with #{{:name => "snapshot_name"}.inspect}",
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @volume.class.name,
-        :instance_id => @volume.id,
-        :method_name => 'create_volume_snapshot',
-        :args        => [{:name => "snapshot_name"}]
-      }
-    end
-
-    it "builds create snapshot screen" do
-      post :button, :params => {:pressed => "cloud_volume_snapshot_create", :format => :js, :id => @volume.id}
-      expect(assigns(:flash_array)).to be_nil
-    end
-
-    it "queues the create cloud snapshot action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :snapshot_create, :params => {:button        => "create",
-                                         :format        => :js,
-                                         :id            => @volume.id,
-                                         :snapshot_name => 'snapshot_name'}
     end
   end
 
@@ -317,16 +203,6 @@ describe CloudVolumeController do
       controller.params = {:button => 'cancel', :id => volume.id}
     end
 
-    it 'calls flash_and_redirect for canceling attaching Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:attach_volume)
-    end
-
-    it 'calls flash_and_redirect for canceling detaching Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:detach_volume)
-    end
-
     it 'calls flash_and_redirect for adding new Cloud Volume' do
       expect(controller).to receive(:flash_and_redirect).with(_("Add of new Cloud Volume was cancelled by the user"))
       controller.send(:create)
@@ -335,21 +211,6 @@ describe CloudVolumeController do
     it 'calls flash_and_redirect for canceling editing Cloud Volume' do
       expect(controller).to receive(:flash_and_redirect).with(_("Edit of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
       controller.send(:update)
-    end
-
-    it 'calls flash_and_redirect for canceling Backup creating of Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:backup_create)
-    end
-
-    it 'calls flash_and_redirect for canceling restoring of Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:backup_restore)
-    end
-
-    it 'calls flash_and_redirect for canceling creating Snapshot of Cloud Volume' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => volume.name})
-      controller.send(:snapshot_create)
     end
   end
 

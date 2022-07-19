@@ -38,12 +38,6 @@ module Mixins
       drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
     end
 
-    def show_ad_hoc_metrics
-      @showtype = "ad_hoc_metrics"
-      @lastaction = "show_ad_hoc_metrics"
-      drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
-    end
-
     def display_storage_managers
       nested_list(ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
     end
@@ -120,7 +114,7 @@ module Mixins
       end
 
       def custom_display_modes
-        %w[props ad_hoc_metrics]
+        %w[props]
       end
 
       def default_show_template
@@ -180,13 +174,6 @@ module Mixins
                       :url  => show_link(@record, :refresh => "n", :display => "performance"))
       perf_gen_init_options # Intialize options, charts are generated async
       javascript_redirect(polymorphic_path(@record, :display => "performance"))
-    end
-
-    def ad_hoc_metrics_pressed
-      @showtype = "ad_hoc_metrics"
-      @record = find_record_with_rbac(model, params[:id])
-      drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
-      javascript_redirect(polymorphic_path(@record, :display => "ad_hoc_metrics"))
     end
 
     # provider_id can be either a provider id or a storage manager id, depending on context
@@ -362,9 +349,6 @@ module Mixins
         when "#{table_name}_perf"
           performance_pressed
           return
-        when "#{table_name}_ad_hoc_metrics"
-          ad_hoc_metrics_pressed
-          return
         when 'refresh_server_summary'
           javascript_redirect(:back)
           return
@@ -452,6 +436,10 @@ module Mixins
       elsif params[:pressed] == "cloud_volume_detach"
         javascript_redirect(:controller => "cloud_volume",
                             :action     => "detach",
+                            :id         => find_record_with_rbac(CloudVolume, checked_or_params))
+      elsif params[:pressed] == "cloud_volume_clone"
+        javascript_redirect(:controller => "cloud_volume",
+                            :action     => "clone",
                             :id         => find_record_with_rbac(CloudVolume, checked_or_params))
       elsif params[:pressed] == "cloud_volume_edit"
         javascript_redirect(:controller => "cloud_volume",
@@ -563,6 +551,12 @@ module Mixins
         show_list
         @refresh_partial = "layouts/gtl"
       end
+    end
+
+    def open_console(identifier)
+      assert_privileges(identifier)
+      @ems = find_record_with_rbac(model, params[:id])
+      javascript_open_window(@ems.console_url.to_s)
     end
   end
 end

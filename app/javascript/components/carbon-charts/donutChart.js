@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DonutChart } from '@carbon/charts-react';
 
-const DonutChartGraph = ({ data }) => {
+const DonutChartGraph = ({ data, title }) => {
   const options = {
+    title,
     donut: {
       center: {
         label: __('Total'),
@@ -25,10 +26,12 @@ const DonutChartGraph = ({ data }) => {
 
 DonutChartGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any),
+  title: PropTypes.string,
 };
 
 DonutChartGraph.defaultProps = {
   data: null,
+  title: '',
 };
 
 export default DonutChartGraph;

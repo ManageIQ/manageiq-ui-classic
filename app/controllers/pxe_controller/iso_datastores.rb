@@ -114,7 +114,7 @@ module PxeController::IsoDatastores
   # Set form variables for edit
   def iso_datastore_set_form_vars
     @edit = {}
-    @edit[:emses] = ManageIQ::Providers::Redhat::InfraManager.without_iso_datastores.order(:name)
+    @edit[:emses] = ExtManagementSystem.order(:name).supporting(:create_iso_datastore)
   end
 
   # Common Schedule button handler routines

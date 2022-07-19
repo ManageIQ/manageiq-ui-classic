@@ -1,0 +1,919 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom Button form component should add a new generic object custom button 1`] = `
+<div
+  className="col-md-12 button-form"
+>
+  <Connect(MiqFormRenderer)
+    FormTemplate={[Function]}
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "select",
+            "id": "button_type",
+            "label": "Button Type",
+            "loadOptions": [Function],
+            "name": "options.button_type",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "is": "ansible_playbook",
+              "when": "options.button_type",
+            },
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "service_template_name",
+                "includeEmpty": true,
+                "isRequired": true,
+                "label": "Playbook Catalog Item",
+                "name": "uri_attributes.service_template_name",
+                "options": Array [
+                  Object {
+                    "label": "Blue Demo Raw",
+                    "value": "Blue Demo Raw",
+                  },
+                  Object {
+                    "label": "CF create user",
+                    "value": "CF create user",
+                  },
+                  Object {
+                    "label": "Deploy RHEL7 on VMware",
+                    "value": "Deploy RHEL7 on VMware",
+                  },
+                  Object {
+                    "label": "Deploy Ticket Monster on AWS",
+                    "value": "Deploy Ticket Monster on AWS",
+                  },
+                  Object {
+                    "label": "LB",
+                    "value": "LB",
+                  },
+                  Object {
+                    "label": "MyPBaaS",
+                    "value": "MyPBaaS",
+                  },
+                  Object {
+                    "label": "OpenStack Application SLA Catalog Item",
+                    "value": "OpenStack Application SLA Catalog Item",
+                  },
+                  Object {
+                    "label": "SimplePing",
+                    "value": "SimplePing",
+                  },
+                  Object {
+                    "label": "demo playbook",
+                    "value": "demo playbook",
+                  },
+                ],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "radio",
+                "id": "inventory_type",
+                "label": "Inventory",
+                "name": "inventory_type",
+                "options": Array [
+                  Object {
+                    "label": "Localhost",
+                    "value": "localhost",
+                  },
+                  Object {
+                    "label": "Target Machine",
+                    "value": "vmdb_object",
+                  },
+                  Object {
+                    "label": "Specific Hosts",
+                    "value": "manual",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "condition": Object {
+                  "is": "manual",
+                  "when": "inventory_type",
+                },
+                "id": "hosts",
+                "isRequired": true,
+                "label": "Enter a comma separated list of IP or DNS names",
+                "maxLength": 255,
+                "name": "hosts",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+            "id": "playbook-fields",
+            "name": "playbook-fields",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "id": "name",
+                "isRequired": true,
+                "label": "Name",
+                "maxLength": 50,
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "checkbox",
+                "id": "display",
+                "label": "Display on Button",
+                "name": "options.display",
+              },
+            ],
+            "id": "name-wrapper",
+            "name": "subform-1",
+          },
+          Object {
+            "component": "text-field",
+            "id": "desription",
+            "isRequired": true,
+            "label": "Description",
+            "maxLength": 255,
+            "name": "description",
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "font-icon-picker-ddf",
+            "iconChange": [Function],
+            "id": "button_icon",
+            "label": "Icon",
+            "name": "options.button_icon",
+            "onChangeURL": "/generic_object_definition/show_list",
+            "selected": undefined,
+          },
+          Object {
+            "component": "text-field",
+            "id": "color-select",
+            "label": "Icon color",
+            "name": "options.button_color",
+            "type": "color",
+          },
+          Object {
+            "component": "select",
+            "id": "dialog_id",
+            "isSearchable": true,
+            "label": "Dialog",
+            "name": "resource_action.dialog_id",
+            "options": undefined,
+            "simpleValue": true,
+          },
+          Object {
+            "component": "select",
+            "id": "display_for",
+            "label": "Display for",
+            "name": "options.display_for",
+            "options": Array [
+              Object {
+                "label": "Single Entity",
+                "value": "single",
+              },
+              Object {
+                "label": "List",
+                "value": "list",
+              },
+              Object {
+                "label": "Single and List",
+                "value": "both",
+              },
+            ],
+          },
+          Object {
+            "component": "select",
+            "id": "submit_how",
+            "label": "Submit",
+            "name": "options.submit_how",
+            "options": Array [
+              Object {
+                "label": "Submit all",
+                "value": "all",
+              },
+              Object {
+                "label": "One by one",
+                "value": "one",
+              },
+            ],
+          },
+          Object {
+            "component": "select",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "ae_instance",
+            "label": "System/Process",
+            "name": "resource_action.ae_instance",
+            "options": Array [
+              Object {
+                "label": "Automation",
+                "value": "Automation",
+              },
+              Object {
+                "label": "Event",
+                "value": "Event",
+              },
+              Object {
+                "label": "GenericObject",
+                "value": "GenericObject",
+              },
+              Object {
+                "label": "MiqEvent",
+                "value": "MiqEvent",
+              },
+              Object {
+                "label": "Request",
+                "value": "Request",
+              },
+              Object {
+                "label": "parse_automation_request",
+                "value": "parse_automation_request",
+              },
+              Object {
+                "label": "parse_event_stream",
+                "value": "parse_event_stream",
+              },
+              Object {
+                "label": "parse_provider_category",
+                "value": "parse_provider_category",
+              },
+            ],
+          },
+          Object {
+            "component": "text-field",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "ae_message",
+            "label": "Message",
+            "maxLength": 255,
+            "name": "resource_action.ae_message",
+          },
+          Object {
+            "component": "text-field",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "request",
+            "isRequired": true,
+            "label": "Request",
+            "maxLength": 255,
+            "name": "uri_attributes.request",
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "visibility",
+                "label": "Role Access",
+                "name": "visibility.roles",
+                "options": Array [
+                  Object {
+                    "label": "<To All>",
+                    "value": "_All_",
+                  },
+                  Object {
+                    "label": "<By Role>",
+                    "value": "role",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "condition": Object {
+                  "is": "role",
+                  "when": "visibility.roles",
+                },
+                "id": "available_roles",
+                "isMulti": true,
+                "label": "User Roles",
+                "name": "available_roles",
+                "options": undefined,
+                "sortItems": [Function],
+              },
+            ],
+            "id": "attribute/value pairs",
+            "label": "Attribute/Value Pairs",
+            "name": "attribute/value pairs",
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Custom Button form component should edit a generic object custom button 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CustomButtonForm
+    ansiblePlaybooks={
+      Array [
+        Object {
+          "id": 55,
+          "name": "Blue Demo Raw",
+        },
+        Object {
+          "id": 78,
+          "name": "CF create user",
+        },
+        Object {
+          "id": 15,
+          "name": "Deploy RHEL7 on VMware",
+        },
+        Object {
+          "id": 14,
+          "name": "Deploy Ticket Monster on AWS",
+        },
+        Object {
+          "id": 129,
+          "name": "LB",
+        },
+        Object {
+          "id": 4,
+          "name": "MyPBaaS",
+        },
+        Object {
+          "id": 32,
+          "name": "OpenStack Application SLA Catalog Item",
+        },
+        Object {
+          "id": 49,
+          "name": "SimplePing",
+        },
+        Object {
+          "id": 69,
+          "name": "demo playbook",
+        },
+      ]
+    }
+    appliesToClass="GenericObjectDefinition"
+    distinctInstances={
+      Array [
+        "Automation",
+        "Event",
+        "GenericObject",
+        "MiqEvent",
+        "Request",
+        "parse_automation_request",
+        "parse_event_stream",
+        "parse_provider_category",
+      ]
+    }
+    recId="128"
+    url="/generic_object_definition/show_list"
+  >
+    <Loading
+      active={true}
+      className="export-spinner"
+      description="Active loading indicator"
+      small={true}
+      withOverlay={false}
+    >
+      <div
+        aria-atomic="true"
+        aria-labelledby="loading-id-4"
+        aria-live="assertive"
+        className="export-spinner bx--loading bx--loading--small"
+      >
+        <label
+          className="bx--visually-hidden"
+          id="loading-id-4"
+        >
+          Active loading indicator
+        </label>
+        <svg
+          className="bx--loading__svg"
+          viewBox="0 0 100 100"
+        >
+          <title>
+            Active loading indicator
+          </title>
+          <circle
+            className="bx--loading__background"
+            cx="50%"
+            cy="50%"
+            r="44"
+          />
+          <circle
+            className="bx--loading__stroke"
+            cx="50%"
+            cy="50%"
+            r="44"
+          />
+        </svg>
+      </div>
+    </Loading>
+  </CustomButtonForm>
+</Provider>
+`;
+
+exports[`Custom Button form component should render the adding form for generic objbuttons 1`] = `
+<div
+  className="col-md-12 button-form"
+>
+  <Connect(MiqFormRenderer)
+    FormTemplate={[Function]}
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "select",
+            "id": "button_type",
+            "label": "Button Type",
+            "loadOptions": [Function],
+            "name": "options.button_type",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "is": "ansible_playbook",
+              "when": "options.button_type",
+            },
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "service_template_name",
+                "includeEmpty": true,
+                "isRequired": true,
+                "label": "Playbook Catalog Item",
+                "name": "uri_attributes.service_template_name",
+                "options": Array [
+                  Object {
+                    "label": "Blue Demo Raw",
+                    "value": "Blue Demo Raw",
+                  },
+                  Object {
+                    "label": "CF create user",
+                    "value": "CF create user",
+                  },
+                  Object {
+                    "label": "Deploy RHEL7 on VMware",
+                    "value": "Deploy RHEL7 on VMware",
+                  },
+                  Object {
+                    "label": "Deploy Ticket Monster on AWS",
+                    "value": "Deploy Ticket Monster on AWS",
+                  },
+                  Object {
+                    "label": "LB",
+                    "value": "LB",
+                  },
+                  Object {
+                    "label": "MyPBaaS",
+                    "value": "MyPBaaS",
+                  },
+                  Object {
+                    "label": "OpenStack Application SLA Catalog Item",
+                    "value": "OpenStack Application SLA Catalog Item",
+                  },
+                  Object {
+                    "label": "SimplePing",
+                    "value": "SimplePing",
+                  },
+                  Object {
+                    "label": "demo playbook",
+                    "value": "demo playbook",
+                  },
+                ],
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "radio",
+                "id": "inventory_type",
+                "label": "Inventory",
+                "name": "inventory_type",
+                "options": Array [
+                  Object {
+                    "label": "Localhost",
+                    "value": "localhost",
+                  },
+                  Object {
+                    "label": "Target Machine",
+                    "value": "vmdb_object",
+                  },
+                  Object {
+                    "label": "Specific Hosts",
+                    "value": "manual",
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "condition": Object {
+                  "is": "manual",
+                  "when": "inventory_type",
+                },
+                "id": "hosts",
+                "isRequired": true,
+                "label": "Enter a comma separated list of IP or DNS names",
+                "maxLength": 255,
+                "name": "hosts",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+            "id": "playbook-fields",
+            "name": "playbook-fields",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "id": "name",
+                "isRequired": true,
+                "label": "Name",
+                "maxLength": 50,
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "checkbox",
+                "id": "display",
+                "label": "Display on Button",
+                "name": "options.display",
+              },
+            ],
+            "id": "name-wrapper",
+            "name": "subform-1",
+          },
+          Object {
+            "component": "text-field",
+            "id": "desription",
+            "isRequired": true,
+            "label": "Description",
+            "maxLength": 255,
+            "name": "description",
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "font-icon-picker-ddf",
+            "iconChange": [Function],
+            "id": "button_icon",
+            "label": "Icon",
+            "name": "options.button_icon",
+            "onChangeURL": "/generic_object_definition/show_list",
+            "selected": undefined,
+          },
+          Object {
+            "component": "text-field",
+            "id": "color-select",
+            "label": "Icon color",
+            "name": "options.button_color",
+            "type": "color",
+          },
+          Object {
+            "component": "select",
+            "id": "dialog_id",
+            "isSearchable": true,
+            "label": "Dialog",
+            "name": "resource_action.dialog_id",
+            "options": undefined,
+            "simpleValue": true,
+          },
+          Object {
+            "component": "select",
+            "id": "display_for",
+            "label": "Display for",
+            "name": "options.display_for",
+            "options": Array [
+              Object {
+                "label": "Single Entity",
+                "value": "single",
+              },
+              Object {
+                "label": "List",
+                "value": "list",
+              },
+              Object {
+                "label": "Single and List",
+                "value": "both",
+              },
+            ],
+          },
+          Object {
+            "component": "select",
+            "id": "submit_how",
+            "label": "Submit",
+            "name": "options.submit_how",
+            "options": Array [
+              Object {
+                "label": "Submit all",
+                "value": "all",
+              },
+              Object {
+                "label": "One by one",
+                "value": "one",
+              },
+            ],
+          },
+          Object {
+            "component": "select",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "ae_instance",
+            "label": "System/Process",
+            "name": "resource_action.ae_instance",
+            "options": Array [
+              Object {
+                "label": "Automation",
+                "value": "Automation",
+              },
+              Object {
+                "label": "Event",
+                "value": "Event",
+              },
+              Object {
+                "label": "GenericObject",
+                "value": "GenericObject",
+              },
+              Object {
+                "label": "MiqEvent",
+                "value": "MiqEvent",
+              },
+              Object {
+                "label": "Request",
+                "value": "Request",
+              },
+              Object {
+                "label": "parse_automation_request",
+                "value": "parse_automation_request",
+              },
+              Object {
+                "label": "parse_event_stream",
+                "value": "parse_event_stream",
+              },
+              Object {
+                "label": "parse_provider_category",
+                "value": "parse_provider_category",
+              },
+            ],
+          },
+          Object {
+            "component": "text-field",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "ae_message",
+            "label": "Message",
+            "maxLength": 255,
+            "name": "resource_action.ae_message",
+          },
+          Object {
+            "component": "text-field",
+            "condition": Object {
+              "not": Object {
+                "is": "ansible_playbook",
+                "when": "options.button_type",
+              },
+            },
+            "id": "request",
+            "isRequired": true,
+            "label": "Request",
+            "maxLength": 255,
+            "name": "uri_attributes.request",
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "visibility",
+                "label": "Role Access",
+                "name": "visibility.roles",
+                "options": Array [
+                  Object {
+                    "label": "<To All>",
+                    "value": "_All_",
+                  },
+                  Object {
+                    "label": "<By Role>",
+                    "value": "role",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "condition": Object {
+                  "is": "role",
+                  "when": "visibility.roles",
+                },
+                "id": "available_roles",
+                "isMulti": true,
+                "label": "User Roles",
+                "name": "available_roles",
+                "options": undefined,
+                "sortItems": [Function],
+              },
+            ],
+            "id": "attribute/value pairs",
+            "label": "Attribute/Value Pairs",
+            "name": "attribute/value pairs",
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Custom Button form component should render the editing form for generic object custom buttons 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CustomButtonForm
+    ansiblePlaybooks={
+      Array [
+        Object {
+          "id": 55,
+          "name": "Blue Demo Raw",
+        },
+        Object {
+          "id": 78,
+          "name": "CF create user",
+        },
+        Object {
+          "id": 15,
+          "name": "Deploy RHEL7 on VMware",
+        },
+        Object {
+          "id": 14,
+          "name": "Deploy Ticket Monster on AWS",
+        },
+        Object {
+          "id": 129,
+          "name": "LB",
+        },
+        Object {
+          "id": 4,
+          "name": "MyPBaaS",
+        },
+        Object {
+          "id": 32,
+          "name": "OpenStack Application SLA Catalog Item",
+        },
+        Object {
+          "id": 49,
+          "name": "SimplePing",
+        },
+        Object {
+          "id": 69,
+          "name": "demo playbook",
+        },
+      ]
+    }
+    appliesToClass="GenericObjectDefinition"
+    distinctInstances={
+      Array [
+        "Automation",
+        "Event",
+        "GenericObject",
+        "MiqEvent",
+        "Request",
+        "parse_automation_request",
+        "parse_event_stream",
+        "parse_provider_category",
+      ]
+    }
+    recId="128"
+    url="/generic_object_definition/show_list"
+  >
+    <Loading
+      active={true}
+      className="export-spinner"
+      description="Active loading indicator"
+      small={true}
+      withOverlay={false}
+    >
+      <div
+        aria-atomic="true"
+        aria-labelledby="loading-id-1"
+        aria-live="assertive"
+        className="export-spinner bx--loading bx--loading--small"
+      >
+        <label
+          className="bx--visually-hidden"
+          id="loading-id-1"
+        >
+          Active loading indicator
+        </label>
+        <svg
+          className="bx--loading__svg"
+          viewBox="0 0 100 100"
+        >
+          <title>
+            Active loading indicator
+          </title>
+          <circle
+            className="bx--loading__background"
+            cx="50%"
+            cy="50%"
+            r="44"
+          />
+          <circle
+            className="bx--loading__stroke"
+            cx="50%"
+            cy="50%"
+            r="44"
+          />
+        </svg>
+      </div>
+    </Loading>
+  </CustomButtonForm>
+</Provider>
+`;

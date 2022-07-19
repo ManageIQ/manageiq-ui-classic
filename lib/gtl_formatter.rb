@@ -114,7 +114,7 @@ class GtlFormatter
         text = format_col_for_display(view, row, col)
         item = {:title      => text,
                 :icon       => icon,
-                :background => textual_power_state_whitelisted(record[col]),
+                :background => textual_power_state_whitelisted(row[col]),
                 :text       => text}.compact
       elsif COLUMN_WITH_ICON.key?(col)
         # Generate html for the list icon

@@ -111,7 +111,7 @@
                                   "auto-focus"     => ""}
               %span{"style" => "color:red", "ng-show" => "angularForm.total_cpus.$invalid"}
                 = _(" Total processors value larger than the maximum allowed")
-  - if supports_reconfigure_disks? && role_allows?(:feature => 'vm_reconfigure_disks')
+  - if item_supports?(:reconfigure_disks) && role_allows?(:feature => 'vm_reconfigure_disks')
     %hr
     %div
       %h3
@@ -137,7 +137,7 @@
           %th{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}= _('Dependent')
           %th{"ng-hide" => "vm.isVmwareCloud()"}= _('Delete Backing')
           %th{"ng-if" => "vm.vm_vendor == 'redhat'"}= _('Bootable')
-          - if supports_reconfigure_disksize?
+          - if item_supports?(:reconfigure_disksize)
             %th{:colspan => 2}= _('Actions')
           - else
             %th= _('Actions')
@@ -202,7 +202,7 @@
                      "ng-model"      => "disk.cb_bootable",
                      "ng-readonly"   => true,
                      "switch-active" => false}
-            - if supports_reconfigure_disksize?
+            - if item_supports?(:reconfigure_disksize)
               %td.action-cell
                 %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                               "ng-if"    => "disk.add_remove == ''",
@@ -295,11 +295,11 @@
               %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                                 "ng-click" => "vm.addDisk()",
                                                                 "ng-disabled" => "rowForm.dvcSize.$invalid"}= _(' Add ')
-            - if supports_reconfigure_disksize?
+            - if item_supports?(:reconfigure_disksize)
               %td.action-cell
                 %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                                   "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
-  - if supports_reconfigure_network_adapters? && role_allows?(:feature => 'vm_reconfigure_networks')
+  - if item_supports?(:reconfigure_network_adapters) && role_allows?(:feature => 'vm_reconfigure_networks')
     %hr
     %div
       %h3
@@ -402,7 +402,7 @@
 
   %hr
 
-  - if supports_reconfigure_cdroms? && role_allows?(:feature => 'vm_reconfigure_drives')
+  - if item_supports?(:reconfigure_cdroms) && role_allows?(:feature => 'vm_reconfigure_drives')
     %div{"ng-if" => "vm.reconfigureModel.vmCDRoms"}
       %h3
         = _('CD/DVD Drives')

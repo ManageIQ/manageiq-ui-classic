@@ -31,12 +31,3 @@
         = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
     - else
       = render :partial => 'table_button', :locals => {:buttons => @record.set_data[:button_order].map{ |id| CustomButton.find_by(:id => id) }}
-
-    %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
-                                                                           'entity'       => _('Custom Button Group'),
-                                                                           'entity-name'  => @record.description,
-                                                                           'redirect-url' => "/generic_object_definition",}
-:javascript
-  miq_bootstrap('#generic_object_definition_show_form');
-  $('#searchbox').hide();
-

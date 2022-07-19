@@ -252,7 +252,8 @@ class MiqAlertController < ApplicationController
       @ems = ExtManagementSystem.find_by(:id => @alert.expression[:options][:ems_id])
     end
     if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
-      MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
+      @expression_options = MiqAlert.expression_options(@alert.expression[:eval_method])
+      @expression_options.each do |eo|
         case eo[:name]
         when :perf_column
           @perf_column_unit = alert_get_perf_column_unit(eo[:values][@alert.db][@alert.expression[:options][:perf_column]])

@@ -1057,6 +1057,7 @@ SecurityPolicyRuleController:
 - open_url_after_dialog
 - wait_for_task
 ServiceController:
+- index
 - dialog_field_changed
 - dialog_form_button_pressed
 - dialog_load
@@ -1068,7 +1069,6 @@ ServiceController:
 - open_url_after_dialog
 - ownership_update
 - reload
-- report_data
 - tree_autoload
 - tree_select
 - wait_for_task
@@ -1171,6 +1171,7 @@ VmCloudController:
 - launch_html5_console
 - launch_vmrc_console
 - linux_initprocesses
+- management_console
 - network_ports
 - network_routers
 - open_url_after_dialog
@@ -1264,6 +1265,7 @@ VmInfraController:
 - launch_native_console
 - launch_vmrc_console
 - linux_initprocesses
+- management_console
 - name_changed
 - native_console
 - open_url_after_dialog
@@ -1353,6 +1355,7 @@ VmOrTemplateController:
 - launch_native_console
 - launch_vmrc_console
 - linux_initprocesses
+- management_console
 - name_changed
 - native_console
 - network_ports

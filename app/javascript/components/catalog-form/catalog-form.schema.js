@@ -39,7 +39,7 @@ const createSchema = (options, catalogId) => ({
     },
     {
       component: componentTypes.SUB_FORM,
-      id: 'dual-list-sub-form',
+      id: 'dual-list-sub-form-catalog',
       name: 'dual-list-sub-form',
       fields: [
         {
@@ -54,6 +54,10 @@ const createSchema = (options, catalogId) => ({
           moveAllLeftTitle: __('Remove All'),
           moveRightTitle: __('Add'),
           moveAllRightTitle: __('Add All'),
+          noValueTitle: __('No option selected'),
+          noOptionsTitle: __('No available options'),
+          filterOptionsTitle: __('Filter options'),
+          filterValuesTitle: __('Filter values'),
           options,
         },
       ],

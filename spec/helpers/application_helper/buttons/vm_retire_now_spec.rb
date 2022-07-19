@@ -3,7 +3,7 @@ describe ApplicationHelper::Button::VmRetireNow do
     context "when record is retireable" do
       before do
         @record = FactoryBot.create(:vm_vmware)
-        allow(@record).to receive(:supports_retire?).and_return(true)
+        stub_supports(Vm, :retire)
       end
 
       it_behaves_like "will not be skipped for this record"
@@ -12,7 +12,7 @@ describe ApplicationHelper::Button::VmRetireNow do
     context "when record is not retiretable" do
       before do
         @record = FactoryBot.create(:vm_vmware)
-        allow(@record).to receive(:supports_retire?).and_return(false)
+        stub_supports_not(Vm, :retire)
       end
 
       it_behaves_like "will be skipped for this record"

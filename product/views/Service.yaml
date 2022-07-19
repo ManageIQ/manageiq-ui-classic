@@ -24,6 +24,8 @@ db_options:
 cols:
 - name
 - description
+- Type
+- Retired
 - created_at
 - v_total_vms
 - aggregate_all_vm_cpus
@@ -45,6 +47,8 @@ include:
 col_order:
 - name
 - description
+- type
+- retired
 - created_at
 - v_total_vms
 - aggregate_all_vm_cpus
@@ -59,6 +63,8 @@ col_order:
 headers:
 - Name
 - Description
+- Type
+- Retired
 - Created On
 - Total VMs
 - Total CPUs

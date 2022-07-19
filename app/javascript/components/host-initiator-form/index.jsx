@@ -26,7 +26,7 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
 
   const onSubmit = async(values) => {
     miqSparkleOn();
-    const message = __('Host initiator define');
+    const message = sprintf(__('Defining of Host initiator "%s" has been successfully queued.'), values.name);
     API.post('/api/host_initiators', { action: 'create', resource: values })
       .then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
   };
@@ -36,13 +36,13 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
     miqRedirectBack(message, 'success', redirect);
   };
 
-  const validate=(values) => {
+  const validate = (values) => {
     const errors = {};
-    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)){
-      errors.wwpn = "Please provide at least one WWPN."
+    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
+      errors.wwpn = 'Please provide at least one WWPN.';
     }
     return errors;
-  }
+  };
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
 

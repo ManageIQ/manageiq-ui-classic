@@ -1,3 +1,5 @@
+require('./miq_global.js');
+
 window.logError = function(fn) {
   return function(text) {
     try {

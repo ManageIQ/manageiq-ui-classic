@@ -15,9 +15,7 @@ describe ApplicationHelper::Button::VmSnapshotRemoveOne do
   end
   let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
   let(:active) { true }
-  before do
-    allow(record.ext_management_system).to receive(:supports_snapshots?).and_return(true)
-  end
+  before { stub_supports(record.ext_management_system, :snapshots) }
   describe '#disabled?' do
     subject { button.disabled? }
     context 'when record.kind_of?(ManageIQ::Providers::Redhat::InfraManager::Vm)' do

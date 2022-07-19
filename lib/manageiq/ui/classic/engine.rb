@@ -38,14 +38,7 @@ module ManageIQ
         config.assets.paths << root.join('vendor', 'assets', 'stylesheets').to_s
 
         if Rails.env.production? || Rails.env.test?
-          require 'uglifier'
-          config.assets.js_compressor = Uglifier.new(
-            :compress => {
-              :unused      => false,
-              :keep_fargs  => true,
-              :keep_fnames => true
-            }
-          )
+          config.assets.js_compressor = :uglifier
         end
 
         def self.vmdb_plugin?

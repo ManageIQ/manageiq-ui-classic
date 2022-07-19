@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getConvertedData = (data, units) => {
   if (data && data.xData && data.yData) {
     const columnsData = data.xData;
@@ -7,7 +9,7 @@ export const getConvertedData = (data, units) => {
       columnsData.forEach((item, i) => {
         const obj = {};
         obj.group = units;
-        obj.date = item;
+        obj.date = moment(item).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss z')
         obj.value = rowsData[i];
         arr.push(obj);
       });
@@ -22,6 +24,24 @@ export const getLatestValue = (data) => {
     return data.yData[data.yData.length - 1];
   }
   return 0;
+};
+
+export const getHeatMapData = (data) => {
+  if (data) {
+    const arr = [];
+    data.forEach((item) => {
+      const obj = {};
+      obj.percent = item.percent;
+      obj.total = item.total;
+      obj.provider = item.provider;
+      obj.node = item.node;
+      obj.value = item.percent * 100;
+      obj.unit = item.unit;
+      arr.push(obj);
+    });
+    return arr;
+  }
+  return [];
 };
 
 export const getPodsData = (data, createdlabel, deletedLabel) => {

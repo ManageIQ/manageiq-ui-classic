@@ -31,7 +31,7 @@ module TreeNode
       else
         base_class = @object.class.base_model.name # i.e. Vm or MiqTemplate
         base_class = "Datacenter" if base_class == "EmsFolder" && @object.kind_of?(::Datacenter)
-        base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
+        base_class = "ManageIQ::Providers::ExternalAutomationManager" if @object.kind_of?(ManageIQ::Providers::ExternalAutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)
         cid = @object.id
         "#{@tree.try(:options).try(:[], :full_ids) && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
@@ -77,8 +77,8 @@ module TreeNode
 
           if result.nil?
             if block_given?
-              args = [@object, @parent_id].take(block.arity.abs)
-              result = instance_exec(*args, &block)
+              # All blocks here are either to_procs that only take the receiver or a block with no arguments.
+              result = instance_exec(@object, &block)
             else
               result = value
             end

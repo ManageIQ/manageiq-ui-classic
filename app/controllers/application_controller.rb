@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   end
 
   def allow_websocket
-    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin])
+    override_content_security_policy_directives(:connect_src => ["'self'", 'https://fonts.gstatic.com', websocket_origin])
   end
   private :allow_websocket
 
@@ -1568,7 +1568,7 @@ class ApplicationController < ActionController::Base
           set_pre_prov_vars
           template = find_record_with_rbac(VmOrTemplate, checked_or_params)
 
-          render_flash_not_applicable_to_model("provisioning") unless template.supports_provisioning?
+          render_flash_not_applicable_to_model("provisioning") unless template.supports?(:provisioning)
           return if performed?
 
           @edit[:src_vm_id] = template
@@ -1607,6 +1607,7 @@ class ApplicationController < ActionController::Base
   def vm_publish
     prov_redirect("publish")
   end
+  alias instance_publish vm_publish
 
   def get_global_session_data
     # Set the current userid in the User class for this thread for models to use

@@ -3,7 +3,7 @@ module Mixins
     def model_feature_for_action(action)
       case action
       when :edit
-        :ems_storage_new
+        :update
       end
     end
   end

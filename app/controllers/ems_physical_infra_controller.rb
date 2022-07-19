@@ -24,10 +24,7 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def launch_console
-    assert_privileges('ems_physical_infra_console')
-    @ems = find_record_with_rbac(model, params[:id])
-    $log.info('Console URL - ' + @ems.console_url.to_s)
-    javascript_open_window(@ems.console_url.to_s)
+    open_console('ems_physical_infra_console')
   end
 
   def change_password_ems_physical_infra_path(id = nil)

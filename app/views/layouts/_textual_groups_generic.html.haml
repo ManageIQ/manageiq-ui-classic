@@ -4,5 +4,4 @@
     :javascript
       add_flash("#{j_str(flash[:message])}", "#{j_str(flash[:level])}")
 #textual_summary
-:javascript
-  ManageIQ.component.componentFactory('TextualSummaryWrapper', '#textual_summary', {summary: #{process_textual_info(textual_group_list, @record).to_json}});
+  = react('TextualSummaryWrapper', {:options => @options, :summary => process_textual_info(textual_group_list, @record)})

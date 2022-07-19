@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ -n "$CI" ]; then
+  echo "== Installing system packages =="
+  sudo apt-get update
+  sudo apt-get install -y libcurl4-openssl-dev
+  echo
+fi
+
+if [ -n "$CI" -a \( "$TEST_SUITE" = "spec:javascript" -o "$TEST_SUITE" = "spec:jest" \) ]; then
+  # Install google-chrome-beta
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+  sudo apt-get update
+  sudo apt-get install google-chrome-beta
+  echo
+fi
+
+gem_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." &>/dev/null && pwd)"
+spec_manageiq="$gem_root/spec/manageiq"
+
+if [ -n "$MANAGEIQ_REPO" ]; then
+  echo "== Symlinking spec/manageiq to $MANAGEIQ_REPO =="
+  rm -rf "$spec_manageiq"
+  ln -s "$(cd "$MANAGEIQ_REPO" &>/dev/null && pwd)" "$spec_manageiq"
+elif [ ! -d "$spec_manageiq" ]; then
+  echo "== Cloning manageiq sample app =="
+  git clone https://github.com/ManageIQ/manageiq.git --branch master --depth 1 "$spec_manageiq"
+fi

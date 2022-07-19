@@ -35,5 +35,5 @@ export const tableData = (headerItems, rowItems) => {
   const headerKeys = miqColumns.map((h) => h.key);
   const miqRows = convertRows(rowItems, headerKeys);
   const rows = rowData(headerKeys, miqRows);
-  return { miqColumns, miqRows: rows };
+  return { miqColumns, miqRows: rows.rowItems };
 };

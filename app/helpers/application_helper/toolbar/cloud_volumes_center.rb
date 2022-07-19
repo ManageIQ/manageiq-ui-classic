@@ -73,6 +73,18 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        :enabled      => false,
                        :onwhen       => '1'
                      ),
+
+                     button(
+                       :cloud_volume_clone,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Clone selected Cloud Volume'),
+                       t,
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1'
+                     ),
+
                      button(
                        :cloud_volume_edit,
                        'pficon pficon-edit fa-lg',
@@ -81,6 +93,9 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        :url_parms    => 'main_div',
                        :send_checked => true,
                        :enabled      => false,
+                       :klass     => ApplicationHelper::Button::PolymorphicConditionalButton,
+                       :options   => {:feature      => :update,
+                                      :parent_class => "CloudVolume"},
                        :onwhen       => '1'
                      ),
                      button(
@@ -89,7 +104,9 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        t = N_('Delete selected Cloud Volumes'),
                        t,
                        :url_parms => 'main_div',
-                       :klass     => ApplicationHelper::Button::CatalogItemButton,
+                       :klass     => ApplicationHelper::Button::PolymorphicConditionalButton,
+                       :options   => {:feature      => :delete,
+                                      :parent_class => "CloudVolume"},
                        :data      => {'function'      => 'sendDataWithRx',
                                       'function-data' => {:controller      => 'provider_dialogs',
                                                           :modal_title     => N_('Delete Volumes'),

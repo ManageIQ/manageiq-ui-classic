@@ -7,11 +7,10 @@ describe ApplicationHelper::Button::ReportOnly do
   let(:instance_data) { {'record' => record, 'report' => report, 'report_result_id' => report_result_id} }
   let(:button) { described_class.new(view_context, {}, instance_data, {}) }
 
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     let(:setup_report_result_details) { record.miq_report_result_details << result_detail if record }
     before do
       setup_report_result_details
-      button.calculate_properties
     end
 
     context 'when record not present' do

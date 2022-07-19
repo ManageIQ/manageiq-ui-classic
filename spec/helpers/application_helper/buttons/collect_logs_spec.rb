@@ -9,13 +9,12 @@ describe ApplicationHelper::Button::CollectLogs do
     MiqTask.delete_all
   end
 
-  describe '#calculate_properties' do
+  describe '#disabled?' do
     let(:setup_log_files) {}
     let(:setup_tasks) {}
     before do
       setup_log_files
       setup_tasks
-      button.calculate_properties
     end
     after(:each) { tear_down }
 

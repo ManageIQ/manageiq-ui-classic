@@ -6,6 +6,7 @@ import EmptyChart from '../emptyChart';
 
 const HostLineChart = ({ data, config }) => {
   const areaOptions = {
+    title: data.config.title,
     grid: {
       x: {
         enabled: false,

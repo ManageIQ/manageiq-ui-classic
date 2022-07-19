@@ -36,7 +36,7 @@ describe('TagGroup', () => {
     };
 
     const wrapper = mount(<TagGroup items={tagData.items} title={tagData.title} />);
-    expect(wrapper.html()).toContain('Policy<b>&nbsp;|&nbsp;</b>2');
-    expect(wrapper.containsMatchingElement(<IconOrImage icon="fa fa-tag" />)).toEqual(true);
+    expect(wrapper.html()).toContain('<div class="expand wrap_text">Policy,2</div>');
+    expect(wrapper.containsMatchingElement(<i className="fa fa-tag" />)).toEqual(true);
   });
 });

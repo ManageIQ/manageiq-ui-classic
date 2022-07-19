@@ -10,21 +10,16 @@ describe ApplicationHelper::Button::VmNativeConsole do
     it { is_expected.to be true }
   end
 
-  describe '#calculate_properties' do
-    before(:each) do
-      remote_console_validation
-      button.calculate_properties
-    end
-
+  describe '#disabled?' do
     context 'and remote control is supported' do
-      let(:remote_console_validation) do
+      let!(:remote_console_validation) do
         allow(record).to receive(:validate_native_console_support).and_return(true)
       end
       it_behaves_like 'an enabled button'
     end
     context 'and remote control is not supported' do
       let(:err_msg) { 'Remote console is not supported' }
-      let(:remote_console_validation) do
+      let!(:remote_console_validation) do
         allow(record).to receive(:validate_native_console_support)
           .and_raise(MiqException::RemoteConsoleNotSupportedError, err_msg)
       end

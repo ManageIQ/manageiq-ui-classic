@@ -6,14 +6,16 @@
 @import '~patternfly/dist/css/patternfly.css';
 @import '~patternfly/dist/css/patternfly-additions.css';
 @import './breadcrumbs.scss';
-@import './button-group.scss';
+@import './button-forms.scss';
 @import './carbon.scss';
 @import './charts.scss';
+@import './dashboard.scss';
 @import './data-table.scss';
 @import './ddf_override.scss';
 @import './menu.scss';
 @import './miq-data-table.scss';
 @import './miq-table-toolbar.scss';
+@import './miq-structured-list.scss';
 @import './navbar.scss';
 @import './no-records-found.scss';
 @import './notifications.scss';
@@ -21,3 +23,5 @@
 @import './search-bar.scss';
 @import './tree.scss';
 @import './toolbar.scss';
+@import './widget.scss';
+@import './cloud-container-projects-dashboard.scss';

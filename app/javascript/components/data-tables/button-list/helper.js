@@ -1,9 +1,5 @@
-import React from 'react';
-import classNames from 'classnames';
-
 /** Function to generate table's header contents */
 const tableHeaders = () => [
-  { key: 'icon', header: '' },
   { key: 'name', header: __('Name') },
   { key: 'hoverText', header: __('Description') },
 ];
@@ -13,8 +9,7 @@ const generateNodeKey = (nodeType, itemId, treeId) => (nodeType.split('-')[1] ==
 /** Function to generate table body's row contents */
 const tableRows = (list, nodeType, treeId, treeBox) => list.map((item, index) => ({
   id: index.toString(),
-  name: item.name,
-  icon: <i className={classNames('fa-lg', item.button_icon)} style={{ color: item.button_color }} />,
+  name: { text: item.name, icon: item.button_icon, props: { style: { color: item.button_color } } },
   hoverText: item.description,
   treeBox,
   nodeKey: generateNodeKey(nodeType, item.id, treeId),

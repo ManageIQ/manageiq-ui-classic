@@ -49,7 +49,7 @@ headers:
 - Description
 - Instances
 - Cloud Tenant
-- Cloud Provider
+- Network Provider
 
 # Condition(s) string for the SQL query
 conditions:

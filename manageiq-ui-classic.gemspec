@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "rails", "~> 6.0.0"
+  s.add_dependency "rails", ">= 6.0.4", "< 7.0"
 
   s.add_dependency "execjs", "2.8.1" # Note: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
   s.add_dependency "high_voltage", "~> 3.0.0"
@@ -32,10 +32,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "manageiq-style"
   s.add_development_dependency "rails-controller-testing", '~> 1.0.2'
-  s.add_development_dependency "simplecov"
+  s.add_development_dependency "simplecov", ">= 0.21.2"
 
   # core because jasmine gem depends on major version only, meaning breakages when not the latest
   s.add_development_dependency "jasmine", "~> 3.4.0"
   s.add_development_dependency "jasmine-core", "~> 3.4.0"
-  s.add_development_dependency "chrome_remote", "~> 0.2.0"
+  s.add_development_dependency "chrome_remote", "~> 0.3.0"
 end

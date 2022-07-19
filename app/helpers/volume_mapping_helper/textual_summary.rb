@@ -9,7 +9,7 @@ module VolumeMappingHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i[
-        provider physical_storage cloud_volume host_initiator lun
+        provider physical_storage cloud_volume host_initiator_group host_initiator lun
       ]
     )
   end
@@ -62,6 +62,19 @@ module VolumeMappingHelper::TextualSummary
         :title => _("Navigate to the Host Initiator of this Mapping"),
         :value => host_initiator.name,
         :link  => url_for_only_path(:controller => 'host_initiator', :action => 'show', :id => host_initiator.id)
+      }
+    end
+  end
+
+  def textual_host_initiator_group
+    group = @record.host_initiator_group
+    if group
+      {
+        :label => _("Host Initiator Group"),
+        :icon  => "pficon pficon-zone",
+        :title => _("Navigate to Host Initiator Group %{group_name}") % {:group_name => group.name},
+        :value => group.name,
+        :link  => url_for_only_path(:controller => 'host_initiator_group', :action => 'show', :id => group.id)
       }
     end
   end

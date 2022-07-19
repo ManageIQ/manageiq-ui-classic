@@ -105,9 +105,9 @@ module ApplicationHelper
     end
 
     # Detect if queried features are missing from the database and possibly invalid
-    if !Rails.env.production? && MiqProductFeature.where(:identifier => features).count != features.length
+    if !Rails.env.production? && features.detect { |feature| !MiqProductFeature.feature_exists?(feature) }
       message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
-      identifiers = MiqProductFeature.all.pluck(:identifier)
+      identifiers = MiqProductFeature.features.keys
       if Rails.env.development?
         raise message
       elsif Rails.env.test? && identifiers.length >= 5
@@ -201,13 +201,7 @@ module ApplicationHelper
   #           - false in case the record (or one of many records) does not
   #             support the feature
   def records_support_feature?(records, feature)
-    Array.wrap(records).all? do |record|
-      if record.respond_to?("supports_#{feature}?")
-        record.supports?(feature)
-      else # TODO: remove with deleting AvailabilityMixin module
-        record.is_available?(feature)
-      end
-    end
+    Array.wrap(records).all? { |record| record.supports?(feature.to_sym) }
   end
 
   # Create a url for a record that links to the proper controller
@@ -408,7 +402,7 @@ module ApplicationHelper
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
+    when "ManageIQ::Providers::ExternalAutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::CloudManager::CloudDatabase",
         "ManageIQ::Providers::ConfigurationManager",
@@ -616,7 +610,6 @@ module ApplicationHelper
       miq_policy_export
       miq_policy_rsop
       monitor_alerts_list
-      monitor_alerts_most_recent
       monitor_alerts_overview
       ops
       pxe
@@ -772,7 +765,6 @@ module ApplicationHelper
        ems_storage
        flavor
        floating_ip
-       generic_object_definition
        host
        host_aggregate
        load_balancer
@@ -909,8 +901,6 @@ module ApplicationHelper
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
       "ManageIQ::Providers::CloudManager::Template"
-    when :svcs_tree
-      "Service"
     when :vms_filter_tree
       "ManageIQ::Providers::InfraManager::Vm"
     when :templates_filter_tree
@@ -1028,7 +1018,7 @@ module ApplicationHelper
   end
 
   def pdf_page_size_style
-    "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
+    "#{@options[:page_layout]}"
   end
 
   DOWNLOAD_VIEW_LAYOUTS = %w[action
@@ -1037,7 +1027,6 @@ module ApplicationHelper
                              availability_zone
                              alerts_overview
                              alerts_list
-                             alerts_most_recent
                              cloud_database
                              cloud_network
                              cloud_object_store_container
@@ -1091,7 +1080,6 @@ module ApplicationHelper
                              miq_template
                              monitor_alerts_overview
                              monitor_alerts_list
-                             monitor_alerts_most_recent
                              network_port
                              network_router
                              network_service
@@ -1165,7 +1153,6 @@ module ApplicationHelper
       instances_filter_tree
       providers_tree
       storage_tree
-      svcs_tree
       templates_filter_tree
       templates_images_filter_tree
       vandt_tree
@@ -1345,5 +1332,12 @@ module ApplicationHelper
   def miq_toolbar(toolbars)
     limit = ::Settings.ui.custom_button_count || 3
     react('MiqToolbar', :kebabLimit => limit, :toolbars => toolbars)
+  end
+
+  def miq_structured_list(data)
+    react('MiqStructuredList', {:title => data[:title],
+                                :headers  => data[:headers],
+                                :rows     => data[:rows],
+                                :message  => data[:message], :mode => ["miq_summary", data[:mode]].join(' ')})
   end
 end

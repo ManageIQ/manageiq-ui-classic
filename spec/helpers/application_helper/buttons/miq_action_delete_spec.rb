@@ -7,7 +7,6 @@ describe ApplicationHelper::Button::MiqActionDelete do
     subject { button[:title] }
     before { allow(record).to receive(:miq_policies).and_return(miq_policies) }
     before { allow(record).to receive(:action_type).and_return(action_type) }
-    before { button.calculate_properties }
 
     context 'and record has no policies' do
       let(:miq_policies) { [] }

@@ -9,6 +9,6 @@ class ApplicationHelper::Button::IsoDatastoreNew < ApplicationHelper::Button::Bu
   private
 
   def no_ems_without_iso_datastores?
-    !ManageIQ::Providers::Redhat::InfraManager.any_without_iso_datastores?
+    ExtManagementSystem.supporting(:create_iso_datastore).none?
   end
 end

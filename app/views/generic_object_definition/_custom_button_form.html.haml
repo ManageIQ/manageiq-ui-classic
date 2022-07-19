@@ -1,11 +1,10 @@
-- @angular_form = true
-
 = render :partial => "layouts/flash_msg"
 
-%main-custom-button-form{"generic-object-definition-record-id" => @generic_object_definition.try(:id),
-                         "custom-button-group-record-id"       => @custom_button_group.try(:id),
-                         "custom-button-record-id"             => @custom_button.try(:id),
-                         "redirect-url"                        => "/#{controller_name}/show_list",}
-
-:javascript
-  miq_bootstrap('main-custom-button-form');
+= react 'CustomButtonForm', :recId => @custom_button.try(:id),
+                            :url => "/#{controller_name}/show_list",
+                            :appliesToClass => "GenericObjectDefinition",
+                            :appliesToId => @generic_object_definition.try(:id).to_s,
+                            :customButtonGroupId => @custom_button_group.try(:id).to_s,
+                            :distinctInstances => @distinct_instances_across_domains,
+                            :ansiblePlaybooks => @templates,
+                            :isGenericObject => true

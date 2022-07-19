@@ -6,7 +6,7 @@ module Mixins
           assert_privileges("instance_remove_security_group")
           recs = checked_or_params
           @record = find_record_with_rbac(VmCloud, recs.first)
-          if @record.supports_remove_security_group? && @record.ext_management_system.present?
+          if @record.supports?(:remove_security_group) && @record.ext_management_system.present?
             if @explorer
               remove_security_group
               @refresh_partial = "vm_common/remove_security_group"

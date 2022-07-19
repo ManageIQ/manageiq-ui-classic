@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, TableCell } from 'carbon-components-react';
 import classNames from 'classnames';
 import {
-  CellAction, hasIcon, hasImage, hasButton, isObject,
+  CellAction, hasIcon, hasImage, hasButton, isObject, isArray, isNumber, decimalCount,
 } from './helper';
 
 const MiqTableCell = ({
@@ -18,6 +18,33 @@ const MiqTableCell = ({
     </div>
   );
 
+  /** Function to print a number with decimal. */
+  const renderArrayListItem = (item) => {
+    if (isNumber(item)) {
+      return decimalCount(item) >= 2 ? item : parseFloat(item).toFixed(1);
+    }
+    return item;
+  };
+
+  /** Function to render a list within a table cell.
+   * Usage eg: Overview / Chargeback / Rates / Item (Summary)
+  */
+  const cellArrayList = (data) => (
+    data && data.text && (
+      <div className="cell">
+        <div className="array_list">
+          {
+            data.text.map((item, index) => (
+              <div className={classNames('list_row')} key={index.toString()}>
+                {renderArrayListItem(item)}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    )
+  );
+
   /** Function to render an image in cell. */
   const cellImage = (item) => (
     <div className={cellClass}>
@@ -26,10 +53,14 @@ const MiqTableCell = ({
     </div>
   );
 
-  /** Fuction to render an icon in cell. */
+  /** Fuction to render icon(s) in cell. */
   const renderIcon = (icon, style, showText) => (
     <div className={cellClass}>
-      <i className={classNames('fa-lg', 'icon', icon)} style={style} />
+      {
+        typeof (icon) === 'string'
+          ? <i className={classNames('fa-lg', 'icon', icon)} style={style} />
+          : icon.map((i, index) => <i className={classNames('fa-lg', 'icon', i)} key={index.toString()} />)
+      }
       {showText && truncateText}
     </div>
   );
@@ -37,10 +68,11 @@ const MiqTableCell = ({
   /** Fuction to render an icon in cell based on the 'type' in 'item'. */
   const cellIcon = (item, showText) => {
     if (showText) {
-      const iconStyle = item.background ? { background: item.background, color: '#FFF' } : { color: '#000' };
+      const color = item.props ? item.props.style : {};
+      const iconStyle = item.background ? { background: item.background, color: '#FFF' } : color;
       return renderIcon(item.icon, iconStyle, showText);
     }
-    const { className, style } = item.props;
+    const { className, style } = item.props ? item.props : { className: item.icon, style: { color: '#000' } };
     return renderIcon(className, style, showText);
   };
 
@@ -65,8 +97,10 @@ const MiqTableCell = ({
   const cellComponent = () => {
     const { data } = cell;
     const keys = Object.keys(data);
-    const content = { component: '', cellClick: true, showText: true };
+    const content = { component: '', cellClick: !!onCellClick, showText: true };
     if (isObject(data)) {
+      if (isArray(data.text)) return { ...content, component: cellArrayList(data), cellClick: false };
+
       if (hasImage(keys, data)) return { ...content, component: cellImage(data) };
 
       const { showIcon, showText } = hasIcon(keys, data);

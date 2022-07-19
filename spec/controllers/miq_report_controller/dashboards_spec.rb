@@ -1,7 +1,7 @@
 describe ReportController do
   context "::Dashboards" do
     let(:miq_widget)     { FactoryBot.create(:miq_widget) }
-    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [miq_widget.id], :col2 => [], :col3 => []}) }
+    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [miq_widget.id], :col2 => []}) }
     let(:user)           { user_with_feature(%w(db_copy db_edit)) }
 
     before do
@@ -105,7 +105,7 @@ describe ReportController do
         allow(controller).to receive(:replace_right_cell)
         owner = miq_widget_set.owner
         new_widget = FactoryBot.create(:miq_widget)
-        new_hash = {:name => "New Name", :description => "New Description", :col1 => [new_widget.id], :col2 => [], :col3 => []}
+        new_hash = {:name => "New Name", :description => "New Description", :col1 => [new_widget.id], :col2 => []}
         controller.instance_variable_set(:@edit, :new => new_hash, :db_id => miq_widget_set.id, :current => miq_widget_set.set_data)
         controller.params = {:id => miq_widget_set.id, :button => "save"}
         controller.db_edit
@@ -117,7 +117,10 @@ describe ReportController do
 
     describe "#db_save_members" do
       let(:set_data) do
-        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryBot.create(:miq_widget).id)] }.to_h
+        {
+          :col1 => Array.new(2) { FactoryBot.create(:miq_widget).id },
+          :col2 => Array.new(2) { FactoryBot.create(:miq_widget).id }
+        }
       end
 
       before do
@@ -134,7 +137,7 @@ describe ReportController do
         controller.send(:db_save_members)
 
         miq_widget_set.reload
-        expect(miq_widget_set.members.uniq.map(&:id)).to match_array((set_data[:col1] + set_data[:col2] + set_data[:col3]).uniq)
+        expect(miq_widget_set.members.uniq.map(&:id)).to match_array((set_data[:col1] + set_data[:col2]).uniq)
       end
     end
 
@@ -146,12 +149,12 @@ describe ReportController do
                                             :owner       => user.current_group,
                                             :name        => "fred",
                                             :description => "FRED",
-                                            :set_data    => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
+                                            :set_data    => {:col1 => [@widget1.id], :col2 => []})
         FactoryBot.create(:miq_widget_set,
                           :owner       => user.current_group,
                           :name        => "wilma",
                           :description => "WILMA",
-                          :set_data    => {:col1 => [@widget2.id], :col2 => [], :col3 => []})
+                          :set_data    => {:col1 => [@widget2.id], :col2 => []})
         login_as user
         EvmSpecHelper.local_miq_server
       end
@@ -159,8 +162,8 @@ describe ReportController do
       it 'display flash message for uniqueness of tab title of dashboard within a group' do
         controller.instance_variable_set(:@sb, :nodes => ["xx", "g_g", "#{user.current_group.id}_", @miq_widget_set.id])
         controller.instance_variable_set(:@edit, :db_id => @miq_widget_set.id, :read_only => false, :type => "db_edit", :key => "db_edit__#{@miq_widget_set.id}",
-                                                  :new => {:name => "fred", :description => "WILMA", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},
-                                                  :current => {:name => "fred", :description => "FRED", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []})
+                                                  :new => {:name => "fred", :description => "WILMA", :locked => false, :col1 => [@widget1.id], :col2 => []},
+                                                  :current => {:name => "fred", :description => "FRED", :locked => false, :col1 => [@widget1.id], :col2 => []})
         controller.send(:db_fields_validation)
         expect(assigns(:flash_array).first[:message]).to include("Tab Title must be unique for this group")
       end
@@ -168,18 +171,18 @@ describe ReportController do
       it 'No flash message set when tab title is unique within a group' do
         controller.instance_variable_set(:@sb, :nodes => ["xx", "g_g", "#{user.current_group.id}_", @miq_widget_set.id])
         controller.instance_variable_set(:@edit, :db_id => @miq_widget_set.id, :read_only => false, :type => "db_edit", :key => "db_edit__#{@miq_widget_set.id}",
-                                                 :new => {:name => "fred", :description => "NEW TAB TITLE", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},
-                                                 :current => {:name => "fred", :description => "FRED", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []})
+                                                 :new => {:name => "fred", :description => "NEW TAB TITLE", :locked => false, :col1 => [@widget1.id], :col2 => []},
+                                                 :current => {:name => "fred", :description => "FRED", :locked => false, :col1 => [@widget1.id], :col2 => []})
         controller.send(:db_fields_validation)
         expect(assigns(:flash_array)).to be_nil
       end
 
       it 'No flash message set when tab title is changed for read-only Dashboard' do
-        dashboard = FactoryBot.create(:miq_widget_set, :read_only => true, :set_data => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
+        dashboard = FactoryBot.create(:miq_widget_set, :read_only => true, :set_data => {:col1 => [@widget1.id], :col2 => []})
         controller.instance_variable_set(:@sb, :nodes => ["xx", dashboard.id])
         controller.instance_variable_set(:@edit, :db_id => @miq_widget_set.id, :read_only => true, :type => "db_edit", :key => "db_edit__#{@miq_widget_set.id}",
-                                                 :new => {:name => "default", :description => "NEW #{dashboard.description}", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},
-                                                 :current => {:name => "default", :description => dashboard.description, :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []})
+                                                 :new => {:name => "default", :description => "NEW #{dashboard.description}", :locked => false, :col1 => [@widget1.id], :col2 => []},
+                                                 :current => {:name => "default", :description => dashboard.description, :locked => false, :col1 => [@widget1.id], :col2 => []})
         controller.send(:db_fields_validation)
         expect(assigns(:flash_array)).to be_nil
       end

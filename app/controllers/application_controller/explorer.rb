@@ -53,9 +53,8 @@ module ApplicationController::Explorer
     'retire'       => :s2, 'right_size'       => :s2, 'snapshot_add'    => :s2,
     'tag'          => :s2, 'timeline'         => :s2, 'resize'          => :s2,
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
-    'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
+    'evacuate'     => :s2, 'service_dialog'   => :s2,
     'manager_configuration_script_service_dialog' => :s2,
-    'transform_mass'           => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
     'add_security_group'       => :s2,
@@ -89,7 +88,7 @@ module ApplicationController::Explorer
     elsif X_BUTTON_ALLOWED_ACTIONS[action] == :s2
       # don't need to set params[:id] and do find_checked_items for methods
       # like ownership, the code in those methods handle it
-      if %w[edit right_size resize attach detach live_migrate evacuate
+      if %w[edit right_size resize attach detach clone live_migrate evacuate
             associate_floating_ip disassociate_floating_ip].include?(action)
         @_params[:id] = (params[:id] ? [params[:id]] : find_checked_items)[0]
       end

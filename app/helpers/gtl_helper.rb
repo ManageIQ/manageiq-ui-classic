@@ -53,6 +53,7 @@ module GtlHelper
       :hideSelect        => options[:selected_records].kind_of?(Array),
       :showUrl           => gtl_show_url(options),
       :pages             => options[:pages],
+      :noFlashDiv        => options[:no_flash_div],
     )
   end
 

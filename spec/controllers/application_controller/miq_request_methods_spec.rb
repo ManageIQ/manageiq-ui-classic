@@ -107,6 +107,15 @@ describe MiqRequestController do
       end
     end
 
+    context 'provisioning instances displayed through details page of infra provider' do
+      let(:ctrl) { 'vm_infra' }
+      let(:kls) { 'infra' }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::InfraManager::Template)
+      end
+    end
+
     context 'provisioning instances displayed on instances explorer screen' do
       let(:ctrl) { 'vm_cloud' }
       let(:kls) { nil }

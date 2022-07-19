@@ -4,11 +4,14 @@
   }
 }
 
-#dual-list-sub-form {
+#dual-list-sub-form-catalog {
   .bx--row--condensed {
     svg {
       height: 48px;
     }
+  }
+  #move-right, #move-all-right, #move-all-left, #move-left {
+    width: 130px;
   }
 }
 
@@ -59,12 +62,6 @@
 #dateInfo {
   margin-top: -25px;
   margin-bottom: 25px;
-}
-
-#networkWarning {
-  margin-top: -30px;
-  color: #da1e28;
-  font-size: 14px;
 }
 
 .bx--fieldset {
@@ -296,5 +293,53 @@
         }
       }
     }
+  }
+}
+
+#firewall_rules {
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+    margin-bottom: 100px;
+  }
+}
+
+#generic-objects-field-array-methods,
+#generic-objects-field-array-attributes {
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+    width: 400px;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+  }
+}
+
+#generic-objects-field-array-associations {
+  .bx--list-box__wrapper {
+    width: 400px;
+    display: inline-flex;
+
+    .bx--combo-box {
+      margin-top: 1.5rem;
+      margin-left: -2rem;
+    }
+  }
+
+  .bx--form-item {
+    display: inline-flex;
+    margin-right: 2rem;
+    width: 400px;
+  }
+
+  .remove-0-2-8 {
+    margin-top: 2.2rem;
+    margin-left: 32px;
   }
 }

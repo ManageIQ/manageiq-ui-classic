@@ -1,6 +1,4 @@
 /* eslint-disable radix */
-import React from 'react';
-
 /** Icons used in report list. */
 const ReportIcons = {
   folderClose: 'fa-lg pficon-folder-close',
@@ -9,10 +7,7 @@ const ReportIcons = {
 };
 
 /** Headers used on all report list. */
-const defaultHeaders = [
-  { key: 'icon', header: '' },
-  { key: 'name', header: __('Name') },
-];
+const defaultHeaders = [{ key: 'name', header: __('Name') }];
 
 /** Additional headers used in levelFour report list. */
 const additionalHeaders = [
@@ -25,9 +20,9 @@ const additionalHeaders = [
 ];
 
 /** Renders the icon for levelOne and levelTwo. */
-const cellIcon = (name, reportTitle) => {
-  const iconName = (name === reportTitle) ? ReportIcons.folderCloseBlue : ReportIcons.folderClose;
-  return <i className={iconName} />;
+const cellIcon = (type, name, reportTitle) => {
+  const iconName = (type === reportTitle) ? ReportIcons.folderCloseBlue : ReportIcons.folderClose;
+  return { text: name, icon: iconName };
 };
 
 /** Function to generate data needed for the level one folder list with 2 columns. */
@@ -39,7 +34,7 @@ const levelOne = (reportMenu, reportTitle) => {
     const obj = { id: index.toString(), nodeKey, clickable: true };
     const name = item[0].toString();
     headers.forEach((h) => {
-      obj[h.key] = (h.key === 'icon') ? cellIcon(name, reportTitle) : name;
+      obj[h.key] = cellIcon(name, name, reportTitle);
     });
     rows.push(obj);
   });
@@ -56,7 +51,7 @@ const levelTwo = (nodes, reportMenu, reportTitle) => {
     const obj = { id: index.toString(), nodeKey, clickable: true };
     const name = item[0].toString();
     headers.forEach((h) => {
-      obj[h.key] = (h.key === 'icon') ? cellIcon(reportMenu[nodeOne][0], reportTitle) : name;
+      obj[h.key] = cellIcon(reportMenu[nodeOne][0], name, reportTitle);
     });
     obj.clickable = true;
     rows.push(obj);
@@ -77,14 +72,9 @@ const levelFour = (nodes, reportMenu, reportDetails) => {
     const obj = { id: nodeId, nodeKey, clickable: true };
     headers.forEach((h) => {
       switch (h.key) {
-        case 'icon':
-        {
-          obj[h.key] = <i className={ReportIcons.fileText} />;
-          break;
-        }
         case 'name':
         {
-          obj[h.key] = item;
+          obj[h.key] = { text: item, icon: ReportIcons.fileText };
           break;
         }
         case 'group':

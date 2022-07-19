@@ -10,8 +10,6 @@ describe ApplicationHelper::Button::NewFlavor do
     subject { button[:title] }
 
     context 'no provider available' do
-      before { button.calculate_properties }
-
       it_behaves_like 'a disabled button'
     end
 
@@ -19,7 +17,6 @@ describe ApplicationHelper::Button::NewFlavor do
       before do
         provider = FactoryBot.create(:ems_openstack)
         allow(provider.class::Flavor).to receive(:create).and_return(true)
-        button.calculate_properties
       end
 
       it_behaves_like 'an enabled button'

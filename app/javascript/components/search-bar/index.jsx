@@ -77,12 +77,12 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
         <input type="hidden" name="authenticity_token" value={formToken()} />
         <TextInput
           id="search_text"
-          labelText={_('Search')}
+          labelText={__('Search')}
           hideLabel
-          placeholder="Search"
+          placeholder={__('Search')}
           name="search[text]"
           value={data}
-          title={_('Search by Name within results')}
+          title={__('Search by Name within results')}
           onChange={(event) => setData(event.target.value)}
         />
         { data && renderClear() }
