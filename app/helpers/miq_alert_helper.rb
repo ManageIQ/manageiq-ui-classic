@@ -33,7 +33,7 @@ module MiqAlertHelper
         if ["AND", "OR", "(", ")"].exclude?([token].flatten.first)
           rows.push({:cells => {:value => [token].flatten.first}})
         else
-          rows.push({:cells => {:value => [token].flatten.first, :style => {:color => "black"}}})
+          rows.push({:cells => {:value => [token].flatten.first, :style => 'color_black'}})
         end
       end
     else
@@ -90,7 +90,7 @@ module MiqAlertHelper
       when :ems_id
         if ems.blank?
           row_data[:cells][:value] = _("Provider no longer exists, this alert must be reconfigured")
-          row_data[:cells][:style] = {:style => "color: red;"}
+          row_data[:cells][:style] = 'color_red'
         else
           row_data[:cells][:value] = ems.name
         end

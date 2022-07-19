@@ -51,6 +51,13 @@
     .content {
       display: flex;
       flex-direction: row;
+
+      &.color_black {
+        color: $text-primary;
+      }
+      &.color_red {
+        color: $button-danger-primary;
+      }
     }
 
     .cell_link {

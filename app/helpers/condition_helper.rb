@@ -16,7 +16,7 @@ module ConditionHelper
         if ["AND", "OR", "(", ")"].exclude?([token].flatten.first)
           rows.push({:cells => {:label => _(''), :value => [token].flatten.first}})
         else
-          rows.push({:cells => {:label => _(''), :value => [token].flatten.first, :style => {:color => "black"}}})
+          rows.push({:cells => {:label => _(''), :value => [token].flatten.first, :style => 'color_black'}})
         end
       end
     else
@@ -34,7 +34,7 @@ module ConditionHelper
         if ["AND", "OR", "(", ")"].exclude?([token].flatten.first)
           rows.push({:cells => {:label => _(''), :value => [token].flatten.first}})
         else
-          rows.push({:cells => {:label => _(''), :value => [token].flatten.first, :style => {:color => "black"}}})
+          rows.push({:cells => {:label => _(''), :value => [token].flatten.first, :style => 'color_black'}})
         end
       end
     else

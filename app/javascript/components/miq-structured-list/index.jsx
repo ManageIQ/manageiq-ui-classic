@@ -81,7 +81,7 @@ const MiqStructuredList = ({
 
   /** Function to render the items of cell */
   const renderContent = (row) => (
-    <div className={classNames('content', row.bold ? 'label_header' : '')}>
+    <div className={classNames('content', row.bold ? 'label_header' : '', row.style)}>
       {row.icon && renderIcon(row)}
       {row.image && renderImage(row)}
       {renderValues(row)}

@@ -157,8 +157,7 @@ describe ReportController do
       end
 
       def row_count_html(row_count_value)
-        "<label class='control-label col-md-2'>Row Count</label>\n" \
-        "<div class='col-md-10'>\n<p class='form-control-static'>#{row_count_value}</p>\n</div>"
+        {:cells => {:label => _("Row Count"), :value => row_count_value.to_s}}.to_json
       end
 
       it "renders show of Dashboard Widget in Widgets tree with default row_count value" do
