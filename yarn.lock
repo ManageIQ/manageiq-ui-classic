@@ -10687,12 +10687,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"jquery-ui@npm:~1.13.0":
-  version: 1.13.0
-  resolution: "jquery-ui@npm:1.13.0"
+"jquery-ui@npm:~1.13.2":
+  version: 1.13.2
+  resolution: "jquery-ui@npm:1.13.2"
   dependencies:
     jquery: ">=1.8.0 <4.0.0"
-  checksum: 8c4881cdd2ae5aa54c2f62200f27d965417f2a136ca6ce28571cdf80eb12dcd651ce6622ee09d1a45eb27272795c69fe0de14f4742840bd08f9e3331de959d11
+  checksum: 0d04a4b86e703d6ff71bcc37335f99be137b03fa24fa22f00f61f5aac132e7143b7d6dd9973ad4f72366e102826e417bc3d88c1640f7dd824961a7131bd3966a
   languageName: node
   linkType: hard
 
@@ -11775,7 +11775,7 @@ fsevents@^1.2.7:
     jest: ~24.9.0
     jest-cli: ~24.9.0
     jquery: ~2.2.4
-    jquery-ui: ~1.13.0
+    jquery-ui: ~1.13.2
     jquery-ujs: ~1.2.2
     jquery.hotkeys: ~0.1.0
     jquery.observe_field: ~0.1.0

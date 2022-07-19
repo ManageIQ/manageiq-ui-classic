@@ -71,7 +71,7 @@
     "es6-shim": "~0.35.3",
     "history": "^4.7.2",
     "jquery": "~2.2.4",
-    "jquery-ui": "~1.13.0",
+    "jquery-ui": "~1.13.2",
     "jquery-ujs": "~1.2.2",
     "jquery.hotkeys": "~0.1.0",
     "jquery.observe_field": "~0.1.0",
