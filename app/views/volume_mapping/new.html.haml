@@ -1,2 +1,6 @@
-= react('VolumeMappingForm',
-         :redirect => previous_breadcrumb_url)
+= render :partial => "layouts/flash_msg"
+
+- if @storage_manager
+  = react 'VolumeMappingForm', :redirect => previous_breadcrumb_url, :storageManagerId => @storage_manager.id.to_s
+- else
+  = react 'VolumeMappingForm', :redirect => previous_breadcrumb_url

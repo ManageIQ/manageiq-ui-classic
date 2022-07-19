@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Loading } from 'carbon-components-react';
 
 import MiqFormRenderer from '@@ddf';
 import createSchema from './volume-mapping-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const VolumeMappingForm = ({ redirect }) => {
-  const [emsId, setEmsId] = useState(undefined);
+const VolumeMappingForm = ({ redirect, storageManagerId }) => {
+  const [state, setState] = useState({});
   const [storageId, setStorageId] = useState(undefined);
+  const { isLoading, initialValues } = state;
   const [volumeId, setVolumeId] = useState(undefined);
   const [hostInitiatorId, setHostInitiatorId] = useState(undefined);
   const [hostInitiatorGroupId, setHostInitiatorGroupId] =  useState(undefined);
+
+  const loadSchema = (appendState = {}) => () => {
+    setState((state) => ({
+      ...state,
+      ...appendState,
+    }));
+  };
+
+  useEffect(() => {
+    if (storageManagerId) {
+      API.options(`/api/volume_mappings?ems_id=${storageManagerId}`)
+        .then(loadSchema({ initialValues: { ems_id: storageManagerId }, isLoading: false }));
+    }
+  }, [storageManagerId]);
 
   const onSubmit = async(values) => {
     miqSparkleOn();
@@ -24,9 +40,12 @@ const VolumeMappingForm = ({ redirect }) => {
     miqRedirectBack(message, 'success', redirect);
   };
 
-  return (
+  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
+
+  return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId, hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId)}
+      schema={createSchema(state, setState, !!storageManagerId, initialValues, storageId, setStorageId, volumeId, setVolumeId, hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId)}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonsLabels={{
@@ -40,5 +59,11 @@ const VolumeMappingForm = ({ redirect }) => {
 VolumeMappingForm.propTypes = {
   redirect: PropTypes.string.isRequired,
 };
+VolumeMappingForm.propTypes = {
+  storageManagerId: PropTypes.string,
+};
 
+VolumeMappingForm.defaultProps = {
+  storageManagerId: undefined,
+};
 export default VolumeMappingForm;

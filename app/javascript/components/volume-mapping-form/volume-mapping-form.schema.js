@@ -39,97 +39,103 @@ const loadHostInitiatorGroups = (storage_id) =>
       value: item.host_initiator_group_id,
     })])).values()]);
 
-const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVolumeId,
-  hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId) => ({
-
-  fields: [
-    {
-      component: componentTypes.SELECT,
-      name: 'ems_id',
-      key: 'ems_id',
-      id: 'ems_id',
-      label: __('Provider:'),
-      isRequired: true,
-      includeEmpty: true,
-      loadOptions: loadProviders,
-      onChange: (value) => setEmsId(value),
-      validate: [{ type: validatorTypes.REQUIRED }],
-    },
-    {
-      component: componentTypes.SELECT,
-      name: 'physical_storage_id',
-      id: 'physical_storage_id',
-      label: __('Physical Storage:'),
-      isRequired: true,
-      includeEmpty: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
-      onChange: (new_storage_id) => setStorageId(new_storage_id),
-      key: `physical_storage_id-${emsId}`,
-      condition: {
-        when: 'ems_id',
-        isNotEmpty: true,
+const createSchema = (state, setState, ems, initialValues, storageId, setStorageId, volumeId, setVolumeId,
+  hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId) => {
+  let emsId = state.ems_id;
+  if (initialValues && initialValues.ems_id) {
+    emsId = initialValues.ems_id;
+  }
+  return ({
+    fields: [
+      {
+        component: componentTypes.SELECT,
+        name: 'ems_id',
+        id: 'ems_id',
+        key: `${emsId}`,
+        label: __('Provider:'),
+        placeholder: __('<Choose>'),
+        isRequired: true,
+        isDisabled: ems,
+        includeEmpty: true,
+        loadOptions: loadProviders,
+        onChange: (value) => setState({ ...state, ems_id: value }),
+        validate: [{ type: validatorTypes.REQUIRED }],
       },
-    },
-    {
-      component: componentTypes.SELECT,
-      name: 'cloud_volume_id',
-      id: 'cloud_volume_id',
-      label: __('Volume:'),
-      isRequired: true,
-      includeEmpty: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      loadOptions: () => (storageId ? loadCloudVolumes(storageId) : Promise.resolve([])),
-      onChange: (cloud_volume_id) => setVolumeId(cloud_volume_id),
-      key: `cloud_volume_id-${storageId}`,
-      condition: {
-        and: [
-          {when: 'physical_storage_id', isNotEmpty: true,},
-          {when: 'ems_id', isNotEmpty: true,},
-        ]
+      {
+        component: componentTypes.SELECT,
+        name: 'physical_storage_id',
+        id: 'physical_storage_id',
+        label: __('Physical Storage:'),
+        isRequired: true,
+        placeholder: __('<Choose>'),
+        includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
+        onChange: (new_storage_id) => setStorageId(new_storage_id),
+        key: `physical_storage_id-${emsId}`,
+        condition: {
+          when: 'ems_id',
+          isNotEmpty: true,
+        },
       },
-    },
-
-    {
-      component: componentTypes.SELECT,
-      name: 'host_initiator_id',
-      id: 'host_initiator_id',
-      label: __('Host Initiator:'),
-      isRequired: true,
-      includeEmpty: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      loadOptions: () => (storageId ? loadHostInitiators(storageId) : Promise.resolve([])),
-      onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
-      key: `host_initiator_id-${storageId}`,
-      condition: {
-        and: [
-          {when: 'physical_storage_id', isNotEmpty: true,},
-          {when: 'ems_id', isNotEmpty: true,},
-          {when: 'mapping_object', is: "host"}
-        ]
+      {
+        component: componentTypes.SELECT,
+        name: 'cloud_volume_id',
+        id: 'cloud_volume_id',
+        label: __('Volume:'),
+        isRequired: true,
+        includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (storageId ? loadCloudVolumes(storageId) : Promise.resolve([])),
+        onChange: (cloud_volume_id) => setVolumeId(cloud_volume_id),
+        key: `cloud_volume_id-${storageId}`,
+        condition: {
+          and: [
+            {when: 'physical_storage_id', isNotEmpty: true,},
+            {when: 'ems_id', isNotEmpty: true,},
+          ]
+        },
       },
-    },
-    {
-      component: componentTypes.SELECT,
-      name: 'host_initiator_group_id',
-      id: 'host_initiator_group_id',
-      label: __('Host Initiator Group:'),
-      isRequired: true,
-      helperText: __("Note! Volume can't be mapped to an empty host-initiator-group (host-cluster). Empty host-initiator-groups are not listed."),
-      includeEmpty: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
-      onChange: (host_initiator_group_id) => setHostInitiatorGroupId(host_initiator_group_id),
-      key: `host_initiator_group_id-${storageId}`,
-      condition: {
-        and: [
-          {when: 'physical_storage_id', isNotEmpty: true,},
-          {when: 'ems_id', isNotEmpty: true,},
-          {when: 'mapping_object', is: "host_group"}
-        ]
+      {
+        component: componentTypes.SELECT,
+        name: 'host_initiator_id',
+        id: 'host_initiator_id',
+        label: __('Host Initiator:'),
+        isRequired: true,
+        includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (storageId ? loadHostInitiators(storageId) : Promise.resolve([])),
+        onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
+        key: `host_initiator_id-${storageId}`,
+        condition: {
+          and: [
+            {when: 'physical_storage_id', isNotEmpty: true,},
+            {when: 'ems_id', isNotEmpty: true,},
+            {when: 'mapping_object', is: "host"}
+          ]
+        },
       },
-    },
-    {
+      {
+        component: componentTypes.SELECT,
+        name: 'host_initiator_group_id',
+        id: 'host_initiator_group_id',
+        label: __('Host Initiator Group:'),
+        isRequired: true,
+        helperText: __("Note! Volume can't be mapped to an empty host-initiator-group (host-cluster). Empty host-initiator-groups are not listed."),
+        includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
+        onChange: (host_initiator_group_id) => setHostInitiatorGroupId(host_initiator_group_id),
+        key: `host_initiator_group_id-${storageId}`,
+        condition: {
+          and: [
+            {when: 'physical_storage_id', isNotEmpty: true,},
+            {when: 'ems_id', isNotEmpty: true,},
+            {when: 'mapping_object', is: "host_group"}
+          ]
+        },
+      },
+      {
       "component": "radio",
       "label": "Map directly to Host Initiator, or to a Group?",
       "name": "mapping_object",
@@ -153,7 +159,8 @@ const createSchema = (emsId, setEmsId, storageId, setStorageId, volumeId, setVol
     }
 
 
-  ],
-});
+    ],
+  });
+};
 
 export default createSchema;
