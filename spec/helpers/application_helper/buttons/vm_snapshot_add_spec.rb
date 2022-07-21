@@ -37,7 +37,7 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
     end
     context 'when creating snapshots is not available' do
       let(:record) { FactoryBot.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Operation not supported'
+      it_behaves_like 'a disabled button', 'Feature not available/supported'
     end
     context 'when user has permissions to create snapsnots' do
       it_behaves_like 'an enabled button'

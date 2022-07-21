@@ -33,7 +33,7 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
     end
     context 'when reverting to a snapshot is not available' do
       let(:record) { FactoryBot.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Operation not supported'
+      it_behaves_like 'a disabled button', 'Feature not available/supported'
     end
   end
 end
