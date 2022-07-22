@@ -70,9 +70,11 @@
 
 .heatmap_charts_div {
   display: inline-flex;
+
   .chart-holder {
     margin-right: 55px;
   }
+
   .heat-chart-pf {
     margin-bottom: 50px;
     width: 300px;
@@ -86,6 +88,7 @@
 
 .empty-chart-contents {
   margin-bottom: 10px;
+
   span {
     vertical-align: middle;
     width: 100%;
@@ -99,3 +102,62 @@
   font-weight: 400 !important;
 }
 
+.card-pf-utilization {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border: 1px solid $selected-ui;
+
+  .card-pf-heading {
+    border: 0;
+    margin: 0;
+    padding: 0 20px 0;
+
+    .card-pf-title {
+      font-weight: 300;
+    }
+  }
+
+  .card-pf-body {
+    padding: 0;
+    margin: 0;
+
+    .bx--cc--chart-wrapper {
+      .layout-child {
+        &.spacer {
+          margin-top: 0;
+        }
+
+        &.legend {
+          margin-top: 5px;
+        }
+      }
+
+      &:last-child {
+        display: flex;
+        flex-direction: column-reverse;
+        height: 113px;
+        width: 100%;
+      }
+    }
+  }
+
+  .card-pf-body > *:last-child {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .trend-footer-pf {
+    font-size: 12px;
+    border-top: 1px solid $selected-ui;
+    font-weight: 400;
+    color: #333;
+    padding: 20px;
+    background: #fafafa;
+    margin: 0;
+  }
+}
