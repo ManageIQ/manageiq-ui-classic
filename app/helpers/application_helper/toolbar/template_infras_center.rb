@@ -143,8 +143,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
-          :onwhen       => "1",
-          :klass        => ApplicationHelper::Button::ButtonTemplateClone),
+          :onwhen       => "1"),
       ]
     ),
  ])
