@@ -163,8 +163,8 @@ describe ApplicationController do
         expected_options = {
           :model      => "Host",
           :object_ids => [host.id],
-          :add_ids    => [dept_finance.id, env_production.id],
-          :delete_ids => [dept_accounting.id, env_accounting.id]
+          :add_ids    => array_including(dept_finance.id, env_production.id),
+          :delete_ids => array_including(dept_accounting.id, env_accounting.id)
         }
         expect(Classification).to receive(:bulk_reassignment).with(expected_options)
 
