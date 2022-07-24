@@ -25,7 +25,7 @@ module CloudVolumeHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i[
-        parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
+        parent_ems_cloud ems storage_resource availability_zone cloud_tenant base_snapshot cloud_volume_backups
         cloud_volume_snapshots attachments custom_button_events host_initiators
       ]
     )
@@ -53,6 +53,12 @@ module CloudVolumeHelper::TextualSummary
 
   def textual_ems
     textual_link(@record.ext_management_system)
+  end
+
+  def textual_storage_resource
+    @record.ext_management_system.storage_resources.find(@record.storage_resource_id)
+  rescue
+    nil
   end
 
   def textual_availability_zone
