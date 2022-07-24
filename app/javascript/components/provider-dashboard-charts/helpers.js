@@ -27,7 +27,7 @@ export const getLatestValue = (data) => {
 };
 
 export const getHeatMapData = (data) => {
-  if (data) {
+  if (data && data.node !== undefined) {
     const arr = [];
     data.forEach((item) => {
       const obj = {};
