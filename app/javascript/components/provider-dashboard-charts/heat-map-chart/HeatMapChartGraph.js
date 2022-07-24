@@ -9,7 +9,7 @@ const HeatMapChartGraph = ({
 }) => {
   const heatData1 = data[dataPoint1];
   const heatData2 = data[dataPoint2];
-  const heatmapCpuData = (heatData1 === null || heatData1[0]['node'] === undefined) ? [] : getHeatMapData(heatData1);
+  const heatmapCpuData = (heatData1 === null) ? [] : getHeatMapData(heatData1);
   const heatmapMemoryData = (heatData2 === null) ? [] : getHeatMapData(heatData2);
 
   const heatmapCpuTooltip = () => (data) => {
