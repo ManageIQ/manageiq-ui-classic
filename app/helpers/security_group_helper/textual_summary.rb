@@ -57,7 +57,7 @@ module SecurityGroupHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_parent_ems_cloud
@@ -79,11 +79,11 @@ module SecurityGroupHelper::TextualSummary
   end
 
   def textual_cloud_tenant
-    @record.cloud_tenant
+    textual_link(@record.cloud_tenant, :label => _('Cloud Tenant'))
   end
 
   def textual_network_ports
-    @record.network_ports
+    textual_link(@record.network_ports, :label => _('Network Ports'))
   end
 
   def textual_network_router

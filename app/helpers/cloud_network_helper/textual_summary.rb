@@ -23,11 +23,11 @@ module CloudNetworkHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_status
-    @record.status
+    {:label => _("Status"), :value => _(@record.status)}
   end
 
   def textual_ems_ref
@@ -50,15 +50,15 @@ module CloudNetworkHelper::TextualSummary
   end
 
   def textual_cloud_tenant
-    @record.cloud_tenant
+    textual_link(@record.cloud_tenant, :label => _('Cloud Tenant'))
   end
 
   def textual_network_routers
-    @record.network_routers
+    textual_link(@record.network_routers, :label => _('Network Routers'))
   end
 
   def textual_cloud_subnets
-    @record.cloud_subnets
+    textual_link(@record.cloud_subnets, :label => _('Cloud Subnets'))
   end
 
   def textual_floating_ips
