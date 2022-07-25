@@ -1544,10 +1544,11 @@ class ApplicationController < ActionController::Base
     @org_controller = "vm" # request originated from controller
     @refresh_partial = typ ? "prov_edit" : "pre_prov"
     if typ
-      @prov_id = find_record_with_rbac(VmOrTemplate, checked_or_params).id
+      prov_obj = find_record_with_rbac(VmOrTemplate, checked_or_params)
+      @prov_id = prov_obj.id
       case typ
       when "clone"
-        @prov_type = "clone_to_vm"
+        @prov_type = prov_obj.template? ? "clone_to_template" : "clone_to_vm"
       when "migrate"
         @prov_id = [@prov_id]
         @prov_type = "migrate"
