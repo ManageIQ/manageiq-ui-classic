@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './group-form.schema';
 import {
-  formatButton, formatName, formatSetData, getGenericObjectButtonList,
+  formatButton, formatName, formatSetData, getButtonList,
 } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
@@ -32,19 +32,19 @@ const GroupForm = ({
           ...state,
           initialValues: { ...initialValues, name: formatName(initialValues.name) },
           buttonIcon: (initialValues && initialValues.set_data) ? initialValues.set_data.button_icon : '',
-          options: isGenericObject ? buttons : buttonOptions,
+          options: isGenericObject || appliesToClass === 'ServiceTemplate' ? buttons : buttonOptions,
           isLoading: false,
         }));
       });
   };
 
   useEffect(() => {
-    if (isGenericObject) {
-      API.get(`/api/custom_buttons?expand=resources&filter[]=applies_to_class=GenericObjectDefinition&filter[]=applies_to_id=${appliesToId}`)
+    if (isGenericObject || appliesToClass === 'ServiceTemplate') {
+      API.get(`/api/custom_buttons?expand=resources&filter[]=applies_to_class=${appliesToClass}&filter[]=applies_to_id=${appliesToId}`)
         .then((data) => {
-          API.get(`/api/custom_button_sets?expand=resources&filter[]=owner_type=GenericObjectDefinition&filter[]=owner_id=${appliesToId}`)
+          API.get(`/api/custom_button_sets?expand=resources&filter[]=owner_type=${appliesToClass}&filter[]=owner_id=${appliesToId}`)
             .then((buttonGroups) => {
-              const buttons = getGenericObjectButtonList(buttonGroups, data, recId);
+              const buttons = getButtonList(buttonGroups, data, recId);
               if (recId) {
                 getInitialValues(buttons);
               } else {
