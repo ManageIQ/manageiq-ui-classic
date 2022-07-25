@@ -101,7 +101,7 @@ const MiqTableCell = ({
     if (isObject(data)) {
       if (isArray(data.text)) return { ...content, component: cellArrayList(data), cellClick: false };
 
-      if (hasImage(keys, data)) return { ...content, component: cellImage(data) };
+      if (data.text && hasImage(keys, data)) return { ...content, component: cellImage(data) };
 
       const { showIcon, showText } = hasIcon(keys, data);
       if (showIcon) return { ...content, component: cellIcon(data, showText), showText };
