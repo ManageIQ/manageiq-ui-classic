@@ -1594,6 +1594,8 @@ class ApplicationController < ActionController::Base
   end
 
   def vm_clone
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("clone")
   end
   alias image_clone vm_clone
@@ -1601,11 +1603,15 @@ class ApplicationController < ActionController::Base
   alias miq_template_clone vm_clone
 
   def vm_migrate
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("migrate")
   end
   alias miq_template_migrate vm_migrate
 
   def vm_publish
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("publish")
   end
   alias instance_publish vm_publish
