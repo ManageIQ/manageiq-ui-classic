@@ -7,20 +7,12 @@ import EmptyChart from '../emptyChart';
 const HeatMapChartGraph = ({
   data, dataPoint1, dataPoint2, dataPointAvailable,
 }) => {
-  const heatData1 = data[dataPoint1];
-  const heatData2 = data[dataPoint2];
-  const heatmapCpuData = (heatData1 === null) ? [] : getHeatMapData(heatData1);
-  const heatmapMemoryData = (heatData2 === null) ? [] : getHeatMapData(heatData2);
-
+  const heatmapCpuData = getHeatMapData(data[dataPoint1]);
+  const heatmapMemoryData = getHeatMapData(data[dataPoint2]);
   const heatmapCpuTooltip = () => (data) => {
-    let d1;
-
-    if (dataPoint1 === 'resourceUsage') {
-      d1 = heatmapCpuData.find((item) => item.node === data[1].value);
-    }
-    else {
-      d1 = heatmapCpuData[0];
-    }
+    const d1 = (dataPoint1 === 'resourceUsage')
+      ? heatmapCpuData.find((item) => item.node === data[1].value)
+      : heatmapCpuData[0];
 
     let percent = -1;
     let tooltip = sprintf(__('Cluster: %s'), data[1].value) + `<br>` + sprintf(__('Provider: %s'), d1.provider)
