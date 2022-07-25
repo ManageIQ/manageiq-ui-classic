@@ -134,7 +134,7 @@ module Mixins
     def edit
       assert_privileges("#{permission_prefix}_edit")
       begin
-        @ems = find_record_with_rbac(model, params[:id])
+        @ems = find_record_with_rbac(model, params[:id]) ## TODO is params[:id] supposed to be checked_item_id? This assumes only one id is passed in
       rescue => err
         return redirect_to(:action      => @lastaction || "show_list",
                            :flash_msg   => err.message,
