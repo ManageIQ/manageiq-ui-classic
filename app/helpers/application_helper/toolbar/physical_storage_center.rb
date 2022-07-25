@@ -46,22 +46,25 @@ class ApplicationHelper::Toolbar::PhysicalStorageCenter < ApplicationHelper::Too
       ),
     ]
   )
-  button_group('physical_storage_monitoring', [
-                 select(
-                   :physical_storage_monitoring_choice,
-                   nil,
-                   t = N_('Monitoring'),
-                   t,
-                   :items => [
-                     button(
-                       :physical_storage_timeline,
-                       'ff ff-timeline fa-lg',
-                       N_('Show Timelines for this Physical Storage Provider'),
-                       N_('Timelines'),
-                       :klass     => ApplicationHelper::Button::PhysicalStorageTimeline,
-                       :url_parms => "?display=timeline"
-                     ),
-                   ]
-                 ),
-               ])
+  button_group(
+    'physical_storage_monitoring',
+    [
+      select(
+        :physical_storage_monitoring_choice,
+        nil,
+        t = N_('Monitoring'),
+        t,
+        :items => [
+          button(
+            :physical_storage_timeline,
+            'ff ff-timeline fa-lg',
+            N_('Show Timelines for this Physical Storage Provider'),
+            N_('Timelines'),
+            :klass     => ApplicationHelper::Button::PhysicalStorageTimeline,
+            :url_parms => "?display=timeline"
+          ),
+        ]
+      ),
+    ]
+  )
 end
