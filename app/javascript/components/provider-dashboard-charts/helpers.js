@@ -27,8 +27,8 @@ export const getLatestValue = (data) => {
 };
 
 export const getHeatMapData = (data) => {
+  const arr = [];
   if (data && data.node !== undefined) {
-    const arr = [];
     data.forEach((item) => {
       const obj = {};
       obj.percent = item.percent;
@@ -39,9 +39,8 @@ export const getHeatMapData = (data) => {
       obj.unit = item.unit;
       arr.push(obj);
     });
-    return arr;
   }
-  return [];
+  return arr;
 };
 
 export const getPodsData = (data, createdlabel, deletedLabel) => {
