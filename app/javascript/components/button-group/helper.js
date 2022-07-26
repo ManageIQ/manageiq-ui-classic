@@ -41,7 +41,7 @@ export const formatSetData = (setData, buttonIcon, appliesToClass, appliesToId) 
   });
 };
 
-export const getGenericObjectButtonList = (buttonGroups, data, recId) => {
+export const getButtonList = (buttonGroups, data, recId) => {
   const buttons = [];
   const assignedButtons = [];
   let unassignedButtons = [];
