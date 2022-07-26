@@ -1,0 +1,31 @@
+.col-md-12
+	.col-md-4
+		%ul.nav.nav.tabs{:role => "tablist",:id=> "myTabs"}
+			- RequestLogs.select('request_logs.object_type').where(:miq_requests_id => @miq_request.id).group(:object_type).each do |task|
+				%li{:role=>"presentation"}
+					%a.tab{:href=>"##{task.object_type}",:aria-controls=>"#{task.object_type}", :role=>"tab", :data-toggle=>"tab"}
+						= h(_(task.object_type))
+
+	.col-md-8
+		.tab-content{:id => "logpane"}
+			- RequestLogs.select('request_logs.object_type').where(:miq_requests_id => @miq_request.id).group(:object_type).each do |task|
+				.tab-pane{:id=>"#{task.object_type}"}
+					.col-md-12.overflow-auto{:style => 'max-height:300px; margin-bottom:30px; overflow-y: scroll'}
+						%table.table
+							- RequestLogs.where(:miq_requests_id => @miq_request.id,:object_type => task.object_type).each do |item|
+								%tr
+									%th
+										= h(_(item.created_at))
+									%th
+										= h(_(item.log_message))	
+.clear
+
+
+:javascript
+	$('#myTabs li:first-child').addClass("active");
+	$('#logpane div:first-child').addClass("active");
+	
+	$('#myTabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
