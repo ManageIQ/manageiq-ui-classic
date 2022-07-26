@@ -20,11 +20,11 @@ module CloudDatabaseHelper::TextualSummary
   #
 
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_status
-    @record.status
+    {:label => _("Status"), :value => _(@record.status)}
   end
 
   def textual_ems_ref
