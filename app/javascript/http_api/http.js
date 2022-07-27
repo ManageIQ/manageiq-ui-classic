@@ -6,7 +6,8 @@ export default {
 };
 
 function nonApiOnly(url) {
-  if (url.match(/^[^/]|(\/api($|\/))/)) {
+  const path = new URL(url, document.location.href);
+  if (path.pathname.match(/^\/api($|\/)/)) {
     throw new Error(`${url} is an API endpoint URL, try using 'API' instead of 'http'`);
   }
 
