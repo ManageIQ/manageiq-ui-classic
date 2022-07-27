@@ -31,8 +31,8 @@
         :prefix                     => "/miq_request/",
         :keys                       => keys})
   - when :service
-    - keys = wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow) ? [:src_vm_id, :provision_type, :linked_clone, :seal_template] : [:vm_filter, :src_vm_id, :provision_type, :linked_clone, :snapshot]
-    - label = wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow) ? _("Selected VM") : _("Select")
+    - keys = wf.kind_of?(ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow) ? [:src_vm_id, :provision_type, :linked_clone, :seal_template] : [:vm_filter, :src_vm_id, :provision_type, :linked_clone, :snapshot]
+    - label = wf.kind_of?(ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow) ? _("Selected VM") : _("Select")
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,
         :dialog                     => dialog,
@@ -196,7 +196,7 @@
           :prefix                     => "/miq_request/",
           :keys                       => keys})
       - if edit_or_options[0] == "fields"
-        - if wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow)
+        - if wf.kind_of?(ManageIQ::Providers::Ovirt::InfraManager::ProvisionWorkflow)
           - if edit_or_options[1] == "Sysprep Specification"
             - keys = [:sysprep_computer_name, :sysprep_organization, :sysprep_admin_password, :sysprep_product_key]
             = render(:partial => "/miq_request/prov_dialog_fieldset",
