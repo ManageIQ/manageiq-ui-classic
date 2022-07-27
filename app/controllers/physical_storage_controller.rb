@@ -119,7 +119,7 @@ class PhysicalStorageController < ApplicationController
   end
 
   def x_show
-    assert_privileges("infra_networking_view")
+    assert_privileges("physical_storage_view")
     @switch = @record = identify_record(params[:id], Switch)
     generic_x_show
   end
@@ -140,7 +140,7 @@ class PhysicalStorageController < ApplicationController
     return unless %w[download_pdf main].include?(@display)
 
     @showtype = "main"
-    @center_toolbar = 'infra_networking'
+    @center_toolbar = 'physical_storage'
   end
 
   def explorer
@@ -166,7 +166,7 @@ class PhysicalStorageController < ApplicationController
   end
 
   def custom_button_events
-    assert_privileges("infra_networking_view")
+    assert_privileges("physical_storage_view")
     return unless init_show_variables('switch')
 
     @lastaction = "custom_button_events"
