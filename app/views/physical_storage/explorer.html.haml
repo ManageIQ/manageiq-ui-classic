@@ -1,24 +1,16 @@
 - content_for :search do
-  = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => (x_active_tree == :vandt_tree)})
+  = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => (x_active_tree == :infra_networking_tree)})
   = render(:partial => 'layouts/quick_search')
 
 -# These are the initial divs that will go inside center_cell_div
 - if @record
-  -# Showing a specific VM or Template record
+  -# Showing a specific networking element
   #main_div
-    - if @showtype == "performance"
-      = render(:partial => "layouts/performance_async")
-    - elsif @showtype == "timeline"
-      = render(:partial => "layouts/tl_show_async")
-    - else
-      = render :partial => "layouts/textual_groups_generic"
-- elsif @upload_sysprep_file
-  #main_div
-    = render(:partial => 'miq_request/prov_edit')
-    - @upload_sysprep_file = false
-    :javascript
-      ManageIQ.afterOnload = "miqPrepRightCellForm('#{x_active_tree}');"
+    = render :partial => "layouts/textual_groups_generic"
 - else
-  -# Showing a list of VMs
+  -# Showing a list of switches
   #main_div
     = render(:partial => 'layouts/x_gtl')
+  -# Show Search box
+  :javascript
+    #{javascript_show_if_exists("adv_searchbox_div")}

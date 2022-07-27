@@ -1257,19 +1257,40 @@ Rails.application.routes.draw do
 
     :physical_storage   => {
       :get  => %w[
+        dialog_load
         download_data
         download_summary_pdf
         edit
         show
         show_list
         new
+        explorer
+        x_show
+        hosts
+        tagging
+        tagging_edit
       ],
       :post => %w[
         button
+        custom_button_events
+        hosts
         listnav_search_selected
         quick_search
         show_list
-      ] + adv_search_post + save_post + exp_post
+        reload
+        tagging
+        tagging_edit
+        tree_select
+        tree_autoload
+        x_button
+        explorer
+        x_show
+        x_search_by_name
+      ] + adv_search_post +
+        exp_post +
+        save_post +
+        x_post +
+        dialog_runner_post
     },
 
     :physical_chassis    => {
