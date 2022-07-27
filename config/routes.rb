@@ -1521,11 +1521,14 @@ Rails.application.routes.draw do
         show
         download_data
         download_summary_pdf
+        edit
+        new
       ),
       :post => %w(
         quick_search
         show_list
         show
+        button
       ) +
         adv_search_post +
         exp_post
