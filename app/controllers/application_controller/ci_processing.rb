@@ -74,6 +74,8 @@ module ApplicationController::CiProcessing
       @switch = @record = identify_record(params[:id], Switch)
     elsif db == "service"
       @service = @record = identify_record(params[:id], Service)
+    elsif db == "physical_storage"
+      @physical_storage = @record = identify_record(params[:id], PhysicalStorage)
     end
   end
 

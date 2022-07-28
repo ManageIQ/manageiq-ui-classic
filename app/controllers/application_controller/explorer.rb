@@ -70,7 +70,7 @@ module ApplicationController::Explorer
 
   def x_button
     model, action = pressed2model_action(params[:pressed])
-    allowed_models = %w[common image instance vm miq_template provider automation storage infra_networking]
+    allowed_models = %w[common image instance vm miq_template provider automation storage infra_networking physical_storage]
     raise ActionController::RoutingError, 'invalid button action' unless
       allowed_models.include?(model)
 
@@ -98,6 +98,8 @@ module ApplicationController::Explorer
           send(method, Storage)
         when 'infra_networking'
           send(method, Switch)
+        when 'physical_storage'
+          send(method, PhysicalStorage)
         else
           send(method, VmOrTemplate)
         end

@@ -18,10 +18,6 @@ class PhysicalStorageController < ApplicationController
 
   toolbar :physical_storage, :physical_storages
 
-  def self.model
-    PhysicalStorage
-  end
-
   def breadcrumb_name(_model)
     _('Physical Storages')
   end
@@ -120,7 +116,7 @@ class PhysicalStorageController < ApplicationController
 
   def x_show
     assert_privileges("physical_storage_view")
-    @switch = @record = identify_record(params[:id], Switch)
+    @physical_storage = @record = identify_record(params[:id], PhysicalStorage)
     generic_x_show
   end
 
@@ -155,7 +151,7 @@ class PhysicalStorageController < ApplicationController
 
   def tagging
     assert_privileges("infra_networking_tag")
-    tagging_edit('Switch', false)
+    tagging_edit('PhysicalStorage', false)
     render_tagging_form
   end
 
@@ -193,9 +189,9 @@ class PhysicalStorageController < ApplicationController
   def features
     [
       {
-        :role     => "infra_networking",
+        :role     => "physical_storage",
         :role_any => true,
-        :name     => :infra_networking,
+        :name     => :physical_storage,
         :title    => _("PhysicalStorage")
       }
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
@@ -293,8 +289,9 @@ class PhysicalStorageController < ApplicationController
 
   def default_node
     return unless x_node == "root"
-
-    options = {:model => "Switch", :named_scope => :shareable}
+    # require 'byebug'
+    # byebug
+    options = {:model => "PhysicalStorage"}
     process_show_list(options) if @show_list
     @right_cell_text = if @search_text && !@in_a_form
                          _("All Switches (Names with \"%{search_text}\")") % {:search_text => @search_text}
@@ -307,7 +304,7 @@ class PhysicalStorageController < ApplicationController
   def render_form
     presenter = rendering_objects
     @in_a_form = true
-    presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => 'infra_networking'}])
+    presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => 'physical_storage'}])
     update_title(presenter)
     rebuild_toolbars(false, presenter)
     handle_bottom_cell(presenter)
@@ -343,7 +340,7 @@ class PhysicalStorageController < ApplicationController
       @delete_node = params[:id] if @replace_trees # get_node_info might set this
       type, _id = parse_nodetype_and_id(x_node)
 
-      record_showing = type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
+      record_showing = type && ["PhysicalStorage"].include?(TreeBuilder.get_model_for_prefix(type))
     end
 
     # Build presenter to render the JS command for the tree update
@@ -357,7 +354,7 @@ class PhysicalStorageController < ApplicationController
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @sb[:action] || params[:display]
-      partial_locals = {:controller =>'infra_networking'}
+      partial_locals = {:controller =>'physical_storage'}
       if partial == 'layouts/x_gtl'
         partial_locals[:action_url] = @lastaction
         presenter[:parent_id] = @record.id # Set parent rec id for JS function miqGridSort to build URL
@@ -408,7 +405,7 @@ class PhysicalStorageController < ApplicationController
 
   def dvswitch_record?(node = x_node)
     type, _id = node.split("-")
-    type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
+    type && ["PhysicalStorage"].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def search_text_type(node)

@@ -371,6 +371,9 @@ class TreeBuilder
     #### Switches
     :infra_networking                => "TreeBuilderInfraNetworking",
 
+    ### Physical Storage
+    :physical_storage               => "TreeBuilderPhysicalStorage",
+
     # Configuration
     ## Management
     ### Providers
