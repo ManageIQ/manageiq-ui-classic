@@ -134,7 +134,9 @@ module OpsHelper
       :server            => {:id => server.id, :name => server.name},
       :basic_information => ops_basic_information(data[:server], server_zones),
       :server_controls   => ops_server_controls(session[:server_roles], data[:repository_scanning], smartproxy_choices),
-      :smtp              => ops_smtp_server(data[:smtp])
+      :smtp              => ops_smtp_server(data[:smtp]),
+      :webservices       => ops_webservices(data[:webservices]),
+      :logging           => ops_logging(data[:log]),
     }
   end
 
@@ -218,5 +220,18 @@ module OpsHelper
       :test_email           => form_text(_("Test E-Mail Address"), smtp[:new_to]),
     }
     smtp
+  end
+
+  def ops_webservices(webservices)
+    {
+      :mode     => form_select(_("Mode"), webservices[:mode], '', [[_("invoke"), "invoke"], [_("disable"), "disable"]], false, 'webservices_mode'),
+      :security => form_select(_("Security"), webservices[:security], '', [[_("none"), "none"], [_("ws-security"), "ws-security"]], false, 'webservices_security'),
+    }
+  end
+
+  def ops_logging(log)
+    {
+      :level  => form_select(_("Log Leve"), log[:level], '', [[_("fatal"), "fatal"], [_("error"), "error"], [_("warn"), "warn"], [_("info"), "info"], [_("debug"), "debug"]], false, 'log_level')
+    }
   end
 end

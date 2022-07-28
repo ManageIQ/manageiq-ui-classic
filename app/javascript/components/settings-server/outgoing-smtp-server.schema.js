@@ -1,9 +1,11 @@
 import { componentTypes } from '@@ddf';
+import { createOptions } from './helper';
 
 export const outgoingSmtpSchema = ({ smtp }) => ({
   component: componentTypes.SUB_FORM,
   id: 'smpt',
   name: 'smpt',
+  title: __('Outgoing SMTP E-mail Server'),
   fields: [
     {
       component: componentTypes.TEXT_FIELD,
@@ -38,7 +40,7 @@ export const outgoingSmtpSchema = ({ smtp }) => ({
       name: 'smtp.sslVerifyMode.value',
       label: __('SSL verify Mode'),
       placeholder: __('<Choose>'),
-      options: smtp.ssl_verify_mode.options,
+      options: createOptions(smtp.ssl_verify_mode.options),
     },
     {
       component: componentTypes.SELECT,
@@ -46,7 +48,7 @@ export const outgoingSmtpSchema = ({ smtp }) => ({
       name: 'smtp.authentication.value',
       label: __('Authentication'),
       placeholder: __('<Choose>'),
-      options: smtp.authentication.options,
+      options: createOptions(smtp.authentication.options),
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -76,5 +78,11 @@ export const outgoingSmtpSchema = ({ smtp }) => ({
       label: __('Test E-Mail Address'),
       maxLength: 128,
     },
+    {
+      component: componentTypes.SWITCH,
+      label: __('Verify'),
+      name: 'smtp.verify',
+      initialValue: true,
+    }
   ],
 });

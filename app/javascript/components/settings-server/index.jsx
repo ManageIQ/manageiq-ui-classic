@@ -19,6 +19,8 @@ const SettingsServer = ({ selected, formData }) => {
       initialValues.basic = data.basic;
       initialValues.serverControls = data.serverControls;
       initialValues.smtp = data.smtp;
+      initialValues.webservices = data.webservices;
+      initialValues.logging = data.logging;
       console.log(initialValues);
       setState({ initialValues, isLoading: false });
     });

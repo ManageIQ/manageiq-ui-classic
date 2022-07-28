@@ -24,20 +24,10 @@ const basicInformation = (result, formData) => {
   return basic;
 };
 
-const sslVerifyMode = (formData) => {
-  formData.smtp.ssl_verify_mode.options = createOptions(formData.smtp.ssl_verify_mode.options);
-  return formData.smtp;
-};
-
-const authentication = (formData) => {
-  formData.smtp.authentication.options = createOptions(formData.smtp.authentication.options);
-  return formData.smtp;
-};
-
 export const initialFormData = (result, formData) => ({
   basic: basicInformation(result, formData),
   serverControls: formData.server_controls,
   smtp: formData.smtp,
-  sslVerifyMode: sslVerifyMode(formData),
-  authentication: authentication(formData),
+  webservices: formData.webservices,
+  logging: formData.logging,
 });
