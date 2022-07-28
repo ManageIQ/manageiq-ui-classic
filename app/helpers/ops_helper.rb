@@ -134,6 +134,7 @@ module OpsHelper
       :server            => {:id => server.id, :name => server.name},
       :basic_information => ops_basic_information(data[:server], server_zones),
       :server_controls   => ops_server_controls(session[:server_roles], data[:repository_scanning], smartproxy_choices),
+      :smtp              => ops_smtp_server(data[:smtp])
     }
   end
 
@@ -201,5 +202,21 @@ module OpsHelper
                      form_select(_("Zone*"), server[:zone], server_zone_title_text, options[:zone], false, 'server_zone')
                    end
     basic
+  end
+
+  def ops_smtp_server(smtp)
+    smtp = {
+      :host                 => form_text(_("Host"), smtp[:host]),
+      :port                 => form_text(_("Port"), smtp[:port]),
+      :domain               => form_text(_("Domain"), smtp[:domain]),
+      :enable_starttls_auto => {:type => :switch, :label => _("Start TLS Automatically"), :value => smtp[:enable_starttls_auto]},
+      :ssl_verify_mode      => form_select(_("SSL Verify Mode"), smtp[:openssl_verify_mode], '', GenericMailer.openssl_verify_modes, false, 'smtp_openssl_verify_mode'),
+      :authentication       => form_select(_("Authentication"), smtp[:authentication], '', GenericMailer.authentication_modes, false, 'smtp_authentication'),
+      :username             => form_text(_("Username"), smtp[:user_name]),
+      :password             => form_text(_("Password"), smtp[:password]),
+      :from_email           => form_text(_("From E-Mail Address"), smtp[:from]),
+      :test_email           => form_text(_("Test E-Mail Address"), smtp[:new_to]),
+    }
+    smtp
   end
 end

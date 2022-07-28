@@ -15,10 +15,10 @@ const SettingsServer = ({ selected, formData }) => {
   console.log(selected);
   useEffect(() => {
     API.get(`/api/servers/${formData.server.id}/settings`).then((result) => {
-      console.log('result=', result);
       const data = initialFormData(result, formData);
       initialValues.basic = data.basic;
       initialValues.serverControls = data.serverControls;
+      initialValues.smtp = data.smtp;
       console.log(initialValues);
       setState({ initialValues, isLoading: false });
     });
