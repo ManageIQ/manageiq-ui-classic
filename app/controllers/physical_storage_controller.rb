@@ -19,7 +19,7 @@ class PhysicalStorageController < ApplicationController
   toolbar :physical_storage, :physical_storages
 
   def self.model
-    Switch
+    PhysicalStorage
   end
 
   def breadcrumb_name(_model)
@@ -167,7 +167,7 @@ class PhysicalStorageController < ApplicationController
 
   def custom_button_events
     assert_privileges("physical_storage_view")
-    return unless init_show_variables('switch')
+    return unless init_show_variables('PhysicalStorage')
 
     @lastaction = "custom_button_events"
     drop_breadcrumb(:name => _("%{name} (Custom Button Events)") % {:name => @record.name},
@@ -196,7 +196,7 @@ class PhysicalStorageController < ApplicationController
         :role     => "infra_networking",
         :role_any => true,
         :name     => :infra_networking,
-        :title    => _("Switches")
+        :title    => _("PhysicalStorage")
       }
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
@@ -219,8 +219,8 @@ class PhysicalStorageController < ApplicationController
                 host_switches_list(id, Host)
               when "EmsCluster"
                 cluster_switches_list(id, EmsCluster)
-              when "Switch"
-                dvswitch_node(id, Switch)
+              when "PhysicalStorage"
+                dvswitch_node(id, PhysicalStorage)
               when "MiqSearch"
                 miq_search_node
               else
@@ -243,7 +243,7 @@ class PhysicalStorageController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
+      options = {:model => "PhysicalStorage", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype = 'main'
       @pages = nil
@@ -259,7 +259,7 @@ class PhysicalStorageController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
+      options = {:model => "PhysicalStorage", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype = 'main'
       @pages = nil
@@ -275,7 +275,7 @@ class PhysicalStorageController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
+      options = {:model => "PhysicalStorage", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype = 'main'
       @pages = nil
@@ -285,7 +285,7 @@ class PhysicalStorageController < ApplicationController
   end
 
   def miq_search_node
-    options = {:model => "Switch"}
+    options = {:model => "PhysicalStorage"}
     process_show_list(options) if @show_list
     @right_cell_text = _("All Switches")
     options
