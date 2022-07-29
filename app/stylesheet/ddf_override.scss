@@ -286,6 +286,7 @@
 
         .Cancel {
           background-color: #393939;
+          width: 200px;
         }
 
         .Delete {
@@ -342,4 +343,19 @@
     margin-top: 2.2rem;
     margin-left: 32px;
   }
+}
+
+#addButtonProps.addButtonProps {
+  display: flex;
+  padding-right: 30px;
+}
+
+#removeButtonProps.removeButtonProps {
+  display: flex;
+  padding-right: 30px;
+}
+
+.bx--tabs--scrollable .bx--tabs--scrollable__nav-link {
+  min-width: 10rem;
+  width: fit-content;
 }

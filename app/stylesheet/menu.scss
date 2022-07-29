@@ -17,11 +17,15 @@
     padding: 0;
   }
 
+  .bx--side-nav__navigation.bx--side-nav.bx--side-nav--expanded.secondary {
+    width: fit-content;
+    max-width: 30rem;
+    min-width: 16rem;
+  }
+
   // sizing
   .bx--side-nav.secondary {
     left: 16rem;
-    max-width: 14rem;
-    width: 14rem;
 
     .bx--side-nav__link-text {
       font-weight: 400;
@@ -174,11 +178,11 @@
 .miq-main-menu-overlay {
   background-color: #000;
   bottom: 0;
-  left: 30rem;
+  left: 10rem;
   opacity: 0.5;
   position: fixed;
   right: 0;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 .navbar-brand-name {
