@@ -103,7 +103,7 @@ class PhysicalStorageController < ApplicationController
   end
 
   def load_or_clear_adv_search
-    adv_search_build("InfraNetworking")
+    adv_search_build("PhysicalStorage")
     session[:edit] = @edit
     @explorer = true
 
@@ -283,7 +283,7 @@ class PhysicalStorageController < ApplicationController
   def miq_search_node
     options = {:model => "PhysicalStorage"}
     process_show_list(options) if @show_list
-    @right_cell_text = _("All Switches")
+    @right_cell_text = _("All Storages")
     options
   end
 
@@ -296,7 +296,7 @@ class PhysicalStorageController < ApplicationController
     @right_cell_text = if @search_text && !@in_a_form
                          _("All Switches (Names with \"%{search_text}\")") % {:search_text => @search_text}
                        else
-                         _("All Switches")
+                         _("All Storages")
                        end
     options
   end

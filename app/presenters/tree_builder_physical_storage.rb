@@ -24,22 +24,18 @@ class TreeBuilderPhysicalStorage < TreeBuilder
   def x_get_tree_roots
     require 'byebug'
     byebug
-    model   = ManageIQ::Providers::StorageManager
+    model   = ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage
     objects = Rbac.filtered(model.order(model.arel_table[:name].lower))
     count_only_or_objects(false, objects)
   end
 
   def x_get_tree_provider_kids(object, count_only)
-    require 'byebug'
-    byebug
     count_only_or_objects(count_only,
                           Rbac.filtered(EmsCluster.where(:ems_id => object[:id])),
                           "name")
   end
 
   def x_get_tree_cluster_kids(object, count_only)
-    require 'byebug'
-    byebug
     hosts = object.hosts
     switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
 
@@ -48,16 +44,12 @@ class TreeBuilderPhysicalStorage < TreeBuilder
   end
 
   def x_get_tree_host_kids(object, count_only)
-    require 'byebug'
-    byebug
     count_only_or_objects(count_only,
                           Rbac.filtered(object.switches.where(:shared => 'true')).sort,
                           "name")
   end
 
   def x_get_tree_switch_kids(object, count_only)
-    require 'byebug'
-    byebug
     count_only_or_objects(count_only,
                           object.lans.sort,
                           "name")
