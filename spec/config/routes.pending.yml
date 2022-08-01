@@ -955,6 +955,8 @@ PhysicalServerController:
 - wait_for_task
 PhysicalStorageController:
 - index
+- tl_chooser
+- wait_for_task
 PhysicalSwitchController:
 - index
 PictureController:

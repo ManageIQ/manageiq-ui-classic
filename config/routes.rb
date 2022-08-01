@@ -1266,6 +1266,8 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
+        tl_chooser
+        wait_for_task
         listnav_search_selected
         quick_search
         show_list
