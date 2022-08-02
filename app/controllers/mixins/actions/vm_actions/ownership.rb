@@ -1,4 +1,3 @@
-require 'byebug'
 module Mixins
   module Actions
     module VmActions
