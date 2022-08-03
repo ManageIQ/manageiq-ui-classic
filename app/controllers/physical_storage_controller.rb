@@ -70,6 +70,7 @@ class PhysicalStorageController < ApplicationController
   end
 
   def tree_select
+
     @lastaction = "explorer"
     @sb[:action] = nil
 
@@ -78,7 +79,7 @@ class PhysicalStorageController < ApplicationController
     self.x_node = params[:id]
     assert_accordion_and_tree_privileges(x_active_tree)
     load_or_clear_adv_search
-    apply_node_search_text if x_active_tree == :infra_networking_tree
+    apply_node_search_text if x_active_tree == :physical_storage_tree
     replace_right_cell
   end
 
@@ -86,8 +87,8 @@ class PhysicalStorageController < ApplicationController
     @lastaction = "explorer"
     @explorer = true
 
-    @sb[:infra_networking_search_text] ||= {}
-    @sb[:infra_networking_search_text]["#{x_active_accord}_search_text"] = @search_text
+    @sb[:physical_storage_search_text] ||= {}
+    @sb[:physical_storage_search_text]["#{x_active_accord}_search_text"] = @search_text
 
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
@@ -96,7 +97,7 @@ class PhysicalStorageController < ApplicationController
 
     get_node_info(x_node)
 
-    @search_text = @sb[:infra_networking_search_text]["#{x_active_accord}_search_text"]
+    @search_text = @sb[:physical_storage_search_text]["#{x_active_accord}_search_text"]
 
     load_or_clear_adv_search
     replace_right_cell(:action => x_node)
@@ -167,7 +168,7 @@ class PhysicalStorageController < ApplicationController
 
     @lastaction = "custom_button_events"
     drop_breadcrumb(:name => _("%{name} (Custom Button Events)") % {:name => @record.name},
-                    :url  => "/infra_networking/custom_button_events/#{@record.id}")
+                    :url  => "/physical_storage/custom_button_events/#{@record.id}")
     show_details(CustomButtonEvent, :association => "custom_button_events", :clickable => false)
   end
 
@@ -289,8 +290,7 @@ class PhysicalStorageController < ApplicationController
 
   def default_node
     return unless x_node == "root"
-    # require 'byebug'
-    # byebug
+
     options = {:model => "PhysicalStorage"}
     process_show_list(options) if @show_list
     @right_cell_text = if @search_text && !@in_a_form
@@ -365,7 +365,7 @@ class PhysicalStorageController < ApplicationController
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
 
-    replace_search_box(presenter, :nameonly => x_active_tree == :infra_networking_tree)
+    replace_search_box(presenter, :nameonly => x_active_tree == :physical_storage_tree)
     handle_bottom_cell(presenter)
     rebuild_toolbars(record_showing, presenter)
     presenter[:right_cell_text] = @right_cell_text
@@ -416,19 +416,19 @@ class PhysicalStorageController < ApplicationController
 
   def apply_node_search_text
     setup_search_text_for_node
-    previous_nodetype = search_text_type(@sb[:infra_networking_search_text][:previous_node])
-    current_nodetype  = search_text_type(@sb[:infra_networking_search_text][:current_node])
+    previous_nodetype = search_text_type(@sb[:physical_storage_search_text][:previous_node])
+    current_nodetype  = search_text_type(@sb[:physical_storage_search_text][:current_node])
 
-    @sb[:infra_networking_search_text]["#{previous_nodetype}_search_text"] = @search_text
-    @search_text = @sb[:infra_networking_search_text]["#{current_nodetype}_search_text"]
-    @sb[:infra_networking_search_text]["#{x_active_accord}_search_text"] = @search_text
+    @sb[:physical_storage_search_text]["#{previous_nodetype}_search_text"] = @search_text
+    @search_text = @sb[:physical_storage_search_text]["#{current_nodetype}_search_text"]
+    @sb[:physical_storage_search_text]["#{x_active_accord}_search_text"] = @search_text
   end
 
   def setup_search_text_for_node
-    @sb[:infra_networking_search_text] ||= {}
-    @sb[:infra_networking_search_text][:current_node] ||= x_node
-    @sb[:infra_networking_search_text][:previous_node] = @sb[:infra_networking_search_text][:current_node]
-    @sb[:infra_networking_search_text][:current_node] = x_node
+    @sb[:physical_storage_search_text] ||= {}
+    @sb[:physical_storage_search_text][:current_node] ||= x_node
+    @sb[:physical_storage_search_text][:previous_node] = @sb[:physical_storage_search_text][:current_node]
+    @sb[:physical_storage_search_text][:current_node] = x_node
   end
 
   def update_partials(record_showing, presenter)

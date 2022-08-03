@@ -59,6 +59,7 @@ module Sandbox
     images_filter_tree
     images_tree
     infra_networking_tree
+    physical_storage_tree
     instances_filter_tree
     instances_tree
     iso_datastores_tree
@@ -122,6 +123,7 @@ module Sandbox
     instances
     instances_filter
     infra_networking
+    physical_storage
     iso_datastores
     old_dialogs
     ot

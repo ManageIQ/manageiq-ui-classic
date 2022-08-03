@@ -7,7 +7,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
                                     GenericObject GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemplate NetworkRouter NetworkService OrchestrationStack
                                     SecurityGroup SecurityPolicy SecurityPolicyRule Service ServiceTemplate Storage
-                                    Switch Tenant User Vm VmOrTemplate].freeze
+                                    Switch Tenant User Vm VmOrTemplate PhysicalStorage].freeze
 
   def custom_button_appliable_class?(model)
     # FIXME: merge with model replacement in 'custom_button_class_model'

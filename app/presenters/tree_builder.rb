@@ -244,7 +244,6 @@ class TreeBuilder
   # @returns [Hash] display hash for this node and all children
   def x_build_node(object, pid)
     parents = pid.to_s.split('_')
-
     object, ancestry_kids = object_from_ancestry(object)
     node = TreeNode.new(object, pid, self)
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
@@ -464,6 +463,7 @@ class TreeBuilder
     "odg"  => "MiqDialog",
     "ot"   => "OrchestrationTemplate",
     "phys" => "PhysicalServer",
+    "phs"   => "PhysicalStorage",
     "pi"   => "PxeImage",
     "pit"  => "PxeImageType",
     "ps"   => "PxeServer",

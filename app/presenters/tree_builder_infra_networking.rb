@@ -22,8 +22,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
   end
 
   def x_get_tree_roots
-    require 'byebug'
-    byebug
+
     model   = ManageIQ::Providers::Vmware::InfraManager
     objects = Rbac.filtered(model.order(model.arel_table[:name].lower))
     count_only_or_objects(false, objects)

@@ -1,8 +1,8 @@
 class TreeBuilderPhysicalStorage < TreeBuilder
-  has_kids_for ManageIQ::Providers::Autosde::PhysicalStorage, [:x_get_tree_provider_kids]
+  has_kids_for ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage, [:x_get_tree_provider_kids]
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
-  has_kids_for Switch, [:x_get_tree_switch_kids]
   has_kids_for EmsFolder, [:x_get_tree_folder_kids]
+  include TreeBuilderFiltersMixin
 
   def override(node, object)
     node.selectable = false if object.kind_of?(Lan)
@@ -10,9 +10,15 @@ class TreeBuilderPhysicalStorage < TreeBuilder
 
   private
 
+  def initialize(*args)
+    @root_class ||= 'ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage'
+    super(*args)
+  end
+
   def tree_init_options
     {:open_all => true}
   end
+
 
   def root_options
     {
@@ -22,8 +28,6 @@ class TreeBuilderPhysicalStorage < TreeBuilder
   end
 
   def x_get_tree_roots
-    require 'byebug'
-    byebug
     model   = ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage
     objects = Rbac.filtered(model.order(model.arel_table[:name].lower))
     count_only_or_objects(false, objects)
@@ -39,7 +43,7 @@ class TreeBuilderPhysicalStorage < TreeBuilder
     hosts = object.hosts
     switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
 
-    objects = Rbac.filtered(Switch, :named_scope => [:shareable, [:with_id, switch_ids.flatten.uniq]])
+    objects = Rbac.filtered(PhysicalStorage, :named_scope => [:shareable, [:with_id, switch_ids.flatten.uniq]])
     count_only_or_objects(count_only, objects)
   end
 
