@@ -194,7 +194,7 @@ class ServiceController < ApplicationController
       action = "dialog_form_button_pressed"
     when "ownership"
       partial = "shared/views/ownership"
-      header = _("Set Ownership for Service1")
+      header = _("Set Ownership for Service")
       action = "ownership_update"
     when "retire"
       partial = "shared/views/retire"
