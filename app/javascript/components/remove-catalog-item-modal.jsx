@@ -96,7 +96,7 @@ class RemoveCatalogItemModal extends React.Component {
     });
     dispatch({
       type: 'FormButtons.customLabel',
-      payload: __('Delete'),
+      payload: 'Delete', // NOTE: This will be translated in <MiqButton />
     });
   }
 
@@ -172,7 +172,7 @@ class RemoveCatalogItemModal extends React.Component {
 
 RemoveCatalogItemModal.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recordId: PropTypes.number,
+  recordId: PropTypes.string,
   gridChecks: PropTypes.arrayOf(PropTypes.any),
 };
 

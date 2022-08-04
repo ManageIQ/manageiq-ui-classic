@@ -61,16 +61,24 @@ function createSchema(emsId, parentOptions) {
           filterOptionsTitle: __('Filter options'),
           filterValuesTitle: __('Filter values'),
           AddButtonProps: {
+            id: 'addButtonProps',
+            className: 'addButtonProps',
             size: 'small',
+            iconDescription: "Add Selected",
           },
           AddAllButtonProps: {
             size: 'small',
+            iconDescription: "Add All",
           },
           RemoveButtonProps: {
+            id: 'removeButtonProps',
+            className: 'removeButtonProps',
             size: 'small',
+            iconDescription: "Remove Selected",
           },
           RemoveAllButtonProps: {
             size: 'small',
+            iconDescription: "Remove All",
           },
           options: parentOptions,
         },
