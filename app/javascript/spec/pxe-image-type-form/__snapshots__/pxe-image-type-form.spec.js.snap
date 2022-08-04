@@ -829,22 +829,16 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
                                             labelText="Name"
-                                            light={false}
                                             maxLength={255}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -866,7 +860,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -1429,14 +1423,8 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -1466,15 +1454,8 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -2367,22 +2348,16 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
                                             labelText="Name"
-                                            light={false}
                                             maxLength={255}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="foo"
                                             warn={false}
                                             warnText=""
@@ -2404,7 +2379,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -2974,14 +2949,8 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -3012,15 +2981,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -3048,15 +3011,8 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

@@ -110,7 +110,7 @@ exports[`Operation Ranges renders just fine... 1`] = `
       className="miq-structured-list-accordion operation_ranges"
     >
       <ul
-        className="bx--accordion miq-structured-list-accordion operation_ranges bx--accordion--start"
+        className="bx--accordion miq-structured-list-accordion operation_ranges bx--accordion--start bx--accordion--md"
       >
         <AccordionItem
           open={true}
@@ -120,7 +120,7 @@ exports[`Operation Ranges renders just fine... 1`] = `
             className="bx--accordion__item bx--accordion__item--active"
             onAnimationEnd={[Function]}
           >
-            <defaultRenderExpando
+            <defaultRenderToggle
               aria-controls="accordion-item-1"
               aria-expanded={true}
               className="bx--accordion__heading"
@@ -177,7 +177,7 @@ exports[`Operation Ranges renders just fine... 1`] = `
                   </div>
                 </Text>
               </button>
-            </defaultRenderExpando>
+            </defaultRenderToggle>
             <div
               className="bx--accordion__content"
               id="accordion-item-1"

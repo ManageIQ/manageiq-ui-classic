@@ -322,7 +322,7 @@ exports[`TextualSummary renders just fine 1`] = `
                 className="miq-structured-list-accordion generic_group"
               >
                 <ul
-                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start bx--accordion--md"
                 >
                   <AccordionItem
                     open={true}
@@ -332,7 +332,7 @@ exports[`TextualSummary renders just fine 1`] = `
                       className="bx--accordion__item bx--accordion__item--active"
                       onAnimationEnd={[Function]}
                     >
-                      <defaultRenderExpando
+                      <defaultRenderToggle
                         aria-controls="accordion-item-1"
                         aria-expanded={true}
                         className="bx--accordion__heading"
@@ -389,7 +389,7 @@ exports[`TextualSummary renders just fine 1`] = `
                             </div>
                           </Text>
                         </button>
-                      </defaultRenderExpando>
+                      </defaultRenderToggle>
                       <div
                         className="bx--accordion__content"
                         id="accordion-item-1"
@@ -751,7 +751,7 @@ exports[`TextualSummary renders just fine 1`] = `
                 className="miq-structured-list-accordion generic_group"
               >
                 <ul
-                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start bx--accordion--md"
                 >
                   <AccordionItem
                     open={true}
@@ -761,7 +761,7 @@ exports[`TextualSummary renders just fine 1`] = `
                       className="bx--accordion__item bx--accordion__item--active"
                       onAnimationEnd={[Function]}
                     >
-                      <defaultRenderExpando
+                      <defaultRenderToggle
                         aria-controls="accordion-item-2"
                         aria-expanded={true}
                         className="bx--accordion__heading"
@@ -818,7 +818,7 @@ exports[`TextualSummary renders just fine 1`] = `
                             </div>
                           </Text>
                         </button>
-                      </defaultRenderExpando>
+                      </defaultRenderToggle>
                       <div
                         className="bx--accordion__content"
                         id="accordion-item-2"
@@ -1533,7 +1533,7 @@ exports[`TextualSummary renders just fine 1`] = `
                 className="miq-structured-list-accordion generic_group"
               >
                 <ul
-                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start"
+                  className="bx--accordion miq-structured-list-accordion generic_group bx--accordion--start bx--accordion--md"
                 >
                   <AccordionItem
                     open={true}
@@ -1543,7 +1543,7 @@ exports[`TextualSummary renders just fine 1`] = `
                       className="bx--accordion__item bx--accordion__item--active"
                       onAnimationEnd={[Function]}
                     >
-                      <defaultRenderExpando
+                      <defaultRenderToggle
                         aria-controls="accordion-item-3"
                         aria-expanded={true}
                         className="bx--accordion__heading"
@@ -1600,7 +1600,7 @@ exports[`TextualSummary renders just fine 1`] = `
                             </div>
                           </Text>
                         </button>
-                      </defaultRenderExpando>
+                      </defaultRenderToggle>
                       <div
                         className="bx--accordion__content"
                         id="accordion-item-3"
@@ -2513,7 +2513,7 @@ exports[`TextualSummary renders just fine 1`] = `
                 className="miq-structured-list-accordion tag_group"
               >
                 <ul
-                  className="bx--accordion miq-structured-list-accordion tag_group bx--accordion--start"
+                  className="bx--accordion miq-structured-list-accordion tag_group bx--accordion--start bx--accordion--md"
                 >
                   <AccordionItem
                     open={true}
@@ -2523,7 +2523,7 @@ exports[`TextualSummary renders just fine 1`] = `
                       className="bx--accordion__item bx--accordion__item--active"
                       onAnimationEnd={[Function]}
                     >
-                      <defaultRenderExpando
+                      <defaultRenderToggle
                         aria-controls="accordion-item-4"
                         aria-expanded={true}
                         className="bx--accordion__heading"
@@ -2580,7 +2580,7 @@ exports[`TextualSummary renders just fine 1`] = `
                             </div>
                           </Text>
                         </button>
-                      </defaultRenderExpando>
+                      </defaultRenderToggle>
                       <div
                         className="bx--accordion__content"
                         id="accordion-item-4"

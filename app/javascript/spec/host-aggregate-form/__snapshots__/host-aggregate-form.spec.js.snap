@@ -804,14 +804,8 @@ exports[`Host aggregate form component should render add host form variant (remv
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -842,15 +836,9 @@ exports[`Host aggregate form component should render add host form variant (remv
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -878,15 +866,8 @@ exports[`Host aggregate form component should render add host form variant (remv
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
