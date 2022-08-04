@@ -1544,10 +1544,11 @@ class ApplicationController < ActionController::Base
     @org_controller = "vm" # request originated from controller
     @refresh_partial = typ ? "prov_edit" : "pre_prov"
     if typ
-      @prov_id = find_record_with_rbac(VmOrTemplate, checked_or_params).id
+      prov_obj = find_record_with_rbac(VmOrTemplate, checked_or_params)
+      @prov_id = prov_obj.id
       case typ
       when "clone"
-        @prov_type = "clone_to_vm"
+        @prov_type = prov_obj.template? ? "clone_to_template" : "clone_to_vm"
       when "migrate"
         @prov_id = [@prov_id]
         @prov_type = "migrate"
@@ -1593,6 +1594,8 @@ class ApplicationController < ActionController::Base
   end
 
   def vm_clone
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("clone")
   end
   alias image_clone vm_clone
@@ -1600,11 +1603,15 @@ class ApplicationController < ActionController::Base
   alias miq_template_clone vm_clone
 
   def vm_migrate
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("migrate")
   end
   alias miq_template_migrate vm_migrate
 
   def vm_publish
+    @record = identify_record(params[:id], controller_to_model)
+
     prov_redirect("publish")
   end
   alias instance_publish vm_publish

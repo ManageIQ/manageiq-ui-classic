@@ -1208,7 +1208,7 @@ module VmCommon
       task_headers = {"clone"   => _("Clone %{vm_or_template}"),
                       "migrate" => _("Migrate %{vm_or_template}"),
                       "publish" => _("Publish %{vm_or_template}")}
-      header = task_headers[@sb[:action]] % {:vm_or_template => ui_lookup(:table => table)}
+      header = task_headers[@sb[:action]] % {:vm_or_template => model_for_vm(@record).display_name}
       action = "prov_edit"
     when "dialog_provision"
       partial = "shared/dialogs/dialog_provision"
