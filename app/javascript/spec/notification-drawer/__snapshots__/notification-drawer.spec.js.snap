@@ -25,12 +25,8 @@ exports[`Notification drawer tests should render correctly 1`] = `
         >
           <Button
             className="collapsed heading-icon"
-            dangerDescription="danger"
-            disabled={false}
             hasIconOnly={true}
             iconDescription="collapsed"
-            isExpressive={false}
-            kind="primary"
             onClick={[Function]}
             onKeyPress={[Function]}
             renderIcon={
@@ -39,11 +35,6 @@ exports[`Notification drawer tests should render correctly 1`] = `
                 "render": [Function],
               }
             }
-            size="default"
-            tabIndex={0}
-            tooltipAlignment="center"
-            tooltipPosition="top"
-            type="button"
           >
             <button
               aria-describedby={null}
@@ -104,13 +95,9 @@ exports[`Notification drawer tests should render correctly 1`] = `
           </Button>
           <Button
             className="heading-icon closeIcon"
-            dangerDescription="danger"
             description="Close"
-            disabled={false}
             hasIconOnly={true}
             iconDescription="Close"
-            isExpressive={false}
-            kind="primary"
             onClick={[Function]}
             onKeyPress={[Function]}
             renderIcon={
@@ -119,11 +106,6 @@ exports[`Notification drawer tests should render correctly 1`] = `
                 "render": [Function],
               }
             }
-            size="default"
-            tabIndex={0}
-            tooltipAlignment="center"
-            tooltipPosition="top"
-            type="button"
           >
             <button
               aria-describedby={null}
@@ -199,7 +181,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
               className="Notification-accordion"
             >
               <ul
-                className="bx--accordion Notification-accordion bx--accordion--start"
+                className="bx--accordion Notification-accordion bx--accordion--start bx--accordion--md"
               >
                 <AccordionItem
                   title={
@@ -219,7 +201,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                     className="bx--accordion__item"
                     onAnimationEnd={[Function]}
                   >
-                    <defaultRenderExpando
+                    <defaultRenderToggle
                       aria-controls="accordion-item-6"
                       aria-expanded={false}
                       className="bx--accordion__heading"
@@ -285,7 +267,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                           </div>
                         </Text>
                       </button>
-                    </defaultRenderExpando>
+                    </defaultRenderToggle>
                     <div
                       className="bx--accordion__content"
                       id="accordion-item-6"
@@ -311,11 +293,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                 <div
                                   className="subtitle-div-notification-menu"
                                 >
-                                  <ForwardRef(ComponentToggle)
+                                  <OverflowMenu
                                     ariaLabel="open and close options"
+                                    direction="bottom"
                                     flipped={true}
                                     floatingmenu="true"
+                                    focusTrap={true}
+                                    iconDescription="open and close list of options"
                                     id="10000000003625"
+                                    light={false}
+                                    menuOffset={[Function]}
+                                    menuOffsetFlip={[Function]}
+                                    onClick={[Function]}
+                                    onClose={[Function]}
+                                    onKeyDown={[Function]}
+                                    onOpen={[Function]}
+                                    open={false}
+                                    renderIcon={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "render": [Function],
+                                      }
+                                    }
+                                    selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                     title="open and close options"
                                   >
                                     <OverflowMenuItem
@@ -351,7 +351,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                       onKeyDown={[Function]}
                                       requireTitle={true}
                                     />
-                                  </ForwardRef(ComponentToggle)>
+                                  </OverflowMenu>
                                 </div>
                                 <div
                                   className="subtitle-div-notification-time"
@@ -387,11 +387,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                   <div
                                     className="subtitle-div-notification-menu"
                                   >
-                                    <ForwardRef(ComponentToggle)
+                                    <OverflowMenu
                                       ariaLabel="open and close options"
+                                      direction="bottom"
                                       flipped={true}
                                       floatingmenu="true"
+                                      focusTrap={true}
+                                      iconDescription="open and close list of options"
                                       id="10000000003625"
+                                      light={false}
+                                      menuOffset={[Function]}
+                                      menuOffsetFlip={[Function]}
+                                      onClick={[Function]}
+                                      onClose={[Function]}
+                                      onKeyDown={[Function]}
+                                      onOpen={[Function]}
+                                      open={false}
+                                      renderIcon={
+                                        Object {
+                                          "$$typeof": Symbol(react.forward_ref),
+                                          "render": [Function],
+                                        }
+                                      }
+                                      selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                       title="open and close options"
                                     >
                                       <OverflowMenuItem
@@ -427,7 +445,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                         onKeyDown={[Function]}
                                         requireTitle={true}
                                       />
-                                    </ForwardRef(ComponentToggle)>
+                                    </OverflowMenu>
                                   </div>
                                   <div
                                     className="subtitle-div-notification-time"
@@ -506,11 +524,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                         <div
                                           className="subtitle-div-notification-menu"
                                         >
-                                          <ForwardRef(ComponentToggle)
+                                          <OverflowMenu
                                             ariaLabel="open and close options"
+                                            direction="bottom"
                                             flipped={true}
                                             floatingmenu="true"
+                                            focusTrap={true}
+                                            iconDescription="open and close list of options"
                                             id="10000000003625"
+                                            light={false}
+                                            menuOffset={[Function]}
+                                            menuOffsetFlip={[Function]}
+                                            onClick={[Function]}
+                                            onClose={[Function]}
+                                            onKeyDown={[Function]}
+                                            onOpen={[Function]}
+                                            open={false}
+                                            renderIcon={
+                                              Object {
+                                                "$$typeof": Symbol(react.forward_ref),
+                                                "render": [Function],
+                                              }
+                                            }
+                                            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                             title="open and close options"
                                           >
                                             <OverflowMenuItem
@@ -546,7 +582,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                               onKeyDown={[Function]}
                                               requireTitle={true}
                                             />
-                                          </ForwardRef(ComponentToggle)>
+                                          </OverflowMenu>
                                         </div>
                                         <div
                                           className="subtitle-div-notification-time"
@@ -582,120 +618,98 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                           <div
                                             className="subtitle-div-notification-menu"
                                           >
-                                            <FeatureToggle(OverflowMenu)
+                                            <OverflowMenu
                                               ariaLabel="open and close options"
+                                              direction="bottom"
                                               flipped={true}
                                               floatingmenu="true"
+                                              focusTrap={true}
+                                              iconDescription="open and close list of options"
                                               id="10000000003625"
+                                              light={false}
+                                              menuOffset={[Function]}
+                                              menuOffsetFlip={[Function]}
+                                              onClick={[Function]}
+                                              onClose={[Function]}
+                                              onKeyDown={[Function]}
+                                              onOpen={[Function]}
+                                              open={false}
+                                              renderIcon={
+                                                Object {
+                                                  "$$typeof": Symbol(react.forward_ref),
+                                                  "render": [Function],
+                                                }
+                                              }
+                                              selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                               title="open and close options"
                                             >
-                                              <ForwardRef(OverflowMenu)
-                                                ariaLabel="open and close options"
-                                                flipped={true}
-                                                floatingmenu="true"
-                                                id="10000000003625"
-                                                title="open and close options"
+                                              <ClickListener
+                                                onClickOutside={[Function]}
                                               >
-                                                <OverflowMenu
-                                                  ariaLabel="open and close options"
-                                                  direction="bottom"
-                                                  flipped={true}
+                                                <button
+                                                  aria-expanded={false}
+                                                  aria-haspopup={true}
+                                                  aria-label="open and close options"
+                                                  className="bx--overflow-menu bx--overflow-menu--md"
                                                   floatingmenu="true"
-                                                  iconDescription="open and close list of options"
                                                   id="10000000003625"
-                                                  innerRef={null}
-                                                  light={false}
-                                                  menuOffset={[Function]}
-                                                  menuOffsetFlip={[Function]}
                                                   onClick={[Function]}
                                                   onClose={[Function]}
                                                   onKeyDown={[Function]}
-                                                  onOpen={[Function]}
                                                   open={false}
-                                                  renderIcon={
-                                                    Object {
-                                                      "$$typeof": Symbol(react.forward_ref),
-                                                      "render": [Function],
-                                                    }
-                                                  }
-                                                  selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                                   title="open and close options"
+                                                  type="button"
                                                 >
-                                                  <ClickListener
-                                                    onClickOutside={[Function]}
+                                                  <ForwardRef(OverflowMenuVertical16)
+                                                    aria-label="open and close list of options"
+                                                    className="bx--overflow-menu__icon"
                                                   >
-                                                    <button
-                                                      aria-expanded={false}
-                                                      aria-haspopup={true}
-                                                      aria-label="open and close options"
-                                                      className="bx--overflow-menu"
-                                                      floatingmenu="true"
-                                                      id="10000000003625"
-                                                      onClick={[Function]}
-                                                      onClose={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      open={false}
-                                                      title="open and close options"
-                                                      type="button"
+                                                    <Icon
+                                                      aria-label="open and close list of options"
+                                                      className="bx--overflow-menu__icon"
+                                                      fill="currentColor"
+                                                      height={16}
+                                                      preserveAspectRatio="xMidYMid meet"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
                                                     >
-                                                      <ForwardRef(OverflowMenuVertical16)
+                                                      <svg
                                                         aria-label="open and close list of options"
                                                         className="bx--overflow-menu__icon"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
                                                       >
-                                                        <Icon
-                                                          aria-label="open and close list of options"
-                                                          className="bx--overflow-menu__icon"
-                                                          fill="currentColor"
-                                                          height={16}
-                                                          onClick={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          preserveAspectRatio="xMidYMid meet"
-                                                          viewBox="0 0 32 32"
-                                                          width={16}
-                                                          xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                          <svg
-                                                            aria-label="open and close list of options"
-                                                            className="bx--overflow-menu__icon"
-                                                            fill="currentColor"
-                                                            focusable="false"
-                                                            height={16}
-                                                            onClick={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            preserveAspectRatio="xMidYMid meet"
-                                                            role="img"
-                                                            viewBox="0 0 32 32"
-                                                            width={16}
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                          >
-                                                            <circle
-                                                              cx="16"
-                                                              cy="8"
-                                                              r="2"
-                                                            />
-                                                            <circle
-                                                              cx="16"
-                                                              cy="16"
-                                                              r="2"
-                                                            />
-                                                            <circle
-                                                              cx="16"
-                                                              cy="24"
-                                                              r="2"
-                                                            />
-                                                            <title>
-                                                              open and close list of options
-                                                            </title>
-                                                          </svg>
-                                                        </Icon>
-                                                      </ForwardRef(OverflowMenuVertical16)>
-                                                    </button>
-                                                  </ClickListener>
-                                                </OverflowMenu>
-                                              </ForwardRef(OverflowMenu)>
-                                            </FeatureToggle(OverflowMenu)>
+                                                        <circle
+                                                          cx="16"
+                                                          cy="8"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="16"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="24"
+                                                          r="2"
+                                                        />
+                                                        <title>
+                                                          open and close list of options
+                                                        </title>
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(OverflowMenuVertical16)>
+                                                </button>
+                                              </ClickListener>
+                                            </OverflowMenu>
                                           </div>
                                           <div
                                             className="subtitle-div-notification-time"
@@ -733,11 +747,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                 <div
                                   className="subtitle-div-notification-menu"
                                 >
-                                  <ForwardRef(ComponentToggle)
+                                  <OverflowMenu
                                     ariaLabel="open and close options"
+                                    direction="bottom"
                                     flipped={true}
                                     floatingmenu="true"
+                                    focusTrap={true}
+                                    iconDescription="open and close list of options"
                                     id="10000000003624"
+                                    light={false}
+                                    menuOffset={[Function]}
+                                    menuOffsetFlip={[Function]}
+                                    onClick={[Function]}
+                                    onClose={[Function]}
+                                    onKeyDown={[Function]}
+                                    onOpen={[Function]}
+                                    open={false}
+                                    renderIcon={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "render": [Function],
+                                      }
+                                    }
+                                    selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                     title="open and close options"
                                   >
                                     <OverflowMenuItem
@@ -773,7 +805,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                       onKeyDown={[Function]}
                                       requireTitle={true}
                                     />
-                                  </ForwardRef(ComponentToggle)>
+                                  </OverflowMenu>
                                 </div>
                                 <div
                                   className="subtitle-div-notification-time"
@@ -809,11 +841,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                   <div
                                     className="subtitle-div-notification-menu"
                                   >
-                                    <ForwardRef(ComponentToggle)
+                                    <OverflowMenu
                                       ariaLabel="open and close options"
+                                      direction="bottom"
                                       flipped={true}
                                       floatingmenu="true"
+                                      focusTrap={true}
+                                      iconDescription="open and close list of options"
                                       id="10000000003624"
+                                      light={false}
+                                      menuOffset={[Function]}
+                                      menuOffsetFlip={[Function]}
+                                      onClick={[Function]}
+                                      onClose={[Function]}
+                                      onKeyDown={[Function]}
+                                      onOpen={[Function]}
+                                      open={false}
+                                      renderIcon={
+                                        Object {
+                                          "$$typeof": Symbol(react.forward_ref),
+                                          "render": [Function],
+                                        }
+                                      }
+                                      selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                       title="open and close options"
                                     >
                                       <OverflowMenuItem
@@ -849,7 +899,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                         onKeyDown={[Function]}
                                         requireTitle={true}
                                       />
-                                    </ForwardRef(ComponentToggle)>
+                                    </OverflowMenu>
                                   </div>
                                   <div
                                     className="subtitle-div-notification-time"
@@ -929,11 +979,29 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                         <div
                                           className="subtitle-div-notification-menu"
                                         >
-                                          <ForwardRef(ComponentToggle)
+                                          <OverflowMenu
                                             ariaLabel="open and close options"
+                                            direction="bottom"
                                             flipped={true}
                                             floatingmenu="true"
+                                            focusTrap={true}
+                                            iconDescription="open and close list of options"
                                             id="10000000003624"
+                                            light={false}
+                                            menuOffset={[Function]}
+                                            menuOffsetFlip={[Function]}
+                                            onClick={[Function]}
+                                            onClose={[Function]}
+                                            onKeyDown={[Function]}
+                                            onOpen={[Function]}
+                                            open={false}
+                                            renderIcon={
+                                              Object {
+                                                "$$typeof": Symbol(react.forward_ref),
+                                                "render": [Function],
+                                              }
+                                            }
+                                            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                             title="open and close options"
                                           >
                                             <OverflowMenuItem
@@ -969,7 +1037,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                               onKeyDown={[Function]}
                                               requireTitle={true}
                                             />
-                                          </ForwardRef(ComponentToggle)>
+                                          </OverflowMenu>
                                         </div>
                                         <div
                                           className="subtitle-div-notification-time"
@@ -1005,120 +1073,98 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                           <div
                                             className="subtitle-div-notification-menu"
                                           >
-                                            <FeatureToggle(OverflowMenu)
+                                            <OverflowMenu
                                               ariaLabel="open and close options"
+                                              direction="bottom"
                                               flipped={true}
                                               floatingmenu="true"
+                                              focusTrap={true}
+                                              iconDescription="open and close list of options"
                                               id="10000000003624"
+                                              light={false}
+                                              menuOffset={[Function]}
+                                              menuOffsetFlip={[Function]}
+                                              onClick={[Function]}
+                                              onClose={[Function]}
+                                              onKeyDown={[Function]}
+                                              onOpen={[Function]}
+                                              open={false}
+                                              renderIcon={
+                                                Object {
+                                                  "$$typeof": Symbol(react.forward_ref),
+                                                  "render": [Function],
+                                                }
+                                              }
+                                              selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                               title="open and close options"
                                             >
-                                              <ForwardRef(OverflowMenu)
-                                                ariaLabel="open and close options"
-                                                flipped={true}
-                                                floatingmenu="true"
-                                                id="10000000003624"
-                                                title="open and close options"
+                                              <ClickListener
+                                                onClickOutside={[Function]}
                                               >
-                                                <OverflowMenu
-                                                  ariaLabel="open and close options"
-                                                  direction="bottom"
-                                                  flipped={true}
+                                                <button
+                                                  aria-expanded={false}
+                                                  aria-haspopup={true}
+                                                  aria-label="open and close options"
+                                                  className="bx--overflow-menu bx--overflow-menu--md"
                                                   floatingmenu="true"
-                                                  iconDescription="open and close list of options"
                                                   id="10000000003624"
-                                                  innerRef={null}
-                                                  light={false}
-                                                  menuOffset={[Function]}
-                                                  menuOffsetFlip={[Function]}
                                                   onClick={[Function]}
                                                   onClose={[Function]}
                                                   onKeyDown={[Function]}
-                                                  onOpen={[Function]}
                                                   open={false}
-                                                  renderIcon={
-                                                    Object {
-                                                      "$$typeof": Symbol(react.forward_ref),
-                                                      "render": [Function],
-                                                    }
-                                                  }
-                                                  selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
                                                   title="open and close options"
+                                                  type="button"
                                                 >
-                                                  <ClickListener
-                                                    onClickOutside={[Function]}
+                                                  <ForwardRef(OverflowMenuVertical16)
+                                                    aria-label="open and close list of options"
+                                                    className="bx--overflow-menu__icon"
                                                   >
-                                                    <button
-                                                      aria-expanded={false}
-                                                      aria-haspopup={true}
-                                                      aria-label="open and close options"
-                                                      className="bx--overflow-menu"
-                                                      floatingmenu="true"
-                                                      id="10000000003624"
-                                                      onClick={[Function]}
-                                                      onClose={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      open={false}
-                                                      title="open and close options"
-                                                      type="button"
+                                                    <Icon
+                                                      aria-label="open and close list of options"
+                                                      className="bx--overflow-menu__icon"
+                                                      fill="currentColor"
+                                                      height={16}
+                                                      preserveAspectRatio="xMidYMid meet"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
                                                     >
-                                                      <ForwardRef(OverflowMenuVertical16)
+                                                      <svg
                                                         aria-label="open and close list of options"
                                                         className="bx--overflow-menu__icon"
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
                                                       >
-                                                        <Icon
-                                                          aria-label="open and close list of options"
-                                                          className="bx--overflow-menu__icon"
-                                                          fill="currentColor"
-                                                          height={16}
-                                                          onClick={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          preserveAspectRatio="xMidYMid meet"
-                                                          viewBox="0 0 32 32"
-                                                          width={16}
-                                                          xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                          <svg
-                                                            aria-label="open and close list of options"
-                                                            className="bx--overflow-menu__icon"
-                                                            fill="currentColor"
-                                                            focusable="false"
-                                                            height={16}
-                                                            onClick={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            preserveAspectRatio="xMidYMid meet"
-                                                            role="img"
-                                                            viewBox="0 0 32 32"
-                                                            width={16}
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                          >
-                                                            <circle
-                                                              cx="16"
-                                                              cy="8"
-                                                              r="2"
-                                                            />
-                                                            <circle
-                                                              cx="16"
-                                                              cy="16"
-                                                              r="2"
-                                                            />
-                                                            <circle
-                                                              cx="16"
-                                                              cy="24"
-                                                              r="2"
-                                                            />
-                                                            <title>
-                                                              open and close list of options
-                                                            </title>
-                                                          </svg>
-                                                        </Icon>
-                                                      </ForwardRef(OverflowMenuVertical16)>
-                                                    </button>
-                                                  </ClickListener>
-                                                </OverflowMenu>
-                                              </ForwardRef(OverflowMenu)>
-                                            </FeatureToggle(OverflowMenu)>
+                                                        <circle
+                                                          cx="16"
+                                                          cy="8"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="16"
+                                                          r="2"
+                                                        />
+                                                        <circle
+                                                          cx="16"
+                                                          cy="24"
+                                                          r="2"
+                                                        />
+                                                        <title>
+                                                          open and close list of options
+                                                        </title>
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(OverflowMenuVertical16)>
+                                                </button>
+                                              </ClickListener>
+                                            </OverflowMenu>
                                           </div>
                                           <div
                                             className="subtitle-div-notification-time"
@@ -1148,17 +1194,9 @@ exports[`Notification drawer tests should render correctly 1`] = `
                               Showing 100 items out of 2 total.
                             </span>
                             <Button
-                              dangerDescription="danger"
-                              disabled={false}
                               id="toggleMaxNotifications"
-                              isExpressive={false}
                               kind="ghost"
                               onClick={[Function]}
-                              size="default"
-                              tabIndex={0}
-                              tooltipAlignment="center"
-                              tooltipPosition="top"
-                              type="button"
                             >
                               <button
                                 aria-describedby={null}
@@ -1183,17 +1221,10 @@ exports[`Notification drawer tests should render correctly 1`] = `
                           className="notification-footer"
                         >
                           <Button
-                            dangerDescription="danger"
                             disabled={false}
                             id="markAllReadBtn"
-                            isExpressive={false}
                             kind="ghost"
                             onClick={[Function]}
-                            size="default"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
                           >
                             <button
                               aria-describedby={null}
@@ -1213,17 +1244,10 @@ exports[`Notification drawer tests should render correctly 1`] = `
                             </button>
                           </Button>
                           <Button
-                            dangerDescription="danger"
                             disabled={false}
                             id="clearAllBtn"
-                            isExpressive={false}
                             kind="ghost"
                             onClick={[Function]}
-                            size="default"
-                            tabIndex={0}
-                            tooltipAlignment="center"
-                            tooltipPosition="top"
-                            type="button"
                           >
                             <button
                               aria-describedby={null}

@@ -1314,10 +1314,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -1326,14 +1323,11 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                 Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={255}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -1363,7 +1357,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -1413,22 +1407,16 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           name="description"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="description"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="description"
                                             labelText="Description"
-                                            light={false}
                                             maxLength={100}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -1450,7 +1438,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -2565,14 +2553,8 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -2602,15 +2584,8 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -4000,10 +3975,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -4012,14 +3984,11 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                 Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={255}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="Copy of foo"
                                             warn={false}
                                             warnText=""
@@ -4049,7 +4018,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -4099,22 +4068,16 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           name="description"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="description"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="description"
                                             labelText="Description"
-                                            light={false}
                                             maxLength={100}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="bar"
                                             warn={false}
                                             warnText=""
@@ -4136,7 +4099,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -5263,14 +5226,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -5300,15 +5256,8 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -6698,10 +6647,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -6710,14 +6656,11 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                 Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={255}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="foo"
                                             warn={false}
                                             warnText=""
@@ -6747,7 +6690,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={255}
@@ -6797,22 +6740,16 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           name="description"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="description"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="description"
                                             labelText="Description"
-                                            light={false}
                                             maxLength={100}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="bar"
                                             warn={false}
                                             warnText=""
@@ -6834,7 +6771,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={100}
@@ -7963,14 +7900,8 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -8001,15 +7932,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -8037,15 +7962,8 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

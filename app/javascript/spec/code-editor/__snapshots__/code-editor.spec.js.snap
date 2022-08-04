@@ -46,6 +46,7 @@ exports[`CodeEditor component should render mode switches 1`] = `
   messageText=""
 >
   <RadioButtonGroup
+    hideLegend={false}
     labelPosition="right"
     name="--undefined--mode"
     onChange={[Function]}

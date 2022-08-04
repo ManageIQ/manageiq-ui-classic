@@ -2254,10 +2254,7 @@ exports[`Generic Object Form Component should render adding a new generic object
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="name"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="name"
@@ -2266,14 +2263,11 @@ exports[`Generic Object Form Component should render adding a new generic object
                                       Name
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="name"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value=""
                                   warn={false}
                                   warnText=""
@@ -2303,7 +2297,7 @@ exports[`Generic Object Form Component should render adding a new generic object
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="name"
                                           maxLength={255}
@@ -2375,10 +2369,7 @@ exports[`Generic Object Form Component should render adding a new generic object
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="description"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="description"
@@ -2387,14 +2378,11 @@ exports[`Generic Object Form Component should render adding a new generic object
                                       Description
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="description"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value=""
                                   warn={false}
                                   warnText=""
@@ -2424,7 +2412,7 @@ exports[`Generic Object Form Component should render adding a new generic object
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="description"
                                           maxLength={255}
@@ -2810,11 +2798,8 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-attributes"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -2823,10 +2808,6 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -3331,11 +3312,8 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-associations"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -3344,10 +3322,6 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -3702,11 +3676,8 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-methods"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -3715,10 +3686,6 @@ exports[`Generic Object Form Component should render adding a new generic object
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -4554,14 +4521,8 @@ exports[`Generic Object Form Component should render adding a new generic object
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -4591,15 +4552,8 @@ exports[`Generic Object Form Component should render adding a new generic object
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -7278,10 +7232,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="name"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="name"
@@ -7290,14 +7241,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       Name
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="name"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value="Generic Object"
                                   warn={false}
                                   warnText=""
@@ -7327,7 +7275,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="name"
                                           maxLength={255}
@@ -7399,10 +7347,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="description"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="description"
@@ -7411,14 +7356,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       Description
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="description"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value="this is a test"
                                   warn={false}
                                   warnText=""
@@ -7448,7 +7390,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="description"
                                           maxLength={255}
@@ -7924,21 +7866,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="attributes[0].attributes_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="attributes[0].attributes_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="attributes[0].attributes_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="this_is_a_string"
                                                                 warn={false}
                                                                 warnText=""
@@ -7960,7 +7896,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="attributes[0].attributes_name"
                                                                         name="attributes[0].attributes_name"
@@ -8237,10 +8173,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-attributes[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -8250,10 +8184,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-6"
@@ -8316,11 +8246,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-attributes"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -8329,10 +8256,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -8939,21 +8862,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="associations[0].associations_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="associations[0].associations_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="associations[0].associations_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="bottle_neck"
                                                                 warn={false}
                                                                 warnText=""
@@ -8975,7 +8892,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="associations[0].associations_name"
                                                                         name="associations[0].associations_name"
@@ -9436,10 +9353,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-associations[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -9449,10 +9364,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-8"
@@ -9618,21 +9529,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="associations[1].associations_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="associations[1].associations_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="associations[1].associations_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="project"
                                                                 warn={false}
                                                                 warnText=""
@@ -9654,7 +9559,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="associations[1].associations_name"
                                                                         name="associations[1].associations_name"
@@ -10115,10 +10020,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-associations[1]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -10128,10 +10031,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-9"
@@ -10194,11 +10093,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-associations"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -10207,10 +10103,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -10642,21 +10534,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="methods[0].methods_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="methods[0].methods_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="methods[0].methods_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="method"
                                                                 warn={false}
                                                                 warnText=""
@@ -10678,7 +10564,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="methods[0].methods_name"
                                                                         name="methods[0].methods_name"
@@ -10699,10 +10585,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-methods[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -10712,10 +10596,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-11"
@@ -10778,11 +10658,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-methods"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -10791,10 +10668,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -11315,12 +11188,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         />
                                                         <Button
                                                           className="edit-button"
-                                                          dangerDescription="danger"
-                                                          disabled={false}
                                                           hasIconOnly={true}
                                                           iconDescription="Delete File"
-                                                          isExpressive={false}
-                                                          kind="primary"
                                                           name="file_edit"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
@@ -11332,11 +11201,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               "render": [Function],
                                                             }
                                                           }
-                                                          size="default"
-                                                          tabIndex={0}
-                                                          tooltipAlignment="center"
-                                                          tooltipPosition="top"
-                                                          type="button"
                                                           value=""
                                                         >
                                                           <button
@@ -11442,60 +11306,70 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   name="image_update"
                                 >
                                   <div>
-                                    <Toggle
-                                      aria-label="Toggle"
-                                      defaultToggled={false}
+                                    <FeatureToggle(Toggle)
                                       id="image_update"
                                       key="image_update"
-                                      labelA="Off"
-                                      labelB="On"
                                       name="image_update"
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
-                                      onToggle={[Function]}
                                       toggled={false}
                                       type="checkbox"
                                     >
-                                      <div
-                                        className="bx--form-item"
+                                      <Toggle
+                                        aria-label="Toggle"
+                                        defaultToggled={false}
+                                        id="image_update"
+                                        labelA="Off"
+                                        labelB="On"
+                                        name="image_update"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onToggle={[Function]}
+                                        toggled={false}
+                                        type="checkbox"
                                       >
-                                        <input
-                                          aria-label={null}
-                                          checked={false}
-                                          className="bx--toggle-input"
-                                          id="image_update"
-                                          name="image_update"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          onKeyUp={[Function]}
-                                          type="checkbox"
-                                        />
-                                        <label
-                                          aria-label="Toggle"
-                                          className="bx--toggle-input__label"
-                                          htmlFor="image_update"
+                                        <div
+                                          className="bx--form-item"
                                         >
-                                          <span
-                                            className="bx--toggle__switch"
+                                          <input
+                                            aria-label={null}
+                                            checked={false}
+                                            className="bx--toggle-input"
+                                            id="image_update"
+                                            name="image_update"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyUp={[Function]}
+                                            type="checkbox"
+                                          />
+                                          <label
+                                            aria-label="Toggle"
+                                            className="bx--toggle-input__label"
+                                            htmlFor="image_update"
                                           >
                                             <span
-                                              aria-hidden="true"
-                                              className="bx--toggle__text--off"
+                                              className="bx--toggle__switch"
                                             >
-                                              Off
+                                              <span
+                                                aria-hidden="true"
+                                                className="bx--toggle__text--off"
+                                              >
+                                                Off
+                                              </span>
+                                              <span
+                                                aria-hidden="true"
+                                                className="bx--toggle__text--on"
+                                              >
+                                                On
+                                              </span>
                                             </span>
-                                            <span
-                                              aria-hidden="true"
-                                              className="bx--toggle__text--on"
-                                            >
-                                              On
-                                            </span>
-                                          </span>
-                                        </label>
-                                      </div>
-                                    </Toggle>
+                                          </label>
+                                        </div>
+                                      </Toggle>
+                                    </FeatureToggle(Toggle)>
                                     <HelperTextBlock />
                                   </div>
                                 </Switch>
@@ -12250,14 +12124,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -12288,15 +12156,9 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -12324,15 +12186,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -14999,10 +14854,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="name"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="name"
@@ -15011,14 +14863,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       Name
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="name"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value="Generic Object"
                                   warn={false}
                                   warnText=""
@@ -15048,7 +14897,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="name"
                                           maxLength={255}
@@ -15120,10 +14969,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="description"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="description"
@@ -15132,14 +14978,11 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       Description
                                     </IsRequired>
                                   }
-                                  light={false}
                                   maxLength={255}
                                   name="description"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value="this is a test"
                                   warn={false}
                                   warnText=""
@@ -15169,7 +15012,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="description"
                                           maxLength={255}
@@ -15645,21 +15488,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="attributes[0].attributes_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="attributes[0].attributes_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="attributes[0].attributes_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="this_is_a_string"
                                                                 warn={false}
                                                                 warnText=""
@@ -15681,7 +15518,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="attributes[0].attributes_name"
                                                                         name="attributes[0].attributes_name"
@@ -15958,10 +15795,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-attributes[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -15971,10 +15806,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-17"
@@ -16037,11 +15868,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-attributes"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -16050,10 +15878,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -16660,21 +16484,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="associations[0].associations_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="associations[0].associations_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="associations[0].associations_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="bottle_neck"
                                                                 warn={false}
                                                                 warnText=""
@@ -16696,7 +16514,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="associations[0].associations_name"
                                                                         name="associations[0].associations_name"
@@ -17157,10 +16975,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-associations[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -17170,10 +16986,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-19"
@@ -17339,21 +17151,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="associations[1].associations_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="associations[1].associations_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="associations[1].associations_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="project"
                                                                 warn={false}
                                                                 warnText=""
@@ -17375,7 +17181,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="associations[1].associations_name"
                                                                         name="associations[1].associations_name"
@@ -17836,10 +17642,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-associations[1]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -17849,10 +17653,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-20"
@@ -17915,11 +17715,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-associations"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -17928,10 +17725,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -18363,21 +18156,15 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               }
                                                             >
                                                               <TextInput
-                                                                disabled={false}
-                                                                helperText=""
                                                                 id="methods[0].methods_name"
-                                                                inline={false}
                                                                 invalid={false}
                                                                 invalidText=""
                                                                 key="methods[0].methods_name"
                                                                 labelText="Name"
-                                                                light={false}
                                                                 name="methods[0].methods_name"
                                                                 onBlur={[Function]}
                                                                 onChange={[Function]}
-                                                                onClick={[Function]}
                                                                 onFocus={[Function]}
-                                                                type="text"
                                                                 value="method"
                                                                 warn={false}
                                                                 warnText=""
@@ -18399,7 +18186,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                       data-invalid={null}
                                                                     >
                                                                       <input
-                                                                        className="bx--text-input"
+                                                                        className="bx--text-input bx--text-input--md"
                                                                         disabled={false}
                                                                         id="methods[0].methods_name"
                                                                         name="methods[0].methods_name"
@@ -18420,10 +18207,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                       </SingleField>
                                                       <Button
                                                         className="remove-0-2-8"
-                                                        dangerDescription="danger"
                                                         disabled={false}
                                                         id="remove-methods[0]"
-                                                        isExpressive={false}
                                                         kind="danger"
                                                         onClick={[Function]}
                                                         renderIcon={
@@ -18433,10 +18218,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                           }
                                                         }
                                                         size="small"
-                                                        tabIndex={0}
-                                                        tooltipAlignment="center"
-                                                        tooltipPosition="top"
-                                                        type="button"
                                                       >
                                                         <button
                                                           aria-describedby="danger-description-22"
@@ -18499,11 +18280,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                   >
                                                     <Button
                                                       className="add-0-2-6"
-                                                      dangerDescription="danger"
                                                       disabled={false}
                                                       id="add-methods"
-                                                      isExpressive={false}
-                                                      kind="primary"
                                                       onClick={[Function]}
                                                       renderIcon={
                                                         Object {
@@ -18512,10 +18290,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                         }
                                                       }
                                                       size="small"
-                                                      tabIndex={0}
-                                                      tooltipAlignment="center"
-                                                      tooltipPosition="top"
-                                                      type="button"
                                                     >
                                                       <button
                                                         aria-describedby={null}
@@ -19121,60 +18895,70 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   name="image_update"
                                 >
                                   <div>
-                                    <Toggle
-                                      aria-label="Toggle"
-                                      defaultToggled={false}
+                                    <FeatureToggle(Toggle)
                                       id="image_update"
                                       key="image_update"
-                                      labelA="Off"
-                                      labelB="On"
                                       name="image_update"
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
-                                      onToggle={[Function]}
                                       toggled={true}
                                       type="checkbox"
                                     >
-                                      <div
-                                        className="bx--form-item"
+                                      <Toggle
+                                        aria-label="Toggle"
+                                        defaultToggled={false}
+                                        id="image_update"
+                                        labelA="Off"
+                                        labelB="On"
+                                        name="image_update"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onToggle={[Function]}
+                                        toggled={true}
+                                        type="checkbox"
                                       >
-                                        <input
-                                          aria-label={null}
-                                          checked={true}
-                                          className="bx--toggle-input"
-                                          id="image_update"
-                                          name="image_update"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          onKeyUp={[Function]}
-                                          type="checkbox"
-                                        />
-                                        <label
-                                          aria-label="Toggle"
-                                          className="bx--toggle-input__label"
-                                          htmlFor="image_update"
+                                        <div
+                                          className="bx--form-item"
                                         >
-                                          <span
-                                            className="bx--toggle__switch"
+                                          <input
+                                            aria-label={null}
+                                            checked={true}
+                                            className="bx--toggle-input"
+                                            id="image_update"
+                                            name="image_update"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyUp={[Function]}
+                                            type="checkbox"
+                                          />
+                                          <label
+                                            aria-label="Toggle"
+                                            className="bx--toggle-input__label"
+                                            htmlFor="image_update"
                                           >
                                             <span
-                                              aria-hidden="true"
-                                              className="bx--toggle__text--off"
+                                              className="bx--toggle__switch"
                                             >
-                                              Off
+                                              <span
+                                                aria-hidden="true"
+                                                className="bx--toggle__text--off"
+                                              >
+                                                Off
+                                              </span>
+                                              <span
+                                                aria-hidden="true"
+                                                className="bx--toggle__text--on"
+                                              >
+                                                On
+                                              </span>
                                             </span>
-                                            <span
-                                              aria-hidden="true"
-                                              className="bx--toggle__text--on"
-                                            >
-                                              On
-                                            </span>
-                                          </span>
-                                        </label>
-                                      </div>
-                                    </Toggle>
+                                          </label>
+                                        </div>
+                                      </Toggle>
+                                    </FeatureToggle(Toggle)>
                                     <HelperTextBlock />
                                   </div>
                                 </Switch>
@@ -19923,14 +19707,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -19961,15 +19739,9 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -19997,15 +19769,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

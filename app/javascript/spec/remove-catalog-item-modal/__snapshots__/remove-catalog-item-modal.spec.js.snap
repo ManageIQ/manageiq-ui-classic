@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RemoveCatalogItemModal should correctly render modal for duplicate catalog items 1`] = `
-<ModalBody
+<ForwardRef(ModalBody)
   className="warning-modal-body"
 >
   <div>
@@ -20,11 +20,11 @@ exports[`RemoveCatalogItemModal should correctly render modal for duplicate cata
       </li>
     </ul>
   </div>
-</ModalBody>
+</ForwardRef(ModalBody)>
 `;
 
 exports[`RemoveCatalogItemModal should correctly render modal for multiple catalog items 1`] = `
-<ModalBody
+<ForwardRef(ModalBody)
   className="warning-modal-body"
 >
   <div>
@@ -52,11 +52,11 @@ exports[`RemoveCatalogItemModal should correctly render modal for multiple catal
       </li>
     </ul>
   </div>
-</ModalBody>
+</ForwardRef(ModalBody)>
 `;
 
 exports[`RemoveCatalogItemModal should correctly render modal for single catalog item 1`] = `
-<ModalBody
+<ForwardRef(ModalBody)
   className="warning-modal-body"
 >
   <div>
@@ -75,5 +75,5 @@ exports[`RemoveCatalogItemModal should correctly render modal for single catalog
       </li>
     </ul>
   </div>
-</ModalBody>
+</ForwardRef(ModalBody)>
 `;

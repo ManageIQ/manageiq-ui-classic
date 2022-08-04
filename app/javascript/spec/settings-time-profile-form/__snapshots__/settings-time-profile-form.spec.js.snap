@@ -4419,10 +4419,7 @@ exports[`VM common form component should render adding form variant add new time
                                   }
                                 >
                                   <TextInput
-                                    disabled={false}
-                                    helperText=""
                                     id="description"
-                                    inline={false}
                                     invalid={false}
                                     invalidText=""
                                     key="description"
@@ -4431,14 +4428,11 @@ exports[`VM common form component should render adding form variant add new time
                                         Description
                                       </IsRequired>
                                     }
-                                    light={false}
                                     maxLength={128}
                                     name="description"
                                     onBlur={[Function]}
                                     onChange={[Function]}
-                                    onClick={[Function]}
                                     onFocus={[Function]}
-                                    type="text"
                                     value=""
                                     warn={false}
                                     warnText=""
@@ -4468,7 +4462,7 @@ exports[`VM common form component should render adding form variant add new time
                                           data-invalid={null}
                                         >
                                           <input
-                                            className="bx--text-input"
+                                            className="bx--text-input bx--text-input--md"
                                             disabled={false}
                                             id="description"
                                             maxLength={128}
@@ -5148,13 +5142,11 @@ exports[`VM common form component should render adding form variant add new time
                                                   name="DaysSelectAll"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
-                                                  onClick={[Function]}
                                                   onFocus={[Function]}
                                                   type="checkbox"
                                                 >
                                                   <div
                                                     className="bx--form-item bx--checkbox-wrapper"
-                                                    onClick={[Function]}
                                                   >
                                                     <input
                                                       checked={false}
@@ -5745,14 +5737,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={0}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Sunday"
@@ -5853,14 +5843,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={1}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Monday"
@@ -5961,14 +5949,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={2}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Tuesday"
@@ -6069,14 +6055,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={3}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Wedensday"
@@ -6177,14 +6161,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={4}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Thursday"
@@ -6285,14 +6267,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={5}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Friday"
@@ -6393,14 +6373,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.days"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={6}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="Saturday"
@@ -7752,13 +7730,11 @@ exports[`VM common form component should render adding form variant add new time
                                                   name="HoursSelectAll"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
-                                                  onClick={[Function]}
                                                   onFocus={[Function]}
                                                   type="checkbox"
                                                 >
                                                   <div
                                                     className="bx--form-item bx--checkbox-wrapper"
-                                                    onClick={[Function]}
                                                   >
                                                     <input
                                                       checked={false}
@@ -8463,14 +8439,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={0}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="12-1"
@@ -8571,14 +8545,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={1}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="1-2"
@@ -8679,14 +8651,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={2}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="2-3"
@@ -8787,14 +8757,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={3}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="3-4"
@@ -8895,14 +8863,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={4}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="4-5"
@@ -9003,14 +8969,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={5}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="5-6"
@@ -9111,14 +9075,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={6}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="6-7"
@@ -9219,14 +9181,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={7}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="7-8"
@@ -9327,14 +9287,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={8}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="8-9"
@@ -9435,14 +9393,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={9}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="9-10"
@@ -9543,14 +9499,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={10}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="10-11"
@@ -9651,14 +9605,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursAM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={11}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="11-12"
@@ -10377,14 +10329,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={12}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="12-1"
@@ -10485,14 +10435,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={13}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="1-2"
@@ -10593,14 +10541,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={14}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="2-3"
@@ -10701,14 +10647,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={15}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="3-4"
@@ -10809,14 +10753,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={16}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="4-5"
@@ -10917,14 +10859,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={17}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="5-6"
@@ -11025,14 +10965,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={18}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="6-7"
@@ -11133,14 +11071,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={19}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="7-8"
@@ -11241,14 +11177,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={20}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="8-9"
@@ -11349,14 +11283,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={21}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="9-10"
@@ -11457,14 +11389,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={22}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="10-11"
@@ -11565,14 +11495,12 @@ exports[`VM common form component should render adding form variant add new time
                                                                     name="profile.hoursPM"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
-                                                                    onClick={[Function]}
                                                                     onFocus={[Function]}
                                                                     type="checkbox"
                                                                     value={23}
                                                                   >
                                                                     <div
                                                                       className="bx--form-item bx--checkbox-wrapper"
-                                                                      onClick={[Function]}
                                                                     >
                                                                       <input
                                                                         aria-label="11-12"
@@ -14116,14 +14044,8 @@ exports[`VM common form component should render adding form variant add new time
                                       variant="primary"
                                     >
                                       <Button
-                                        dangerDescription="danger"
                                         disabled={true}
-                                        isExpressive={false}
                                         kind="primary"
-                                        size="default"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
                                         type="submit"
                                         variant="primary"
                                       >
@@ -14153,15 +14075,8 @@ exports[`VM common form component should render adding form variant add new time
                                       type="button"
                                     >
                                       <Button
-                                        dangerDescription="danger"
-                                        disabled={false}
-                                        isExpressive={false}
                                         kind="secondary"
                                         onClick={[Function]}
-                                        size="default"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
                                         type="button"
                                       >
                                         <button

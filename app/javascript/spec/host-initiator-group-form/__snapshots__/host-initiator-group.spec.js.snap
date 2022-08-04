@@ -1055,10 +1055,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                 }
                               >
                                 <TextInput
-                                  disabled={false}
-                                  helperText=""
                                   id="name"
-                                  inline={false}
                                   invalid={false}
                                   invalidText=""
                                   key="name"
@@ -1067,13 +1064,10 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                       Name:
                                     </IsRequired>
                                   }
-                                  light={false}
                                   name="name"
                                   onBlur={[Function]}
                                   onChange={[Function]}
-                                  onClick={[Function]}
                                   onFocus={[Function]}
-                                  type="text"
                                   value="my_group"
                                   warn={false}
                                   warnText=""
@@ -1103,7 +1097,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                         data-invalid={null}
                                       >
                                         <input
-                                          className="bx--text-input"
+                                          className="bx--text-input bx--text-input--md"
                                           disabled={false}
                                           id="name"
                                           name="name"
@@ -1784,14 +1778,8 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -1821,15 +1809,8 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

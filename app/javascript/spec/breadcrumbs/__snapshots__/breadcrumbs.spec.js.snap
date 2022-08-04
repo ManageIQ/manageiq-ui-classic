@@ -142,18 +142,10 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
         >
           <Button
             className="btn btn-default"
-            dangerDescription="danger"
-            disabled={false}
             id="notifications-toggle"
-            isExpressive={false}
-            kind="primary"
             onClick={[Function]}
             size="sm"
-            tabIndex={0}
             title="0 unread notification"
-            tooltipAlignment="center"
-            tooltipPosition="top"
-            type="button"
           >
             <button
               aria-describedby={null}

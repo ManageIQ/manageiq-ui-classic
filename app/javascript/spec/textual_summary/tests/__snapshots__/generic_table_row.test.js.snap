@@ -59,15 +59,8 @@ exports[`Simple Table renders multi-value just fine... 1`] = `
                 />
               </IconOrImage>
               <Button
-                dangerDescription="danger"
-                disabled={false}
-                isExpressive={false}
                 kind="ghost"
                 size="sm"
-                tabIndex={0}
-                tooltipAlignment="center"
-                tooltipPosition="top"
-                type="button"
               >
                 <button
                   aria-describedby={null}
@@ -196,15 +189,8 @@ exports[`Simple Table renders simple value just fine... 1`] = `
                 />
               </IconOrImage>
               <Button
-                dangerDescription="danger"
-                disabled={false}
-                isExpressive={false}
                 kind="ghost"
                 size="sm"
-                tabIndex={0}
-                tooltipAlignment="center"
-                tooltipPosition="top"
-                type="button"
               >
                 <button
                   aria-describedby={null}

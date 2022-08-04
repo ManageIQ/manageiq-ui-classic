@@ -15,56 +15,35 @@ exports[`Search Bar component should render the search bar component 1`] = `
       value=""
     />
     <TextInput
-      disabled={false}
-      helperText=""
       hideLabel={true}
       id="search_text"
-      inline={false}
-      invalid={false}
-      invalidText=""
       labelText="Search"
-      light={false}
       name="search[text]"
       onChange={[Function]}
-      onClick={[Function]}
       placeholder="Search"
       title="Search by Name within results"
-      type="text"
       value=""
-      warn={false}
-      warnText=""
     />
     <Button
       className="search_button"
-      dangerDescription="danger"
-      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
-      isExpressive={false}
-      kind="primary"
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
           "render": [Function],
         }
       }
-      size="default"
-      tabIndex={0}
-      tooltipAlignment="center"
       tooltipPosition="bottom"
       type="submit"
     />
   </Form>
   <Button
-    dangerDescription="danger"
     data-target="#advsearchModal"
     data-toggle="modal"
-    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"
-    isExpressive={false}
-    kind="primary"
     onClick={[Function]}
     renderIcon={
       Object {
@@ -72,8 +51,6 @@ exports[`Search Bar component should render the search bar component 1`] = `
         "render": [Function],
       }
     }
-    size="default"
-    tabIndex={0}
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"
@@ -97,56 +74,35 @@ exports[`Search Bar component should render the search bar component with advanc
       value=""
     />
     <TextInput
-      disabled={false}
-      helperText=""
       hideLabel={true}
       id="search_text"
-      inline={false}
-      invalid={false}
-      invalidText=""
       labelText="Search"
-      light={false}
       name="search[text]"
       onChange={[Function]}
-      onClick={[Function]}
       placeholder="Search"
       title="Search by Name within results"
-      type="text"
       value=""
-      warn={false}
-      warnText=""
     />
     <Button
       className="search_button"
-      dangerDescription="danger"
-      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
-      isExpressive={false}
-      kind="primary"
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
           "render": [Function],
         }
       }
-      size="default"
-      tabIndex={0}
-      tooltipAlignment="center"
       tooltipPosition="bottom"
       type="submit"
     />
   </Form>
   <Button
-    dangerDescription="danger"
     data-target="#advsearchModal"
     data-toggle="modal"
-    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"
-    isExpressive={false}
-    kind="primary"
     onClick={[Function]}
     renderIcon={
       Object {
@@ -154,8 +110,6 @@ exports[`Search Bar component should render the search bar component with advanc
         "render": [Function],
       }
     }
-    size="default"
-    tabIndex={0}
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"
@@ -179,31 +133,18 @@ exports[`Search Bar component should render the search bar component with search
       value=""
     />
     <TextInput
-      disabled={false}
-      helperText=""
       hideLabel={true}
       id="search_text"
-      inline={false}
-      invalid={false}
-      invalidText=""
       labelText="Search"
-      light={false}
       name="search[text]"
       onChange={[Function]}
-      onClick={[Function]}
       placeholder="Search"
       title="Search by Name within results"
-      type="text"
       value="nameSearch"
-      warn={false}
-      warnText=""
     />
     <Button
-      dangerDescription="danger"
-      disabled={false}
       hasIconOnly={true}
       iconDescription="Clear"
-      isExpressive={false}
       kind="secondary"
       onClick={[Function]}
       renderIcon={
@@ -212,43 +153,29 @@ exports[`Search Bar component should render the search bar component with search
           "render": [Function],
         }
       }
-      size="default"
-      tabIndex={0}
-      tooltipAlignment="center"
       tooltipPosition="bottom"
       type="reset"
     />
     <Button
       className="search_button"
-      dangerDescription="danger"
-      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
-      isExpressive={false}
-      kind="primary"
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
           "render": [Function],
         }
       }
-      size="default"
-      tabIndex={0}
-      tooltipAlignment="center"
       tooltipPosition="bottom"
       type="submit"
     />
   </Form>
   <Button
-    dangerDescription="danger"
     data-target="#advsearchModal"
     data-toggle="modal"
-    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"
-    isExpressive={false}
-    kind="primary"
     onClick={[Function]}
     renderIcon={
       Object {
@@ -256,8 +183,6 @@ exports[`Search Bar component should render the search bar component with search
         "render": [Function],
       }
     }
-    size="default"
-    tabIndex={0}
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"

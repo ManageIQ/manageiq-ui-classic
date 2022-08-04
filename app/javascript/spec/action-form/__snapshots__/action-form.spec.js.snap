@@ -8128,10 +8128,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="description"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="description"
@@ -8140,14 +8137,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 Description
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={50}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -8177,7 +8171,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={50}
@@ -14731,14 +14725,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -14768,15 +14756,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
