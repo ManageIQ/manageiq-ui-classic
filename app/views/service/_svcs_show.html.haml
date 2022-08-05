@@ -11,7 +11,7 @@
         - if retirement_job
           = miq_tab_header("retirement") do
             = _("Retirement")
-      -if @record.type == "ServiceAnsibleTower"
+      -if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
         - job = @record.try(:job)
         = miq_tab_header("tower_job") do
           = _("Job")
@@ -38,7 +38,7 @@
               = _('VMs')
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
-      - if @record.type == "ServiceAnsibleTower"
+      - if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
         = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
           - if job && job.respond_to?(:raw_stdout_via_worker)
