@@ -23,7 +23,7 @@ export const formatName = (buttonGroupName) => {
 };
 
 /** Function to update the field set_data's values during form submit */
-export const formatSetData = (setData, buttonIcon, appliesToClass, appliesToId) => {
+export const formatSetData = (setData, buttonIcon, appliesToClass, appliesToId, groupIndex) => {
   if (appliesToId) {
     return ({
       ...setData,
@@ -31,6 +31,7 @@ export const formatSetData = (setData, buttonIcon, appliesToClass, appliesToId) 
       button_icon: buttonIcon,
       applies_to_class: appliesToClass,
       applies_to_id: appliesToId,
+      group_index: groupIndex || Math.floor(Math.random() * 1000),
     });
   }
   return ({
@@ -38,6 +39,7 @@ export const formatSetData = (setData, buttonIcon, appliesToClass, appliesToId) 
     button_color: (setData && setData.button_color) ? setData.button_color : '#000',
     button_icon: buttonIcon,
     applies_to_class: appliesToClass,
+    group_index: groupIndex || Math.floor(Math.random() * 1000),
   });
 };
 
