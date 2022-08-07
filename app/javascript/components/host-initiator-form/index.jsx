@@ -38,8 +38,15 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
 
   const validate = (values) => {
     const errors = {};
-    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
-      errors.wwpn = 'Please provide at least one WWPN.';
+    if (values.port_type == "ISCSI") {
+      if (!values.iqn || !values.iqn.length) {
+        errors.iqn = 'Please provide an IQN.';
+      }
+    }
+    if (values.port_type == "FC" || values.port_type == "NVMeFC") {
+      if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
+        errors.wwpn = 'Please provide at least one WWPN.';
+      }
     }
     return errors;
   };
