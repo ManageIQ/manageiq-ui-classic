@@ -87,12 +87,31 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         condition: { when: 'physical_storage_id', isNotEmpty: true },
       },
       {
-        component: componentTypes.TEXT_FIELD,
+        component: componentTypes.FIELD_ARRAY,
         name: 'iqn',
         id: 'iqn',
-        label: __('iqn:'),
+        label: __('IQN:'),
+        fieldKey: 'field_array',
         isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
+        buttonLabels: {
+          add: __('Add'),
+          remove: __('Remove'),
+        },
+        AddButtonProps: {
+          size: 'small',
+        },
+        RemoveButtonProps: {
+          size: 'small',
+        },
+        fields: [
+          {
+            component: componentTypes.TEXT_FIELD,
+            label: __('IQN'),
+            isRequired: true,
+            validate: [{ type: validatorTypes.REQUIRED }],
+          },
+        ],
         condition: {
           when: 'port_type',
           is: 'ISCSI',
