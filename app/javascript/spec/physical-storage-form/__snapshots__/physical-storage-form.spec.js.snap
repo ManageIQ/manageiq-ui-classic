@@ -2821,20 +2821,15 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           >
                                             <TextInput
                                               disabled={true}
-                                              helperText=""
                                               id="name"
-                                              inline={false}
                                               invalid={false}
                                               invalidText=""
                                               key="name"
                                               labelText="Name:"
-                                              light={false}
                                               name="name"
                                               onBlur={[Function]}
                                               onChange={[Function]}
-                                              onClick={[Function]}
                                               onFocus={[Function]}
-                                              type="text"
                                               value=""
                                               warn={false}
                                               warnText=""
@@ -2856,7 +2851,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     data-invalid={null}
                                                   >
                                                     <input
-                                                      className="bx--text-input"
+                                                      className="bx--text-input bx--text-input--md"
                                                       disabled={true}
                                                       id="name"
                                                       name="name"
@@ -3094,21 +3089,15 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               name="edit"
                                             >
                                               <TextInput
-                                                disabled={false}
-                                                helperText=""
                                                 id="edit"
-                                                inline={false}
                                                 invalid={false}
                                                 invalidText=""
                                                 key="edit"
                                                 labelText="edit"
-                                                light={false}
                                                 name="edit"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
-                                                onClick={[Function]}
                                                 onFocus={[Function]}
-                                                type="text"
                                                 value=""
                                                 warn={false}
                                                 warnText=""
@@ -3130,7 +3119,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       data-invalid={null}
                                                     >
                                                       <input
-                                                        className="bx--text-input"
+                                                        className="bx--text-input bx--text-input--md"
                                                         disabled={false}
                                                         id="edit"
                                                         name="edit"
@@ -3581,10 +3570,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                           }
                                                         >
                                                           <TextInput
-                                                            disabled={false}
-                                                            helperText=""
                                                             id="management_ip"
-                                                            inline={false}
                                                             invalid={false}
                                                             invalidText=""
                                                             key="management_ip"
@@ -3593,11 +3579,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                 Management IP:
                                                               </IsRequired>
                                                             }
-                                                            light={false}
                                                             name="management_ip"
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
-                                                            onClick={[Function]}
                                                             onFocus={[Function]}
                                                             type="text"
                                                             value=""
@@ -3629,7 +3613,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                   data-invalid={null}
                                                                 >
                                                                   <input
-                                                                    className="bx--text-input"
+                                                                    className="bx--text-input bx--text-input--md"
                                                                     disabled={false}
                                                                     id="management_ip"
                                                                     name="management_ip"
@@ -3947,10 +3931,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                           }
                                                         >
                                                           <TextInput
-                                                            disabled={false}
-                                                            helperText=""
                                                             id="user"
-                                                            inline={false}
                                                             invalid={false}
                                                             invalidText=""
                                                             key="user"
@@ -3959,11 +3940,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                 User:
                                                               </IsRequired>
                                                             }
-                                                            light={false}
                                                             name="user"
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
-                                                            onClick={[Function]}
                                                             onFocus={[Function]}
                                                             type="text"
                                                             value=""
@@ -3995,7 +3974,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                   data-invalid={null}
                                                                 >
                                                                   <input
-                                                                    className="bx--text-input"
+                                                                    className="bx--text-input bx--text-input--md"
                                                                     disabled={false}
                                                                     id="user"
                                                                     name="user"
@@ -4313,10 +4292,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                           }
                                                         >
                                                           <TextInput
-                                                            disabled={false}
-                                                            helperText=""
                                                             id="physical_storage_password"
-                                                            inline={false}
                                                             invalid={false}
                                                             invalidText=""
                                                             key="password"
@@ -4325,11 +4301,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                 Password:
                                                               </IsRequired>
                                                             }
-                                                            light={false}
                                                             name="password"
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
-                                                            onClick={[Function]}
                                                             onFocus={[Function]}
                                                             type="password"
                                                             value=""
@@ -4361,7 +4335,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                                   data-invalid={null}
                                                                 >
                                                                   <input
-                                                                    className="bx--text-input"
+                                                                    className="bx--text-input bx--text-input--md"
                                                                     disabled={false}
                                                                     id="physical_storage_password"
                                                                     name="password"
@@ -4404,16 +4378,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       }
                                     >
                                       <Button
-                                        dangerDescription="danger"
                                         disabled={true}
-                                        isExpressive={false}
                                         kind="tertiary"
                                         onClick={[Function]}
                                         size="small"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
-                                        type="button"
                                       >
                                         <button
                                           aria-describedby={null}
@@ -4907,14 +4875,8 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       variant="primary"
                                     >
                                       <Button
-                                        dangerDescription="danger"
                                         disabled={true}
-                                        isExpressive={false}
                                         kind="primary"
-                                        size="default"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
                                         type="submit"
                                         variant="primary"
                                       >
@@ -4945,15 +4907,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       type="button"
                                     >
                                       <Button
-                                        dangerDescription="danger"
                                         disabled={true}
-                                        isExpressive={false}
                                         kind="secondary"
                                         onClick={[Function]}
-                                        size="default"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
                                         type="button"
                                       >
                                         <button
@@ -4981,15 +4937,8 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       type="button"
                                     >
                                       <Button
-                                        dangerDescription="danger"
-                                        disabled={false}
-                                        isExpressive={false}
                                         kind="secondary"
                                         onClick={[Function]}
-                                        size="default"
-                                        tabIndex={0}
-                                        tooltipAlignment="center"
-                                        tooltipPosition="top"
                                         type="button"
                                       >
                                         <button

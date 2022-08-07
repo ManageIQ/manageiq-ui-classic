@@ -208,6 +208,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
         <TextArea
           cols={50}
           disabled={false}
+          enableCounter={false}
           helperText=""
           invalid={false}
           invalidText=""

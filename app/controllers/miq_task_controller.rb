@@ -120,8 +120,10 @@ class MiqTaskController < ApplicationController
   def delete_all_tasks
     assert_privileges("miq_task_deleteall")
     task_ids = []
-    session[:view].table.data.each do |rec|
-      task_ids.push(rec["id"])
+    if session[:view].table.present?
+      session[:view].table.data.each do |rec|
+        task_ids.push(rec["id"])
+      end
     end
     delete_tasks_from_table(task_ids, "Delete all finished tasks")
     jobs

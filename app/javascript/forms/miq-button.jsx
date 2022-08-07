@@ -38,7 +38,7 @@ function MiqButton(props) {
         onKeyPress={buttonClicked}
         title={title}
       >
-        {props.name}
+        {__(props.name)}
       </Button>
     );
   }
@@ -49,7 +49,7 @@ function MiqButton(props) {
       onKeyPress={buttonClicked}
       title={title}
     >
-      {props.name}
+      {__(props.name)}
     </Button>
   );
 }

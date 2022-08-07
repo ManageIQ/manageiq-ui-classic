@@ -45,21 +45,15 @@ exports[`TreeSelector component should render correctly 1`] = `
             className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3"
           >
             <TextInput
-              disabled={false}
-              helperText=""
               id="tree-selector"
-              inline={false}
               invalid={false}
               invalidText=""
               key="tree-selector"
               labelText=""
-              light={false}
               name="tree-selector"
               onBlur={[Function]}
               onChange={[Function]}
-              onClick={[Function]}
               onFocus={[Function]}
-              type="text"
               value=""
               warn={false}
               warnText=""
@@ -75,7 +69,7 @@ exports[`TreeSelector component should render correctly 1`] = `
                     data-invalid={null}
                   >
                     <input
-                      className="bx--text-input"
+                      className="bx--text-input bx--text-input--md"
                       disabled={false}
                       id="tree-selector"
                       name="tree-selector"
@@ -96,11 +90,8 @@ exports[`TreeSelector component should render correctly 1`] = `
           >
             <Button
               className="tree-selector-toggle"
-              dangerDescription="danger"
-              disabled={false}
               hasIconOnly={true}
               iconDescription="Toggle"
-              isExpressive={false}
               kind="primary"
               onClick={[Function]}
               renderIcon={
@@ -110,10 +101,6 @@ exports[`TreeSelector component should render correctly 1`] = `
                 }
               }
               size="field"
-              tabIndex={0}
-              tooltipAlignment="center"
-              tooltipPosition="top"
-              type="button"
             >
               <button
                 aria-describedby={null}
@@ -174,11 +161,8 @@ exports[`TreeSelector component should render correctly 1`] = `
             </Button>
             <Button
               className="tree-selector-clear"
-              dangerDescription="danger"
-              disabled={false}
               hasIconOnly={true}
               iconDescription="Clear"
-              isExpressive={false}
               kind="danger"
               onClick={[Function]}
               renderIcon={
@@ -188,10 +172,6 @@ exports[`TreeSelector component should render correctly 1`] = `
                 }
               }
               size="field"
-              tabIndex={0}
-              tooltipAlignment="center"
-              tooltipPosition="top"
-              type="button"
             >
               <button
                 aria-describedby="danger-description-2"
@@ -299,34 +279,35 @@ exports[`TreeSelector component should render correctly 1`] = `
                 tree-selector
               </h3>
               <button
-                aria-label="Close"
+                aria-label="close"
                 className="bx--modal-close"
                 onClick={[Function]}
                 title="Close"
                 type="button"
               >
                 <ForwardRef(Close20)
-                  aria-label="Close"
+                  aria-hidden="true"
                   className="bx--modal-close__icon"
+                  tabIndex="-1"
                 >
                   <Icon
-                    aria-label="Close"
+                    aria-hidden="true"
                     className="bx--modal-close__icon"
                     fill="currentColor"
                     height={20}
                     preserveAspectRatio="xMidYMid meet"
+                    tabIndex="-1"
                     viewBox="0 0 32 32"
                     width={20}
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <svg
-                      aria-label="Close"
+                      aria-hidden={true}
                       className="bx--modal-close__icon"
                       fill="currentColor"
                       focusable="false"
                       height={20}
                       preserveAspectRatio="xMidYMid meet"
-                      role="img"
                       viewBox="0 0 32 32"
                       width={20}
                       xmlns="http://www.w3.org/2000/svg"
@@ -415,16 +396,8 @@ exports[`TreeSelector component should render correctly 1`] = `
                 className="bx--modal-footer bx--btn-set"
               >
                 <Button
-                  dangerDescription="danger"
-                  disabled={false}
-                  isExpressive={false}
                   kind="secondary"
                   onClick={[Function]}
-                  size="default"
-                  tabIndex={0}
-                  tooltipAlignment="center"
-                  tooltipPosition="top"
-                  type="button"
                 >
                   <button
                     aria-describedby={null}
@@ -443,16 +416,9 @@ exports[`TreeSelector component should render correctly 1`] = `
                   </button>
                 </Button>
                 <Button
-                  dangerDescription="danger"
                   disabled={true}
-                  isExpressive={false}
                   kind="primary"
                   onClick={[Function]}
-                  size="default"
-                  tabIndex={0}
-                  tooltipAlignment="center"
-                  tooltipPosition="top"
-                  type="button"
                 >
                   <button
                     aria-describedby={null}

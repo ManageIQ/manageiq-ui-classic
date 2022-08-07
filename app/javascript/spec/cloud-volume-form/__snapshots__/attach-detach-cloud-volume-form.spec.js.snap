@@ -1074,10 +1074,7 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                             }
                           >
                             <TextInput
-                              disabled={false}
-                              helperText=""
                               id="device_mountpoint"
-                              inline={false}
                               invalid={false}
                               invalidText=""
                               key="device_mountpoint"
@@ -1086,13 +1083,10 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                                   Device Mountpoint
                                 </IsRequired>
                               }
-                              light={false}
                               name="device_mountpoint"
                               onBlur={[Function]}
                               onChange={[Function]}
-                              onClick={[Function]}
                               onFocus={[Function]}
-                              type="text"
                               value=""
                               warn={false}
                               warnText=""
@@ -1122,7 +1116,7 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                                     data-invalid={null}
                                   >
                                     <input
-                                      className="bx--text-input"
+                                      className="bx--text-input bx--text-input--md"
                                       disabled={false}
                                       id="device_mountpoint"
                                       name="device_mountpoint"
@@ -1181,15 +1175,9 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                       >
                         <Button
                           className="btnRight"
-                          dangerDescription="danger"
                           disabled={true}
                           id="submit"
-                          isExpressive={false}
                           kind="primary"
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="submit"
                           variant="contained"
                         >
@@ -1213,16 +1201,10 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                         </Button>
                         <Button
                           className="btnRight"
-                          dangerDescription="danger"
                           disabled={true}
                           id="reset"
-                          isExpressive={false}
                           kind="secondary"
                           onClick={[Function]}
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="button"
                           variant="contained"
                         >
@@ -1245,15 +1227,8 @@ exports[`Attach / Detach form component should render attach form variant 1`] = 
                           </button>
                         </Button>
                         <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
                           kind="secondary"
                           onClick={[Function]}
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="button"
                           variant="contained"
                         >
@@ -2243,15 +2218,9 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                       >
                         <Button
                           className="btnRight"
-                          dangerDescription="danger"
                           disabled={true}
                           id="submit"
-                          isExpressive={false}
                           kind="primary"
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="submit"
                           variant="contained"
                         >
@@ -2275,16 +2244,10 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                         </Button>
                         <Button
                           className="btnRight"
-                          dangerDescription="danger"
                           disabled={false}
                           id="reset"
-                          isExpressive={false}
                           kind="secondary"
                           onClick={[Function]}
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="button"
                           variant="contained"
                         >
@@ -2307,15 +2270,8 @@ exports[`Attach / Detach form component should render detach form variant 1`] = 
                           </button>
                         </Button>
                         <Button
-                          dangerDescription="danger"
-                          disabled={false}
-                          isExpressive={false}
                           kind="secondary"
                           onClick={[Function]}
-                          size="default"
-                          tabIndex={0}
-                          tooltipAlignment="center"
-                          tooltipPosition="top"
                           type="button"
                           variant="contained"
                         >

@@ -32,7 +32,7 @@ module EmsStorageHelper::TextualSummary
   #
   def textual_provider_region
     return nil if @record.provider_region.nil?
-    {:label => _("Region"), :value => @record.description}
+    {:label => _("Region"), :value => @record.provider_region}
   end
 
   def textual_hostname

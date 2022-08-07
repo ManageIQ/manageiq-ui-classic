@@ -1649,9 +1649,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                         >
                                           <TextInput
                                             disabled={true}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -1660,14 +1658,11 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="test add zone name"
                                             warn={false}
                                             warnText=""
@@ -1697,7 +1692,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={true}
                                                     id="name"
                                                     maxLength={50}
@@ -1769,10 +1764,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="description"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="description"
@@ -1781,14 +1773,11 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 Description
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={50}
                                             name="description"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value="test add zone"
                                             warn={false}
                                             warnText=""
@@ -1818,7 +1807,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={50}
@@ -1868,22 +1857,16 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           name="settings.proxy_server_ip"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="settings.proxy_server_ip"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="settings.proxy_server_ip"
                                             labelText="SmartProxy Server IP"
-                                            light={false}
                                             maxLength={50}
                                             name="settings.proxy_server_ip"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -1905,7 +1888,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="settings.proxy_server_ip"
                                                     maxLength={50}
@@ -3401,14 +3384,8 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -3439,15 +3416,9 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -3475,15 +3446,8 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

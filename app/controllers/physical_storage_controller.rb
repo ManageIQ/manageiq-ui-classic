@@ -575,6 +575,14 @@ class PhysicalStorageController < ApplicationController
     render :json => presenter.for_render
   end
 
+  def button
+    if params[:pressed] == "physical_storage_timeline"
+      @record = find_record_with_rbac(PhysicalStorage, params[:id])
+      show_timeline
+      javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
+    end
+  end
+
   def download_summary_pdf
     assert_privileges('physical_storage_show')
     super

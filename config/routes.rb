@@ -1274,6 +1274,8 @@ Rails.application.routes.draw do
         button
         custom_button_events
         hosts
+        tl_chooser
+        wait_for_task
         listnav_search_selected
         quick_search
         show_list
@@ -1542,11 +1544,14 @@ Rails.application.routes.draw do
         show
         download_data
         download_summary_pdf
+        edit
+        new
       ),
       :post => %w(
         quick_search
         show_list
         show
+        button
       ) +
         adv_search_post +
         exp_post

@@ -835,10 +835,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -847,14 +844,11 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                                 Backup Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -884,7 +878,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={50}
@@ -1029,64 +1023,76 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                           name="incremental"
                                         >
                                           <div>
-                                            <Toggle
-                                              aria-label="Toggle"
-                                              defaultToggled={false}
+                                            <FeatureToggle(Toggle)
                                               id="incremental"
                                               key="incremental"
-                                              labelA="Off"
-                                              labelB="On"
                                               labelText="Incremental?"
                                               maxLength={50}
                                               name="incremental"
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <div
-                                                className="bx--form-item"
+                                              <Toggle
+                                                aria-label="Toggle"
+                                                defaultToggled={false}
+                                                id="incremental"
+                                                labelA="Off"
+                                                labelB="On"
+                                                labelText="Incremental?"
+                                                maxLength={50}
+                                                name="incremental"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onToggle={[Function]}
+                                                toggled={false}
+                                                type="checkbox"
                                               >
-                                                <input
-                                                  aria-label={null}
-                                                  checked={false}
-                                                  className="bx--toggle-input"
-                                                  id="incremental"
-                                                  maxLength={50}
-                                                  name="incremental"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyUp={[Function]}
-                                                  type="checkbox"
-                                                />
-                                                <label
-                                                  aria-label={null}
-                                                  className="bx--toggle-input__label"
-                                                  htmlFor="incremental"
+                                                <div
+                                                  className="bx--form-item"
                                                 >
-                                                  Incremental?
-                                                  <span
-                                                    className="bx--toggle__switch"
+                                                  <input
+                                                    aria-label={null}
+                                                    checked={false}
+                                                    className="bx--toggle-input"
+                                                    id="incremental"
+                                                    maxLength={50}
+                                                    name="incremental"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    type="checkbox"
+                                                  />
+                                                  <label
+                                                    aria-label={null}
+                                                    className="bx--toggle-input__label"
+                                                    htmlFor="incremental"
                                                   >
+                                                    Incremental?
                                                     <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--off"
+                                                      className="bx--toggle__switch"
                                                     >
-                                                      Off
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--off"
+                                                      >
+                                                        Off
+                                                      </span>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--on"
+                                                      >
+                                                        On
+                                                      </span>
                                                     </span>
-                                                    <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--on"
-                                                    >
-                                                      On
-                                                    </span>
-                                                  </span>
-                                                </label>
-                                              </div>
-                                            </Toggle>
+                                                  </label>
+                                                </div>
+                                              </Toggle>
+                                            </FeatureToggle(Toggle)>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -1123,64 +1129,76 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                           name="force"
                                         >
                                           <div>
-                                            <Toggle
-                                              aria-label="Toggle"
-                                              defaultToggled={false}
+                                            <FeatureToggle(Toggle)
                                               id="force"
                                               key="force"
-                                              labelA="Off"
-                                              labelB="On"
                                               labelText="Force?"
                                               maxLength={50}
                                               name="force"
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <div
-                                                className="bx--form-item"
+                                              <Toggle
+                                                aria-label="Toggle"
+                                                defaultToggled={false}
+                                                id="force"
+                                                labelA="Off"
+                                                labelB="On"
+                                                labelText="Force?"
+                                                maxLength={50}
+                                                name="force"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onToggle={[Function]}
+                                                toggled={false}
+                                                type="checkbox"
                                               >
-                                                <input
-                                                  aria-label={null}
-                                                  checked={false}
-                                                  className="bx--toggle-input"
-                                                  id="force"
-                                                  maxLength={50}
-                                                  name="force"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyUp={[Function]}
-                                                  type="checkbox"
-                                                />
-                                                <label
-                                                  aria-label={null}
-                                                  className="bx--toggle-input__label"
-                                                  htmlFor="force"
+                                                <div
+                                                  className="bx--form-item"
                                                 >
-                                                  Force?
-                                                  <span
-                                                    className="bx--toggle__switch"
+                                                  <input
+                                                    aria-label={null}
+                                                    checked={false}
+                                                    className="bx--toggle-input"
+                                                    id="force"
+                                                    maxLength={50}
+                                                    name="force"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    type="checkbox"
+                                                  />
+                                                  <label
+                                                    aria-label={null}
+                                                    className="bx--toggle-input__label"
+                                                    htmlFor="force"
                                                   >
+                                                    Force?
                                                     <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--off"
+                                                      className="bx--toggle__switch"
                                                     >
-                                                      Off
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--off"
+                                                      >
+                                                        Off
+                                                      </span>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--on"
+                                                      >
+                                                        On
+                                                      </span>
                                                     </span>
-                                                    <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--on"
-                                                    >
-                                                      On
-                                                    </span>
-                                                  </span>
-                                                </label>
-                                              </div>
-                                            </Toggle>
+                                                  </label>
+                                                </div>
+                                              </Toggle>
+                                            </FeatureToggle(Toggle)>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -1449,14 +1467,8 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -1486,15 +1498,8 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -2369,10 +2374,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                           }
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
@@ -2381,14 +2383,11 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                                 Backup Name
                                               </IsRequired>
                                             }
-                                            light={false}
                                             maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -2418,7 +2417,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={50}
@@ -2563,64 +2562,76 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                           name="incremental"
                                         >
                                           <div>
-                                            <Toggle
-                                              aria-label="Toggle"
-                                              defaultToggled={false}
+                                            <FeatureToggle(Toggle)
                                               id="incremental"
                                               key="incremental"
-                                              labelA="Off"
-                                              labelB="On"
                                               labelText="Incremental?"
                                               maxLength={50}
                                               name="incremental"
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <div
-                                                className="bx--form-item"
+                                              <Toggle
+                                                aria-label="Toggle"
+                                                defaultToggled={false}
+                                                id="incremental"
+                                                labelA="Off"
+                                                labelB="On"
+                                                labelText="Incremental?"
+                                                maxLength={50}
+                                                name="incremental"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onToggle={[Function]}
+                                                toggled={false}
+                                                type="checkbox"
                                               >
-                                                <input
-                                                  aria-label={null}
-                                                  checked={false}
-                                                  className="bx--toggle-input"
-                                                  id="incremental"
-                                                  maxLength={50}
-                                                  name="incremental"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyUp={[Function]}
-                                                  type="checkbox"
-                                                />
-                                                <label
-                                                  aria-label={null}
-                                                  className="bx--toggle-input__label"
-                                                  htmlFor="incremental"
+                                                <div
+                                                  className="bx--form-item"
                                                 >
-                                                  Incremental?
-                                                  <span
-                                                    className="bx--toggle__switch"
+                                                  <input
+                                                    aria-label={null}
+                                                    checked={false}
+                                                    className="bx--toggle-input"
+                                                    id="incremental"
+                                                    maxLength={50}
+                                                    name="incremental"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    type="checkbox"
+                                                  />
+                                                  <label
+                                                    aria-label={null}
+                                                    className="bx--toggle-input__label"
+                                                    htmlFor="incremental"
                                                   >
+                                                    Incremental?
                                                     <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--off"
+                                                      className="bx--toggle__switch"
                                                     >
-                                                      Off
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--off"
+                                                      >
+                                                        Off
+                                                      </span>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--on"
+                                                      >
+                                                        On
+                                                      </span>
                                                     </span>
-                                                    <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--on"
-                                                    >
-                                                      On
-                                                    </span>
-                                                  </span>
-                                                </label>
-                                              </div>
-                                            </Toggle>
+                                                  </label>
+                                                </div>
+                                              </Toggle>
+                                            </FeatureToggle(Toggle)>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -2657,64 +2668,76 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                           name="force"
                                         >
                                           <div>
-                                            <Toggle
-                                              aria-label="Toggle"
-                                              defaultToggled={false}
+                                            <FeatureToggle(Toggle)
                                               id="force"
                                               key="force"
-                                              labelA="Off"
-                                              labelB="On"
                                               labelText="Force?"
                                               maxLength={50}
                                               name="force"
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <div
-                                                className="bx--form-item"
+                                              <Toggle
+                                                aria-label="Toggle"
+                                                defaultToggled={false}
+                                                id="force"
+                                                labelA="Off"
+                                                labelB="On"
+                                                labelText="Force?"
+                                                maxLength={50}
+                                                name="force"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onToggle={[Function]}
+                                                toggled={false}
+                                                type="checkbox"
                                               >
-                                                <input
-                                                  aria-label={null}
-                                                  checked={false}
-                                                  className="bx--toggle-input"
-                                                  id="force"
-                                                  maxLength={50}
-                                                  name="force"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyUp={[Function]}
-                                                  type="checkbox"
-                                                />
-                                                <label
-                                                  aria-label={null}
-                                                  className="bx--toggle-input__label"
-                                                  htmlFor="force"
+                                                <div
+                                                  className="bx--form-item"
                                                 >
-                                                  Force?
-                                                  <span
-                                                    className="bx--toggle__switch"
+                                                  <input
+                                                    aria-label={null}
+                                                    checked={false}
+                                                    className="bx--toggle-input"
+                                                    id="force"
+                                                    maxLength={50}
+                                                    name="force"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    type="checkbox"
+                                                  />
+                                                  <label
+                                                    aria-label={null}
+                                                    className="bx--toggle-input__label"
+                                                    htmlFor="force"
                                                   >
+                                                    Force?
                                                     <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--off"
+                                                      className="bx--toggle__switch"
                                                     >
-                                                      Off
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--off"
+                                                      >
+                                                        Off
+                                                      </span>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="bx--toggle__text--on"
+                                                      >
+                                                        On
+                                                      </span>
                                                     </span>
-                                                    <span
-                                                      aria-hidden="true"
-                                                      className="bx--toggle__text--on"
-                                                    >
-                                                      On
-                                                    </span>
-                                                  </span>
-                                                </label>
-                                              </div>
-                                            </Toggle>
+                                                  </label>
+                                                </div>
+                                              </Toggle>
+                                            </FeatureToggle(Toggle)>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -2983,14 +3006,8 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -3020,15 +3037,8 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -4110,14 +4120,8 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -4147,15 +4151,8 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -5237,14 +5234,8 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -5274,15 +5265,8 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -5859,22 +5843,16 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                                           name="name"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
                                             labelText="Snapshot Name"
-                                            light={false}
                                             maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -5896,7 +5874,7 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={50}
@@ -6106,14 +6084,8 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -6143,15 +6115,8 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button
@@ -6728,22 +6693,16 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                                           name="name"
                                         >
                                           <TextInput
-                                            disabled={false}
-                                            helperText=""
                                             id="name"
-                                            inline={false}
                                             invalid={false}
                                             invalidText=""
                                             key="name"
                                             labelText="Snapshot Name"
-                                            light={false}
                                             maxLength={50}
                                             name="name"
                                             onBlur={[Function]}
                                             onChange={[Function]}
-                                            onClick={[Function]}
                                             onFocus={[Function]}
-                                            type="text"
                                             value=""
                                             warn={false}
                                             warnText=""
@@ -6765,7 +6724,7 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input"
+                                                    className="bx--text-input bx--text-input--md"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={50}
@@ -6975,14 +6934,8 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                                     variant="primary"
                                   >
                                     <Button
-                                      dangerDescription="danger"
                                       disabled={true}
-                                      isExpressive={false}
                                       kind="primary"
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="submit"
                                       variant="primary"
                                     >
@@ -7012,15 +6965,8 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                                     type="button"
                                   >
                                     <Button
-                                      dangerDescription="danger"
-                                      disabled={false}
-                                      isExpressive={false}
                                       kind="secondary"
                                       onClick={[Function]}
-                                      size="default"
-                                      tabIndex={0}
-                                      tooltipAlignment="center"
-                                      tooltipPosition="top"
                                       type="button"
                                     >
                                       <button

@@ -1,179 +1,167 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Catalog form component should render add variant form 1`] = `
-<ContextProvider
-  value={true}
->
-  <div
-    className="bx--grid"
-  >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
+<FlexGrid>
+  <Connect(MiqFormRenderer)
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
       }
-      canReset={false}
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "autoFocus": true,
-              "component": "text-field",
-              "id": "name",
-              "label": "Name",
-              "maxLength": 40,
-              "name": "name",
-              "validate": Array [
-                [Function],
-              ],
-              "validateOnMount": true,
-            },
-            Object {
-              "component": "text-field",
-              "id": "description",
-              "label": "Description",
-              "maxLength": 60,
-              "name": "description",
-            },
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "allToRight": false,
-                  "component": "dual-list-select",
-                  "filterOptionsTitle": "Filter options",
-                  "filterValuesTitle": "Filter values",
-                  "id": "service_templates",
-                  "label": "Assign Catalog Items",
-                  "leftTitle": "Unassigned:",
-                  "moveAllLeftTitle": "Remove All",
-                  "moveAllRightTitle": "Add All",
-                  "moveLeftTitle": "Remove",
-                  "moveRightTitle": "Add",
-                  "name": "service_templates",
-                  "noOptionsTitle": "No available options",
-                  "noValueTitle": "No option selected",
-                  "options": Array [
-                    Object {
-                      "label": "template 44",
-                      "value": "http://localhost:3000/api/service_templates/44",
-                    },
-                    Object {
-                      "label": "template 10",
-                      "value": "http://localhost:3000/api/service_templates/10",
-                    },
-                  ],
-                  "rightTitle": "Selected:",
-                },
-              ],
-              "id": "dual-list-sub-form-catalog",
-              "name": "dual-list-sub-form",
-            },
-          ],
-        }
+    }
+    canReset={false}
+    onCancel={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "autoFocus": true,
+            "component": "text-field",
+            "id": "name",
+            "label": "Name",
+            "maxLength": 40,
+            "name": "name",
+            "validate": Array [
+              [Function],
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "id": "description",
+            "label": "Description",
+            "maxLength": 60,
+            "name": "description",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "allToRight": false,
+                "component": "dual-list-select",
+                "filterOptionsTitle": "Filter options",
+                "filterValuesTitle": "Filter values",
+                "id": "service_templates",
+                "label": "Assign Catalog Items",
+                "leftTitle": "Unassigned:",
+                "moveAllLeftTitle": "Remove All",
+                "moveAllRightTitle": "Add All",
+                "moveLeftTitle": "Remove",
+                "moveRightTitle": "Add",
+                "name": "service_templates",
+                "noOptionsTitle": "No available options",
+                "noValueTitle": "No option selected",
+                "options": Array [
+                  Object {
+                    "label": "template 44",
+                    "value": "http://localhost:3000/api/service_templates/44",
+                  },
+                  Object {
+                    "label": "template 10",
+                    "value": "http://localhost:3000/api/service_templates/10",
+                  },
+                ],
+                "rightTitle": "Selected:",
+              },
+            ],
+            "id": "dual-list-sub-form-catalog",
+            "name": "dual-list-sub-form",
+          },
+        ],
       }
-    />
-  </div>
-</ContextProvider>
+    }
+  />
+</FlexGrid>
 `;
 
 exports[`Catalog form component should render edit variant form 1`] = `
-<ContextProvider
-  value={true}
->
-  <div
-    className="bx--grid"
-  >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Save",
-        }
+<FlexGrid>
+  <Connect(MiqFormRenderer)
+    buttonsLabels={
+      Object {
+        "submitLabel": "Save",
       }
-      canReset={true}
-      initialValues={
-        Object {
-          "description": "This is a DROGO!",
-          "name": "DROGO",
-          "service_templates": Array [
-            "http://localhost:3000/api/service_templates/2",
-            "http://localhost:3000/api/service_templates/6",
-          ],
-        }
+    }
+    canReset={true}
+    initialValues={
+      Object {
+        "description": "This is a DROGO!",
+        "name": "DROGO",
+        "service_templates": Array [
+          "http://localhost:3000/api/service_templates/2",
+          "http://localhost:3000/api/service_templates/6",
+        ],
       }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "autoFocus": true,
-              "component": "text-field",
-              "id": "name",
-              "label": "Name",
-              "maxLength": 40,
-              "name": "name",
-              "validate": Array [
-                [Function],
-              ],
-              "validateOnMount": true,
-            },
-            Object {
-              "component": "text-field",
-              "id": "description",
-              "label": "Description",
-              "maxLength": 60,
-              "name": "description",
-            },
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "allToRight": false,
-                  "component": "dual-list-select",
-                  "filterOptionsTitle": "Filter options",
-                  "filterValuesTitle": "Filter values",
-                  "id": "service_templates",
-                  "label": "Assign Catalog Items",
-                  "leftTitle": "Unassigned:",
-                  "moveAllLeftTitle": "Remove All",
-                  "moveAllRightTitle": "Add All",
-                  "moveLeftTitle": "Remove",
-                  "moveRightTitle": "Add",
-                  "name": "service_templates",
-                  "noOptionsTitle": "No available options",
-                  "noValueTitle": "No option selected",
-                  "options": Array [
-                    Object {
-                      "label": "template 44",
-                      "value": "http://localhost:3000/api/service_templates/44",
-                    },
-                    Object {
-                      "label": "template 10",
-                      "value": "http://localhost:3000/api/service_templates/10",
-                    },
-                    Object {
-                      "label": "template 2",
-                      "value": "http://localhost:3000/api/service_templates/2",
-                    },
-                    Object {
-                      "label": "template 6",
-                      "value": "http://localhost:3000/api/service_templates/6",
-                    },
-                  ],
-                  "rightTitle": "Selected:",
-                },
-              ],
-              "id": "dual-list-sub-form-catalog",
-              "name": "dual-list-sub-form",
-            },
-          ],
-        }
+    }
+    onCancel={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "autoFocus": true,
+            "component": "text-field",
+            "id": "name",
+            "label": "Name",
+            "maxLength": 40,
+            "name": "name",
+            "validate": Array [
+              [Function],
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "id": "description",
+            "label": "Description",
+            "maxLength": 60,
+            "name": "description",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "allToRight": false,
+                "component": "dual-list-select",
+                "filterOptionsTitle": "Filter options",
+                "filterValuesTitle": "Filter values",
+                "id": "service_templates",
+                "label": "Assign Catalog Items",
+                "leftTitle": "Unassigned:",
+                "moveAllLeftTitle": "Remove All",
+                "moveAllRightTitle": "Add All",
+                "moveLeftTitle": "Remove",
+                "moveRightTitle": "Add",
+                "name": "service_templates",
+                "noOptionsTitle": "No available options",
+                "noValueTitle": "No option selected",
+                "options": Array [
+                  Object {
+                    "label": "template 44",
+                    "value": "http://localhost:3000/api/service_templates/44",
+                  },
+                  Object {
+                    "label": "template 10",
+                    "value": "http://localhost:3000/api/service_templates/10",
+                  },
+                  Object {
+                    "label": "template 2",
+                    "value": "http://localhost:3000/api/service_templates/2",
+                  },
+                  Object {
+                    "label": "template 6",
+                    "value": "http://localhost:3000/api/service_templates/6",
+                  },
+                ],
+                "rightTitle": "Selected:",
+              },
+            ],
+            "id": "dual-list-sub-form-catalog",
+            "name": "dual-list-sub-form",
+          },
+        ],
       }
-    />
-  </div>
-</ContextProvider>
+    }
+  />
+</FlexGrid>
 `;

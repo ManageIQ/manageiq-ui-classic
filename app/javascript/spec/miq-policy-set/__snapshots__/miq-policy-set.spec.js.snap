@@ -53,6 +53,7 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
         <TextArea
           cols={50}
           disabled={false}
+          enableCounter={false}
           helperText=""
           invalid={false}
           invalidText=""

@@ -7,8 +7,9 @@ function FormButtons(props) {
   const primaryTitle = props.customLabel || (props.newRecord ? __('Add') : __('Save'));
   const primaryHandler = (props.newRecord ? props.addClicked : props.saveClicked) || props.addClicked || props.saveClicked;
 
-  const resetTitle = __('Reset');
-  const cancelTitle = __('Cancel');
+  // NOTE: These strings will be translated by <MiqButton />
+  const resetTitle = 'Reset';
+  const cancelTitle = 'Cancel';
 
   const { btnType } = props;
   if (btnType === 'deleteModal') {

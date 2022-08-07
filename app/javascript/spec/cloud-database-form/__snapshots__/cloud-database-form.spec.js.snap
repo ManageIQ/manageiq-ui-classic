@@ -1,0 +1,1346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cloud Database form component should render "Add New" form 1`] = `
+<Grid>
+  <Connect(MiqFormRenderer)
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
+      }
+    }
+    canReset={true}
+    initialValues={Object {}}
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "select",
+            "id": "ems_id",
+            "isDisabled": false,
+            "isRequired": true,
+            "label": "Cloud Provider",
+            "loadOptions": [Function],
+            "name": "ems_id",
+            "onChange": [Function],
+            "validate": Array [
+              Object {
+                "type": "required",
+              },
+            ],
+          },
+        ],
+      }
+    }
+  />
+</Grid>
+`;
+
+exports[`Cloud Database form component should render "Edit" form 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <CloudDatabaseForm
+    recordId="1"
+  >
+    <Grid>
+      <FlexGrid>
+        <GridSettings
+          mode="flexbox"
+          subgrid={false}
+        >
+          <div
+            className="bx--grid"
+          >
+            <Connect(MiqFormRenderer)
+              buttonsLabels={
+                Object {
+                  "submitLabel": "Save",
+                }
+              }
+              canReset={false}
+              initialValues={
+                Object {
+                  "ems_id": "1",
+                }
+              }
+              onCancel={[Function]}
+              onReset={[Function]}
+              onSubmit={[Function]}
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "ems_id",
+                      "isDisabled": true,
+                      "isRequired": true,
+                      "label": "Cloud Provider",
+                      "loadOptions": [Function],
+                      "name": "ems_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "text-field",
+                      "id": "sample_component",
+                      "isRequired": true,
+                      "label": "Sample Component",
+                      "name": "Sample Component",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                  ],
+                }
+              }
+            >
+              <MiqFormRenderer
+                buttonsLabels={
+                  Object {
+                    "submitLabel": "Save",
+                  }
+                }
+                canReset={false}
+                className="form-react"
+                componentMapper={
+                  Object {
+                    "checkbox": [Function],
+                    "code-editor": [Function],
+                    "date-picker": [Function],
+                    "dual-list-select": [Function],
+                    "edit-password-field": [Function],
+                    "field-array": [Function],
+                    "file-upload": [Function],
+                    "font-icon-picker": [Function],
+                    "font-icon-picker-ddf": [Function],
+                    "multi-select": [Function],
+                    "password-field": [Function],
+                    "plain-text": [Function],
+                    "radio": [Function],
+                    "select": [Function],
+                    "slider": [Function],
+                    "sub-form": [Function],
+                    "switch": [Function],
+                    "tabs": [Function],
+                    "text-field": [Function],
+                    "textarea": [Function],
+                    "time-picker": [Function],
+                    "tree-selector": [Function],
+                    "tree-view": [Function],
+                    "validate-credentials": [Function],
+                    "wizard": [Function],
+                  }
+                }
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                dispatch={[Function]}
+                initialValues={
+                  Object {
+                    "ems_id": "1",
+                  }
+                }
+                onCancel={[Function]}
+                onReset={[Function]}
+                onSubmit={[Function]}
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "ems_id",
+                        "isDisabled": true,
+                        "isRequired": true,
+                        "label": "Cloud Provider",
+                        "loadOptions": [Function],
+                        "name": "ems_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "id": "sample_component",
+                        "isRequired": true,
+                        "label": "Sample Component",
+                        "name": "Sample Component",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+              >
+                <FormRenderer
+                  FormTemplate={[Function]}
+                  clearOnUnmount={false}
+                  componentMapper={
+                    Object {
+                      "checkbox": [Function],
+                      "code-editor": [Function],
+                      "date-picker": [Function],
+                      "dual-list-select": [Function],
+                      "edit-password-field": [Function],
+                      "field-array": [Function],
+                      "file-upload": [Function],
+                      "font-icon-picker": [Function],
+                      "font-icon-picker-ddf": [Function],
+                      "multi-select": [Function],
+                      "password-field": [Function],
+                      "plain-text": [Function],
+                      "radio": [Function],
+                      "select": [Function],
+                      "slider": [Function],
+                      "spy-field": [Function],
+                      "sub-form": [Function],
+                      "switch": [Function],
+                      "tabs": [Function],
+                      "text-field": [Function],
+                      "textarea": [Function],
+                      "time-picker": [Function],
+                      "tree-selector": [Function],
+                      "tree-view": [Function],
+                      "validate-credentials": [Function],
+                      "wizard": [Function],
+                    }
+                  }
+                  dispatch={[Function]}
+                  initialValues={
+                    Object {
+                      "ems_id": "1",
+                    }
+                  }
+                  onCancel={[Function]}
+                  onReset={[Function]}
+                  onSubmit={[Function]}
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "ems_id",
+                          "isDisabled": true,
+                          "isRequired": true,
+                          "label": "Cloud Provider",
+                          "loadOptions": [Function],
+                          "name": "ems_id",
+                          "onChange": [Function],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "sample_component",
+                          "isRequired": true,
+                          "label": "Sample Component",
+                          "name": "Sample Component",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                >
+                  <ReactFinalForm
+                    decorators={
+                      Array [
+                        [Function],
+                      ]
+                    }
+                    dispatch={[Function]}
+                    initialValues={
+                      Object {
+                        "ems_id": "1",
+                      }
+                    }
+                    mutators={
+                      Object {
+                        "concat": [Function],
+                        "insert": [Function],
+                        "move": [Function],
+                        "pop": [Function],
+                        "push": [Function],
+                        "remove": [Function],
+                        "removeBatch": [Function],
+                        "shift": [Function],
+                        "swap": [Function],
+                        "unshift": [Function],
+                        "update": [Function],
+                      }
+                    }
+                    onSubmit={[Function]}
+                    render={[Function]}
+                    subscription={
+                      Object {
+                        "pristine": true,
+                        "submitting": true,
+                        "valid": true,
+                      }
+                    }
+                  >
+                    <Component
+                      formFields={
+                        Array [
+                          <SingleField
+                            component="select"
+                            id="ems_id"
+                            isDisabled={true}
+                            isRequired={true}
+                            label="Cloud Provider"
+                            loadOptions={[Function]}
+                            name="ems_id"
+                            onChange={[Function]}
+                            validate={
+                              Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ]
+                            }
+                          />,
+                          <SingleField
+                            component="text-field"
+                            id="sample_component"
+                            isRequired={true}
+                            label="Sample Component"
+                            name="Sample Component"
+                            validate={
+                              Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ]
+                            }
+                          />,
+                          <SingleField
+                            component="spy-field"
+                            name="spy-field"
+                          />,
+                        ]
+                      }
+                      schema={
+                        Object {
+                          "fields": Array [
+                            Object {
+                              "component": "select",
+                              "id": "ems_id",
+                              "isDisabled": true,
+                              "isRequired": true,
+                              "label": "Cloud Provider",
+                              "loadOptions": [Function],
+                              "name": "ems_id",
+                              "onChange": [Function],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "text-field",
+                              "id": "sample_component",
+                              "isRequired": true,
+                              "label": "Sample Component",
+                              "name": "Sample Component",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "spy-field",
+                              "initialize": undefined,
+                              "name": "spy-field",
+                            },
+                          ],
+                        }
+                      }
+                    >
+                      <WrappedFormTemplate
+                        canReset={false}
+                        cancelLabel="Cancel"
+                        disableSubmit={
+                          Array [
+                            "pristine",
+                            "invalid",
+                          ]
+                        }
+                        formFields={
+                          Array [
+                            <SingleField
+                              component="select"
+                              id="ems_id"
+                              isDisabled={true}
+                              isRequired={true}
+                              label="Cloud Provider"
+                              loadOptions={[Function]}
+                              name="ems_id"
+                              onChange={[Function]}
+                              validate={
+                                Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ]
+                              }
+                            />,
+                            <SingleField
+                              component="text-field"
+                              id="sample_component"
+                              isRequired={true}
+                              label="Sample Component"
+                              name="Sample Component"
+                              validate={
+                                Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ]
+                              }
+                            />,
+                            <SingleField
+                              component="spy-field"
+                              name="spy-field"
+                            />,
+                          ]
+                        }
+                        formWrapperProps={
+                          Object {
+                            "className": "form-react",
+                          }
+                        }
+                        resetLabel="Reset"
+                        schema={
+                          Object {
+                            "fields": Array [
+                              Object {
+                                "component": "select",
+                                "id": "ems_id",
+                                "isDisabled": true,
+                                "isRequired": true,
+                                "label": "Cloud Provider",
+                                "loadOptions": [Function],
+                                "name": "ems_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "text-field",
+                                "id": "sample_component",
+                                "isRequired": true,
+                                "label": "Sample Component",
+                                "name": "Sample Component",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              },
+                            ],
+                          }
+                        }
+                        showFormControls={true}
+                        submitLabel="Save"
+                      >
+                        <FormTemplate
+                          Button={[Function]}
+                          ButtonGroup={[Function]}
+                          Description={[Function]}
+                          FormWrapper={[Function]}
+                          Header={[Function]}
+                          Title={[Function]}
+                          buttonOrder={
+                            Array [
+                              "submit",
+                              "reset",
+                              "cancel",
+                            ]
+                          }
+                          canReset={false}
+                          cancelLabel="Cancel"
+                          disableSubmit={
+                            Array [
+                              "pristine",
+                              "invalid",
+                            ]
+                          }
+                          formFields={
+                            Array [
+                              <SingleField
+                                component="select"
+                                id="ems_id"
+                                isDisabled={true}
+                                isRequired={true}
+                                label="Cloud Provider"
+                                loadOptions={[Function]}
+                                name="ems_id"
+                                onChange={[Function]}
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              />,
+                              <SingleField
+                                component="text-field"
+                                id="sample_component"
+                                isRequired={true}
+                                label="Sample Component"
+                                name="Sample Component"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              />,
+                              <SingleField
+                                component="spy-field"
+                                name="spy-field"
+                              />,
+                            ]
+                          }
+                          formWrapperProps={
+                            Object {
+                              "className": "form-react",
+                            }
+                          }
+                          resetLabel="Reset"
+                          schema={
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "component": "select",
+                                  "id": "ems_id",
+                                  "isDisabled": true,
+                                  "isRequired": true,
+                                  "label": "Cloud Provider",
+                                  "loadOptions": [Function],
+                                  "name": "ems_id",
+                                  "onChange": [Function],
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                },
+                                Object {
+                                  "component": "text-field",
+                                  "id": "sample_component",
+                                  "isRequired": true,
+                                  "label": "Sample Component",
+                                  "name": "Sample Component",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                },
+                                Object {
+                                  "component": "spy-field",
+                                  "initialize": undefined,
+                                  "name": "spy-field",
+                                },
+                              ],
+                            }
+                          }
+                          showFormControls={true}
+                          submitLabel="Save"
+                        >
+                          <Form
+                            className="form-react"
+                            onSubmit={[Function]}
+                          >
+                            <Form
+                              className="form-0-2-3 form-react"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <form
+                                className="bx--form form-0-2-3 form-react"
+                                noValidate={true}
+                                onSubmit={[Function]}
+                              >
+                                 
+                                <SingleField
+                                  component="select"
+                                  id="ems_id"
+                                  isDisabled={true}
+                                  isRequired={true}
+                                  key="ems_id"
+                                  label="Cloud Provider"
+                                  loadOptions={[Function]}
+                                  name="ems_id"
+                                  onChange={[Function]}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <FormConditionWrapper
+                                    field={
+                                      Object {
+                                        "component": "select",
+                                        "id": "ems_id",
+                                        "isDisabled": true,
+                                        "isRequired": true,
+                                        "label": "Cloud Provider",
+                                        "loadOptions": [Function],
+                                        "name": "ems_id",
+                                        "onChange": [Function],
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      }
+                                    }
+                                  >
+                                    <FormFieldHideWrapper
+                                      hideField={false}
+                                    >
+                                      <SelectWithOnChange
+                                        component="select"
+                                        id="ems_id"
+                                        isDisabled={true}
+                                        isRequired={true}
+                                        label="Cloud Provider"
+                                        loadOptions={[Function]}
+                                        name="ems_id"
+                                        onChange={[Function]}
+                                        placeholder="<Choose>"
+                                        validate={
+                                          Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Select
+                                          component="select"
+                                          id="ems_id"
+                                          isDisabled={true}
+                                          isRequired={true}
+                                          label="Cloud Provider"
+                                          loadOptions={[Function]}
+                                          loadingMessage="Loading..."
+                                          name="ems_id"
+                                          placeholder="<Choose>"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <Select
+                                            SelectComponent={[Function]}
+                                            disabled={true}
+                                            id="ems_id"
+                                            invalid={false}
+                                            invalidText=""
+                                            isClearable={false}
+                                            isSearchable={false}
+                                            labelText={
+                                              <IsRequired>
+                                                Cloud Provider
+                                              </IsRequired>
+                                            }
+                                            loadOptions={[Function]}
+                                            loadOptionsChangeCounter={1}
+                                            loadingMessage="Loading..."
+                                            name="ems_id"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            options={Array []}
+                                            placeholder="<Choose>"
+                                            pluckSingleValue={true}
+                                            simpleValue={false}
+                                            value="1"
+                                          >
+                                            <ClearedSelect
+                                              className=""
+                                              closeMenuOnSelect={true}
+                                              disabled={true}
+                                              hideSelectedOptions={false}
+                                              id="ems_id"
+                                              invalidText=""
+                                              isClearable={false}
+                                              isFetching={false}
+                                              isSearchable={false}
+                                              labelText={
+                                                <IsRequired>
+                                                  Cloud Provider
+                                                </IsRequired>
+                                              }
+                                              name="ems_id"
+                                              noOptionsMessage={[Function]}
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onInputChange={[Function]}
+                                              options={
+                                                Array [
+                                                  Object {
+                                                    "label": "<Choose>",
+                                                    "value": "-1",
+                                                  },
+                                                  Object {
+                                                    "label": "Blue",
+                                                    "value": "1",
+                                                  },
+                                                  Object {
+                                                    "label": "Yellow",
+                                                    "value": "2",
+                                                  },
+                                                  Object {
+                                                    "label": "Green",
+                                                    "value": "3",
+                                                  },
+                                                ]
+                                              }
+                                              placeholder="<Choose>"
+                                              value="1"
+                                            >
+                                              <Select
+                                                className=""
+                                                disabled={true}
+                                                helperText=""
+                                                id="ems_id"
+                                                inline={false}
+                                                invalid={false}
+                                                invalidText=""
+                                                labelText={
+                                                  <IsRequired>
+                                                    Cloud Provider
+                                                  </IsRequired>
+                                                }
+                                                light={false}
+                                                name="ems_id"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                value="1"
+                                              >
+                                                <div
+                                                  className="bx--form-item"
+                                                >
+                                                  <div
+                                                    className="bx--select bx--select--disabled"
+                                                  >
+                                                    <label
+                                                      className="bx--label bx--label--disabled"
+                                                      htmlFor="ems_id"
+                                                    >
+                                                      <IsRequired>
+                                                        <span
+                                                          aria-hidden="true"
+                                                          className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                        >
+                                                          *
+                                                        </span>
+                                                        Cloud Provider
+                                                      </IsRequired>
+                                                    </label>
+                                                    <div
+                                                      className="bx--select-input__wrapper"
+                                                      data-invalid={null}
+                                                    >
+                                                      <select
+                                                        className="bx--select-input"
+                                                        disabled={true}
+                                                        id="ems_id"
+                                                        name="ems_id"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        value="1"
+                                                      >
+                                                        <SelectItem
+                                                          disabled={false}
+                                                          hidden={false}
+                                                          key="-1"
+                                                          label="<Choose>"
+                                                          text="<Choose>"
+                                                          value="-1"
+                                                        >
+                                                          <option
+                                                            className="bx--select-option"
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            label="<Choose>"
+                                                            value="-1"
+                                                          >
+                                                            &lt;Choose&gt;
+                                                          </option>
+                                                        </SelectItem>
+                                                        <SelectItem
+                                                          disabled={false}
+                                                          hidden={false}
+                                                          key="1"
+                                                          label="Blue"
+                                                          text="Blue"
+                                                          value="1"
+                                                        >
+                                                          <option
+                                                            className="bx--select-option"
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            label="Blue"
+                                                            value="1"
+                                                          >
+                                                            Blue
+                                                          </option>
+                                                        </SelectItem>
+                                                        <SelectItem
+                                                          disabled={false}
+                                                          hidden={false}
+                                                          key="2"
+                                                          label="Yellow"
+                                                          text="Yellow"
+                                                          value="2"
+                                                        >
+                                                          <option
+                                                            className="bx--select-option"
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            label="Yellow"
+                                                            value="2"
+                                                          >
+                                                            Yellow
+                                                          </option>
+                                                        </SelectItem>
+                                                        <SelectItem
+                                                          disabled={false}
+                                                          hidden={false}
+                                                          key="3"
+                                                          label="Green"
+                                                          text="Green"
+                                                          value="3"
+                                                        >
+                                                          <option
+                                                            className="bx--select-option"
+                                                            disabled={false}
+                                                            hidden={false}
+                                                            label="Green"
+                                                            value="3"
+                                                          >
+                                                            Green
+                                                          </option>
+                                                        </SelectItem>
+                                                      </select>
+                                                      <ForwardRef(ChevronDown16)
+                                                        className="bx--select__arrow"
+                                                      >
+                                                        <Icon
+                                                          className="bx--select__arrow"
+                                                          fill="currentColor"
+                                                          height={16}
+                                                          preserveAspectRatio="xMidYMid meet"
+                                                          viewBox="0 0 16 16"
+                                                          width={16}
+                                                          xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                          <svg
+                                                            aria-hidden={true}
+                                                            className="bx--select__arrow"
+                                                            fill="currentColor"
+                                                            focusable="false"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <path
+                                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                            />
+                                                          </svg>
+                                                        </Icon>
+                                                      </ForwardRef(ChevronDown16)>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </Select>
+                                            </ClearedSelect>
+                                          </Select>
+                                        </Select>
+                                      </SelectWithOnChange>
+                                    </FormFieldHideWrapper>
+                                  </FormConditionWrapper>
+                                </SingleField>
+                                <SingleField
+                                  component="text-field"
+                                  id="sample_component"
+                                  isRequired={true}
+                                  key="Sample Component"
+                                  label="Sample Component"
+                                  name="Sample Component"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <FormConditionWrapper
+                                    field={
+                                      Object {
+                                        "component": "text-field",
+                                        "id": "sample_component",
+                                        "isRequired": true,
+                                        "label": "Sample Component",
+                                        "name": "Sample Component",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      }
+                                    }
+                                  >
+                                    <FormFieldHideWrapper
+                                      hideField={false}
+                                    >
+                                      <TextField
+                                        component="text-field"
+                                        id="sample_component"
+                                        isRequired={true}
+                                        label="Sample Component"
+                                        name="Sample Component"
+                                        validate={
+                                          Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <TextInput
+                                          id="sample_component"
+                                          invalid={false}
+                                          invalidText=""
+                                          key="Sample Component"
+                                          labelText={
+                                            <IsRequired>
+                                              Sample Component
+                                            </IsRequired>
+                                          }
+                                          name="Sample Component"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          value=""
+                                          warn={false}
+                                          warnText=""
+                                        >
+                                          <div
+                                            className="bx--form-item bx--text-input-wrapper"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="sample_component"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Sample Component
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--text-input__field-outer-wrapper"
+                                            >
+                                              <div
+                                                className="bx--text-input__field-wrapper"
+                                                data-invalid={null}
+                                              >
+                                                <input
+                                                  className="bx--text-input bx--text-input--md"
+                                                  disabled={false}
+                                                  id="sample_component"
+                                                  name="Sample Component"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  type="text"
+                                                  value=""
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </TextInput>
+                                      </TextField>
+                                    </FormFieldHideWrapper>
+                                  </FormConditionWrapper>
+                                </SingleField>
+                                <SingleField
+                                  component="spy-field"
+                                  key="spy-field"
+                                  name="spy-field"
+                                >
+                                  <FormConditionWrapper
+                                    field={
+                                      Object {
+                                        "component": "spy-field",
+                                        "initialize": undefined,
+                                        "name": "spy-field",
+                                      }
+                                    }
+                                  >
+                                    <FormFieldHideWrapper
+                                      hideField={false}
+                                    >
+                                      <SpyField
+                                        component="spy-field"
+                                        name="spy-field"
+                                      >
+                                        <FormSpy
+                                          onChange={[Function]}
+                                          subscription={
+                                            Object {
+                                              "pristine": true,
+                                              "valid": true,
+                                            }
+                                          }
+                                        />
+                                      </SpyField>
+                                    </FormFieldHideWrapper>
+                                  </FormConditionWrapper>
+                                </SingleField>
+                                <FormSpy>
+                                  <FormControls
+                                    Button={[Function]}
+                                    ButtonGroup={[Function]}
+                                    FormSpy={[Function]}
+                                    buttonOrder={
+                                      Array [
+                                        "submit",
+                                        "reset",
+                                        "cancel",
+                                      ]
+                                    }
+                                    buttonsProps={Object {}}
+                                    canReset={false}
+                                    canSubmit={false}
+                                    cancelLabel="Cancel"
+                                    disableSubmit={true}
+                                    formFields={
+                                      Array [
+                                        <SingleField
+                                          component="select"
+                                          id="ems_id"
+                                          isDisabled={true}
+                                          isRequired={true}
+                                          label="Cloud Provider"
+                                          loadOptions={[Function]}
+                                          name="ems_id"
+                                          onChange={[Function]}
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        />,
+                                        <SingleField
+                                          component="text-field"
+                                          id="sample_component"
+                                          isRequired={true}
+                                          label="Sample Component"
+                                          name="Sample Component"
+                                          validate={
+                                            Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ]
+                                          }
+                                        />,
+                                        <SingleField
+                                          component="spy-field"
+                                          name="spy-field"
+                                        />,
+                                      ]
+                                    }
+                                    formSpyProps={
+                                      Object {
+                                        "active": undefined,
+                                        "dirty": false,
+                                        "dirtyFields": Object {},
+                                        "dirtyFieldsSinceLastSubmit": Object {
+                                          "ems_id": true,
+                                        },
+                                        "dirtySinceLastSubmit": false,
+                                        "error": undefined,
+                                        "errors": Object {
+                                          "Sample Component": "Required",
+                                        },
+                                        "form": Object {
+                                          "batch": [Function],
+                                          "blur": [Function],
+                                          "change": [Function],
+                                          "destroyOnUnregister": false,
+                                          "focus": [Function],
+                                          "getFieldState": [Function],
+                                          "getRegisteredFields": [Function],
+                                          "getState": [Function],
+                                          "initialize": [Function],
+                                          "isValidationPaused": [Function],
+                                          "mutators": Object {
+                                            "concat": [Function],
+                                            "insert": [Function],
+                                            "move": [Function],
+                                            "pop": [Function],
+                                            "push": [Function],
+                                            "remove": [Function],
+                                            "removeBatch": [Function],
+                                            "shift": [Function],
+                                            "swap": [Function],
+                                            "unshift": [Function],
+                                            "update": [Function],
+                                          },
+                                          "pauseValidation": [Function],
+                                          "registerField": [Function],
+                                          "reset": [Function],
+                                          "resetFieldState": [Function],
+                                          "restart": [Function],
+                                          "resumeValidation": [Function],
+                                          "setConfig": [Function],
+                                          "submit": [Function],
+                                          "subscribe": [Function],
+                                        },
+                                        "hasSubmitErrors": false,
+                                        "hasValidationErrors": true,
+                                        "initialValues": Object {
+                                          "ems_id": "1",
+                                        },
+                                        "invalid": true,
+                                        "modified": Object {
+                                          "Sample Component": false,
+                                          "ems_id": false,
+                                        },
+                                        "modifiedSinceLastSubmit": false,
+                                        "pristine": true,
+                                        "submitError": undefined,
+                                        "submitErrors": undefined,
+                                        "submitFailed": false,
+                                        "submitSucceeded": false,
+                                        "submitting": false,
+                                        "touched": Object {
+                                          "Sample Component": false,
+                                          "ems_id": false,
+                                        },
+                                        "valid": false,
+                                        "validating": false,
+                                        "values": Object {
+                                          "ems_id": "1",
+                                        },
+                                        "visited": Object {
+                                          "Sample Component": false,
+                                          "ems_id": false,
+                                        },
+                                      }
+                                    }
+                                    onCancel={[Function]}
+                                    onReset={[Function]}
+                                    resetLabel="Reset"
+                                    schema={
+                                      Object {
+                                        "fields": Array [
+                                          Object {
+                                            "component": "select",
+                                            "id": "ems_id",
+                                            "isDisabled": true,
+                                            "isRequired": true,
+                                            "label": "Cloud Provider",
+                                            "loadOptions": [Function],
+                                            "name": "ems_id",
+                                            "onChange": [Function],
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          },
+                                          Object {
+                                            "component": "text-field",
+                                            "id": "sample_component",
+                                            "isRequired": true,
+                                            "label": "Sample Component",
+                                            "name": "Sample Component",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          },
+                                          Object {
+                                            "component": "spy-field",
+                                            "initialize": undefined,
+                                            "name": "spy-field",
+                                          },
+                                        ],
+                                      }
+                                    }
+                                    submitLabel="Save"
+                                  >
+                                    <ButtonGroup>
+                                      <ButtonSet
+                                        className=""
+                                      >
+                                        <div
+                                          className="bx--btn-set"
+                                        >
+                                          <Button
+                                            buttonType="submit"
+                                            disabled={true}
+                                            key="form-submit"
+                                            label="Save"
+                                            type="submit"
+                                            variant="primary"
+                                          >
+                                            <Button
+                                              disabled={true}
+                                              kind="primary"
+                                              type="submit"
+                                              variant="primary"
+                                            >
+                                              <button
+                                                aria-describedby={null}
+                                                aria-pressed={null}
+                                                className="bx--btn bx--btn--primary bx--btn--disabled"
+                                                disabled={true}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onMouseEnter={[Function]}
+                                                onMouseLeave={[Function]}
+                                                tabIndex={0}
+                                                type="submit"
+                                                variant="primary"
+                                              >
+                                                Save
+                                              </button>
+                                            </Button>
+                                          </Button>
+                                          <Button
+                                            buttonType="cancel"
+                                            key="form-cancel"
+                                            label="Cancel"
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <Button
+                                              kind="secondary"
+                                              onClick={[Function]}
+                                              type="button"
+                                            >
+                                              <button
+                                                aria-describedby={null}
+                                                aria-pressed={null}
+                                                className="bx--btn bx--btn--secondary"
+                                                disabled={false}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                onMouseEnter={[Function]}
+                                                onMouseLeave={[Function]}
+                                                tabIndex={0}
+                                                type="button"
+                                              >
+                                                Cancel
+                                              </button>
+                                            </Button>
+                                          </Button>
+                                        </div>
+                                      </ButtonSet>
+                                    </ButtonGroup>
+                                  </FormControls>
+                                </FormSpy>
+                                 
+                              </form>
+                            </Form>
+                          </Form>
+                        </FormTemplate>
+                      </WrappedFormTemplate>
+                    </Component>
+                  </ReactFinalForm>
+                </FormRenderer>
+              </MiqFormRenderer>
+            </Connect(MiqFormRenderer)>
+          </div>
+        </GridSettings>
+      </FlexGrid>
+    </Grid>
+  </CloudDatabaseForm>
+</Provider>
+`;

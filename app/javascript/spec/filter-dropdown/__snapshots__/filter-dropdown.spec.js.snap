@@ -189,17 +189,10 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
       </Select>
       <Button
         className="default_button"
-        dangerDescription="danger"
-        disabled={false}
         id="set_default"
-        isExpressive={false}
-        kind="primary"
         onClick={[Function]}
         size="sm"
-        tabIndex={0}
         title={"Select a filter to set it as my default"}
-        tooltipAlignment="center"
-        tooltipPosition="top"
         type="submit"
       >
         <button

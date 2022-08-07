@@ -34,113 +34,95 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
         <div
           className="card-pf-heading-kebab"
         >
-          <FeatureToggle(OverflowMenu)
+          <OverflowMenu
+            ariaLabel="open and close list of options"
             className="widget-overflow-menu"
+            direction="bottom"
             flipped={true}
+            focusTrap={true}
+            iconDescription="open and close list of options"
             id="1-menu"
+            light={false}
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
+            onClick={[Function]}
+            onClose={[Function]}
+            onKeyDown={[Function]}
+            onOpen={[Function]}
+            open={false}
+            renderIcon={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ForwardRef(OverflowMenu)
-              className="widget-overflow-menu"
-              flipped={true}
-              id="1-menu"
+            <ClickListener
+              onClickOutside={[Function]}
             >
-              <OverflowMenu
-                ariaLabel="open and close list of options"
-                className="widget-overflow-menu"
-                direction="bottom"
-                flipped={true}
-                iconDescription="open and close list of options"
+              <button
+                aria-expanded={false}
+                aria-haspopup={true}
+                aria-label="open and close list of options"
+                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="1-menu"
-                innerRef={null}
-                light={false}
-                menuOffset={[Function]}
-                menuOffsetFlip={[Function]}
                 onClick={[Function]}
                 onClose={[Function]}
                 onKeyDown={[Function]}
-                onOpen={[Function]}
                 open={false}
-                renderIcon={
-                  Object {
-                    "$$typeof": Symbol(react.forward_ref),
-                    "render": [Function],
-                  }
-                }
-                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+                type="button"
               >
-                <ClickListener
-                  onClickOutside={[Function]}
+                <ForwardRef(OverflowMenuVertical16)
+                  aria-label="open and close list of options"
+                  className="bx--overflow-menu__icon"
                 >
-                  <button
-                    aria-expanded={false}
-                    aria-haspopup={true}
+                  <Icon
                     aria-label="open and close list of options"
-                    className="widget-overflow-menu bx--overflow-menu"
-                    id="1-menu"
-                    onClick={[Function]}
-                    onClose={[Function]}
-                    onKeyDown={[Function]}
-                    open={false}
-                    type="button"
+                    className="bx--overflow-menu__icon"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <ForwardRef(OverflowMenuVertical16)
+                    <svg
                       aria-label="open and close list of options"
                       className="bx--overflow-menu__icon"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <Icon
-                        aria-label="open and close list of options"
-                        className="bx--overflow-menu__icon"
-                        fill="currentColor"
-                        height={16}
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-label="open and close list of options"
-                          className="bx--overflow-menu__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle
-                            cx="16"
-                            cy="8"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="16"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="24"
-                            r="2"
-                          />
-                          <title>
-                            open and close list of options
-                          </title>
-                        </svg>
-                      </Icon>
-                    </ForwardRef(OverflowMenuVertical16)>
-                  </button>
-                </ClickListener>
-              </OverflowMenu>
-            </ForwardRef(OverflowMenu)>
-          </FeatureToggle(OverflowMenu)>
+                      <circle
+                        cx="16"
+                        cy="8"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="16"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="24"
+                        r="2"
+                      />
+                      <title>
+                        open and close list of options
+                      </title>
+                    </svg>
+                  </Icon>
+                </ForwardRef(OverflowMenuVertical16)>
+              </button>
+            </ClickListener>
+          </OverflowMenu>
           <h2
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
@@ -236,113 +218,95 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
         <div
           className="card-pf-heading-kebab"
         >
-          <FeatureToggle(OverflowMenu)
+          <OverflowMenu
+            ariaLabel="open and close list of options"
             className="widget-overflow-menu"
+            direction="bottom"
             flipped={true}
+            focusTrap={true}
+            iconDescription="open and close list of options"
             id="83-menu"
+            light={false}
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
+            onClick={[Function]}
+            onClose={[Function]}
+            onKeyDown={[Function]}
+            onOpen={[Function]}
+            open={false}
+            renderIcon={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ForwardRef(OverflowMenu)
-              className="widget-overflow-menu"
-              flipped={true}
-              id="83-menu"
+            <ClickListener
+              onClickOutside={[Function]}
             >
-              <OverflowMenu
-                ariaLabel="open and close list of options"
-                className="widget-overflow-menu"
-                direction="bottom"
-                flipped={true}
-                iconDescription="open and close list of options"
+              <button
+                aria-expanded={false}
+                aria-haspopup={true}
+                aria-label="open and close list of options"
+                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="83-menu"
-                innerRef={null}
-                light={false}
-                menuOffset={[Function]}
-                menuOffsetFlip={[Function]}
                 onClick={[Function]}
                 onClose={[Function]}
                 onKeyDown={[Function]}
-                onOpen={[Function]}
                 open={false}
-                renderIcon={
-                  Object {
-                    "$$typeof": Symbol(react.forward_ref),
-                    "render": [Function],
-                  }
-                }
-                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+                type="button"
               >
-                <ClickListener
-                  onClickOutside={[Function]}
+                <ForwardRef(OverflowMenuVertical16)
+                  aria-label="open and close list of options"
+                  className="bx--overflow-menu__icon"
                 >
-                  <button
-                    aria-expanded={false}
-                    aria-haspopup={true}
+                  <Icon
                     aria-label="open and close list of options"
-                    className="widget-overflow-menu bx--overflow-menu"
-                    id="83-menu"
-                    onClick={[Function]}
-                    onClose={[Function]}
-                    onKeyDown={[Function]}
-                    open={false}
-                    type="button"
+                    className="bx--overflow-menu__icon"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <ForwardRef(OverflowMenuVertical16)
+                    <svg
                       aria-label="open and close list of options"
                       className="bx--overflow-menu__icon"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <Icon
-                        aria-label="open and close list of options"
-                        className="bx--overflow-menu__icon"
-                        fill="currentColor"
-                        height={16}
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-label="open and close list of options"
-                          className="bx--overflow-menu__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle
-                            cx="16"
-                            cy="8"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="16"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="24"
-                            r="2"
-                          />
-                          <title>
-                            open and close list of options
-                          </title>
-                        </svg>
-                      </Icon>
-                    </ForwardRef(OverflowMenuVertical16)>
-                  </button>
-                </ClickListener>
-              </OverflowMenu>
-            </ForwardRef(OverflowMenu)>
-          </FeatureToggle(OverflowMenu)>
+                      <circle
+                        cx="16"
+                        cy="8"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="16"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="24"
+                        r="2"
+                      />
+                      <title>
+                        open and close list of options
+                      </title>
+                    </svg>
+                  </Icon>
+                </ForwardRef(OverflowMenuVertical16)>
+              </button>
+            </ClickListener>
+          </OverflowMenu>
           <h2
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
@@ -438,113 +402,95 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
         <div
           className="card-pf-heading-kebab"
         >
-          <FeatureToggle(OverflowMenu)
+          <OverflowMenu
+            ariaLabel="open and close list of options"
             className="widget-overflow-menu"
+            direction="bottom"
             flipped={true}
+            focusTrap={true}
+            iconDescription="open and close list of options"
             id="19-menu"
+            light={false}
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
+            onClick={[Function]}
+            onClose={[Function]}
+            onKeyDown={[Function]}
+            onOpen={[Function]}
+            open={false}
+            renderIcon={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ForwardRef(OverflowMenu)
-              className="widget-overflow-menu"
-              flipped={true}
-              id="19-menu"
+            <ClickListener
+              onClickOutside={[Function]}
             >
-              <OverflowMenu
-                ariaLabel="open and close list of options"
-                className="widget-overflow-menu"
-                direction="bottom"
-                flipped={true}
-                iconDescription="open and close list of options"
+              <button
+                aria-expanded={false}
+                aria-haspopup={true}
+                aria-label="open and close list of options"
+                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="19-menu"
-                innerRef={null}
-                light={false}
-                menuOffset={[Function]}
-                menuOffsetFlip={[Function]}
                 onClick={[Function]}
                 onClose={[Function]}
                 onKeyDown={[Function]}
-                onOpen={[Function]}
                 open={false}
-                renderIcon={
-                  Object {
-                    "$$typeof": Symbol(react.forward_ref),
-                    "render": [Function],
-                  }
-                }
-                selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
+                type="button"
               >
-                <ClickListener
-                  onClickOutside={[Function]}
+                <ForwardRef(OverflowMenuVertical16)
+                  aria-label="open and close list of options"
+                  className="bx--overflow-menu__icon"
                 >
-                  <button
-                    aria-expanded={false}
-                    aria-haspopup={true}
+                  <Icon
                     aria-label="open and close list of options"
-                    className="widget-overflow-menu bx--overflow-menu"
-                    id="19-menu"
-                    onClick={[Function]}
-                    onClose={[Function]}
-                    onKeyDown={[Function]}
-                    open={false}
-                    type="button"
+                    className="bx--overflow-menu__icon"
+                    fill="currentColor"
+                    height={16}
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width={16}
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <ForwardRef(OverflowMenuVertical16)
+                    <svg
                       aria-label="open and close list of options"
                       className="bx--overflow-menu__icon"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
+                      fill="currentColor"
+                      focusable="false"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <Icon
-                        aria-label="open and close list of options"
-                        className="bx--overflow-menu__icon"
-                        fill="currentColor"
-                        height={16}
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-label="open and close list of options"
-                          className="bx--overflow-menu__icon"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle
-                            cx="16"
-                            cy="8"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="16"
-                            r="2"
-                          />
-                          <circle
-                            cx="16"
-                            cy="24"
-                            r="2"
-                          />
-                          <title>
-                            open and close list of options
-                          </title>
-                        </svg>
-                      </Icon>
-                    </ForwardRef(OverflowMenuVertical16)>
-                  </button>
-                </ClickListener>
-              </OverflowMenu>
-            </ForwardRef(OverflowMenu)>
-          </FeatureToggle(OverflowMenu)>
+                      <circle
+                        cx="16"
+                        cy="8"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="16"
+                        r="2"
+                      />
+                      <circle
+                        cx="16"
+                        cy="24"
+                        r="2"
+                      />
+                      <title>
+                        open and close list of options
+                      </title>
+                    </svg>
+                  </Icon>
+                </ForwardRef(OverflowMenuVertical16)>
+              </button>
+            </ClickListener>
+          </OverflowMenu>
           <h2
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
