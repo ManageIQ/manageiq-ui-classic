@@ -9,10 +9,10 @@ import {
 } from './helper';
 
 const MiqTableCell = ({
-  cell, onCellClick, row,
+  cell, onCellClick, row, truncate,
 }) => {
   const truncateText = <span title={cell.value} className="bx--front-line">{cell.value}</span>;
-  const truncateClass = ((cell.value).length > 40) ? 'truncate_cell' : '';
+  const truncateClass = ((cell.value).length > 40) && truncate ? 'truncate_cell' : '';
   const cellClass = classNames('cell', truncateClass, cell.data.style_class);
   const cellText = () => (
     <div className={cellClass}>
@@ -188,10 +188,12 @@ MiqTableCell.propTypes = {
     data: PropTypes.any,
     clickable: PropTypes.bool,
   }),
+  truncate: PropTypes.bool,
 };
 
 MiqTableCell.defaultProps = {
   onCellClick: undefined,
   row: {},
   cell: {},
+  truncate: true,
 };

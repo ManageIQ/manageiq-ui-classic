@@ -51,6 +51,12 @@
         = _("Last Update")
       .col-md-8
         = h(format_timezone(@miq_request.updated_on))
+    - if @miq_request.parent_id
+      .form-group
+        %label.control-label.col-md-2
+          = _("Parent Request")
+        .col-md-8
+          = h(link_to(@miq_request.parent_id, :controller => "miq_request", :action => "show", :id => @miq_request.parent_id))
     - if @miq_request.fulfilled_on
       .form-group
         %label.control-label.col-md-2
@@ -116,7 +122,11 @@
               :title                 => t)
           %span#buttons_off
             = button_tag(t, :class => "btn btn-primary disabled")
-  %br
+  - if RequestLog.exists?(:resource_id => @miq_request.id)
+    %h3
+      = _("Request Logs")
+      = react('RequestsTable', {:initialData => RequestLog.where(:resource_id => @miq_request.id)})
+    %br
   - if @miq_request.workflow_class
     = render :partial => "prov_wf", :locals => {:wf => @miq_request.workflow_class.new({:src_vm_id => @miq_request.source_id}, current_user), :show => true}
   - elsif @miq_request.type == 'ServiceTemplateProvisionRequest'

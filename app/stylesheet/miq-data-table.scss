@@ -165,6 +165,33 @@
   }
 }
 
+.requests-table {
+  .miq-data-table {
+    .bx--data-table--sticky-header thead, .bx--data-table--sticky-header tbody, .bx--data-table--sticky-header tr, .bx--data-table--sticky-header th, .bx--data-table--sticky-header td {
+      display: revert;
+    }
+
+    .clickable-row {
+      td:nth-child(3) {
+        .bx--front-line {
+          white-space: pre;
+        }
+      }
+      td {
+        vertical-align: inherit;
+      }
+
+      vertical-align: top;
+    }
+
+    thead tr th {  
+      .bx--table-header-label {
+        min-width: fit-content;
+      }
+    }
+  }
+}
+
 .provision-instance-container {
   display: flex;
   flex-direction: column;

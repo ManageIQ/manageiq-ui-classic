@@ -458,7 +458,10 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-ds-grid-data-table"
@@ -669,21 +672,23 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -1199,6 +1204,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1306,6 +1312,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1413,6 +1420,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1520,6 +1528,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1648,6 +1657,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1755,6 +1765,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1862,6 +1873,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -1969,6 +1981,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2097,6 +2110,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2204,6 +2218,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2311,6 +2326,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2418,6 +2434,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2546,6 +2563,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2653,6 +2671,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2760,6 +2779,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2867,6 +2887,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -2995,6 +3016,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3102,6 +3124,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3209,6 +3232,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3316,6 +3340,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3444,6 +3469,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3551,6 +3577,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3658,6 +3685,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3765,6 +3793,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -3893,6 +3922,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4000,6 +4030,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4107,6 +4138,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4214,6 +4246,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4342,6 +4375,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4449,6 +4483,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4556,6 +4591,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4663,6 +4699,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4791,6 +4828,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -4898,6 +4936,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5005,6 +5044,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5112,6 +5152,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5240,6 +5281,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5347,6 +5389,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5454,6 +5497,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -5561,6 +5605,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -6207,7 +6252,10 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-host-grid-data-table"
@@ -6494,21 +6542,23 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -7250,6 +7300,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -7385,6 +7436,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -7520,6 +7572,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -7655,6 +7708,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -7790,6 +7844,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -7925,6 +7980,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8081,6 +8137,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8216,6 +8273,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8351,6 +8409,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8486,6 +8545,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8621,6 +8681,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8756,6 +8817,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -8912,6 +8974,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9047,6 +9110,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9182,6 +9246,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9317,6 +9382,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9452,6 +9518,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9587,6 +9654,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9743,6 +9811,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -9878,6 +9947,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10013,6 +10083,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10148,6 +10219,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10283,6 +10355,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10418,6 +10491,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10574,6 +10648,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10709,6 +10784,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10844,6 +10920,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -10979,6 +11056,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11114,6 +11192,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11249,6 +11328,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11405,6 +11485,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11540,6 +11621,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11675,6 +11757,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11810,6 +11893,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -11945,6 +12029,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12080,6 +12165,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12236,6 +12322,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12371,6 +12458,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12506,6 +12594,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12641,6 +12730,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12776,6 +12866,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -12911,6 +13002,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13067,6 +13159,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13202,6 +13295,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13337,6 +13431,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13472,6 +13567,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13607,6 +13703,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13742,6 +13839,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -13898,6 +13996,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14033,6 +14132,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14168,6 +14268,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14303,6 +14404,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14438,6 +14540,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14573,6 +14676,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14729,6 +14833,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14864,6 +14969,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -14999,6 +15105,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -15134,6 +15241,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -15269,6 +15377,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -15404,6 +15513,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -15670,7 +15780,10 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-iso_img-grid-data-table"
@@ -15767,21 +15880,23 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -15958,6 +16073,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16044,6 +16160,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16130,6 +16247,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16216,6 +16334,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16302,6 +16421,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16388,6 +16508,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16474,6 +16595,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16560,6 +16682,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16646,6 +16769,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -16732,6 +16856,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17074,7 +17199,10 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-pxe_img-grid-data-table"
@@ -17209,21 +17337,23 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -17513,6 +17643,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17592,6 +17723,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17692,6 +17824,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17771,6 +17904,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17871,6 +18005,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -17950,6 +18085,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18050,6 +18186,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18129,6 +18266,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18229,6 +18367,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18308,6 +18447,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18408,6 +18548,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18487,6 +18628,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18587,6 +18729,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18666,6 +18809,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18766,6 +18910,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18845,6 +18990,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -18945,6 +19091,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -19024,6 +19171,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -19124,6 +19272,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -19203,6 +19352,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -19621,7 +19771,10 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-template-grid-data-table"
@@ -19794,21 +19947,23 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -20211,6 +20366,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20304,6 +20460,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20397,6 +20554,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20511,6 +20669,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20604,6 +20763,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20697,6 +20857,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20811,6 +20972,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20904,6 +21066,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -20997,6 +21160,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21111,6 +21275,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21204,6 +21369,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21297,6 +21463,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21411,6 +21578,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21504,6 +21672,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21597,6 +21766,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21711,6 +21881,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21804,6 +21975,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -21897,6 +22069,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22011,6 +22184,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22104,6 +22278,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22197,6 +22372,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22311,6 +22487,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22404,6 +22581,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22497,6 +22675,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22611,6 +22790,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22704,6 +22884,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22797,6 +22978,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -22911,6 +23093,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -23004,6 +23187,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -23097,6 +23281,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -23895,7 +24080,10 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
         ]
       }
       showPagination={false}
+      size="lg"
       sortable={true}
+      stickyHeader={false}
+      truncateText={true}
     >
       <div
         className="miq-data-table prov-vm-grid-data-table"
@@ -24258,21 +24446,23 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
               },
             ]
           }
-          size="normal"
+          size="lg"
           sortDirection="ASC"
           sortRow={[Function]}
+          stickyHeader={false}
           translateWithId={[Function]}
         >
           <Table
             isSortable={true}
             overflowMenuOnHover={true}
-            size="normal"
+            size="lg"
+            stickyHeader={false}
           >
             <div
               className="bx--data-table-content"
             >
               <table
-                className="bx--data-table bx--data-table--normal bx--data-table--sort bx--data-table--no-border"
+                className="bx--data-table bx--data-table--lg bx--data-table--sort bx--data-table--no-border"
               >
                 <TableHead>
                   <thead>
@@ -25240,6 +25430,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -25403,6 +25594,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -25566,6 +25758,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -25729,6 +25922,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -25892,6 +26086,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26055,6 +26250,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26218,6 +26414,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26381,6 +26578,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26565,6 +26763,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26728,6 +26927,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -26891,6 +27091,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27054,6 +27255,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27217,6 +27419,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27380,6 +27583,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27543,6 +27747,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27706,6 +27911,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -27890,6 +28096,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28053,6 +28260,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28216,6 +28424,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28379,6 +28588,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28542,6 +28752,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28705,6 +28916,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -28868,6 +29080,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29031,6 +29244,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29215,6 +29429,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29378,6 +29593,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29541,6 +29757,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29704,6 +29921,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -29867,6 +30085,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30030,6 +30249,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30193,6 +30413,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30356,6 +30577,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30540,6 +30762,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30703,6 +30926,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -30866,6 +31090,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31029,6 +31254,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31192,6 +31418,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31355,6 +31582,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31518,6 +31746,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31681,6 +31910,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -31865,6 +32095,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32028,6 +32259,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32191,6 +32423,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32354,6 +32587,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32517,6 +32751,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32680,6 +32915,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -32843,6 +33079,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33006,6 +33243,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33190,6 +33428,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33353,6 +33592,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33516,6 +33756,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33679,6 +33920,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -33842,6 +34084,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34005,6 +34248,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34168,6 +34412,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34331,6 +34576,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34515,6 +34761,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34678,6 +34925,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -34841,6 +35089,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35004,6 +35253,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35167,6 +35417,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35330,6 +35581,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35493,6 +35745,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35656,6 +35909,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -35840,6 +36094,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36003,6 +36258,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36166,6 +36422,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36329,6 +36586,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36492,6 +36750,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36655,6 +36914,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36818,6 +37078,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -36981,6 +37242,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37165,6 +37427,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37328,6 +37591,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37491,6 +37755,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37654,6 +37919,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37817,6 +38083,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -37980,6 +38247,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -38143,6 +38411,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""
@@ -38306,6 +38575,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                               "isSelected": false,
                             }
                           }
+                          truncate={true}
                         >
                           <TableCell
                             className=""

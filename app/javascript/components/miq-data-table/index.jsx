@@ -18,7 +18,19 @@ import {
 import MiqTableCell from './miq-table-cell';
 
 const MiqDataTable = ({
-  headers, rows, onCellClick, mode, sortable, rowCheckBox, showPagination, pageOptions, gridChecks, onSort,
+  headers,
+  rows,
+  onCellClick,
+  mode,
+  sortable,
+  rowCheckBox,
+  showPagination,
+  pageOptions,
+  gridChecks,
+  onSort,
+  size,
+  stickyHeader,
+  truncateText,
 }) => {
   const isRowSelected = (itemId) => gridChecks.includes(itemId);
   const propRows = rows;
@@ -98,6 +110,7 @@ const MiqDataTable = ({
         onCellClick={onCellClick}
         cell={cell}
         row={row}
+        truncate={truncateText}
       />
     ))
   );
@@ -122,7 +135,9 @@ const MiqDataTable = ({
         rows={rows}
         headers={headers}
         isSortable={sortable}
+        size={size}
         sortDirection="ASC"
+        stickyHeader={stickyHeader}
       >
         {({
           rows, getTableProps, getHeaderProps, getRowProps, getSelectionProps,
@@ -178,6 +193,9 @@ MiqDataTable.propTypes = {
   }),
   gridChecks: PropTypes.arrayOf(PropTypes.any),
   onSort: PropTypes.func,
+  size: PropTypes.string,
+  stickyHeader: PropTypes.bool,
+  truncateText: PropTypes.bool,
 };
 
 MiqDataTable.defaultProps = {
@@ -193,6 +211,9 @@ MiqDataTable.defaultProps = {
   },
   gridChecks: [],
   onSort: undefined,
+  size: 'lg',
+  stickyHeader: false,
+  truncateText: true,
 };
 
 export default MiqDataTable;
