@@ -80,7 +80,8 @@ const GroupForm = ({
       values.owner_id = appliesToId;
     }
     values.owner_type = appliesToClass;
-    values.set_data = formatSetData(values.set_data, buttonIcon, appliesToClass, appliesToId);
+    const groupIndex = initialValues ? initialValues.set_data.group_index : undefined;
+    values.set_data = formatSetData(values.set_data, buttonIcon, appliesToClass, appliesToId, groupIndex);
     if (values.set_data.display === undefined) {
       values.set_data.display = false;
     }
