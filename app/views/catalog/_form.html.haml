@@ -4,7 +4,7 @@
       = _('Basic Info')
     = miq_tab_header('details', @sb[:st_form_active_tab]) do
       = _('Details')
-    - unless @edit[:new][:st_prov_type].try(:start_with?, "generic_")
+    - unless @edit[:new][:st_prov_type].try(:start_with?, "generic_")  ||  @edit[:new][:st_prov_type].try(:start_with?, "autosde")
       - if @edit[:new][:service_type] == "composite"
         = miq_tab_header('resources', @sb[:st_form_active_tab]) do
           = _('Resources')

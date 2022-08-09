@@ -624,7 +624,7 @@ class CatalogController < ApplicationController
   private :get_ae_tree_edit_key
 
   def need_prov_dialogs?(type)
-    !type.starts_with?('generic')
+    !(type.starts_with?('generic') or type.starts_with?('autosde'))
   end
   helper_method :need_prov_dialogs?
 
