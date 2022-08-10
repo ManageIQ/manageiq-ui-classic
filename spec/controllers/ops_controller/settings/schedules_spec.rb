@@ -93,7 +93,7 @@ describe OpsController do
                   :password   => "password2",
                   :uri        => "smb://samba_uri",
                   :uri_prefix => "smb"}
-      expect(controller.send(:build_uri_settings, :mocked_filedepot)).to include(settings)
+      expect(controller.send(:build_uri_settings, mocked_filedepot)).to include(settings)
     end
 
     it "uses the stored password for validation if params[:log_password] does not exist" do
