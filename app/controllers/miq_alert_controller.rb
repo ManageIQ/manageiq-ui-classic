@@ -37,8 +37,8 @@ class MiqAlertController < ApplicationController
     alert_set_record_vars(alert)
 
     unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
-      alert.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      alert.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
       javascript_flash
       return

@@ -233,8 +233,8 @@ class ChargebackRateController < ApplicationController
       session[:changed] = @changed = false
       javascript_redirect(:action => @lastaction, :id => @rate[:id], :flash_msg => flash_msg)
     else
-      @rate.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      @rate.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
       @rate_details.each do |detail|
         display_detail_errors(detail, detail.errors)
@@ -407,7 +407,7 @@ class ChargebackRateController < ApplicationController
   end
 
   def display_detail_errors(detail, errors)
-    errors.each { |field, msg| add_flash("'#{detail.chargeable_field.description}' #{field.to_s.humanize.downcase} #{msg}", :error) }
+    errors.each { |error| add_flash("'#{detail.chargeable_field.description}' #{error.attribute.to_s.humanize.downcase} #{error.message}", :error) }
   end
 
   def add_row(i, pos, code_currency)
