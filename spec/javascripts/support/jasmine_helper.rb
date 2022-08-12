@@ -15,10 +15,9 @@ class StaticOrHaml
     return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
 
     raw = File.read(path)
-    scope = ActionView::Base.new
-    scope.controller = ActionController::Base.new
-    scope.view_paths << File.expand_path("../app/views", __FILE__)
-
+    lookup_context = ActionView::LookupContext.new(File.expand_path("../app/views", __FILE__))
+    controller = ActionController::Base.new
+    scope = ActionView::Base.new(lookup_context, [], controller)
     scope.extend(ApplicationHelper)
 
     compiled = hamlit_compile(raw, scope)
@@ -61,7 +60,8 @@ Jasmine.configure do |config|
     Jasmine::Runners::ChromeHeadless.new(formatter, jasmine_server_url, config)
   end
 
-  config.chrome_binary = 'google-chrome-beta'
+  command = 'google-chrome-beta'
+  config.chrome_binary = command if system("which #{command}", [:out, :err] => "/dev/null")
   config.chrome_cli_options = {
     'headless' => nil,
     'disable-gpu' => nil,
