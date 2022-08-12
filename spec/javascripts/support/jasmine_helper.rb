@@ -15,10 +15,11 @@ class StaticOrHaml
     return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
 
     raw = File.read(path)
-    scope = ActionView::Base.new
-    scope.controller = ActionController::Base.new
-    scope.view_paths << File.expand_path("../app/views", __FILE__)
+    lookup_context = ActionView::LookupContext.new(File.expand_path("../app/views", __FILE__))
+    controller = ActionController::Base.new
 
+    # Rails 6.1 ActionView::Base now has 3 required arguments
+    scope = ActionView::Base.new(lookup_context, [], controller)
     scope.extend(ApplicationHelper)
 
     compiled = hamlit_compile(raw, scope)
