@@ -5,13 +5,12 @@
 }
 
 #dual-list-sub-form-catalog {
-  .bx--row--condensed {
-    svg {
-      height: 48px;
-    }
-  }
   #move-right, #move-all-right, #move-all-left, #move-left {
-    width: 130px;
+    svg {
+      position: unset;
+    }
+
+    max-width: 100%;
   }
 }
 
