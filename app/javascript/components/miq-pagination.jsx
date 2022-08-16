@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from 'carbon-components-react';
 
-const getItemRangeText = (min, max, totalItems) => sprintf(__(`%d-%d of %d items`), min, max, totalItems);
+const getItemRangeText = (min, max, totalItems) => sprintf(n__(`%d-%d of %d item`, `%d-%d of %d items`, totalItems), min, max, totalItems);
 
 // eslint-disable-next-line no-undef
 const getPageRangeText = (_current, total) => sprintf(n__(`of %d page`, `of %d pages`, total), total);
