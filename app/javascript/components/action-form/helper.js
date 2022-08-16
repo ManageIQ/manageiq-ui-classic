@@ -1,7 +1,7 @@
 const dataHelper = (values) => {
   const vd = values.description;
   const vt = values.action_type;
-  const optionValue = values.options;
+  const optionValue = values.options ? values.options : {};
   delete values.action_type;
   delete values.description;
   let data = {};
@@ -17,7 +17,7 @@ const dataHelper = (values) => {
       break;
     }
     case 'custom_automation': {
-      const catValue = optionValue.ae_hash;
+      const catValue = optionValue.ae_hash ? optionValue.ae_hash : [];
       const buildCatValue = (catValue) => {
         const obj = {};
         catValue.forEach((pt) => {

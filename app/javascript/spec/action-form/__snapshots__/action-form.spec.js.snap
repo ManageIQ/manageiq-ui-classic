@@ -405,14 +405,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                         Object {
                           "component": "text-field",
                           "id": "attribute",
+                          "isRequired": true,
                           "label": "attribute",
                           "name": "attribute",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
                         },
                         Object {
                           "component": "text-field",
                           "id": "value",
+                          "isRequired": true,
                           "label": "value",
                           "name": "value",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
                         },
                       ],
                       "id": "options.ae_hash",
@@ -1095,14 +1107,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           Object {
                             "component": "text-field",
                             "id": "attribute",
+                            "isRequired": true,
                             "label": "attribute",
                             "name": "attribute",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
                           },
                           Object {
                             "component": "text-field",
                             "id": "value",
+                            "isRequired": true,
                             "label": "value",
                             "name": "value",
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
                           },
                         ],
                         "id": "options.ae_hash",
@@ -1778,14 +1802,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             Object {
                               "component": "text-field",
                               "id": "attribute",
+                              "isRequired": true,
                               "label": "attribute",
                               "name": "attribute",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
                             },
                             Object {
                               "component": "text-field",
                               "id": "value",
+                              "isRequired": true,
                               "label": "value",
                               "name": "value",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
                             },
                           ],
                           "id": "options.ae_hash",
@@ -2461,14 +2497,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 Object {
                                   "component": "text-field",
                                   "id": "attribute",
+                                  "isRequired": true,
                                   "label": "attribute",
                                   "name": "attribute",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
                                 },
                                 Object {
                                   "component": "text-field",
                                   "id": "value",
+                                  "isRequired": true,
                                   "label": "value",
                                   "name": "value",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
                                 },
                               ],
                               "id": "options.ae_hash",
@@ -3108,14 +3156,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 Object {
                                   "component": "text-field",
                                   "id": "attribute",
+                                  "isRequired": true,
                                   "label": "attribute",
                                   "name": "attribute",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
                                 },
                                 Object {
                                   "component": "text-field",
                                   "id": "value",
+                                  "isRequired": true,
                                   "label": "value",
                                   "name": "value",
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
                                 },
                               ],
                               "id": "options.ae_hash",
@@ -3766,14 +3826,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   Object {
                                     "component": "text-field",
                                     "id": "attribute",
+                                    "isRequired": true,
                                     "label": "attribute",
                                     "name": "attribute",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
                                   },
                                   Object {
                                     "component": "text-field",
                                     "id": "value",
+                                    "isRequired": true,
                                     "label": "value",
                                     "name": "value",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
                                   },
                                 ],
                                 "id": "options.ae_hash",
@@ -4419,14 +4491,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   Object {
                                     "component": "text-field",
                                     "id": "attribute",
+                                    "isRequired": true,
                                     "label": "attribute",
                                     "name": "attribute",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
                                   },
                                   Object {
                                     "component": "text-field",
                                     "id": "value",
+                                    "isRequired": true,
                                     "label": "value",
                                     "name": "value",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
                                   },
                                 ],
                                 "id": "options.ae_hash",
@@ -5092,14 +5176,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     Object {
                                       "component": "text-field",
                                       "id": "attribute",
+                                      "isRequired": true,
                                       "label": "attribute",
                                       "name": "attribute",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
                                     },
                                     Object {
                                       "component": "text-field",
                                       "id": "value",
+                                      "isRequired": true,
                                       "label": "value",
                                       "name": "value",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
                                     },
                                   ],
                                   "id": "options.ae_hash",
@@ -5745,14 +5841,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     Object {
                                       "component": "text-field",
                                       "id": "attribute",
+                                      "isRequired": true,
                                       "label": "attribute",
                                       "name": "attribute",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
                                     },
                                     Object {
                                       "component": "text-field",
                                       "id": "value",
+                                      "isRequired": true,
                                       "label": "value",
                                       "name": "value",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
                                     },
                                   ],
                                   "id": "options.ae_hash",
@@ -6409,14 +6517,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       Object {
                                         "component": "text-field",
                                         "id": "attribute",
+                                        "isRequired": true,
                                         "label": "attribute",
                                         "name": "attribute",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
                                       },
                                       Object {
                                         "component": "text-field",
                                         "id": "value",
+                                        "isRequired": true,
                                         "label": "value",
                                         "name": "value",
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
                                       },
                                     ],
                                     "id": "options.ae_hash",
@@ -7050,14 +7170,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           Object {
                                             "component": "text-field",
                                             "id": "attribute",
+                                            "isRequired": true,
                                             "label": "attribute",
                                             "name": "attribute",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
                                           },
                                           Object {
                                             "component": "text-field",
                                             "id": "value",
+                                            "isRequired": true,
                                             "label": "value",
                                             "name": "value",
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
                                           },
                                         ],
                                         "id": "options.ae_hash",
@@ -7695,14 +7827,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             Object {
                                               "component": "text-field",
                                               "id": "attribute",
+                                              "isRequired": true,
                                               "label": "attribute",
                                               "name": "attribute",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
                                             },
                                             Object {
                                               "component": "text-field",
                                               "id": "value",
+                                              "isRequired": true,
                                               "label": "value",
                                               "name": "value",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
                                             },
                                           ],
                                           "id": "options.ae_hash",
@@ -10155,14 +10299,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             Object {
                                               "component": "text-field",
                                               "id": "attribute",
+                                              "isRequired": true,
                                               "label": "attribute",
                                               "name": "attribute",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
                                             },
                                             Object {
                                               "component": "text-field",
                                               "id": "value",
+                                              "isRequired": true,
                                               "label": "value",
                                               "name": "value",
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
                                             },
                                           ],
                                           "id": "options.ae_hash",
@@ -10199,14 +10355,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 Object {
                                                   "component": "text-field",
                                                   "id": "attribute",
+                                                  "isRequired": true,
                                                   "label": "attribute",
                                                   "name": "attribute",
+                                                  "validate": Array [
+                                                    Object {
+                                                      "type": "required",
+                                                    },
+                                                  ],
                                                 },
                                                 Object {
                                                   "component": "text-field",
                                                   "id": "value",
+                                                  "isRequired": true,
                                                   "label": "value",
                                                   "name": "value",
+                                                  "validate": Array [
+                                                    Object {
+                                                      "type": "required",
+                                                    },
+                                                  ],
                                                 },
                                               ],
                                               "id": "options.ae_hash",
@@ -10243,14 +10411,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   Object {
                                                     "component": "text-field",
                                                     "id": "attribute",
+                                                    "isRequired": true,
                                                     "label": "attribute",
                                                     "name": "attribute",
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ],
                                                   },
                                                   Object {
                                                     "component": "text-field",
                                                     "id": "value",
+                                                    "isRequired": true,
                                                     "label": "value",
                                                     "name": "value",
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                                 "id": "options.ae_hash",
@@ -10300,14 +10480,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       Object {
                                                         "component": "text-field",
                                                         "id": "attribute",
+                                                        "isRequired": true,
                                                         "label": "attribute",
                                                         "name": "attribute",
+                                                        "validate": Array [
+                                                          Object {
+                                                            "type": "required",
+                                                          },
+                                                        ],
                                                       },
                                                       Object {
                                                         "component": "text-field",
                                                         "id": "value",
+                                                        "isRequired": true,
                                                         "label": "value",
                                                         "name": "value",
+                                                        "validate": Array [
+                                                          Object {
+                                                            "type": "required",
+                                                          },
+                                                        ],
                                                       },
                                                     ],
                                                     "id": "options.ae_hash",
@@ -10350,14 +10542,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         Object {
                                                           "component": "text-field",
                                                           "id": "attribute",
+                                                          "isRequired": true,
                                                           "label": "attribute",
                                                           "name": "attribute",
+                                                          "validate": Array [
+                                                            Object {
+                                                              "type": "required",
+                                                            },
+                                                          ],
                                                         },
                                                         Object {
                                                           "component": "text-field",
                                                           "id": "value",
+                                                          "isRequired": true,
                                                           "label": "value",
                                                           "name": "value",
+                                                          "validate": Array [
+                                                            Object {
+                                                              "type": "required",
+                                                            },
+                                                          ],
                                                         },
                                                       ],
                                                       "id": "options.ae_hash",
@@ -10399,14 +10603,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                           Object {
                                                             "component": "text-field",
                                                             "id": "attribute",
+                                                            "isRequired": true,
                                                             "label": "attribute",
                                                             "name": "attribute",
+                                                            "validate": Array [
+                                                              Object {
+                                                                "type": "required",
+                                                              },
+                                                            ],
                                                           },
                                                           Object {
                                                             "component": "text-field",
                                                             "id": "value",
+                                                            "isRequired": true,
                                                             "label": "value",
                                                             "name": "value",
+                                                            "validate": Array [
+                                                              Object {
+                                                                "type": "required",
+                                                              },
+                                                            ],
                                                           },
                                                         ],
                                                         "id": "options.ae_hash",
@@ -13602,14 +13818,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               Object {
                                                 "component": "text-field",
                                                 "id": "attribute",
+                                                "isRequired": true,
                                                 "label": "attribute",
                                                 "name": "attribute",
+                                                "validate": Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ],
                                               },
                                               Object {
                                                 "component": "text-field",
                                                 "id": "value",
+                                                "isRequired": true,
                                                 "label": "value",
                                                 "name": "value",
+                                                "validate": Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ],
                                               },
                                             ],
                                             "id": "options.ae_hash",
@@ -14329,14 +14557,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               Object {
                                                 "component": "text-field",
                                                 "id": "attribute",
+                                                "isRequired": true,
                                                 "label": "attribute",
                                                 "name": "attribute",
+                                                "validate": Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ],
                                               },
                                               Object {
                                                 "component": "text-field",
                                                 "id": "value",
+                                                "isRequired": true,
                                                 "label": "value",
                                                 "name": "value",
+                                                "validate": Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ],
                                               },
                                             ],
                                             "id": "options.ae_hash",
@@ -15077,14 +15317,26 @@ exports[`Action Form Component should render correctly 1`] = `
                     Object {
                       "component": "text-field",
                       "id": "attribute",
+                      "isRequired": true,
                       "label": "attribute",
                       "name": "attribute",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
                     },
                     Object {
                       "component": "text-field",
                       "id": "value",
+                      "isRequired": true,
                       "label": "value",
                       "name": "value",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
                     },
                   ],
                   "id": "options.ae_hash",
