@@ -25,5 +25,5 @@ if [ -n "$MANAGEIQ_REPO" ]; then
   ln -s "$(cd "$MANAGEIQ_REPO" &>/dev/null && pwd)" "$spec_manageiq"
 elif [ ! -d "$spec_manageiq" ]; then
   echo "== Cloning manageiq sample app =="
-  git clone https://github.com/ManageIQ/manageiq.git --branch master --depth 1 "$spec_manageiq"
+  git clone https://github.com/ManageIQ/manageiq.git --branch oparin --depth 1 "$spec_manageiq"
 fi
