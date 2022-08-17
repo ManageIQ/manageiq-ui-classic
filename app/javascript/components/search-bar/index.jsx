@@ -23,7 +23,7 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
 
   /** Function to filter the results through form submit. */
   const onSearch = () => {
-    http.post({ url: action });
+    http.post(action, null, { headers: {}, skipJsonParsing: true });
   };
 
   /** Function to clear the search input and submit the form. */
