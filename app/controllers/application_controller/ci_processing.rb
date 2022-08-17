@@ -620,8 +620,7 @@ module ApplicationController::CiProcessing
   # Params:
   #   action      - a string indicating the operation user wants to execute
   # Returns:
-  #   symbol      - a feature implemented by using AvailabilityMixin or
-  #                 SupportsFeatureMixin
+  #   symbol      - a feature implemented by using SupportsFeatureMixin
   def action_to_feature(action)
     feature_aliases = {
       "scan"                   => :smartstate_analysis,
