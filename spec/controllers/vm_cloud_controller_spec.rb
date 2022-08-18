@@ -252,25 +252,6 @@ describe VmCloudController do
     end
   end
 
-  context 'canceling actions on Instances' do
-    let(:instance) { FactoryBot.create(:vm_cloud) }
-
-    before do
-      allow(controller).to receive(:assert_privileges)
-      controller.params = {:button => 'cancel', :id => instance.id}
-    end
-
-    it 'calls flash_and_redirect for canceling attaching Cloud Volume to Instance' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
-      controller.send(:attach_volume)
-    end
-
-    it 'calls flash_and_redirect for canceling detaching Cloud Volume from Instance' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
-      controller.send(:detach_volume)
-    end
-  end
-
   describe '#flash_and_redirect' do
     before do
       allow(controller).to receive(:session).and_return(:edit => {:expression => {}})

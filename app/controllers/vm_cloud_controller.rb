@@ -57,107 +57,12 @@ class VmCloudController < ApplicationController
 
   def attach_volume
     assert_privileges("instance_attach")
-
     @vm = find_record_with_rbac(VmCloud, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
-    when "attach"
-      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
-      if volume.supports?(:attach)
-        task_id = volume.attach_volume_queue(session[:userid], @vm.ems_ref, params[:device_path])
-
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "attach_finished")
-        else
-          add_flash(_("Attaching Cloud volume failed: Task start failed"), :error)
-          javascript_flash(:spinner_off => true)
-        end
-      else
-        add_flash(_("Cloud Volume \"%{volume_name}\" cannot be attached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:attach)}, :error)
-        javascript_flash
-      end
-    end
-  end
-
-  def attach_finished
-    task_id = session[:async][:params][:task_id]
-    vm_id = session[:async][:params][:id]
-    vm = find_record_with_rbac(VmCloud, vm_id)
-    volume_id = session[:async][:params][:volume_id]
-    volume = find_record_with_rbac(CloudVolume, volume_id)
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
-        :volume_name => volume.name,
-        :vm_name     => vm.name
-      })
-    else
-      add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
-        :volume_name => volume.name,
-        :vm_name     => vm.name,
-        :details     => get_error_message_from_fog(task.message)
-      }, :error)
-    end
-
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
-    flash_to_session
-    @record = @sb[:action] = nil
-    replace_right_cell
   end
 
   def detach_volume
     assert_privileges("instance_detach")
-
     @vm = find_record_with_rbac(VmCloud, params[:id])
-    case params[:button]
-    when "cancel"
-      flash_and_redirect(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
-
-    when "detach"
-      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
-      if volume.supported?(:detach)
-        task_id = volume.detach_volume_queue(session[:userid], @vm.ems_ref)
-
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "detach_finished")
-        else
-          add_flash(_("Detaching Cloud volume failed: Task start failed"), :error)
-          javascript_flash(:spinner_off => true)
-        end
-      else
-        add_flash(_("Cloud Volume \"%{volume_name}\" cannot be detached because %{reason}") % {:volume_name => volume.name, :reason => unsupported_reason(:detach)}, :error)
-        javascript_flash
-      end
-    end
-  end
-
-  def detach_finished
-    task_id = session[:async][:params][:task_id]
-    vm_id = session[:async][:params][:id]
-    vm = find_record_with_rbac(VmCloud, vm_id)
-    volume_id = session[:async][:params][:volume_id]
-    volume = find_record_with_rbac(CloudVolume, volume_id)
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
-        :volume_name => volume.name,
-        :vm_name     => vm.name
-      })
-    else
-      add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
-        :volume_name => volume.name,
-        :vm_name     => vm.name,
-        :details     => get_error_message_from_fog(task.message)
-      }, :error)
-    end
-
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
-    flash_to_session
-    @record = @sb[:action] = nil
-    replace_right_cell
   end
 
   def flash_and_redirect(message)

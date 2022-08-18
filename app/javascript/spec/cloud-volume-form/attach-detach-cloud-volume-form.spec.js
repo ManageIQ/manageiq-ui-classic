@@ -51,10 +51,14 @@ describe('Attach / Detach form component', () => {
     });
   });
 
-  it('should render attach form variant', async(done) => {
+/* Steps to reach page tested:
+  1. Storage > Volume
+  2. Configuration > Attach / Detach to an Instance
+*/
+  it('should render Attach Selected Cloud Volume to an Instance form', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" vmChoices={sampleVmChoice} />);
+      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Instance"} />);
     });
 
     setImmediate(() => {
@@ -64,10 +68,10 @@ describe('Attach / Detach form component', () => {
     });
   });
 
-  it('should render detach form variant', async(done) => {
+  it('should render Detach Selected Cloud Volume from an Instance form', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" vmChoices={sampleVmChoice} />);
+      wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Instance"} />);
     });
 
     setImmediate(() => {
@@ -75,5 +79,69 @@ describe('Attach / Detach form component', () => {
       expect(toJson(wrapper)).toMatchSnapshot();
       done();
     });
+  });
+
+/* Steps to reach page tested:
+    1. Compute > Cloud > Instances
+    2. Select an Instance that allows for attach/detach (Openstack, IBM Cloud, Amazon)
+    3. Configuration > Attach / Detach a Cloud Volume from this Instance
+*/
+  it('should render Attach Cloud Volume to the Selected Instance form', async(done) => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Volume"} />);
+    });
+
+    setImmediate(() => {
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it('should render Detach Cloud Volume from the Selected Instance form', async(done) => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Volume"} />);
+    });
+
+    setImmediate(() => {
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+      done();
+    });
+  });
+
+/*
+ * Submit Logic
+ */
+
+  it('should submit Attach API call', async(done) => {
+    const submitData = {
+      "action": "attach",
+      "resource": {
+        "vm_id": "1",
+        "device": "",
+      }
+    }
+    fetchMock.postOnce('/api/cloud_volumes/1', submitData);
+    const wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Instance"}/>);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    done();
+  });
+
+
+  it('should submit Detach API call', async(done) => {
+    const submitData = {
+      "action": "attach",
+      "resource": {
+        "vm_id": "1",
+        "device": "",
+      }
+    }
+    fetchMock.postOnce('/api/cloud_volumes/1', submitData);
+    const wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel={"Volume"}/>);
+    expect(toJson(wrapper)).toMatchSnapshot();
+    done();
   });
 });

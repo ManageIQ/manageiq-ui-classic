@@ -1,25 +1,4 @@
-%form#form_div{:name            => "angularForm",
-               'ng-controller'  => "vmCloudDetachFormController as vm",
-               "miq-form"       => true,
-               'form-changed'   => true,
-               "model"          => "vm.vmCloudModel",
-               "model-copy"     => 'vm.modelCopy'}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Detach Volume')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Volume')
-      .col-md-8
-        = select_tag("volume_id",
-                      options_for_select(@volume_choices.sort),
-                      "ng-model"                    => "vm.vmCloudModel.volume_id",
-                      :required                     => true,
-                      "selectpicker-for-select-tag" => "")
-
-  = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Detach'), :button_click => 'vm.submitClicked()'}
-
-:javascript
-  ManageIQ.angular.app.value('vmCloudDetachFormId', '#{@vm.id}');
-  miq_bootstrap('#form_div');
+= react 'AttachDetachCloudVolumeForm',  :recordId => @vm.id.to_s,
+                                        :isAttach => false,
+                                        :dropdownChoices => @volume_choices.sort,
+                                        :dropdownLabel => "Volume" ## Label will be translated in schema
