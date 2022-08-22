@@ -251,7 +251,6 @@ module ApplicationHelper
       if controller == "ems_storage" && action == "show"
         return ems_storages_path
       end
-    
       if request[:controller] == 'service' && view.db == 'GenericObject'
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
@@ -1283,6 +1282,10 @@ module ApplicationHelper
 
   def accessible_select_event_types
     ApplicationController::Timelines::SELECT_EVENT_TYPE.map { |key, value| [_(key), value] }
+  end
+
+  def storage_systems_options
+    PhysicalStorage.all.ids
   end
 
   def unique_html_id(prefix = 'unknown')

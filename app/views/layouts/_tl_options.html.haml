@@ -48,6 +48,19 @@
                     'data-deselect-all-text'      => _('Deselect All'),
                     'multiple'                    => '',
                     :class                        => 'selectpicker category-selector')
+                %span{'ng-if' => 'vm.reportModel.tl_show === "timeline"'}
+                  = select_tag("tl_levels_management",
+                    options_for_select(storage_systems_options, nil),
+                    'ng-model' => 'vm.reportModel.tl_storage_systems',
+                    'title' => _('Select Storage System'),
+                    'ng-disabled' => 'vm.reportModel.tl_categories.length === 0',
+                    "selectpicker-for-select-tag" => '',
+                    'data-live-search' => 'true',
+                    'data-actions-box' => 'true',
+                    'data-select-all-text' => _('Select All'),
+                    'data-deselect-all-text' => _('Deselect All'),
+                    'multiple' => '',
+                    :class => 'selectpicker category-selector')
                 %span{'ng-if' => 'vm.reportModel.tl_show !== "timeline"'}
                   = select_tag("tl_category_policy",
                     options_for_select(@tl_options.policy.events.keys.sort, nil),

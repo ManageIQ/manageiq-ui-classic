@@ -1,5 +1,6 @@
 module ApplicationController::Timelines
   SELECT_EVENT_TYPE = [[N_('Management Events'), 'timeline'], [N_('Policy Events'), 'policy_timeline']].freeze
+  SELECT_STORAGE_SYSTEM = [[N_('TEST1'), 'TEST1'], [N_('TEST2'), 'TEST2']]
 
   DateOptions = Struct.new(
     :end_date,
@@ -122,9 +123,9 @@ module ApplicationController::Timelines
   ) do
     def initialize(*args)
       super
-      self.date       = DateOptions.new
-      self.management = ManagementEventsOptions.new
-      self.policy     = PolicyEventsOptions.new
+      self.date             = DateOptions.new
+      self.management       = ManagementEventsOptions.new
+      self.policy           = PolicyEventsOptions.new
     end
 
     def management_events?
