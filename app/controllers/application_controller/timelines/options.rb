@@ -123,9 +123,9 @@ module ApplicationController::Timelines
   ) do
     def initialize(*args)
       super
-      self.date             = DateOptions.new
-      self.management       = ManagementEventsOptions.new
-      self.policy           = PolicyEventsOptions.new
+      self.date       = DateOptions.new
+      self.management = ManagementEventsOptions.new
+      self.policy     = PolicyEventsOptions.new
     end
 
     def management_events?

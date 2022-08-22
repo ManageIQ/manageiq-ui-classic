@@ -7,7 +7,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
       tl_timerange: 'weeks',
       tl_timepivot: 'ending',
       tl_result: 'success',
-      tl_storage_systems: '',
+      tl_storage_systems: [''],
       tl_range_count: 1,
       tl_date: new Date(ManageIQ.calendar.calDateTo),
     };

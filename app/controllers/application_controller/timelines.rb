@@ -47,11 +47,6 @@ module ApplicationController::Timelines
   end
 
   def tl_build_init_options(refresh = nil)
-
-
-    require 'byebug'
-    byebug
-
     @tl_record = @record # Use related server vm record
     if @tl_options.nil? ||
        (refresh != "n" && params[:refresh] != "n" && @tl_options[:model] != @tl_record.class.base_class.to_s)
@@ -64,11 +59,6 @@ module ApplicationController::Timelines
     @tl_options.tl_show = params[:tl_show] || "timeline"
     sdate, edate = @tl_record.first_and_last_event(@tl_options.evt_type)
     @tl_options.date.update_start_end(sdate, edate)
-
-    #storage = find_records_with_rbac(PhysicalStorage, params[:id])
-    # TOMORROW
-    # find_record_with_rbac(PhysicalStorage, params[:id]).name -- works for 1 record only, there must be a way
-    # add this to the application controller function, this should work for 1 physical storage
 
     if @tl_options.policy_events?
       @tl_options.policy.result ||= "both"
@@ -103,19 +93,23 @@ module ApplicationController::Timelines
       from_dt = create_time_in_utc("#{from_date.strftime} 00:00:00",
                                    session[:user_tz])
 
-      require 'byebug'
-      byebug
-      #rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
+      parameters = [from_dt, to_dt]
       rec_cond = ""
-      params[:tl_storage_systems].each do |i, index|
-        rec_cond = rec_cond + "#{@tl_options.evt_type}.physical_storage_id = #{i}"
-        unless i.equal?params[:tl_storage_systems].last
-          rec_cond = rec_cond + " or "
+      rec_params = ""
+
+      if params[:tl_storage_systems] == [""]
+        rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
+        parameters = rec_params + [from_dt, to_dt]
+      else
+        params[:tl_storage_systems].each do |i, index|
+          rec_cond = rec_cond + "#{@tl_options.evt_type}.physical_storage_id = #{i}"
+          unless i.equal?params[:tl_storage_systems].last
+            rec_cond = rec_cond + " or "
+          end
         end
       end
 
       conditions = [rec_cond, "timestamp >= ?", "timestamp <= ?"]
-      parameters = [from_dt, to_dt]
 
       tl_add_event_type_conditions(conditions, parameters)
       tl_add_policy_conditions(conditions, parameters) if @tl_options.policy_events?
@@ -125,10 +119,6 @@ module ApplicationController::Timelines
       @report.rpt_options ||= {}
       @report.rpt_options[:categories] = @tl_options.categories
       @title = @report.title
-
-      require 'byebug'
-      byebug
-
     end
   end
 
@@ -191,9 +181,6 @@ module ApplicationController::Timelines
       @timeline = true
       miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
       @report = miq_task.task_results
-
-      require 'byebug'
-      byebug
 
       if !miq_task.results_ready?
         add_flash(_("Error building timeline %{error_message}") % {:error_message => miq_task.message}, :error)
