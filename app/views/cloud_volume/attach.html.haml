@@ -1,3 +1,6 @@
 = render :partial => "layouts/flash_msg"
 .col-md-12
-  = react 'AttachDetachCloudVolumeForm', :recordId => @volume.id.to_s, :isAttach => true, :vmChoices => @vm_choices.sort
+  = react 'AttachDetachCloudVolumeForm',  :recordId => @volume.id.to_s,
+                                          :isAttach => true,
+                                          :dropdownChoices => @vm_choices.sort,
+                                          :dropdownLabel => "Instance" ## Label will be translated in schema
