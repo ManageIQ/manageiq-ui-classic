@@ -61,63 +61,6 @@ module Mixins
         def disassociate_floating_ip_vm
           assert_privileges("instance_disassociate_floating_ip")
           @record = find_record_with_rbac(VmCloud, params[:id])
-
-          case params[:button]
-          when "cancel" then disassociate_handle_cancel_button
-          when "submit" then disassociate_handle_submit_button
-          end
-        end
-
-        private
-
-        def disassociate_handle_cancel_button
-          add_flash(_("Disassociation of Floating IP from Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
-          @record = @sb[:action] = nil
-          if @sb[:explorer]
-            replace_right_cell
-          else
-            flash_to_session
-            render :update do |page|
-              page << javascript_prologue
-              page.redirect_to(previous_breadcrumb_url)
-            end
-          end
-        end
-
-        def disassociate_handle_submit_button
-          if @record.supports?(:disassociate_floating_ip)
-            floating_ip = params[:floating_ip][:address]
-            begin
-              @record.disassociate_floating_ip_queue(session[:userid], floating_ip)
-              add_flash(_("Disassociating Floating IP %{address} from Instance \"%{name}\"") % {
-                :address => floating_ip,
-                :name    => @record.name
-              })
-            rescue StandardError => ex
-              add_flash(_("Unable to disassociate Floating IP %{address} from Instance \"%{name}\": %{details}") % {
-                :address => floating_ip,
-                :name    => @record.name,
-                :details => get_error_message_from_fog(ex.to_s)
-              }, :error)
-            end
-          else
-            add_flash(_("Unable to disassociate Floating IP from Instance \"%{name}\": %{details}") % {
-              :name    => @record.name,
-              :details => @record.unsupported_reason(:disassociate_floating_ip)
-            }, :error)
-          end
-          params[:id] = @record.id.to_s # reset id in params for show
-          @record = nil
-          @sb[:action] = nil
-          if @sb[:explorer]
-            replace_right_cell
-          else
-            flash_to_session
-            render :update do |page|
-              page << javascript_prologue
-              page.redirect_to(previous_breadcrumb_url)
-            end
-          end
         end
       end
     end
