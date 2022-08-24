@@ -1285,7 +1285,8 @@ module ApplicationHelper
   end
 
   def storage_systems_options
-    PhysicalStorage.all.ids
+    storages = PhysicalStorage.all.ids
+    storages.map{|k| [PhysicalStorage.find_by(:id=>k).name, k]}
   end
 
   def unique_html_id(prefix = 'unknown')

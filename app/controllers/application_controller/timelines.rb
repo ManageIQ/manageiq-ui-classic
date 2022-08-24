@@ -97,16 +97,11 @@ module ApplicationController::Timelines
       rec_cond = ""
       rec_params = ""
 
-      if params[:tl_storage_systems] == [""]
+      if params[:tl_storage_systems].nil? or params[:tl_storage_systems]== [""]
         rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
         parameters = rec_params + [from_dt, to_dt]
       else
-        params[:tl_storage_systems].each do |i, index|
-          rec_cond = rec_cond + "#{@tl_options.evt_type}.physical_storage_id = #{i}"
-          unless i.equal?params[:tl_storage_systems].last
-            rec_cond = rec_cond + " or "
-          end
-        end
+        rec_cond = tl_map_storage_systems(params[:tl_storage_systems])
       end
 
       conditions = [rec_cond, "timestamp >= ?", "timestamp <= ?"]
@@ -120,6 +115,18 @@ module ApplicationController::Timelines
       @report.rpt_options[:categories] = @tl_options.categories
       @title = @report.title
     end
+  end
+
+  def tl_map_storage_systems(storages)
+    rec_cond = ""
+    storages.each do |i|
+      rec_cond = rec_cond + "#{@tl_options.evt_type}.physical_storage_id = #{i}"
+      unless i.equal?params[:tl_storage_systems].last
+        rec_cond = rec_cond + " or "
+      end
+    end
+
+    rec_cond
   end
 
   def tl_add_event_type_conditions(conditions, parameters)
