@@ -104,8 +104,8 @@ class ConditionController < ApplicationController
           session[:changed] = @changed = false
           javascript_redirect(:action => params[:button] == "add" ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
         else
-          condition.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          condition.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           javascript_flash
         end

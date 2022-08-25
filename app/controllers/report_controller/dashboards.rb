@@ -23,8 +23,8 @@ module ReportController::Dashboards
       if g.save
         AuditEvent.success(build_saved_audit(g, @edit))
       else
-        g.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        g.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         err = true
       end
@@ -152,8 +152,8 @@ module ReportController::Dashboards
         @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:replace_trees => [:db])
       else
-        @dashboard.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        @dashboard.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
         javascript_flash

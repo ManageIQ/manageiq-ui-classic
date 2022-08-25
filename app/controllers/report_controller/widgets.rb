@@ -85,8 +85,8 @@ module ReportController::Widgets
         # @schedule = nil
         replace_right_cell(:replace_trees => [:widgets])
       else
-        @widget.errors.each do |field, msg|
-          add_flash("#{_(field.to_s.capitalize)} #{msg}", :error)
+        @widget.errors.each do |error|
+          add_flash("#{_(error.attribute.to_s.capitalize)} #{error.message}", :error)
         end
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
         javascript_flash

@@ -104,8 +104,8 @@ module PxeController::PxeServers
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => refresh_trees)
       else
-        update_img.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        update_img.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @in_a_form = true
         @changed = true
@@ -143,8 +143,8 @@ module PxeController::PxeServers
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node)
       else
-        update_wimg.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        update_wimg.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @in_a_form = true
         @changed = true

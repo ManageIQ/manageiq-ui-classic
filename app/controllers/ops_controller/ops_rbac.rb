@@ -379,8 +379,8 @@ module OpsController::OpsRbac
         if group.save
           AuditEvent.success(build_saved_audit(group, params[:button] == "add"))
         else
-          group.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          group.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           err = true
         end
@@ -732,7 +732,7 @@ module OpsController::OpsRbac
     end
 
     @changed = session[:changed] = (@edit[:new] != @edit[:current])
-    record.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+    record.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
 
     render_flash
   end

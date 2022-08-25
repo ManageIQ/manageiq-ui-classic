@@ -32,7 +32,7 @@ module OpsController::Settings::Tags
         page.replace_html('settings_co_categories', :partial => 'settings_co_categories_tab')
       end
     else
-      category.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+      category.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
       javascript_flash
     end
   end
@@ -95,8 +95,8 @@ module OpsController::Settings::Tags
         begin
           update_category.save!
         rescue
-          update_category.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          update_category.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           @in_a_form = true
           session[:changed] = @changed
@@ -208,7 +208,7 @@ module OpsController::Settings::Tags
       end
     end
     unless entry.errors.empty?
-      entry.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+      entry.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
       javascript_flash(:focus => 'entry_name')
       return
     end
@@ -247,7 +247,7 @@ module OpsController::Settings::Tags
         page.replace(:tab_div, :partial => "settings_co_tags_tab")
       end
     else
-      entry.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+      entry.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
       javascript_flash(:focus => 'entry_name')
     end
   end

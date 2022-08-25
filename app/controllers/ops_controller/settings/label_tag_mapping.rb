@@ -339,8 +339,8 @@ module OpsController::Settings::LabelTagMapping
         page.replace_html('settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab')
       end
     else
-      mapping.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
-      category.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+      mapping.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
+      category.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
       javascript_flash
     end
   end

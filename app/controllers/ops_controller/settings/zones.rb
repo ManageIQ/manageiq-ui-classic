@@ -20,7 +20,7 @@ module OpsController::Settings::Zones
       zone.destroy
     rescue => bang
       add_flash(bang.to_s, :error)
-      zone.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+      zone.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
       self.x_node = "z-#{zone.id}"
       get_node_info(x_node)
     else

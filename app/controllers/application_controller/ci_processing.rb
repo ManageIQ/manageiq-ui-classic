@@ -161,7 +161,7 @@ module ApplicationController::CiProcessing
         AuditEvent.success(audit)
         add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => model_name, :name => record_name})
       else
-        error_msg = element.errors.collect { |_attr, msg| msg }.join(';')
+        error_msg = element.errors.collect { |error| error.message }.join(';')
         add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                  {:model => model_name, :name => record_name, :error_msg => error_msg}, :error)
       end
