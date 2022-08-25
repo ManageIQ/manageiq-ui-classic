@@ -1,12 +1,11 @@
+---
 name: CI
-
-on:
+'on':
   push:
   pull_request:
   workflow_dispatch:
   schedule:
-  - cron: '0 0 * * *'
-
+  - cron: 0 0 * * *
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -23,10 +22,6 @@ jobs:
         - spec:javascript
         - spec:jest
         - spec:routes
-        include:
-        - ruby-version: '2.6'
-          node-version: 14
-          test-suite: spec
     services:
       postgres:
         image: manageiq/postgresql:10
@@ -34,14 +29,15 @@ jobs:
           POSTGRESQL_USER: root
           POSTGRESQL_PASSWORD: smartvm
           POSTGRESQL_DATABASE: vmdb_test
-        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 5
+        options: "--health-cmd pg_isready --health-interval 2s --health-timeout 5s
+          --health-retries 5"
         ports:
         - 5432:5432
     env:
-      TEST_SUITE: ${{ matrix.test-suite }}
+      TEST_SUITE: "${{ matrix.test-suite }}"
       PGHOST: localhost
       PGPASSWORD: smartvm
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
     steps:
     - uses: actions/checkout@v2
     - name: Set up system
@@ -49,14 +45,15 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby-version }}
+        ruby-version: "${{ matrix.ruby-version }}"
         bundler-cache: true
       timeout-minutes: 30
     - name: Set up Node
-      if: ${{ matrix.test-suite == 'spec:compile' || matrix.test-suite == 'spec:javascript' || matrix.test-suite == 'spec:jest' }}
+      if: "${{ matrix.test-suite == 'spec:compile' || matrix.test-suite == 'spec:javascript'
+        || matrix.test-suite == 'spec:jest' }}"
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: "${{ matrix.node-version }}"
         cache: yarn
         registry-url: https://npm.manageiq.org/
     - name: Prepare tests
@@ -64,6 +61,7 @@ jobs:
     - name: Run tests
       run: bundle exec rake
     - name: Report code coverage
-      if: ${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '2.7' && matrix.test-suite == 'spec' }}
+      if: "${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '2.7' &&
+        matrix.test-suite == 'spec' }}"
       continue-on-error: true
       uses: paambaati/codeclimate-action@v3.0.0
