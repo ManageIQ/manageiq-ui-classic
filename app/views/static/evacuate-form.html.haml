@@ -5,11 +5,11 @@
                "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
-    = _('Evacuate Host')
+    = _('Evacuate Host 1')
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = _('Auto-select Host?')
+        = _('Auto-select Host? 1')
       .col-md-8
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
@@ -38,7 +38,7 @@
                             'ng-model'    => "vm.vmCloudModel.admin_password"}
   %div{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
     %h3
-      = _('Select Destination Host')
+      = _('Select Destination Host 1')
     .form-horizontal
       .form-group
         %label.col-md-2.control-label

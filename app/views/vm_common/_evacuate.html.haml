@@ -1,3 +1,6 @@
+= react 'VmEvacuateForm', :recordIds => @evacuate_items
+-# - require 'byebug'
+-# - byebug ## @vm is nil, so we cant do @vm.hosts
 - message = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
 - form_id = @evacuate_items.length == 1 ? @evacuate_items[0].id : ''
 %vm-cloud-evacuate-form{'record-id' => form_id}

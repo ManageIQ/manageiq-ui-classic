@@ -27,7 +27,7 @@ function vmCloudEvacuateFormController($http, $scope, miqService) {
     ManageIQ.angular.scope = $scope;
     $scope.saveable = miqService.saveable;
 
-    if (vm.recordId) {
+    if (vm.recordId) { // only goes in when we select ONE VM, otherwise we stick to default values
       miqService.sparkleOn();
       $http.get('/vm_cloud/evacuate_form_fields/' + vm.recordId)
         .then(getEvacuateFormData)

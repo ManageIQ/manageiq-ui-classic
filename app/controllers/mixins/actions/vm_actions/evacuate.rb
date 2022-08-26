@@ -2,7 +2,9 @@ module Mixins
   module Actions
     module VmActions
       module Evacuate
-        def evacuate
+        def evacuate ## 2
+          require 'byebug'
+          # byebug
           assert_privileges("instance_evacuate")
           drop_breadcrumb(:name => _("Evacuate Instances"), :url => "/vm_cloud/evacuate") unless @explorer
           @sb[:explorer] = @explorer
@@ -17,6 +19,8 @@ module Mixins
         end
 
         def evacuatevms
+          require 'byebug' ## 1
+          # byebug
           assert_privileges("instance_evacuate")
           session[:evacuate_items] = checked_or_params
           if @explorer
@@ -30,12 +34,9 @@ module Mixins
         alias instance_evacuate evacuatevms
 
         def evacuate_vm
+          require 'byebug'
+          byebug # on cancel pressed
           assert_privileges("instance_evacuate")
-
-          case params[:button]
-          when "cancel" then add_flash(_("Evacuation of Instances was cancelled by the user"))
-          when "submit" then evacuate_handle_submit_button
-          end
 
           @sb[:action] = nil
           if @sb[:explorer]
@@ -48,9 +49,13 @@ module Mixins
         end
 
         def evacuate_form_fields
+          require 'byebug'
+          byebug # 3, this is loaded in after the top half is built (so for building the table i guess)
+          ## Not hit on multiple vms selected?
           assert_privileges("instance_evacuate")
           @record = find_record_with_rbac(VmOrTemplate, params[:id])
           hosts = []
+          byebug
           unless @record.ext_management_system.nil?
             begin
               connection = @record.ext_management_system.connect
@@ -72,7 +77,9 @@ module Mixins
         private
 
         def evacuate_handle_submit_button
-          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
+          require 'byebug'
+          byebug
+          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name) ## session[:evacuate_items] is either [134, 133] or [134]
           @evacuate_items.each do |vm|
             if vm.supports?(:evacuate)
               options = {
