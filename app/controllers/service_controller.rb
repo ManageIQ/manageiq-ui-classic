@@ -28,6 +28,8 @@ class ServiceController < ApplicationController
       service_retire
     when 'service_retire_now'
       service_retire_now
+    when 'service_reconfigure'
+      service_reconfigure
     end
   end
 
@@ -60,11 +62,15 @@ class ServiceController < ApplicationController
 
   def service_reconfigure
     service = Service.find_by(:id => params[:id])
-    service_template = service.service_template
+    service_template = ServiceTemplate.find_by(:id => service.service_template_id)
     resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
-
-    @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service.name}
     dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    @resource_action_id = resource_action.id
+    @target_id = service.id
+    @angular_form = true
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Reconfigure Service\"%{name}\"") % {:name => service.name})
+    javascript_redirect(:action => 'reconfigure_dialog', :id => checked_item_id)
   end
 
   def service_form_fields

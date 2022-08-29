@@ -2736,6 +2736,7 @@ Rails.application.routes.draw do
         show
         show_list
         edit
+        reconfigure_dialog
         ownership
         tagging_edit
       ),
@@ -2745,6 +2746,7 @@ Rails.application.routes.draw do
         quick_search
         reload
         edit
+        reconfigure_dialog
         show
         button
         show_list
