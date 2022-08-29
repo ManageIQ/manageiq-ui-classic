@@ -11,6 +11,12 @@ class EmsStorageDashboardService < EmsDashboardService
     }.compact
   end
 
+  def aggregate_event_data
+    {
+      :aggEvents => agg_events
+    }.compact
+  end
+
   def aggregate_status
     {
       :quadicon      => @controller.instance_exec(@ems, &EmsStorageDashboardService.quadicon_calc),
@@ -71,7 +77,6 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def heatmaps
     resource_usage = []
-
     @ems.physical_storages.each do |system|
       system.storage_resources.each do |resource|
         resource_usage << {
@@ -89,5 +94,37 @@ class EmsStorageDashboardService < EmsDashboardService
       :resourceUsage => resource_usage.presence,
       :title         => 'Used capacity [%]'
     }
+  end
+
+  def agg_events
+    event_hash = {}
+    event_list = []
+    events = EmsEvent.where("ems_id=#{@ems_id}")
+
+    events.each do |event|
+      unless event_hash[event.physical_storage_name]
+        event_hash[event.physical_storage_name] = {:fixed => 0, :not_fixed => 0}
+      end
+      if event.event_type == "autosde_critical_alert_fixed"
+        event_hash[event.physical_storage_name][:fixed] = event_hash[event.physical_storage_name][:fixed] + 1
+      else
+        event_hash[event.physical_storage_name][:not_fixed] = event_hash[event.physical_storage_name][:not_fixed] + 1
+      end
+    end
+
+    event_hash.each_pair do |key, value|
+      event_list << {
+        :group => "fixed",
+        :key   => key,
+        :value => value[:fixed]
+      }
+      event_list << {
+        :group => "not_fixed",
+        :key   => key,
+        :value => value[:not_fixed]
+      }
+    end
+
+    event_list.to_a
   end
 end

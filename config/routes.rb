@@ -119,6 +119,7 @@ Rails.application.routes.draw do
         show
         aggregate_status_data
         resources_capacity_data
+        aggregate_event_data
       ]
     },
 
@@ -134,6 +135,7 @@ Rails.application.routes.draw do
         tagging_edit
         download_private_key
         ownership
+
       ) +
         compare_get,
       :post => %w(

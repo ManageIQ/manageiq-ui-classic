@@ -35,6 +35,7 @@ import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-
 import DashboardWidget from '../components/dashboard-widgets/dashboard-charts';
 import Datastore from '../components/data-tables/datastore';
 import DbList from '../components/data-tables/db-list';
+import EventChart from "../components/provider-dashboard-charts/events-bar-chart";
 import FlavorForm from '../components/flavor-form';
 import FilterDropdown from '../components/filter-dropdown';
 import FirmwareRegistryForm from '../components/firmware-registry/firmware-registry-form';
@@ -168,6 +169,7 @@ ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
 ManageIQ.component.addReact('DashboardWidget', DashboardWidget);
 ManageIQ.component.addReact('Datastore', Datastore);
 ManageIQ.component.addReact('DbList', DbList);
+ManageIQ.component.addReact('EventChart', EventChart);
 ManageIQ.component.addReact('FirmwareRegistryForm', FirmwareRegistryForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FilterDropdown', FilterDropdown);

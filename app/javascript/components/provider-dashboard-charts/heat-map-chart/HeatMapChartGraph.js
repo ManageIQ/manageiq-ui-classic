@@ -74,7 +74,6 @@ const HeatMapChartGraph = ({
     },
     experimental: true,
     height: '400px',
-    width: '280px',
     tooltip: {
       customHTML: heatmapCpuTooltip(data),
       truncation: {
@@ -108,7 +107,6 @@ const HeatMapChartGraph = ({
       },
     },
     height: '400px',
-    width: '280px',
     tooltip: {
       customHTML: heatmapMemoryTooltip(data),
       truncation: {
