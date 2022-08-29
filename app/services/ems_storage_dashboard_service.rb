@@ -97,22 +97,15 @@ class EmsStorageDashboardService < EmsDashboardService
   end
 
   def agg_events
-    event_hash = {}
     event_list = []
-    events = EmsEvent.where("ems_id=#{@ems_id}")
 
-    events.each do |event|
-      unless event_hash[event.physical_storage_name]
-        event_hash[event.physical_storage_name] = {:fixed => 0, :not_fixed => 0}
-      end
-      if event.event_type == "autosde_critical_alert_fixed"
-        event_hash[event.physical_storage_name][:fixed] = event_hash[event.physical_storage_name][:fixed] + 1
-      else
-        event_hash[event.physical_storage_name][:not_fixed] = event_hash[event.physical_storage_name][:not_fixed] + 1
-      end
+    event_hash = @ems.ems_events.group_by(&:physical_storage_name)
+                     .transform_values do |events|
+      fixed, not_fixed = events.partition { |event| event.event_type == "autosde_critical_alert_fixed" }.map(&:count)
+      {:fixed => fixed, :not_fixed => not_fixed}
     end
 
-    event_hash.each_pair do |key, value|
+    event_hash.each do |key, value|
       event_list << {
         :group => "fixed",
         :key   => key,
