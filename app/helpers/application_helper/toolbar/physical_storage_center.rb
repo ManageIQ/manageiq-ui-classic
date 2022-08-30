@@ -60,7 +60,7 @@ class ApplicationHelper::Toolbar::PhysicalStorageCenter < ApplicationHelper::Too
             'ff ff-timeline fa-lg',
             N_('Show Timelines for this Physical Storage Provider'),
             N_('Timelines'),
-            :klass     => ApplicationHelper::Button::EmsTimeline,
+            :klass     => ApplicationHelper::Button::PhysicalStorageTimeline,
             :url_parms => "?display=timeline"
           ),
         ]
