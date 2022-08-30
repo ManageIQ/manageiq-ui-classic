@@ -6,7 +6,14 @@
 %h1
   = @title
 = render :partial => "layouts/flash_msg"
-= render :partial => "layouts/tl_options"
+- case @tl_options.model
+- when "PhysicalStorage"
+  = render :partial => "layouts/physical_storage_tl_options"
+- when "ExtManagementSystem"
+  = render :partial => "layouts/physical_storage_tl_options"
+- else
+  = render :partial => "layouts/tl_options"
+
 = render :partial => 'layouts/tl_detail'
 
 = _("* Dates/Times on this page are based on time zone: %{time_zone}.") % {:time_zone => session[:user_tz]}
