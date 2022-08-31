@@ -19,7 +19,8 @@ describe('timelineOptionsController', function() {
             keyPairFormId: 'new',
             url: '/host/tl_chooser',
             categories: [],
-            miqService: miqService
+            miqService: miqService,
+            model: ""
         });
     }));
 
