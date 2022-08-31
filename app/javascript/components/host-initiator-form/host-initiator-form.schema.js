@@ -109,7 +109,27 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             component: componentTypes.TEXT_FIELD,
             label: __('IQN'),
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              {
+                type: validatorTypes.REQUIRED
+              },
+              {
+                type: "pattern",
+                pattern: "iqn\\.(\\d{4}-\\d{2})\\.([^:]+)(:)([^,:\\s']+)",
+                message: __('The IQN should have the format: iqn.yyyy-mm.naming-authority:unique name')
+              },
+              {
+                type: "pattern",
+                pattern: "^[a-z0-9:.-]*$",
+                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), ' +
+                  'periods (.) or colons (:)')
+              },
+              {
+                type: "max-length",
+                threshold: 223,
+                message: __('The IQN should have up to 223 characters.')
+              }
+            ],
           },
         ],
         condition: {
@@ -206,7 +226,16 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             component: componentTypes.TEXT_FIELD,
             label: __('Custom WWPN'),
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              {
+                type: validatorTypes.REQUIRED
+              },
+              {
+                type: "exact-length",
+                threshold: 16,
+                message: __('The length of the WWPN should be exactly 16 characters.')
+              }
+            ],
           },
         ],
         condition: {
