@@ -13,7 +13,7 @@
     .col-xs-12.col-sm-12.col-md-6
       = react('RecentHostGraph', :providerId => @record.id.to_s)
     .col-xs-12.col-sm-12.col-md-6
-      = react('RecentVmGraph', :providerId => @record.id.to_s, :title => _('Recent VMs'), :config => 'recentVmsConfig',
+      = react('RecentVmGraph', :providerId => @record.id.to_s, :title => _('Recent VMs and Templates'), :config => 'recentVmsConfig',
        :apiUrl => 'ems_infra_dashboard/recent_vms_data', :dataPoint => 'recentResources')
 
   :javascript

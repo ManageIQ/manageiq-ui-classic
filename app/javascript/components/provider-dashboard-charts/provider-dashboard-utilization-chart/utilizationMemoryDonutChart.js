@@ -76,7 +76,7 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
   const areaChartData = getConvertedData(memoryData, config.units);
 
   return (
-    <div>
+    <div className="utilization-memory-chart-pf">
       <div className="utilization-trend-chart-pf">
         <h3>{config.title}</h3>
         <div className="current-values">
