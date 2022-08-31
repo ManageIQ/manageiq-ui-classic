@@ -50,7 +50,7 @@ const UsageAreaChart = ({
   const areaData = getConvertedData(usageData.xy_data, config.createdLabel);
 
   return (
-    <div>
+    <div className='usage_area_charts_section'>
       { (config.valueType === 'actual') && (
         <span>
           <span className="trend-title-big-pf">

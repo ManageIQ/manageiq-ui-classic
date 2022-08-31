@@ -43,7 +43,7 @@ const VmAreaChart = ({
 
   const areaData = getConvertedData(usageData, config.units);
   return (
-    <div>
+    <div className='vm_area_charts_section'>
       {usageData.dataAvailable ? <AreaChart data={areaData} options={areaOptions} /> : <EmptyChart />}
       <span className={`trend-footer-pf ${!usageData.dataAvailable ? 'chart-transparent-text' : ''}`}>{config.legendLeftText}</span>
     </div>
