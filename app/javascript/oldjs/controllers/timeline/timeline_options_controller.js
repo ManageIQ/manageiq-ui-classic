@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', '$scope', function(miqService, url, categories, $scope) {
+ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', 'model', '$scope', function(miqService, url, categories, model, $scope) {
   var vm = this;
   var init = function() {
     vm.reportModel = {
@@ -20,6 +20,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
     };
     ManageIQ.angular.scope = $scope;
     vm.availableCategories = categories;
+    vm.model = model;
   };
 
   vm.clearLevelsIfNotSelected = function() {
@@ -32,6 +33,14 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
     vm.reportModel.tl_categories = [];
   };
 
+  vm.showFilterField = function() {
+    let bool = false;
+    if(vm.model === "PhysicalStorage" || vm.model === "ExtManagementSystem"){
+      bool = true;
+    }
+    return bool;
+  }
+
   vm.countDecrement = function() {
     if (vm.reportModel.tl_range_count > 1) {
       vm.reportModel.tl_range_count--;
@@ -39,6 +48,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
   };
 
   vm.countIncrement = function() {
+    console.log(vm.showFilterField());
     vm.reportModel.tl_range_count++;
   };
 
