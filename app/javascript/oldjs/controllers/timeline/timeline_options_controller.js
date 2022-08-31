@@ -39,7 +39,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
       bool = true;
     }
     return bool;
-  }
+  };
 
   vm.countDecrement = function() {
     if (vm.reportModel.tl_range_count > 1) {
@@ -48,7 +48,6 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
   };
 
   vm.countIncrement = function() {
-    console.log(vm.showFilterField());
     vm.reportModel.tl_range_count++;
   };
 
