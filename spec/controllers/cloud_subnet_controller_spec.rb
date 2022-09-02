@@ -93,7 +93,7 @@ describe CloudSubnetController do
       }
     end
     let(:cloud_tenant) { FactoryBot.create(:cloud_tenant) }
-    let(:cloud_network) { FactoryBot.create(:cloud_network_openstack) }
+    let(:cloud_network) { FactoryBot.create(:cloud_network) }
     let(:queue_options) do
       {
         :class_name  => ems.class.name,

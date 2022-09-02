@@ -4,7 +4,7 @@ describe CloudNetworkController do
   let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
   let(:ct) { FactoryBot.create(:cloud_network) }
   let(:network) { FactoryBot.create(:cloud_network) }
-  let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
+  let(:ems) { FactoryBot.create(:ems_network) }
 
   before do
     FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => ct)
@@ -150,7 +150,7 @@ describe CloudNetworkController do
   end
 
   describe "#edit" do
-    let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems) }
+    let(:network) { FactoryBot.create(:cloud_network, :ext_management_system => ems) }
     let(:task_options) do
       {
         :action => "updating Cloud Network for user %{user}" % {:user => controller.current_user.userid},
@@ -160,13 +160,16 @@ describe CloudNetworkController do
     let(:queue_options) do
       {
         :class_name  => network.class.name,
-        :method_name => 'raw_update_cloud_network',
+        :method_name => 'update_cloud_network',
         :instance_id => network.id,
         :args        => [{:name => "test2", :admin_state_up => false, :shared => false, :external_facing => false}]
       }
     end
 
-    before { stub_user(:features => :all) }
+    before do
+      stub_user(:features => :all)
+      stub_supports(network.class, :update)
+    end
 
     it "builds edit screen" do
       post :button, :params => { :pressed => "cloud_network_edit", :format => :js, :id => network.id }
@@ -220,7 +223,7 @@ describe CloudNetworkController do
   end
 
   describe "#delete" do
-    let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems) }
+    let(:network) { FactoryBot.create(:cloud_network, :ext_management_system => ems) }
     let(:task_options) do
       {
         :action => "deleting Cloud Network for user %{user}" % {:user => controller.current_user.userid},
@@ -230,14 +233,18 @@ describe CloudNetworkController do
     let(:queue_options) do
       {
         :class_name  => network.class.name,
-        :method_name => 'raw_delete_cloud_network',
+        :method_name => 'delete_cloud_network',
         :instance_id => network.id,
-        :args        => []
+        :priority    => MiqQueue::NORMAL_PRIORITY,
+        :role        => "ems_operations",
+        :zone        => ems.my_zone,
+        :args        => [{}]
       }
     end
 
     before do
       stub_user(:features => :all)
+      stub_supports(network.class, :delete)
       session[:cloud_network_lastaction] = 'show'
       controller.params = {:pressed => "cloud_network_delete",
                            :id      => network.id}
