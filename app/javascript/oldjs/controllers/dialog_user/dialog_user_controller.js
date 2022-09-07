@@ -3,6 +3,11 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   vm.$onInit = function() {
     var apiCall = new Promise(function(resolve) {
+      console.log(dialogId);
+      console.log(resourceActionId);
+      console.log(targetId);
+      console.log(targetType);
+
       var url = '/api/service_dialogs/' + dialogId +
         '?resource_action_id=' + resourceActionId +
         '&target_id=' + targetId +
@@ -18,6 +23,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     vm.dialog = dialog.content[0];
     vm.dialogLoaded = true;
 
+    console.log(vm.dialog);
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {

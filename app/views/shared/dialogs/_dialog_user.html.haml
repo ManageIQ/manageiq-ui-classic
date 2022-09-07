@@ -1,3 +1,21 @@
+- if @dialog_locals
+  - api_submit_endpoint ||= @dialog_locals[:api_submit_endpoint]
+  - api_action ||= @dialog_locals[:api_action]
+  - finish_submit_endpoint ||= @dialog_locals[:finish_submit_endpoint]
+  - cancel_endpoint ||= @dialog_locals[:cancel_endpoint]
+  - target_id ||= @dialog_locals[:target_id]
+  - target_type ||= @dialog_locals[:target_type]
+  - real_target_type ||= @dialog_locals[:real_target_type]
+  - dialog_id ||= @dialog_locals[:dialog_id]
+  - resource_action_id ||= @dialog_locals[:resource_action_id]
+  - open_url ||= @dialog_locals[:open_url]
+
+= react('OrderServiceForm',
+        :dialogId => @dialog_locals[:dialog_id],
+        :resourceActionId => @dialog_locals[:resource_action_id],
+        :targetId => @dialog_locals[:target_id],
+        :targetType => @dialog_locals[:target_type])
+
 .row.wrapper{"ng-controller" => "dialogUserController as vm"}
   .spinner{'ng-show' => "!vm.dialogLoaded"}
 
