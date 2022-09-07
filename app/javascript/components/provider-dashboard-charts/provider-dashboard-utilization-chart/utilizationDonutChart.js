@@ -76,7 +76,7 @@ const UtilizationDonutChart = ({ data, config }) => {
   const areaChartData = getConvertedData(cpuData, config.units);
 
   return (
-    <div>
+    <div className="utilization-cpu-chart-pf">
       <div className="utilization-trend-chart-pf">
         <h3>{config.title}</h3>
         <div className="current-values">

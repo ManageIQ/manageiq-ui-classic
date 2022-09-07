@@ -47,7 +47,7 @@ const HostLineChart = ({ data, config }) => {
   const lineData = getConvertedData(data, config.units);
 
   return (
-    <div>
+    <div className='host_line_charts_section'>
       {data.dataAvailable ? <LineChart data={lineData} options={areaOptions} /> : <EmptyChart />}
       <span className={`trend-footer-pf ${!data.dataAvailable ? 'chart-transparent-text' : ''}`}>{config.legendLeftText}</span>
     </div>
