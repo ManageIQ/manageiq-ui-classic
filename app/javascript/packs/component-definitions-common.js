@@ -80,6 +80,8 @@ import OptimizationList from '../components/data-tables/optimization/optimizatio
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import ProvGrid from '../components/prov-grid';
+import OrderServiceForm from '../components/order-service-form';
+import OrderServiceRefreshButton from '../components/order-service-form/order-service-refresh-button';
 import PxeImageForm from '../components/pxe-image-type-form';
 import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeIsoDatastoreForm from '../components/pxe-iso-datastore-form';
@@ -246,6 +248,8 @@ ManageIQ.component.addReact('ObjectTypesList', ObjectTypesList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
+ManageIQ.component.addReact('OrderServiceForm', OrderServiceForm);
+ManageIQ.component.addReact('OrderServiceRefreshButton', OrderServiceRefreshButton);
 ManageIQ.component.addReact('PxeImageForm', PxeImageForm);
 ManageIQ.component.addReact('PxeCustomizationTemplateForm', PxeCustomizationTemplateForm);
 ManageIQ.component.addReact('PxeIsoDatastoreForm', PxeIsoDatastoreForm);

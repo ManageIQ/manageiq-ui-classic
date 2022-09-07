@@ -1,3 +1,19 @@
+- if @dialog_locals
+  - dialog = order_service_data(@dialog_locals)
+  - api_submit_endpoint ||= dialog[:apiSubmitEndpoint]
+  - api_action ||= dialog[:apiAction]
+  - cancel_endpoint ||= dialog[:cancelEndPoint]
+  - dialog_id ||= dialog[:dialogId]
+  - finish_submit_endpoint ||= dialog[:finishSubmitEndpoint]
+  - open_url ||= dialog[:openUrl]
+  - resource_action_id ||= dialog[:resourceActionId]
+  - real_target_type ||= dialog[:realTargetType]
+  - target_id ||= dialog[:targetId]
+  - target_type ||= dialog[:targetType]
+
+= react('OrderServiceForm', :initialData => dialog)
+
+
 .row.wrapper{"ng-controller" => "dialogUserController as vm"}
   .spinner{'ng-show' => "!vm.dialogLoaded"}
 
