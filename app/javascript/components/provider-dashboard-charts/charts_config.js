@@ -107,6 +107,9 @@ export const chartConfig = {
     units: __('KBps'),
     dataName: __('KBps'),
     tooltipFn: hourlyTimeTooltip,
+    size: { height: '150px' },
+    createdLabel: __('Network'),
+    valueType: 'actual',
   },
   dailyPodUsageConfig: {
     chartId: 'podUsageDailyChart',

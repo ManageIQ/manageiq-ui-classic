@@ -63,8 +63,9 @@
   }
 
   #pods-area-chart {
-    margin-left: -25px;
-    width: 95%;
+    .layout-child.graph-frame {
+      text-align: justify;
+    }
   }
 
   #pods-table {
@@ -84,7 +85,17 @@
   }
 
   .trend-footer-pf {
-    margin-left: -500px;
+    display: block;
+    text-align: initial;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #d1d1d1;
+    margin: 20px -10px -10px;
+    padding: 20px;
+    padding-bottom: 21px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333;
+    background: #fafafa;
   }
 
   .card-title {
@@ -99,7 +110,7 @@
 
   .card-text {
     text-align: left;
-    margin-left: -500px;
+    margin-left: -69%;
     display: inline-table;
     width: 200px;
     font-size: 36px;

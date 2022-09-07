@@ -38,7 +38,7 @@ const ServersHealthPieChart = ({ data, config }) => {
   };
 
   return (
-    <div>
+    <div className='servers_health_pie_chart_section'>
       <div className="utilization-trend-chart-pf">
         <h3>{config.title}</h3>
         <div className="current-values" />

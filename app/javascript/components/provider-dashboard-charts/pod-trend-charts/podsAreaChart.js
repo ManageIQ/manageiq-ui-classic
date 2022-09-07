@@ -46,7 +46,7 @@ const PodsAreaChart = ({
   const areaData = getPodsData(usageData.xy_data, config.createdLabel, config.deletedLabel);
 
   return (
-    <div>
+    <div className='pods_area_chart_section'>
       { (config.valueType === 'actual') && (
         <span>
           <span className="trend-title-big-pf">
