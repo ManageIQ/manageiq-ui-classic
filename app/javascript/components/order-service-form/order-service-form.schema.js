@@ -3,15 +3,11 @@ import { componentTypes, validatorTypes } from '@@ddf';
 const createSchema = (fields) => ({
   fields: [
     {
-      component: componentTypes.TEXT_FIELD,
-      id: 'name',
-      name: 'name',
-      label: __('Name'),
-      maxLength: 128,
-      validate: [{ type: validatorTypes.REQUIRED }],
-      isRequired: true,
+      component: componentTypes.TABS,
+      name: 'tabs',
+      fields,
     },
-    ...fields,
+    // ...fields,
   ],
 });
 

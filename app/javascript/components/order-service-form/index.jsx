@@ -30,17 +30,36 @@ const OrderServiceForm = ({
             console.log(group.label);
             group.dialog_fields.forEach((field) => {
               console.log(field);
+              const validate = [];
+              if (field.validator_rule) {
+                // Check what validator_type is
+                if (field.validator_message) {
+                  validate.push = {
+                    type: validatorTypes.PATTERN,
+                    pattern: field.validator_rule,
+                    message: field.validator_message,
+                  };
+                } else {
+                  validate.push = {
+                    type: validatorTypes.PATTERN,
+                    pattern: field.validator_rule,
+                  };
+                }
+              }
+              if (field.required) {
+                validate.push({
+                  type: validatorTypes.REQUIRED,
+                });
+              }
               let component = {
                 component: componentTypes.TEXT_FIELD,
-                id: field.name,
+                id: field.id,
                 name: field.name,
-                label: __(field.label),
-                maxLength: 50,
-                validate: [{ type: validatorTypes.REQUIRED }],
+                label: field.label,
                 isRequired: field.required,
                 isDisabled: field.read_only,
                 initialValue: field.default_value,
-                description: __(field.description),
+                description: field.description,
               };
               if (field.type === 'DialogFieldTextAreaBox') {
                 component = {
@@ -58,20 +77,19 @@ const OrderServiceForm = ({
             });
             const subForm = {
               component: componentTypes.SUB_FORM,
-              id: group.label,
+              id: group.id,
               name: group.label,
-              label: group.label,
+              title: group.label,
               fields: dialogFields,
             };
             dialogSubForms.push(subForm);
             dialogFields = [];
           });
           const tabComponent = {
-            component: componentTypes.TABS,
             name: tab.label,
+            title: tab.label,
             fields: dialogSubForms,
           };
-          dialogTabs.push(tabComponent);
           dialogTabs.push(tabComponent);
           dialogSubForms = [];
           console.log(dialogTabs);
@@ -97,7 +115,7 @@ const OrderServiceForm = ({
 };
 
 OrderServiceForm.propTypes = {
-  dialogId: PropTypes.string.isRequired,
+  dialogId: PropTypes.number.isRequired,
 };
 
 OrderServiceForm.defaultProps = {
