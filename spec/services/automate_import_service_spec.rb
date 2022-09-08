@@ -96,10 +96,12 @@ describe AutomateImportService do
       it "creates a new MiqAeImport with the correct import options" do
         expect(MiqAeImport).to receive(:new).with(
           "carrot",
-          "import_as" => "carrot",
-          "overwrite" => true,
-          "zip_file"  => zip_file.path,
-          "tenant_id" => user.current_tenant.id
+          {
+            "import_as" => "carrot",
+            "overwrite" => true,
+            "zip_file"  => zip_file.path,
+            "tenant_id" => user.current_tenant.id
+          }
         ).and_return(miq_ae_import)
         automate_import_service.import_datastore(import_file_upload, "carrot", "", ["starch"])
       end

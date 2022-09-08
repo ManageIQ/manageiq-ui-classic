@@ -151,8 +151,7 @@ describe CatalogController do
       allow(wf).to receive(:submit_request).and_return(:request => workflow.make_request(nil, {}))
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
-      expect(page).to receive(:redirect_to).with(:controller => "miq_request",
-                                                 :action     => "show_list")
+      expect(page).to receive(:redirect_to).with({:controller => "miq_request", :action => "show_list"})
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
       expect(session[:flash_msgs]).to match [a_hash_including(:message => "Order Request was Submitted", :level => :success)]
