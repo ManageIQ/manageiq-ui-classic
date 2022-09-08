@@ -1,17 +1,1 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudAssociateFloatingIpFormController as vm"}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Associate Floating IP')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Floating IP')
-      .col-md-8
-        %select{:name        => 'floating_ip',
-                'ng-model'   => 'vm.vmCloudModel.floating_ip',
-                'ng-options' => 'floating_ip.address for floating_ip in vm.floating_ips track by floating_ip.address'}
-    = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Submit'), :button_click => 'vm.submitClicked()'}
-
-:javascript
-  ManageIQ.angular.app.value('vmCloudAssociateFloatingIpFormId', '#{@record.id}');
-  miq_bootstrap('#form_div');
+= react 'VmFloatingIPsForm',  :recordId => @record.id.to_s, :isAssociate => true, :options => @record.cloud_tenant.nil? ? [] : @record.cloud_tenant.floating_ips.where(:vm_id => nil)
