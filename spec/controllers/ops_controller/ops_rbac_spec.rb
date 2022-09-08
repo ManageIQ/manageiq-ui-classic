@@ -168,7 +168,7 @@ describe OpsController do
       it "gets the list of tenants by calling get_view with correct args" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@settings, {})
-        expect(controller).to receive(:get_view).with(Tenant, :named_scope => :in_my_region).and_return(
+        expect(controller).to receive(:get_view).with(Tenant, {:named_scope => :in_my_region}).and_return(
           [double('view', :table => double('table', :data => [])), {}]
         )
         controller.send(:rbac_tenants_list)
@@ -261,7 +261,7 @@ describe OpsController do
                     :active_tab  => "rbac_details"}
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-        allow(@tenant).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+        allow(@tenant).to receive(:tagged_with).with({:cat => user.userid}).and_return("my tags")
         classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryBot.create(:classification_tag,
                                   :name   => "tag1",
@@ -557,7 +557,7 @@ describe OpsController do
       allow(controller).to receive(:replace_right_cell)
 
       post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details).with(nil, :no_cache => true)
+      expect(MiqExpression).to receive(:tag_details).with(nil, {:no_cache => true})
       post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
     end
 
