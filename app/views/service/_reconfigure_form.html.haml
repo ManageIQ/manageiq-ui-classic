@@ -1,3 +1,4 @@
+= resource_action_id
 #main_div
   .row.wrapper{"ng-controller" => "dialogUserReconfigureController as vm"}
     .spinner{'ng-show' => "!vm.dialogLoaded"}
@@ -20,6 +21,6 @@
                     'on-click' => "vm.cancelClicked($event)"}
 
   :javascript
-    ManageIQ.angular.app.value('resourceActionId', '#{resource_action_id}');
-    ManageIQ.angular.app.value('targetId', '#{target_id}');
+    ManageIQ.angular.app.value('resourceActionId', #{ resource_action_id });
+    ManageIQ.angular.app.value('targetId', #{ target_id });
     miq_bootstrap('.wrapper');

@@ -60,15 +60,29 @@ class ServiceController < ApplicationController
     drop_breadcrumb(:name => _("Edit Service\"%{name}\"") % {:name => @service.name}, :url => "/service/edit/#{@service.id}")
   end
 
-  def service_reconfigure
+  def reconfigure_dialog
     service = Service.find_by(:id => params[:id])
     service_template = ServiceTemplate.find_by(:id => service.service_template_id)
-    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    #resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    resource_action = service_template.resource_actions.first
     dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
     @resource_action_id = resource_action.id
     @target_id = service.id
     @angular_form = true
     @in_a_form = true
+    drop_breadcrumb(:name => _("Reconfigure Service\"%{name}\"") % {:name => service.name})
+  end
+
+  def service_reconfigure
+    service = Service.find_by(:id => params[:id])
+    # service_template = ServiceTemplate.find_by(:id => service.service_template_id)
+    # #resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    # resource_action = service_template.resource_actions.first
+    # dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    # @resource_action_id = resource_action.id
+    # @target_id = service.id
+    # @angular_form = true
+    # @in_a_form = true
     drop_breadcrumb(:name => _("Reconfigure Service\"%{name}\"") % {:name => service.name})
     javascript_redirect(:action => 'reconfigure_dialog', :id => checked_item_id)
   end
@@ -210,6 +224,8 @@ class ServiceController < ApplicationController
       partial = "shared/dialogs/reconfigure_dialog"
       header = @right_cell_text
       action = nil
+      puts "params=====#{params.inspect}"
+      locals = params[:dialog_locals]
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
@@ -221,6 +237,7 @@ class ServiceController < ApplicationController
     else
       action = nil
     end
+    locals ||= {}
     return partial, action, header
   end
 

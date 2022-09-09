@@ -40,8 +40,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
                        'pficon pficon-edit fa-lg',
                        N_('Reconfigure the options of this Service'),
                        N_('Reconfigure this Service'),
-                       :klass   => ApplicationHelper::Button::GenericFeatureButton,
-                       :options => {:feature => :reconfigure}
+                       #:klass   => ApplicationHelper::Button::GenericFeatureButton,
+                       #:options => {:feature => :reconfigure}
                      ),
                    ]
                  ),

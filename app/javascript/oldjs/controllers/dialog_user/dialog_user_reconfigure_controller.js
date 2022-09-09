@@ -13,8 +13,10 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   };
 
   function init(data) {
-    vm.dialogId = data.reconfigure_dialog[0].id;
-    vm.dialog = data.reconfigure_dialog[0];
+    if(data.reconfigure_dialog) {
+      vm.dialogId = data.reconfigure_dialog[0].id;
+      vm.dialog = data.reconfigure_dialog[0];
+    }
     vm.dialogLoaded = true;
   }
 
