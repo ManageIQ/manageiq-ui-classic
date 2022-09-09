@@ -8,6 +8,6 @@ class ApplicationHelper::Button::SecurityGroupNew < ApplicationHelper::Button::B
 
   # disable button if no active providers support create action
   def disabled?
-    ::EmsNetwork.all.none? { |ems| SecurityGroup.class_by_ems(ems).supports?(:create) }
+    ::EmsNetwork.all.none? { |ems| SecurityGroup.class_by_ems(ems)&.supports?(:create) }
   end
 end
