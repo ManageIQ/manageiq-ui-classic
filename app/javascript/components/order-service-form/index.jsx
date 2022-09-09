@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import MiqFormRenderer, { componentTypes, validatorTypes } from '@@ddf';
+// import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import createSchema from './order-service-form.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -51,16 +52,21 @@ const OrderServiceForm = ({
                   type: validatorTypes.REQUIRED,
                 });
               }
-              let component = {
-                component: componentTypes.TEXT_FIELD,
-                id: field.id,
-                name: field.name,
-                label: field.label,
-                isRequired: field.required,
-                isDisabled: field.read_only,
-                initialValue: field.default_value,
-                description: field.description,
-              };
+              let component = {};
+              if (field.type === 'DialogFieldTextBox') {
+                component = {
+                  component: componentTypes.TEXT_FIELD,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  hideField: !field.visible,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                };
+              }
               if (field.type === 'DialogFieldTextAreaBox') {
                 component = {
                   component: componentTypes.TEXT_FIELD,
@@ -70,6 +76,40 @@ const OrderServiceForm = ({
                   maxLength: 50,
                   validate: [{ type: validatorTypes.REQUIRED }],
                   isRequired: true,
+                };
+              }
+              if (field.type === 'DialogFieldDropDownList') {
+                const options = [];
+                let placeholder = __('<Choose>');
+                field.values.forEach((option) => {
+                  if (option[0] === null) {
+                    option[0] = '-1';
+                    // eslint-disable-next-line prefer-destructuring
+                    placeholder = option[1];
+
+                    // IF API CAN HANDLE NO VALUE BEING RECIEVED THEN DON'T MAKE THIS FIELD REQUIRED AND DON'T NEED VALUE OF -1, JUST LEAVE NULL
+                    if (!field.required) {
+                      field.required = true;
+                      validate.push({ type: validatorTypes.REQUIRED });
+                    }
+                  }
+                  options.push({ value: option[0], label: option[1] });
+                });
+                component = {
+                  component: componentTypes.SELECT,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  hideField: !field.visible,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                  options,
+                  placeholder,
+                  isSearchable: true,
+                  simpleValue: true,
                 };
               }
               dialogFields.push(component);
@@ -99,9 +139,12 @@ const OrderServiceForm = ({
   }, []);
 
   const onSubmit = (values) => {
+    console.log(values);
   };
 
   const onCancel = () => {
+    const message = __('Dialog Cancelled');
+    miqRedirectBack(message, 'warning', '/catalog');
   };
 
   return !isLoading && (
