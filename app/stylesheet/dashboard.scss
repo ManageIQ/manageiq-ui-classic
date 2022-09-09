@@ -30,7 +30,7 @@
         margin: 0;
         border: 0;
 
-        div[id^="dd_"] div:first-child {
+        div[id^="dd_"] div.widget-report {
           overflow-y: auto;
         }
 
