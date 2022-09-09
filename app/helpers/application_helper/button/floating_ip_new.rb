@@ -8,6 +8,6 @@ class ApplicationHelper::Button::FloatingIpNew < ApplicationHelper::Button::Butt
 
   # disable button if no active providers support create action
   def disabled?
-    ::EmsNetwork.all.none? { |ems| ::FloatingIp.class_by_ems(ems).supports?(:create) }
+    ::EmsNetwork.all.none? { |ems| ::FloatingIp.class_by_ems(ems)&.supports?(:create) }
   end
 end
