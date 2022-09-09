@@ -5,7 +5,7 @@
       = react('RefreshDataNotification', :providerId => @record.id.to_s, 
        :apiUrl => 'container_dashboard/refresh_status_data')
   .row.row-tile-pf
-    = react('ContainerDashboardCards', :providerId => @record.id.to_s)
+    = react('ContainerDashboardCards', :providerId => @record ? @record.id.to_s : '')
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       - if @record
