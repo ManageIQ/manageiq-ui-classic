@@ -27,7 +27,11 @@ module ApplicationHelper
   end
 
   def get_record_type
-    @tl_record.type
+    if @tl_record
+      @tl_record.type
+    else
+      nil
+    end
   end
 
   def api_collection_path(klass, *options)
