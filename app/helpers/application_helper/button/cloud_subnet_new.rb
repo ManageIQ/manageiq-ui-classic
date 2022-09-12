@@ -12,6 +12,6 @@ class ApplicationHelper::Button::CloudSubnetNew < ApplicationHelper::Button::But
 
   # disable button if no active providers support create action
   def disabled?
-    ::EmsNetwork.all.none? { |ems| CloudSubnet.class_by_ems(ems).supports?(:create) }
+    ::EmsNetwork.all.none? { |ems| CloudSubnet.class_by_ems(ems)&.supports?(:create) }
   end
 end
