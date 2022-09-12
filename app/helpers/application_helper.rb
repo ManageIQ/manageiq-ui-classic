@@ -26,6 +26,10 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
+  def get_record_type
+    @tl_record.type
+  end
+
   def api_collection_path(klass, *options)
     identifier = api_identifier_by_class(klass)
     send("api_#{identifier}_path", *options)
@@ -1285,8 +1289,8 @@ module ApplicationHelper
   end
 
   def storage_systems_options
-    storages = PhysicalStorage.all.ids
-    storages.map{|k| [PhysicalStorage.find_by(:id=>k).name, k]}
+    storages = PhysicalStorage.all.to_a
+    storages.map{|k| [k.name, k.id]}
   end
 
   def unique_html_id(prefix = 'unknown')

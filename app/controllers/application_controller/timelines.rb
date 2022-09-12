@@ -93,16 +93,8 @@ module ApplicationController::Timelines
       from_dt = create_time_in_utc("#{from_date.strftime} 00:00:00",
                                    session[:user_tz])
 
-      parameters = [from_dt, to_dt]
-      rec_cond = ""
-      rec_params = ""
-
-      if params[:tl_storage_systems].nil? or params[:tl_storage_systems]== [""]
-        rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
-        parameters = rec_params + [from_dt, to_dt]
-      else
-        rec_cond = tl_map_storage_systems(params[:tl_storage_systems])
-      end
+      rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type, params[:tl_storage_systems])
+      parameters = rec_params + [from_dt, to_dt]
 
       conditions = [rec_cond, "timestamp >= ?", "timestamp <= ?"]
 

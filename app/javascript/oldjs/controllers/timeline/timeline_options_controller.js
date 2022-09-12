@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', 'model', '$scope', function(miqService, url, categories, model, $scope) {
+ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', 'record_type', '$scope', function(miqService, url, categories, record_type, $scope) {
   var vm = this;
   var init = function() {
     vm.reportModel = {
@@ -20,7 +20,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
     };
     ManageIQ.angular.scope = $scope;
     vm.availableCategories = categories;
-    vm.model = model;
+    vm.record_type = record_type;
   };
 
   vm.clearLevelsIfNotSelected = function() {
@@ -34,8 +34,10 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
   };
 
   vm.showFilterField = function() {
+    const allowed_types = ["ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage", "ManageIQ::Providers::Autosde::StorageManager"]
     let bool = false;
-    if(vm.model === "PhysicalStorage" || vm.model === "ExtManagementSystem"){
+
+    if (allowed_types.includes(vm.record_type)) {
       bool = true;
     }
     return bool;

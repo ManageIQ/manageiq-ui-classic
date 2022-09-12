@@ -20,7 +20,7 @@ describe('timelineOptionsController', function() {
             url: '/host/tl_chooser',
             categories: [],
             miqService: miqService,
-            model: ""
+            record_type: ""
         });
     }));
 
