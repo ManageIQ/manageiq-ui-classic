@@ -1,6 +1,6 @@
 class ApplicationHelper::Button::SecurityPolicyNew < ApplicationHelper::Button::ButtonNewDiscover
   def supports_button_action?
-    ::EmsNetwork.all.any? { |ems| SecurityPolicy.class_by_ems(ems).supports_create? }
+    ::EmsNetwork.all.any? { |ems| SecurityPolicy.class_by_ems(ems)&.supports_create? }
   end
 
   def role_allows_feature?

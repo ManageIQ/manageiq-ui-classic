@@ -46,7 +46,7 @@ class FloatingIpController < ApplicationController
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
 
-      if FloatingIp.class_by_ems(ems).supports_create?
+      if FloatingIp.class_by_ems(ems)&.supports_create?
         options.delete(:ems_id)
         task_id = ems.create_floating_ip_queue(session[:userid], options)
 
