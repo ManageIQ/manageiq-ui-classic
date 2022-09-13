@@ -125,7 +125,7 @@ module ReportController::SavedReports
       @report = nil
       r = MiqReportResult.for_user(current_user).find(savedreports[0])
       @sb[:miq_report_id] = r.miq_report_id
-      process_saved_reports(savedreports, "destroy") unless savedreports.empty?
+      params[:miq_grid_checks] = process_saved_reports(savedreports, "destroy") unless savedreports.empty?
       add_flash(_("The selected Saved Report was deleted")) if @flash_array.nil?
       @report_deleted = true
     end
