@@ -1,5 +1,5 @@
 - url = url_for_only_path(:action => 'tl_chooser', :id => @record.id)
-- record_type = get_record_type
+- record_type = extract_record_type(@record)
 
 #tl_options_div
   %form#form_div{:name           => 'angularForm',
@@ -16,7 +16,7 @@
         .row
           .col-sm-12.toolbar-pf-actions.timeline-toolbar
             .form-group
-              %div{'class' => 'timeline-filterbar', 'style'=>'width: 900px'}
+              %div{'class' => 'timeline-filterbar', 'style' => 'width: 900px'}
                 = select_tag("tl_show",
                   options_for_select(accessible_select_event_types, nil),
                   'ng-model'                    => 'vm.reportModel.tl_show',

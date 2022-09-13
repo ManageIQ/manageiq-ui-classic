@@ -109,18 +109,6 @@ module ApplicationController::Timelines
     end
   end
 
-  def tl_map_storage_systems(storages)
-    rec_cond = ""
-    storages.each do |i|
-      rec_cond = rec_cond + "#{@tl_options.evt_type}.physical_storage_id = #{i}"
-      unless i.equal?params[:tl_storage_systems].last
-        rec_cond = rec_cond + " or "
-      end
-    end
-
-    rec_cond
-  end
-
   def tl_add_event_type_conditions(conditions, parameters)
     tl_add_event_type_inclusions(conditions, parameters)
     tl_add_event_type_exclusions(conditions, parameters)

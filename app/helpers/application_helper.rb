@@ -26,11 +26,9 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
-  def get_record_type
-    if @tl_record
-      @tl_record.type
-    else
-      nil
+  def extract_record_type(record)
+    if record
+      record.type
     end
   end
 
@@ -1293,8 +1291,7 @@ module ApplicationHelper
   end
 
   def storage_systems_options
-    storages = PhysicalStorage.all.to_a
-    storages.map{|k| [k.name, k.id]}
+    ManageIQ::Providers::Autosde::StorageManager::PhysicalStorage.pluck(:name, :id)
   end
 
   def unique_html_id(prefix = 'unknown')
