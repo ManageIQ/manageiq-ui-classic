@@ -6,7 +6,7 @@ const WidgetReport = ({ widgetModel }) => {
   let widget;
   if (widgetModel) {
     // eslint-disable-next-line react/no-danger
-    widget = (<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(widgetModel) }} />);
+    widget = (<div className="widget-report" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(widgetModel) }} />);
   } else {
     widget = (
       <h1 id="empty-widget">
