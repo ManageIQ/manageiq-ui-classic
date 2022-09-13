@@ -27,9 +27,7 @@ module ApplicationHelper
   end
 
   def extract_record_type(record)
-    if record
-      record.type
-    end
+    record&.type
   end
 
   def api_collection_path(klass, *options)
