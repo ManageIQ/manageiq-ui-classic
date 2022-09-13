@@ -6,6 +6,7 @@ import MiqFormRenderer, { componentTypes, validatorTypes } from '@@ddf';
 import createSchema from './order-service-form.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { onClickToExplorer } from '../breadcrumbs/on-click-functions';
 
 const OrderServiceForm = ({
   dialogId, resourceActionId, targetId, targetType,
@@ -35,16 +36,16 @@ const OrderServiceForm = ({
               if (field.validator_rule) {
                 // Check what validator_type is
                 if (field.validator_message) {
-                  validate.push = {
+                  validate.push({
                     type: validatorTypes.PATTERN,
                     pattern: field.validator_rule,
                     message: field.validator_message,
-                  };
+                  });
                 } else {
-                  validate.push = {
+                  validate.push({
                     type: validatorTypes.PATTERN,
                     pattern: field.validator_rule,
-                  };
+                  });
                 }
               }
               if (field.required) {
@@ -53,9 +54,39 @@ const OrderServiceForm = ({
                 });
               }
               let component = {};
+              console.log(field);
               if (field.type === 'DialogFieldTextBox') {
+                if (field.options.protected) {
+                  component = {
+                    component: 'password-field',
+                    id: field.id,
+                    name: field.name,
+                    label: field.label,
+                    hideField: !field.visible,
+                    isRequired: field.required,
+                    isDisabled: field.read_only,
+                    initialValue: field.default_value,
+                    description: field.description,
+                    validate,
+                  };
+                } else {
+                  component = {
+                    component: componentTypes.TEXT_FIELD,
+                    id: field.id,
+                    name: field.name,
+                    label: field.label,
+                    hideField: !field.visible,
+                    isRequired: field.required,
+                    isDisabled: field.read_only,
+                    initialValue: field.default_value,
+                    description: field.description,
+                    validate,
+                  };
+                }
+              }
+              if (field.type === 'DialogFieldTextAreaBox') {
                 component = {
-                  component: componentTypes.TEXT_FIELD,
+                  component: componentTypes.TEXT_AREA,
                   id: field.id,
                   name: field.name,
                   label: field.label,
@@ -65,17 +96,6 @@ const OrderServiceForm = ({
                   initialValue: field.default_value,
                   description: field.description,
                   validate,
-                };
-              }
-              if (field.type === 'DialogFieldTextAreaBox') {
-                component = {
-                  component: componentTypes.TEXT_FIELD,
-                  id: 'button_group_name',
-                  name: 'name',
-                  label: __('Name'),
-                  maxLength: 50,
-                  validate: [{ type: validatorTypes.REQUIRED }],
-                  isRequired: true,
                 };
               }
               if (field.type === 'DialogFieldDropDownList') {
