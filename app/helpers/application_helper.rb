@@ -26,10 +26,6 @@ module ApplicationHelper
     url_for(:only_path => true, **args)
   end
 
-  def extract_record_type(record)
-    record&.type
-  end
-
   def api_collection_path(klass, *options)
     identifier = api_identifier_by_class(klass)
     send("api_#{identifier}_path", *options)

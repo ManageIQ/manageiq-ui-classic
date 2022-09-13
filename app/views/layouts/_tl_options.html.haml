@@ -1,5 +1,4 @@
 - url = url_for_only_path(:action => 'tl_chooser', :id => @record.id)
-- record_type = extract_record_type(@record)
 
 #tl_options_div
   %form#form_div{:name           => 'angularForm',
@@ -121,6 +120,6 @@
   ManageIQ.angular.app.value('recordId', '#{@record.id}');
   ManageIQ.angular.app.value('url', '#{url}');
   ManageIQ.angular.app.value('categories', '#{@tl_options.management.events.keys.sort}');
-  ManageIQ.angular.app.value('record_type', '#{record_type}');
+  ManageIQ.angular.app.value('record_type', '#{@record&.type}');
 
   miq_bootstrap('#form_div');
