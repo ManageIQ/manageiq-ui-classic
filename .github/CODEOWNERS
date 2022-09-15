@@ -1,8 +1,1 @@
-# trees
-app/presenters/tree_node/                         @skateman
-app/presenters/tree_builder_*                     @skateman
-# styling and images
-app/assets/stylesheets/                           @epwinchell
-app/assets/images/                                @epwinchell
-# topology services
-app/services/*topology_service.rb                 @skateman
+*   @ManageIQ/committers-ui
