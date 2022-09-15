@@ -5,12 +5,4 @@
         = render :partial => 'layouts/info_msg', :locals => {:message => msg}
     = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:list], :data => @grid_data}
   - else
-    - name_readonly = @ae_ns.domain? && !@ae_ns.editable_property?(:name)
-    - description_readonly = @ae_ns.domain? && !@ae_ns.editable_property?(:description)
-    %namespace-form{:ae_ns_domain => @ae_ns.domain?,
-                    :namespace_path => @ae_ns.domain? ? "" : @sb[:namespace_path],
-                    :namespace_id => @ae_ns.id || 'new',
-                    :name_readonly => name_readonly,
-                    :description_readonly => description_readonly}
-:javascript
-  miq_bootstrap('namespace-form')
+    = datastore_form(@ae_ns, @sb, :list)
