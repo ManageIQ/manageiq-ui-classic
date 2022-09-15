@@ -226,7 +226,7 @@ describe EmsClusterController do
 
     it "sets session[:selected_sections] to empty array when last section on screen is unchecked" do
       session[:selected_sections] = [:_model_]
-      controller.params = {:id => "xx-group_Properties_xx-group_Properties%253A_model_", :check => "false"}
+      controller.params = {:all_checked => ["xx-group_Properties_xx-group_Properties:_model_"], :id => "xx-group_Properties_xx-group_Properties%3A_model_", :check => "false"}
       allow(controller).to receive(:render)
       controller.send(:sections_field_changed)
       expect(session[:selected_sections]).to eq([])
@@ -234,7 +234,7 @@ describe EmsClusterController do
 
     it "sets selected sections in session[:selected_sections]" do
       session[:selected_sections] = [:_model_]
-      controller.params = {:all_checked => ["xx-group_Properties_xx-group_Properties:_model_", "xx-group_Properties_xx-group_Properties:hardware"], :id => "xx-group_Properties_xx-group_Properties%253Ahardware", :check => "true"}
+      controller.params = {:all_checked => ["xx-group_Properties_xx-group_Properties:_model_", "xx-group_Properties_xx-group_Properties:hardware"], :id => "xx-group_Properties_xx-group_Properties%3Ahardware", :check => "true"}
       allow(controller).to receive(:render)
       controller.send(:sections_field_changed)
       expect(session[:selected_sections]).to eq(["_model_", "hardware"])
