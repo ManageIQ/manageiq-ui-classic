@@ -1,0 +1,30 @@
+.catalog-custom-image-wrapper
+  %h3.custom-image-title
+    = _('Custom Image') # This partial file can be removed once API is ready
+  .form-horizontal
+    - if record.picture
+      .custom-image-wrapper
+        .custom-image
+          = image_tag("#{record.picture.url_path}?#{rand(99_999_999)}")
+        %div
+          = link_to({:action => "st_upload_image", :id => record.id, :pressed => "remove"},
+                  "data-miq_sparkle_on" => true,
+                  "data-miq_sparkle_off" => true,
+                  :remote => true,
+                  :class => 'btn btn-default',
+                  "data-method" => :post,
+                  :confirm => _("Are you sure you want to remove this Custom Image?"),
+                  :title => _("Remove this Custom Image")) do
+            %i.pficon.pficon-delete
+    - else
+      = _('No custom image has been uploaded')
+      %br
+      %br
+    .form-group
+      = form_tag({:action => "st_upload_image", :id => record.id},
+                  {:multipart => true, :method => :post}) do
+        .col-md-4
+          = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "image"}
+        .col-md-6
+          = submit_tag(_("Upload"), :id => "upload", :class => "upload btn btn-default")
+          = _('* Requires image file in .png or .jpg format')
