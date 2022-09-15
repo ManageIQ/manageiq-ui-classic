@@ -9,20 +9,31 @@ const ValidateStorageCredentials = ({ ...props }) => {
   const { storageId } = useContext(EditingContext);
 
   const validateStorage = (fields, fieldNames) => new Promise((resolve, reject) => {
+    const url = storageId ? `/api/physical_storages/${storageId}` : '/api/physical_storages';
     const resource = pick(fields, fieldNames);
 
-    API.post('/api/physical_storages', { action: 'validate', resource }).then(({ results: [result] = [], ...single }) => {
+    const editErrorMessage = (message) => {
+      const prefix1 = "Reason is:";
+      const prefix2 = 'management_ip":["';
+
+      if (message.includes(prefix1))
+        return message.slice(message.indexOf(prefix1) + prefix1.length, -3);
+
+      if (message.includes(prefix2))
+        return message.slice(message.indexOf(prefix2) + prefix2.length, -4);
+
+      return message;
+    };
+
+    API.post(url, { action: 'validate', resource }).then(({ results: [result] = [], ...single }) => {
       // eslint-disable-next-line camelcase
       const { task_id, success } = result || single;
       // The request here can either create a background task or fail
       return success ? API.wait_for_task(task_id) : Promise.reject(result);
-      // The wait_for_task request can succeed with valid or invalid credentials
-      // with the message that the task is completed successfully. Based on the
-      // task_results we resolve() or reject() with an unknown error.
-      // Any known errors are passed to the catch(), which will reject() with a
-      // message describing what went wrong.
-    }).then((result) => (result.task_results ? resolve() : reject(__('Validation failed: unknown error'))))
-      .catch(({ message }) => reject([__('Validation failed:'), message].join(' ')));
+      // The wait_for_task request can succeed with valid or invalid credentials, but with invalid credentials
+      // the status will be Error and the message will describe the error if it is known, or reject it if unknown.
+    }).then((result) => (result.status === 'Ok' ? resolve() : reject(__('Validation failed: unknown error'))))
+      .catch(({ message }) => reject([__('Validation failed:'), editErrorMessage(message)].join(' ')));
   });
 
   // The order of props is important here, because they have to be overridden
