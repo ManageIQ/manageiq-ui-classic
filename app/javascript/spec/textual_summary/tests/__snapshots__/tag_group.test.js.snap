@@ -293,6 +293,7 @@ exports[`TagGroup renders just fine 1`] = `
                                             style={
                                               Object {
                                                 "background": undefined,
+                                                "color": undefined,
                                               }
                                             }
                                           />
@@ -378,6 +379,7 @@ exports[`TagGroup renders just fine 1`] = `
                                                 style={
                                                   Object {
                                                     "background": undefined,
+                                                    "color": undefined,
                                                   }
                                                 }
                                               />
@@ -411,6 +413,7 @@ exports[`TagGroup renders just fine 1`] = `
                                                 style={
                                                   Object {
                                                     "background": undefined,
+                                                    "color": undefined,
                                                   }
                                                 }
                                               />
@@ -508,6 +511,7 @@ exports[`TagGroup renders just fine 1`] = `
                                                 style={
                                                   Object {
                                                     "background": undefined,
+                                                    "color": undefined,
                                                   }
                                                 }
                                               />
@@ -541,6 +545,7 @@ exports[`TagGroup renders just fine 1`] = `
                                                 style={
                                                   Object {
                                                     "background": undefined,
+                                                    "color": undefined,
                                                   }
                                                 }
                                               />
