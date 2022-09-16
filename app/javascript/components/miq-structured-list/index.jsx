@@ -32,7 +32,7 @@ const MiqStructuredList = ({
   /** Function to render an icon in the cell. */
   const renderIcon = (row) => (
     <div className={classNames('cell icon', row.background ? 'backgrounded-icon' : '')} title={row.title}>
-      <i className={row.icon} title={row.title} style={{ background: row.background }} />
+      <i className={row.icon} title={row.title} style={{ background: row.background, color: row.color }} />
     </div>
   );
 
@@ -272,7 +272,7 @@ export default MiqStructuredList;
 MiqStructuredList.propTypes = {
   title: PropTypes.string,
   headers: PropTypes.arrayOf(PropTypes.any),
-  rows: PropTypes.arrayOf(PropTypes.any).isRequired,
+  rows: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func,
   mode: PropTypes.string.isRequired,
   message: PropTypes.string,
@@ -283,4 +283,5 @@ MiqStructuredList.defaultProps = {
   headers: [],
   onClick: undefined,
   message: '' || undefined,
+  rows: [],
 };

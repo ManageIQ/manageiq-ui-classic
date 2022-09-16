@@ -276,6 +276,7 @@ class GenericObjectDefinitionController < ApplicationController
     @explorer = false
 
     node = x_node || params[:id]
+    @node_type = node.split('-').first
 
     v_tb, c_tb = case node_type(node)
                  when :root         then process_root_node(presenter)

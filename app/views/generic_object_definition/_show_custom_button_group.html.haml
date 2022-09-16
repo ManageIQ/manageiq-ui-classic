@@ -1,33 +1,10 @@
-= render :partial => "layouts/flash_msg"
-- if @record && @record.kind_of?(CustomButtonSet)
-  %h3
-    = _('Basic Information')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        = _('Name')
-      .col-md-8
-        = @record.name.split('|').first
-        - display = @record.set_data.key?(:display) ? @record.set_data[:display] : true
-        &nbsp;
-        .checkbox-inline
-          %label{:style => "font-weight: normal"}
-            = check_box_tag(display, true, display, :disabled => true)
-            = _('Display on Button')
-
-    .form-group
-      %label.control-label.col-md-2
-        = _('Description')
-      .col-md-8
-        = @record.description
-    .form-group
-      %label.control-label.col-md-2
-        = _('Image')
-      .col-md-8
-        %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
-
-    - if @record.custom_buttons.empty?
-      %hr
-        = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
-    - else
-      = render :partial => 'table_button', :locals => {:buttons => @record.set_data[:button_order].map{ |id| CustomButton.find_by(:id => id) }}
+= generic_object_definition_button_group_summary(@record)
+- if @record.custom_buttons.empty?
+    %hr
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
+- else
+    = react 'ButtonList', :list => @custom_buttons_table_data,
+        :treeId => x_node,
+        :treeBox => 'generic_object_definitions_tree',
+        :nodeType => @nodeType,
+        :shortNodeKey => true

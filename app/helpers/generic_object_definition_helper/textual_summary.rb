@@ -33,7 +33,7 @@ module GenericObjectDefinitionHelper::TextualSummary
 
   def textual_group_attribute_details_list
     if @record.property_attributes.count.zero?
-      TextualEmpty.new(_('Attributes'), _('No Attributes defined'))
+      empty_record_properties_list(_('Attributes'))
     else
       record_properties_list(
         _('Attributes (%{count})') % {:count => @record.property_attributes.count},
@@ -44,7 +44,7 @@ module GenericObjectDefinitionHelper::TextualSummary
 
   def textual_group_association_details_list
     if @record.property_associations.count.zero?
-      TextualEmpty.new(_('Associations'), _('No Associations defined'))
+      empty_record_properties_list(_('Associations'))
     else
       record_properties_list(
         _('Associations (%{count})') % {:count => @record.property_associations.count },
@@ -62,9 +62,18 @@ module GenericObjectDefinitionHelper::TextualSummary
     )
   end
 
+  def empty_record_properties_list(title)
+    TextualMultilabel.new(
+      title,
+      :additional_table_class => "table-fixed",
+      :labels                 => nil,
+      :values                 => nil
+    )
+  end
+
   def textual_group_method_details_list
     if @record.property_methods.count.zero?
-      TextualEmpty.new(_('Methods'), _('No Methods defined'))
+      empty_record_properties_list(_('Methods'))
     else
       TextualMultilabel.new(
         _('Methods (%{count})') % {:count => @record.property_methods.count},
