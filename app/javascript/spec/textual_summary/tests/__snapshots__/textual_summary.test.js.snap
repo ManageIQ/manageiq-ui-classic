@@ -1691,6 +1691,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                       style={
                                                         Object {
                                                           "background": undefined,
+                                                          "color": undefined,
                                                         }
                                                       }
                                                     />
@@ -1780,6 +1781,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Cloud Networks"
@@ -1872,6 +1874,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Cloud Subnets"
@@ -1964,6 +1967,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Network Routers"
@@ -2056,6 +2060,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Security Groups"
@@ -2148,6 +2153,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Floating IPs"
@@ -2240,6 +2246,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Network Ports"
@@ -2332,6 +2339,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                           style={
                                                             Object {
                                                               "background": undefined,
+                                                              "color": undefined,
                                                             }
                                                           }
                                                           title="Show all Load Balancers"
@@ -2412,6 +2420,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                       style={
                                                         Object {
                                                           "background": "green",
+                                                          "color": undefined,
                                                         }
                                                       }
                                                     />
@@ -2671,6 +2680,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                       style={
                                                         Object {
                                                           "background": undefined,
+                                                          "color": undefined,
                                                         }
                                                       }
                                                     />
@@ -2748,6 +2758,7 @@ exports[`TextualSummary renders just fine 1`] = `
                                                       style={
                                                         Object {
                                                           "background": undefined,
+                                                          "color": undefined,
                                                         }
                                                       }
                                                     />
