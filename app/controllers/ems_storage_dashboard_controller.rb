@@ -23,6 +23,11 @@ class EmsStorageDashboardController < ApplicationController
     render :json => {:data => aggregate_status(params[:id])}
   end
 
+  def aggregate_event_data
+    assert_privileges('ems_storage_show') # TODO: might be ems_event_show
+    render :json => {:data => aggregate_event(params[:id])}
+  end
+
   private
 
   def block_storage_heatmap_data(ems_id)
@@ -31,6 +36,10 @@ class EmsStorageDashboardController < ApplicationController
 
   def aggregate_status(ems_id)
     EmsStorageDashboardService.new(ems_id, self, EmsStorage).aggregate_status_data
+  end
+
+  def aggregate_event(ems_id)
+    EmsStorageDashboardService.new(ems_id, self, EmsStorage).aggregate_event_data
   end
 
   def get_session_data

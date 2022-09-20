@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StackedBarChart } from '@carbon/charts-react';
 
-const StackBarChartGraph = ({ data, title }) => {
+const StackBarChartGraph = ({ data, title, chart_options=null }) => {
   const options = {
     title,
     axes: {
@@ -24,7 +24,7 @@ const StackBarChartGraph = ({ data, title }) => {
   };
 
   return (
-    <StackedBarChart data={data} options={options} />
+    <StackedBarChart data={data} options={chart_options? chart_options : options} />
   );
 };
 
