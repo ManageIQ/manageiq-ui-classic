@@ -99,7 +99,7 @@ class EmsStorageDashboardService < EmsDashboardService
   def agg_events
     event_hash = {}
     event_list = []
-    events = EmsEvent.where("ems_id=#{@ems_id}")
+    events = EmsEvent.where(:ems_id => @ems_id)
 
     events.each do |event|
       unless event_hash[event.physical_storage_name]
