@@ -98,7 +98,6 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def agg_events
     event_list = []
-
     event_hash = @ems.ems_events.group_by(&:physical_storage_name)
                      .transform_values do |events|
       fixed, not_fixed = events.partition { |event| event.event_type == "autosde_critical_alert_fixed" }.map(&:count)
