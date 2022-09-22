@@ -78,7 +78,7 @@ module CatalogHelper
   def catalog_tab_content(key_name, &block)
     if catalog_tabs_types[key_name]
       class_name = key_name == :basic ? 'tab_content active' : 'tab_content'
-      content_tag(:div, :id => "tab_#{key_name}", :class => class_name, &block)
+      content_tag(:div, :id => key_name, :class => class_name, &block)
     end
   end
 

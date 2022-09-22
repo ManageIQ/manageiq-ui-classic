@@ -1,4 +1,11 @@
 module RequestInfoHelper
+  def provision_tab_configuration(workflow)
+    prov_tab_labels = workflow.provisioning_tab_list.map do |dialog|
+      {:name => dialog[:name], :text => dialog[:description]}
+    end
+    return prov_tab_labels, workflow.get_dialog_order
+  end
+
   def prov_grid_data(edit, vms, vm)
     none_index = '__VM__NONE__'
     rows = []
