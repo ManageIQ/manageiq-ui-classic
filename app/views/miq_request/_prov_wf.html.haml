@@ -5,26 +5,22 @@
     - options = @options || @edit[:new]
     - wf = options[:wf] || @edit[:wf]
     - tabname = (@tabactive || options[:current_tab_key]).to_s
-    #prov_tabs
-      %ul.nav.nav-tabs{'role' => 'tablist'}
-        - wf.provisioning_tab_list.each do |dialog|
-          = miq_tab_header(dialog[:name], tabname) do
-            = dialog[:description]
+    - prov_tab_labels, prov_tab_keys = provision_tab_configuration(wf)
 
-      .tab-content
-        - current_tab = @edit && @edit[:new] ? @edit[:new][:current_tab_key] : @options[:current_tab_key]
-        - wf.get_dialog_order.each do |dialog_name|
-          = miq_tab_content(dialog_name, current_tab) do
-            - if dialog_name == current_tab
-              - dialog = wf.get_dialog(dialog_name)
-              - unless dialog.blank? || dialog[:display] == :ignore
-                - partial_locals = {:wf => wf, :dialog => dialog_name}
+    = react('MiqCustomTab', {:containerId => 'request-info-tabs',
+                             :tabLabels => prov_tab_labels,
+                             :type => 'CATALOG_REQUEST_INFO'})
 
-                - if wf.kind_of?(MiqProvisionWorkflow)
-                  = render :partial => "/shared/views/prov_dialog", :locals => partial_locals
-                - elsif wf.kind_of?(VmMigrateWorkflow)
-                  = render :partial => "/miq_request/prov_vm_migrate_dialog", :locals => partial_locals
+    #request-info-tabs.miq_custom_tabs_container
+      - current_tab = @edit && @edit[:new] ? @edit[:new][:current_tab_key] : @options[:current_tab_key]
+      - prov_tab_keys.each do |dialog_name|
+        = miq_tab_content(dialog_name, current_tab, :class => 'tab_content') do
+          - if dialog_name == current_tab
+            - dialog = wf.get_dialog(dialog_name)
+            - unless dialog.blank? || dialog[:display] == :ignore
+              - partial_locals = {:wf => wf, :dialog => dialog_name}
 
-:javascript
-  miq_tabs_init('#prov_tabs', '/miq_request/prov_field_changed', {edit_mode: 'true'});
-
+              - if wf.kind_of?(MiqProvisionWorkflow)
+                = render :partial => "/shared/views/prov_dialog", :locals => partial_locals
+              - elsif wf.kind_of?(VmMigrateWorkflow)
+                = render :partial => "/miq_request/prov_vm_migrate_dialog", :locals => partial_locals

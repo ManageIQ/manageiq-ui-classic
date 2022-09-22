@@ -2,10 +2,11 @@
 - record, sb, tenants_tree, options, no_wf_msg = @record, @sb, @tenants_tree, @options, @no_wf_msg
 - tab_labels, condition = catalog_tab_configuration(record)
 
-= react('MiqCustomTab', {:containerId => 'catalog-tabs', :tabLabels => tab_labels})
+= react('MiqCustomTab', {:containerId => 'catalog-tabs',
+                         :tabLabels => tab_labels,
+                         :type => 'CATALOG_SUMMARY'})
 
 #catalog-tabs.miq_custom_tabs_container
-
   = catalog_tab_content(:basic) do
     = catalog_basic_information(record, sb, tenants_tree)
     = catalog_smart_management(record)

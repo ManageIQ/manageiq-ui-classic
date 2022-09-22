@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiqCustomTab component should render tabs for catalog summery page 1`] = `
+<Tabs
+  className="miq_custom_tabs"
+  id="catalog_summary_static"
+  scrollDebounceWait={150}
+  scrollIntoView={true}
+  selected={0}
+  selectionMode="automatic"
+  type="default"
+>
+  <Tab
+    key="tabbasic"
+    label={"Basic Information"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabdetail"
+    label={"Details"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabresource"
+    label={"Selected Resources"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+</Tabs>
+`;
+
+exports[`MiqCustomTab component should render tabs for request info page under catalog summary page 1`] = `
+<Tabs
+  className="miq_custom_tabs"
+  id="catalog_request_info_dynamic"
+  scrollDebounceWait={150}
+  scrollIntoView={true}
+  selected={0}
+  selectionMode="automatic"
+  type="default"
+>
+  <Tab
+    key="tabrequester"
+    label={"Requester"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabpurpose"
+    label={"Purpose"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabservice"
+    label={"Catalog"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabenvironment"
+    label={"Environment"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabhardware"
+    label={"Properties"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabcustomize"
+    label={"Customize"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+  <Tab
+    key="tabschedule"
+    label={"Schedule"}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    selected={false}
+  />
+</Tabs>
+`;
