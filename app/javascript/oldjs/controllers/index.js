@@ -21,4 +21,3 @@ require('./schedule/schedule_form_controller.js');
 require('./timeline/timeline_options_controller.js');
 require('./tree_view_controller.js');
 require('./vm_cloud/vm_cloud_live_migrate_form_controller.js');
-require('./vm_cloud/vm_cloud_resize_form_controller.js');
