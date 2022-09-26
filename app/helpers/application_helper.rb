@@ -353,7 +353,7 @@ module ApplicationHelper
     when "ActionSet"
       controller = "miq_action"
       action = "show_set"
-    when "AutomationRequest"
+    when "AutomationRequest", "MiqProvision"
       controller = "miq_request"
       action = "show"
     when "ConditionSet"
