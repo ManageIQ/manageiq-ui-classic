@@ -413,13 +413,11 @@ module ApplicationController::Compare
   end
 
   def set_checked_sections
-    session[:selected_sections] = []
-    params[:all_checked]&.each do |a|
-      s = a.split(':')
-      if s.length > 1
-        session[:selected_sections].push(s[1])
-      end
+    session[:selected_sections] = selections = []
+    params[:all_checked]&.each do |item|
+      add_selections!(selection_names(item), selections)
     end
+    session[:selected_sections] = update_selections(params[:id], selections, params[:check])
   end
 
   # Toggle exists/details view
@@ -1850,5 +1848,55 @@ module ApplicationController::Compare
 
       unset_same_flag unless fld.nil? || base_val == fld[:_value_]
     end
+  end
+
+  def validate_name(name)
+    name&.starts_with?('xx-group')
+  end
+
+  # Method to get the selection names from :all_checked and :id params.
+  # individual selected item suggests that the variable name contains ':'
+  # else, the child_names are retrived from the selected_parent item.
+  def selection_names(name)
+    if validate_name(name)
+      count = name.scan(/xx-group/).count
+      count == 1 ? child_names(name) : [name.split(':')[1]]
+    end
+  end
+
+  # Method to get the child names of a selected parent item.
+  # session[:miq_sections] contains all tree names and the keys are filters using the selected group_name[1].
+  def child_names(name)
+    child_names = []
+    group_name = name.split('_')
+    if group_name[1]
+      child_sections = session[:miq_sections]&.select { |_key, value| value[:group] == group_name[1] }
+      if child_sections && child_sections.length > 1
+        child_names = child_sections.keys.map(&:to_s)
+      end
+    end
+    child_names
+  end
+
+  # Method to add or remove selections if an id is present.
+  def update_selections(param_id, selections, check)
+    if param_id
+      names = selection_names(CGI.unescape(param_id))
+      case check
+      when "true" then  add_selections!(names, selections)
+      when "false" then remove_selections!(names, selections)
+      end
+    end
+    selections
+  end
+
+  # Method to add names to the selections.
+  def add_selections!(names, selections)
+    selections.replace(selections | names)
+  end
+
+  # Method to remove names to the selections.
+  def remove_selections!(names, selections)
+    selections.replace(selections - names)
   end
 end
