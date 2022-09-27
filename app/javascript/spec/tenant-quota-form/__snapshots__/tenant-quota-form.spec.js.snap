@@ -998,13 +998,13 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                         key="1"
                         onExpand={[Function]}
                         onKeyPress={[Function]}
-                        tabIndex="0"
+                        tabIndex="1"
                         title=""
                       >
                         <tr
                           disabled={false}
                           onKeyPress={[Function]}
-                          tabIndex="0"
+                          tabIndex="1"
                           title=""
                         >
                           <MiqTableCell
@@ -2728,13 +2728,13 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                         key="1"
                         onExpand={[Function]}
                         onKeyPress={[Function]}
-                        tabIndex="0"
+                        tabIndex="1"
                         title=""
                       >
                         <tr
                           disabled={false}
                           onKeyPress={[Function]}
-                          tabIndex="0"
+                          tabIndex="1"
                           title=""
                         >
                           <MiqTableCell

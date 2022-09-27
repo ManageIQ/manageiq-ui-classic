@@ -75,6 +75,7 @@ import OptimizationList from '../components/data-tables/optimization/optimizatio
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import OrderServiceForm from '../components/order-service-form';
+import ProvGrid from '../components/prov-grid';
 import PxeImageForm from '../components/pxe-image-type-form';
 import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeIsoDatastoreForm from '../components/pxe-iso-datastore-form';
@@ -272,6 +273,7 @@ ManageIQ.component.addReact('WidgetReport', WidgetReport);
 ManageIQ.component.addReact('WidgetWrapper', WidgetWrapper);
 ManageIQ.component.addReact('WidgetZoom', WidgetZoom);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
+ManageIQ.component.addReact('ProvGrid', ProvGrid);
 ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('HostInitiatorForm', HostInitiatorForm);

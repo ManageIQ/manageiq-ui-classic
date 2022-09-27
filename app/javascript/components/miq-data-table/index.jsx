@@ -143,7 +143,7 @@ const MiqDataTable = ({
                     {...getRowProps({ row })}
                     title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
-                    tabIndex={(item && item.clickable === false) ? '' : '0'}
+                    tabIndex={(item && item.clickable === false) ? '' : index.toString()}
                     onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}
                   >
                     {rowCheckBox && renderRowCheckBox(getSelectionProps, row)}

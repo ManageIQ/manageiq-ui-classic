@@ -145,3 +145,20 @@
     }
   }
 }
+
+.prov-vm-grid-data-table {
+  table {
+    tr {
+      td, th {
+        font-size: 0.75rem;
+      }
+
+      &.bx--data-table--selected {
+        td {
+          background: #0f62fe;
+          color: #FFF;
+        }
+      }
+    }
+  }
+}
