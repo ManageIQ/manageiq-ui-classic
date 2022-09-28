@@ -143,7 +143,7 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
         button(
           :ems_native_console,
           'pficon pficon-screen fa-lg',
-          N_('Open a native console for this cloud provider'),
+          N_('Open a native console for this Infrastructure Provider'),
           N_('Native Console'),
           :keepSpinner => true,
           :url         => "launch_console",
