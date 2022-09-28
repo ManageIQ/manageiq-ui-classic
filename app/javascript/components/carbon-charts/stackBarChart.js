@@ -24,7 +24,7 @@ const StackBarChartGraph = ({ data, title, chart_options=null }) => {
   };
 
   return (
-    <StackedBarChart data={data} options={chart_options? chart_options : options} />
+    <StackedBarChart data={data} options={chart_options ? chart_options : options} />
   );
 };
 
