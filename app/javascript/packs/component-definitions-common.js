@@ -107,6 +107,7 @@ import ServersDataChart from '../components/provider-dashboard-charts/servers-pi
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import TaggingWrapperConnected from '../components/taggingWrapper';
 import { TagView } from '../tagging';
+import TenantQuotaForm from '../components/tenant-quota-form';
 import ToastList from '../components/toast-list/toast-list';
 import VmEditForm from '../components/vm-edit-form';
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
@@ -249,6 +250,7 @@ ManageIQ.component.addReact('TableListViewWrapper', TableListViewWrapper);
 ManageIQ.component.addReact('TagGroup', (props) => <TagGroup {...props} />);
 ManageIQ.component.addReact('TagView', TagView);
 ManageIQ.component.addReact('TaggingWrapperConnected', TaggingWrapperConnected);
+ManageIQ.component.addReact('TenantQuotaForm', TenantQuotaForm);
 ManageIQ.component.addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 ManageIQ.component.addReact('TimeProfileReportsTable', TimeProfileReportsTable);
 ManageIQ.component.addReact('TimeProfileTable', TimeProfileTable);
