@@ -3007,6 +3007,7 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
+        management_console
         ownership_update
         patches
         perf_chart_chooser
