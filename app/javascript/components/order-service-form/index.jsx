@@ -6,7 +6,6 @@ import MiqFormRenderer, { componentTypes, validatorTypes } from '@@ddf';
 import createSchema from './order-service-form.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { onClickToExplorer } from '../breadcrumbs/on-click-functions';
 
 const OrderServiceForm = ({
   dialogId, resourceActionId, targetId, targetType,
@@ -16,6 +15,8 @@ const OrderServiceForm = ({
     isLoading: false,
     fields: [],
   });
+
+  let hasTime = false;
 
   useEffect(() => {
     API.get(`/api/service_dialogs/${dialogId}?resource_action_id=${resourceActionId}&target_id=${targetId}&target_type=${targetType}`)
@@ -31,7 +32,6 @@ const OrderServiceForm = ({
             console.log(group);
             console.log(group.label);
             group.dialog_fields.forEach((field) => {
-              console.log(field);
               const validate = [];
               if (field.validator_rule) {
                 // Check what validator_type is
@@ -55,6 +55,7 @@ const OrderServiceForm = ({
               }
               let component = {};
               console.log(field);
+              console.log(field.type);
               if (field.type === 'DialogFieldTextBox') {
                 if (field.options.protected) {
                   component = {
@@ -73,6 +74,7 @@ const OrderServiceForm = ({
                   component = {
                     component: componentTypes.TEXT_FIELD,
                     id: field.id,
+                    className: 'test',
                     name: field.name,
                     label: field.label,
                     hideField: !field.visible,
@@ -86,7 +88,21 @@ const OrderServiceForm = ({
               }
               if (field.type === 'DialogFieldTextAreaBox') {
                 component = {
-                  component: componentTypes.TEXT_AREA,
+                  component: componentTypes.TEXTAREA,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  hideField: !field.visible,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                };
+              }
+              if (field.type === 'DialogFieldCheckBox') {
+                component = {
+                  component: componentTypes.CHECKBOX,
                   id: field.id,
                   name: field.name,
                   label: field.label,
@@ -101,11 +117,11 @@ const OrderServiceForm = ({
               if (field.type === 'DialogFieldDropDownList') {
                 const options = [];
                 let placeholder = __('<Choose>');
-                field.values.forEach((option) => {
-                  if (option[0] === null) {
-                    option[0] = '-1';
+                field.values.forEach((value) => {
+                  if (value[0] === null) {
+                    value[0] = '-1';
                     // eslint-disable-next-line prefer-destructuring
-                    placeholder = option[1];
+                    placeholder = value[1];
 
                     // IF API CAN HANDLE NO VALUE BEING RECIEVED THEN DON'T MAKE THIS FIELD REQUIRED AND DON'T NEED VALUE OF -1, JUST LEAVE NULL
                     if (!field.required) {
@@ -113,7 +129,7 @@ const OrderServiceForm = ({
                       validate.push({ type: validatorTypes.REQUIRED });
                     }
                   }
-                  options.push({ value: option[0], label: option[1] });
+                  options.push({ value: value[0], label: value[1] });
                 });
                 component = {
                   component: componentTypes.SELECT,
@@ -130,6 +146,96 @@ const OrderServiceForm = ({
                   placeholder,
                   isSearchable: true,
                   simpleValue: true,
+                };
+              }
+              if (field.type === 'DialogFieldTagControl') {
+                const options = [];
+                field.values.forEach((value) => {
+                  if (!value.id) {
+                    value.id = '-1';
+                  }
+                  options.push({ value: value.id, label: value.name });
+                });
+                component = {
+                  component: componentTypes.SELECT,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  hideField: !field.visible,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                  options,
+                };
+              }
+              if (field.type === 'DialogFieldDateControl') {
+                if (field.default_value === '' || !field.default_value) {
+                  const today = new Date();
+                  field.default_value = today.toISOString();
+                }
+                component = {
+                  component: componentTypes.DATE_PICKER,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                  variant: 'date-time',
+                };
+              }
+              if (field.type === 'DialogFieldDateTimeControl') {
+                let newDate = '';
+                hasTime = true;
+                if (field.default_value === '' || !field.default_value) {
+                  newDate = new Date();
+                  field.default_value = newDate.toISOString();
+                } else {
+                  newDate = new Date(field.default_value);
+                }
+                component = [{
+                  component: componentTypes.DATE_PICKER,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: newDate.toISOString(),
+                  description: field.description,
+                  validate,
+                  variant: 'date-time',
+                },
+                {
+                  component: componentTypes.TIME_PICKER,
+                  id: `${field.id}-time`,
+                  name: `${field.name}-time`,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: newDate,
+                  validate,
+                  twelveHoursFormat: true,
+                }];
+              }
+              if (field.type === 'DialogFieldRadioButton') {
+                const options = [];
+                field.values.forEach((value) => {
+                  options.push({ value: value[0], label: value[1] });
+                });
+                component = {
+                  component: componentTypes.RADIO,
+                  id: field.id,
+                  name: field.name,
+                  label: field.label,
+                  isRequired: field.required,
+                  isDisabled: field.read_only,
+                  initialValue: field.default_value,
+                  description: field.description,
+                  validate,
+                  options,
                 };
               }
               dialogFields.push(component);
@@ -169,6 +275,7 @@ const OrderServiceForm = ({
 
   return !isLoading && (
     <MiqFormRenderer
+      className="order-service-form"
       schema={createSchema(fields)}
       initialValues={initialValues}
       onSubmit={onSubmit}

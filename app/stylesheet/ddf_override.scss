@@ -358,3 +358,17 @@
   min-width: 10rem;
   width: fit-content;
 }
+
+.order-service-form {
+  .bx--btn--primary {
+    margin-right: 10px;
+  }
+
+  .bx--form-item {
+    padding-bottom: 2rem;
+  }
+
+  .bx--list-box__wrapper {
+    padding-bottom: 2rem;
+  }
+}

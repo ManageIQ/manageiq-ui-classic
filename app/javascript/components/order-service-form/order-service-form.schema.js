@@ -1,4 +1,4 @@
-import { componentTypes, validatorTypes } from '@@ddf';
+import { componentTypes } from '@@ddf';
 
 const createSchema = (fields) => ({
   fields: [
@@ -7,7 +7,6 @@ const createSchema = (fields) => ({
       name: 'tabs',
       fields,
     },
-    // ...fields,
   ],
 });
 

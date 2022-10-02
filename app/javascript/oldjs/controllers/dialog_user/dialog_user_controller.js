@@ -82,32 +82,35 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       apiData = {action: apiAction, resource: _.omit(apiData, 'action')};
     }
 
-    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
-      .then(function(response) {
+    console.log(apiData);
+    console.log(vm.dialogData);
+    console.log(DialogData);
+    // return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
+    //   .then(function(response) {
 
-        if (vm.openUrl === 'true') {
-          return API.wait_for_task(response.task_id)
-            .then(function() {
-              return $http.post('open_url_after_dialog', {targetId: vm.targetId, realTargetType: realTargetType});
-            })
-            .then(function(response) {
-              if (response.data.open_url) {
-                $window.open(response.data.open_url);
-                miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
-              } else {
-                miqService.miqFlash('error', __('Automate failed to obtain URL.'));
-                miqService.sparkleOff();
-              }
-            })
-            .catch(function() {
-              return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
-            });
-        }
-        miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
-      })
-      .catch(function(err) {
-        dialogUserSubmitErrorHandlerService.handleError(err);
-      });
+    //     if (vm.openUrl === 'true') {
+    //       return API.wait_for_task(response.task_id)
+    //         .then(function() {
+    //           return $http.post('open_url_after_dialog', {targetId: vm.targetId, realTargetType: realTargetType});
+    //         })
+    //         .then(function(response) {
+    //           if (response.data.open_url) {
+    //             $window.open(response.data.open_url);
+    //             miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+    //           } else {
+    //             miqService.miqFlash('error', __('Automate failed to obtain URL.'));
+    //             miqService.sparkleOff();
+    //           }
+    //         })
+    //         .catch(function() {
+    //           return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
+    //         });
+    //     }
+    //     miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+    //   })
+    //   .catch(function(err) {
+    //     dialogUserSubmitErrorHandlerService.handleError(err);
+    //   });
   }
 
   function cancelClicked(_event) {
