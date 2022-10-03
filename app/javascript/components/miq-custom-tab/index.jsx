@@ -6,6 +6,7 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
   const [data, setData] = useState({ loading: false });
   const tabConfigurations = (name) => [
     { type: 'CATALOG_SUMMARY' },
+    { type: 'CATALOG_EDIT' },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
   ];
 

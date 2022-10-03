@@ -72,7 +72,20 @@ module CatalogHelper
       tab_labels.push(tab_label(:retirement)) if condition[:retirement]
     end
 
-    _tab_labels, _condition = tab_labels, condition
+    return tab_labels, condition
+  end
+
+  def catalog_tab_edit_configuration(record)
+    condition = catalog_tab_edit_conditions(record)
+    tab_labels = [tab_label(:basic)]
+    tab_labels.push(tab_label(:detail)) if condition[:detail]
+    tab_labels.push(tab_label(:resource)) if condition[:resource]
+    tab_labels.push(tab_label(:request)) if condition[:request]
+    return tab_labels, condition
+  end
+
+  def catalog_tab_edit_generic_configuration
+    [tab_label(:basic), tab_label(:provision), tab_label(:retirement)]
   end
 
   def catalog_tab_content(key_name, &block)
@@ -255,6 +268,19 @@ module CatalogHelper
       :provision  => record.prov_type == catalog_provision_types[:playbook],
       :retirement => record.config_info.fetch_path(:retirement)
     }
+  end
+
+  def catalog_tab_edit_conditions(record)
+    resource = request = false
+    detail = !!record[:display]
+    unless record[:st_prov_type].try(:start_with?, "generic_")
+      if record[:service_type] == "composite"
+        resource = true
+      elsif record[:service_type] == "atomic" && need_prov_dialogs?(record[:st_prov_type])
+        request = true
+      end
+    end
+    {:detail => detail, :resource => resource, :request => request}
   end
 
   def provision_data(data, type)
