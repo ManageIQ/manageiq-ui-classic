@@ -14,7 +14,7 @@ const ProvGrid = ({
   const onSort = (itemKey) => {
     const selectedHeader = initialData.headers.find((item) => item.text === itemKey);
     if (selectedHeader) {
-      const sortUrl = `sort_vm_grid/${initialData.recordId}?field_id=${fieldId}&sort_choice=${selectedHeader.sort_choice}`;
+      const sortUrl = `sort_${type}_grid/${initialData.recordId}?field_id=${fieldId}&sort_choice=${selectedHeader.sort_choice}`;
       window.miqJqueryRequest(sortUrl);
     }
   };
