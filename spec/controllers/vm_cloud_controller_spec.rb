@@ -110,19 +110,6 @@ describe VmCloudController do
       expect(response).to render_template(:partial => 'vm_common/_resize')
     end
 
-    it 'can resize an instance' do
-      flavor = FactoryBot.create(:flavor_openstack)
-      allow(controller).to receive(:load_edit).and_return(true)
-      allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
-      expect(VmCloudReconfigureRequest).to receive(:make_request)
-      post :resize_vm, :params => {
-        :button    => 'submit',
-        :objectId  => vm_openstack.id,
-        :flavor_id => flavor.id
-      }
-      expect(response.status).to eq(200)
-    end
-
     it 'can open instance live migrate tab' do
       post :explorer
       expect(response.status).to eq(200)
