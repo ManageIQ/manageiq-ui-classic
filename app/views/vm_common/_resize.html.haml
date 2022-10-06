@@ -1,2 +1,4 @@
 = render :partial => "layouts/flash_msg"
-= react 'VmResizeForm', :recordId => @record.id.to_s
+= react 'VmResizeForm', :recordId => @record.id.to_s,
+                        :vmCloudResizeFormId => "#{@request_id || "new"}"
+
