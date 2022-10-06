@@ -81,7 +81,7 @@
             :owner_manager_phone, :owner_phone, :owner_phone_mobile,
             :owner_state, :owner_title, :owner_zip, :request_notes,
             :subnet_mask, :memory_limit, :memory_reserve,
-            :root_username, :root_password, :sysprep_password, :sysprep_domain_admin,
+            :root_username, :root_password, :ssh_public_key, :sysprep_password, :sysprep_domain_admin,
             :sysprep_domain_password, :sysprep_workgroup_name,
             :sysprep_full_name, :sysprep_organization,
             :sysprep_product_id, :sysprep_computer_name,
@@ -292,7 +292,7 @@
         .col-md-10
           = react('TaggingWrapperConnected',
             :tags    => @tags,
-            :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true, 
+            :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true,
                           :url => url, :isDisabled => @tags[:isDisabled]})
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
