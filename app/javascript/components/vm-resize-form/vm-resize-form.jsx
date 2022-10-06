@@ -5,7 +5,7 @@ import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './vm-resize.schema';
 
-const VmResizeForm =({recordId}) =>{
+const VmResizeForm =({recordId, vmCloudResizeFormId}) =>{
   const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const VmResizeForm =({recordId}) =>{
     miqSparkleOn();
     const resource = {
       resizeValues: values,
+      resizeFormId: vmCloudResizeFormId,
     };
     const payload = {
       action: 'resize',

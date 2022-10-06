@@ -46,7 +46,7 @@ describe('vm resize form component', () => {
   it('should render a resize form', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<VmResizeForm recordId='1'/>);
+      wrapper = mount(<VmResizeForm recordId='1' vmCloudResizeFormId='53'/>);
     });
 
     setImmediate(() => {
@@ -61,12 +61,13 @@ describe('vm resize form component', () => {
       action: 'resize',
       resource: {
         resizeValues: {flavor: 'bh1-16x1600'}
-      }
+      },
+      resizeFormId: '53',
     };
     fetchMock.postOnce('/api/vms/1', submitData);
     let wrapper
     await act(async() => {
-      wrapper = mount(<VmResizeForm recordId='1'/>);
+      wrapper = mount(<VmResizeForm recordId='1' vmCloudResizeFormId='53'/>);
     });
     expect(toJson(wrapper)).toMatchSnapshot();
     done();

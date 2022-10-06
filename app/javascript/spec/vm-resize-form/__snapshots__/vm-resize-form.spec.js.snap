@@ -19,6 +19,7 @@ exports[`vm resize form component should render a resize form 1`] = `
 >
   <VmResizeForm
     recordId="1"
+    vmCloudResizeFormId="53"
   >
     <Grid>
       <FlexGrid>
@@ -843,6 +844,7 @@ exports[`vm resize form component should submit resize API call 1`] = `
 >
   <VmResizeForm
     recordId="1"
+    vmCloudResizeFormId="53"
   />
 </Provider>
 `;
