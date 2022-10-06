@@ -24,11 +24,20 @@
       margin-bottom: 15px;
       border: 1px solid $selected-ui;
 
+      .chart-holder.fullscreen .spacer {
+        margin-top: 2px;
+      }
+
       .card-pf {
         display: flex;
         flex-direction: column;
         margin: 0;
         border: 0;
+
+        .card-pf-body{
+          margin: 0;
+          padding: 0;
+        }
 
         div[id^="dd_"] div.widget-report {
           overflow-y: auto;
