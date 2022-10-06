@@ -62,12 +62,12 @@ const VmResizeForm =({recordId}) =>{
 
 }
 
-// VmResizeForm.propTypes = {
-//   recordId: PropTypes.string,
-// };
+VmResizeForm.propTypes = {
+  recordId: PropTypes.string,
+};
 
-// VmResizeForm.defaultProps = {
-//   recordId: undefined,
-// }
+VmResizeForm.defaultProps = {
+  recordId: undefined,
+}
 
 export default VmResizeForm;
