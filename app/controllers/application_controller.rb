@@ -1006,7 +1006,7 @@ class ApplicationController < ActionController::Base
   def process_saved_reports(saved_reports, task)
     success_count = 0
     failure_count = 0
-    params[:miq_grid_checks] = params[:miq_grid_checks].split(",")
+    params[:miq_grid_checks] = params[:miq_grid_checks]&.split(",")
     MiqReportResult.for_user(current_user).where(:id => saved_reports).order(MiqReportResult.arel_table[:name].lower).each do |rep|
       rep.public_send(task) if rep.respond_to?(task) # Run the task
     rescue StandardError
@@ -1020,7 +1020,7 @@ class ApplicationController < ActionController::Base
           :target_class => "MiqReportResult",
           :userid       => current_userid
         )
-        params[:miq_grid_checks].delete(rep[:id].to_s)
+        params[:miq_grid_checks]&.delete(rep[:id].to_s)
         success_count += 1
       else
         add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => rep.name, :task => task})
