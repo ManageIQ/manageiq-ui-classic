@@ -41,13 +41,13 @@ describe EmsCloudHelper::TextualSummary do
       cloud_tenants
       flavors
       security_groups
+      placement_groups
       instances
       images
       cloud_volumes
       orchestration_stacks
       storage_managers
       cloud_databases
-      placement_groups
       custom_button_events
       tenant
     )
