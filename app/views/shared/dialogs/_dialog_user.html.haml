@@ -14,7 +14,13 @@
         :dialogId => @dialog_locals[:dialog_id],
         :resourceActionId => @dialog_locals[:resource_action_id],
         :targetId => @dialog_locals[:target_id],
-        :targetType => @dialog_locals[:target_type])
+        :targetType => @dialog_locals[:target_type],
+        :apiSubmitEndpoint => @dialog_locals[:api_submit_endpoint],
+        :apiAction => @dialog_locals[:api_action],
+        :openUrl => @dialog_locals[:open_url],
+        :realTargetType => @dialog_locals[:real_target_type],
+        :finishSubmitEndpoint => @dialog_locals[:finish_submit_endpoint])
+
 
 .row.wrapper{"ng-controller" => "dialogUserController as vm"}
   .spinner{'ng-show' => "!vm.dialogLoaded"}
