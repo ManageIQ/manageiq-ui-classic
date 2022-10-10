@@ -24,12 +24,12 @@ class PlacementGroupController < ApplicationController
   end
 
   def download_data
-    assert_privileges('flavor_show_list')
+    assert_privileges('placement_group_view')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('flavor_show')
+    assert_privileges('placement_group_view')
     super
   end
 
