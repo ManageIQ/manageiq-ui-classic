@@ -70,8 +70,8 @@ module VmHelper::TextualSummary
       _("Relationships"),
       %i[
         ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
-        cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
-        floating_ips network_ports cloud_volumes custom_button_events
+        cloud_network cloud_subnet placement_group orchestration_stack cloud_networks cloud_subnets network_routers
+        security_groups floating_ips network_ports cloud_volumes custom_button_events
       ]
     )
   end
@@ -397,6 +397,19 @@ module VmHelper::TextualSummary
       h[:title] = _("Show all Cloud Subnets")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_subnets', :id => @record, :display => "cloud_subnets")
+    end
+    h
+  end
+
+  def textual_placement_group
+    my_placement_group = @record.placement_group
+    h = {:label => _('Placement Group'),
+         :icon  => "pficon-flavor",
+         :value => (my_placement_group.nil? ? _("None") : my_placement_group.name)}
+    if placement_group && role_allows?(:feature => "placement_group_show")
+      h[:title] = _("Show Placement Group")
+      textual_link(@record.placement_group, :label => _('Placement Group'))
+      h[:link]  = url_for_only_path(:controller => 'placement_group', :action => 'show', :id => my_placement_group.id)
     end
     h
   end

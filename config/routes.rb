@@ -157,6 +157,23 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :placement_group => {
+      :get  => %w(
+        show_list
+        index
+        show
+        download_data
+        download_summary_pdf
+      ),
+      :post => %w(
+        quick_search
+        show_list
+        show
+      ) +
+        adv_search_post +
+        exp_post
+    },
+
     :automation_manager_configured_system => {
       :get => %w(
         download_data
