@@ -13,6 +13,8 @@ module ApplicationController::Compare
 
     rpt = get_compare_report(@sb[:compare_db])
     session[:miq_sections] = MiqCompare.sections(rpt)
+    selected_sections = session[:miq_sections]&.select { |_key, value| value[:checked] == true }
+    session[:selected_sections] = selected_sections ? selected_sections.keys.map(&:to_s) : []
     ids = session[:miq_selected].collect(&:to_i)
     @compare = MiqCompare.new({:ids     => ids,
                                :include => session[:miq_sections]},
@@ -413,7 +415,7 @@ module ApplicationController::Compare
   end
 
   def set_checked_sections
-    session[:selected_sections] = selections = []
+    selections = []
     params[:all_checked]&.each do |item|
       add_selections!(selection_names(item), selections)
     end
