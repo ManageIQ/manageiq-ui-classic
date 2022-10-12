@@ -406,7 +406,7 @@ module VmHelper::TextualSummary
     h = {:label => _('Placement Group'),
          :icon  => "pficon-flavor",
          :value => (my_placement_group.nil? ? _("None") : my_placement_group.name)}
-    if placement_group && role_allows?(:feature => "placement_group_show")
+    if !my_placement_group.nil? && role_allows?(:feature => "placement_group_show")
       h[:title] = _("Show Placement Group")
       textual_link(@record.placement_group, :label => _('Placement Group'))
       h[:link]  = url_for_only_path(:controller => 'placement_group', :action => 'show', :id => my_placement_group.id)
