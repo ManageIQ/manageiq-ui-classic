@@ -75,4 +75,4 @@ require('codemirror/theme/eclipse.css');
 require('./bootstrap-datepicker-languages.js');
 
 // added d3 7.X.X as alias for d3 add ins
-require('d3-7.0.0');
+require('d3-7.6.1');
