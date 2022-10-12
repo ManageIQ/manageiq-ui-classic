@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 6.0.0"
 
-  s.add_dependency "coffee-rails"
   s.add_dependency "execjs", "2.8.1" # Note: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
   s.add_dependency "font-fabulous", "~> 1.0.5"
   s.add_dependency "high_voltage", "~> 3.0.0"
