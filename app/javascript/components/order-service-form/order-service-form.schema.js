@@ -1,7 +1,6 @@
 import { componentTypes } from '@@ddf';
 
 const showDateErrorFields = (fields) => {
-  console.log(fields);
   let invalidFields;
   fields.forEach((field) => {
     if (invalidFields) {

@@ -55,6 +55,10 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   vm.isValid = false;
 
   function refreshField(field) {
+    console.log(field);
+    // API.post(field.href).then((data) => {
+    //   console.log(data);
+    // });
     var idList = {
       dialogId: dialogId,
       resourceActionId: resourceActionId,

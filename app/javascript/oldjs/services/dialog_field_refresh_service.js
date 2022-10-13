@@ -16,6 +16,12 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', 'DialogData', 
       },
     };
 
+    console.log(data);
+    console.log(angular.toJson(data));
+
+    console.log(url);
+    console.log(idList.dialogId);
+
     return API.post(url + idList.dialogId, angular.toJson(data))
       .then(function(response) {
         // FIXME: API requests don't actually count towards $.active

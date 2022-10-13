@@ -7,9 +7,23 @@ const checkBoxes = [];
 let hasTime = false;
 let stopSubmit = false;
 let invalidDateFields = [];
+const dynamicFields = [];
+const refreshFields = [];
 
 const buildTextBox = (field, validate) => {
   let component = {};
+  console.log(field);
+  //   if (field.dialog_field_responders.length > 0) {
+  //     field.dialog_field_responders.forEach((tempField) => {
+  //       console.log(tempField);
+  //       dynamicFields.forEach((fieldToRefresh) => {
+  //         if (fieldToRefresh.field === tempField) {
+  //           console.log(fieldToRefresh);
+  //         }
+  //       });
+  //     });
+  //   }
+
   if (field.options.protected) {
     component = {
       component: 'password-field',
@@ -35,6 +49,51 @@ const buildTextBox = (field, validate) => {
       initialValue: field.default_value,
       description: field.description,
       validate,
+    //   resolveProps: (props, { meta, input }, formOptions) => {
+    //     console.log(props);
+    //     console.log(meta);
+    //     console.log(input);
+    //     console.log(formOptions);
+    //     if (!formOptions.pristine) {
+    //       if (field.dialog_field_responders.length > 0) {
+    //         field.dialog_field_responders.forEach((tempField) => {
+    //           console.log(tempField);
+    //           dynamicFields.forEach((fieldToRefresh) => {
+    //             if (fieldToRefresh.field === tempField) {
+    //               const refreshData = {
+    //                 action: 'refresh_dialog_fields',
+    //                 resource: {
+    //                   dialog_fields: {
+    //                     //   credential: null,
+    //                     hosts: 'localhost0',
+    //                     //   param_provider_id: '38',
+    //                     //   param_miq_username: 'admin',
+    //                     //   param_miq_password: 'smartvm',
+    //                     //   check_box_1: 't',
+    //                     //   dropdown_list_1_1: null,
+    //                     //   textarea_box_1: '',
+    //                     //   date_time_control_1: '2022-10-12T20:50:45.180Z',
+    //                     //   date_time_control_2: '2022-10-12T20:50:45.180Z',
+    //                     //   date_control_1: '2022-10-12',
+    //                     //   date_control_2_1: '2022-09-27',
+    //                   },
+    //                   fields: ['credential'],
+    //                   resource_action_id: '2018',
+    //                   target_id: '14',
+    //                   target_type: 'service_template',
+    //                   real_target_type: 'ServiceTemplate',
+    //                 },
+    //               };
+    //               fieldToRefresh.values = API.post(`/api/service_dialogs/10`, refreshData).then((data) => {
+    //                 console.log(data);
+    //               });
+    //               console.log(fieldToRefresh);
+    //             }
+    //           });
+    //         });
+    //       }
+    //     }
+    //   },
     };
   }
   return component;
@@ -69,6 +128,8 @@ const buildCheckBox = (field, validate) => ({
 const buildDropDownList = (field, validate) => {
   let options = [];
   let placeholder = __('<Choose>');
+  let start;
+
   field.values.forEach((value) => {
     if (value[0] === null) {
       value[0] = null;
@@ -78,7 +139,11 @@ const buildDropDownList = (field, validate) => {
     options.push({ value: value[0] !== null ? String(value[0]) : null, label: value[1] });
   });
 
-  let start;
+//   if (field.dynamic) {
+//     dynamicFields.push({ field: field.name, id: field.id, values: options });
+//     console.log(dynamicFields);
+//   }
+
   if (options[0].value === null) {
     start = options.shift();
   }
@@ -356,7 +421,6 @@ const handleTimePickerSubmit = (submitData) => {
                 // Add field label to list of invalid date fields
                 invalidDateFields.push(dateField.label);
               }
-              // Set state of invalid date fields once done looping through all fields
             });
           }
         }
@@ -391,7 +455,6 @@ const handleDatePickerSubmit = (submitData) => {
               // Add field label to list of invalid date fields
               invalidDateFields.push(dateField.label);
             }
-            // Set state of invalid date fields once done looping through all fields
           });
         }
       }

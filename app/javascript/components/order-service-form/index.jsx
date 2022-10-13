@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
-// import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { Button } from 'carbon-components-react';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './order-service-form.schema';
@@ -17,8 +15,7 @@ const OrderServiceForm = ({
     // eslint-disable-next-line no-unused-vars
     isLoading, initialValues, fields, hasTime, showPastDates, showPastDatesFieldErrors, dateErrorFields, checkBoxes, dates,
   }, setState] = useState({
-    // isLoading: !!dialogId,
-    isLoading: false,
+    isLoading: true,
     fields: [],
     hasTime: false,
     showPastDates: [],
@@ -28,11 +25,23 @@ const OrderServiceForm = ({
     dates: [],
   });
   const [showDateError, setShowDateError] = useState([]);
+  // const [dynamicFieldValues, setDynamicFieldValues] = useState({});
+
+  // console.log(dialogId);
+  // console.log(resourceActionId);
+  // console.log(targetId);
+  // console.log(targetType);
+  // console.log(apiSubmitEndpoint);
+  // console.log(apiAction);
+  // console.log(openUrl);
+  // console.log(realTargetType);
+  // console.log(finishSubmitEndpoint);
 
   useEffect(() => {
     API.get(`/api/service_dialogs/${dialogId}?resource_action_id=${resourceActionId}&target_id=${targetId}&target_type=${targetType}`)
       .then((data) => {
         buildFields(data, setState);
+        console.log(data);
       });
   }, []);
 
@@ -136,11 +145,10 @@ OrderServiceForm.propTypes = {
   targetId: PropTypes.number.isRequired,
   targetType: PropTypes.string.isRequired,
   apiSubmitEndpoint: PropTypes.string.isRequired,
+  apiAction: PropTypes.string.isRequired,
   openUrl: PropTypes.bool.isRequired,
-};
-
-OrderServiceForm.defaultProps = {
-  // dialogId: undefined,
+  realTargetType: PropTypes.string.isRequired,
+  finishSubmitEndpoint: PropTypes.string.isRequired,
 };
 
 export default OrderServiceForm;
