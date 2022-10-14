@@ -6,7 +6,6 @@
 %h1
   = @title
 = render :partial => "layouts/flash_msg"
-= render :partial => "layouts/tl_options"
-= render :partial => 'layouts/tl_detail'
+= react('TimelineOptions')
 
 = _("* Dates/Times on this page are based on time zone: %{time_zone}.") % {:time_zone => session[:user_tz]}
