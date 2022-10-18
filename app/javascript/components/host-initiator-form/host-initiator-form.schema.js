@@ -234,6 +234,11 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
                 type: "exact-length",
                 threshold: 16,
                 message: __('The length of the WWPN should be exactly 16 characters.')
+              },
+              {
+                type: "pattern",
+                pattern: "^[0-9A-Fa-f]+$",
+                message: __('The WWPN should be a hexadecimal expression (0-9, A-F)')
               }
             ],
           },
