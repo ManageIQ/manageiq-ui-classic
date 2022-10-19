@@ -118,6 +118,7 @@ import UsageTrendChart from '../components/provider-dashboard-charts/usage-netwo
 import UtilizationChartGraph from '../components/provider-dashboard-charts/provider-dashboard-utilization-chart';
 import VmCommonRenameForm from '../components/vm-common-rename-form';
 import VmFloatingIPsForm from '../components/vm-floating-ips/vm-floating-ips-form';
+import VmResizeForm from '../components/vm-resize-form/vm-resize-form';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WidgetChart from '../components/dashboard-widgets/widget-chart';
@@ -258,6 +259,7 @@ ManageIQ.component.addReact('TimeProfileTable', TimeProfileTable);
 ManageIQ.component.addReact('ToastList', ToastList);
 ManageIQ.component.addReact('Toolbar', Toolbar);
 ManageIQ.component.addReact('VmEditForm', VmEditForm);
+ManageIQ.component.addReact('VmResizeForm', VmResizeForm);
 ManageIQ.component.addReact('UsageTrendChart', UsageTrendChart);
 ManageIQ.component.addReact('UtilizationChartGraph', UtilizationChartGraph);
 ManageIQ.component.addReact('VmFloatingIPsForm', VmFloatingIPsForm);

@@ -73,6 +73,12 @@
           = _("Flavor")
         .col-md-8
           = h(Flavor.find(@options[:instance_type]).name_with_details)
+    - @options["resizeValues"]&.each do |key, value|
+      .form-group
+        %label.control-label.col-md-2
+          = _(key.titleize)
+        .col-md-8
+          = h(value)
   %hr
   %h3
     = _("Affected VMs")
