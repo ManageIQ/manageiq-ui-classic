@@ -175,5 +175,8 @@
     "node": ">= 14.0.0",
     "npm": ">= 6.0.0"
   },
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.0.2",
+  "resolutions": {
+    "terser": "~4.8.1"
+  }
 }
