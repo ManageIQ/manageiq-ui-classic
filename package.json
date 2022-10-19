@@ -177,6 +177,7 @@
   },
   "packageManager": "yarn@3.0.2",
   "resolutions": {
-    "terser": "~4.8.1"
+    "terser": "~4.8.1",
+    "d3-color": "~3.1.0"
   }
 }
