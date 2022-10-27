@@ -8,7 +8,7 @@ import EditingContext from './editing-context';
 const ValidateStorageCredentials = ({ ...props }) => {
   const { storageId } = useContext(EditingContext);
 
-  const validateStorage = (fields, fieldNames) => new Promise((resolve, reject) => {
+  const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const url = storageId ? `/api/physical_storages/${storageId}` : '/api/physical_storages';
     const resource = pick(fields, fieldNames);
 
@@ -37,12 +37,12 @@ const ValidateStorageCredentials = ({ ...props }) => {
   });
 
   // The order of props is important here, because they have to be overridden
-  return <AsyncCredentials {...props} asyncValidate={validateStorage} edit={!!storageId} />;
+  return <AsyncCredentials {...props} asyncValidate={asyncValidate} edit={!!storageId} />;
 };
 
 ValidateStorageCredentials.propTypes = {
   ...AsyncCredentials.propTypes,
-  validateStorage: PropTypes.func,
+  asyncValidate: PropTypes.func,
   validation: PropTypes.bool,
 };
 ValidateStorageCredentials.defaultProps = {
