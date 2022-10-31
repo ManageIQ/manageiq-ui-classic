@@ -258,7 +258,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         component: componentTypes.SELECT,
         id: 'host_initiator_group',
         name: 'host_initiator_group',
-        label: __('host initiator group:'),
+        label: __('Host Initiator Group:'),
         isRequired: false,
         // includeEmpty: true,
         validate: [{ type: validatorTypes.REQUIRED }],
