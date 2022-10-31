@@ -162,3 +162,21 @@
     }
   }
 }
+
+.provision-instance-container {
+  display: flex;
+  flex-direction: column;
+
+  .provision-instance-list {
+    height: calc(100vh - 210px);
+    overflow: auto;
+  }
+  .provision-instance-actions {
+
+    #pre_prov_form_buttons_div {
+      display: flex;
+      justify-content: end;
+    }
+  }
+
+}
