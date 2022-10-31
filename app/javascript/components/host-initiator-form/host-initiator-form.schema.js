@@ -20,6 +20,13 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
     value: id,
   })));
 
+const loadGroups = (id) => API.get(`/api/physical_storages/${id}?attributes=host_initiator_groups`)
+  .then(({ host_initiator_groups }) => {
+    let groupOptions = host_initiator_groups.map(({ id, name }) => ({ label: name, value: id }));
+    groupOptions.unshift({ label: `<${__('None')}>`, value: '' });
+    return groupOptions;
+  });
+
 const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_candidates`)
   // eslint-disable-next-line camelcase
   .then(({ wwpn_candidates }) => wwpn_candidates.map(({ candidate }) =>
@@ -246,6 +253,18 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         condition: {
           or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
         },
+      },
+      {
+        component: componentTypes.SELECT,
+        id: 'host_initiator_group',
+        name: 'host_initiator_group',
+        label: __('host initiator group:'),
+        isRequired: false,
+        // includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (storageId ? loadGroups(storageId) : Promise.resolve([])),
+        isSearchable: true,
+        condition: { and: [{ when: 'physical_storage_id', isNotEmpty: true }, { when: 'port_type', isNotEmpty: true }] },
       },
     ],
   });
