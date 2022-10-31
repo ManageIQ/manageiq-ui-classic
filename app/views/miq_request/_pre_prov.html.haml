@@ -13,11 +13,15 @@
              :onclick => "miqAjax('#{hide_depricated_url}')",
              :checked => @edit[:hide_deprecated_templates]}
         = _('Hide deprecated')
-  = render :partial => "layouts/x_gtl"
+  
+  .provision-instance-container
+    .provision-instance-list
+      = render :partial => "layouts/x_gtl"
 
-  #pre_prov_form_buttons_div.pull-right
-    = render :partial => 'layouts/x_edit_buttons', :locals => {:action_url      => 'pre_prov',
-                                                               :continue_button => true,
-                                                               :no_reset        => true}
+    .provision-instance-actions
+      #pre_prov_form_buttons_div.pull-right
+        = render :partial => 'layouts/x_edit_buttons', :locals => {:action_url => 'pre_prov',
+                                                                  :continue_button => true,
+                                                                  :no_reset => true}
   :javascript
     $(provisioningListenToRx);
