@@ -171,6 +171,7 @@
   };
 })(ManageIQ);
 
+// TODO: Convert this file to React
 window.miqInitTimeline = function(json) {
   if (!json) {
     return;
