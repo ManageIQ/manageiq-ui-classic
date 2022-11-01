@@ -1,3 +1,2 @@
 #prov_vm_div
-  - initial_data = prov_grid_data(@edit, @vms, @vm)
-  = react('ProvGrid', {:type => 'vm', :fieldId => field_id, :initialData => initial_data})
+  = react('ProvGrid', {:type => 'vm', :fieldId => field_id, :initialData => prov_vm_grid_data(@edit, @vms, @vm)})
