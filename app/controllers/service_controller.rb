@@ -16,6 +16,11 @@ class ServiceController < ApplicationController
     process_show_list(:dbname => :service, :gtl_dbname => :service)
   end
 
+  def show
+    super
+    @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)
+  end
+
   def button
     case params[:pressed]
     when 'service_tag'
