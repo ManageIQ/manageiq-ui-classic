@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import MiqCustomTab from '../../components/miq-custom-tab';
 
 describe('MiqCustomTab component', () => {
-  it('should render tabs for catalog summery page', () => {
+  it('should render tabs for catalog summary page', () => {
     const tabLabels = [
       { name: 'basic', text: _('Basic Information') },
       { name: 'detail', text: _('Details') },
@@ -35,6 +35,21 @@ describe('MiqCustomTab component', () => {
       type="CATALOG_REQUEST_INFO"
     />);
     expect(wrapper.find('#catalog_request_info_dynamic')).toHaveLength(1);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render tabs for catalog edit page', () => {
+    const tabLabels = [
+      { name: 'basic', text: _('Basic Information') },
+      { name: 'detail', text: _('Details') },
+      { name: 'resource', text: _('Selected Resources') },
+    ];
+    const wrapper = shallow(<MiqCustomTab
+      containerId="catalog-edit-tabs"
+      tabLabels={tabLabels}
+      type="CATALOG_EDIT"
+    />);
+    expect(wrapper.find('#catalog_edit_static')).toHaveLength(1);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
