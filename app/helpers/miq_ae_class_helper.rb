@@ -314,4 +314,14 @@ module MiqAeClassHelper
       class_field_data(data)
     end
   end
+
+  def datastore_form(ae_ns, sb_data, type)
+    domain = ae_ns.domain?
+    react('DatastoreForm', {:type          => DATASTORE_TYPES[type],
+                            :domain        => domain,
+                            :namespacePath => domain ? "" : sb_data[:namespace_path],
+                            :namespaceId   => ae_ns.id || 'new',
+                            :nameReadOnly  => domain && !ae_ns.editable_property?(:name),
+                            :descReadOnly  => domain && !ae_ns.editable_property?(:description)})
+  end
 end

@@ -250,8 +250,8 @@ module MiqAeCustomizationController::OldDialogs
       begin
         dialog.save!
       rescue StandardError
-        dialog.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        dialog.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @changed = true
         javascript_flash

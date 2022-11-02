@@ -437,6 +437,7 @@ class ApplicationHelper::ToolbarChooser
             physical_server
             physical_switch
             physical_storage
+            placement_group
             container_template
             resource_pool
             timeline

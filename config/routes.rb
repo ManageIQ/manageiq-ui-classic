@@ -119,6 +119,7 @@ Rails.application.routes.draw do
         show
         aggregate_status_data
         resources_capacity_data
+        aggregate_event_data
       ]
     },
 
@@ -134,6 +135,7 @@ Rails.application.routes.draw do
         tagging_edit
         download_private_key
         ownership
+
       ) +
         compare_get,
       :post => %w(
@@ -153,6 +155,23 @@ Rails.application.routes.draw do
         compare_post +
         exp_post +
         save_post
+    },
+
+    :placement_group => {
+      :get  => %w(
+        show_list
+        index
+        show
+        download_data
+        download_summary_pdf
+      ),
+      :post => %w(
+        quick_search
+        show_list
+        show
+      ) +
+        adv_search_post +
+        exp_post
     },
 
     :automation_manager_configured_system => {
@@ -2361,7 +2380,6 @@ Rails.application.routes.draw do
         log_collection_form_fields
         pglogical_subscriptions_form_fields
         schedule_form_fields
-        tenant_quotas_form_fields
       ),
       :post => %w(
         accordion_select
@@ -2831,7 +2849,6 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         resize
-        resize_form_fields
         evacuate
         evacuate_form_fields
         live_migrate
@@ -2855,7 +2872,6 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         reconfigure_update
-        resize_vm
         evacuate_vm
         live_migrate_vm
         associate_floating_ip_vm
@@ -2891,7 +2907,6 @@ Rails.application.routes.draw do
         show
         tagging_edit
         resize
-        resize_form_fields
         live_migrate_form_fields
         attach
         detach
@@ -2909,7 +2924,6 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
-        resize_vm
         event_logs
         explorer
         launch_html5_console
@@ -3006,6 +3020,7 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
+        management_console
         ownership_update
         patches
         perf_chart_chooser

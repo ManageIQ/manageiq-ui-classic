@@ -1,0 +1,7 @@
+- if options && options[:wf]
+  .catalog-custom-component-wrapper
+    %h3.custom-component-title
+      = _('Request Info')
+    = render :partial => "miq_request/prov_wf", :locals => {:wf => options[:wf], :show => true}
+- else
+  %span{:style => "color:red"}= no_wf_msg

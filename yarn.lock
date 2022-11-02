@@ -5850,16 +5850,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-7.0.0@npm:d3@^7.0.0":
-  version: 7.1.1
-  resolution: "d3@npm:7.1.1"
+"d3-7.6.1@npm:d3@^7.6.1":
+  version: 7.6.1
+  resolution: "d3@npm:7.6.1"
   dependencies:
     d3-array: 3
     d3-axis: 3
     d3-brush: 3
     d3-chord: 3
     d3-color: 3
-    d3-contour: 3
+    d3-contour: 4
     d3-delaunay: 6
     d3-dispatch: 3
     d3-drag: 3
@@ -5884,7 +5884,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: 1b0e03baa8ad325965b6360613dfaf33b3ac298e57ea63aa8128957ef4a01bda9eed186a5fc5ec3ab59361367b7285a1f6e2baee273fd34977e8ab9c2148783a
+  checksum: af883cfeaf0a861afb2424edcb5419a5c56c84ddbc1ac9c7771c569f1926ace8db3cf0f4996038eb1db9700f7335e30c23b885199e0320a002893492ae83b415
   languageName: node
   linkType: hard
 
@@ -5903,6 +5903,15 @@ __metadata:
   dependencies:
     internmap: 1 - 2
   checksum: bb1a76d2da203f09c6c2c02b6320ed1fb39e848a82ec51148d98a2adfffdd89e8fc760504a1a31700b04009716844f2f009b05fe7ca9db55b654ab67987bbc36
+  languageName: node
+  linkType: hard
+
+"d3-array@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "d3-array@npm:3.2.0"
+  dependencies:
+    internmap: 1 - 2
+  checksum: e236f6670b60b64abb6c435da25b5cbbdc2c7c0decdbf9355bc4cf6803d6da4fa820b7b78b9cbd127edb493555934a9788d45084c2f39d7c2e1a2b7aa48264a4
   languageName: node
   linkType: hard
 
@@ -5944,19 +5953,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-color@npm:1 - 3, d3-color@npm:3":
-  version: 3.0.1
-  resolution: "d3-color@npm:3.0.1"
-  checksum: 5096af3bd342d0cfad4719c1860915d0a2fd2f9078b1f0d960ab16e541eb71886d8f3b5e3df0e298d5c139aff43516295543304c65acf8cb4850e71c93f4df0c
+"d3-color@npm:~3.1.0":
+  version: 3.1.0
+  resolution: "d3-color@npm:3.1.0"
+  checksum: 4931fbfda5d7c4b5cfa283a13c91a954f86e3b69d75ce588d06cde6c3628cebfc3af2069ccf225e982e8987c612aa7948b3932163ce15eb3c11cd7c003f3ee3b
   languageName: node
   linkType: hard
 
-"d3-contour@npm:3":
-  version: 3.0.1
-  resolution: "d3-contour@npm:3.0.1"
+"d3-contour@npm:4":
+  version: 4.0.0
+  resolution: "d3-contour@npm:4.0.0"
   dependencies:
-    d3-array: 2 - 3
-  checksum: efd5f092562c4883ac7372968e59018339e4448c816f9113c4d8a54c93bf93fa7395e9f97c7168dab2755aa3442c2e03e5170a3129567be15c64f8a17739089e
+    d3-array: ^3.2.0
+  checksum: 1f9b9e56d0966d98a4c740b6af32b4fa2d14424159644adc24f4eb0ab023afbd414938f63f95032a66407fb701f4966efe40875e2cc0460fb653a943d3fc86b0
   languageName: node
   linkType: hard
 
@@ -11431,7 +11440,7 @@ fsevents@^1.2.7:
     create-react-context: ~0.3.0
     css-loader: ~3.4.2
     cypress: ^4.7.0
-    d3-7.0.0: "npm:d3@^7.0.0"
+    d3-7.6.1: "npm:d3@^7.6.1"
     dompurify: ^2.3.6
     duplicate-package-checker-webpack-plugin: ~3.0.0
     enhanced-resolve: ~4.0.0
@@ -11467,7 +11476,7 @@ fsevents@^1.2.7:
     moment: ~2.29.4
     moment-duration-format: ~2.2.2
     moment-strftime: ~0.5.0
-    moment-timezone: ~0.5.21
+    moment-timezone: ~0.5.37
     ng-annotate-loader: ~0.7.0
     node-fetch: ~2.6.1
     numeral: ~2.0.6
@@ -11965,12 +11974,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:~0.5.21":
-  version: 0.5.34
-  resolution: "moment-timezone@npm:0.5.34"
+"moment-timezone@npm:~0.5.37":
+  version: 0.5.37
+  resolution: "moment-timezone@npm:0.5.37"
   dependencies:
     moment: ">= 2.9.0"
-  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
+  checksum: b3fc24848a396ee3801331a4b5511591df0e22241e59f55200a475603f23a8429f01887294c7a0c005dae25b8e4bef20472fbc875ff20080f26fded066559f1a
   languageName: node
   linkType: hard
 
@@ -16701,16 +16710,16 @@ resolve@^1.1.7:
   languageName: node
   linkType: hard
 
-"terser@npm:^4.1.2":
-  version: 4.8.0
-  resolution: "terser@npm:4.8.0"
+"terser@npm:~4.8.1":
+  version: 4.8.1
+  resolution: "terser@npm:4.8.1"
   dependencies:
     commander: ^2.20.0
     source-map: ~0.6.1
     source-map-support: ~0.5.12
   bin:
     terser: bin/terser
-  checksum: f980789097d4f856c1ef4b9a7ada37beb0bb022fb8aa3057968862b5864ad7c244253b3e269c9eb0ab7d0caf97b9521273f2d1cf1e0e942ff0016e0583859c71
+  checksum: b342819bf7e82283059aaa3f22bb74deb1862d07573ba5a8947882190ad525fd9b44a15074986be083fd379c58b9a879457a330b66dcdb77b485c44267f9a55a
   languageName: node
   linkType: hard
 

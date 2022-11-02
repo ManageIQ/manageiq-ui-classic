@@ -11,6 +11,12 @@ class EmsStorageDashboardService < EmsDashboardService
     }.compact
   end
 
+  def aggregate_event_data
+    {
+      :aggEvents => agg_events
+    }.compact
+  end
+
   def aggregate_status
     {
       :quadicon      => @controller.instance_exec(@ems, &EmsStorageDashboardService.quadicon_calc),
@@ -71,7 +77,6 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def heatmaps
     resource_usage = []
-
     @ems.physical_storages.each do |system|
       system.storage_resources.each do |resource|
         resource_usage << {
@@ -89,5 +94,29 @@ class EmsStorageDashboardService < EmsDashboardService
       :resourceUsage => resource_usage.presence,
       :title         => 'Used capacity [%]'
     }
+  end
+
+  def agg_events
+    event_list = []
+    event_hash = @ems.ems_events.group_by(&:physical_storage_name)
+                     .transform_values do |events|
+      fixed, not_fixed = events.partition { |event| event.event_type == "autosde_critical_alert_fixed" }.map(&:count)
+      {:fixed => fixed, :not_fixed => not_fixed}
+    end
+
+    event_hash.each do |key, value|
+      event_list << {
+        :group => "fixed",
+        :key   => key,
+        :value => value[:fixed]
+      }
+      event_list << {
+        :group => "not_fixed",
+        :key   => key,
+        :value => value[:not_fixed]
+      }
+    end
+
+    event_list.to_a
   end
 end

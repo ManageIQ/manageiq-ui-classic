@@ -32,14 +32,21 @@ const HostInitiatorForm = ({ redirect, storageManagerId }) => {
   };
 
   const onCancel = () => {
-    const message = __('defining of host initiator was cancelled by the user');
+    const message = __('Creation of host initiator was cancelled by the user.');
     miqRedirectBack(message, 'success', redirect);
   };
 
   const validate = (values) => {
     const errors = {};
-    if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
-      errors.wwpn = 'Please provide at least one WWPN.';
+    if (values.port_type == "ISCSI") {
+      if (!values.iqn || !values.iqn.length) {
+        errors.iqn = __('Please provide at least one IQN.');
+      }
+    }
+    if (values.port_type == "FC" || values.port_type == "NVMeFC") {
+      if ((!values.wwpn || !values.wwpn.length) && (!values.custom_wwpn || !values.custom_wwpn.length)) {
+        errors.wwpn = __('Please provide at least one WWPN.');
+      }
     }
     return errors;
   };

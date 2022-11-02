@@ -65,7 +65,7 @@
     "codemirror": "~5.58.2",
     "connected-react-router": "~6.7.0",
     "create-react-context": "~0.3.0",
-    "d3-7.0.0": "npm:d3@^7.0.0",
+    "d3-7.6.1": "npm:d3@^7.6.1",
     "dompurify": "^2.3.6",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "es6-shim": "~0.35.3",
@@ -79,7 +79,7 @@
     "moment": "~2.29.4",
     "moment-duration-format": "~2.2.2",
     "moment-strftime": "~0.5.0",
-    "moment-timezone": "~0.5.21",
+    "moment-timezone": "~0.5.37",
     "numeral": "~2.0.6",
     "patternfly": "~3.59.1",
     "patternfly-bootstrap-treeview": "~2.1.7",
@@ -175,5 +175,9 @@
     "node": ">= 14.0.0",
     "npm": ">= 6.0.0"
   },
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.0.2",
+  "resolutions": {
+    "terser": "~4.8.1",
+    "d3-color": "~3.1.0"
+  }
 }

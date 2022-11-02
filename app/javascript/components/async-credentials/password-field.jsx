@@ -25,7 +25,7 @@ const PasswordField = ({
     helperText,
     ...rest,
     component: edit ? 'edit-password-field' : componentClass,
-    componentClass,
+    ...(edit) && { componentClass },
   };
 
   const newProps = { ...secretField };

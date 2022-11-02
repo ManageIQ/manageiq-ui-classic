@@ -184,8 +184,8 @@ class HostController < ApplicationController
           nil
         else
           @errors.each { |msg| add_flash(msg, :error) }
-          @host.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          @host.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
           @in_a_form = true

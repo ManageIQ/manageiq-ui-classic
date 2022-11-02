@@ -78,6 +78,7 @@ describe VmHelper::TextualSummary do
     genealogy
     cloud_network
     cloud_subnet
+    placement_group
     orchestration_stack
     cloud_networks
     cloud_subnets

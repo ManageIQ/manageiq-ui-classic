@@ -467,8 +467,8 @@ class CatalogController < ApplicationController
           @edit = session[:edit] = @record = nil
           replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
         else
-          @st.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          @st.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           @changed = session[:changed] = (@edit[:new] != @edit[:current])
           javascript_flash
@@ -1005,8 +1005,8 @@ class CatalogController < ApplicationController
     if @edit[:wf] && need_prov_dialogs?(@edit[:new][:st_prov_type])
       request = @edit[:wf].make_request(@edit[:req_id], @edit[:new])
       if request && request&.errors.present?
-        request.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        request.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
       else
         validate_fields
@@ -1058,8 +1058,8 @@ class CatalogController < ApplicationController
       @edit = session[:edit] = @record = nil
       replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
     else
-      st.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      st.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
       javascript_flash

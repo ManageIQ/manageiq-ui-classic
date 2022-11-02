@@ -84,6 +84,7 @@ module Menu
           Menu::Item.new('vm_cloud',            N_('Instances'),          'vm_cloud_explorer',   {:feature => 'vm_cloud_explorer', :any => true}, '/vm_cloud/explorer'),
           Menu::Item.new('orchestration_stack', N_('Stacks'),             'orchestration_stack', {:feature => 'orchestration_stack_show_list'},   '/orchestration_stack/show_list'),
           Menu::Item.new('auth_key_pair_cloud', N_('Key Pairs'),          'auth_key_pair_cloud', {:feature => 'auth_key_pair_cloud_show_list'},   '/auth_key_pair_cloud/show_list'),
+          Menu::Item.new('placement_group',     N_('Placement Groups'),   'placement_group',     {:feature => 'placement_group_show_list'},       '/placement_group/show_list'),
           Menu::Item.new('cloud_databases',     N_('Databases'),          'cloud_database',      {:feature => 'cloud_database'},                  '/cloud_database/show_list'),
         ])
       end
@@ -233,9 +234,9 @@ module Menu
       def settings_menu_section
         Menu::Section.new(:set, N_("Settings"), 'carbon--Settings', [
           Menu::Item.new('configuration', N_('My Settings'), 'my_settings', {:feature => 'my_settings', :any => true}, '/configuration/index'),
+          Menu::Item.new('ops_explorer', N_('Application Settings'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer'),
           Menu::Item.new('my_tasks', N_('Tasks'), 'tasks', {:feature => 'tasks', :any => true}, '/miq_task/index?jobs_tab=tasks'),
           help_documentation,
-          Menu::Item.new('ops_explorer', N_('Application Settings'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer'),
           help_product,
           help_about,
         ])

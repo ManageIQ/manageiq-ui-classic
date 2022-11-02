@@ -1402,8 +1402,8 @@ class MiqAeClassController < ApplicationController
       add_active_node_to_open_nodes
       replace_right_cell(:replace_trees => [:ae])
     else
-      add_ae_ns.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      add_ae_ns.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
       javascript_flash(:spinner_off => true)
     end
@@ -2855,8 +2855,8 @@ class MiqAeClassController < ApplicationController
   end
 
   def flash_validation_errors(am_obj)
-    am_obj.errors.each do |field, msg|
-      add_flash("#{field.to_s.capitalize} #{msg}", :error)
+    am_obj.errors.each do |error|
+      add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
     end
   end
 

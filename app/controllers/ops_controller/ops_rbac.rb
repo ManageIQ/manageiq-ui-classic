@@ -140,35 +140,13 @@ module OpsController::OpsRbac
   end
 
   def rbac_tenant_manage_quotas_cancel
-    @tenant = Tenant.find(params[:id])
-    add_flash(_("Manage quotas for %{model}\ \"%{name}\" was cancelled by the user") %
-                  {:model => tenant_type_title_string(@tenant.divisible), :name => @tenant.name})
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node)
   end
 
   def rbac_tenant_manage_quotas_save_add
-    tenant = Tenant.find(params[:id])
-    begin
-      tenant.set_quotas(rbac_tenant_manage_quotas_params.to_h.deep_symbolize_keys)
-    rescue => bang
-      add_flash(_("Error when saving tenant quota: %{message}") % {:message => bang.message}, :error)
-      javascript_flash
-    else
-      add_flash(_("Quotas for %{model} \"%{name}\" were saved") %
-                    {:model => tenant_type_title_string(tenant.divisible), :name => tenant.name})
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
-    end
-  end
-
-  private def rbac_tenant_manage_quotas_params
-    if params[:quotas]
-      permitted_attrs = TenantQuota::NAMES.index_with { %i[unit value warn_value] }
-      params.require(:quotas).permit(permitted_attrs)
-    else
-      {}
-    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
   end
 
   def rbac_tenant_manage_quotas_reset
@@ -177,7 +155,6 @@ module OpsController::OpsRbac
     @edit = {:tenant_id => @tenant.id}
     session[:edit] = {:key => "tenant_manage_quotas__#{@tenant.id}"}
     session[:changed] = false
-    add_flash(_("All changes have been reset"), :warning) if params[:button] == 'reset'
     replace_right_cell(:nodetype => "tenant_manage_quotas")
   end
 
@@ -191,17 +168,6 @@ module OpsController::OpsRbac
     when "reset", nil # Reset or first time in
       rbac_tenant_manage_quotas_reset
     end
-  end
-
-  def tenant_quotas_form_fields
-    assert_privileges("rbac_tenant_manage_quotas")
-
-    tenant = Tenant.find(params[:id])
-    tenant_quotas = tenant.get_quotas
-    render :json => {
-      :name   => tenant.name,
-      :quotas => tenant_quotas
-    }
   end
 
   # Edit user or group tags
@@ -379,8 +345,8 @@ module OpsController::OpsRbac
         if group.save
           AuditEvent.success(build_saved_audit(group, params[:button] == "add"))
         else
-          group.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          group.errors.each do |error|
+            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
           end
           err = true
         end
@@ -732,7 +698,7 @@ module OpsController::OpsRbac
     end
 
     @changed = session[:changed] = (@edit[:new] != @edit[:current])
-    record.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+    record.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
 
     render_flash
   end

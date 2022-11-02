@@ -22,7 +22,12 @@ SimpleTable.propTypes = {
   labels: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({ value: PropTypes.string.isRequired, sortable: PropTypes.string }),
-  ])).isRequired,
-  rows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
+  ])),
+  rows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)),
   onClick: PropTypes.func.isRequired,
+};
+
+SimpleTable.defaultProps = {
+  rows: [],
+  labels: '',
 };

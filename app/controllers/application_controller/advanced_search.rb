@@ -64,8 +64,8 @@ module ApplicationController::AdvancedSearch
         @edit[@expkey][:exp_token] = nil
         true
       else
-        s.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        s.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         false
       end

@@ -34,6 +34,8 @@ module ApplicationController::Timelines
       self.levels = params[:tl_levels]&.map(&:to_sym) || group_levels
       self.categories = {}
       params.fetch(:tl_categories, []).each do |category_display_name|
+        next if category_display_name == "Other"
+
         group_data = event_groups[events[category_display_name]]
         category = {
           :display_name => category_display_name,

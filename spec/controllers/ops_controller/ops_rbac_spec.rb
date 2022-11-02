@@ -168,7 +168,7 @@ describe OpsController do
       it "gets the list of tenants by calling get_view with correct args" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@settings, {})
-        expect(controller).to receive(:get_view).with(Tenant, :named_scope => :in_my_region).and_return(
+        expect(controller).to receive(:get_view).with(Tenant, {:named_scope => :in_my_region}).and_return(
           [double('view', :table => double('table', :data => [])), {}]
         )
         controller.send(:rbac_tenants_list)
@@ -186,67 +186,6 @@ describe OpsController do
       end
     end
 
-    describe "#rbac_tenant_manage_quotas" do
-      before do
-        @tenant = FactoryBot.create(:tenant,
-                                    :name      => "OneTenant",
-                                    :parent    => Tenant.root_tenant,
-                                    :domain    => "test",
-                                    :subdomain => "test")
-        sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
-          :active_tree => :rbac_tree,
-          :active_tab  => "rbac_details"
-        }
-        controller.instance_variable_set(:@sb, sb_hash)
-        allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-      end
-
-      it "resets tenant manage quotas" do
-        controller.params = {:id => @tenant.id, :button => "reset"}
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        expect(flash_message[:message]).to include("All changes have been reset")
-        expect(flash_message[:level]).to be(:warning)
-      end
-
-      it "cancels tenant manage quotas" do
-        controller.params = {:id => @tenant.id, :button => "cancel", :divisible => "true"}
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        expect(flash_message[:message])
-          .to include("Manage quotas for Tenant \"#{@tenant.name}\" was cancelled by the user")
-        expect(flash_message[:level]).to be(:success)
-      end
-
-      it "saves tenant quotas record changes" do
-        controller.params = {
-          :name      => "OneTenant",
-          :id        => @tenant.id,
-          :button    => "save",
-          :divisible => "true",
-          :quotas    => {
-            :cpu_allocated => {:value => 1024.0},
-            :mem_allocated => {:value => 4096.0}
-          }
-        }
-        expect(controller).to receive(:render)
-        expect(response.status).to eq(200)
-        controller.send(:rbac_tenant_manage_quotas)
-        flash_message = assigns(:flash_array).first
-        @tenant.reload
-        tenant_quotas = @tenant.get_quotas
-        expect(tenant_quotas[:cpu_allocated][:value]).to be(1024.0)
-        expect(tenant_quotas[:mem_allocated][:value]).to be(4096.0)
-        expect(flash_message[:message]).to include("Quotas for Tenant \"OneTenant\" were saved")
-        expect(flash_message[:level]).to be(:success)
-      end
-    end
-
     describe "#tags_edit" do
       let!(:user) { stub_user(:features => :all) }
 
@@ -261,7 +200,7 @@ describe OpsController do
                     :active_tab  => "rbac_details"}
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-        allow(@tenant).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+        allow(@tenant).to receive(:tagged_with).with({:cat => user.userid}).and_return("my tags")
         classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryBot.create(:classification_tag,
                                   :name   => "tag1",
@@ -557,7 +496,7 @@ describe OpsController do
       allow(controller).to receive(:replace_right_cell)
 
       post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details).with(nil, :no_cache => true)
+      expect(MiqExpression).to receive(:tag_details).with(nil, {:no_cache => true})
       post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
     end
 

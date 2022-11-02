@@ -204,7 +204,9 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Power On the selected items?"),
           :klass        => ApplicationHelper::Button::HostFeatureButton,
-          :options      => {:feature => :start}),
+          :options      => {:feature => :start},
+          :enabled      => false,
+          :onwhen       => "1+"),
         button(
           :host_stop,
           nil,
@@ -215,7 +217,9 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Power Off the selected items?"),
           :klass        => ApplicationHelper::Button::HostFeatureButton,
-          :options      => {:feature => :stop}),
+          :options      => {:feature => :stop},
+          :enabled      => false,
+          :onwhen       => "1+"),
         button(
           :host_reset,
           nil,
@@ -226,7 +230,9 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Reset the selected items?"),
           :klass        => ApplicationHelper::Button::HostFeatureButtonWithDisable,
-          :options      => {:feature => :reset}),
+          :options      => {:feature => :reset},
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

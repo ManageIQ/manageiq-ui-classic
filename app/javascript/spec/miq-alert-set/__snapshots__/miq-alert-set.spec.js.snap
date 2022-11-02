@@ -205,20 +205,15 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
       >
-        <TextArea
-          cols={50}
-          disabled={false}
-          enableCounter={false}
-          helperText=""
-          invalid={false}
-          invalidText=""
-          labelText=""
-          light={false}
-          onChange={[Function]}
-          onClick={[Function]}
-          placeholder=""
-          rows={4}
-          value="text area description"
+        <MiqStructuredListInputs
+          value={
+            Object {
+              "input": "text_area",
+              "readonly": true,
+              "rows": 4,
+              "text": "text area description",
+            }
+          }
         />
       </FeatureToggle(StructuredListCell)>
     </FeatureToggle(StructuredListRow)>

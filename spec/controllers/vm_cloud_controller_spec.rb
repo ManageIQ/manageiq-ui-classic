@@ -110,19 +110,6 @@ describe VmCloudController do
       expect(response).to render_template(:partial => 'vm_common/_resize')
     end
 
-    it 'can resize an instance' do
-      flavor = FactoryBot.create(:flavor_openstack)
-      allow(controller).to receive(:load_edit).and_return(true)
-      allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
-      expect(VmCloudReconfigureRequest).to receive(:make_request)
-      post :resize_vm, :params => {
-        :button    => 'submit',
-        :objectId  => vm_openstack.id,
-        :flavor_id => flavor.id
-      }
-      expect(response.status).to eq(200)
-    end
-
     it 'can open instance live migrate tab' do
       post :explorer
       expect(response.status).to eq(200)
@@ -249,25 +236,6 @@ describe VmCloudController do
                 ":status_line   => \"HTTP/1.1 400 Bad Request\\r\\n\"\n"
       expect(subject.send(:get_error_message_from_fog, raw_msg)).to eq "Keypair data is invalid: failed to generate "\
                                                                        "fingerprint"
-    end
-  end
-
-  context 'canceling actions on Instances' do
-    let(:instance) { FactoryBot.create(:vm_cloud) }
-
-    before do
-      allow(controller).to receive(:assert_privileges)
-      controller.params = {:button => 'cancel', :id => instance.id}
-    end
-
-    it 'calls flash_and_redirect for canceling attaching Cloud Volume to Instance' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
-      controller.send(:attach_volume)
-    end
-
-    it 'calls flash_and_redirect for canceling detaching Cloud Volume from Instance' do
-      expect(controller).to receive(:flash_and_redirect).with(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
-      controller.send(:detach_volume)
     end
   end
 

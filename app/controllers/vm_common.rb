@@ -358,6 +358,10 @@ module VmCommon
     show_association('floating_ips', _('Floating IPs'), :floating_ips, FloatingIp)
   end
 
+  def placement_group
+    show_association('placement_groups', _('Placement Groups'), :placement_groups, PlacementGroup)
+  end
+
   def cloud_subnets
     show_association('cloud_subnets', _('Subnets'), :cloud_subnets, CloudSubnet)
   end
@@ -1273,7 +1277,6 @@ module VmCommon
     when "resize"
       partial = "vm_common/resize"
       header = _("Reconfiguring %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table), :name => name}
-      action = "resize_vm"
     when "retire"
       partial = "shared/views/retire"
       header = _("Set/Remove retirement date for %{vm_or_template}") % {:vm_or_template => ui_lookup(:table => table)}

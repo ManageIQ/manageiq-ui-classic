@@ -48,8 +48,8 @@ module Mixins
         end
         javascript_redirect(:action => @lastaction, :id => params[:id])
       else
-        @provider.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        @provider.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         render_flash
       end

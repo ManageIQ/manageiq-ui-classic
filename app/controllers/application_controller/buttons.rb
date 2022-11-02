@@ -460,9 +460,9 @@ module ApplicationController::Buttons
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
-      @custom_button.errors.each do |field, msg|
+      @custom_button.errors.each do |error|
         add_flash(_("Error during 'add': %{error_message}") %
-          {:error_message => @custom_button.errors.full_message(field, msg)}, :error)
+          {:error_message => @custom_button.errors.full_message(error.attribute, error.message)}, :error)
       end
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
@@ -508,9 +508,9 @@ module ApplicationController::Buttons
       build_filter_exp_table
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
-      @custom_button.errors.each do |field, msg|
+      @custom_button.errors.each do |error|
         add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
-          {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
+          {:field_name => error.attribute.to_s.capitalize, :error_message => error.message}, :error)
       end
       @breadcrumbs = []
       drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")

@@ -1,3 +1,27 @@
+.tenant-quota-data-table {
+  .miq-data-table {
+    margin-bottom: 32px;
+  } 
+
+  .bx--btn-set {
+    margin-bottom: 48px;
+  }
+
+  .bx--form-item {
+    .bx--front-line, .bx--label, .bx--toggle-input {
+      display: none;
+    }
+  
+    .bx--toggle-input__label {
+      margin-bottom: 0px;
+  
+      .bx--toggle__switch {
+        margin-top: 0px;
+      }
+    }
+  }
+}
+
 .miq-data-table {
   margin-top: 20px;
 
@@ -60,7 +84,6 @@
       }
 
       span {
-        min-height: 30px;
         display: flex;
         align-items: center;
       }
@@ -90,7 +113,6 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      padding-top: 6px;
     }
   }
 }
@@ -122,4 +144,39 @@
       padding-left: 10px;
     }
   }
+}
+
+.prov-vm-grid-data-table {
+  table {
+    tr {
+      td, th {
+        font-size: 0.75rem;
+      }
+
+      &.bx--data-table--selected {
+        td {
+          background: #0f62fe;
+          color: #FFF;
+        }
+      }
+    }
+  }
+}
+
+.provision-instance-container {
+  display: flex;
+  flex-direction: column;
+
+  .provision-instance-list {
+    height: calc(100vh - 210px);
+    overflow: auto;
+  }
+  .provision-instance-actions {
+
+    #pre_prov_form_buttons_div {
+      display: flex;
+      justify-content: end;
+    }
+  }
+
 }

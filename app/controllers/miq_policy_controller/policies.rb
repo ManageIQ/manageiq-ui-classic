@@ -43,8 +43,8 @@ module MiqPolicyController::Policies
     policy.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
 
     if !policy.valid? || @flash_array || !policy.save
-      policy.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      policy.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
       javascript_flash
       return
@@ -204,8 +204,8 @@ module MiqPolicyController::Policies
       @policy.conditions.collect { |pc| pc }.each { |c| @policy.conditions.delete(c) unless mems.key?(c.id) } # Remove any conditions no longer in members
       mems.each_key { |m| @policy.conditions.push(Condition.find(m)) unless @policy.conditions.collect(&:id).include?(m) } # Add any new conditions
       if !@policy.valid? || @flash_array || !@policy.save
-        @policy.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        @policy.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         javascript_flash
         return

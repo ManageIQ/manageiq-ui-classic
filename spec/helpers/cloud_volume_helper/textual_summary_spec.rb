@@ -2,6 +2,7 @@ describe CloudVolumeHelper::TextualSummary do
   include_examples "textual_group", "Relationships", %i(
     parent_ems_cloud
     ems
+    storage_resource
     availability_zone
     cloud_tenant
     base_snapshot

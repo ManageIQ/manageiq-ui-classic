@@ -294,8 +294,8 @@ module OpsController::Settings::AnalysisProfiles
             get_node_info(x_node)
             replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])
           else
-            scanitemset.errors.each do |field, msg|
-              add_flash("#{_(field.to_s.capitalize)} #{msg}", :error)
+            scanitemset.errors.each do |error|
+              add_flash("#{_(error.attribute.to_s.capitalize)} #{error.message}", :error)
             end
             @edit[:new] = ap_sort_array(@edit[:new])
             @edit[:current] = ap_sort_array(@edit[:current])

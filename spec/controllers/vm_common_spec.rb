@@ -188,18 +188,20 @@ describe VmOrTemplateController do
       controller.instance_eval { @in_a_form = true }
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :vandt_tree)
-      expect(controller).to receive(:render_to_string).with(:partial => "layouts/breadcrumbs").exactly(1).times
-      expect(controller).to receive(:render_to_string).with(:partial => "miq_request/prov_edit",
-                                                            :locals  => {:controller => "vm"}).exactly(1).times
-      expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_adv_searchbox",
-                                                            :locals  => {:nameonly => true}).exactly(1).times
-      expect(controller).not_to receive(:render_to_string).with(:partial => "layouts/adv_search")
-      expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_edit_buttons",
-                                                            :locals  => {:action_url      => "prov_edit",
-                                                                         :record_id       => vm.id,
-                                                                         :no_reset        => true,
-                                                                         :submit_button   => true,
-                                                                         :continue_button => false}).exactly(1).times
+      expect(controller).to receive(:render_to_string).with({:partial => "layouts/breadcrumbs"}).exactly(1).times
+      expect(controller).to receive(:render_to_string).with({:partial => "miq_request/prov_edit",
+                                                            :locals  => {:controller => "vm"}}).exactly(1).times
+      expect(controller).to receive(:render_to_string).with({:partial => "layouts/x_adv_searchbox",
+                                                            :locals  => {:nameonly => true}}).exactly(1).times
+      expect(controller).not_to receive(:render_to_string).with({:partial => "layouts/adv_search"})
+      expect(controller).to receive(:render_to_string).with({
+                                                              :partial => "layouts/x_edit_buttons",
+                                                              :locals  => {:action_url      => "prov_edit",
+                                                                           :record_id       => vm.id,
+                                                                           :no_reset        => true,
+                                                                           :submit_button   => true,
+                                                                           :continue_button => false}
+                                                            }).exactly(1).times
       controller.send(:replace_right_cell, :action => 'migrate', :presenter => presenter)
       expect(presenter[:update_partials]).to have_key(:form_buttons_div)
     end

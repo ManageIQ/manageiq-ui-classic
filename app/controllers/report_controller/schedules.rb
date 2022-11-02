@@ -231,8 +231,8 @@ module ReportController::Schedules
         self.x_node = "msc-#{schedule.id}"
         replace_right_cell(:replace_trees => [:schedules])
       else
-        schedule.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        schedule.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
         drop_breadcrumb(:name => "Edit Schedule", :url => "/miq_schedule/edit")

@@ -41,6 +41,7 @@ describe EmsCloudHelper::TextualSummary do
       cloud_tenants
       flavors
       security_groups
+      placement_groups
       instances
       images
       cloud_volumes

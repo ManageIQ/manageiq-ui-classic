@@ -5,6 +5,8 @@ export const CellElements = {
   icon: 'icon',
   image: 'image',
   text: 'text',
+  textinput: 'is_textinput',
+  toggle: 'is_toggle',
 };
 
 /** Click events in a cell.  */
@@ -36,6 +38,8 @@ export const isNumber = (data) => typeof (data) === 'number';
 export const isNull = (data) => (data === null);
 export const hasImage = (keys, data) => keys.includes(CellElements.image) && data.image && data.image.length > 0;
 export const hasButton = (keys) => keys.includes(CellElements.button);
+export const hasTextInput = (keys) => keys.includes(CellElements.textinput);
+export const hasToggle = (keys) => keys.includes(CellElements.toggle);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');
 

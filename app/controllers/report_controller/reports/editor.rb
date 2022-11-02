@@ -96,8 +96,8 @@ module ReportController::Reports::Editor
         end
         replace_right_cell(:replace_trees => [:reports])
       else
-        rpt.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        rpt.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @in_a_form = true
         session[:changed] = !!@changed
@@ -1641,8 +1641,8 @@ module ReportController::Reports::Editor
     end
 
     unless rpt.valid? # Check the model for errors
-      rpt.errors.each do |field, message|
-        add_flash("#{field.to_s.capitalize} #{message}", :error)
+      rpt.errors.each do |error|
+        add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
       end
     end
     @sb[:miq_tab] = active_tab if flash_errors?

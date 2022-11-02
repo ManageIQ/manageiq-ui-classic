@@ -253,8 +253,8 @@ module ReportController::Menus
         @in_a_form = false
         replace_right_cell(:replace_trees => [:reports])
       else
-        rec.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        rec.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end
         @in_a_form = true
         session[:changed] = @changed

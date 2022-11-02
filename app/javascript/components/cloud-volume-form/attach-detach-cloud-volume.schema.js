@@ -1,15 +1,15 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = (vmOptions, dynamicFields) => ({
+const createSchema = (dropdrownOptions, dropdownLabel, dynamicFields) => ({
   fields: [
     {
       component: componentTypes.SELECT,
-      id: 'vm_id',
-      name: 'vm_id',
-      label: __('Instance'),
+      id: 'dropdown_id',
+      name: 'dropdown_id',
+      label: __(dropdownLabel), // Label value will be "Instance" or "Volume"
       isRequired: true,
       includeEmpty: true,
-      options: vmOptions,
+      options: dropdrownOptions,
     },
     dynamicFields,
   ],

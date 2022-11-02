@@ -7,7 +7,7 @@ import { Button } from 'carbon-components-react';
 import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
+const AttachDetachCloudVolumeForm = ({ recordId, isAttach, dropdownChoices, dropdownLabel }) => {
   const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
@@ -19,9 +19,19 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
     }));
   };
 
+  const dropdownOptions = [];
+  dropdownChoices.forEach((opt) => {
+    dropdownOptions.push({ label: opt[0], value: opt[1].toString() });
+  });
+
   useEffect(() => {
-    if (isLoading && isAttach) {
+    if (isLoading && isAttach && dropdownLabel == "Instance") {
       API.options(`/api/cloud_volumes/${recordId}?option_action=attach`)
+        .then(loadSchema());
+    } else if (isLoading && isAttach && dropdownLabel == "Volume") {
+      // NOTE We assume all Volumes passed in are of the same provider type as the chosen Instance
+      const refVolumeType = dropdownOptions[0]['value'];
+      API.options(`/api/cloud_volumes/${refVolumeType}?option_action=attach`)
         .then(loadSchema());
     } else if (isLoading) {
       setState((state) => ({
@@ -31,29 +41,36 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
     }
   });
 
-  const vmOptions = [];
-  vmChoices.forEach((vm) => {
-    vmOptions.push({ label: vm[0], value: vm[1].toString() });
-  });
-
   const onSubmit = (values) => {
     miqSparkleOn();
+
+    var vm_id, volume_id, redirectUrl;
+    if (dropdownLabel == "Instance") {
+      volume_id = recordId;
+      vm_id = values.dropdown_id;
+      redirectUrl = '/cloud_volume/show_list';
+    } else {
+      volume_id = values.dropdown_id;
+      vm_id = recordId;
+      redirectUrl = '/vm_cloud/explorer'
+    }
+
     const resource = {
-      vm_id: values.vm_id,
+      vm_id: vm_id,
       device: values.device_mountpoint ? values.device_mountpoint : '',
     };
     const payload = {
       action: isAttach ? 'attach' : 'detach',
       resource,
     };
-    const request = API.post(`/api/cloud_volumes/${recordId}`, payload);
+    const request = API.post(`/api/cloud_volumes/${volume_id}`, payload);
 
     request.then(() => {
       const message = sprintf(isAttach
         ? __('Attachment of Cloud Volume has been successfully queued.')
-        : __('Detachment of Cloud Volume of Host has been successfully queued.'));
+        : __('Detachment of Cloud Volume has been successfully queued.'));
 
-      miqRedirectBack(message, 'success', '/cloud_volume/show_list');
+      miqRedirectBack(message, 'success', redirectUrl);
     }).catch(miqSparkleOff);
   };
 
@@ -63,13 +80,19 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
       ? __('Attaching Cloud Volume was cancelled by the user.')
       : __('Detaching Cloud Volume was cancelled by the user.'));
 
-    miqRedirectBack(message, 'warning', '/cloud_volume/show_list');
+    var redirectUrl;
+    if (dropdownLabel == "Instance") {
+      redirectUrl = '/cloud_volume/show_list';
+    } else {
+      redirectUrl = '/vm_cloud/explorer'
+    }
+    miqRedirectBack(message, 'warning', redirectUrl);
   };
 
   return !isLoading && (
     <div className="tasks-form">
       <MiqFormRenderer
-        schema={createSchema(vmOptions, fields)}
+        schema={createSchema(dropdownOptions, dropdownLabel, fields)}
         onSubmit={onSubmit}
         onCancel={onCancel}
         canReset
@@ -82,9 +105,9 @@ const AttachDetachCloudVolumeForm = ({ recordId, isAttach, vmChoices }) => {
 
 const verifyIsDisabled = (values, fields) => {
   let isDisabled = true;
-  if (values.vm_id && (fields[0] && fields[0].isRequired) && values.device_mountpoint) {
+  if (values.dropdown_id && (fields[0] && fields[0].isRequired) && values.device_mountpoint) {
     isDisabled = false;
-  } else if (values.vm_id && !(fields[0] && fields[0].isRequired)) {
+  } else if (values.dropdown_id && !(fields[0] && fields[0].isRequired)) {
     isDisabled = false;
   }
   return isDisabled;
@@ -140,12 +163,14 @@ const FormTemplate = ({
 AttachDetachCloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
   isAttach: PropTypes.bool,
-  vmChoices: PropTypes.arrayOf(PropTypes.any),
+  dropdownChoices: PropTypes.arrayOf(PropTypes.any),
+  dropdownLabel: PropTypes.string,
 };
 AttachDetachCloudVolumeForm.defaultProps = {
   recordId: undefined,
   isAttach: true,
-  vmChoices: [],
+  dropdownChoices: [],
+  dropdownLabel: "",
 };
 
 FormTemplate.propTypes = {

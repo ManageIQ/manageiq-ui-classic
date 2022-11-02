@@ -20,6 +20,13 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
     value: id,
   })));
 
+const loadGroups = (id) => API.get(`/api/physical_storages/${id}?attributes=host_initiator_groups`)
+  .then(({ host_initiator_groups }) => {
+    let groupOptions = host_initiator_groups.map(({ id, name }) => ({ label: name, value: id }));
+    groupOptions.unshift({ label: `<${__('None')}>`, value: '' });
+    return groupOptions;
+  });
+
 const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_candidates`)
   // eslint-disable-next-line camelcase
   .then(({ wwpn_candidates }) => wwpn_candidates.map(({ candidate }) =>
@@ -109,7 +116,27 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             component: componentTypes.TEXT_FIELD,
             label: __('IQN'),
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              {
+                type: validatorTypes.REQUIRED
+              },
+              {
+                type: "pattern",
+                pattern: "iqn\\.(\\d{4}-\\d{2})\\.([^:]+)(:)([^,:\\s']+)",
+                message: __('The IQN should have the format: iqn.yyyy-mm.naming-authority:unique name')
+              },
+              {
+                type: "pattern",
+                pattern: "^[a-z0-9:.-]*$",
+                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), ' +
+                  'periods (.) or colons (:)')
+              },
+              {
+                type: "max-length",
+                threshold: 223,
+                message: __('The IQN should have up to 223 characters.')
+              }
+            ],
           },
         ],
         condition: {
@@ -206,12 +233,38 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             component: componentTypes.TEXT_FIELD,
             label: __('Custom WWPN'),
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              {
+                type: validatorTypes.REQUIRED
+              },
+              {
+                type: "exact-length",
+                threshold: 16,
+                message: __('The length of the WWPN should be exactly 16 characters.')
+              },
+              {
+                type: "pattern",
+                pattern: "^[0-9A-Fa-f]+$",
+                message: __('The WWPN should be a hexadecimal expression (0-9, A-F)')
+              }
+            ],
           },
         ],
         condition: {
           or: [{ when: 'port_type', is: 'FC' }, { when: 'port_type', is: 'NVMeFC' }],
         },
+      },
+      {
+        component: componentTypes.SELECT,
+        id: 'host_initiator_group',
+        name: 'host_initiator_group',
+        label: __('Host Initiator Group:'),
+        isRequired: false,
+        // includeEmpty: true,
+        validate: [{ type: validatorTypes.REQUIRED }],
+        loadOptions: () => (storageId ? loadGroups(storageId) : Promise.resolve([])),
+        isSearchable: true,
+        condition: { and: [{ when: 'physical_storage_id', isNotEmpty: true }, { when: 'port_type', isNotEmpty: true }] },
       },
     ],
   });

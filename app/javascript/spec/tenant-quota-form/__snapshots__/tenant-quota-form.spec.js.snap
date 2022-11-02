@@ -1,0 +1,3490 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tenant Quota Form Component should render the manage quotas form for a tenant no quotas defined 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <TenantQuotaForm
+    recordId="1"
+  >
+    <div
+      className="tenant-quota-data-table"
+    >
+      <MiqDataTable
+        gridChecks={Array []}
+        headers={
+          Array [
+            Object {
+              "header": "Enforced",
+              "key": "Enforced",
+            },
+            Object {
+              "header": "Description",
+              "key": "Description",
+            },
+            Object {
+              "header": "Value",
+              "key": "Value",
+            },
+            Object {
+              "header": "Units",
+              "key": "Units",
+            },
+          ]
+        }
+        mode=""
+        onCellClick={[Function]}
+        pageOptions={
+          Object {
+            "page": 1,
+            "pageSize": 20,
+            "pageSizes": Array [
+              5,
+              10,
+              20,
+              50,
+              100,
+              200,
+            ],
+            "totalItems": 10,
+          }
+        }
+        rowCheckBox={false}
+        rows={
+          Array [
+            Object {
+              "Description": Object {
+                "text": "Testing Testing 123",
+              },
+              "Enforced": Object {
+                "alt": "Enforce a Value",
+                "is_toggle": true,
+                "ontoggle": [Function],
+                "text": null,
+                "title": "Enforce a Value",
+                "toggled": false,
+              },
+              "Units": Object {
+                "text": "Count",
+              },
+              "Value": Object {
+                "className": "quota-table-input",
+                "invalid": false,
+                "invalidText": "Value must be a positive integer",
+                "is_textinput": true,
+                "onchange": [Function],
+                "placeholder": "Not Enforced",
+                "readonly": true,
+                "text": null,
+                "type": "number",
+                "value": "",
+              },
+              "id": "0",
+            },
+            Object {
+              "Description": Object {
+                "text": "This is a Test",
+              },
+              "Enforced": Object {
+                "alt": "Enforce a Value",
+                "is_toggle": true,
+                "ontoggle": [Function],
+                "text": null,
+                "title": "Enforce a Value",
+                "toggled": false,
+              },
+              "Units": Object {
+                "text": "GB",
+              },
+              "Value": Object {
+                "className": "quota-table-input",
+                "invalid": false,
+                "invalidText": "Value must be a positive number",
+                "is_textinput": true,
+                "onchange": [Function],
+                "placeholder": "Not Enforced",
+                "readonly": true,
+                "text": null,
+                "type": "number",
+                "value": "",
+              },
+              "id": "1",
+            },
+          ]
+        }
+        showPagination={false}
+        sortable={false}
+      >
+        <div
+          className="miq-data-table"
+        >
+          <DataTable
+            filterRows={[Function]}
+            headers={
+              Array [
+                Object {
+                  "header": "Enforced",
+                  "key": "Enforced",
+                },
+                Object {
+                  "header": "Description",
+                  "key": "Description",
+                },
+                Object {
+                  "header": "Value",
+                  "key": "Value",
+                },
+                Object {
+                  "header": "Units",
+                  "key": "Units",
+                },
+              ]
+            }
+            isSortable={false}
+            locale="en"
+            overflowMenuOnHover={true}
+            rows={
+              Array [
+                Object {
+                  "Description": Object {
+                    "text": "Testing Testing 123",
+                  },
+                  "Enforced": Object {
+                    "alt": "Enforce a Value",
+                    "is_toggle": true,
+                    "ontoggle": [Function],
+                    "text": null,
+                    "title": "Enforce a Value",
+                    "toggled": false,
+                  },
+                  "Units": Object {
+                    "text": "Count",
+                  },
+                  "Value": Object {
+                    "className": "quota-table-input",
+                    "invalid": false,
+                    "invalidText": "Value must be a positive integer",
+                    "is_textinput": true,
+                    "onchange": [Function],
+                    "placeholder": "Not Enforced",
+                    "readonly": true,
+                    "text": null,
+                    "type": "number",
+                    "value": "",
+                  },
+                  "id": "0",
+                },
+                Object {
+                  "Description": Object {
+                    "text": "This is a Test",
+                  },
+                  "Enforced": Object {
+                    "alt": "Enforce a Value",
+                    "is_toggle": true,
+                    "ontoggle": [Function],
+                    "text": null,
+                    "title": "Enforce a Value",
+                    "toggled": false,
+                  },
+                  "Units": Object {
+                    "text": "GB",
+                  },
+                  "Value": Object {
+                    "className": "quota-table-input",
+                    "invalid": false,
+                    "invalidText": "Value must be a positive number",
+                    "is_textinput": true,
+                    "onchange": [Function],
+                    "placeholder": "Not Enforced",
+                    "readonly": true,
+                    "text": null,
+                    "type": "number",
+                    "value": "",
+                  },
+                  "id": "1",
+                },
+              ]
+            }
+            size="normal"
+            sortDirection="ASC"
+            sortRow={[Function]}
+            translateWithId={[Function]}
+          >
+            <Table
+              isSortable={false}
+              overflowMenuOnHover={true}
+              size="normal"
+            >
+              <div
+                className="bx--data-table-content"
+              >
+                <table
+                  className="bx--data-table bx--data-table--normal bx--data-table--no-border"
+                >
+                  <TableHead>
+                    <thead>
+                      <TableRow>
+                        <tr>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Enforced"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Enforced
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Description"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Description
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Value"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Value
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Units"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Units
+                              </div>
+                            </th>
+                          </TableHeader>
+                        </tr>
+                      </TableRow>
+                    </thead>
+                  </TableHead>
+                  <TableBody
+                    aria-live="polite"
+                  >
+                    <tbody
+                      aria-live="polite"
+                    >
+                      <TableRow
+                        ariaLabel="Expand current row"
+                        className=""
+                        disabled={false}
+                        isExpanded={false}
+                        isSelected={false}
+                        key="0"
+                        onExpand={[Function]}
+                        onKeyPress={[Function]}
+                        tabIndex="0"
+                        title=""
+                      >
+                        <tr
+                          disabled={false}
+                          onKeyPress={[Function]}
+                          tabIndex="0"
+                          title=""
+                        >
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "alt": "Enforce a Value",
+                                  "is_toggle": true,
+                                  "ontoggle": [Function],
+                                  "text": null,
+                                  "title": "Enforce a Value",
+                                  "toggled": false,
+                                },
+                                "errors": null,
+                                "id": "0:Enforced",
+                                "info": Object {
+                                  "header": "Enforced",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="0-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Enforced"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <FeatureToggle(Toggle)
+                                    id="0:Enforced"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onToggle={[Function]}
+                                    tabIndex={0}
+                                    toggled={false}
+                                  >
+                                    <Toggle
+                                      aria-label="Toggle"
+                                      defaultToggled={false}
+                                      id="0:Enforced"
+                                      labelA="Off"
+                                      labelB="On"
+                                      labelText={
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        >
+                                          
+                                        </span>
+                                      }
+                                      onToggle={[Function]}
+                                      tabIndex={0}
+                                      toggled={false}
+                                    >
+                                      <div
+                                        className="bx--form-item"
+                                      >
+                                        <input
+                                          aria-label={null}
+                                          checked={false}
+                                          className="bx--toggle-input"
+                                          id="0:Enforced"
+                                          onChange={[Function]}
+                                          onKeyUp={[Function]}
+                                          tabIndex={0}
+                                          type="checkbox"
+                                        />
+                                        <label
+                                          aria-label="Toggle"
+                                          className="bx--toggle-input__label"
+                                          htmlFor="0:Enforced"
+                                        >
+                                          <span
+                                            className="bx--front-line"
+                                            title=""
+                                          />
+                                          <span
+                                            className="bx--toggle__switch"
+                                          >
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--off"
+                                            >
+                                              Off
+                                            </span>
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--on"
+                                            >
+                                              On
+                                            </span>
+                                          </span>
+                                        </label>
+                                      </div>
+                                    </Toggle>
+                                  </FeatureToggle(Toggle)>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "Testing Testing 123",
+                                },
+                                "errors": null,
+                                "id": "0:Description",
+                                "info": Object {
+                                  "header": "Description",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Testing Testing 123",
+                              }
+                            }
+                            key="1-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Description"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="Testing Testing 123"
+                                  >
+                                    Testing Testing 123
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "className": "quota-table-input",
+                                  "invalid": false,
+                                  "invalidText": "Value must be a positive integer",
+                                  "is_textinput": true,
+                                  "onchange": [Function],
+                                  "placeholder": "Not Enforced",
+                                  "readonly": true,
+                                  "text": null,
+                                  "type": "number",
+                                  "value": "",
+                                },
+                                "errors": null,
+                                "id": "0:Value",
+                                "info": Object {
+                                  "header": "Value",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="2-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Value"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <TextInput
+                                    className="quota-table-input"
+                                    defaultValue=""
+                                    id="0:Value"
+                                    invalid={false}
+                                    invalidText="Value must be a positive integer"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onChange={[Function]}
+                                    placeholder="Not Enforced"
+                                    readOnly={true}
+                                    tabIndex={0}
+                                    type="number"
+                                  >
+                                    <div
+                                      className="bx--form-item bx--text-input-wrapper bx--text-input-wrapper--readonly"
+                                    >
+                                      <label
+                                        className="bx--label"
+                                        htmlFor="0:Value"
+                                      >
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        />
+                                      </label>
+                                      <div
+                                        className="bx--text-input__field-outer-wrapper"
+                                      >
+                                        <div
+                                          className="bx--text-input__field-wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <ForwardRef(EditOff16)
+                                            className="bx--text-input__readonly-icon"
+                                          >
+                                            <Icon
+                                              className="bx--text-input__readonly-icon"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 32 32"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--text-input__readonly-icon"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M30 28.6L3.4 2 2 3.4l10.1 10.1L4 21.6V28h6.4l8.1-8.1L28.6 30 30 28.6zM9.6 26H6v-3.6l7.5-7.5 3.6 3.6L9.6 26zM29.4 6.2L29.4 6.2l-3.6-3.6c-.8-.8-2-.8-2.8 0l0 0 0 0-8 8 1.4 1.4L20 8.4l3.6 3.6L20 15.6l1.4 1.4 8-8C30.2 8.2 30.2 7 29.4 6.2L29.4 6.2zM25 10.6L21.4 7l3-3L28 7.6 25 10.6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(EditOff16)>
+                                          <input
+                                            className="bx--text-input quota-table-input bx--text-input--md"
+                                            defaultValue=""
+                                            disabled={false}
+                                            id="0:Value"
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            placeholder="Not Enforced"
+                                            readOnly={true}
+                                            tabIndex={0}
+                                            title="Not Enforced"
+                                            type="number"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </TextInput>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "Count",
+                                },
+                                "errors": null,
+                                "id": "0:Units",
+                                "info": Object {
+                                  "header": "Units",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Count",
+                              }
+                            }
+                            key="3-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Units"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="Count"
+                                  >
+                                    Count
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                        </tr>
+                      </TableRow>
+                      <TableRow
+                        ariaLabel="Expand current row"
+                        className=""
+                        disabled={false}
+                        isExpanded={false}
+                        isSelected={false}
+                        key="1"
+                        onExpand={[Function]}
+                        onKeyPress={[Function]}
+                        tabIndex="1"
+                        title=""
+                      >
+                        <tr
+                          disabled={false}
+                          onKeyPress={[Function]}
+                          tabIndex="1"
+                          title=""
+                        >
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "alt": "Enforce a Value",
+                                  "is_toggle": true,
+                                  "ontoggle": [Function],
+                                  "text": null,
+                                  "title": "Enforce a Value",
+                                  "toggled": false,
+                                },
+                                "errors": null,
+                                "id": "1:Enforced",
+                                "info": Object {
+                                  "header": "Enforced",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="0-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Enforced"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <FeatureToggle(Toggle)
+                                    id="1:Enforced"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onToggle={[Function]}
+                                    tabIndex={0}
+                                    toggled={false}
+                                  >
+                                    <Toggle
+                                      aria-label="Toggle"
+                                      defaultToggled={false}
+                                      id="1:Enforced"
+                                      labelA="Off"
+                                      labelB="On"
+                                      labelText={
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        >
+                                          
+                                        </span>
+                                      }
+                                      onToggle={[Function]}
+                                      tabIndex={0}
+                                      toggled={false}
+                                    >
+                                      <div
+                                        className="bx--form-item"
+                                      >
+                                        <input
+                                          aria-label={null}
+                                          checked={false}
+                                          className="bx--toggle-input"
+                                          id="1:Enforced"
+                                          onChange={[Function]}
+                                          onKeyUp={[Function]}
+                                          tabIndex={0}
+                                          type="checkbox"
+                                        />
+                                        <label
+                                          aria-label="Toggle"
+                                          className="bx--toggle-input__label"
+                                          htmlFor="1:Enforced"
+                                        >
+                                          <span
+                                            className="bx--front-line"
+                                            title=""
+                                          />
+                                          <span
+                                            className="bx--toggle__switch"
+                                          >
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--off"
+                                            >
+                                              Off
+                                            </span>
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--on"
+                                            >
+                                              On
+                                            </span>
+                                          </span>
+                                        </label>
+                                      </div>
+                                    </Toggle>
+                                  </FeatureToggle(Toggle)>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "This is a Test",
+                                },
+                                "errors": null,
+                                "id": "1:Description",
+                                "info": Object {
+                                  "header": "Description",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "This is a Test",
+                              }
+                            }
+                            key="1-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Description"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="This is a Test"
+                                  >
+                                    This is a Test
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "className": "quota-table-input",
+                                  "invalid": false,
+                                  "invalidText": "Value must be a positive number",
+                                  "is_textinput": true,
+                                  "onchange": [Function],
+                                  "placeholder": "Not Enforced",
+                                  "readonly": true,
+                                  "text": null,
+                                  "type": "number",
+                                  "value": "",
+                                },
+                                "errors": null,
+                                "id": "1:Value",
+                                "info": Object {
+                                  "header": "Value",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="2-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Value"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <TextInput
+                                    className="quota-table-input"
+                                    defaultValue=""
+                                    id="1:Value"
+                                    invalid={false}
+                                    invalidText="Value must be a positive number"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onChange={[Function]}
+                                    placeholder="Not Enforced"
+                                    readOnly={true}
+                                    tabIndex={0}
+                                    type="number"
+                                  >
+                                    <div
+                                      className="bx--form-item bx--text-input-wrapper bx--text-input-wrapper--readonly"
+                                    >
+                                      <label
+                                        className="bx--label"
+                                        htmlFor="1:Value"
+                                      >
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        />
+                                      </label>
+                                      <div
+                                        className="bx--text-input__field-outer-wrapper"
+                                      >
+                                        <div
+                                          className="bx--text-input__field-wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <ForwardRef(EditOff16)
+                                            className="bx--text-input__readonly-icon"
+                                          >
+                                            <Icon
+                                              className="bx--text-input__readonly-icon"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 32 32"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--text-input__readonly-icon"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M30 28.6L3.4 2 2 3.4l10.1 10.1L4 21.6V28h6.4l8.1-8.1L28.6 30 30 28.6zM9.6 26H6v-3.6l7.5-7.5 3.6 3.6L9.6 26zM29.4 6.2L29.4 6.2l-3.6-3.6c-.8-.8-2-.8-2.8 0l0 0 0 0-8 8 1.4 1.4L20 8.4l3.6 3.6L20 15.6l1.4 1.4 8-8C30.2 8.2 30.2 7 29.4 6.2L29.4 6.2zM25 10.6L21.4 7l3-3L28 7.6 25 10.6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(EditOff16)>
+                                          <input
+                                            className="bx--text-input quota-table-input bx--text-input--md"
+                                            defaultValue=""
+                                            disabled={false}
+                                            id="1:Value"
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            placeholder="Not Enforced"
+                                            readOnly={true}
+                                            tabIndex={0}
+                                            title="Not Enforced"
+                                            type="number"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </TextInput>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "GB",
+                                },
+                                "errors": null,
+                                "id": "1:Units",
+                                "info": Object {
+                                  "header": "Units",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "GB",
+                              }
+                            }
+                            key="3-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Units"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="GB"
+                                  >
+                                    GB
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                        </tr>
+                      </TableRow>
+                    </tbody>
+                  </TableBody>
+                </table>
+              </div>
+            </Table>
+          </DataTable>
+        </div>
+      </MiqDataTable>
+      <div
+        className="bx--btn-set"
+      >
+        <Button
+          disabled={true}
+          kind="primary"
+          onClick={[Function]}
+          tabIndex={0}
+          type="submit"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--primary bx--btn--disabled"
+            disabled={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            tabIndex={0}
+            type="submit"
+          >
+            Save
+          </button>
+        </Button>
+        <Button
+          disabled={true}
+          kind="secondary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginLeft": "10px",
+            }
+          }
+          tabIndex={0}
+          type="reset"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--secondary bx--btn--disabled"
+            disabled={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            style={
+              Object {
+                "marginLeft": "10px",
+              }
+            }
+            tabIndex={0}
+            type="reset"
+          >
+            Reset
+          </button>
+        </Button>
+        <Button
+          kind="secondary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginLeft": "10px",
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--secondary"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            style={
+              Object {
+                "marginLeft": "10px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Cancel
+          </button>
+        </Button>
+      </div>
+    </div>
+  </TenantQuotaForm>
+</Provider>
+`;
+
+exports[`Tenant Quota Form Component should render the manage quotas form for a tenant with 1 quota already defined 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <TenantQuotaForm
+    recordId="1"
+  >
+    <div
+      className="tenant-quota-data-table"
+    >
+      <MiqDataTable
+        gridChecks={Array []}
+        headers={
+          Array [
+            Object {
+              "header": "Enforced",
+              "key": "Enforced",
+            },
+            Object {
+              "header": "Description",
+              "key": "Description",
+            },
+            Object {
+              "header": "Value",
+              "key": "Value",
+            },
+            Object {
+              "header": "Units",
+              "key": "Units",
+            },
+          ]
+        }
+        mode=""
+        onCellClick={[Function]}
+        pageOptions={
+          Object {
+            "page": 1,
+            "pageSize": 20,
+            "pageSizes": Array [
+              5,
+              10,
+              20,
+              50,
+              100,
+              200,
+            ],
+            "totalItems": 10,
+          }
+        }
+        rowCheckBox={false}
+        rows={
+          Array [
+            Object {
+              "Description": Object {
+                "text": "Testing Testing 123",
+              },
+              "Enforced": Object {
+                "alt": "Enforce a Value",
+                "is_toggle": true,
+                "ontoggle": [Function],
+                "text": null,
+                "title": "Enforce a Value",
+                "toggled": true,
+              },
+              "Units": Object {
+                "text": "Count",
+              },
+              "Value": Object {
+                "className": "quota-table-input",
+                "invalid": false,
+                "invalidText": "Value must be a positive integer",
+                "is_textinput": true,
+                "onchange": [Function],
+                "placeholder": "Not Enforced",
+                "readonly": false,
+                "text": null,
+                "type": "number",
+                "value": "3",
+              },
+              "id": "0",
+            },
+            Object {
+              "Description": Object {
+                "text": "This is a Test",
+              },
+              "Enforced": Object {
+                "alt": "Enforce a Value",
+                "is_toggle": true,
+                "ontoggle": [Function],
+                "text": null,
+                "title": "Enforce a Value",
+                "toggled": false,
+              },
+              "Units": Object {
+                "text": "GB",
+              },
+              "Value": Object {
+                "className": "quota-table-input",
+                "invalid": false,
+                "invalidText": "Value must be a positive number",
+                "is_textinput": true,
+                "onchange": [Function],
+                "placeholder": "Not Enforced",
+                "readonly": true,
+                "text": null,
+                "type": "number",
+                "value": "",
+              },
+              "id": "1",
+            },
+          ]
+        }
+        showPagination={false}
+        sortable={false}
+      >
+        <div
+          className="miq-data-table"
+        >
+          <DataTable
+            filterRows={[Function]}
+            headers={
+              Array [
+                Object {
+                  "header": "Enforced",
+                  "key": "Enforced",
+                },
+                Object {
+                  "header": "Description",
+                  "key": "Description",
+                },
+                Object {
+                  "header": "Value",
+                  "key": "Value",
+                },
+                Object {
+                  "header": "Units",
+                  "key": "Units",
+                },
+              ]
+            }
+            isSortable={false}
+            locale="en"
+            overflowMenuOnHover={true}
+            rows={
+              Array [
+                Object {
+                  "Description": Object {
+                    "text": "Testing Testing 123",
+                  },
+                  "Enforced": Object {
+                    "alt": "Enforce a Value",
+                    "is_toggle": true,
+                    "ontoggle": [Function],
+                    "text": null,
+                    "title": "Enforce a Value",
+                    "toggled": true,
+                  },
+                  "Units": Object {
+                    "text": "Count",
+                  },
+                  "Value": Object {
+                    "className": "quota-table-input",
+                    "invalid": false,
+                    "invalidText": "Value must be a positive integer",
+                    "is_textinput": true,
+                    "onchange": [Function],
+                    "placeholder": "Not Enforced",
+                    "readonly": false,
+                    "text": null,
+                    "type": "number",
+                    "value": "3",
+                  },
+                  "id": "0",
+                },
+                Object {
+                  "Description": Object {
+                    "text": "This is a Test",
+                  },
+                  "Enforced": Object {
+                    "alt": "Enforce a Value",
+                    "is_toggle": true,
+                    "ontoggle": [Function],
+                    "text": null,
+                    "title": "Enforce a Value",
+                    "toggled": false,
+                  },
+                  "Units": Object {
+                    "text": "GB",
+                  },
+                  "Value": Object {
+                    "className": "quota-table-input",
+                    "invalid": false,
+                    "invalidText": "Value must be a positive number",
+                    "is_textinput": true,
+                    "onchange": [Function],
+                    "placeholder": "Not Enforced",
+                    "readonly": true,
+                    "text": null,
+                    "type": "number",
+                    "value": "",
+                  },
+                  "id": "1",
+                },
+              ]
+            }
+            size="normal"
+            sortDirection="ASC"
+            sortRow={[Function]}
+            translateWithId={[Function]}
+          >
+            <Table
+              isSortable={false}
+              overflowMenuOnHover={true}
+              size="normal"
+            >
+              <div
+                className="bx--data-table-content"
+              >
+                <table
+                  className="bx--data-table bx--data-table--normal bx--data-table--no-border"
+                >
+                  <TableHead>
+                    <thead>
+                      <TableRow>
+                        <tr>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Enforced"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Enforced
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Description"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Description
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Value"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Value
+                              </div>
+                            </th>
+                          </TableHeader>
+                          <TableHeader
+                            isSortHeader={false}
+                            isSortable={false}
+                            key="Units"
+                            onClick={[Function]}
+                            scope="col"
+                            sortDirection="NONE"
+                            translateWithId={[Function]}
+                          >
+                            <th
+                              scope="col"
+                            >
+                              <div
+                                className="bx--table-header-label"
+                              >
+                                Units
+                              </div>
+                            </th>
+                          </TableHeader>
+                        </tr>
+                      </TableRow>
+                    </thead>
+                  </TableHead>
+                  <TableBody
+                    aria-live="polite"
+                  >
+                    <tbody
+                      aria-live="polite"
+                    >
+                      <TableRow
+                        ariaLabel="Expand current row"
+                        className=""
+                        disabled={false}
+                        isExpanded={false}
+                        isSelected={false}
+                        key="0"
+                        onExpand={[Function]}
+                        onKeyPress={[Function]}
+                        tabIndex="0"
+                        title=""
+                      >
+                        <tr
+                          disabled={false}
+                          onKeyPress={[Function]}
+                          tabIndex="0"
+                          title=""
+                        >
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "alt": "Enforce a Value",
+                                  "is_toggle": true,
+                                  "ontoggle": [Function],
+                                  "text": null,
+                                  "title": "Enforce a Value",
+                                  "toggled": true,
+                                },
+                                "errors": null,
+                                "id": "0:Enforced",
+                                "info": Object {
+                                  "header": "Enforced",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="0-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": true,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": false,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "3",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Enforced"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <FeatureToggle(Toggle)
+                                    id="0:Enforced"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onToggle={[Function]}
+                                    tabIndex={0}
+                                    toggled={true}
+                                  >
+                                    <Toggle
+                                      aria-label="Toggle"
+                                      defaultToggled={false}
+                                      id="0:Enforced"
+                                      labelA="Off"
+                                      labelB="On"
+                                      labelText={
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        >
+                                          
+                                        </span>
+                                      }
+                                      onToggle={[Function]}
+                                      tabIndex={0}
+                                      toggled={true}
+                                    >
+                                      <div
+                                        className="bx--form-item"
+                                      >
+                                        <input
+                                          aria-label={null}
+                                          checked={true}
+                                          className="bx--toggle-input"
+                                          id="0:Enforced"
+                                          onChange={[Function]}
+                                          onKeyUp={[Function]}
+                                          tabIndex={0}
+                                          type="checkbox"
+                                        />
+                                        <label
+                                          aria-label="Toggle"
+                                          className="bx--toggle-input__label"
+                                          htmlFor="0:Enforced"
+                                        >
+                                          <span
+                                            className="bx--front-line"
+                                            title=""
+                                          />
+                                          <span
+                                            className="bx--toggle__switch"
+                                          >
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--off"
+                                            >
+                                              Off
+                                            </span>
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--on"
+                                            >
+                                              On
+                                            </span>
+                                          </span>
+                                        </label>
+                                      </div>
+                                    </Toggle>
+                                  </FeatureToggle(Toggle)>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "Testing Testing 123",
+                                },
+                                "errors": null,
+                                "id": "0:Description",
+                                "info": Object {
+                                  "header": "Description",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Testing Testing 123",
+                              }
+                            }
+                            key="1-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": true,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": false,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "3",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Description"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="Testing Testing 123"
+                                  >
+                                    Testing Testing 123
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "className": "quota-table-input",
+                                  "invalid": false,
+                                  "invalidText": "Value must be a positive integer",
+                                  "is_textinput": true,
+                                  "onchange": [Function],
+                                  "placeholder": "Not Enforced",
+                                  "readonly": false,
+                                  "text": null,
+                                  "type": "number",
+                                  "value": "3",
+                                },
+                                "errors": null,
+                                "id": "0:Value",
+                                "info": Object {
+                                  "header": "Value",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="2-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": true,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": false,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "3",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Value"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <TextInput
+                                    className="quota-table-input"
+                                    defaultValue="3"
+                                    id="0:Value"
+                                    invalid={false}
+                                    invalidText="Value must be a positive integer"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onChange={[Function]}
+                                    placeholder="Not Enforced"
+                                    readOnly={false}
+                                    tabIndex={0}
+                                    type="number"
+                                  >
+                                    <div
+                                      className="bx--form-item bx--text-input-wrapper"
+                                    >
+                                      <label
+                                        className="bx--label"
+                                        htmlFor="0:Value"
+                                      >
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        />
+                                      </label>
+                                      <div
+                                        className="bx--text-input__field-outer-wrapper"
+                                      >
+                                        <div
+                                          className="bx--text-input__field-wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <input
+                                            className="bx--text-input quota-table-input bx--text-input--md"
+                                            defaultValue="3"
+                                            disabled={false}
+                                            id="0:Value"
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            placeholder="Not Enforced"
+                                            readOnly={false}
+                                            tabIndex={0}
+                                            title="Not Enforced"
+                                            type="number"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </TextInput>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "Count",
+                                },
+                                "errors": null,
+                                "id": "0:Units",
+                                "info": Object {
+                                  "header": "Units",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Count",
+                              }
+                            }
+                            key="3-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": true,
+                                    },
+                                    "errors": null,
+                                    "id": "0:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Testing Testing 123",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Testing Testing 123",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive integer",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": false,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "3",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "Count",
+                                    },
+                                    "errors": null,
+                                    "id": "0:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "Count",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "0",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="0:Units"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="Count"
+                                  >
+                                    Count
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                        </tr>
+                      </TableRow>
+                      <TableRow
+                        ariaLabel="Expand current row"
+                        className=""
+                        disabled={false}
+                        isExpanded={false}
+                        isSelected={false}
+                        key="1"
+                        onExpand={[Function]}
+                        onKeyPress={[Function]}
+                        tabIndex="1"
+                        title=""
+                      >
+                        <tr
+                          disabled={false}
+                          onKeyPress={[Function]}
+                          tabIndex="1"
+                          title=""
+                        >
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "alt": "Enforce a Value",
+                                  "is_toggle": true,
+                                  "ontoggle": [Function],
+                                  "text": null,
+                                  "title": "Enforce a Value",
+                                  "toggled": false,
+                                },
+                                "errors": null,
+                                "id": "1:Enforced",
+                                "info": Object {
+                                  "header": "Enforced",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="0-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Enforced"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <FeatureToggle(Toggle)
+                                    id="1:Enforced"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onToggle={[Function]}
+                                    tabIndex={0}
+                                    toggled={false}
+                                  >
+                                    <Toggle
+                                      aria-label="Toggle"
+                                      defaultToggled={false}
+                                      id="1:Enforced"
+                                      labelA="Off"
+                                      labelB="On"
+                                      labelText={
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        >
+                                          
+                                        </span>
+                                      }
+                                      onToggle={[Function]}
+                                      tabIndex={0}
+                                      toggled={false}
+                                    >
+                                      <div
+                                        className="bx--form-item"
+                                      >
+                                        <input
+                                          aria-label={null}
+                                          checked={false}
+                                          className="bx--toggle-input"
+                                          id="1:Enforced"
+                                          onChange={[Function]}
+                                          onKeyUp={[Function]}
+                                          tabIndex={0}
+                                          type="checkbox"
+                                        />
+                                        <label
+                                          aria-label="Toggle"
+                                          className="bx--toggle-input__label"
+                                          htmlFor="1:Enforced"
+                                        >
+                                          <span
+                                            className="bx--front-line"
+                                            title=""
+                                          />
+                                          <span
+                                            className="bx--toggle__switch"
+                                          >
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--off"
+                                            >
+                                              Off
+                                            </span>
+                                            <span
+                                              aria-hidden="true"
+                                              className="bx--toggle__text--on"
+                                            >
+                                              On
+                                            </span>
+                                          </span>
+                                        </label>
+                                      </div>
+                                    </Toggle>
+                                  </FeatureToggle(Toggle)>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "This is a Test",
+                                },
+                                "errors": null,
+                                "id": "1:Description",
+                                "info": Object {
+                                  "header": "Description",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "This is a Test",
+                              }
+                            }
+                            key="1-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Description"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="This is a Test"
+                                  >
+                                    This is a Test
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "className": "quota-table-input",
+                                  "invalid": false,
+                                  "invalidText": "Value must be a positive number",
+                                  "is_textinput": true,
+                                  "onchange": [Function],
+                                  "placeholder": "Not Enforced",
+                                  "readonly": true,
+                                  "text": null,
+                                  "type": "number",
+                                  "value": "",
+                                },
+                                "errors": null,
+                                "id": "1:Value",
+                                "info": Object {
+                                  "header": "Value",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "",
+                              }
+                            }
+                            key="2-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Value"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <TextInput
+                                    className="quota-table-input"
+                                    defaultValue=""
+                                    id="1:Value"
+                                    invalid={false}
+                                    invalidText="Value must be a positive number"
+                                    labelText={
+                                      <span
+                                        className="bx--front-line"
+                                        title=""
+                                      >
+                                        
+                                      </span>
+                                    }
+                                    onChange={[Function]}
+                                    placeholder="Not Enforced"
+                                    readOnly={true}
+                                    tabIndex={0}
+                                    type="number"
+                                  >
+                                    <div
+                                      className="bx--form-item bx--text-input-wrapper bx--text-input-wrapper--readonly"
+                                    >
+                                      <label
+                                        className="bx--label"
+                                        htmlFor="1:Value"
+                                      >
+                                        <span
+                                          className="bx--front-line"
+                                          title=""
+                                        />
+                                      </label>
+                                      <div
+                                        className="bx--text-input__field-outer-wrapper"
+                                      >
+                                        <div
+                                          className="bx--text-input__field-wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <ForwardRef(EditOff16)
+                                            className="bx--text-input__readonly-icon"
+                                          >
+                                            <Icon
+                                              className="bx--text-input__readonly-icon"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 32 32"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--text-input__readonly-icon"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M30 28.6L3.4 2 2 3.4l10.1 10.1L4 21.6V28h6.4l8.1-8.1L28.6 30 30 28.6zM9.6 26H6v-3.6l7.5-7.5 3.6 3.6L9.6 26zM29.4 6.2L29.4 6.2l-3.6-3.6c-.8-.8-2-.8-2.8 0l0 0 0 0-8 8 1.4 1.4L20 8.4l3.6 3.6L20 15.6l1.4 1.4 8-8C30.2 8.2 30.2 7 29.4 6.2L29.4 6.2zM25 10.6L21.4 7l3-3L28 7.6 25 10.6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(EditOff16)>
+                                          <input
+                                            className="bx--text-input quota-table-input bx--text-input--md"
+                                            defaultValue=""
+                                            disabled={false}
+                                            id="1:Value"
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            placeholder="Not Enforced"
+                                            readOnly={true}
+                                            tabIndex={0}
+                                            title="Not Enforced"
+                                            type="number"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </TextInput>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                          <MiqTableCell
+                            cell={
+                              Object {
+                                "data": Object {
+                                  "text": "GB",
+                                },
+                                "errors": null,
+                                "id": "1:Units",
+                                "info": Object {
+                                  "header": "Units",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "GB",
+                              }
+                            }
+                            key="3-cellKey"
+                            onCellClick={[Function]}
+                            row={
+                              Object {
+                                "cells": Array [
+                                  Object {
+                                    "data": Object {
+                                      "alt": "Enforce a Value",
+                                      "is_toggle": true,
+                                      "ontoggle": [Function],
+                                      "text": null,
+                                      "title": "Enforce a Value",
+                                      "toggled": false,
+                                    },
+                                    "errors": null,
+                                    "id": "1:Enforced",
+                                    "info": Object {
+                                      "header": "Enforced",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "This is a Test",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Description",
+                                    "info": Object {
+                                      "header": "Description",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "This is a Test",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "className": "quota-table-input",
+                                      "invalid": false,
+                                      "invalidText": "Value must be a positive number",
+                                      "is_textinput": true,
+                                      "onchange": [Function],
+                                      "placeholder": "Not Enforced",
+                                      "readonly": true,
+                                      "text": null,
+                                      "type": "number",
+                                      "value": "",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Value",
+                                    "info": Object {
+                                      "header": "Value",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "",
+                                  },
+                                  Object {
+                                    "data": Object {
+                                      "text": "GB",
+                                    },
+                                    "errors": null,
+                                    "id": "1:Units",
+                                    "info": Object {
+                                      "header": "Units",
+                                    },
+                                    "isEditable": false,
+                                    "isEditing": false,
+                                    "isValid": true,
+                                    "value": "GB",
+                                  },
+                                ],
+                                "disabled": false,
+                                "id": "1",
+                                "isExpanded": false,
+                                "isSelected": false,
+                              }
+                            }
+                          >
+                            <TableCell
+                              className=""
+                              key="1:Units"
+                              onClick={[Function]}
+                            >
+                              <td
+                                onClick={[Function]}
+                              >
+                                <div
+                                  className="cell"
+                                >
+                                  <span
+                                    className="bx--front-line"
+                                    title="GB"
+                                  >
+                                    GB
+                                  </span>
+                                </div>
+                              </td>
+                            </TableCell>
+                          </MiqTableCell>
+                        </tr>
+                      </TableRow>
+                    </tbody>
+                  </TableBody>
+                </table>
+              </div>
+            </Table>
+          </DataTable>
+        </div>
+      </MiqDataTable>
+      <div
+        className="bx--btn-set"
+      >
+        <Button
+          disabled={true}
+          kind="primary"
+          onClick={[Function]}
+          tabIndex={0}
+          type="submit"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--primary bx--btn--disabled"
+            disabled={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            tabIndex={0}
+            type="submit"
+          >
+            Save
+          </button>
+        </Button>
+        <Button
+          disabled={true}
+          kind="secondary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginLeft": "10px",
+            }
+          }
+          tabIndex={0}
+          type="reset"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--secondary bx--btn--disabled"
+            disabled={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            style={
+              Object {
+                "marginLeft": "10px",
+              }
+            }
+            tabIndex={0}
+            type="reset"
+          >
+            Reset
+          </button>
+        </Button>
+        <Button
+          kind="secondary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginLeft": "10px",
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <button
+            aria-describedby={null}
+            aria-pressed={null}
+            className="bx--btn bx--btn--secondary"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            style={
+              Object {
+                "marginLeft": "10px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Cancel
+          </button>
+        </Button>
+      </div>
+    </div>
+  </TenantQuotaForm>
+</Provider>
+`;
