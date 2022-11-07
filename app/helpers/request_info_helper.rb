@@ -1,9 +1,81 @@
 module RequestInfoHelper
   private
 
+  REQUEST_INFO_TAB_TYPES = {
+    :requester   => N_('Requester'),
+    :purpose     => N_('Purpose'),
+    :catalog     => N_('Catalog'),
+    :environment => N_('Environment'),
+    :properties  => N_('Properties'),
+    :volumes     => N_('Volumes'),
+    :customize   => N_('Customize'),
+    :schedule    => N_('Schedule'),
+    :hardware    => N_('Hardware'),
+    :network     => N_('Network'),
+  }.freeze
+
+  PROV_FIELD_LABLES = {
+    # Catalog
+    :name                         => N_('Name'),
+    :count                        => N_('Count'),
+    :provision_type               => N_('Provision Type'),
+    :linked_clone                 => N_('Linked Clone'),
+    :vm_name                      => N_('Vm Name'),
+    # Environment
+    :instance_name                => N_('Instance Name'),
+    # Hardware
+    :number_of_sockets            => N_('Number of sockets'),
+    :cores_per_socket             => N_('Cores per socket'),
+    :memory_mb                    => N_('Memory mb'),
+    :disk_format                  => N_('Disk format'),
+    :disk_sparsity                => N_('Disk sparsity'),
+    # Network
+    :network                      => N_('Network'),
+    # Properties
+    :choose_automatically         => N_('Choose Automatically'),
+    :cloud_tenant                 => N_('Cloud Tenant'),
+    :availability_zones           => N_('Availability Zones'),
+    :network_selection_method     => N_('Network Selection Method'),
+    :cloud_network                => N_('Cloud Network'),
+    :security_groups              => N_('Security Groups'),
+    :public_ip_address            => N_('Public IP Address'),
+    # Volumes
+    :volume_name                  => N_('Volume Name'),
+    :size_gigabytes               => N_('Size (gigabytes)'),
+    :delete_on_instance_terminate => N_('Delete on Instance Terminate'),
+    # Customize
+    :instance_type                => N_('Instance Type'),
+    :guest_access_key_pair        => N_('Guest Access Key Pair'),
+    :cloudwatch                   => N_('CloudWatch'),
+    :root_password                => N_('Root Password'),
+    :address_mode                 => N_('Address Mode'),
+    :host_name                    => N_('Host Name'),
+    :subnet_mask                  => N_('Subnet Mask'),
+    :gateway                      => N_('Gateway'),
+    :dns_server_list              => N_('DNS Server list'),
+    :dns_suffix_list              => N_('DNS Suffix List"'),
+    :script_name                  => N_('Script Name'),
+    :script_text                  => N_('Script Text'),
+    # Schedule
+    :time_until_retirement        => N_('Time until Retirement'),
+    :retirement_warning           => N_('Retirement Warning'),
+  }.freeze
+
+  def tab_label_key(label)
+    label.gsub(/[^a-zA-Z ]/, "").downcase.tr(' ', '_').to_sym
+  end
+
+  def request_info_tab_label(label)
+    label ? (_(REQUEST_INFO_TAB_TYPES[tab_label_key(label)]) || label) : ""
+  end
+
+  def prov_field_label(label)
+    label ? (_(PROV_FIELD_LABLES[tab_label_key(label)]) || label) : ""
+  end
+
   def provision_tab_configuration(workflow)
     prov_tab_labels = workflow.provisioning_tab_list.map do |dialog|
-      {:name => dialog[:name], :text => dialog[:description]}
+      {:name => dialog[:name], :text => request_info_tab_label(dialog[:description])}
     end
     return prov_tab_labels, workflow.get_dialog_order
   end

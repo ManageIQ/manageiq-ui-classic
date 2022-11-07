@@ -21,6 +21,7 @@
       - keys.each do |key|
         .form-group
           %label.col-md-4.control-label{:valign => "top"}
+            = prov_field_label(workflow.get_field(key, dialog)[:description])
             = _(workflow.get_field(key, dialog)[:description])
             - if @edit && workflow.get_field(key, dialog)[:required] && workflow.get_field(key, dialog)[:display] == :edit
               *

@@ -16,7 +16,7 @@
     - unless field_hash[:values].blank?
       .form-group
         %label.col-md-2.control-label
-          = field_hash[:description]
+          = prov_field_label(field_hash[:description])
           - if @edit && field_hash[:required] && field_hash[:display] == :edit
             *
         .col-md-8
@@ -46,7 +46,7 @@
   - else
     .form-group
       %label.col-md-2.control-label{:valign => "top"}
-        = field_hash[:description]
+        = prov_field_label(field_hash[:description])
         - len =  field_hash[:max_length] ? field_hash[:max_length] : ViewHelper::MAX_NAME_LEN
         - if field_hash[:help]
           %a{:id               => "popover-#{field_hash.object_id}",
