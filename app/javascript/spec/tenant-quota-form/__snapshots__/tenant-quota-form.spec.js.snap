@@ -72,6 +72,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               "Enforced": Object {
                 "alt": "Enforce a Value",
                 "is_toggle": true,
+                "labelA": "Off",
+                "labelB": "On",
                 "ontoggle": [Function],
                 "text": null,
                 "title": "Enforce a Value",
@@ -101,6 +103,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               "Enforced": Object {
                 "alt": "Enforce a Value",
                 "is_toggle": true,
+                "labelA": "Off",
+                "labelB": "On",
                 "ontoggle": [Function],
                 "text": null,
                 "title": "Enforce a Value",
@@ -165,6 +169,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                   "Enforced": Object {
                     "alt": "Enforce a Value",
                     "is_toggle": true,
+                    "labelA": "Off",
+                    "labelB": "On",
                     "ontoggle": [Function],
                     "text": null,
                     "title": "Enforce a Value",
@@ -194,6 +200,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                   "Enforced": Object {
                     "alt": "Enforce a Value",
                     "is_toggle": true,
+                    "labelA": "Off",
+                    "labelB": "On",
                     "ontoggle": [Function],
                     "text": null,
                     "title": "Enforce a Value",
@@ -348,6 +356,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "data": Object {
                                   "alt": "Enforce a Value",
                                   "is_toggle": true,
+                                  "labelA": "Off",
+                                  "labelB": "On",
                                   "ontoggle": [Function],
                                   "text": null,
                                   "title": "Enforce a Value",
@@ -373,6 +383,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -460,6 +472,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 >
                                   <FeatureToggle(Toggle)
                                     id="0:Enforced"
+                                    labelA="Off"
+                                    labelB="On"
                                     labelText={
                                       <span
                                         className="bx--front-line"
@@ -562,6 +576,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -692,6 +708,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -892,6 +910,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -1013,6 +1033,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "data": Object {
                                   "alt": "Enforce a Value",
                                   "is_toggle": true,
+                                  "labelA": "Off",
+                                  "labelB": "On",
                                   "ontoggle": [Function],
                                   "text": null,
                                   "title": "Enforce a Value",
@@ -1038,6 +1060,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -1125,6 +1149,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 >
                                   <FeatureToggle(Toggle)
                                     id="1:Enforced"
+                                    labelA="Off"
+                                    labelB="On"
                                     labelText={
                                       <span
                                         className="bx--front-line"
@@ -1227,6 +1253,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -1357,6 +1385,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -1557,6 +1587,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -1831,6 +1863,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               "Enforced": Object {
                 "alt": "Enforce a Value",
                 "is_toggle": true,
+                "labelA": "Off",
+                "labelB": "On",
                 "ontoggle": [Function],
                 "text": null,
                 "title": "Enforce a Value",
@@ -1860,6 +1894,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
               "Enforced": Object {
                 "alt": "Enforce a Value",
                 "is_toggle": true,
+                "labelA": "Off",
+                "labelB": "On",
                 "ontoggle": [Function],
                 "text": null,
                 "title": "Enforce a Value",
@@ -1924,6 +1960,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                   "Enforced": Object {
                     "alt": "Enforce a Value",
                     "is_toggle": true,
+                    "labelA": "Off",
+                    "labelB": "On",
                     "ontoggle": [Function],
                     "text": null,
                     "title": "Enforce a Value",
@@ -1953,6 +1991,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                   "Enforced": Object {
                     "alt": "Enforce a Value",
                     "is_toggle": true,
+                    "labelA": "Off",
+                    "labelB": "On",
                     "ontoggle": [Function],
                     "text": null,
                     "title": "Enforce a Value",
@@ -2107,6 +2147,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "data": Object {
                                   "alt": "Enforce a Value",
                                   "is_toggle": true,
+                                  "labelA": "Off",
+                                  "labelB": "On",
                                   "ontoggle": [Function],
                                   "text": null,
                                   "title": "Enforce a Value",
@@ -2132,6 +2174,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -2219,6 +2263,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 >
                                   <FeatureToggle(Toggle)
                                     id="0:Enforced"
+                                    labelA="Off"
+                                    labelB="On"
                                     labelText={
                                       <span
                                         className="bx--front-line"
@@ -2321,6 +2367,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -2451,6 +2499,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -2622,6 +2672,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -2743,6 +2795,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "data": Object {
                                   "alt": "Enforce a Value",
                                   "is_toggle": true,
+                                  "labelA": "Off",
+                                  "labelB": "On",
                                   "ontoggle": [Function],
                                   "text": null,
                                   "title": "Enforce a Value",
@@ -2768,6 +2822,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -2855,6 +2911,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 >
                                   <FeatureToggle(Toggle)
                                     id="1:Enforced"
+                                    labelA="Off"
+                                    labelB="On"
                                     labelText={
                                       <span
                                         className="bx--front-line"
@@ -2957,6 +3015,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -3087,6 +3147,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",
@@ -3287,6 +3349,8 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                     "data": Object {
                                       "alt": "Enforce a Value",
                                       "is_toggle": true,
+                                      "labelA": "Off",
+                                      "labelB": "On",
                                       "ontoggle": [Function],
                                       "text": null,
                                       "title": "Enforce a Value",

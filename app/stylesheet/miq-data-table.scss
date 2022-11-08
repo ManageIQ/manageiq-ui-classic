@@ -7,6 +7,10 @@
     margin-bottom: 48px;
   }
 
+  .bx--data-table thead tr :first-child{
+    padding-right: 2rem;
+  }
+
   .bx--form-item {
     .bx--front-line, .bx--label, .bx--toggle-input {
       display: none;

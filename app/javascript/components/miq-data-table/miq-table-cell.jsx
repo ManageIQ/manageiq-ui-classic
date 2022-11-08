@@ -120,6 +120,8 @@ const MiqTableCell = ({
       <Toggle
         id={id}
         labelText={truncateText}
+        labelA={item.labelA}
+        labelB={item.labelB}
         toggled={item.toggled}
         onToggle={() => (item.ontoggle() ? item.ontoggle() : undefined)}
         disabled={item.disabled}
