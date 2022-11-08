@@ -46,7 +46,7 @@ const VmResizeForm =({recordId, vmCloudResizeFormId}) =>{
 
   const onCancel = () => {
     const message = sprintf(
-      'Resize of VM was cancelled by the user'
+      __('Resize of VM was cancelled by the user')
     );
     miqRedirectBack(message, 'warning', '/vm_cloud/explorer');
 
