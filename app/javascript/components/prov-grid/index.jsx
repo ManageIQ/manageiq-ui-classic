@@ -1,55 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../miq-data-table';
 import { headerData, rowData } from '../miq-data-table/helper';
 import { appendSortData } from './helper';
 
-const ProvGrid = ({
-  type, fieldId, initialData,
-}) => {
-  const { headerKeys, headerItems } = headerData(initialData.headers, false);
-  const miqRows = rowData(headerKeys, initialData.rows, true);
-  const sortedHeaders = appendSortData(initialData.headers, headerItems);
+const ProvGrid = ({ initialData }) => {
+  const [data, setData] = useState({ initialData });
 
+  const { headerKeys, headerItems } = headerData(data.initialData.headers, false);
+  const miqRows = rowData(headerKeys, data.initialData.rows, true);
+  const sortedHeaders = appendSortData(data.initialData.headers, headerItems);
+
+  /** Function to sort the table */
   const onSort = (itemKey) => {
-    const selectedHeader = initialData.headers.find((item) => item.text === itemKey);
+    const {
+      headers, recordId, type, fieldId, field, spec,
+    } = data.initialData;
+
+    const selectedHeader = headers.find((item) => item.text === itemKey);
     if (selectedHeader) {
-      const sortUrl = `sort_${type}_grid/${initialData.recordId}?field_id=${fieldId}&sort_choice=${selectedHeader.sort_choice}`;
-      window.miqJqueryRequest(sortUrl);
+      miqSparkleOn();
+      const url = `sort_${type}_grid/${recordId}?field_id=${fieldId}&sort_choice=${selectedHeader.sort_choice}&field=${field}&spec=${spec}`;
+      miqAjax(url).then((response) => {
+        setData({ ...data, initialData: JSON.parse(response).initialData });
+      });
     }
   };
 
+  /** Function to select a row in the table */
   const onSelect = (selectedRow) => {
+    const { recordId, fieldId } = data.initialData;
     miqSparkleOn();
-    const url = `/miq_request/prov_field_changed/?${fieldId}=${selectedRow.id}&id=${initialData.recordId}`;
+    const url = `/miq_request/prov_field_changed/?${fieldId}=${selectedRow.id}&id=${recordId}`;
     miqAjax(url).then(() => miqSparkleOff());
   };
 
-  const renderDataTable = () => (
-    <MiqDataTable
-      headers={sortedHeaders}
-      rows={miqRows.rowItems}
-      mode={`prov-${type}-grid-data-table`}
-      sortable
-      gridChecks={[initialData.selected]}
-      onCellClick={(selectedRow) => onSelect(selectedRow)}
-      onSort={(headerItem) => onSort(headerItem.key)}
-    />
-  );
-
   return (
-    renderDataTable()
+    <div className="prov_grid_item">
+      <MiqDataTable
+        headers={sortedHeaders}
+        rows={miqRows.rowItems}
+        mode={`prov-${data.initialData.type}-grid-data-table`}
+        sortable={miqRows.rowItems.length > 1}
+        gridChecks={[data.initialData.selected]}
+        onCellClick={(selectedRow) => onSelect(selectedRow)}
+        onSort={(headerItem) => onSort(headerItem.key)}
+      />
+    </div>
   );
 };
 
 ProvGrid.propTypes = {
-  type: PropTypes.string.isRequired,
-  fieldId: PropTypes.string.isRequired,
   initialData: PropTypes.shape({
     headers: PropTypes.arrayOf(PropTypes.any),
     rows: PropTypes.arrayOf(PropTypes.any),
     selected: PropTypes.string,
     recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    type: PropTypes.string.isRequired,
+    fieldId: PropTypes.string.isRequired,
+    field: PropTypes.string.isRequired,
+    spec: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

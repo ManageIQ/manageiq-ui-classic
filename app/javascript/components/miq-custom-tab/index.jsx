@@ -18,10 +18,26 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
     return `${type.toLowerCase()}_${cType}`;
   };
 
+  /** Function to find the tabs dom elements using the container Id. */
+  const containerTabs = () => {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      return [];
+    }
+    return container.getElementsByClassName('tab_content');
+  };
+
+  /** Function to clear all tabs content so that, the react component will render a fresh instance */
+  const clearTabContents = () => {
+    const tabs = containerTabs();
+    tabs.forEach((child) => {
+      child.innerHTML = '';
+    });
+  };
+
   /** Function to load the tab contents which are already available within the page. */
   const staticContents = (name) => {
-    const container = document.getElementById(containerId);
-    const tabs = container.getElementsByClassName('tab_content');
+    const tabs = containerTabs();
     tabs.forEach((child) => {
       if (child.parentElement.id === containerId) {
         child.classList.remove('active');
@@ -37,6 +53,7 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
    *  After the url is executed, the selected tab contents are displayes using the staticContents function.
   */
   const dynamicContents = (name, url) => {
+    clearTabContents();
     window.miqJqueryRequest(url).then(() => {
       staticContents(name);
       setData({ loading: false });

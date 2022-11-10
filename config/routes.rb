@@ -334,6 +334,7 @@ Rails.application.routes.draw do
         sort_iso_img_grid
         sort_pxe_img_grid
         sort_vc_grid
+        sort_template_grid
         sort_vm_grid
         st_catalog_edit
         st_edit
@@ -2223,6 +2224,7 @@ Rails.application.routes.draw do
         sort_pxe_img_grid
         sort_template_grid
         sort_vc_grid
+        sort_template_grid
         sort_vm_grid
         sort_windows_image_grid
         stamp

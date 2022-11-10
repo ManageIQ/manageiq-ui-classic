@@ -1,5 +1,6 @@
 module ApplicationController::MiqRequestMethods
   extend ActiveSupport::Concern
+  include RequestInfoHelper
   included do
     helper_method :dialog_partial_for_workflow
   end
@@ -595,11 +596,8 @@ module ApplicationController::MiqRequestMethods
     end
 
     send("build_#{what}_grid", values, @edit[sortdir], @edit[sortcol])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("prov_#{what}_div", :partial => "miq_request/prov_#{what}_grid", :locals => {:field_id => params[:field_id]})
-      page << "miqSparkle(false);"
-    end
+    spec = params[:spec] == 'true'
+    render :json => {:initialData => prov_grid_component( params[:field].to_sym,  params[:field_id].to_sym, spec, "data")}
   end
 
   def tag_symbol_for_workflow
