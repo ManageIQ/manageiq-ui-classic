@@ -71,6 +71,8 @@ export const createRows = (initialValues, enforced, setEnforced, values, setValu
       Enforced: {
         is_toggle: true,
         text: null,
+        labelA: __('Off'),
+        labelB: __('On'),
         title: __('Enforce a Value'),
         alt: __('Enforce a Value'),
         ontoggle: () => enforce(index),
