@@ -38,9 +38,9 @@ const TimelineOptions = ({ url }) => {
           policyGroupNames.push({ label: value, value: key });
         });
         // NOTE: data.MiqEvent.group_levels does not have the expected `Both` option
-        policyGroupLevels.push({ label: 'Success', value: 'success' });
-        policyGroupLevels.push({ label: 'Failure', value: 'failure' });
-        policyGroupLevels.push({ label: 'Both', value: 'both' });
+        policyGroupLevels.push({ label: __('Success'), value: 'success' });
+        policyGroupLevels.push({ label: __('Failure'), value: 'failure' });
+        policyGroupLevels.push({ label: __('Both'), value: 'both' });
 
         // TODO: is there a way to make the above more elegant/shorter?
         // NOTE: group_names for MiqEvents and MiqEvents includes the 'Other' option,
