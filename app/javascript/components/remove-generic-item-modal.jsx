@@ -22,7 +22,11 @@ const apiTransformFunctions = {
 const parseApiError = (error) => {
   // eslint-disable-next-line no-prototype-builtins
   if (error.hasOwnProperty('data')) {
-    return error.data.error.message;
+    // eslint-disable-next-line no-prototype-builtins
+    if (error.data.hasOwnProperty('error')) {
+      return error.data.error.message;
+    }
+    return error.data.message;
   // eslint-disable-next-line no-prototype-builtins
   } if (error.hasOwnProperty('message')) {
     return error.message;
