@@ -1,4 +1,6 @@
 module VmHelper
+  include RequestInfoHelper
+
   include_concern 'TextualSummary'
   include_concern 'ComplianceSummaryHelper'
 
