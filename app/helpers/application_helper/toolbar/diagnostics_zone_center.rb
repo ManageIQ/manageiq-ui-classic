@@ -32,6 +32,22 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
           :klass   => ApplicationHelper::Button::ZoneDeleteServer
         ),
         button(
+          :delete_server,
+          'pficon pficon-delete fa-lg',
+          N_('Delete selected Servers'),
+          :enabled => false,
+          :onwhen  => "1+",
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => {:api_url        => 'servers',
+                                           :component_name => 'RemoveGenericItemModal',
+                                           :controller     => 'provider_dialogs',
+                                           :display_field  => 'name',
+                                           :modal_text     => N_("Are you sure you want to delete the selected Servers?"),
+                                           :modal_title    => N_("Delete Servers"),
+                                           :redirect_url   => '/ops/explorer/'}},
+          :klass   => ApplicationHelper::Button::ServersDeleteServer
+        ),
+        button(
           :zone_role_start,
           'fa fa-play-circle-o fa-lg',
           server_role_string_proc(_('Start the %{server_role_description} Role on Server %{server_name} [%{server_id}]')),
