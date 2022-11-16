@@ -136,31 +136,33 @@
             = _("Summary")
           = miq_tab_header("diagnostics_workers", @sb[:active_tab]) do
             = _("Workers")
-        = miq_tab_header("diagnostics_collect_logs", @sb[:active_tab]) do
-          = _("Collect Logs")
-        - if @sb[:selected_server_id] == my_server.id
-          = miq_tab_header("diagnostics_evm_log", @sb[:active_tab]) do
-            = _("%{product} Log") % {:product => Vmdb::Appliance.PRODUCT_NAME}
-          = miq_tab_header("diagnostics_audit_log", @sb[:active_tab]) do
-            = _("Audit Log")
-          = miq_tab_header("diagnostics_production_log", @sb[:active_tab]) do
-            = _(@sb[:rails_log])
-            = _("Log")
+        - if !MiqEnvironment::Command.is_podified?
+          = miq_tab_header("diagnostics_collect_logs", @sb[:active_tab]) do
+            = _("Collect Logs")
+          - if @sb[:selected_server_id] == my_server.id
+            = miq_tab_header("diagnostics_evm_log", @sb[:active_tab]) do
+              = _("%{product} Log") % {:product => Vmdb::Appliance.PRODUCT_NAME}
+            = miq_tab_header("diagnostics_audit_log", @sb[:active_tab]) do
+              = _("Audit Log")
+            = miq_tab_header("diagnostics_production_log", @sb[:active_tab]) do
+              = _(@sb[:rails_log])
+              = _("Log")
       .tab-content
         - if @sb[:selected_server_id] == my_server.id || @selected_server.started?
           = miq_tab_content("diagnostics_summary", @sb[:active_tab]) do
             = render :partial => "diagnostics_summary_tab"
           = miq_tab_content("diagnostics_workers", @sb[:active_tab]) do
             = render :partial => "diagnostics_workers_tab"
-        = miq_tab_content("diagnostics_collect_logs", @sb[:active_tab]) do
-          = render :partial => "diagnostics_collect_logs_tab"
-        - if @sb[:selected_server_id] == my_server.id
-          = miq_tab_content("diagnostics_evm_log", @sb[:active_tab]) do
-            = render :partial => "diagnostics_evm_log_tab"
-          = miq_tab_content("diagnostics_audit_log", @sb[:active_tab]) do
-            = render :partial => "diagnostics_audit_log_tab"
-          = miq_tab_content("diagnostics_production_log", @sb[:active_tab]) do
-            = render :partial => "diagnostics_production_log_tab"
+        - if !MiqEnvironment::Command.is_podified?
+          = miq_tab_content("diagnostics_collect_logs", @sb[:active_tab]) do
+            = render :partial => "diagnostics_collect_logs_tab"
+          - if @sb[:selected_server_id] == my_server.id
+            = miq_tab_content("diagnostics_evm_log", @sb[:active_tab]) do
+              = render :partial => "diagnostics_evm_log_tab"
+            = miq_tab_content("diagnostics_audit_log", @sb[:active_tab]) do
+              = render :partial => "diagnostics_audit_log_tab"
+            = miq_tab_content("diagnostics_production_log", @sb[:active_tab]) do
+              = render :partial => "diagnostics_production_log_tab"
     - else
       %ul.nav.nav-tabs{'role' => 'tablist'}
         = miq_tab_header("diagnostics_zones", @sb[:active_tab]) do
