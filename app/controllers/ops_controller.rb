@@ -240,6 +240,7 @@ class OpsController < ApplicationController
     assert_privileges(x_active_tree == :settings_tree ? "ops_settings" : "ops_diagnostics")
 
     @explorer = true
+    params[:miq_grid_checks] = []
     session[:changed] = false
     session[:flash_msgs] = @flash_array = nil # clear out any messages from previous screen i.e import tab
     if params[:tab]
