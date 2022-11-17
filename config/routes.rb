@@ -2610,6 +2610,7 @@ Rails.application.routes.draw do
         tagging_edit
         wait_for_task
         launch_configured_system_console
+        listnav_search_selected
       ] +
         adv_search_post +
         dialog_runner_post +
