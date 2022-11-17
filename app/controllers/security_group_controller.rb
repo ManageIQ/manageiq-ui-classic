@@ -55,7 +55,7 @@ class SecurityGroupController < ApplicationController
       @security_group = SecurityGroup.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      if SecurityGroup.class_by_ems(ems).supports_create?
+      if SecurityGroup.class_by_ems(ems)&.supports_create?
         options.delete(:ems_id)
         task_id = ems.create_security_group_queue(session[:userid], options)
 
