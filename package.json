@@ -179,6 +179,7 @@
   "resolutions": {
     "terser": "~4.8.1",
     "d3-color": "~3.1.0",
-    "nwsapi": "^2.2.1"
+    "nwsapi": "^2.2.1",
+    "minimatch": "~3.1.2"
   }
 }
