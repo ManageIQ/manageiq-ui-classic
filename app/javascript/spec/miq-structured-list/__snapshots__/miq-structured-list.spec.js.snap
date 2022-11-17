@@ -1972,3 +1972,52 @@ exports[`Structured list component should render a tag_group table 1`] = `
   </AccordionItem>
 </Accordion>
 `;
+
+exports[`Structured list component should render strings without double escaping strings 1`] = `
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_summary miq_host_devices"
+>
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Catch All
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="cell icon"
+          >
+            <i
+              className="pficon pficon-unknown"
+              style={
+                Object {
+                  "background": undefined,
+                  "color": undefined,
+                }
+              }
+            />
+          </div>
+          <div
+            className="expand wrap_text"
+          >
+            &lt; A test to HTML's "Escape" logic Hello&Goodbye &gt;
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
+`;
