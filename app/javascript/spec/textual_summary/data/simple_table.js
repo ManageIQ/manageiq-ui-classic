@@ -35,3 +35,16 @@ export const buildInstance = {
     ],
   ],
 };
+
+export const complexTableData = {
+  "rows": [
+      {
+          "cells": {
+              "label": "Catch All",
+              "value": `< A test to HTML's "Escape" logic Hello&Goodbye >`,
+              "icon": "pficon pficon-unknown"
+          }
+      }
+  ],
+  "mode": "miq_summary miq_host_devices",
+}

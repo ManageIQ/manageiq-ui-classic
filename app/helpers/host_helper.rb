@@ -36,24 +36,24 @@ module HostHelper
       devices = devices_details
       if devices.present?
         devices.each do |item|
-          rows.push(generate_row(h(item[:name]), h(item[:description]), item[:icon]))
+          rows.push(generate_row(item[:name], item[:description], item[:icon]))
         end
       end
     when "os_info"
       os_info = os_info_details
       if os_info.present?
         os_info.each do |item|
-          rows.push(generate_row(h(item[:osinfo]), h(item[:description])))
+          rows.push(generate_row(item[:osinfo], item[:description]))
         end
-        rows.push(generate_row(_('Hostname'), h(record.hostname)))
-        rows.push(generate_row(_('IP Address'), h(record.ipaddress)))
+        rows.push(generate_row(_('Hostname'), record.hostname))
+        rows.push(generate_row(_('IP Address'), record.ipaddress))
       end
 
     when "hv_info"
       vmm_info = vmm_info_details
       if vmm_info.present?
         vmm_info.each do |item|
-          rows.push(generate_row(h(item[:vmminfo]), h(item[:description])))
+          rows.push(generate_row(item[:vmminfo], item[:description]))
         end
       end
     end

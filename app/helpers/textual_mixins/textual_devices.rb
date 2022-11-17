@@ -103,7 +103,7 @@ module TextualMixins::TextualDevices
       address = port.address
       filename = port.filename
       model = port.model
-      autodetect = port.auto_detect ? "" : _("Default Adapter")
+      autodetect = port.auto_detect ? nil : _("Default Adapter")
       desc = [location, address, filename, model, autodetect, network_name(port)].compact.join(', ')
       Device.new(name, desc, nil, port.decorate.fonticon) # TODO: look into this more if this can be SCSI, serial, parallel, usb, sound
     end
