@@ -111,7 +111,7 @@ const initialState = {
 
 const filterToString = (filter) => (
   filter && filter.field && filter.string
-    ? `${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
+    ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
     : ''
 );
 
