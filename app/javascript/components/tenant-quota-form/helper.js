@@ -1,12 +1,13 @@
 const GIGABYTE = 1024 * 1024 * 1024;
 
 // Creates the Rows of the MiqDataTable
-export const createRows = (initialValues, enforced, setEnforced, values, setValues, setDisabled, invalid, setInvalid) => {
-  /* Determines whether the reset/save buttons should be disabled
+export const createRows = (initialValues, enforced, setEnforced, values, setValues, setDisabled, setChanged, invalid, setInvalid) => {
+  /* Determines whether the save button should be disabled
     based on whether the form has changed or if an inputted value is invalid */
   const isDisabled = () => {
     let fresh = true;
-    if (Object.values(invalid).every((value) => value.bool === false)) {
+    if (Object.values(invalid).every((value) => value.bool === false)
+      && !Object.values(enforced).some((value, index) => (value === false && values[index] === ''))) {
       // eslint-disable-next-line no-restricted-syntax
       for (const key in enforced) {
         if (initialValues.enforced[key] !== enforced[key] || initialValues.values[key] !== values[key]) {
@@ -18,6 +19,20 @@ export const createRows = (initialValues, enforced, setEnforced, values, setValu
     setDisabled(fresh);
   };
 
+  /* Determines whether the reset button should be disabled
+    based on whether the form has changed */
+  const isChanged = () => {
+    let fresh = true;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key in enforced) {
+      if (initialValues.enforced[key] !== enforced[key] || initialValues.values[key] !== values[key]) {
+        fresh = false;
+        break;
+      }
+    }
+    setChanged(fresh);
+  };
+
   /* Determines whether the "value" text input of a particular row should be readonly
     based on the value of the enforced toggle */
   const enforce = (index) => {
@@ -25,16 +40,19 @@ export const createRows = (initialValues, enforced, setEnforced, values, setValu
 
     if (enforced[index] === true) {
       values[index] = '';
+      invalid[index].bool = false;
       Array.from(document.querySelectorAll('.quota-table-input')).forEach((input, key) => {
         if (key === index) {
           input.value = '';
         }
       });
       setValues(() => ({ ...values }));
+      setInvalid(() => ({ ...invalid }));
     }
 
     setEnforced(() => ({ ...enforced }));
     isDisabled();
+    isChanged();
   };
 
   // Updates the value of a particular row to state
@@ -42,6 +60,7 @@ export const createRows = (initialValues, enforced, setEnforced, values, setValu
     values[index] = target.value;
     setValues(() => ({ ...values }));
     isDisabled();
+    isChanged();
   };
 
   // Validates text input by ensuring no negative numbers are submitted or non-integer values when unit = fixnum
@@ -60,6 +79,7 @@ export const createRows = (initialValues, enforced, setEnforced, values, setValu
 
     setInvalid(() => ({ ...invalid }));
     isDisabled();
+    isChanged();
   };
 
   // The rows of the table are created here (quotas)
@@ -158,7 +178,7 @@ export const prepareData = (initialValues = {}, values = {}) => {
       if (initialValues.data.quota_definitions[key].unit === 'bytes') {
         value = parseFloat(value) * GIGABYTE;
       } else if (initialValues.data.quota_definitions[key].unit === 'fixnum') {
-        value = parseInt(value, 10);
+        value = parseFloat(value);
       }
 
       if (initialValues.data.quota_definitions[key].id === undefined) {
