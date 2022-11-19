@@ -9,7 +9,7 @@ const filterServicesByCapabilities = async(filterArray, providerCapabilities) =>
         Object.keys(resource.capabilities).forEach((key) => {
           capsToFilter.push(getCapabilityUuid(providerCapabilities, key, resource.capabilities[key]));
         });
-        if (arrayIncludes(filterArray, capsToFilter)) {
+        if (arrayIncludes(capsToFilter, filterArray)) {
           valueArray.push(resource);
         }
       });

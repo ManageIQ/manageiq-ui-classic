@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import validateName from '../../helpers/storage_manager/validate-names';
-import loadProviderCapabilities from '../../helpers/storage_manager/load-provider-capabilities';
+import { loadProviderCapabilities } from '../../helpers/storage_manager/load-provider-capabilities';
 
 const loadProviders = () =>
   API.get(
