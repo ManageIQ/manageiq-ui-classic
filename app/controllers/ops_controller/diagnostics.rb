@@ -355,21 +355,21 @@ module OpsController::Diagnostics
     end
   end
 
-  def fetch_journal_log(service_name)
+  def fetch_journal_log(service_name = nil, max_count = 1_000, filter_params = {})
     return unless MiqEnvironment::Command.supports_systemd?
 
-    filter_params = {
-      :syslog_identifier => service_name
-    }
+    filter_params[:syslog_identifier] = service_name if service_name.present?
 
     require "systemd/journal"
     Systemd::Journal.open do |journal|
       journal.filter(filter_params)
-      journal.map(&:message)
+
+      entries = max_count.nil? ? journal.all : journal.take(max_count)
+      entries.map(&:message).join("\n")
     end
   end
 
-  def fetch_log_file(service_name)
+  def fetch_log_file(service_name, max_count = 1_000)
     log = case service_name
           when "evm"
             $log
@@ -379,7 +379,7 @@ module OpsController::Diagnostics
             $rails_log
           end
 
-    Vmdb::Loggers.contents(log, nil)
+    Vmdb::Loggers.contents(log, max_count)
   end
 
   def cu_repair_set_form_vars
