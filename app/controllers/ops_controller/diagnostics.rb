@@ -152,7 +152,7 @@ module OpsController::Diagnostics
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data(fetch_journal_log(:syslog_identifier => "evm"), :filename => "evm.log")
+    send_data(fetch_local_log("evm"), :filename => "evm.log")
     AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
 
@@ -160,7 +160,7 @@ module OpsController::Diagnostics
   def fetch_audit_log
     assert_privileges("fetch_audit_log")
     disable_client_cache
-    send_data(fetch_journal_log(:syslog_identifier => "audit"), :filename => "audit.log")
+    send_data(fetch_local_log("audit"), :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
                        :message => "Audit log downloaded")
@@ -170,7 +170,7 @@ module OpsController::Diagnostics
   def fetch_production_log
     assert_privileges("fetch_production_log")
     disable_client_cache
-    send_data(fetch_journal_log(:syslog_identifier => Rails.env), :filename => "#{Rails.env}.log")
+    send_data(fetch_local_log(Rails.env), :filename => "#{Rails.env}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{Rails.env}_log",
                        :message => "#{@sb[:rails_log]} log downloaded")
@@ -347,7 +347,21 @@ module OpsController::Diagnostics
 
   private ############################
 
-  def fetch_journal_log(filter_params)
+  def fetch_local_log(*params)
+    if MiqEnvironment::Command.supports_systemd?
+      fetch_journal_log(*params)
+    elsif !MiqEnvironment::Command.is_podified?
+      fetch_log_file(*params)
+    end
+  end
+
+  def fetch_journal_log(service_name)
+    return unless MiqEnvironment::Command.supports_systemd?
+
+    filter_params = {
+      :syslog_identifier => service_name
+    }
+
     require "systemd/journal"
     journal = Systemd::Journal.new
     begin
@@ -356,6 +370,19 @@ module OpsController::Diagnostics
     ensure
       journal.close
     end
+  end
+
+  def fetch_log_file(service_name)
+    log = case service_name
+          when "evm"
+            $log
+          when "audit"
+            $audit_log
+          when Rails.env
+            $rails_log
+          end
+
+    Vmdb::Loggers.contents(log, nil)
   end
 
   def cu_repair_set_form_vars
@@ -652,19 +679,19 @@ module OpsController::Diagnostics
       @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = fetch_journal_log(:syslog_identifier => "evm")
+          @log = fetch_local_log("evm")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
-          @log = fetch_journal_log(:syslog_identifier => "audit")
+          @log = fetch_local_log("audit")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
-          @log = fetch_journal_log(:syslog_identifier => Rails.env)
+          @log = fetch_local_log(Rails.env)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
