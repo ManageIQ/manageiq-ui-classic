@@ -152,8 +152,7 @@ module OpsController::Diagnostics
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($log, nil),
-              :filename => "evm.log")
+    send_data(fetch_journal_log(:syslog_identifier => "evm"), :filename => "evm.log")
     AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
 
@@ -161,8 +160,7 @@ module OpsController::Diagnostics
   def fetch_audit_log
     assert_privileges("fetch_audit_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($audit_log, nil),
-              :filename => "audit.log")
+    send_data(fetch_journal_log(:syslog_identifier => "audit"), :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
                        :message => "Audit log downloaded")
@@ -172,8 +170,7 @@ module OpsController::Diagnostics
   def fetch_production_log
     assert_privileges("fetch_production_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($rails_log, nil),
-              :filename => "#{Rails.env}.log")
+    send_data(fetch_journal_log(:syslog_identifier => Rails.env), :filename => "#{Rails.env}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{Rails.env}_log",
                        :message => "#{@sb[:rails_log]} log downloaded")
@@ -349,6 +346,17 @@ module OpsController::Diagnostics
   end
 
   private ############################
+
+  def fetch_journal_log(filter_params)
+    require "systemd/journal"
+    journal = Systemd::Journal.new
+    begin
+      journal.filter(filter_params)
+      journal.map(&:message)
+    ensure
+      journal.close
+    end
+  end
 
   def cu_repair_set_form_vars
     @timezone_offset = get_timezone_offset
@@ -644,19 +652,19 @@ module OpsController::Diagnostics
       @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = Vmdb::Loggers.contents($log)
+          @log = fetch_journal_log(:syslog_identifier => "evm")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
-          @log = Vmdb::Loggers.contents($audit_log)
+          @log = fetch_journal_log(:syslog_identifier => "audit")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
-          @log = Vmdb::Loggers.contents($rails_log)
+          @log = fetch_journal_log(:syslog_identifier => Rails.env)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
