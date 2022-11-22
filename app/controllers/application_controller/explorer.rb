@@ -89,7 +89,7 @@ module ApplicationController::Explorer
       # don't need to set params[:id] and do find_checked_items for methods
       # like ownership, the code in those methods handle it
       if %w[edit right_size resize attach detach clone live_migrate evacuate
-            associate_floating_ip disassociate_floating_ip].include?(action)
+            associate_floating_ip disassociate_floating_ip publish migrate].include?(action)
         @_params[:id] = (params[:id] ? [params[:id]] : find_checked_items)[0]
       end
       if %w[protect tag].include?(action)
