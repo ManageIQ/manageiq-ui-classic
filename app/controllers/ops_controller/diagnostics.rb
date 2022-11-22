@@ -363,12 +363,9 @@ module OpsController::Diagnostics
     }
 
     require "systemd/journal"
-    journal = Systemd::Journal.new
-    begin
+    Systemd::Journal.open do |journal|
       journal.filter(filter_params)
       journal.map(&:message)
-    ensure
-      journal.close
     end
   end
 
