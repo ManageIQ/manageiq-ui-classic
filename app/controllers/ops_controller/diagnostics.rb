@@ -365,7 +365,13 @@ module OpsController::Diagnostics
       journal.filter(filter_params)
 
       entries = max_count.nil? ? journal.all : journal.take(max_count)
-      entries.map(&:message).join("\n")
+      entries.map do |entry|
+        # This is the time in microseconds since the epoch UTC, formatted as a decimal string.
+        seconds_since_epoch = entry._source_realtime_timestamp.to_f / 1_000_000.0
+        timestamp = Time.strptime(seconds_since_epoch.to_s, "%s").strftime("%Y-%m-%dT%H:%M:%S.%6N ")
+
+        "[#{timestamp} ##{entry._pid}]#{entry.message}"
+      end.join("\n")
     end
   end
 
