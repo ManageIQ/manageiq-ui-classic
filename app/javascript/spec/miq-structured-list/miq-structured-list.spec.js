@@ -11,6 +11,7 @@ import { tagGroupData } from '../textual_summary/data/tag_group';
 import { diagnosticSettingsListData } from '../textual_summary/data/diagnostic_settings_list';
 import { catalogListData } from '../textual_summary/data/catalog_list';
 import { miqAeClassListData } from '../textual_summary/data/miq_ae_class_list';
+import { miqAePolicyListData } from '../textual_summary/data/miq_ae_policy_list';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -129,6 +130,14 @@ describe('Structured list component', () => {
       title={miqAeClassListData.title}
       mode="table_list_view"
       onClick={onClick}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render miq policy data without double escaping strings', () => {
+    const wrapper = shallow(<MiqStructuredList
+      rows={miqAePolicyListData.items}
+      mode={miqAePolicyListData.mode}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
