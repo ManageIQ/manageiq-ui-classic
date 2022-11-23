@@ -9,6 +9,7 @@ import { simpleTableData, complexTableData, buildInstance } from '../textual_sum
 import { tableListViewData } from '../textual_summary/data/table_list_view';
 import { tagGroupData } from '../textual_summary/data/tag_group';
 import { diagnosticSettingsListData } from '../textual_summary/data/diagnostic_settings_list';
+import { catalogListData } from '../textual_summary/data/catalog_list';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -105,6 +106,17 @@ describe('Structured list component', () => {
     const wrapper = shallow(<MiqStructuredList
       rows={diagnosticSettingsListData.items}
       mode={diagnosticSettingsListData.mode}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render catalog_data with escaped strings', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(<MiqStructuredList
+      rows={catalogListData.items}
+      title={catalogListData.title}
+      mode="catalog_list_view"
+      onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
