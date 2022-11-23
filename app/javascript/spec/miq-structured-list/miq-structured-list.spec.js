@@ -10,6 +10,7 @@ import { tableListViewData } from '../textual_summary/data/table_list_view';
 import { tagGroupData } from '../textual_summary/data/tag_group';
 import { diagnosticSettingsListData } from '../textual_summary/data/diagnostic_settings_list';
 import { catalogListData } from '../textual_summary/data/catalog_list';
+import { miqAeClassListData } from '../textual_summary/data/miq_ae_class_list';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -116,6 +117,17 @@ describe('Structured list component', () => {
       rows={catalogListData.items}
       title={catalogListData.title}
       mode="catalog_list_view"
+      onClick={onClick}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render miq_ae_class_list_view with escaped strings', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(<MiqStructuredList
+      rows={miqAeClassListData.items}
+      title={miqAeClassListData.title}
+      mode="table_list_view"
       onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
