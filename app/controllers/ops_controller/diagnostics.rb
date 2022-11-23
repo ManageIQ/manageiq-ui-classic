@@ -152,8 +152,7 @@ module OpsController::Diagnostics
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($log, nil),
-              :filename => "evm.log")
+    send_data(fetch_local_log("evm"), :filename => "evm.log")
     AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
 
@@ -161,8 +160,7 @@ module OpsController::Diagnostics
   def fetch_audit_log
     assert_privileges("fetch_audit_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($audit_log, nil),
-              :filename => "audit.log")
+    send_data(fetch_local_log("audit"), :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
                        :message => "Audit log downloaded")
@@ -172,8 +170,7 @@ module OpsController::Diagnostics
   def fetch_production_log
     assert_privileges("fetch_production_log")
     disable_client_cache
-    send_data(Vmdb::Loggers.contents($rails_log, nil),
-              :filename => "#{Rails.env}.log")
+    send_data(fetch_local_log(Rails.env), :filename => "#{Rails.env}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{Rails.env}_log",
                        :message => "#{@sb[:rails_log]} log downloaded")
@@ -349,6 +346,47 @@ module OpsController::Diagnostics
   end
 
   private ############################
+
+  def fetch_local_log(*params)
+    if MiqEnvironment::Command.supports_systemd?
+      fetch_journal_log(*params)
+    elsif !MiqEnvironment::Command.is_podified?
+      fetch_log_file(*params)
+    end
+  end
+
+  def fetch_journal_log(service_name = nil, max_count = 1_000, filter_params = {})
+    return unless MiqEnvironment::Command.supports_systemd?
+
+    filter_params[:syslog_identifier] = service_name if service_name.present?
+
+    require "systemd/journal"
+    Systemd::Journal.open do |journal|
+      journal.filter(filter_params)
+
+      entries = max_count.nil? ? journal.all : journal.take(max_count)
+      entries.map do |entry|
+        # This is the time in microseconds since the epoch UTC, formatted as a decimal string.
+        seconds_since_epoch = entry._source_realtime_timestamp.to_f / 1_000_000.0
+        timestamp = Time.zone.at(seconds_since_epoch).strftime("%Y-%m-%dT%H:%M:%S.%6N")
+
+        "[#{timestamp} ##{entry._pid}]#{entry.message}"
+      end.join("\n")
+    end
+  end
+
+  def fetch_log_file(service_name, max_count = 1_000)
+    log = case service_name
+          when "evm"
+            $log
+          when "audit"
+            $audit_log
+          when Rails.env
+            $rails_log
+          end
+
+    Vmdb::Loggers.contents(log, max_count)
+  end
 
   def cu_repair_set_form_vars
     @timezone_offset = get_timezone_offset
@@ -644,19 +682,19 @@ module OpsController::Diagnostics
       @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = Vmdb::Loggers.contents($log)
+          @log = fetch_local_log("evm")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
-          @log = Vmdb::Loggers.contents($audit_log)
+          @log = fetch_local_log("audit")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
-          @log = Vmdb::Loggers.contents($rails_log)
+          @log = fetch_local_log(Rails.env)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
