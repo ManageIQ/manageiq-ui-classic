@@ -1973,6 +1973,126 @@ exports[`Structured list component should render a tag_group table 1`] = `
 </Accordion>
 `;
 
+exports[`Structured list component should render settings list 1`] = `
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list selected_server_roles"
+>
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="cell icon"
+          >
+            <i
+              className="pficon pficon-server fa-5x"
+              style={
+                Object {
+                  "background": undefined,
+                  "color": undefined,
+                }
+              }
+            />
+          </div>
+          <div
+            className="wrap_text"
+          />
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="1"
+      onClick={[Function]}
+      tabIndex={1}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Server
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            EVM(17)
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="2"
+      onClick={[Function]}
+      tabIndex={2}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        IP Address
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            127.1.1.0
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="3"
+      onClick={[Function]}
+      tabIndex={3}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Status
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            Active
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
+`;
+
 exports[`Structured list component should render strings without double escaping strings 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"

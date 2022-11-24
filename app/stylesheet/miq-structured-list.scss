@@ -109,8 +109,6 @@
     }
 
     .cell {
-      width: 20px;
-      height: 20px;
       margin-right: 10px;
       display: flex;
       align-items: center;
@@ -123,11 +121,18 @@
       }
 
       i {
+        width: 20px;
+        height: 20px;
         font-size: 15px;
         display: flex;
         justify-content: center;
         flex-direction: row;
         padding: 5px;
+      }
+      .settings-icn {
+        width: 70px !important;
+        height: 80px !important;
+        font-size: 5em !important;
       }
     }
   }
