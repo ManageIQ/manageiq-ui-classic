@@ -11,6 +11,7 @@ const TenantQuotaForm = ({ recordId }) => {
   const [enforced, setEnforced] = useState({});
   const [values, setValues] = useState({});
   const [disabled, setDisabled] = useState(true);
+  const [changed, setChanged] = useState(true);
   const [invalid, setInvalid] = useState({});
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
@@ -51,6 +52,7 @@ const TenantQuotaForm = ({ recordId }) => {
     setEnforced(() => ({ ...initialValues.enforced }));
     setValues(() => ({ ...initialValues.values }));
     setDisabled(true);
+    setChanged(true);
     setInvalid(() => ({ ...initialValues.invalid }));
     // eslint-disable-next-line no-return-assign
     Array.from(document.querySelectorAll('.quota-table-input')).forEach((input, index) => input.value = initialValues.values[index]);
@@ -71,14 +73,14 @@ const TenantQuotaForm = ({ recordId }) => {
           { key: 'Value', header: __('Value') },
           { key: 'Units', header: __('Units') },
         ]}
-        rows={createRows(initialValues, enforced, setEnforced, values, setValues, setDisabled, invalid, setInvalid)}
+        rows={createRows(initialValues, enforced, setEnforced, values, setValues, setDisabled, setChanged, invalid, setInvalid)}
         onCellClick={() => {}}
       />
       <div className="bx--btn-set">
         <Button kind="primary" tabIndex={0} disabled={disabled} type="submit" onClick={onSubmit}>
           {submitLabel}
         </Button>
-        <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} disabled={disabled} type="reset" onClick={onReset}>
+        <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} disabled={changed} type="reset" onClick={onReset}>
           {__('Reset')}
         </Button>
         <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} type="button" onClick={onCancel}>
