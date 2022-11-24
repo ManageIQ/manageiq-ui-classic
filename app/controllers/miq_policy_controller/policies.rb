@@ -165,7 +165,15 @@ module MiqPolicyController::Policies
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
     when "reset", nil # Reset or first time in
       @in_a_form = true
+      params[:id] ||= find_checked_items[0]
       @policy = MiqPolicy.find_by(:id => params[:id]) # Get existing record
+
+      if @policy.read_only
+        add_flash(_("This Policy is read only and cannot be modified"), :error)
+        flash_to_session
+        redirect_to(:action => @lastaction, :id => params[:id])
+      end
+
       policy_build_edit_screen("events")
       javascript_redirect(:action        => 'miq_policy_edit_events',
                           :id            => params[:id],
@@ -192,7 +200,15 @@ module MiqPolicyController::Policies
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
     when "reset", nil # Reset or first time in
       @in_a_form = true
+      params[:id] ||= find_checked_items[0]
       @policy = MiqPolicy.find_by(:id => params[:id]) # Get existing record
+
+      if @policy.read_only
+        add_flash(_("This Policy is read only and cannot be modified"), :error)
+        flash_to_session
+        redirect_to(:action => @lastaction, :id => params[:id])
+      end
+
       policy_build_edit_screen("conditions")
       javascript_redirect(:action        => 'miq_policy_edit_conditions',
                           :id            => params[:id],

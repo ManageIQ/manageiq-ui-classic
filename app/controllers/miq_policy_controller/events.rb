@@ -11,6 +11,14 @@ module MiqPolicyController::Events
       javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
     when "reset", nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
+
+      @policy = MiqPolicy.find_by(:id => params[:id]) # Get existing record
+      if @policy.read_only
+        add_flash(_("This Policy is read only and cannot be modified"), :error)
+        flash_to_session
+        redirect_to(:action => @lastaction, :id => params[:id])
+      end
+
       event_build_edit_screen
       javascript_redirect(:action        => 'miq_event_edit',
                           :id            => params[:id],
