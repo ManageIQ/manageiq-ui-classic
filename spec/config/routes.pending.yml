@@ -542,6 +542,7 @@ EmsNetworkController:
 - tl_chooser
 - wait_for_task
 EmsPhysicalInfraController:
+- dialog_load
 - dialog_field_changed
 - dialog_form_button_pressed
 - dynamic_checkbox_refresh
@@ -933,6 +934,14 @@ PersistentVolumeController:
 - open_url_after_dialog
 - sections_field_changed
 PhysicalChassisController:
+- dialog_load
+- dialog_field_changed
+- dialog_form_button_pressed
+- dynamic_checkbox_refresh
+- dynamic_date_refresh
+- dynamic_radio_button_refresh
+- dynamic_text_box_refresh
+- open_url_after_dialog
 - download_summary_pdf
 - index
 - protect
@@ -944,20 +953,52 @@ PhysicalNetworkPortController:
 - index
 - report_data
 PhysicalRackController:
+- dialog_load
+- dialog_field_changed
+- dialog_form_button_pressed
+- dynamic_checkbox_refresh
+- dynamic_date_refresh
+- dynamic_radio_button_refresh
+- dynamic_text_box_refresh
+- open_url_after_dialog
 - download_summary_pdf
 - index
 - protect
 - quick_search
 PhysicalServerController:
+- dialog_load
+- dialog_field_changed
+- dialog_form_button_pressed
+- dynamic_checkbox_refresh
+- dynamic_date_refresh
+- dynamic_radio_button_refresh
+- dynamic_text_box_refresh
+- open_url_after_dialog
 - index
 - perf_top_chart
 - tl_chooser
 - wait_for_task
 PhysicalStorageController:
+- dialog_load
+- dialog_field_changed
+- dialog_form_button_pressed
+- dynamic_checkbox_refresh
+- dynamic_date_refresh
+- dynamic_radio_button_refresh
+- dynamic_text_box_refresh
+- open_url_after_dialog
 - index
 - tl_chooser
 - wait_for_task
 PhysicalSwitchController:
+- dialog_load
+- dialog_field_changed
+- dialog_form_button_pressed
+- dynamic_checkbox_refresh
+- dynamic_date_refresh
+- dynamic_radio_button_refresh
+- dynamic_text_box_refresh
+- open_url_after_dialog
 - index
 PictureController:
 - show

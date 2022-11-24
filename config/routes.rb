@@ -1204,6 +1204,7 @@ Rails.application.routes.draw do
 
     :physical_switch    =>  {
       :get  =>  %w(
+        dialog_load
         download_data
         download_summary_pdf
         show_list
@@ -1211,14 +1212,16 @@ Rails.application.routes.draw do
       ),
 
       :post   =>  %w(
+        button
         listnav_search_selected
         show_list
         quick_search
-      ) + adv_search_post + save_post,
+      ) + adv_search_post + save_post + dialog_runner_post,
     },
 
     :physical_server    =>  {
       :get  =>  %w(
+        dialog_load
         download_data
         download_summary_pdf
         perf_top_chart
@@ -1243,22 +1246,24 @@ Rails.application.routes.draw do
       ) +
           adv_search_post +
           exp_post +
-          save_post
+          save_post +
+          dialog_runner_post
     },
 
     :physical_rack    =>  {
       :get  =>  %w(
+        dialog_load
         download_data
         download_summary_pdf
         protect
         show_list
         show
       ),
-
       :post   =>  %w(
+        button
         show_list
         quick_search
-      )
+      ) + dialog_runner_post
     },
 
     :physical_network_port    => {
@@ -1276,6 +1281,7 @@ Rails.application.routes.draw do
 
     :physical_storage   => {
       :get  => %w[
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -1290,11 +1296,12 @@ Rails.application.routes.draw do
         listnav_search_selected
         quick_search
         show_list
-      ] + adv_search_post + save_post + exp_post
+      ] + adv_search_post + save_post + exp_post + dialog_runner_post,
     },
 
     :physical_chassis    => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         protect
@@ -1303,9 +1310,10 @@ Rails.application.routes.draw do
       ),
 
       :post  => %w(
+        button
         show_list
         quick_search
-      )
+      ) + dialog_runner_post,
     },
 
     :guest_device    =>  {

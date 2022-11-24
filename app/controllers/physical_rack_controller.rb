@@ -60,4 +60,12 @@ class PhysicalRackController < ApplicationController
     assert_privileges('physical_rack_show_list')
     super
   end
+
+  def button
+    if params[:pressed] == "custom_button"
+      custom_buttons
+    end
+  end
+
+  has_custom_buttons
 end
