@@ -296,7 +296,7 @@ module ApplicationHelper
                  MiqSchedule
                  PxeServer
                  PxeImageType
-                 IsoDatastore
+                 Storage
                  CustomizationTemplate].include?(view.db) &&
               %w[ops pxe report].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"

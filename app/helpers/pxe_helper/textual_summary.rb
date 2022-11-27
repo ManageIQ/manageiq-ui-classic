@@ -125,15 +125,15 @@ module PxeHelper::TextualSummary
   end
 
   def textual_iso_datastore_basicinfo
-    %i[iso_datastore_name iso_datastore_last_refresh_on]
+    %i[iso_datastore_name iso_datastore_updated_on]
   end
 
   def textual_iso_datastore_name
-    {:label => _('Providers'), :value => @isd.name}
+    {:label => _('Providers'), :value => @isd.ext_management_system.name}
   end
 
-  def textual_iso_datastore_last_refresh_on
-    {:label => _("Last Refreshed On"), :value => @isd.last_refresh_on}
+  def textual_iso_datastore_updated_on
+    {:label => _("Updated On"), :value => @isd.updated_on}
   end
 
   def textual_iso_img_info

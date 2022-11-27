@@ -451,7 +451,6 @@ class TreeBuilder
     "god"  => "GenericObjectDefinition",
     "h"    => "Host",
     "hot"  => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
-    "isd"  => "IsoDatastore",
     "isi"  => "IsoImage",
     "l"    => "Lan",
     "me"   => "MiqEnterprise",
