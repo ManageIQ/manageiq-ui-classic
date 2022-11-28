@@ -5,12 +5,12 @@ import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
 import { ChevronDown20 } from '@carbon/icons-react';
 
 const addClick = (item) =>
-  window.miqJqueryRequest(`widget_add?widget=${item.id}`, { beforeSend: true, complete: true });
+  window.miqJqueryRequest(`/dashboard/widget_add?widget=${item.id}`, { beforeSend: true, complete: true });
 
 const resetClick = () => {
   /* eslint no-alert: off */
   if (window.confirm(__("Are you sure you want to reset this Dashboard's Widgets to the defaults?"))) {
-    window.miqJqueryRequest('reset_widgets', { beforeSend: true });
+    window.miqJqueryRequest('/dashboard/reset_widgets', { beforeSend: true });
   }
 };
 
