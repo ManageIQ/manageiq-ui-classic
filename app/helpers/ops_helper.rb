@@ -185,4 +185,11 @@ module OpsHelper
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
   end
+
+  def settings_authentication(data)
+    {:session_timeout_hours => data[:session][:timeout] / 3600,
+     :session_timeout_mins => data[:session][:timeout] % 3600 / 60,
+     :authentication_amazon_key => data[:authentication][:amazon_key],
+     :authentication_amazon_secret => data[:authentication][:amazon_secret]}
+  end
 end

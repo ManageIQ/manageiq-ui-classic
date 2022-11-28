@@ -331,7 +331,6 @@ module OpsController::Settings::Common
     server_config.each_key do |category|
       server_config[category] = @edit[:new][category].dup
     end
-
     valid, errors = Authenticator::Amazon.validate_connection(server_config)
     if valid
       add_flash(_("Amazon Settings validation was successful"))

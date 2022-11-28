@@ -1,5 +1,7 @@
 - if @sb[:active_tab] == "settings_authentication"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
+  - session_data = settings_authentication(@edit[:new])
+  = react('SettingsAuthenticationForm', {:id => @sb[:selected_server_id], :sessionData => session_data})
   %h3
     = _("Authentication")
   .form-horizontal

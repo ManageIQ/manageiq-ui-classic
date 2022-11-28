@@ -1,0 +1,29 @@
+.settingsAuthenticationWrapper{
+
+  #sessionTimeoutOuter{
+    h3 {
+      font-size: 0.875rem;
+    }
+  }
+
+  .sessionTimeoutInnerWrapper{
+    display: flex;
+    column-gap: 10px;
+  }
+  .settingAuthenticationRow{
+
+    .bx--form-item{
+      margin-bottom: 20px;
+    }
+    .externalAuthenticationSettingsWrapper{
+      .bx--fieldset{
+        margin-top: 10px;
+        margin-bottom: 0px;
+
+        .bx--label{
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
