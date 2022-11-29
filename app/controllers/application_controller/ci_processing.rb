@@ -446,6 +446,7 @@ module ApplicationController::CiProcessing
     generic_button_operation('vm_destroy', _('Terminate'), vm_button_action)
   end
   alias instance_terminate terminatevms
+  alias vm_terminate terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
