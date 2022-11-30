@@ -1175,6 +1175,7 @@ Rails.application.routes.draw do
 
     :ems_physical_infra                => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         protect

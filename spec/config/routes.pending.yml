@@ -542,6 +542,7 @@ EmsNetworkController:
 - tl_chooser
 - wait_for_task
 EmsPhysicalInfraController:
+- dialog_load
 - dialog_field_changed
 - dialog_form_button_pressed
 - dynamic_checkbox_refresh
