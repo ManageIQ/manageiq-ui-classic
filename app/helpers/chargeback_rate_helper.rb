@@ -40,7 +40,7 @@ module ChargebackRateHelper
         @cur_group = detail.chargeable_field[:group]
       end
       num_tiers = detail.chargeback_tiers.to_a.blank? ? "1" : tiers.to_a.length.to_s
-      cells.push({:text => h(rate_detail_group(detail.chargeable_field[:group]))})
+      cells.push({:text => rate_detail_group(detail.chargeable_field[:group])})
       cells.push({:text => [
         _(detail.chargeable_field[:description]), 
         Dictionary.gettext(detail.chargeable_field.metric_key, :type => :column, :notfound => :titleize)

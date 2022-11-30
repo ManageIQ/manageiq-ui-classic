@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { shallow } from 'enzyme';
 import MiqDataTable from '../../components/miq-data-table';
 import {
-  simpleData, containerNodesData, hostData, catalogData, timeProfileReportsData, chargebackRateData,
+  simpleData, containerNodesData, hostData, catalogData, timeProfileReportsData, chargebackRateData, complexTableData
 } from './data';
 
 describe('Data table component', () => {
@@ -21,6 +21,17 @@ describe('Data table component', () => {
 
   it('should render a simple non-clickable data table', () => {
     const { miqHeaders, miqRows } = timeProfileReportsData();
+    const wrapper = shallow(<MiqDataTable
+      headers={miqHeaders}
+      rows={miqRows}
+      mode="list"
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render strings without double escaping strings', () => {
+    const onClick = jest.fn();
+    const { miqHeaders, miqRows } = complexTableData();
     const wrapper = shallow(<MiqDataTable
       headers={miqHeaders}
       rows={miqRows}
