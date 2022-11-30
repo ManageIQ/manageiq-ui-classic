@@ -3,14 +3,15 @@
                          :tabLabels => catalog_tab_edit_generic_configuration,
                          :type => 'CATALOG_EDIT'})
 
-#catalog-tabs-generic-edit.miq_custom_tabs_container
-  %form.form-horizontal#form_div{"name" => "angularForm",
-                                "ng-controller" => "catalogItemFormController as vm",
-                                "miq-form" => 'true',
-                                "model" => "vm.catalogItemModel",
-                                "model-copy" => 'vm.modelCopy',
-                                "ng-cloak" => ''}
-    = render :partial => "layouts/flash_msg"
+
+%form.form-horizontal#form_div{"name" => "angularForm",
+                              "ng-controller" => "catalogItemFormController as vm",
+                              "miq-form" => 'true',
+                              "model" => "vm.catalogItemModel",
+                              "model-copy" => 'vm.modelCopy',
+                              "ng-cloak" => ''}
+  = render :partial => "layouts/flash_msg"
+  #catalog-tabs-generic-edit.miq_custom_tabs_container
     = catalog_tab_content(:basic) do
       %h3= _('Basic Information')
       %div{"ng-if" => "vm.afterGet"}
@@ -116,7 +117,7 @@
 
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
              :locals => {:record => @record, :ng_model => "vm.catalogItemModel"}
-    = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
   ManageIQ.angular.app.value('catalogItemFormId', '#{@record.id || "new"}');
