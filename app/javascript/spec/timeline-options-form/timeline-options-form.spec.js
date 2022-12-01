@@ -50,7 +50,7 @@ describe('Show Timeline Options form component', () => {
     });
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.find(Button)).toHaveLength(2);
+      expect(wrapper.find(Button)).toHaveLength(1);
       wrapper.find(Button).first().simulate('click');
       expect(submitSpy).toHaveBeenCalledTimes(0);
       done();
