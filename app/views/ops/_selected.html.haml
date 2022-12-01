@@ -1,6 +1,5 @@
 - rec = @record
 %div{:id => "selected_#{@sb[:active_tab].split('_').last}_div"}
-  %hr
   %h3
     = _("Selected Item")
   - if @sb[:diag_tree_type] == "roles"

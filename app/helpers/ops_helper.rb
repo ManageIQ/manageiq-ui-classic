@@ -101,4 +101,88 @@ module OpsHelper
     data[:rows] = rows
     miq_structured_list(data)
   end
+
+  def select_by_servers(record)
+    if record.instance_of?(MiqServer)
+      select_server_details(record)
+    else
+      data = {:mode => "selected_server_role_details"}
+      rows = [
+        {:cells => [{:icon => "ff ff-user-role settings-icn"}]},
+        row_data(_('Role'), "#{record.server_role.description} on Server: #{record.miq_server.name} [#{record.miq_server.id}]")
+      ]
+      status = _("unavailable")
+      if record.miq_server.started?
+        status = record.active ? _("active") : _("available")
+      end
+      rows.push(row_data(_('Status'), status))
+      priority = server_priority(record)
+      rows.push(row_data(_('Priority'), priority))
+
+      max = record.server_role.max_concurrent
+      rows.push(row_data(_('Max Concurrent'), max == 0 ? _("unlimited") : max))
+
+      data[:rows] = rows
+      miq_structured_list(data)
+    end
+  end
+
+  def select_by_roles(record)
+    if record.instance_of?(ServerRole)
+      data = {:mode => "selected_server_by_role_details"}
+      rows = [{:cells => [{:icon => "ff ff-user-role settings-icn"}]},
+              row_data(_('Role'), record.description)]
+      status = record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped"
+      rows.push(row_data(_('Status'), status))
+      max = record.max_concurrent
+      rows.push(row_data(_('Max Concurrent'), max == 0 ? _("unlimited") : max))
+
+      data[:rows] = rows
+      miq_structured_list(data)
+    else
+      select_server_details(record.miq_server, record)
+    end
+  end
+
+  def select_server_details(record, role = nil)
+    data = {:mode => "selected_server_roles"}
+    rows = [
+      {:cells => [{:icon => "pficon pficon-server settings-icn"}]},
+      row_data(_('Server'), "#{record.name}(#{record.id})"),
+      row_data(_('Hostname'), record[:hostname]),
+      row_data(_('IP Address'), record[:ipaddress]),
+      row_data(_('Status'), record[:status]),
+      row_data(_('Process ID'), record[:pid])
+    ]
+    priority = server_priority(role)
+    rows.push(row_data(_('Priority'), priority))
+    started_on = record.started_on
+    stopped_on = record.stopped_on
+    rows.push(row_data(_('Started On'), started_on.blank? ? "" : format_timezone(started_on)))
+    rows.push(row_data(_('Stopped On'), stopped_on.blank? ? "" : format_timezone(stopped_on)))
+    rows.push(row_data(_('Memory Usage'), record[:memory_usage]))
+    rows.push(row_data(_('Memory Size'), record[:memory_size]))
+    rows.push(row_data(_('CPU Time'), record[:cpu_time]))
+    rows.push(row_data(_('CPU Percent'), record[:percent_cpu]))
+    rows.push(row_data(_('Version / Build'), record[:version]))
+    data[:rows] = rows
+    miq_structured_list(data)
+  end
+
+  def server_priority(record)
+    if record&.master_supported?
+      case record.priority
+      when 1
+        "primary"
+      when 2
+        "secondary"
+      else
+        "normal"
+      end
+    end
+  end
+
+  def row_data(label, value)
+    {:cells => {:label => label, :value => value}}
+  end
 end
