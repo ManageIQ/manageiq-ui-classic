@@ -12,6 +12,7 @@ import { diagnosticSettingsListData } from '../textual_summary/data/diagnostic_s
 import { catalogListData } from '../textual_summary/data/catalog_list';
 import { miqAeClassListData } from '../textual_summary/data/miq_ae_class_list';
 import { miqAePolicyListData } from '../textual_summary/data/miq_ae_policy_list';
+import { miqAlertListData } from '../textual_summary/data/miq_alert_list';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -98,6 +99,17 @@ describe('Structured list component', () => {
       rows={tableListViewData.items}
       title={tableListViewData.title}
       mode="table_list_view"
+      onClick={onClick}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render miq_alert_show page without double escaping strings', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(<MiqStructuredList
+      rows={miqAlertListData.items}
+      title={miqAlertListData.title}
+      mode={miqAlertListData.mode}
       onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();

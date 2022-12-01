@@ -199,7 +199,7 @@ module MiqAlertHelper
     else
       alert_profiles.each do |ap|
         rows.push({
-                    :cells   => [{:icon => 'pficon pficon-warning-triangle-o', :value => h(ap.description)}],
+                    :cells   => [{:icon => 'pficon pficon-warning-triangle-o', :value => ap.description}],
                     :title   => _("View this Alert Profile"),
                     :onclick => "DoNav('/miq_alert_set/show/#{ap.id}');",
                   })
