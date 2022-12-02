@@ -252,6 +252,15 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :confirm => N_("Reset this VM?"),
           :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :reset}),
+        button(
+          :vm_terminate,
+          nil,
+          N_('Delete this VM'),
+          N_('Delete'),
+          :icon    => "pficon pficon-delete fa-lg",
+          :confirm => N_("Delete this VM?"),
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options => {:feature => :terminate}),
       ]
     ),
   ])
