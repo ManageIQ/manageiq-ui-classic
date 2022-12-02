@@ -2503,6 +2503,160 @@ exports[`Structured list component should render miq_alert_show page without dou
 </Accordion>
 `;
 
+exports[`Structured list component should render miq_reports_data without double escaping strings 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_policy_set"
+>
+  <AccordionItem
+    open={true}
+    title="Policies"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_policy_set"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Description
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                & Application SLA &
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title="View this Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="View this Policy"
+              >
+                <i
+                  className="pficon pficon-image"
+                  style={
+                    Object {
+                      "background": undefined,
+                      "color": undefined,
+                    }
+                  }
+                  title="View this Policy"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                description one &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title="View this Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="View this Policy"
+              >
+                <i
+                  className="pficon pficon-container-node"
+                  style={
+                    Object {
+                      "background": undefined,
+                      "color": undefined,
+                    }
+                  }
+                  title="View this Policy"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                description two &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="3"
+          onClick={[Function]}
+          tabIndex={3}
+          title="View this Policy"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="View this Policy"
+              >
+                <i
+                  className="pficon pficon-virtual-machine"
+                  style={
+                    Object {
+                      "background": undefined,
+                      "color": undefined,
+                    }
+                  }
+                  title="View this Policy"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                description three &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render settings list 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"
