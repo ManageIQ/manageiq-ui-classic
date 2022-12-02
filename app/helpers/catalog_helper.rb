@@ -102,18 +102,18 @@ module CatalogHelper
     rows = []
     rows.push(row_data(_('Name / Description'), "#{record.name} / #{record.description}"))
     rows.push(row_data(_('Display in Catalog'), {:input => "checkbox", :name => "display", :checked => record.display, :disabled => true, :label => ''}))
-    rows.push(row_data(_('Catalog'), h(record.service_template_catalog ? record.service_template_catalog.name : _('Unassigned'))))
+    rows.push(row_data(_('Catalog'), record.service_template_catalog ? record.service_template_catalog.name : _('Unassigned')))
     rows.push(row_data(_('Zone'), record.zone ? record.zone.name : '')) unless record.composite?
-    rows.push(row_data(_('Dialog'), h(sb_params[:dialog_label]))) unless catalog_provision?(record, :playbook)
+    rows.push(row_data(_('Dialog'), sb_params[:dialog_label])) unless catalog_provision?(record, :playbook)
     rows.push(row_data(_("Price / Month (in %{currency})") % {:currency => record.currency.code}, record.price)) if record.currency
-    rows.push(row_data(_('Item Type'), h(_(ServiceTemplate.all_catalog_item_types[record.prov_type])))) if record.prov_type
-    rows.push(row_data(_('Subtype'), h(_(ServiceTemplate::GENERIC_ITEM_SUBTYPES[record[:generic_subtype]]) || _("Custom")))) if catalog_provision?(record, :generic)
+    rows.push(row_data(_('Item Type'), _(ServiceTemplate.all_catalog_item_types[record.prov_type]))) if record.prov_type
+    rows.push(row_data(_('Subtype'), _(ServiceTemplate::GENERIC_ITEM_SUBTYPES[record[:generic_subtype]]) || _("Custom"))) if catalog_provision?(record, :generic)
 
     if catalog_provision?(record, :orchestration)
-      rows.push(row_data(_('Orchestration Template'), h(record.try(:orchestration_template).try(:name))))
-      rows.push(row_data(_('Provider'), h(record.orchestration_manager.name))) if record.orchestration_manager
+      rows.push(row_data(_('Orchestration Template'), record.try(:orchestration_template).try(:name)))
+      rows.push(row_data(_('Provider'), record.orchestration_manager.name)) if record.orchestration_manager
     elsif catalog_provision?(record, :tower)
-      rows.push(row_data(_('Ansible Tower Template'), h(record.try(:job_template).try(:name))))
+      rows.push(row_data(_('Ansible Tower Template'), record.try(:job_template).try(:name)))
     elsif catalog_provision?(record, :template)
       rows.push(row_data(_('Provider'), provision_data(prov_data, :provider_name)))
       rows.push(row_data(_('Container Template'), provision_data(prov_data, :template_name)))
@@ -125,13 +125,13 @@ module CatalogHelper
         entry_points.push([_("Reconfigure"), :reconfigure_fqname], [_("Retirement"), :retire_fqname])
       end
       entry_points.each do |entry_points_op|
-        rows.push(row_data("#{entry_points_op[0]} %s" % _('Entry Point'), h(sb_params[entry_points_op[1]])))
+        rows.push(row_data("#{entry_points_op[0]} %s" % _('Entry Point'), sb_params[entry_points_op[1]]))
       end
     end
 
-    rows.push(row_data(_('Tenant'), h(record.tenant.name))) if User.current_user.super_admin_user?
-    rows.push(row_data(_('Owner'), h(record.try(:evm_owner).try(:name))))
-    rows.push(row_data(_('Ownership Group'), h(record.try(:miq_group).try(:name))))
+    rows.push(row_data(_('Tenant'), record.tenant.name)) if User.current_user.super_admin_user?
+    rows.push(row_data(_('Owner'), record.try(:evm_owner).try(:name)))
+    rows.push(row_data(_('Ownership Group'), record.try(:miq_group).try(:name)))
     rows.push(row_data(_('Additional Tenants'), {:input => 'component', :component => 'TREE_VIEW_REDUX', :props => tenants_tree.locals_for_render})) if role_allows?(:feature => 'rbac_tenant_view')
 
     if catalog_provision?(record, :ovf)
@@ -189,16 +189,16 @@ module CatalogHelper
     list_type = type == :provision ? 'provisioning' : 'retirement'
     data = {:title => "#{list_type.camelize} %s" % _('Info'), :mode => "miq_catalog_playbook_info"}
     rows = []
-    rows.push(row_data(_('Repository'), h(info[:repository])))
-    rows.push(row_data(_('Playbook'), h(info[:playbook])))
-    rows.push(row_data(_('Machine Credential'), h(info[:machine_credential])))
-    rows.push(row_data(_('Vault Credential'), h(info[:vault_credential])))
-    rows.push(row_data(_('Vault Credential'), h(info[:vault_credential])))
-    rows.push(row_data(_('Cloud Credential'), h(info[:cloud_credential])))
-    rows.push(row_data(_('Max TTL (mins)'), h(record.config_info[type][:execution_ttl])))
-    rows.push(row_data(_('Hosts'), h(record.config_info[type][:hosts])))
-    rows.push(row_data(_('Logging Output'), h(ViewHelper::LOG_OUTPUT_LEVELS[info[:log_output]])))
-    rows.push(row_data(_('Escalate Privilege'), h(info[:become_enabled])))
+    rows.push(row_data(_('Repository'), info[:repository]))
+    rows.push(row_data(_('Playbook'), info[:playbook]))
+    rows.push(row_data(_('Machine Credential'), info[:machine_credential]))
+    rows.push(row_data(_('Vault Credential'), info[:vault_credential]))
+    rows.push(row_data(_('Vault Credential'), info[:vault_credential]))
+    rows.push(row_data(_('Cloud Credential'), info[:cloud_credential]))
+    rows.push(row_data(_('Max TTL (mins)'), record.config_info[type][:execution_ttl]))
+    rows.push(row_data(_('Hosts'), record.config_info[type][:hosts]))
+    rows.push(row_data(_('Logging Output'), ViewHelper::LOG_OUTPUT_LEVELS[info[:log_output]]))
+    rows.push(row_data(_('Escalate Privilege'), info[:become_enabled]))
     rows.push(row_data(_('Verbosity'), _(ViewHelper::VERBOSITY_LEVELS[info[:verbosity]])))
     data[:rows] = rows
     miq_structured_list(data)

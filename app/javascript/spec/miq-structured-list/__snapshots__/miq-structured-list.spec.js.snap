@@ -1973,6 +1973,104 @@ exports[`Structured list component should render a tag_group table 1`] = `
 </Accordion>
 `;
 
+exports[`Structured list component should render catalog_data with escaped strings 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion catalog_list_view"
+>
+  <AccordionItem
+    open={true}
+    title="Basic Information"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list catalog_list_view"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Name / Description
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                GCE Catalog item / Test &
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Catalog
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                My Own && Catalog
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Zone
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                Google
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render settings list 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"
