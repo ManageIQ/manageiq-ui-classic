@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const accountSettings = () => [
+const accountSettings = (onFieldChange) => [
   {
     component: componentTypes.SUB_FORM,
     id: 'amazonAuthenticationSettings',
@@ -10,16 +10,18 @@ const accountSettings = () => [
     fields: [
       {
         component: componentTypes.TEXT_FIELD,
-        id: 'authentication_amazon_key',
-        name: 'authentication_amazon_key',
+        id: 'amazon_key',
+        name: 'amazon_key',
         label: __('Access Key'),
+        onKeyUp: (event) => onFieldChange(event.target),
       },
       {
         component: componentTypes.TEXT_FIELD,
-        id: 'authentication_amazon_secret',
-        name: 'authentication_amazon_secret',
+        id: 'amazon_secret',
+        name: 'amazon_secret',
         label: __('Secret Key'),
         type: 'password',
+        onKeyUp: (event) => onFieldChange(event.target),
       },
     ],
   },
@@ -44,7 +46,17 @@ const roleSettings = () => [
   },
 ];
 
-const amazonAuthenticationSchema = (type) => [
+const validateCredentials = (initialValue) => {
+  console.log('initialValue===============', initialValue);
+  return ({
+    component: 'settings-authentication-provider-validator',
+    id: 'settings-authentication-provider-validator',
+    name: 'settings-authentication-provider-validator',
+    initialValue,
+  });
+};
+
+const amazonAuthenticationSchema = (type, initialValue, onFieldChange) => [
   {
     component: componentTypes.SUB_FORM,
     id: 'amazonSettings',
@@ -55,8 +67,9 @@ const amazonAuthenticationSchema = (type) => [
       is: type,
     },
     fields: [
-      accountSettings(),
+      accountSettings(onFieldChange),
       roleSettings(),
+      validateCredentials(initialValue),
     ],
   },
 ];

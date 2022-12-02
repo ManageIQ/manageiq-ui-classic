@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import createSchema from './settings-authentication-form-schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
+import mapper from '../../forms/mappers/componentMapper';
+import SettingsAuthenticationProviderValidator from '../settings-authentication-provider-validator';
 
 const SettingsAuthenticationForm = ({ id, sessionData }) => {
+  console.log('sessionData=', sessionData);
   const [data, setData] = useState({
     isLoading: true,
     initialValue: sessionData,
+    validate: false,
   });
 
   useEffect(() => {
@@ -36,12 +40,31 @@ const SettingsAuthenticationForm = ({ id, sessionData }) => {
     }
   };
 
-  console.log('data=', data);
+  const onModeChange = (value) => {
+    const status = value !== 'amazon';
+    setData({ ...data, validation: status });
+  };
+
+  const onFieldChange = ({ name, value }) => {
+    console.log('onFieldChange----------------------', name, value);
+    data.initialValue[name] = value;
+    console.log('data=', data.initialValue);
+    setData({
+      ...data,
+      initialValue: { ...data.initialValue },
+    });
+  };
+
+  const componentMapper = {
+    ...mapper,
+    'settings-authentication-provider-validator': SettingsAuthenticationProviderValidator,
+  };
 
   return (
     <MiqFormRenderer
+      componentMapper={componentMapper}
       initialValues={data.initialValue}
-      schema={createSchema()}
+      schema={createSchema(onModeChange, data.initialValue, onFieldChange)}
       canReset={!!id}
       onSubmit={onSubmit}
       buttonsLabels={{

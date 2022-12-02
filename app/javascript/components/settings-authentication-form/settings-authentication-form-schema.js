@@ -48,15 +48,16 @@ const sessionTimeout = () => [
   },
 ];
 
-const mode = () => ({
+const mode = (onModeChange) => ({
   component: componentTypes.SELECT,
   id: 'authentication_mode',
   name: 'mode',
   options: modes(),
   label: __('Mode'),
+  onChange: (value) => onModeChange(value),
 });
 
-const createSchema = () => {
+const createSchema = (onModeChange, initialValue, onFieldChange) => {
   const fields = [
     {
       component: componentTypes.SUB_FORM,
@@ -66,8 +67,8 @@ const createSchema = () => {
       title: __('Authentication'),
       fields: [
         sessionTimeout(),
-        mode(),
-        amazonAuthenticationSchema('amazon'),
+        mode(onModeChange),
+        amazonAuthenticationSchema('amazon', initialValue, onFieldChange),
         externalAuthenticationSchema('httpd'),
       ],
     },
