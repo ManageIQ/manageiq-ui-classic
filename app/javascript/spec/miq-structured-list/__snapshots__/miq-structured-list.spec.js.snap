@@ -2071,6 +2071,130 @@ exports[`Structured list component should render catalog_data with escaped strin
 </Accordion>
 `;
 
+exports[`Structured list component should render miq policy data without double escaping strings 1`] = `
+<FeatureToggle(StructuredListWrapper)
+  ariaLabel="Structured list"
+  className="miq-structured-list miq_policy_details"
+>
+  <FeatureToggle(StructuredListBody)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="0"
+      onClick={[Function]}
+      tabIndex={0}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Active
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            Yes &
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="1"
+      onClick={[Function]}
+      tabIndex={1}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Created
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            By Username Thor Odinson && at 2020-10-10 15T $UTC
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className=""
+      key="2"
+      onClick={[Function]}
+      tabIndex={2}
+      title=""
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header"
+      >
+        Last Updated
+      </FeatureToggle(StructuredListCell)>
+      <FeatureToggle(StructuredListCell)
+        className="content_value object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="expand wrap_text"
+          >
+            By Username Lord Loki && at 2020-10-10 15T $UTC &
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+    <FeatureToggle(StructuredListRow)
+      className="clickable"
+      key="3"
+      onClick={[Function]}
+      tabIndex={3}
+      title="View this Action"
+    >
+      <FeatureToggle(StructuredListCell)
+        className="label_header object_item"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="cell icon"
+            title="View this Action"
+          >
+            <i
+              className="pficon pficon-close"
+              style={
+                Object {
+                  "background": undefined,
+                  "color": undefined,
+                }
+              }
+              title="View this Action"
+            />
+          </div>
+          <div
+            className="expand wrap_text"
+          >
+            Test &&
+          </div>
+        </div>
+      </FeatureToggle(StructuredListCell)>
+    </FeatureToggle(StructuredListRow)>
+  </FeatureToggle(StructuredListBody)>
+</FeatureToggle(StructuredListWrapper)>
+`;
+
 exports[`Structured list component should render miq_ae_class_list_view with escaped strings 1`] = `
 <Accordion
   align="start"

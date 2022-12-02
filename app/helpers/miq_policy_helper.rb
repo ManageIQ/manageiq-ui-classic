@@ -9,10 +9,10 @@ module MiqPolicyHelper
   def miq_summary_policy_basic_information(record)
     rows = []
     data = {:title => _('Basic Information'), :mode => "miq_policy_basic_information"}
-    rows.push({:cells => {:label => _('Active'), :value => h(record.active ? _("Yes") : _("No"))}})
-    rows.push({:cells => {:label => _('Created'), :value => h(_("By Username %{username} %{created_on}") % {:username => record.created_by || _("N/A"), :created_on => format_timezone(record.created_on, session[:user_tz], "gtl")})}})
+    rows.push({:cells => {:label => _('Active'), :value => record.active ? _("Yes") : _("No")}})
+    rows.push({:cells => {:label => _('Created'), :value => _("By Username %{username} %{created_on}") % {:username => record.created_by || _("N/A"), :created_on => format_timezone(record.created_on, session[:user_tz], "gtl")}}})
     if @record.created_on != @record.updated_on
-      rows.push({:cells => {:label => _("Last Updated"), :value => h(_("By Username %{username} %{updated_on}") % {:username => record.updated_by || _("N/A"), :updated_on => format_timezone(record.updated_on, session[:user_tz], "gtl")})}})
+      rows.push({:cells => {:label => _("Last Updated"), :value => _("By Username %{username} %{updated_on}") % {:username => record.updated_by || _("N/A"), :updated_on => format_timezone(record.updated_on, session[:user_tz], "gtl")}}})
     end
     data[:rows] = rows
     miq_structured_list(data)
@@ -23,11 +23,7 @@ module MiqPolicyHelper
     data = {:title => _('Scope'), :mode => "miq_policy_scope"}
     if !expression_table.nil?
       expression_table.each do |token|
-        if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-          rows.push({:cells => {:label => _(''), :value => h([token].flatten.first)}})
-        else
-          rows.push({:cells => {:label => _(''), :value => h([token].flatten.first)}})
-        end
+        rows.push({:cells => {:label => _(''), :value => [token].flatten.first}})
       end
     else
       data[:message] = _("No Policy scope defined, the scope of this policy includes all elements.")
@@ -47,9 +43,9 @@ module MiqPolicyHelper
         cells = [{:icon => c.decorate.fonticon, :value => c.description}]
         value = []
         if c.applies_to_exp.present?
-          value.push({:label => _("Scope"), :value => h(MiqExpression.to_human(c.applies_to_exp))})
+          value.push({:label => _("Scope"), :value => MiqExpression.to_human(c.applies_to_exp)})
         end
-        value.push({:label => _("Expression"), :value => h(MiqExpression.to_human(c.expression))})
+        value.push({:label => _("Expression"), :value => MiqExpression.to_human(c.expression)})
         cells.push(value)
         rows.push({
                     :cells   => cells,
@@ -73,7 +69,7 @@ module MiqPolicyHelper
         obj = {}
         obj['cells'] = [{
           :icon    => e.decorate.try(:fonticon),
-          :value   => h(e.description),
+          :value   => e.description,
           :title   => _("View this Event"),
           :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"
         }]
@@ -82,7 +78,7 @@ module MiqPolicyHelper
         ta.each do |a|
           values.push({:value => {
                         :icon    => "pficon pficon-ok",
-                        :value   => h(a.description),
+                        :value   => a.description,
                         :title   => _("View this Action"),
                         :onclick => "DoNav('/miq_action/show/#{a.id}');"
                       }})
@@ -91,7 +87,7 @@ module MiqPolicyHelper
         fa.each do |a|
           values.push({:value => {
                         :icon    => "pficon pficon-close",
-                        :value   => h(a.description),
+                        :value   => a.description,
                         :title   => _("View this Action"),
                         :onclick => "DoNav('/miq_action/show/#{a.id}');"
                       }})
