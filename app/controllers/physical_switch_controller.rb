@@ -67,4 +67,11 @@ class PhysicalSwitchController < ApplicationController
     super
   end
 
+  def button
+    if params[:pressed] == "custom_button"
+      custom_buttons
+    end
+  end
+
+  has_custom_buttons
 end

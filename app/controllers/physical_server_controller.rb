@@ -63,10 +63,13 @@ class PhysicalServerController < ApplicationController
 
     return if %w[physical_server_protect physical_server_tag].include?(params[:pressed]) &&
               @flash_array.nil? # Some other screen is showing, so return
-    if params[:pressed] == "physical_server_timeline"
+    case params[:pressed]
+    when "physical_server_timeline"
       @record = find_record_with_rbac(PhysicalServer, params[:id])
       show_timeline
       javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
+    when "custom_button"
+      custom_buttons
     end
   end
 
@@ -158,4 +161,5 @@ class PhysicalServerController < ApplicationController
     super
   end
 
+  has_custom_buttons
 end
