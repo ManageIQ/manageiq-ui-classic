@@ -2293,6 +2293,62 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
 </Accordion>
 `;
 
+exports[`Structured list component should render miq_alert_show page without double escaping strings 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_alert_id"
+>
+  <AccordionItem
+    open={true}
+    title="Belongs to Alert profiles"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_alert_id"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className="clickable"
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title="View this Alert Profile"
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="cell icon"
+                title="View this Alert Profile"
+              >
+                <i
+                  className="pficon pficon-warning-triangle-o"
+                  style={
+                    Object {
+                      "background": undefined,
+                      "color": undefined,
+                    }
+                  }
+                  title="View this Alert Profile"
+                />
+              </div>
+              <div
+                className="expand wrap_text"
+              >
+                view this &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render settings list 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"
