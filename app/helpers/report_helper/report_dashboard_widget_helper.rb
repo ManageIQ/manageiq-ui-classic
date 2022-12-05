@@ -33,8 +33,8 @@ module ReportHelper::ReportDashboardWidgetHelper
     current_status = glyphicon ? [{:icon => glyphicon, :value => _(widget.status)}] : _(widget.status)
     data[:rows] = [
       row_data(_('Current Status'), current_status),
-      row_data(_('Last Run Time'), h(widget.last_run_on ? format_timezone(widget.last_run_on, timezone, "view") : "")),
-      row_data(_('Message'), h(widget.status_message))
+      row_data(_('Last Run Time'), widget.last_run_on ? format_timezone(widget.last_run_on, timezone, "view") : ""),
+      row_data(_('Message'), widget.status_message)
     ]
     miq_structured_list(data)
   end
@@ -54,14 +54,14 @@ module ReportHelper::ReportDashboardWidgetHelper
     data = {:title => _('Report Options'), :mode => "miq_widget_report_options"}
     rows = []
     if widget.resource
-      rows.push(row_data(_('Report Filter'), h(widget.resource.name)))
+      rows.push(row_data(_('Report Filter'), widget.resource.name))
     else
       rows.push(row_data(_('Report Filter'), "*** %s ***" % _('Report no longer exists'), 'color_red'))
     end
     sb_data[:col_order].each_with_index do |col, idx|
-      rows.push(row_data("%s #{idx + 1}" % _('Column'), h(col)))
+      rows.push(row_data("%s #{idx + 1}" % _('Column'), col))
     end
-    rows.push(row_data(_('Row Count'), h(widget.row_count)))
+    rows.push(row_data(_('Row Count'), widget.row_count.to_s))
     data[:rows] = rows
     miq_structured_list(data)
   end
@@ -70,7 +70,7 @@ module ReportHelper::ReportDashboardWidgetHelper
     data = {:title => _('Chart Options'), :mode => "miq_widget_report_options"}
     rows = []
     if widget.resource
-      rows.push(row_data(_('Filter'), h(widget.resource.title)))
+      rows.push(row_data(_('Filter'), widget.resource.title))
     else
       rows.push(row_data(_('Filter'), "*** %s ***" % _('Chart no longer exists'), 'color_red'))
     end
@@ -82,7 +82,7 @@ module ReportHelper::ReportDashboardWidgetHelper
     data = {:title => _('Menu Shortcuts'), :mode => "miq_widget_menu_shortcuts"}
     rows = []
     widget.miq_widget_shortcuts.order("sequence").each_with_index do |_ws, wsi|
-      rows.push(row_data('', h(widget.description))) unless wsi == 0
+      rows.push(row_data('', widget.description)) unless wsi == 0
     end
     data[:rows] = rows
     miq_structured_list(data)
@@ -94,8 +94,8 @@ module ReportHelper::ReportDashboardWidgetHelper
       data = {:title => _('Timer'), :mode => "miq_widget_timer"}
       rows = []
       if schedule.kind_of?(MiqSchedule)
-        rows.push(row_data(_('Run At'), h(schedule.run_at_to_human(timezone).to_s)))
-        run_time = schedule.next_run_on.blank? ? '' : h(format_timezone(schedule.next_run_on, timezone, "view"))
+        rows.push(row_data(_('Run At'), schedule.run_at_to_human(timezone).to_s))
+        run_time = schedule.next_run_on.blank? ? '' : format_timezone(schedule.next_run_on, timezone, "view")
         rows.push(row_data(_('Next Run Time'), run_time))
         data[:rows] = rows
       else
