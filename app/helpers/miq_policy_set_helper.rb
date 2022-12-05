@@ -1,7 +1,7 @@
 module MiqPolicySetHelper
   def miq_summary_policy_set_info(record)
     data = {:title => _("Basic Information"), :mode => "miq_policy_set_info"}
-    data[:rows] = [{:cells => {:label => _("Description"), :value => h(record.description)}}]
+    data[:rows] = [{:cells => {:label => _("Description"), :value => record.description}}]
     miq_structured_list(data)
   end
 
@@ -13,7 +13,7 @@ module MiqPolicySetHelper
     else
       profile_policies.each do |p|
         cells = [{:icon => p.decorate.fonticon, :bold => true, :value => "#{ui_lookup(:model => p.towhat)} #{p.mode.capitalize}"}]
-        cells.push(h(p.description))
+        cells.push(p.description)
         rows.push({
                     :cells   => cells,
                     :title   => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
