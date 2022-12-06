@@ -1597,6 +1597,78 @@ exports[`Structured list component should render a operation_range table 1`] = `
 </Accordion>
 `;
 
+exports[`Structured list component should render a report_information page without double escaping strings 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_report_schedules"
+>
+  <AccordionItem
+    open={true}
+    title="report_information"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_report_schedules"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Last Run Time
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                & 2022-12-07 02:00:00 UTC &
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Next Run Time
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                & 2022-12-07 02:00:00 UTC &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render a simple_table 1`] = `
 <Accordion
   align="start"

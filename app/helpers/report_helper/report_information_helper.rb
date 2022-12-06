@@ -50,8 +50,8 @@ module ReportHelper::ReportInformationHelper
           {:value => s.description},
           {:value => _(s.enabled)},
           {:value => s.run_at[:interval][:unit]},
-          {:value => s.last_run_on ? h(format_timezone(s.last_run_on, tz, "gtl")) : ""},
-          {:value => s.next_run_on ? h(format_timezone(s.next_run_on, tz, "gtl")) : ""},
+          {:value => s.last_run_on ? format_timezone(s.last_run_on, tz, "gtl") : ""},
+          {:value => s.next_run_on ? format_timezone(s.next_run_on, tz, "gtl") : ""},
           {:value => s.v_zone_name},
         ]
         cells.push({:value => s.userid}) if super_admin_user?
@@ -79,7 +79,7 @@ module ReportHelper::ReportInformationHelper
         widget_action = role_allows?(:feature => 'miq_report_widget_editor') ? report_action_url("xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{w.id}", "widgets") : ""
         rows.push({
                     :cells   => [
-                      {:value => h(w.title), :icon => "fa fa-file-text-o"},
+                      {:value => w.title, :icon => "fa fa-file-text-o"},
                       {:value => w.description},
                       {:value => _(w.enabled)},
                     ],
