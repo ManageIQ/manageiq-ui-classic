@@ -73,12 +73,6 @@ const TimelineOptions = ({ url }) => {
     window.miqJqueryRequest(url, { beforeSend: true, data: vmData });
   };
 
-  const onReset = () => {
-    setState((state) => ({
-      ...state,
-    }));
-  };
-
   return !isLoading && (
     <>
       <MiqFormRenderer
@@ -87,8 +81,7 @@ const TimelineOptions = ({ url }) => {
           timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels,
         )}
         onSubmit={onSubmit}
-        onReset={onReset}
-        canReset
+        buttonsLabels={{ submitLabel: __('Apply') }}
       />
     </>
   );

@@ -21,7 +21,11 @@ exports[`Show Timeline Options form component should render form 1`] = `
     url="sample/url"
   >
     <Connect(MiqFormRenderer)
-      canReset={true}
+      buttonsLabels={
+        Object {
+          "submitLabel": "Apply",
+        }
+      }
       componentMapper={
         Object {
           "checkbox": [Function],
@@ -51,7 +55,6 @@ exports[`Show Timeline Options form component should render form 1`] = `
           "wizard": [Function],
         }
       }
-      onReset={[Function]}
       onSubmit={[Function]}
       schema={
         Object {
@@ -272,8 +275,12 @@ exports[`Show Timeline Options form component should render form 1`] = `
       }
     >
       <MiqFormRenderer
-        buttonsLabels={Object {}}
-        canReset={true}
+        buttonsLabels={
+          Object {
+            "submitLabel": "Apply",
+          }
+        }
+        canReset={false}
         className="form-react"
         componentMapper={
           Object {
@@ -311,7 +318,6 @@ exports[`Show Timeline Options form component should render form 1`] = `
           ]
         }
         dispatch={[Function]}
-        onReset={[Function]}
         onSubmit={[Function]}
         schema={
           Object {
@@ -1273,7 +1279,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
               }
             >
               <WrappedFormTemplate
-                canReset={true}
+                canReset={false}
                 cancelLabel="Cancel"
                 disableSubmit={
                   Array [
@@ -1733,7 +1739,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                   }
                 }
                 showFormControls={true}
-                submitLabel="Save"
+                submitLabel="Apply"
               >
                 <FormTemplate
                   Button={[Function]}
@@ -1749,7 +1755,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                       "cancel",
                     ]
                   }
-                  canReset={true}
+                  canReset={false}
                   cancelLabel="Cancel"
                   disableSubmit={
                     Array [
@@ -2209,7 +2215,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                     }
                   }
                   showFormControls={true}
-                  submitLabel="Save"
+                  submitLabel="Apply"
                 >
                   <Form
                     className="form-react"
@@ -4810,7 +4816,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                               ]
                             }
                             buttonsProps={Object {}}
-                            canReset={true}
+                            canReset={false}
                             canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
@@ -5339,7 +5345,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                                 ],
                               }
                             }
-                            submitLabel="Save"
+                            submitLabel="Apply"
                           >
                             <ButtonGroup>
                               <ButtonSet
@@ -5352,7 +5358,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                                     buttonType="submit"
                                     disabled={true}
                                     key="form-submit"
-                                    label="Save"
+                                    label="Apply"
                                     type="submit"
                                     variant="primary"
                                   >
@@ -5376,38 +5382,7 @@ exports[`Show Timeline Options form component should render form 1`] = `
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Save
-                                      </button>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="reset"
-                                    disabled={true}
-                                    key="form-reset"
-                                    label="Reset"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
-                                        disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
-                                        type="button"
-                                      >
-                                        Reset
+                                        Apply
                                       </button>
                                     </Button>
                                   </Button>
