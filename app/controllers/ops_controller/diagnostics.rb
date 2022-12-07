@@ -736,16 +736,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def database_details
-    @database_details = ActiveRecord::Base.configurations[Rails.env]
-    @database_display_name =
-      if @database_details["host"].in?([nil, "", "localhost", "127.0.0.1"])
-        _("Internal Database")
-      else
-        _("External Database")
-      end
-  end
-
   def orphaned_records_get
     @sb[:orphaned_records] = MiqReportResult.orphaned_counts_by_userid
   end
