@@ -50,7 +50,8 @@
         .col-md-12.no-padding
           = render :partial => 'layouts/x_form_buttons'
           .row#paging_div{:style => saved_report_paging? ? "" : "display: none"}
-
+            - if saved_report_paging?
+              = render(:partial => 'layouts/saved_report_paging_bar', :locals => {:pages => @sb[:pages]})
 - elsif layout_full_center
   = render :partial => layout_full_center
 - else
