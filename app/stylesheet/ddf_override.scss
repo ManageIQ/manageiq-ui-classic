@@ -4,6 +4,27 @@
   }
 }
 
+#dateSelectors {
+  display: flex;
+  gap: 2%;
+}
+
+#managementEvents {
+  display: flex;
+  gap: 2%;
+  flex-direction: row;
+
+  .bx--multi-select__wrapper.bx--list-box__wrapper {
+    flex-grow: 1;
+  }
+}
+
+#policyEvents {
+  .bx--multi-select__wrapper.bx--list-box__wrapper {
+    margin-bottom: 2rem;
+  }
+}
+
 #dual-list-sub-form-catalog {
   #move-right, #move-all-right, #move-all-left, #move-left {
     svg {
