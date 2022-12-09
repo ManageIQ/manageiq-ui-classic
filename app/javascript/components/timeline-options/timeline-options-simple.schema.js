@@ -24,87 +24,101 @@ const createSchemaSimple = (
         // Managment Events //
         /// ///////////////////
         {
-          component: componentTypes.SELECT,
-          id: 'managementGroupNames',
-          name: 'managementGroupNames',
-          label: __('Category Managements'),
-          options: managementGroupNames,
-          isMulti: true,
-          isSearchable: true,
-          isClearable: true,
-          simpleValue: true,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          condition: {
-            and: [
-              {
-                when: 'timelineEvents',
-                is: 'EmsEvent',
+          component: componentTypes.SUB_FORM,
+          id: 'managementEvents',
+          name: 'managementEvents',
+          fields: [
+            {
+              component: componentTypes.SELECT,
+              id: 'managementGroupNames',
+              name: 'managementGroupNames',
+              label: __('Category Managements'),
+              options: managementGroupNames,
+              isMulti: true,
+              isSearchable: true,
+              isClearable: true,
+              simpleValue: true,
+              validate: [{ type: validatorTypes.REQUIRED }],
+              isRequired: true,
+              condition: {
+                and: [
+                  {
+                    when: 'timelineEvents',
+                    is: 'EmsEvent',
+                  },
+                ],
               },
-            ],
-          },
-        },
-        {
-          component: componentTypes.SELECT,
-          id: 'managementGroupLevels',
-          name: 'managementGroupLevels',
-          label: __('Levels Management'),
-          options: managementGroupLevels,
-          isMulti: true,
-          isSearchable: true,
-          isClearable: true,
-          simpleValue: true,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          condition: {
-            and: [
-              {
-                when: 'timelineEvents',
-                is: 'EmsEvent',
+            },
+            {
+              component: componentTypes.SELECT,
+              id: 'managementGroupLevels',
+              name: 'managementGroupLevels',
+              label: __('Levels Management'),
+              options: managementGroupLevels,
+              isMulti: true,
+              isSearchable: true,
+              isClearable: true,
+              simpleValue: true,
+              validate: [{ type: validatorTypes.REQUIRED }],
+              isRequired: true,
+              condition: {
+                and: [
+                  {
+                    when: 'timelineEvents',
+                    is: 'EmsEvent',
+                  },
+                ],
               },
-            ],
-          },
+            },
+          ],
         },
         /// ///////////////
         // Policy Events //
         /// ///////////////
         {
-          component: componentTypes.SELECT,
-          id: 'policyGroupNames',
-          name: 'policyGroupNames',
-          label: __('Category Policy'),
-          options: policyGroupNames,
-          isMulti: true,
-          isSearchable: true,
-          isClearable: true,
-          simpleValue: true,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          condition: {
-            and: [
-              {
-                when: 'timelineEvents',
-                is: 'MiqEvent',
+          component: componentTypes.SUB_FORM,
+          id: 'policyEvents',
+          name: 'policyEvents',
+          fields: [
+            {
+              component: componentTypes.SELECT,
+              id: 'policyGroupNames',
+              name: 'policyGroupNames',
+              label: __('Category Policy'),
+              options: policyGroupNames,
+              isMulti: true,
+              isSearchable: true,
+              isClearable: true,
+              simpleValue: true,
+              validate: [{ type: validatorTypes.REQUIRED }],
+              isRequired: true,
+              condition: {
+                and: [
+                  {
+                    when: 'timelineEvents',
+                    is: 'MiqEvent',
+                  },
+                ],
               },
-            ],
-          },
-        },
-        {
-          component: componentTypes.RADIO,
-          label: __('Event Result'),
-          name: 'policyGroupLevels',
-          id: 'policyGroupLevels',
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          options: policyGroupLevels,
-          condition: {
-            and: [
-              {
-                when: 'timelineEvents',
-                is: 'MiqEvent',
+            },
+            {
+              component: componentTypes.RADIO,
+              label: __('Event Result'),
+              name: 'policyGroupLevels',
+              id: 'policyGroupLevels',
+              validate: [{ type: validatorTypes.REQUIRED }],
+              isRequired: true,
+              options: policyGroupLevels,
+              condition: {
+                and: [
+                  {
+                    when: 'timelineEvents',
+                    is: 'MiqEvent',
+                  },
+                ],
               },
-            ],
-          },
+            },
+          ],
         },
       ],
     },
@@ -118,20 +132,23 @@ const createSchemaSimple = (
       name: 'datesRange',
       fields: [
         {
-          component: 'date-picker',
-          id: 'startDate',
-          name: 'startDate',
-          label: __('Start Date'),
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-        },
-        {
-          component: 'date-picker',
-          id: 'endDate',
-          name: 'endDate',
-          label: __('End Date'),
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
+          component: componentTypes.SUB_FORM,
+          id: 'dateSelectors',
+          name: 'dateSelectors',
+          fields: [
+            {
+              component: 'date-picker',
+              id: 'startDate',
+              name: 'startDate',
+              label: __('Start Date'),
+            },
+            {
+              component: 'date-picker',
+              id: 'endDate',
+              name: 'endDate',
+              label: __('End Date'),
+            },
+          ],
         },
       ],
     },
