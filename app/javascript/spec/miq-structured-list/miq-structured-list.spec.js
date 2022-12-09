@@ -15,6 +15,7 @@ import { miqAePolicyListData } from '../textual_summary/data/miq_ae_policy_list'
 import { miqAlertListData } from '../textual_summary/data/miq_alert_list';
 import { miqPolicySetListData } from '../textual_summary/data/miq_policy_set_list';
 import { miqReportDashboardListData } from '../textual_summary/data/report_dashboard_list';
+import { reportInformationListData } from '../textual_summary/data/report_information_list';
 
 describe('Structured list component', () => {
   it('should render a simple_table with generic data', () => {
@@ -118,7 +119,6 @@ describe('Structured list component', () => {
   });
 
   it('should render settings list', () => {
-    const onClick = jest.fn();
     const wrapper = shallow(<MiqStructuredList
       rows={diagnosticSettingsListData.items}
       mode={diagnosticSettingsListData.mode}
@@ -154,6 +154,17 @@ describe('Structured list component', () => {
       rows={miqPolicySetListData.items}
       title={miqPolicySetListData.title}
       mode={miqPolicySetListData.mode}
+      onClick={onClick}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render a report_information page without double escaping strings', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(<MiqStructuredList
+      rows={reportInformationListData.items}
+      title={reportInformationListData.title}
+      mode={reportInformationListData.mode}
       onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
