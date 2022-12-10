@@ -2729,6 +2729,156 @@ exports[`Structured list component should render miq_reports_data without double
 </Accordion>
 `;
 
+exports[`Structured list component should render report_schedule page without double escaping strings 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_report_schedule_info"
+>
+  <AccordionItem
+    open={true}
+    title="Schedule Info"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_report_schedule_info"
+    >
+      <FeatureToggle(StructuredListBody)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="0"
+          onClick={[Function]}
+          tabIndex={0}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Description
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                My_Host Network Information &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="1"
+          onClick={[Function]}
+          tabIndex={1}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Active
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                True &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="2"
+          onClick={[Function]}
+          tabIndex={2}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            E-Mail after Running
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                True &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="3"
+          onClick={[Function]}
+          tabIndex={3}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            From E-mail
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                (Default: test@test.com) &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+        <FeatureToggle(StructuredListRow)
+          className=""
+          key="4"
+          onClick={[Function]}
+          tabIndex={4}
+          title=""
+        >
+          <FeatureToggle(StructuredListCell)
+            className="label_header"
+          >
+            Run At
+          </FeatureToggle(StructuredListCell)>
+          <FeatureToggle(StructuredListCell)
+            className="content_value object_item"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="expand wrap_text"
+              >
+                && Run once on Thu Nov 15 01:10:00 UTC 2018 &&
+              </div>
+            </div>
+          </FeatureToggle(StructuredListCell)>
+        </FeatureToggle(StructuredListRow)>
+      </FeatureToggle(StructuredListBody)>
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render settings list 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"
