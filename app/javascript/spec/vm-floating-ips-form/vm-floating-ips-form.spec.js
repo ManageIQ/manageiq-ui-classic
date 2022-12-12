@@ -7,13 +7,29 @@ import VmFloatingIPsForm from '../../components/vm-floating-ips/vm-floating-ips-
 import { mount } from '../helpers/mountForm';
 
 describe('Associate / Disassociate form component', () => {
-  const sampleFloatingIpChoice = [
-    ['1.2.3.4', 1],
-    ['2.3.4.5', 2],
-    ['3.4.5.6', 3],
-    ['4.5.6.7', 4],
-    ['5.6.7.8', 5],
-  ];
+  const samplerecordId = '1';
+  const sampleCloudTennantId = {
+    cloud_tenant_id: '2',
+  };
+  const sampleFloatingIpChoice = {
+    resources: [
+      { address: '1.2.3.4', id: 1 },
+      { address: '2.3.4.5', id: 2 },
+      { address: '3.4.5.6', id: 3 },
+      { address: '4.5.6.7', id: 4 },
+      { address: '5.6.7.8', id: 5 },
+    ],
+  };
+
+  beforeEach(() => {
+    fetchMock.get(`/api/vms/${samplerecordId}`, sampleCloudTennantId);
+    fetchMock.get(`/api/floating_ips?expand=resources&filter[]=cloud_tenant_id=${sampleCloudTennantId.cloud_tenant_id}`, sampleFloatingIpChoice);
+  });
+
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
 
   it('should render form', (done) => {
     const wrapper = shallow(<VmFloatingIPsForm />);
@@ -27,7 +43,7 @@ describe('Associate / Disassociate form component', () => {
   it('should render associate form variant', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<VmFloatingIPsForm recordId="1" isAssociat options={sampleFloatingIpChoice} />);
+      wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate />);
     });
 
     setImmediate(() => {
@@ -40,7 +56,7 @@ describe('Associate / Disassociate form component', () => {
   it('should render disassociate form variant', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<VmFloatingIPsForm recordId="1" isAssociat={false} options={sampleFloatingIpChoice} />);
+      wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />);
     });
 
     setImmediate(() => {
@@ -61,12 +77,10 @@ describe('Associate / Disassociate form component', () => {
         floating_ip: '1',
       },
     };
-    fetchMock.postOnce('/api/vms/1', submitData);
-    const wrapper = mount(<VmFloatingIPsForm recordId="1" isAssociat options={sampleFloatingIpChoice} />);
+    fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
+    const wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate />);
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
-    fetchMock.reset();
-    fetchMock.restore();
   });
 
   it('should submit Disassociate API call', async(done) => {
@@ -76,11 +90,9 @@ describe('Associate / Disassociate form component', () => {
         floating_ip: '1',
       },
     };
-    fetchMock.postOnce('/api/vms/1', submitData);
-    const wrapper = mount(<VmFloatingIPsForm recordId="1" isAssociat={false} options={sampleFloatingIpChoice} />);
+    fetchMock.postOnce(`/api/vms/${samplerecordId}`, submitData);
+    const wrapper = mount(<VmFloatingIPsForm recordId={samplerecordId} isAssociate={false} />);
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
-    fetchMock.reset();
-    fetchMock.restore();
   });
 });
