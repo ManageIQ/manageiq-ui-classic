@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'service_template_catalog/show_list'
+  get 'service_template_catalog/show'
   # rubocop:disable Layout/HashAlignment
   # rubocop:disable Layout/MultilineOperationIndentation
   # default routes for each controller
@@ -303,6 +305,7 @@ Rails.application.routes.draw do
         ot_show
         servicetemplates_names
         show
+        catalog_item
       ],
       :post => %w[
         ab_group_reorder
@@ -2768,6 +2771,14 @@ Rails.application.routes.draw do
       :get => %w[
         index
       ]
+    },
+    :service_template_catalog          => {
+      :get  => %w(
+        show_list
+        show
+        new
+        edit
+      ),
     },
 
     :service                  => {

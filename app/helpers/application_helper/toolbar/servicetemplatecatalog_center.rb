@@ -13,6 +13,7 @@ class ApplicationHelper::Toolbar::ServicetemplatecatalogCenter < ApplicationHelp
           t = N_('Edit this Item'),
           t,
           :url_parms    => "main_div",
+          :url   => '/edit',
           :send_checked => true),
         button(
           :st_catalog_delete,
