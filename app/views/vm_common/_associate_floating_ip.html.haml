@@ -1,1 +1,1 @@
-= react 'VmFloatingIPsForm',  :recordId => @record.id.to_s, :isAssociate => true, :options => @record.cloud_tenant.nil? ? [] : @record.cloud_tenant.floating_ips.where(:vm_id => nil)
+= react 'VmFloatingIPsForm', :recordId => @record.id.to_s, :isAssociate => true
