@@ -57,10 +57,21 @@ module Menu
         ])
       end
 
+      def catalogs_menu_section
+        Menu::Section.new(:catalog, N_("Catalogs"), nil, [
+          Menu::Item.new('catalog_service_template_catalog',        N_('Service Catalogs'),         'catalog_service_template_catalogs',         {:feature => 'catalog_service_template_catalogs_show_list'}, '/service_template_catalog/show_list'),
+          # Menu::Item.new('catalog_item',           N_('Catalog Items'),            'catalog_items',            {:feature => 'catalog_items_show_list'}, '/catalog/catalog_items'),
+          # Menu::Item.new('orchestration_template', N_('Orchestration Templates'),  'orchestration_templates',  {:feature => 'orchestration_templates_show_list'}, '/catalog/orchestration_templates'),
+          # Menu::Item.new('catalog',                N_('Catalogs'),                 'catalog_catalogs',         {:feature => 'catalog_catalogs_show_list'}, '/catalog/catalogs'),
+        ])
+      end
+
+
       def services_menu_section
         Menu::Section.new(:svc, N_("Services"), 'carbon--ToolBox', [
                             Menu::Item.new('services', N_('My Services'), 'service', {:feature => 'service_show_list'}, '/service/show_list'),
-                            Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
+                            catalogs_menu_section,
+                            #Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
                             Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
                             Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request/show_list?typ=service')
                           ])

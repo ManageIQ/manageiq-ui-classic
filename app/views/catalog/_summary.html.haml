@@ -1,0 +1,34 @@
+= render :partial => "layouts/flash_msg"
+- tab_labels, condition = catalog_tab_configuration(record)
+
+= react('MiqCustomTab', {:containerId => 'catalog-tabs',
+                         :tabLabels => tab_labels,
+                         :type => 'CATALOG_SUMMARY'})
+
+#catalog-tabs.miq_custom_tabs_container
+  = catalog_tab_content(:basic) do
+    = catalog_basic_information(record, sb, tenants_tree)
+    = catalog_smart_management(record)
+    = render :partial => "catalog/sandt_tree_custom_image_form", :locals => {:record => record}
+  
+  - if condition[:detail]
+    = catalog_tab_content(:detail) do
+      = catalog_details(record)
+
+  - if condition[:resource]
+    = catalog_tab_content(:resource) do
+      = catalog_resources(record) 
+  - elsif condition[:request]
+    = catalog_tab_content(:request) do
+      = render :partial => "catalog/sandt_tree_request", :locals => {:record => record, :options => options, :no_wf_msg => no_wf_msg}
+
+  - if defined?(provisioning) && condition[:provision]
+    = catalog_tab_content(:provision) do
+      = catalog_generic_ansible_playbook_info(:provision, record, provisioning)
+      = catalog_variables_default_data(:provision, record)
+      = catalog_dialog(provisioning)  
+
+    - if condition[:retirement]
+      = catalog_tab_content(:retirement) do
+        = catalog_generic_ansible_playbook_info(:retirement, record, retirement)
+        = catalog_variables_default_data(:retirement, record)

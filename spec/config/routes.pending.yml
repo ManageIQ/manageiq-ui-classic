@@ -1134,6 +1134,8 @@ ServiceController:
 - wait_for_task
 - x_history
 - x_search_by_name
+ServiceCatalogController:
+- show_list
 StaticController:
 - favicon
 - show

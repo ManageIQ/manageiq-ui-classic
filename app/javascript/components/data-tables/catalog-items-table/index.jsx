@@ -13,7 +13,7 @@ const CatalogItemsTable = ({ initialData, record }) => {
         rows={rows}
         headers={headers}
         onCellClick={(selectedRow) => onSelect(selectedRow)}
-        mode="db-list"
+        mode="catalog-items-list"
       />
     )
   );

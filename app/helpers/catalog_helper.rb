@@ -68,8 +68,8 @@ module CatalogHelper
     end
 
     if condition[:provision]
-      tab_labels.push(tab_label(:provision))
-      tab_labels.push(tab_label(:retirement)) if condition[:retirement]
+      tab_labels.push(tab_label(:provision)) if defined?(provisioning)
+      tab_labels.push(tab_label(:retirement)) if defined?(retirement) && condition[:retirement]
     end
 
     return tab_labels, condition

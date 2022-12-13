@@ -154,7 +154,7 @@ module ApplicationController::Explorer
     self.x_node = params[:id]
 
     assert_accordion_and_tree_privileges(x_active_tree)
-
+    
     if node_info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)

@@ -24,6 +24,22 @@ class CatalogController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
+  def service_catalogs
+    assert_privileges("service_catalogs_show_list")
+  end
+
+  def catalog_items
+    assert_privileges("catalog_itemss_show_list")
+  end
+
+  def orchestration_templates
+    assert_privileges("orchestration_templates_show_list")
+  end
+
+  def catalogs
+    assert_privileges("catalogs_show_list")
+  end
+
   CATALOG_X_BUTTON_ALLOWED_ACTIONS = {
     'ab_button_new'                 => :ab_button_new,
     'ab_button_edit'                => :ab_button_edit,
@@ -83,6 +99,12 @@ class CatalogController < ApplicationController
     atomic_catalogitem_new
     catalogitem_new
   ].freeze
+
+  def service_catalog_item
+    stc = ServiceTemplateCatalog.find(params[:id].to_i)
+    @record = stc.service_templates.where("id = ?", params[:item].to_i)&.first
+    identify_catalog(@record.id)
+  end
 
   def assert_privileges_for_servicetemplate_edit
     if params[:pressed].present? && EDIT_CATALOG_FEATURES.include?(params[:pressed])
@@ -1893,7 +1915,6 @@ class CatalogController < ApplicationController
 
     ovf_template = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => provision[:ovf_template_id])
     ovf_template_details[:provisioning][:ovf_template_name] = ovf_template.try(:name)
-
     ovf_template_details
   end
 
@@ -2116,6 +2137,8 @@ class CatalogController < ApplicationController
       add_nodes = open_parent_nodes(@record) # Open the parent nodes of selected record, if not open
     end
 
+    puts "x_active_tree============== #{x_active_tree}"
+
     v_tb =
       case x_active_tree
       when :sandt_tree
@@ -2169,6 +2192,8 @@ class CatalogController < ApplicationController
                   template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
                   template_locals.merge!(fetch_ct_details) if need_container_template_locals?
                   template_locals.merge!(fetch_ovf_template_details) if need_ovf_template_locals?
+                  puts " template_locals123=#{template_locals.inspect}"
+
                   r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
                 end
               elsif @sb[:buttons_node]
@@ -2237,7 +2262,6 @@ class CatalogController < ApplicationController
     presenter.reset_one_trans
 
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
-
     render :json => presenter.for_render
   end
 
