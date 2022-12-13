@@ -18,32 +18,7 @@ exports[`Associate / Disassociate form component should render associate form va
   }
 >
   <VmFloatingIPsForm
-    isAssociat={true}
     isAssociate={true}
-    options={
-      Array [
-        Array [
-          "1.2.3.4",
-          1,
-        ],
-        Array [
-          "2.3.4.5",
-          2,
-        ],
-        Array [
-          "3.4.5.6",
-          3,
-        ],
-        Array [
-          "4.5.6.7",
-          4,
-        ],
-        Array [
-          "5.6.7.8",
-          5,
-        ],
-      ]
-    }
     recordId="1"
   >
     <Connect(MiqFormRenderer)
@@ -58,29 +33,8 @@ exports[`Associate / Disassociate form component should render associate form va
               "includeEmpty": true,
               "isRequired": true,
               "label": "Floating IP",
+              "loadOptions": [Function],
               "name": "floating_ip",
-              "options": Array [
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-              ],
               "validate": Array [
                 Object {
                   "type": "required",
@@ -142,29 +96,8 @@ exports[`Associate / Disassociate form component should render associate form va
                 "includeEmpty": true,
                 "isRequired": true,
                 "label": "Floating IP",
+                "loadOptions": [Function],
                 "name": "floating_ip",
-                "options": Array [
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                ],
                 "validate": Array [
                   Object {
                     "type": "required",
@@ -223,29 +156,8 @@ exports[`Associate / Disassociate form component should render associate form va
                   "includeEmpty": true,
                   "isRequired": true,
                   "label": "Floating IP",
+                  "loadOptions": [Function],
                   "name": "floating_ip",
-                  "options": Array [
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                  ],
                   "validate": Array [
                     Object {
                       "type": "required",
@@ -303,31 +215,8 @@ exports[`Associate / Disassociate form component should render associate form va
                     includeEmpty={true}
                     isRequired={true}
                     label="Floating IP"
+                    loadOptions={[Function]}
                     name="floating_ip"
-                    options={
-                      Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ]
-                    }
                     validate={
                       Array [
                         Object {
@@ -351,29 +240,8 @@ exports[`Associate / Disassociate form component should render associate form va
                       "includeEmpty": true,
                       "isRequired": true,
                       "label": "Floating IP",
+                      "loadOptions": [Function],
                       "name": "floating_ip",
-                      "options": Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ],
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -406,31 +274,8 @@ exports[`Associate / Disassociate form component should render associate form va
                       includeEmpty={true}
                       isRequired={true}
                       label="Floating IP"
+                      loadOptions={[Function]}
                       name="floating_ip"
-                      options={
-                        Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ]
-                      }
                       validate={
                         Array [
                           Object {
@@ -460,29 +305,8 @@ exports[`Associate / Disassociate form component should render associate form va
                         "includeEmpty": true,
                         "isRequired": true,
                         "label": "Floating IP",
+                        "loadOptions": [Function],
                         "name": "floating_ip",
-                        "options": Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ],
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -530,31 +354,8 @@ exports[`Associate / Disassociate form component should render associate form va
                         includeEmpty={true}
                         isRequired={true}
                         label="Floating IP"
+                        loadOptions={[Function]}
                         name="floating_ip"
-                        options={
-                          Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ]
-                        }
                         validate={
                           Array [
                             Object {
@@ -584,29 +385,8 @@ exports[`Associate / Disassociate form component should render associate form va
                           "includeEmpty": true,
                           "isRequired": true,
                           "label": "Floating IP",
+                          "loadOptions": [Function],
                           "name": "floating_ip",
-                          "options": Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ],
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -646,31 +426,8 @@ exports[`Associate / Disassociate form component should render associate form va
                           isRequired={true}
                           key="floating_ip"
                           label="Floating IP"
+                          loadOptions={[Function]}
                           name="floating_ip"
-                          options={
-                            Array [
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                            ]
-                          }
                           validate={
                             Array [
                               Object {
@@ -687,29 +444,8 @@ exports[`Associate / Disassociate form component should render associate form va
                                 "includeEmpty": true,
                                 "isRequired": true,
                                 "label": "Floating IP",
+                                "loadOptions": [Function],
                                 "name": "floating_ip",
-                                "options": Array [
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                ],
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -727,31 +463,8 @@ exports[`Associate / Disassociate form component should render associate form va
                                 includeEmpty={true}
                                 isRequired={true}
                                 label="Floating IP"
+                                loadOptions={[Function]}
                                 name="floating_ip"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                  ]
-                                }
                                 placeholder="<Choose>"
                                 validate={
                                   Array [
@@ -766,36 +479,9 @@ exports[`Associate / Disassociate form component should render associate form va
                                   id="floating_ip"
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   loadingMessage="Loading..."
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   placeholder="<Choose>"
                                   validate={
                                     Array [
@@ -817,40 +503,14 @@ exports[`Associate / Disassociate form component should render associate form va
                                         Floating IP
                                       </IsRequired>
                                     }
+                                    loadOptions={[Function]}
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
                                     name="floating_ip"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                      ]
-                                    }
+                                    options={Array []}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -883,24 +543,24 @@ exports[`Associate / Disassociate form component should render associate form va
                                             "value": undefined,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "1.2.3.4",
+                                            "value": 1,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "2.3.4.5",
+                                            "value": 2,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "3.4.5.6",
+                                            "value": 3,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "4.5.6.7",
+                                            "value": 4,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "5.6.7.8",
+                                            "value": 5,
                                           },
                                         ]
                                       }
@@ -982,71 +642,91 @@ exports[`Associate / Disassociate form component should render associate form va
                                                   disabled={false}
                                                   hidden={false}
                                                   key="1"
-                                                  text=""
-                                                  value=""
+                                                  label="1.2.3.4"
+                                                  text="1.2.3.4"
+                                                  value={1}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="1.2.3.4"
+                                                    value={1}
+                                                  >
+                                                    1.2.3.4
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="2"
-                                                  text=""
-                                                  value=""
+                                                  label="2.3.4.5"
+                                                  text="2.3.4.5"
+                                                  value={2}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="2.3.4.5"
+                                                    value={2}
+                                                  >
+                                                    2.3.4.5
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="3"
-                                                  text=""
-                                                  value=""
+                                                  label="3.4.5.6"
+                                                  text="3.4.5.6"
+                                                  value={3}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="3.4.5.6"
+                                                    value={3}
+                                                  >
+                                                    3.4.5.6
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="4"
-                                                  text=""
-                                                  value=""
+                                                  label="4.5.6.7"
+                                                  text="4.5.6.7"
+                                                  value={4}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="4.5.6.7"
+                                                    value={4}
+                                                  >
+                                                    4.5.6.7
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="5"
-                                                  text=""
-                                                  value=""
+                                                  label="5.6.7.8"
+                                                  text="5.6.7.8"
+                                                  value={5}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="5.6.7.8"
+                                                    value={5}
+                                                  >
+                                                    5.6.7.8
+                                                  </option>
                                                 </SelectItem>
                                               </select>
                                               <ForwardRef(ChevronDown16)
@@ -1148,31 +828,8 @@ exports[`Associate / Disassociate form component should render associate form va
                                   includeEmpty={true}
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   validate={
                                     Array [
                                       Object {
@@ -1269,29 +926,8 @@ exports[`Associate / Disassociate form component should render associate form va
                                     "includeEmpty": true,
                                     "isRequired": true,
                                     "label": "Floating IP",
+                                    "loadOptions": [Function],
                                     "name": "floating_ip",
-                                    "options": Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ],
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -1414,32 +1050,7 @@ exports[`Associate / Disassociate form component should render disassociate form
   }
 >
   <VmFloatingIPsForm
-    isAssociat={false}
-    isAssociate={true}
-    options={
-      Array [
-        Array [
-          "1.2.3.4",
-          1,
-        ],
-        Array [
-          "2.3.4.5",
-          2,
-        ],
-        Array [
-          "3.4.5.6",
-          3,
-        ],
-        Array [
-          "4.5.6.7",
-          4,
-        ],
-        Array [
-          "5.6.7.8",
-          5,
-        ],
-      ]
-    }
+    isAssociate={false}
     recordId="1"
   >
     <Connect(MiqFormRenderer)
@@ -1454,29 +1065,8 @@ exports[`Associate / Disassociate form component should render disassociate form
               "includeEmpty": true,
               "isRequired": true,
               "label": "Floating IP",
+              "loadOptions": [Function],
               "name": "floating_ip",
-              "options": Array [
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-              ],
               "validate": Array [
                 Object {
                   "type": "required",
@@ -1538,29 +1128,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                 "includeEmpty": true,
                 "isRequired": true,
                 "label": "Floating IP",
+                "loadOptions": [Function],
                 "name": "floating_ip",
-                "options": Array [
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                ],
                 "validate": Array [
                   Object {
                     "type": "required",
@@ -1619,29 +1188,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                   "includeEmpty": true,
                   "isRequired": true,
                   "label": "Floating IP",
+                  "loadOptions": [Function],
                   "name": "floating_ip",
-                  "options": Array [
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                  ],
                   "validate": Array [
                     Object {
                       "type": "required",
@@ -1699,31 +1247,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                     includeEmpty={true}
                     isRequired={true}
                     label="Floating IP"
+                    loadOptions={[Function]}
                     name="floating_ip"
-                    options={
-                      Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ]
-                    }
                     validate={
                       Array [
                         Object {
@@ -1747,29 +1272,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                       "includeEmpty": true,
                       "isRequired": true,
                       "label": "Floating IP",
+                      "loadOptions": [Function],
                       "name": "floating_ip",
-                      "options": Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ],
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -1802,31 +1306,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                       includeEmpty={true}
                       isRequired={true}
                       label="Floating IP"
+                      loadOptions={[Function]}
                       name="floating_ip"
-                      options={
-                        Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ]
-                      }
                       validate={
                         Array [
                           Object {
@@ -1856,29 +1337,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                         "includeEmpty": true,
                         "isRequired": true,
                         "label": "Floating IP",
+                        "loadOptions": [Function],
                         "name": "floating_ip",
-                        "options": Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ],
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -1926,31 +1386,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                         includeEmpty={true}
                         isRequired={true}
                         label="Floating IP"
+                        loadOptions={[Function]}
                         name="floating_ip"
-                        options={
-                          Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ]
-                        }
                         validate={
                           Array [
                             Object {
@@ -1980,29 +1417,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                           "includeEmpty": true,
                           "isRequired": true,
                           "label": "Floating IP",
+                          "loadOptions": [Function],
                           "name": "floating_ip",
-                          "options": Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ],
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -2042,31 +1458,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                           isRequired={true}
                           key="floating_ip"
                           label="Floating IP"
+                          loadOptions={[Function]}
                           name="floating_ip"
-                          options={
-                            Array [
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                            ]
-                          }
                           validate={
                             Array [
                               Object {
@@ -2083,29 +1476,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                                 "includeEmpty": true,
                                 "isRequired": true,
                                 "label": "Floating IP",
+                                "loadOptions": [Function],
                                 "name": "floating_ip",
-                                "options": Array [
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                ],
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -2123,31 +1495,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                                 includeEmpty={true}
                                 isRequired={true}
                                 label="Floating IP"
+                                loadOptions={[Function]}
                                 name="floating_ip"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                  ]
-                                }
                                 placeholder="<Choose>"
                                 validate={
                                   Array [
@@ -2162,36 +1511,9 @@ exports[`Associate / Disassociate form component should render disassociate form
                                   id="floating_ip"
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   loadingMessage="Loading..."
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   placeholder="<Choose>"
                                   validate={
                                     Array [
@@ -2213,40 +1535,14 @@ exports[`Associate / Disassociate form component should render disassociate form
                                         Floating IP
                                       </IsRequired>
                                     }
+                                    loadOptions={[Function]}
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
                                     name="floating_ip"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                      ]
-                                    }
+                                    options={Array []}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
@@ -2279,24 +1575,24 @@ exports[`Associate / Disassociate form component should render disassociate form
                                             "value": undefined,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "1.2.3.4",
+                                            "value": 1,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "2.3.4.5",
+                                            "value": 2,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "3.4.5.6",
+                                            "value": 3,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "4.5.6.7",
+                                            "value": 4,
                                           },
                                           Object {
-                                            "label": undefined,
-                                            "value": undefined,
+                                            "label": "5.6.7.8",
+                                            "value": 5,
                                           },
                                         ]
                                       }
@@ -2378,71 +1674,91 @@ exports[`Associate / Disassociate form component should render disassociate form
                                                   disabled={false}
                                                   hidden={false}
                                                   key="1"
-                                                  text=""
-                                                  value=""
+                                                  label="1.2.3.4"
+                                                  text="1.2.3.4"
+                                                  value={1}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="1.2.3.4"
+                                                    value={1}
+                                                  >
+                                                    1.2.3.4
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="2"
-                                                  text=""
-                                                  value=""
+                                                  label="2.3.4.5"
+                                                  text="2.3.4.5"
+                                                  value={2}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="2.3.4.5"
+                                                    value={2}
+                                                  >
+                                                    2.3.4.5
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="3"
-                                                  text=""
-                                                  value=""
+                                                  label="3.4.5.6"
+                                                  text="3.4.5.6"
+                                                  value={3}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="3.4.5.6"
+                                                    value={3}
+                                                  >
+                                                    3.4.5.6
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="4"
-                                                  text=""
-                                                  value=""
+                                                  label="4.5.6.7"
+                                                  text="4.5.6.7"
+                                                  value={4}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="4.5.6.7"
+                                                    value={4}
+                                                  >
+                                                    4.5.6.7
+                                                  </option>
                                                 </SelectItem>
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
                                                   key="5"
-                                                  text=""
-                                                  value=""
+                                                  label="5.6.7.8"
+                                                  text="5.6.7.8"
+                                                  value={5}
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    value=""
-                                                  />
+                                                    label="5.6.7.8"
+                                                    value={5}
+                                                  >
+                                                    5.6.7.8
+                                                  </option>
                                                 </SelectItem>
                                               </select>
                                               <ForwardRef(ChevronDown16)
@@ -2544,31 +1860,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                                   includeEmpty={true}
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   validate={
                                     Array [
                                       Object {
@@ -2665,29 +1958,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                                     "includeEmpty": true,
                                     "isRequired": true,
                                     "label": "Floating IP",
+                                    "loadOptions": [Function],
                                     "name": "floating_ip",
-                                    "options": Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ],
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -2805,8 +2077,8 @@ exports[`Associate / Disassociate form component should render form 1`] = `
           "includeEmpty": true,
           "isRequired": true,
           "label": "Floating IP",
+          "loadOptions": [Function],
           "name": "floating_ip",
-          "options": Array [],
           "validate": Array [
             Object {
               "type": "required",
@@ -2837,32 +2109,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
   }
 >
   <VmFloatingIPsForm
-    isAssociat={true}
     isAssociate={true}
-    options={
-      Array [
-        Array [
-          "1.2.3.4",
-          1,
-        ],
-        Array [
-          "2.3.4.5",
-          2,
-        ],
-        Array [
-          "3.4.5.6",
-          3,
-        ],
-        Array [
-          "4.5.6.7",
-          4,
-        ],
-        Array [
-          "5.6.7.8",
-          5,
-        ],
-      ]
-    }
     recordId="1"
   >
     <Connect(MiqFormRenderer)
@@ -2877,29 +2124,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
               "includeEmpty": true,
               "isRequired": true,
               "label": "Floating IP",
+              "loadOptions": [Function],
               "name": "floating_ip",
-              "options": Array [
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-              ],
               "validate": Array [
                 Object {
                   "type": "required",
@@ -2961,29 +2187,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                 "includeEmpty": true,
                 "isRequired": true,
                 "label": "Floating IP",
+                "loadOptions": [Function],
                 "name": "floating_ip",
-                "options": Array [
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                ],
                 "validate": Array [
                   Object {
                     "type": "required",
@@ -3042,29 +2247,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                   "includeEmpty": true,
                   "isRequired": true,
                   "label": "Floating IP",
+                  "loadOptions": [Function],
                   "name": "floating_ip",
-                  "options": Array [
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                  ],
                   "validate": Array [
                     Object {
                       "type": "required",
@@ -3122,31 +2306,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                     includeEmpty={true}
                     isRequired={true}
                     label="Floating IP"
+                    loadOptions={[Function]}
                     name="floating_ip"
-                    options={
-                      Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ]
-                    }
                     validate={
                       Array [
                         Object {
@@ -3170,29 +2331,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                       "includeEmpty": true,
                       "isRequired": true,
                       "label": "Floating IP",
+                      "loadOptions": [Function],
                       "name": "floating_ip",
-                      "options": Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ],
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -3225,31 +2365,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                       includeEmpty={true}
                       isRequired={true}
                       label="Floating IP"
+                      loadOptions={[Function]}
                       name="floating_ip"
-                      options={
-                        Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ]
-                      }
                       validate={
                         Array [
                           Object {
@@ -3279,29 +2396,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                         "includeEmpty": true,
                         "isRequired": true,
                         "label": "Floating IP",
+                        "loadOptions": [Function],
                         "name": "floating_ip",
-                        "options": Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ],
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -3349,31 +2445,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                         includeEmpty={true}
                         isRequired={true}
                         label="Floating IP"
+                        loadOptions={[Function]}
                         name="floating_ip"
-                        options={
-                          Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ]
-                        }
                         validate={
                           Array [
                             Object {
@@ -3403,29 +2476,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                           "includeEmpty": true,
                           "isRequired": true,
                           "label": "Floating IP",
+                          "loadOptions": [Function],
                           "name": "floating_ip",
-                          "options": Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ],
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -3465,31 +2517,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                           isRequired={true}
                           key="floating_ip"
                           label="Floating IP"
+                          loadOptions={[Function]}
                           name="floating_ip"
-                          options={
-                            Array [
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                            ]
-                          }
                           validate={
                             Array [
                               Object {
@@ -3506,29 +2535,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                 "includeEmpty": true,
                                 "isRequired": true,
                                 "label": "Floating IP",
+                                "loadOptions": [Function],
                                 "name": "floating_ip",
-                                "options": Array [
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                ],
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -3546,31 +2554,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                 includeEmpty={true}
                                 isRequired={true}
                                 label="Floating IP"
+                                loadOptions={[Function]}
                                 name="floating_ip"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                  ]
-                                }
                                 placeholder="<Choose>"
                                 validate={
                                   Array [
@@ -3585,36 +2570,9 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                   id="floating_ip"
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   loadingMessage="Loading..."
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   placeholder="<Choose>"
                                   validate={
                                     Array [
@@ -3636,53 +2594,25 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                         Floating IP
                                       </IsRequired>
                                     }
+                                    loadOptions={[Function]}
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
                                     name="floating_ip"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                      ]
-                                    }
+                                    options={Array []}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
                                     <ClearedSelect
-                                      className=""
-                                      closeMenuOnSelect={true}
-                                      hideSelectedOptions={false}
                                       id="floating_ip"
                                       invalidText=""
                                       isClearable={false}
-                                      isFetching={false}
+                                      isDisabled={true}
+                                      isFetching={true}
                                       isSearchable={false}
                                       labelText={
                                         <IsRequired>
@@ -3694,40 +2624,10 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
-                                      onInputChange={[Function]}
-                                      options={
-                                        Array [
-                                          Object {
-                                            "label": "<Choose>",
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                        ]
-                                      }
-                                      placeholder="<Choose>"
-                                      value=""
+                                      options={Array []}
+                                      placeholder="Loading..."
                                     >
                                       <Select
-                                        className=""
                                         disabled={false}
                                         helperText=""
                                         id="floating_ip"
@@ -3744,7 +2644,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
-                                        value=""
                                       >
                                         <div
                                           className="bx--form-item"
@@ -3777,95 +2676,21 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                value=""
                                               >
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  key="0"
-                                                  label="<Choose>"
-                                                  text="<Choose>"
+                                                  text="Loading..."
                                                   value=""
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    label="<Choose>"
                                                     value=""
                                                   >
-                                                    &lt;Choose&gt;
+                                                    Loading...
                                                   </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="1"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="2"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="3"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="4"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="5"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
                                                 </SelectItem>
                                               </select>
                                               <ForwardRef(ChevronDown16)
@@ -3967,31 +2792,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                   includeEmpty={true}
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   validate={
                                     Array [
                                       Object {
@@ -4088,29 +2890,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                     "includeEmpty": true,
                                     "isRequired": true,
                                     "label": "Floating IP",
+                                    "loadOptions": [Function],
                                     "name": "floating_ip",
-                                    "options": Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ],
                                     "validate": Array [
                                       Object {
                                         "type": "required",
@@ -4233,32 +3014,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
   }
 >
   <VmFloatingIPsForm
-    isAssociat={false}
-    isAssociate={true}
-    options={
-      Array [
-        Array [
-          "1.2.3.4",
-          1,
-        ],
-        Array [
-          "2.3.4.5",
-          2,
-        ],
-        Array [
-          "3.4.5.6",
-          3,
-        ],
-        Array [
-          "4.5.6.7",
-          4,
-        ],
-        Array [
-          "5.6.7.8",
-          5,
-        ],
-      ]
-    }
+    isAssociate={false}
     recordId="1"
   >
     <Connect(MiqFormRenderer)
@@ -4273,29 +3029,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
               "includeEmpty": true,
               "isRequired": true,
               "label": "Floating IP",
+              "loadOptions": [Function],
               "name": "floating_ip",
-              "options": Array [
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-                Object {
-                  "label": undefined,
-                  "value": undefined,
-                },
-              ],
               "validate": Array [
                 Object {
                   "type": "required",
@@ -4357,29 +3092,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                 "includeEmpty": true,
                 "isRequired": true,
                 "label": "Floating IP",
+                "loadOptions": [Function],
                 "name": "floating_ip",
-                "options": Array [
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                  Object {
-                    "label": undefined,
-                    "value": undefined,
-                  },
-                ],
                 "validate": Array [
                   Object {
                     "type": "required",
@@ -4438,29 +3152,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                   "includeEmpty": true,
                   "isRequired": true,
                   "label": "Floating IP",
+                  "loadOptions": [Function],
                   "name": "floating_ip",
-                  "options": Array [
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                    Object {
-                      "label": undefined,
-                      "value": undefined,
-                    },
-                  ],
                   "validate": Array [
                     Object {
                       "type": "required",
@@ -4518,31 +3211,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                     includeEmpty={true}
                     isRequired={true}
                     label="Floating IP"
+                    loadOptions={[Function]}
                     name="floating_ip"
-                    options={
-                      Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ]
-                    }
                     validate={
                       Array [
                         Object {
@@ -4566,29 +3236,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                       "includeEmpty": true,
                       "isRequired": true,
                       "label": "Floating IP",
+                      "loadOptions": [Function],
                       "name": "floating_ip",
-                      "options": Array [
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                        Object {
-                          "label": undefined,
-                          "value": undefined,
-                        },
-                      ],
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -4621,31 +3270,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                       includeEmpty={true}
                       isRequired={true}
                       label="Floating IP"
+                      loadOptions={[Function]}
                       name="floating_ip"
-                      options={
-                        Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ]
-                      }
                       validate={
                         Array [
                           Object {
@@ -4675,29 +3301,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                         "includeEmpty": true,
                         "isRequired": true,
                         "label": "Floating IP",
+                        "loadOptions": [Function],
                         "name": "floating_ip",
-                        "options": Array [
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                          Object {
-                            "label": undefined,
-                            "value": undefined,
-                          },
-                        ],
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -4745,31 +3350,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                         includeEmpty={true}
                         isRequired={true}
                         label="Floating IP"
+                        loadOptions={[Function]}
                         name="floating_ip"
-                        options={
-                          Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ]
-                        }
                         validate={
                           Array [
                             Object {
@@ -4799,29 +3381,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                           "includeEmpty": true,
                           "isRequired": true,
                           "label": "Floating IP",
+                          "loadOptions": [Function],
                           "name": "floating_ip",
-                          "options": Array [
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                            Object {
-                              "label": undefined,
-                              "value": undefined,
-                            },
-                          ],
                           "validate": Array [
                             Object {
                               "type": "required",
@@ -4861,31 +3422,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                           isRequired={true}
                           key="floating_ip"
                           label="Floating IP"
+                          loadOptions={[Function]}
                           name="floating_ip"
-                          options={
-                            Array [
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                              Object {
-                                "label": undefined,
-                                "value": undefined,
-                              },
-                            ]
-                          }
                           validate={
                             Array [
                               Object {
@@ -4902,29 +3440,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                 "includeEmpty": true,
                                 "isRequired": true,
                                 "label": "Floating IP",
+                                "loadOptions": [Function],
                                 "name": "floating_ip",
-                                "options": Array [
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                  Object {
-                                    "label": undefined,
-                                    "value": undefined,
-                                  },
-                                ],
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -4942,31 +3459,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                 includeEmpty={true}
                                 isRequired={true}
                                 label="Floating IP"
+                                loadOptions={[Function]}
                                 name="floating_ip"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                    Object {
-                                      "label": undefined,
-                                      "value": undefined,
-                                    },
-                                  ]
-                                }
                                 placeholder="<Choose>"
                                 validate={
                                   Array [
@@ -4981,36 +3475,9 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                   id="floating_ip"
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   loadingMessage="Loading..."
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "<Choose>",
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   placeholder="<Choose>"
                                   validate={
                                     Array [
@@ -5032,53 +3499,25 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                         Floating IP
                                       </IsRequired>
                                     }
+                                    loadOptions={[Function]}
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
                                     name="floating_ip"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={
-                                      Array [
-                                        Object {
-                                          "label": "<Choose>",
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                        Object {
-                                          "label": undefined,
-                                          "value": undefined,
-                                        },
-                                      ]
-                                    }
+                                    options={Array []}
                                     placeholder="<Choose>"
                                     pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
                                     <ClearedSelect
-                                      className=""
-                                      closeMenuOnSelect={true}
-                                      hideSelectedOptions={false}
                                       id="floating_ip"
                                       invalidText=""
                                       isClearable={false}
-                                      isFetching={false}
+                                      isDisabled={true}
+                                      isFetching={true}
                                       isSearchable={false}
                                       labelText={
                                         <IsRequired>
@@ -5090,40 +3529,10 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
-                                      onInputChange={[Function]}
-                                      options={
-                                        Array [
-                                          Object {
-                                            "label": "<Choose>",
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                          Object {
-                                            "label": undefined,
-                                            "value": undefined,
-                                          },
-                                        ]
-                                      }
-                                      placeholder="<Choose>"
-                                      value=""
+                                      options={Array []}
+                                      placeholder="Loading..."
                                     >
                                       <Select
-                                        className=""
                                         disabled={false}
                                         helperText=""
                                         id="floating_ip"
@@ -5140,7 +3549,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
-                                        value=""
                                       >
                                         <div
                                           className="bx--form-item"
@@ -5173,95 +3581,21 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                value=""
                                               >
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  key="0"
-                                                  label="<Choose>"
-                                                  text="<Choose>"
+                                                  text="Loading..."
                                                   value=""
                                                 >
                                                   <option
                                                     className="bx--select-option"
                                                     disabled={false}
                                                     hidden={false}
-                                                    label="<Choose>"
                                                     value=""
                                                   >
-                                                    &lt;Choose&gt;
+                                                    Loading...
                                                   </option>
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="1"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="2"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="3"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="4"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
-                                                </SelectItem>
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  key="5"
-                                                  text=""
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  />
                                                 </SelectItem>
                                               </select>
                                               <ForwardRef(ChevronDown16)
@@ -5363,31 +3697,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                   includeEmpty={true}
                                   isRequired={true}
                                   label="Floating IP"
+                                  loadOptions={[Function]}
                                   name="floating_ip"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ]
-                                  }
                                   validate={
                                     Array [
                                       Object {
@@ -5484,29 +3795,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                     "includeEmpty": true,
                                     "isRequired": true,
                                     "label": "Floating IP",
+                                    "loadOptions": [Function],
                                     "name": "floating_ip",
-                                    "options": Array [
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                      Object {
-                                        "label": undefined,
-                                        "value": undefined,
-                                      },
-                                    ],
                                     "validate": Array [
                                       Object {
                                         "type": "required",
