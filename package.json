@@ -126,7 +126,7 @@
     "core-js": "~3.6.4",
     "core-js-compat": "~3.2.1",
     "css-loader": "~3.4.2",
-    "cypress": "^4.7.0",
+    "cypress": "^4.12.1",
     "duplicate-package-checker-webpack-plugin": "~3.0.0",
     "enhanced-resolve": "~4.0.0",
     "enzyme": "^3.9.0",
@@ -181,7 +181,6 @@
     "d3-color": "~3.1.0",
     "nwsapi": "^2.2.1",
     "minimatch": "~3.1.2",
-    "qs": "~6.5.3",
     "decode-uri-component": "^0.2.2"
   }
 }
