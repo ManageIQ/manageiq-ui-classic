@@ -2,31 +2,6 @@
 module PxeController::IsoDatastores
   extend ActiveSupport::Concern
 
-  def iso_datastore_new
-    assert_privileges("iso_datastore_new")
-    @isd = IsoDatastore.new
-    iso_datastore_set_form_vars
-    @in_a_form = true
-    replace_right_cell(:nodetype => "isd")
-  end
-
-  def iso_datastore_edit
-    unless params[:id]
-      obj           = find_checked_items
-      @_params[:id] = obj[0] unless obj.empty?
-    end
-    @isd = @record = identify_record(params[:id], IsoDatastore) if params[:id]
-    iso_datastore_set_form_vars
-    @in_a_form = true
-    replace_right_cell(:nodetype => "isd")
-  end
-
-  # Refresh the power states for selected or single VMs
-  def iso_datastore_refresh
-    assert_privileges("iso_datastore_refresh")
-    iso_datastore_button_operation('synchronize_advertised_images_queue', 'Refresh Relationships')
-  end
-
   # Common VM button handler routines
   def iso_datastore_button_operation(method, display_name)
     isds = []
@@ -43,7 +18,7 @@ module PxeController::IsoDatastores
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
-    elsif params[:id].nil? || IsoDatastore.find(params[:id]).nil? # showing 1 vm
+    elsif params[:id].nil? || Storage.supporting(:iso_datastore).find { |storage| storage.id == params[:id].to_i }.nil? # showing 1 vm
       add_flash(_("ISO Datastore no longer exists"), :error)
       iso_datastore_list
       @refresh_partial = "layouts/x_gtl"
@@ -78,7 +53,7 @@ module PxeController::IsoDatastores
     @sortcol = session[:iso_sortcol].nil? ? 0 : session[:iso_sortcol].to_i
     @sortdir = session[:iso_sortdir].nil? ? "ASC" : session[:iso_sortdir]
 
-    @view, @pages = get_view(IsoDatastore) # Get the records (into a view) and the paginator
+    @view, @pages = get_view(Storage) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:iso_sortcol] = @sortcol
@@ -119,7 +94,7 @@ module PxeController::IsoDatastores
 
   # Common Schedule button handler routines
   def process_iso_datastores(elements, task, display_name)
-    process_elements(elements, IsoDatastore, task, display_name, "ems_id")
+    process_elements(elements, Storage, task, display_name, "ems_id")
   end
 
   def iso_datastore_get_node_info(treenodeid)
@@ -130,10 +105,10 @@ module PxeController::IsoDatastores
     else
       @right_cell_div = "iso_datastore_details"
       nodes = treenodeid.split("-")
-      if nodes[0] == "isd" && nodes.length == 2
+      if nodes[0] == "ds" && nodes.length == 2
         # on iso_datastore node OR folder node is selected
-        @record = @isd = IsoDatastore.find(nodes.last)
-        @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name}
+        @record = @isd = Storage.supporting(:iso_datastore).find { |storage| storage.id == nodes.last.to_i }
+        @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name} unless @isd.nil?
       elsif nodes[0] == "isi"
         @record = @img = IsoImage.find(nodes.last)
         @right_cell_text = _("ISO Image \"%{name}\"") % {:name => @img.name}

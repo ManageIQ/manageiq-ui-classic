@@ -1,5 +1,5 @@
 class TreeBuilderIsoDatastores < TreeBuilder
-  has_kids_for IsoDatastore, %i[x_get_tree_iso_datastore_kids]
+  has_kids_for Storage, %i[x_get_tree_iso_datastore_kids]
 
   private
 
@@ -16,7 +16,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots
-    count_only_or_objects(false, IsoDatastore.all, "name")
+    count_only_or_objects(false, Storage.supporting(:iso_datastore), "name")
   end
 
   def x_get_tree_iso_datastore_kids(object, count_only)
