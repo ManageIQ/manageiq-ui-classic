@@ -307,32 +307,8 @@
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of this pulldown field
-            - if field == :src_vm_id
-              -# grid for src_vm_id
-              = render :partial => "miq_request/prov_vm_grid", :locals => {:field_id => field_id}
-            - elsif field == :placement_host_name
-              -# grid for hosts
-              = render :partial => "miq_request/prov_host_grid", :locals => {:field_id => field_id}
-            - elsif field == :placement_ds_name
-              -# grid for datastores
-              = render :partial => "miq_request/prov_ds_grid", :locals => {:field_id => field_id}
-            - elsif field == :attached_ds
-              -# grid for datastores
-              = render :partial => "miq_request/prov_ds_grid", :locals => {:field_id => field_id}
-            - elsif field == :sysprep_custom_spec
-              -# grid for sysprep_custom_spec
-              = render :partial => "miq_request/prov_vc_grid", :locals => {:field_id => field_id, :spec_required => field_hash[:required]}
-            - elsif field == :customization_template_id
-              -# grid for customization script
-              = render :partial => "miq_request/prov_template_grid", :locals => {:field_id => field_id}
-            - elsif field == :pxe_image_id
-              -# grid for pxe_images
-              = render :partial => "miq_request/prov_pxe_img_grid", :locals  => {:field_id => field_id}
-            - elsif field == :iso_image_id
-              -# grid for iso_images
-              = render :partial => "miq_request/prov_iso_img_grid", :locals => {:field_id => field_id}
-            - elsif field == :windows_image_id
-              = render :partial => "miq_request/prov_windows_image_grid", :locals => {:field_id => field_id}
+            - if display_prov_grid(field)
+              = render :partial => "miq_request/prov_grid_item", :locals => {:field => field, :field_id => field_id, :spec => field_hash[:required]}
             - else
               - if field_hash[:values].blank?
                 - opts = [["<#{_('No Choices Available')}>", nil]]
