@@ -2412,9 +2412,9 @@ __metadata:
   linkType: hard
 
 "@types/d3-ease@npm:^1":
-  version: 1.0.10
-  resolution: "@types/d3-ease@npm:1.0.10"
-  checksum: 312be4b5ed8a5ab26e92bc344d8f2d5beddc7df3ec07be3292502f1a3d2b1d3ae3c989d09764211b848b89b072e2277558a507635d2d3e604e89a8cdb0134a4c
+  version: 1.0.11
+  resolution: "@types/d3-ease@npm:1.0.11"
+  checksum: fe28fbdbd75f0baeac5504c0a3acf7a4202865547b04dab840b8278bd0b0287f244e7b333bf212d22b3fcbea51b58650e1f62ea6ad3a3d74ad3c6894c54df81b
   languageName: node
   linkType: hard
 
@@ -2642,9 +2642,9 @@ __metadata:
   linkType: hard
 
 "@types/geojson@npm:*":
-  version: 7946.0.8
-  resolution: "@types/geojson@npm:7946.0.8"
-  checksum: 6049a39b025cfe323d5cf87333d87c133ec963cdbd349c49295bee779827ee4b46a3041fd8bd2e7a4b02d6d1e26f3002968875928941bbed08477bfd5f6f9284
+  version: 7946.0.10
+  resolution: "@types/geojson@npm:7946.0.10"
+  checksum: 12c407c2dc93ecb26c08af533ee732f1506a9b29456616ba7ba1d525df96206c28ddf44a528f6a5415d7d22893e9d967420940a9c095ee5e539c1eba5fefc1f4
   languageName: node
   linkType: hard
 
@@ -4410,9 +4410,9 @@ __metadata:
   linkType: hard
 
 "bootstrap-sass@npm:^3.3.7, bootstrap-sass@npm:^3.4.0":
-  version: 3.4.1
-  resolution: "bootstrap-sass@npm:3.4.1"
-  checksum: e759a5e8e0201f969b0ce7d1ab1a94c0e61df8cfe98290b81adaee40e746e86ee0128a472db3715e3a6963dd7fff07efd1723dc6a64e0c4da0b5468f1e5f7750
+  version: 3.4.3
+  resolution: "bootstrap-sass@npm:3.4.3"
+  checksum: a34efc64b4d73a2da8de338a54cc94343aeb7f5e4abbcf6c03afc738cf848697ec8b2ba719ef584b7dcb00c3b3332f85e6e22a87e2813b98371730d981899849
   languageName: node
   linkType: hard
 
@@ -6464,12 +6464,12 @@ __metadata:
   linkType: hard
 
 "datatables.net-bs@npm:>=1.10.9":
-  version: 1.11.3
-  resolution: "datatables.net-bs@npm:1.11.3"
+  version: 1.13.1
+  resolution: "datatables.net-bs@npm:1.13.1"
   dependencies:
-    datatables.net: ">=1.10.25"
+    datatables.net: ">=1.12.1"
     jquery: ">=1.7"
-  checksum: 2cc430428da4cd60e3df95945fea9a2d1df5cacf3d6e1a51c30ee3d6d564aa57e0a5c320aa9fa6322b7ec56a61c36ea595cd45cde058e229c3f054950131d007
+  checksum: 001d3a492f0c8b55817e5e0f880f0c86dbf87ee248e140d38cdcd45ae70f2b8642a6460d280d5630c200b075cff1277ec7194f87e9cee1457f42a68c6fdb5eba
   languageName: node
   linkType: hard
 
@@ -6485,12 +6485,12 @@ __metadata:
   linkType: hard
 
 "datatables.net-colreorder@npm:>=1.2.0, datatables.net-colreorder@npm:^1.4.1":
-  version: 1.5.5
-  resolution: "datatables.net-colreorder@npm:1.5.5"
+  version: 1.6.1
+  resolution: "datatables.net-colreorder@npm:1.6.1"
   dependencies:
-    datatables.net: ">=1.11.3"
+    datatables.net: ">=1.12.1"
     jquery: ">=1.7"
-  checksum: a3b4e65e1dca40243f6d9880c70585d3c65ecc827f8936c2d79ad30caa00beaf977fce2dd1090e8f6b439637275debeda0584d3fa4f9e13f95372ba12085336d
+  checksum: 731748c29ff6661de51ed4ccfb0fbd7034aac06793690d1c43b9db01e9c9f41ef7da8bbca3bdd0eb050b1af86132b23ab3f37944b1d9d87ce2bf50be29178bfa
   languageName: node
   linkType: hard
 
@@ -6514,12 +6514,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:>=1.10.25, datatables.net@npm:>=1.10.9, datatables.net@npm:>=1.11.3, datatables.net@npm:^1.10.15":
-  version: 1.11.3
-  resolution: "datatables.net@npm:1.11.3"
+"datatables.net@npm:>=1.10.9, datatables.net@npm:>=1.12.1, datatables.net@npm:^1.10.15":
+  version: 1.13.1
+  resolution: "datatables.net@npm:1.13.1"
   dependencies:
     jquery: ">=1.7"
-  checksum: 0bed39cee15d00d6776f5c1aba31fafcb7351863683a656d168699297d2c5c5d0e97bfb690393a0a0393fc27b9e6c4ea8f8701190d746ab59d33e60441c6434b
+  checksum: 0b473bf2b869a11389549b8073b53806a0a6844a203d56af39a2f40b23e1d99543b51e0512db65b203b1372c862f56624caf991ffcd7906a174dc82aeb1022de
   languageName: node
   linkType: hard
 
@@ -10797,7 +10797,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.7.1, jquery@npm:>=1.7.1 <4.0.0, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
+"jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.7.1, jquery@npm:>=1.7.1 <4.0.0, jquery@npm:>=1.8, jquery@npm:^3.5.1":
+  version: 3.6.2
+  resolution: "jquery@npm:3.6.2"
+  checksum: b8ca408b9447e67e614204dbc4b2e71c6ea76eff281942d233769d969eed97fe28ffa34976e9ad9d3faad9b0a0d947d7e326ed272243679a9f5812a586c84168
+  languageName: node
+  linkType: hard
+
+"jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:^3.4.1":
   version: 3.6.0
   resolution: "jquery@npm:3.6.0"
   checksum: 8fd5fef4aa48fd374ec716dd1c1df1af407814a228e15c1260ca140de3a697c2a77c30c54ff1d238b6a3ab4ddc445ddeef9adce6c6d28e4869d85eb9d3951c0e
@@ -11806,7 +11813,7 @@ fsevents@^1.2.7:
     moment: ~2.29.4
     moment-duration-format: ~2.2.2
     moment-strftime: ~0.5.0
-    moment-timezone: ~0.5.37
+    moment-timezone: ~0.5.40
     ng-annotate-loader: ~0.7.0
     node-fetch: ~2.6.1
     numeral: ~2.0.6
@@ -12315,23 +12322,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:~0.5.37":
-  version: 0.5.37
-  resolution: "moment-timezone@npm:0.5.37"
+"moment-timezone@npm:~0.5.40":
+  version: 0.5.40
+  resolution: "moment-timezone@npm:0.5.40"
   dependencies:
     moment: ">= 2.9.0"
-  checksum: b3fc24848a396ee3801331a4b5511591df0e22241e59f55200a475603f23a8429f01887294c7a0c005dae25b8e4bef20472fbc875ff20080f26fded066559f1a
+  checksum: 6f6be5412b37fd937bb143efe74bf65b2c3f115fd967a6dc13b717a126ed6dd198bff6db6e179d69a089e20ac03ce7622c6b5598dd585005195554487a91b528
   languageName: node
   linkType: hard
 
-"moment@npm:>= 2.6.0, moment@npm:>= 2.9.0, moment@npm:^2.10, moment@npm:^2.11.2, moment@npm:^2.19.1":
-  version: 2.29.1
-  resolution: "moment@npm:2.29.1"
-  checksum: 1e14d5f422a2687996be11dd2d50c8de3bd577c4a4ca79ba5d02c397242a933e5b941655de6c8cb90ac18f01cc4127e55b4a12ae3c527a6c0a274e455979345e
-  languageName: node
-  linkType: hard
-
-"moment@npm:^2.27.0, moment@npm:~2.29.4":
+"moment@npm:>= 2.6.0, moment@npm:>= 2.9.0, moment@npm:^2.10, moment@npm:^2.11.2, moment@npm:^2.19.1, moment@npm:^2.27.0, moment@npm:~2.29.4":
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
