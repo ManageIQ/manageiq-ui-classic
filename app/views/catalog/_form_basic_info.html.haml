@@ -2,7 +2,7 @@
   :action => @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed")
 %h3= _('Basic Information')
 #basic_info_div
-  
+
   = hidden_div_if(@edit && @edit[:ae_tree_select] != true, :id => "ae_tree_select_div") do
     = render(:partial => 'layouts/ae_tree_select')
   .form-horizontal
@@ -228,4 +228,6 @@
       = render(:partial => "tenants_tree_show")
   - if @edit[:new][:st_prov_type] == "generic_ovf_template"
     = render(:partial => "form_ovf_template_options")
+  - if @edit[:new][:st_prov_type] == "cisco_intersight"
+    = render(:partial => "form_server_profile_template_options")
 
