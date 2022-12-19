@@ -20,8 +20,8 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_list
-    flash_to_session
-    redirect_to(:action => 'explorer')
+    @center_toolbar = 'infra_networking'
+    process_show_list(:dbname => :switch, :gtl_dbname => :switch, :named_scope => :shareable)
   end
 
   alias_method :index, :show_list

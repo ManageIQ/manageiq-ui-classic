@@ -233,6 +233,9 @@ module ApplicationHelper
     association = view_to_association(view, parent)
     if association.nil?
       controller, action = db_to_controller(view.db)
+      if controller == "switch" && action == "show"
+        return url_for_only_path(:action => "x_show") + "/"
+      end
       if controller == "ems_cloud" && action == "show"
         return ems_clouds_path
       end
@@ -1110,6 +1113,7 @@ module ApplicationHelper
                              security_group
                              services
                              storage
+                             switch
                              templates].freeze
 
   def render_download_view_tb?
