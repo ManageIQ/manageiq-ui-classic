@@ -3,6 +3,51 @@ module OpsHelper
   include_concern 'MyServer'
   include VmwareConsoleHelper
 
+  def row_data(label, value)
+    {:cells => {:label => label, :value => value}}
+  end
+
+  def database_details
+    @database_details = ActiveRecord::Base.configurations[Rails.env]
+    @database_display_name =
+      if @database_details["host"].in?([nil, "", "localhost", "127.0.0.1"])
+        _("Internal Database")
+      else
+        _("External Database")
+      end
+      @data = {:title => _('Basic Information')}
+      @data[:rows] = [
+        row_data(_('Name'), @database_display_name),
+        row_data(_('Hostname'), @database_details["host"]),
+        row_data(_('Database name'), @database_details["database"]),
+        row_data(_('Username'), @database_details["username"])
+      ]
+  end
+
+  def database_tab_summary
+    miq_structured_list(@data)
+  end
+
+  def collect_logs_tab
+    record = @selected_server
+    log_depot_uri = (record.log_file_depot.try(:uri) || "N/A").to_s
+    last_time = record.last_log_sync_on
+    last_collection_time = last_time.blank? ? _("Never") : format_timezone(last_time.to_time, Time.zone, "gtl")
+    data = {:title => _('Basic Information'), :mode => "miq_summary"}
+    data[:rows] = [
+      row_data(_('Log Depot URI'), log_depot_uri),
+      row_data(_('Last Log Collection'), last_collection_time)
+    ]
+    if record.respond_to?(:last_log_sync_message)
+      data[:rows] = [
+        row_data(_('Log Depot URI'), log_depot_uri),
+        row_data(_('Last Log Collection'), last_collection_time),
+        row_data(_('Last Message'), record.last_log_sync_message)
+      ]
+    end
+    miq_structured_list(data)
+  end
+
   def hide_button(button, opt)
     if opt == "on"
       button ? '' : 'display:none'
