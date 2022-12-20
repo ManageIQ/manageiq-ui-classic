@@ -1,4 +1,5 @@
 module ReportController::Reports
+  include DataTableHelper
   extend ActiveSupport::Concern
 
   include_concern 'Editor'
@@ -38,8 +39,8 @@ module ReportController::Reports
                 :error)
     else
       rr = miq_task.miq_report_result
-      @html = report_build_html_table(rr.report, rr.html_rows(:page => 1, :per_page => 100).join)
-
+      table_content = report_build_html_table(rr.report, rr.html_rows(:page => 1, :per_page => 100).join)
+      @html = update_content(table_content, :striped, 'preview')
       if !rpt.graph.nil? && rpt.graph[:type].present? # If graph present
         # FIXME: UNTESTED!!!
         rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart

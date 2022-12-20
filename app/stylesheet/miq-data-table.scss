@@ -177,3 +177,22 @@
   }
 
 }
+
+table.miq_preview {
+  tbody tr {
+    td.group {
+      background: lightgray;
+      font-weight: bold;
+      &:hover {
+        background: lightgray;
+      }
+    }
+
+    td.group_spacer {
+      background: #FFF;
+      &:hover {
+        background: #FFF;
+      }
+    }
+  }
+}

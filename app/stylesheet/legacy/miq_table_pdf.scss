@@ -14,6 +14,14 @@
                 text-align: left !important;
                 padding-left: 4px !important;
             }
+
+            td.group {
+                background: lightgray !important;
+                font-weight: bold;
+            }
+            td.group_spacer {
+                background: #FFF !important;
+            }
         }
     } 
 }

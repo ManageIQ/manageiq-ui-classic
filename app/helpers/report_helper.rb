@@ -3,6 +3,7 @@ module ReportHelper
   include ReportInformationHelper
   include ReportDashboardWidgetHelper
   include ReportScheduleHelper
+  include DataTableHelper
 
   STYLE_CLASSES = {
     :miq_rpt_red_text    => N_("Red Text"),
