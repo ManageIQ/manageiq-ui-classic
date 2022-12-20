@@ -177,11 +177,11 @@
   },
   "packageManager": "yarn@3.0.2",
   "resolutions": {
-    "terser": "~4.8.1",
     "d3-color": "~3.1.0",
-    "nwsapi": "^2.2.1",
-    "minimatch": "~3.1.2",
     "decode-uri-component": "^0.2.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "minimatch": "~3.1.2",
+    "nwsapi": "^2.2.1",
+    "terser": "~4.8.1"
   }
 }
