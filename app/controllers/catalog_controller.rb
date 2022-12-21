@@ -1039,6 +1039,8 @@ class CatalogController < ApplicationController
       common_st_record_vars(st)
       add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
       add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx)
+      add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
+
       st.service_type = "atomic"
 
       if request
@@ -1391,6 +1393,9 @@ class CatalogController < ApplicationController
     if params[:currency]
       @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
       @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
+      end
+    if params[:server_profile_template_id]
+      @edit[:new][:server_profile_template_id] = params[:server_profile_template_id]
     end
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
@@ -1518,6 +1523,10 @@ class CatalogController < ApplicationController
 
   def add_ansible_tower_job_template_vars(st)
     st.job_template = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
+  end
+
+  def add_server_profile_template_vars(st)
+    st.options[:server_profile_template_id] = @edit[:new][:server_profile_template_id].nil? ? nil : @edit[:new][:server_profile_template_id]
   end
 
   def add_container_template_vars
@@ -2005,7 +2014,6 @@ class CatalogController < ApplicationController
   end
 
   def fetch_form_vars_server_profile_templates
-    byebug
     form_available_server_profile_templates if params[:st_prov_type]
   end
 
