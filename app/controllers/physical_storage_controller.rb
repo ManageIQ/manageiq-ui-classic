@@ -88,6 +88,8 @@ class PhysicalStorageController < ApplicationController
   def button
     if params[:pressed] == "custom_button"
       custom_buttons
+    else
+      super
     end
   end
 
