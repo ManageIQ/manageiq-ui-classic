@@ -1,4 +1,4 @@
-- url = url_for(:id => "#{@edit[:rec_id] || "new"}", :action => "atomic_form_field_changed")
+- url = url_for(:id => (@edit[:rec_id]&.to_s || "new"), :action => "atomic_form_field_changed")
 
 #options_div
   .form-horizontal
@@ -12,4 +12,4 @@
                           "data-miq_sparkle_on" => true,
                           :class                => "selectpicker")
         :javascript
-              miqSelectPickerEvent('server_profile_template_id', '#{url}')Ï
+          miqSelectPickerEvent('server_profile_template_id', '#{url}')
