@@ -8,8 +8,8 @@
         = _('Server Profile Template')
       .col-md-8
         = select_tag('server_profile_template_id',
-                          options_for_select(opts, @edit[:new][:server_profile_template_id]),
-                          "data-miq_sparkle_on" => true,
-                          :class                => "selectpicker")
+                      options_for_select(opts, @edit[:new][:server_profile_template_id]),
+                      "data-miq_sparkle_on" => true,
+                      :class => "selectpicker")
         :javascript
           miqSelectPickerEvent('server_profile_template_id', '#{url}')
