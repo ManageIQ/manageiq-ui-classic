@@ -305,7 +305,7 @@ Rails.application.routes.draw do
         ot_show
         servicetemplates_names
         show
-        service_catalog_item
+        catalog_item
       ),
       :post => %w(
         ab_group_reorder

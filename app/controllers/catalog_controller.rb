@@ -1,4 +1,5 @@
 class CatalogController < ApplicationController
+  require 'byebug'
   include AutomateTreeHelper
   include ServiceDialogCreationMixin
   include Mixins::BreadcrumbsMixin
@@ -100,10 +101,12 @@ class CatalogController < ApplicationController
     catalogitem_new
   ].freeze
 
-  def service_catalog_item
+  def catalog_item
     stc = ServiceTemplateCatalog.find(params[:id].to_i)
     @record = stc.service_templates.where("id = ?", params[:item].to_i)&.first
     identify_catalog(@record.id)
+    @title = @record.name
+    @lastaction = "show"
   end
 
   def assert_privileges_for_servicetemplate_edit
@@ -341,7 +344,7 @@ class CatalogController < ApplicationController
   # VM or Template show selected, redirect to proper controller
   def show
     assert_privileges("catalog_items_view")
-
+    byebug
     @sb[:action] = nil
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     record = ServiceTemplate.find(params[:id])
@@ -356,43 +359,43 @@ class CatalogController < ApplicationController
     end
   end
 
-  def explorer
-    @explorer = true
-    @lastaction = "explorer"
-    @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
-    @sb[:action] = nil
+  # def explorer
+  #   @explorer = true
+  #   @lastaction = "explorer"
+  #   @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
+  #   @sb[:action] = nil
 
-    # if AJAX request, replace right cell, and return
-    if request.xml_http_request?
-      replace_right_cell
-      return
-    end
+  #   # if AJAX request, replace right cell, and return
+  #   if request.xml_http_request?
+  #     replace_right_cell
+  #     return
+  #   end
 
-    build_accordions_and_trees
+  #   build_accordions_and_trees
 
-    if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
-      @nodetype, id = parse_nodetype_and_id(params[:id])
-      self.x_active_tree   = 'sandt_tree'
-      self.x_active_accord = 'sandt'
-      st = ServiceTemplate.find(params[:id].split("-").last)
-      prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
-      self.x_node = "#{prefix}#{id}"
-      get_node_info(x_node)
-    else
-      @in_a_form = false
-    end
+  #   if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
+  #     @nodetype, id = parse_nodetype_and_id(params[:id])
+  #     self.x_active_tree   = 'sandt_tree'
+  #     self.x_active_accord = 'sandt'
+  #     st = ServiceTemplate.find(params[:id].split("-").last)
+  #     prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
+  #     self.x_node = "#{prefix}#{id}"
+  #     get_node_info(x_node)
+  #   else
+  #     @in_a_form = false
+  #   end
 
-    if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
-      upload_sysprep_file
-      set_form_locals_for_sysprep
-    end
-    template_locals = {:locals => {:controller => "catalog"}}
-    template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
-    template_locals[:locals].merge!(fetch_ct_details) if need_container_template_locals?
-    template_locals[:locals].merge!(fetch_ovf_template_details) if need_ovf_template_locals?
+  #   if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
+  #     upload_sysprep_file
+  #     set_form_locals_for_sysprep
+  #   end
+  #   template_locals = {:locals => {:controller => "catalog"}}
+  #   template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
+  #   template_locals[:locals].merge!(fetch_ct_details) if need_container_template_locals?
+  #   template_locals[:locals].merge!(fetch_ovf_template_details) if need_ovf_template_locals?
 
-    render :layout => "application", :action => "explorer", :locals => template_locals
-  end
+  #   render :layout => "application", :action => "explorer", :locals => template_locals
+  # end
 
   def set_form_locals_for_sysprep
     @pages = false
@@ -409,34 +412,34 @@ class CatalogController < ApplicationController
     add_flash(_("This item is invalid"), :warning) unless @flash_array || @record.try(:template_valid?)
   end
 
-  # ST clicked on in the explorer right cell
-  def x_show
-    @sb[:action] = nil
-    @explorer = true
-    if x_active_tree == :stcat_tree
-      assert_privileges("catalog_items_view")
+  # # ST clicked on in the explorer right cell
+  # def x_show
+  #   @sb[:action] = nil
+  #   @explorer = true
+  #   if x_active_tree == :stcat_tree
+  #     assert_privileges("catalog_items_view")
 
-      if params[:rec_id]
-        # link to Catalog Item clicked on catalog summary screen
-        self.x_active_tree = :sandt_tree
-        self.x_active_accord = 'sandt'
-        @record = ServiceTemplate.find(params[:rec_id])
-      else
-        @record = ServiceTemplateCatalog.find(params[:id])
-      end
-    elsif x_active_tree == :ot_tree
-      assert_privileges("orchestration_templates_view")
+  #     if params[:rec_id]
+  #       # link to Catalog Item clicked on catalog summary screen
+  #       self.x_active_tree = :sandt_tree
+  #       self.x_active_accord = 'sandt'
+  #       @record = ServiceTemplate.find(params[:rec_id])
+  #     else
+  #       @record = ServiceTemplateCatalog.find(params[:id])
+  #     end
+  #   elsif x_active_tree == :ot_tree
+  #     assert_privileges("orchestration_templates_view")
 
-      @record ||= OrchestrationTemplate.find(params[:id])
-    else
-      assert_privileges("st_catalog_view")
+  #     @record ||= OrchestrationTemplate.find(params[:id])
+  #   else
+  #     assert_privileges("st_catalog_view")
 
-      identify_catalog(params[:id])
-      @record ||= ServiceTemplateCatalog.find(params[:id])
-    end
-    params[:id] = x_build_node_id(@record) # Get the tree node id
-    tree_select
-  end
+  #     identify_catalog(params[:id])
+  #     @record ||= ServiceTemplateCatalog.find(params[:id])
+  #   end
+  #   params[:id] = x_build_node_id(@record) # Get the tree node id
+  #   tree_select
+  # end
 
   def st_edit
     assert_privileges(params[:id] ? 'catalogitem_edit' : 'catalogitem_new')
@@ -933,7 +936,12 @@ class CatalogController < ApplicationController
         :name     => :svccat,
         :title    => _("Service Catalogs")
       },
-
+      {
+        :role     => "catalog_items",
+        :role_any => true,
+        :name     => :sandt,
+        :title    => _("Catalog Items1")
+      },
       {
         :role     => "catalog_items_accord",
         :role_any => true,
@@ -1088,16 +1096,16 @@ class CatalogController < ApplicationController
     end
   end
 
-  def service_template_list(scope, options = {})
-    @no_checkboxes = x_active_tree == :svccat_tree
-    if x_active_tree == :svccat_tree
-      @gtl_small_tiles = true
-      @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
-      options[:gtl_dbname] = :catalog
-    end
-    options[:named_scope] = scope
-    process_show_list(options)
-  end
+  # def service_template_list(scope, options = {})
+  #   @no_checkboxes = x_active_tree == :svccat_tree
+  #   if x_active_tree == :svccat_tree
+  #     @gtl_small_tiles = true
+  #     @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
+  #     options[:gtl_dbname] = :catalog
+  #   end
+  #   options[:named_scope] = scope
+  #   process_show_list(options)
+  # end
 
   def ot_edit_set_form_vars(right_cell_text)
     checked = find_checked_items

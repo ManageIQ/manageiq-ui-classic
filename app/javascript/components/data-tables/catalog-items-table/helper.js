@@ -5,8 +5,8 @@ export const onSelectRender = (record, selectedRow, rows) => {
   miqSparkleOn();
   const rowItem = rows.find((item) => item.id === selectedRow.id);
   const link = `/catalog/x_show/${record.id}?rec_id=${rowItem.id}`;
-  // window.DoNav(`/catalog/service_catalog_item/?item=${rowItem.id}&id=${record.id}`);
-  textualSummaryGenericClick({ explorer: true, link });
+  window.DoNav(`/catalog/catalog_item/?item=${rowItem.id}&id=${record.id}`);
+  // textualSummaryGenericClick({ explorer: true, link });
   miqSparkleOff();
 };
 

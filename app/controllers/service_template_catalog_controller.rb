@@ -34,6 +34,7 @@ class ServiceTemplateCatalogController < ApplicationController
   def show_list
     assert_privileges("catalog_service_template_catalogs_show_list")
     process_show_list(:dbname => :service_template_catalogs, :gtl_dbname => :service_template_catalogs)
+    @title = 'Service Catalogs'
   end
 
   def show
@@ -74,7 +75,6 @@ class ServiceTemplateCatalogController < ApplicationController
 
     @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
     @record = checked_id.present? ? find_record_with_rbac(ServiceTemplateCatalog, checked_id) : ServiceTemplate.new
-    puts "@record=====#{@record.inspect}"
     @sb[:st_form_active_tab] = "basic"
     composite_type = @record.service_type == "composite"
     new_atomic_item = params[:pressed] == "atomic_catalogitem_new" || (params[:button].present? && session[:edit][:new][:service_type] == "atomic")
@@ -89,7 +89,8 @@ class ServiceTemplateCatalogController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Services")},
-        {:title => _("Catalogs"), :url => controller_url},
+        {:title => _("Catalogs")},
+        {:title => _("Service Catalogs"), :url => controller_url},
       ],
     }
   end
