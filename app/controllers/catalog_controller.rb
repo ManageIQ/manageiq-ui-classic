@@ -7,7 +7,6 @@ class CatalogController < ApplicationController
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
-  require 'byebug'
   helper ProvisionCustomizeHelper
   helper MiqAeClassHelper # need the playbook_label
 
@@ -1040,7 +1039,6 @@ class CatalogController < ApplicationController
       add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
       add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx)
       add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
-
       st.service_type = "atomic"
 
       if request
@@ -1393,7 +1391,8 @@ class CatalogController < ApplicationController
     if params[:currency]
       @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
       @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
-      end
+    end
+
     if params[:server_profile_template_id]
       @edit[:new][:server_profile_template_id] = params[:server_profile_template_id]
     end
@@ -2357,4 +2356,3 @@ class CatalogController < ApplicationController
   menu_section :svc
   feature_for_actions %w[ab_button_new ab_button_edit ab_group_new ab_group_edit], *EXP_EDITOR_ACTIONS
 end
-
