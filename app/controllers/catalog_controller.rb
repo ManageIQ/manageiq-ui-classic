@@ -1524,8 +1524,8 @@ class CatalogController < ApplicationController
     st.job_template = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
   end
 
-  def add_server_profile_template_vars(st)
-    st.options[:server_profile_template_id] = @edit[:new][:server_profile_template_id].nil? ? nil : @edit[:new][:server_profile_template_id]
+  def add_server_profile_template_vars(service_template)
+    service_template.options[:server_profile_template_id] = @edit[:new][:server_profile_template_id].nil? ? nil : @edit[:new][:server_profile_template_id]
   end
 
   def add_container_template_vars
