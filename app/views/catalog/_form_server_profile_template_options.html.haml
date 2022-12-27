@@ -1,0 +1,15 @@
+- url = url_for(:id => (@edit[:rec_id]&.to_s || "new"), :action => "atomic_form_field_changed")
+
+#options_div
+  .form-horizontal
+    - opts = [["<#{_('Choose')}>", nil]] + @edit[:available_server_profile_templates]
+    .form-group
+      %label.col-md-2.control-label
+        = _('Server Profile Template')
+      .col-md-8
+        = select_tag('server_profile_template_id',
+                      options_for_select(opts, @edit[:new][:server_profile_template_id]),
+                      "data-miq_sparkle_on" => true,
+                      :class => "selectpicker")
+        :javascript
+          miqSelectPickerEvent('server_profile_template_id', '#{url}')

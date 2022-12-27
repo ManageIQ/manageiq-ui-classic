@@ -7,7 +7,6 @@ class CatalogController < ApplicationController
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
-
   helper ProvisionCustomizeHelper
   helper MiqAeClassHelper # need the playbook_label
 
@@ -1039,6 +1038,7 @@ class CatalogController < ApplicationController
       common_st_record_vars(st)
       add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
       add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx)
+      add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
       st.service_type = "atomic"
 
       if request
@@ -1393,9 +1393,14 @@ class CatalogController < ApplicationController
       @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
     end
 
+    if params[:server_profile_template_id]
+      @edit[:new][:server_profile_template_id] = params[:server_profile_template_id]
+    end
+
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_awx generic_container_template].include?(@edit[:new][:st_prov_type])
     fetch_form_vars_ovf_template if @edit[:new][:st_prov_type] == 'generic_ovf_template'
+    fetch_form_vars_server_profile_templates if @edit[:new][:st_prov_type] == 'cisco_intersight'
   end
 
   def code_currency_label(currency)
@@ -1517,6 +1522,10 @@ class CatalogController < ApplicationController
 
   def add_ansible_tower_job_template_vars(st)
     st.job_template = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
+  end
+
+  def add_server_profile_template_vars(service_template)
+    service_template.options[:server_profile_template_id] = @edit[:new][:server_profile_template_id].nil? ? nil : @edit[:new][:server_profile_template_id]
   end
 
   def add_container_template_vars
@@ -2001,6 +2010,14 @@ class CatalogController < ApplicationController
   def validate_vm_name
     ems_id = ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate.find_by(:id => @edit[:new][:ovf_template_id]).ems_id
     add_flash(_("VM Name already exists, Please select a different VM Name"), :error) if VmOrTemplate.find_by(:name => @edit[:new][:vm_name], :ems_id => ems_id).present?
+  end
+
+  def fetch_form_vars_server_profile_templates
+    form_available_server_profile_templates if params[:st_prov_type]
+  end
+
+  def form_available_server_profile_templates
+    @edit[:available_server_profile_templates] = PhysicalServerProfileTemplate.all.collect { |m| [m.name, m.id] }.sort
   end
 
   def automate_tree_needed?
