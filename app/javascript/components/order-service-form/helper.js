@@ -139,10 +139,21 @@ const buildDropDownList = (field, validate) => {
     options.push({ value: value[0] !== null ? String(value[0]) : null, label: value[1] });
   });
 
-//   if (field.dynamic) {
-//     dynamicFields.push({ field: field.name, id: field.id, values: options });
-//     console.log(dynamicFields);
-//   }
+  if (field.dynamic) {
+    dynamicFields.push({ field: field.name, id: field.id, values: options });
+    console.log(dynamicFields);
+    return {
+      component: 'dynamic-select',
+      id: field.id,
+      name: field.name,
+      label: field.label,
+      description: field.description,
+      options,
+      hideField: !field.visible,
+      reequired: field.required,
+      disabled: field.read_only,
+    };
+  }
 
   if (options[0].value === null) {
     start = options.shift();

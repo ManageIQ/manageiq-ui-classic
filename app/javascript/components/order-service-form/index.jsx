@@ -47,9 +47,10 @@ const OrderServiceForm = ({
 
   const onSubmit = (values) => {
     let submitData = { action: 'order', ...values };
+    console.log(values);
+    return null;
 
     submitData = prepareSubmitData(values, setShowDateError);
-
     if (submitData !== false) {
       if (apiSubmitEndpoint.includes('/generic_objects/')) {
         submitData = { action: apiAction, parameters: _.omit(submitData, 'action') };

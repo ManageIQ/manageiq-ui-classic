@@ -1,4 +1,3 @@
-import React from 'react';
 import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
@@ -11,6 +10,7 @@ import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 import MultiSelectWithSelectAll from '../../components/multiselect-with-selectall';
 import FontIconPicker from '../../components/fonticon-picker';
 import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker-ddf';
+import DynamicSelect from '../../components/dynamic-select';
 
 const mapper = {
   ...componentMapper,
@@ -25,6 +25,7 @@ const mapper = {
   'multi-select': MultiSelectWithSelectAll,
   'font-icon-picker': FontIconPicker,
   'font-icon-picker-ddf': FontIconPickerDdf, // used for react form pages
+  'dynamic-select': DynamicSelect,
 };
 
 export default mapper;
