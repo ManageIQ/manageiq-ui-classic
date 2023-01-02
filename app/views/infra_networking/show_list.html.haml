@@ -1,2 +1,10 @@
-#main-div
-  = render :partial => 'layouts/x_gtl'
+- content_for :search do
+  = render(:partial => "layouts/x_adv_searchbox")
+  = render(:partial => 'layouts/quick_search')
+
+-# Showing a list of switches
+#main_div
+  = render(:partial => 'layouts/gtl')
+-# Show Search box
+:javascript
+  #{javascript_show_if_exists("adv_searchbox_div")}

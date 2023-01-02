@@ -234,7 +234,7 @@ module ApplicationHelper
     if association.nil?
       controller, action = db_to_controller(view.db)
       if controller == "switch" && action == "show"
-        return url_for_only_path(:action => "x_show") + "/"
+        return url_for_only_path(:action => action)
       end
       if controller == "ems_cloud" && action == "show"
         return ems_clouds_path

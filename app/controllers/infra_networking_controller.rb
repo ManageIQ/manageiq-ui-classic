@@ -11,6 +11,10 @@ class InfraNetworkingController < ApplicationController
   include Mixins::CustomButtonDialogFormMixin
   include Mixins::BreadcrumbsMixin
 
+  INFRA_X_BUTTON_ALLOWED_ACTIONS = {
+    "infra_networking_tag"      => :infra_networking_tag
+  }.freeze
+
   def self.model
     Switch
   end
@@ -20,14 +24,20 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_list
-    @center_toolbar = 'infra_networking'
+    @lastaction = "showlist"
+    @center_toolbar = 'infra_networkings'
     process_show_list(:dbname => :switch, :gtl_dbname => :switch, :named_scope => :shareable)
+    render :layout => "application"
   end
 
   alias_method :index, :show_list
 
   def tagging_explorer_controller?
     @explorer
+  end
+
+  def show_searchbar?
+    true
   end
 
   def tree_select
@@ -75,6 +85,11 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
+  def show
+    assert_privileges("infra_networking_view")
+    @switch = @record = identify_record(params[:id], Switch)
+  end
+
   def x_show
     assert_privileges("infra_networking_view")
     @switch = @record = identify_record(params[:id], Switch)
@@ -119,6 +134,8 @@ class InfraNetworkingController < ApplicationController
   def button
     if params[:pressed] == "custom_button"
       custom_buttons
+    else
+      tag(self.class.model)
     end
   end
 
@@ -295,6 +312,11 @@ class InfraNetworkingController < ApplicationController
     end
 
     if params[:action] == 'x_button' && params[:pressed] == 'infra_networking_tag'
+      tagging
+      return
+    end
+
+    if params[:action] == 'button' && params[:pressed] == 'infra_networking_tag'
       tagging
       return
     end

@@ -93,7 +93,7 @@ module ApplicationController::Tags
     add_flash(_("Tag Edit was cancelled by the user"))
     session[:tag_items] = nil # reset tag_items in session
     @edit = nil # clean out the saved info
-    if tagging_explorer_controller?
+    if tagging_explorer_controller? && @lastaction != 'show_list'
       @sb[:action] = nil
       replace_right_cell
     else
@@ -109,7 +109,7 @@ module ApplicationController::Tags
     tagging_save_tags
 
     @edit = nil # clean out the saved info
-    if tagging_explorer_controller?
+    if tagging_explorer_controller? && @lastaction != 'show_list'
       @sb[:action] = nil
       replace_right_cell
     else

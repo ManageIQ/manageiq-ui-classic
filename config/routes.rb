@@ -1779,6 +1779,7 @@ Rails.application.routes.draw do
         tagging
         tagging_edit
         x_show
+        show
       ),
       :post => %w(
         button
