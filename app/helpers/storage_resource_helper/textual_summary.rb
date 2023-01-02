@@ -12,6 +12,7 @@ module StorageResourceHelper::TextualSummary
         name
         logical_free
         logical_total
+        capabilities
       ]
     )
   end
@@ -33,5 +34,16 @@ module StorageResourceHelper::TextualSummary
 
   def textual_logical_total
     {:label => _("Total Size"), :value => number_to_human_size(@record.logical_total, :precision => 2)}
+  end
+
+  def textual_capabilities
+    {:label => _("Capabilities"), :value => parse_capabilities(@record.capabilities)}
+  end
+
+  def parse_capabilities(capabilities)
+    caps = capabilities.map do |capability|
+      "#{capability['name']}: #{capability['value']}"
+    end
+    caps.join(", ")
   end
 end
