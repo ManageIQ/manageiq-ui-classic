@@ -176,7 +176,7 @@ class ConditionController < ApplicationController
     end
 
     if @condition.read_only
-      add_flash(_("Read only condition can not be edited"), :error)
+      add_flash(_("Read only condition cannot be edited"), :error)
       return
     end
 
