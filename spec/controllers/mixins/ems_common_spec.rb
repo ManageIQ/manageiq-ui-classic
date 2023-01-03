@@ -176,7 +176,7 @@ describe EmsContainerController do
 
       it "when VM Migrate is pressed for unsupported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryBot.create(:vm_microsoft)
+        vm = FactoryBot.create(:vm_ovirt)
         post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include('does not apply')
