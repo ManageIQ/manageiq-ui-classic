@@ -35,4 +35,4 @@ The gem is available as open source under the terms of the [Apache License 2.0](
 Except where otherwise noted, all ManageIQ source files are covered by
 the following copyright and license notice:
 
-Copyright 2014-2020 ManageIQ Authors.
+Copyright (c) 2014-present ManageIQ Authors.
