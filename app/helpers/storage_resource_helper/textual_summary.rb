@@ -12,7 +12,6 @@ module StorageResourceHelper::TextualSummary
         name
         logical_free
         logical_total
-        capabilities
       ]
     )
   end
@@ -34,14 +33,5 @@ module StorageResourceHelper::TextualSummary
 
   def textual_logical_total
     {:label => _("Total Size"), :value => number_to_human_size(@record.logical_total, :precision => 2)}
-  end
-
-  def textual_capabilities
-    values = ""
-    JSON.parse(@record.capabilities).each do |capabilities|
-      values += "#{capabilities['abstract_capability']}: #{capabilities['value']}, "
-    end
-
-    {:label => _("Enabled capabilities"), :value => values.chomp(', ') }
   end
 end
