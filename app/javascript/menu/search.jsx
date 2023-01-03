@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Search from 'carbon-components-react/es/components/Search';
 import { Search20 } from '@carbon/icons-react';
-import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
+import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
 export const flatten = (menuItems = []) => {
@@ -32,27 +32,31 @@ const MenuSearch = ({
 }) => {
   if (!expanded) {
     return (
-      <SideNavItem className="padded menu-search vertical-center">
-        <div
-          tabIndex="0"
-          className="search_div"
-          role="button"
-          onClick={toggle}
-          onKeyPress={toggle}
-        >
-          <TooltipIcon
-            direction="right"
-            tooltipText={__('Find')}
-          >
-            <Search20 />
-          </TooltipIcon>
-        </div>
-      </SideNavItem>
+      <div className="menu-search">
+        <SideNavItems>
+          <SideNavItem className="padded vertical-center">
+            <div
+              tabIndex="0"
+              className="search_div"
+              role="button"
+              onClick={toggle}
+              onKeyPress={toggle}
+            >
+              <TooltipIcon
+                direction="right"
+                tooltipText={__('Find')}
+              >
+                <Search20 />
+              </TooltipIcon>
+            </div>
+          </SideNavItem>
+        </SideNavItems>
+      </div>
     );
   }
 
   const flatMenu = flatten(menu).map(({ item, parents }) => {
-    const titles = [...parents, item].map(p => p.title);
+    const titles = [...parents, item].map((p) => p.title);
     const haystack = titles.join(' ').toLocaleLowerCase();
 
     return {
@@ -70,20 +74,24 @@ const MenuSearch = ({
     }
 
     const needle = string.toLocaleLowerCase();
-    const results = flatMenu.filter(item => item.haystack.includes(needle));
+    const results = flatMenu.filter((item) => item.haystack.includes(needle));
 
     onSearch(results);
   };
 
   return (
-    <SideNavItem className="padded menu-search">
-      <Search
-        size="sm"
-        placeholder={__('Find')}
-        labelText={__('Find') /* hidden in css */}
-        onChange={event => searchResults(event.target.value)}
-      />
-    </SideNavItem>
+    <div className="menu-search">
+      <SideNavItems>
+        <SideNavItem className="padded">
+          <Search
+            size="sm"
+            placeholder={__('Find')}
+            labelText={__('Find') /* hidden in css */}
+            onChange={(event) => searchResults(event.target.value)}
+          />
+        </SideNavItem>
+      </SideNavItems>
+    </div>
   );
 };
 

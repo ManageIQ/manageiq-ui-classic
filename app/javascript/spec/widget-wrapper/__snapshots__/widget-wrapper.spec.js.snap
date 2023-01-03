@@ -123,11 +123,16 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
               </button>
             </ClickListener>
           </OverflowMenu>
-          <h2
+          <div
+            aria-label="widget-title-1"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
-            Guest OS Information
-          </h2>
+            <span
+              id="widget-title-1"
+            >
+              Guest OS Information
+            </span>
+          </div>
         </div>
       </div>
       <div
@@ -307,11 +312,16 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
               </button>
             </ClickListener>
           </OverflowMenu>
-          <h2
+          <div
+            aria-label="widget-title-83"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
-            Links
-          </h2>
+            <span
+              id="widget-title-83"
+            >
+              Links
+            </span>
+          </div>
         </div>
       </div>
       <div
@@ -491,11 +501,16 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
               </button>
             </ClickListener>
           </OverflowMenu>
-          <h2
+          <div
+            aria-label="widget-title-19"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
-            EVM: Recently Discovered Hosts
-          </h2>
+            <span
+              id="widget-title-19"
+            >
+              EVM: Recently Discovered Hosts
+            </span>
+          </div>
         </div>
       </div>
       <div

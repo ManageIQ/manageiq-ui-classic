@@ -67,6 +67,10 @@
   .menu-collapse {
     border-top: solid 1px #3d3d3d;
 
+    ul.menu-collapse-list {
+      padding-top: 0;
+    }
+
     .menu-collapse-button {
       margin-left: auto;
       padding: 14px;

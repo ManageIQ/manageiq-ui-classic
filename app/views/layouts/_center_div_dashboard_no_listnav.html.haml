@@ -1,11 +1,12 @@
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden; height: 100%;"}
-  #breadcrumbs
-    = render :partial => "layouts/breadcrumbs"
-  .row.toolbar-pf#toolbar
-    .col-sm-12
-      - if @widgets_menu
-        = miq_toolbar toolbar_from_hash
-  .row#main-content.miq-body.miq-layout-center_div_dashboard_no_listnav
+  %header
+    #breadcrumbs
+      = render :partial => "layouts/breadcrumbs"
+    .row.toolbar-pf#toolbar
+      .col-sm-12
+        - if @widgets_menu
+          = miq_toolbar toolbar_from_hash
+  %main.row#main-content.miq-body.miq-layout-center_div_dashboard_no_listnav
     .col-md-12
       .spacer
       = render :partial => 'layouts/tabs'

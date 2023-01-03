@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
+import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import { UserAvatar20 } from '@carbon/icons-react';
 
 const Username = ({ applianceName, currentUser, expanded }) => {
@@ -9,16 +9,20 @@ const Username = ({ applianceName, currentUser, expanded }) => {
   return (
     <div className="menu-user" data-userid={currentUser.userid} title={title}>
       { expanded && (
-        <SideNavItem className="padded collapse_icon">
-          <span>
-            {currentUser.name}
-          </span>
-        </SideNavItem>
+        <SideNavItems>
+          <SideNavItem className="padded collapse_icon">
+            <span>
+              {currentUser.name}
+            </span>
+          </SideNavItem>
+        </SideNavItems>
       )}
       { expanded || (
-        <SideNavItem className="padded collapse_icon">
-          <UserAvatar20 />
-        </SideNavItem>
+        <SideNavItems>
+          <SideNavItem className="padded collapse_icon">
+            <UserAvatar20 />
+          </SideNavItem>
+        </SideNavItems>
       )}
     </div>
   );

@@ -50,7 +50,7 @@ MenuIcon.defaultProps = {
 const addMenu = (items, locked) => {
   const title = locked
     ? __('Cannot add a Widget, this Dashboard has been locked by the Administrator')
-    : __('Add a widget');
+    : __('Add widget');
   const buttonName = __('Add widget');
 
   return (

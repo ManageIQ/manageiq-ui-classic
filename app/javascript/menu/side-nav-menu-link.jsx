@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { SideNavIcon, SideNavItem } from 'carbon-components-react/es/components/UIShell';
-import Link from 'carbon-components-react/es/components/UIShell/Link';
+import Button from 'carbon-components-react/es/components/UIShell/Link';
 import { ChevronRight20 } from '@carbon/icons-react';
 import cx from 'classnames';
 import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
@@ -17,6 +17,7 @@ const SideNavMenuLink = forwardRef(({
   onClick,
   renderIcon: IconElement,
   title,
+  itemPosition,
 }, ref) => {
   const className = cx({
     'bx--side-nav__link': true,
@@ -26,7 +27,7 @@ const SideNavMenuLink = forwardRef(({
 
   return (
     <SideNavItem id={id}>
-      <Link className={className} onClick={onClick} onKeyPress={onClick} ref={ref} tabIndex="0">
+      <Button className={className} role="button" onClick={onClick} onKeyPress={onClick} ref={ref} tabIndex={itemPosition}>
         {IconElement && (
           <SideNavIcon small>
             {expanded && (<IconElement />)}
@@ -48,7 +49,7 @@ const SideNavMenuLink = forwardRef(({
         <SideNavIcon className="bx--side-nav__submenu-chevron" small>
           <ChevronRight20 />
         </SideNavIcon>
-      </Link>
+      </Button>
     </SideNavItem>
   );
 });
@@ -61,6 +62,7 @@ SideNavMenuLink.propTypes = {
   onClick: PropTypes.func.isRequired,
   renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   title: PropTypes.string.isRequired,
+  itemPosition: PropTypes.number.isRequired,
 };
 
 SideNavMenuLink.defaultProps = {
