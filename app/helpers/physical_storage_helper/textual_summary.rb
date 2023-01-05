@@ -2,7 +2,7 @@ module PhysicalStorageHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[name product_name serial_number health_state enclosures drive_bays uid_ems description]
+      %i[name product_name serial_number health_state enclosures drive_bays uid_ems description capabilities]
     )
   end
 
@@ -96,5 +96,13 @@ module PhysicalStorageHelper::TextualSummary
 
   def textual_lowest_rack_unit
     {:label => _("Lowest Rack Unit"), :value => @record.asset_detail&.lowest_rack_unit}
+  end
+
+  def textual_capabilities
+    {:label => _("Capabilities"), :value => parse_capabilities(@record.capabilities)}
+  end
+
+  def parse_capabilities(capabilities)
+    capabilities.map { |k, v| "#{k}: #{v.join(', ')}" }.join(', ')
   end
 end
