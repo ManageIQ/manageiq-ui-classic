@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'carbon-components-react/es/components/Dropdown';
-import SideNavItem from 'carbon-components-react/es/components/UIShell/SideNavItem';
+import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import { Collaborate20 } from '@carbon/icons-react';
 import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
 
@@ -55,10 +55,10 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
   const expanded = options.length > 1 ? multiGroup : singleGroup;
 
   return (
-    <div
-      className="menu-group"
-    >
-      { isExpanded ? expanded : collapsed }
+    <div className="menu-group">
+      <SideNavItems>
+        { isExpanded ? expanded : collapsed }
+      </SideNavItems>
     </div>
   );
 };

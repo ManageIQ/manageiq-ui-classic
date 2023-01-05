@@ -1,12 +1,13 @@
 - if @tabs
   %ul{'role' => 'tablist', :class => "nav nav-tabs #{@layout == 'dashboard' ? 'nav-tabs-pf' : nil}"}
-    - @tabs.each do |tab|
+    - @tabs.each_with_index do |tab, tab_index|
+      - tab_id = tab[1].split(" ")[0]
       - if tab[0] == @active_tab
-        %li.active{'role' => 'tab', 'aria-selected' => "true", :id => "#{tab[1].split(" ")[0]}_tab", 'aria-controls' =>tab[1].split(" ")[0]}
+        %li.active{'role' => 'tab', 'tabindex' => tab_index, 'aria-selected' => "true", :id => "#{tab_id}_tab", 'aria-controls' => tab_id}
           %a
             = h(tab[1])
       - else
-        %li{'role' => 'tab', 'aria-selected' => "false", :id => "#{tab[1].split(" ")[0]}_tab", 'aria-controls' =>tab[1].split(" ")[0]}
+        %li{'role' => 'tab', 'tabindex' => tab_index, 'aria-selected' => "false", :id => "#{tab_id}_tab", 'aria-controls' => tab_id}
           - if tab[0] == ""
             %a= h(tab[1])
           - else

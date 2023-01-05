@@ -24,7 +24,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
       className="miq-toolbar-group form-group"
     >
       <OverflowMenu
-        ariaLabel="Add a widget"
+        ariaLabel="Add widget"
         direction="bottom"
         disabled={false}
         flipped={false}
@@ -43,7 +43,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         open={false}
         renderIcon={[Function]}
         selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
-        title="Add a widget"
+        title="Add widget"
       >
         <ClickListener
           onClickOutside={[Function]}
@@ -51,7 +51,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           <button
             aria-expanded={false}
             aria-haspopup={true}
-            aria-label="Add a widget"
+            aria-label="Add widget"
             className="bx--overflow-menu bx--overflow-menu--md"
             disabled={false}
             floatingmenu="true"
@@ -60,7 +60,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
             onClose={[Function]}
             onKeyDown={[Function]}
             open={false}
-            title="Add a widget"
+            title="Add widget"
             type="button"
           >
             <renderIcon

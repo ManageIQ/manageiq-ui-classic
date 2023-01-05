@@ -5,8 +5,8 @@ import SideNavMenuLink from './side-nav-menu-link';
 import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
 
-const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, nextRef } }) => items.map((item, idx) => {
-  const prev = items[idx - 1]; // Retrieve the previous item in the menu
+const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, nextRef } }) => items.map((item, itemPosition) => {
+  const prev = items[itemPosition - 1]; // Retrieve the previous item in the menu
 
   // Set the reference to the previous/next item relatively to the selected one
   const ref = (item.id === activeSection && prevRef)
@@ -26,6 +26,7 @@ const mapItems = (items, expanded, { activeSection, onSelect, ref: { prevRef, ne
         hover={item.id === activeSection}
         onSelect={onSelect}
         expanded={expanded}
+        itemPosition={itemPosition}
       />
     ) : (
       <MenuItem {...props} />
@@ -58,7 +59,7 @@ MenuItem.defaultProps = {
 };
 
 const MenuSection = forwardRef(({
-  active, expanded, hover, icon, id, items, title, onSelect,
+  active, expanded, hover, icon, id, items, title, onSelect, itemPosition,
 }, ref) => (
   <SideNavMenuLink
     expanded={expanded}
@@ -72,6 +73,7 @@ const MenuSection = forwardRef(({
     ref={ref}
     renderIcon={carbonizeIcon(icon)}
     title={__(title)}
+    itemPosition={itemPosition}
   />
 ));
 
@@ -84,6 +86,7 @@ MenuSection.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any).isRequired,
   onSelect: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  itemPosition: PropTypes.number.isRequired,
 };
 
 MenuSection.defaultProps = {
@@ -103,7 +106,7 @@ const FirstLevel = forwardRef(({
 FirstLevel.propTypes = {
   activeSection: PropTypes.string,
   expanded: PropTypes.bool.isRequired,
-  menu: PropTypes.any.isRequired,
+  menu: PropTypes.arrayOf(PropTypes.any).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

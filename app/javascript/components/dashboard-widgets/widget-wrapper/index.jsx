@@ -70,9 +70,9 @@ const WidgetWrapper = ({
           >
             {getOverflowButtons(widgetButtons, widgetId, widgetType, widgetTitle, setState, widgetModel, widgetLastRun, widgetNextRun)}
           </OverflowMenu>
-          <h2 className="card-pf-title sortable-handle ui-sortable-handle">
-            {widgetTitle}
-          </h2>
+          <div className="card-pf-title sortable-handle ui-sortable-handle" aria-label={`widget-title-${widgetId}`}>
+            <span id={`widget-title-${widgetId}`}>{widgetTitle}</span>
+          </div>
         </div>
       </div>
       {getWidget(widgetId, isLoading, widgetModel, widgetType, widgetLastRun, widgetNextRun, error)}
