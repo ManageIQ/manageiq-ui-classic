@@ -1,11 +1,9 @@
-%log-collection-form{'record-id'                      => @record.id || "new",
-                     'select-options'                 => @supported_depots_for_select.to_json,
-                     'uri-prefixes'                   => @uri_prefixes.to_json,
-                     'log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
-                     'save-url'                       => "/#{controller_name}/log_depot_edit/",
-                     'message'                        =>  _("Editing Log Depot Settings for %{class}: %{display}") % {:class  => Dictionary.gettext(@record.class.name,
-                                                                                                                                                    :type     => :model,
-                                                                                                                                                    :notfound => :titleize),
-                                                                                                                      :display => @record.display_name}}
-:javascript
-  miq_bootstrap('log-collection-form');
+- record, options, prefixes = @record, @supported_depots_for_select, @uri_prefixes
+- log_type = Dictionary.gettext(record.class.name, :type => :model, :notfound => :titleize)
+
+= react('DiagnosticsCollectLogForm', {:initialData => {:recordId => record.id || "new",
+                                                       :options => options,
+                                                       :prefixes => prefixes,
+                                                       :controller => controller_name,
+                                                       :logType => log_type,
+                                                       :displayName => record.display_name}})

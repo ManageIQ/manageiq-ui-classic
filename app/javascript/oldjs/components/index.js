@@ -3,7 +3,6 @@ require('./auth-credentials.js');
 require('./index.js');
 require('./miq-button.js');
 require('./miq_ae_class/namespace-form.js');
-require('./ops/log-collection-form.js');
 require('./provider-option-field-input.js');
 require('./provier-option-section.js');
 require('./sanitize.js');
