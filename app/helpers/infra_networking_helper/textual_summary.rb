@@ -8,7 +8,7 @@ module InfraNetworkingHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i[hosts custom_button_events])
+    TextualGroup.new(_("Relationships"), %i[hosts custom_button_events lans])
   end
 
   def textual_group_smart_management
@@ -26,6 +26,11 @@ module InfraNetworkingHelper::TextualSummary
       h[:link] = url_for_only_path(:action => 'hosts', :id => @record, :db => 'switch')
     end
     h
+  end
+
+  def textual_lans
+    portgroups = @record.lans.map(&:name)
+    {:label => _("Portgroup"), :icon => "pficon pficon-network", :value => portgroups.join(', ')}
   end
 
   def textual_custom_button_events

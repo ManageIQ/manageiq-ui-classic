@@ -6,7 +6,7 @@ class InfraNetworkingController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
-  include Mixins::ExplorerPresenterMixin
+  # include Mixins::ExplorerPresenterMixin
   include Mixins::FindRecord
   include Mixins::CustomButtonDialogFormMixin
   include Mixins::BreadcrumbsMixin
@@ -37,7 +37,11 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_searchbar?
-    true
+    @record.nil? ? true : false
+  end
+
+  def display_back_button?
+    false
   end
 
   def tree_select
@@ -87,6 +91,10 @@ class InfraNetworkingController < ApplicationController
 
   def show
     assert_privileges("infra_networking_view")
+    @center_toolbar = 'infra_networking'
+    @lastaction = "show"
+    @display = 'main'
+    @showtype = 'main'
     @switch = @record = identify_record(params[:id], Switch)
   end
 
@@ -118,6 +126,15 @@ class InfraNetworkingController < ApplicationController
   def explorer
     @explorer = true
     @lastaction = "explorer"
+
+    build_accordions_and_trees
+    @in_a_form = false
+
+    render :layout => "application"
+  end
+
+  def index
+    @lastaction = "index"
 
     build_accordions_and_trees
     @in_a_form = false
