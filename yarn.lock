@@ -2405,9 +2405,9 @@ __metadata:
   linkType: hard
 
 "@types/d3-dsv@npm:^1":
-  version: 1.2.1
-  resolution: "@types/d3-dsv@npm:1.2.1"
-  checksum: 62e271128530c6bac589f3be76f95b11a052c6af3606b65f82e378981300b5f1d6c3841448744c07680bf40af35a8aad3b6100bbd357007ffe4e111c5e4a34fe
+  version: 1.2.2
+  resolution: "@types/d3-dsv@npm:1.2.2"
+  checksum: af443b7c9b98ceed9247472d036404b982d25af4eaa09ffe54017e675e26c1b9ba29a3464b658b4552e5cc2635a03c0e8354138ab47ad6b06c29ccb65bac3c5b
   languageName: node
   linkType: hard
 
@@ -2433,11 +2433,11 @@ __metadata:
   linkType: hard
 
 "@types/d3-geo@npm:^1":
-  version: 1.12.3
-  resolution: "@types/d3-geo@npm:1.12.3"
+  version: 1.12.4
+  resolution: "@types/d3-geo@npm:1.12.4"
   dependencies:
     "@types/geojson": "*"
-  checksum: f06fde83cae3ff5915a1dcc5ce5600c4a8212296d6cc14246081524c44d82cd93e3734246726c1eaed5800ac2d8155bfe2648ba573f25fa8082a91ec44f61768
+  checksum: 301180d2524fe45a5a5f9c1cafd4d4b89ea1bf99be390ee84e06510ca2126d34b4d674c62ca389078c59e34177140d85cef5ab9512583beed50eee3b07c3a075
   languageName: node
   linkType: hard
 
@@ -7215,7 +7215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eonasdan-bootstrap-datetimepicker@npm:^4.17.47, eonasdan-bootstrap-datetimepicker@npm:~4.17.47":
+"eonasdan-bootstrap-datetimepicker@npm:^4.17.47, eonasdan-bootstrap-datetimepicker@npm:~4.17.49":
   version: 4.17.49
   resolution: "eonasdan-bootstrap-datetimepicker@npm:4.17.49"
   dependencies:
@@ -10817,9 +10817,9 @@ fsevents@^1.2.7:
   linkType: hard
 
 "jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.7.1, jquery@npm:>=1.7.1 <4.0.0, jquery@npm:>=1.8, jquery@npm:^3.5.1":
-  version: 3.6.2
-  resolution: "jquery@npm:3.6.2"
-  checksum: b8ca408b9447e67e614204dbc4b2e71c6ea76eff281942d233769d969eed97fe28ffa34976e9ad9d3faad9b0a0d947d7e326ed272243679a9f5812a586c84168
+  version: 3.6.3
+  resolution: "jquery@npm:3.6.3"
+  checksum: 0fd366bdcaa0c84a7a8751ce20f8192290141913978b5059574426d9b01f4365daa675f95aab3eec94fd794d27b08d32078a2236bef404b8ba78073009988ce6
   languageName: node
   linkType: hard
 
@@ -11803,7 +11803,7 @@ fsevents@^1.2.7:
     enzyme: ^3.9.0
     enzyme-adapter-react-16: ^1.13.0
     enzyme-to-json: ^3.3.4
-    eonasdan-bootstrap-datetimepicker: ~4.17.47
+    eonasdan-bootstrap-datetimepicker: ~4.17.49
     es6-shim: ~0.35.3
     eslint: ~7.11.0
     eslint-config-airbnb: ~18.2.0
@@ -11837,8 +11837,7 @@ fsevents@^1.2.7:
     node-fetch: ~2.6.1
     numeral: ~2.0.6
     path-complete-extname: ~0.1.0
-    patternfly: ~3.59.1
-    patternfly-bootstrap-treeview: ~2.1.7
+    patternfly: ~3.59.5
     postcss-import: ~14.0.2
     postcss-loader: ~3.0.0
     precss: ~4.0.0
@@ -12316,15 +12315,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.4.0, moment-timezone@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "moment-timezone@npm:0.4.1"
-  dependencies:
-    moment: ">= 2.6.0"
-  checksum: 854adeb83be48716f59f4a0ee96863270dd8ff94d319f13c546ecc47408e67c59b35a720aeffaae6c4ad986e8eb7af0a5352621c327cedc1dbee9c6bcc596f94
-  languageName: node
-  linkType: hard
-
 "moment-timezone@npm:~0.5.40":
   version: 0.5.40
   resolution: "moment-timezone@npm:0.5.40"
@@ -12334,7 +12324,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"moment@npm:>= 2.6.0, moment@npm:>= 2.9.0, moment@npm:^2.10, moment@npm:^2.11.2, moment@npm:^2.19.1, moment@npm:^2.27.0, moment@npm:~2.29.4":
+"moment@npm:>= 2.9.0, moment@npm:^2.10, moment@npm:^2.11.2, moment@npm:^2.19.1, moment@npm:^2.27.0, moment@npm:~2.29.4":
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
@@ -13409,7 +13399,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"patternfly-bootstrap-treeview@npm:~2.1.0, patternfly-bootstrap-treeview@npm:~2.1.10, patternfly-bootstrap-treeview@npm:~2.1.7":
+"patternfly-bootstrap-treeview@npm:~2.1.0, patternfly-bootstrap-treeview@npm:~2.1.10":
   version: 2.1.10
   resolution: "patternfly-bootstrap-treeview@npm:2.1.10"
   dependencies:
@@ -13494,7 +13484,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"patternfly@npm:~3.59.1":
+"patternfly@npm:~3.59.5":
   version: 3.59.5
   resolution: "patternfly@npm:3.59.5"
   dependencies:
