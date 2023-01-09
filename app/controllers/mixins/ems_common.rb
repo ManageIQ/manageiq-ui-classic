@@ -86,6 +86,7 @@ module Mixins
           floating_ips
           host_aggregates
           host_initiators
+          host_initiator_groups
           volume_mappings
           hosts
           images
