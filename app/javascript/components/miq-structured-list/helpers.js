@@ -1,6 +1,7 @@
 /* eslint-disable no-eval */
 import { TreeViewRedux } from '../tree-view';
 import CatalogResource from '../data-tables/catalog-resource';
+import MiqDataTable from '../miq-data-table';
 
 export const InputTypes = {
   TEXTAREA: 'text_area',
@@ -11,6 +12,7 @@ export const InputTypes = {
 export const DynamicReactComponents = {
   TREE_VIEW_REDUX: TreeViewRedux,
   CATALOG_RESOURCE: CatalogResource,
+  MIQ_DATA_TABLE: MiqDataTable,
 };
 
 const dataType = (data) => (data ? data.constructor.name.toString() : undefined);
