@@ -28,7 +28,7 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def attributes_data
     attributes = if @ems.supports?(:block_storage)
-                   %i[physical_storages storage_resources cloud_volumes host_initiators volume_mappings]
+                   %i[physical_storages storage_resources cloud_volumes volume_mappings host_initiators host_initiator_groups]
                  else
                    %i[cloud_object_store_containers cloud_object_store_objects]
                  end
@@ -37,8 +37,9 @@ class EmsStorageDashboardService < EmsDashboardService
       :physical_storages             => 'pficon pficon-container-node',
       :storage_resources             => 'pficon pficon-resource-pool',
       :cloud_volumes                 => 'pficon pficon-volume',
+      :volume_mappings               => 'pficon pficon-service',
       :host_initiators               => 'pficon pficon-virtual-machine',
-      :volume_mappings               => 'pficon pficon-volume',
+      :host_initiator_groups         => 'ff ff-relationship',
       :cloud_object_store_containers => 'ff ff-cloud-object-store',
       :cloud_object_store_objects    => 'fa fa-star',
     }
@@ -47,8 +48,9 @@ class EmsStorageDashboardService < EmsDashboardService
       :storage_resources             => 'storage_resources',
       :cloud_volumes                 => 'cloud_volumes',
       :physical_storages             => 'physical_storages',
-      :host_initiators               => 'host_initiators',
       :volume_mappings               => 'volume_mappings',
+      :host_initiators               => 'host_initiators',
+      :host_initiator_groups         => 'host_initiator_groups',
       :cloud_object_store_containers => 'cloud_object_store_containers',
       :cloud_object_store_objects    => 'cloud_object_store_objects',
     }
@@ -57,8 +59,9 @@ class EmsStorageDashboardService < EmsDashboardService
       :storage_resources             => _('Resources (Pools)'),
       :cloud_volumes                 => _('Volumes'),
       :physical_storages             => _('Physical Storages'),
-      :host_initiators               => _('Host Initiators'),
       :volume_mappings               => _('Volume Mappings'),
+      :host_initiators               => _('Host Initiators'),
+      :host_initiator_groups         => _('Host Initiator Groups'),
       :cloud_object_store_containers => _('Containers'),
       :cloud_object_store_objects    => _('Objects'),
     }
