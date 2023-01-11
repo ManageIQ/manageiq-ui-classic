@@ -236,6 +236,15 @@ class OpsController < ApplicationController
     replace_right_cell(:nodetype => @nodetype)
   end
 
+  def change_settings_region_tab
+    @sb[:active_subtab] = params[:tab_id]
+    settings_tags
+    render :update do |page|
+      page << javascript_prologue
+      page.replace('settings-tags-tabs', :partial => "ops/settings_tags_content")
+    end
+  end
+
   def change_tab(new_tab_id = nil)
     assert_privileges(x_active_tree == :settings_tree ? "ops_settings" : "ops_diagnostics")
 
@@ -269,6 +278,7 @@ class OpsController < ApplicationController
       @ldap_group = nil
       @flash_array = nil if MiqServer.my_server(true).logon_status == :ready # don't reset if flash array
       if x_active_tree == :settings_tree
+        settings_tags_default_tab
         settings_get_info
         replace_right_cell(:nodetype => "root")
       elsif x_active_tree == :diagnostics_tree
@@ -565,7 +575,9 @@ class OpsController < ApplicationController
     case x_active_tree
     when :diagnostics_tree then diagnostics_get_info
     when :rbac_tree        then rbac_get_info
-    when :settings_tree    then settings_get_info
+    when :settings_tree
+      settings_tags_default_tab
+      settings_get_info
     end
 
     region_text = _("[Region: %{description} [%{region}]]") % {:description => MiqRegion.my_region.description,
@@ -885,6 +897,10 @@ class OpsController < ApplicationController
     ex.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => ex.for_render
+  end
+
+  def settings_tags_default_tab
+    @sb[:active_subtab] = "settings_co_categories"
   end
 
   menu_section :set

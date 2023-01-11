@@ -875,6 +875,7 @@ NetworkServiceController:
 - wait_for_task
 OpsController:
 - accordion_select
+- change_settings_region_tab
 - dialog_field_changed
 - dialog_form_button_pressed
 - dialog_load

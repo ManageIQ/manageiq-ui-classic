@@ -2411,6 +2411,7 @@ Rails.application.routes.draw do
         ce_new_cat
         ce_select
         change_tab
+        change_settings_region_tab
         cu_collection_field_changed
         cu_collection_update
         cu_repair

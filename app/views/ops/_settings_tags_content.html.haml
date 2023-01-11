@@ -1,0 +1,12 @@
+#settings-tags-tabs.miq_custom_tabs_container
+  = settings_tags_tab_content(:settings_co_categories) do
+    = render :partial => "settings_co_categories_tab"
+  = settings_tags_tab_content(:settings_co_tags) do
+    = render :partial => "settings_co_tags_tab"
+  = settings_tags_tab_content(:settings_import_tags) do
+    = render :partial => "settings_import_tags_tab"
+  = settings_tags_tab_content(:settings_import) do
+    = render :partial => "settings_import_tab"
+  = settings_tags_tab_content(:settings_label_tag_mapping) do
+    = render :partial => "settings_label_tag_mapping_tab"
+    

@@ -8,6 +8,7 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
     { type: 'CATALOG_SUMMARY' },
     { type: 'CATALOG_EDIT' },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
+    { type: 'SETTINGS_TABS', url: `/ops/change_settings_region_tab?tab_id=${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);

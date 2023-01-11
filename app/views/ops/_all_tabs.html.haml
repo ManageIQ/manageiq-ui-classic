@@ -71,33 +71,7 @@
           = miq_tab_content("settings_cu_collection", @sb[:active_tab]) do
             = render :partial => "settings_cu_collection_tab"
           = miq_tab_content("settings_tags", @sb[:active_tab]) do
-            #ops_tags_subtabs
-              %ul.nav.nav-tabs.nav-tabs-pf{:style => 'font-size: 12px'}
-                = miq_tab_header("settings_co_categories", @sb[:active_subtab]) do
-                  = escape_javascript(current_tenant.name)
-                  = _("Categories")
-                = miq_tab_header("settings_co_tags", @sb[:active_subtab]) do
-                  = escape_javascript(current_tenant.name)
-                  = _("Tags")
-                = miq_tab_header("settings_import_tags", @sb[:active_subtab]) do
-                  = _("Import Tags")
-                = miq_tab_header("settings_import", @sb[:active_subtab]) do
-                  = _("Import Variables")
-                = miq_tab_header("settings_label_tag_mapping", @sb[:active_subtab]) do
-                  = _("Map Tags")
-              .tab-content
-                = miq_tab_content("settings_co_categories", @sb[:active_subtab]) do
-                  = render :partial => "settings_co_categories_tab"
-                = miq_tab_content("settings_co_tags", @sb[:active_subtab]) do
-                  = render :partial => "settings_co_tags_tab"
-                = miq_tab_content("settings_import_tags", @sb[:active_subtab]) do
-                  = render :partial => "settings_import_tags_tab"
-                = miq_tab_content("settings_import", @sb[:active_subtab]) do
-                  = render :partial => "settings_import_tab"
-                = miq_tab_content("settings_label_tag_mapping", @sb[:active_subtab]) do
-                  = render :partial => "settings_label_tag_mapping_tab"
-            :javascript
-              miq_tabs_init("#ops_tags_subtabs", "/ops/change_tab", {parent_tab_id: 'settings_tags'});
+            = render :partial => "settings_tags_tab"
           = miq_tab_content("settings_replication", @sb[:active_tab]) do
             = render :partial => "settings_replication_tab"
           = miq_tab_content("settings_help_menu", @sb[:active_tab]) do
