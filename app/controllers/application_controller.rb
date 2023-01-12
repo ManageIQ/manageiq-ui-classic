@@ -1882,6 +1882,17 @@ class ApplicationController < ActionController::Base
   end
   helper_method(:previous_breadcrumb_url)
 
+  def previous_page_url
+    if params[:id]
+      show_url = "/#{params[:controller]}/show"
+      previous_breadcrumb_url == show_url ? "#{show_url}/#{params[:id]}" : previous_breadcrumb_url
+    elsif params[:miq_grid_checks]
+      "/#{params[:controller]}/show_list"
+    else
+      previous_breadcrumb_url
+    end
+  end
+
   def controller_for_common_methods
     case controller_name
     when "vm_infra", "vm_or_template", "vm_cloud"

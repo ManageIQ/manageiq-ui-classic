@@ -98,7 +98,7 @@ module ApplicationController::Tags
       replace_right_cell
     else
       session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
-      javascript_redirect(previous_breadcrumb_url)
+      javascript_redirect(previous_page_url)
     end
   end
 
@@ -114,7 +114,7 @@ module ApplicationController::Tags
       replace_right_cell
     else
       flash_to_session
-      javascript_redirect(previous_breadcrumb_url)
+      javascript_redirect(previous_page_url)
     end
   end
 
