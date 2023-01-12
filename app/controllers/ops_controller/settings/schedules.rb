@@ -163,12 +163,9 @@ module OpsController::Settings::Schedules
 
     schedule_hash = {
       :action_type          => action_type,
-      :depot_name           => depot_name,
       :filter_type          => filter_type,
       :filter_value         => filter_value,
       :filtered_item_list   => filtered_item_list,
-      :log_userid           => log_userid || "",
-      :protocol             => protocol,
       :schedule_description => schedule.description,
       :schedule_enabled     => schedule.enabled ? "1" : "0",
       :schedule_name        => schedule.name,
@@ -177,15 +174,7 @@ module OpsController::Settings::Schedules
       :schedule_start_min   => run_at.strftime("%M").to_i,
       :schedule_time_zone   => schedule.run_at[:tz],
       :schedule_timer_type  => schedule.run_at[:interval][:unit].capitalize,
-      :schedule_timer_value => schedule.run_at[:interval][:value].to_i,
-      :uri                  => uri,
-      :uri_prefix           => uri_prefix,
-      :log_aws_region       => log_aws_region || "",
-      :openstack_region     => openstack_region || "",
-      :keystone_api_version => keystone_api_version,
-      :v3_domain_ident      => v3_domain_ident || "",
-      :swift_api_port       => swift_api_port || 5000,
-      :security_protocol    => security_protocol || ""
+      :schedule_timer_value => schedule.run_at[:interval][:value].to_i
     }
 
     if schedule.sched_action[:method] == "automation_request"
