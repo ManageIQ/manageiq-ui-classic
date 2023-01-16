@@ -3,6 +3,7 @@ module OpsHelper
   include_concern 'MyServer'
   include VmwareConsoleHelper
   include SettingsAnalysisProfileHelper
+  include SettingsTagsTabsHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}

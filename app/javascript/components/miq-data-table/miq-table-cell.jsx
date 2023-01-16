@@ -86,6 +86,9 @@ const MiqTableCell = ({
         disabled={item.disabled}
         onKeyPress={() => (item.onclick ? eval(item.onclick) : undefined)}
         tabIndex={0}
+        title={item.title ? item.title : truncateText}
+        kind={item.kind ? item.kind : 'primary'}
+        className={classNames('miq-data-table-button', item.buttonClassName)}
       >
         {truncateText}
       </Button>
