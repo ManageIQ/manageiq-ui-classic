@@ -107,6 +107,11 @@ class PhysicalStorageController < ApplicationController
       @record = find_record_with_rbac(PhysicalStorage, params[:id])
       show_timeline
       javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
+    when "physical_storage_refresh"
+      @record = find_record_with_rbac(PhysicalStorage, checked_item_id)
+      EmsRefresh.refresh(@record.ext_management_system)
+      add_flash(_("Refresh storage manager successfully initiated for physical storage- #{@record.name}"))
+      render_flash
     else
       return false
     end
