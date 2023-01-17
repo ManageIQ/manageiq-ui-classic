@@ -16,7 +16,6 @@ describe TreeNode::ExtManagementSystem do
 
   {
     # Infrastructure providers
-    :ems_microsoft                    => { :tip_prefix => 'Ems Infra' },
     :ems_openstack_infra              => { :tip_prefix => 'Ems Infra' },
     :ems_redhat                       => { :tip_prefix => 'Ems Infra' },
     :ems_vmware                       => { :tip_prefix => 'Ems Infra' },

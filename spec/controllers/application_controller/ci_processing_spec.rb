@@ -18,7 +18,7 @@ describe ApplicationController do
 
   describe "#generic_button_operation" do
     let(:vm1) { FactoryBot.create(:vm_redhat) }
-    let(:vm2) { FactoryBot.create(:vm_microsoft) }
+    let(:vm2) { FactoryBot.create(:vm_ovirt) }
     let(:vm3) { FactoryBot.create(:vm_vmware) }
 
     context 'record does not support the action' do
@@ -635,19 +635,6 @@ describe ApplicationController do
         expect(assigns(:flash_array).first[:message]).to include("does not apply")
       end
     end
-
-    context 'Microsoft provider' do
-      let(:vm) { FactoryBot.create(:vm_microsoft) }
-
-      it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
-        expect(controller).to receive(:render)
-        controller.send(:vm_reconfigure)
-        unless subject.reconfigurable?
-          expect(controller.send(:flash_errors?)).to be_truthy
-          expect(assigns(:flash_array).first[:message]).to include("does not apply")
-        end
-      end
-    end
   end
 
   describe "#item_supports? (private)" do
@@ -872,7 +859,7 @@ describe HostController do
     end
 
     it "when the vm_or_template supports scan, returns false" do
-      vm1 =  FactoryBot.create(:vm_microsoft)
+      vm1 =  FactoryBot.create(:vm_ovirt)
       vm2 =  FactoryBot.create(:vm_vmware)
       controller.params = {:miq_grid_checks => "#{vm1.id}, #{vm2.id}", :display => 'vms'}
       controller.send(:generic_button_operation,

@@ -3,7 +3,6 @@ describe TreeNode::Host do
 
   %i(
     host
-    host_microsoft
     host_redhat
     host_openstack_infra
     host_vmware

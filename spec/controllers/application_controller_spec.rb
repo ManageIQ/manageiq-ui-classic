@@ -141,9 +141,9 @@ describe ApplicationController do
       controller.params[:pressed] = "vm_migrate"
     end
 
-    it "returns flash message when Migrate button is pressed with list containing SCVMM VM" do
+    it "returns flash message when Migrate button is pressed with list containing an unsupported VM" do
       vm1 = FactoryBot.create(:vm_vmware)
-      vm2 = FactoryBot.create(:vm_microsoft)
+      vm2 = FactoryBot.create(:vm_ovirt)
       controller.params = {:pressed         => "vm_migrate",
                            :miq_grid_checks => "#{vm1.id},#{vm2.id}"}
       controller.set_response!(response)
