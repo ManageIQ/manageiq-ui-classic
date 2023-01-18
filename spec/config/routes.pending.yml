@@ -874,7 +874,12 @@ NetworkServiceController:
 - index
 - wait_for_task
 OpsController:
+- all_categories
 - accordion_select
+- category_entries
+- category_information
+- ce_accept
+- ce_delete
 - dialog_field_changed
 - dialog_form_button_pressed
 - dialog_load

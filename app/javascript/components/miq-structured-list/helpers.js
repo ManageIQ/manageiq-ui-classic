@@ -7,6 +7,7 @@ export const InputTypes = {
   TEXTAREA: 'text_area',
   CHECKBOX: 'checkbox',
   COMPONENT: 'component',
+  DROPDOWN: 'dropdown',
 };
 
 export const DynamicReactComponents = {

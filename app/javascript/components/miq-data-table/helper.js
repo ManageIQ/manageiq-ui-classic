@@ -14,6 +14,7 @@ export const CellAction = {
   selectAll: 'selectAll',
   itemSelect: 'itemSelect',
   itemClick: 'itemClick',
+  buttonCallback: 'buttonCallback',
 };
 
 /** Sorting directions for a table header. */

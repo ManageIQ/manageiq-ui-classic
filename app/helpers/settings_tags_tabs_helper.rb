@@ -16,7 +16,8 @@ module SettingsTagsTabsHelper
   def company_category_rows(categories)
     categories.map do |category|
       {
-        :id    => category[:id].to_s,
+        :id        => category[:id].to_s,
+        :clickable => true,
         :cells => [
           {:text => category[:name]},
           {:text => category[:descripton]},
