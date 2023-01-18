@@ -232,4 +232,12 @@ module OpsHelper
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
   end
+
+  def schedule_form_data(schedule, action_options, filter_options)
+    {
+      :recordId      => schedule&.id ? schedule.id : 'new',
+      :actionOptions => action_options,
+      :filterOptions => filter_options,
+    }
+  end
 end
