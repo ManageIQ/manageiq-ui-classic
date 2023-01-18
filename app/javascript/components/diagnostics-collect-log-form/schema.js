@@ -3,7 +3,7 @@ import { componentTypes } from '@@ddf';
 const createSchema = (initialData, options) => {
   const fields = [{
     component: componentTypes.SUB_FORM,
-    title: __(`Editing Log Depot Settings for ${initialData.logType}: ${initialData.displayName}`),
+    title: sprintf(__(`Editing Log Depot Settings for %s: %s`), initialData.logType, initialData.displayName),
     id: 'log-depot-settings',
     name: 'log-depot-settings',
     fields: [{
