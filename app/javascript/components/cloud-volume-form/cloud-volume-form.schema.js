@@ -1,5 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { parseCondition } from '@data-driven-forms/react-form-renderer';
+import validateName from '../../helpers/validate-names.js';
 
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
@@ -17,7 +18,7 @@ const storageManagers = (supports) => API.get(`/api/providers?expand=resources&a
     return storageManagersOptions;
   });
 
-// storage manager functions to filter by capabilities:
+// storage manager functions:
 const equalsUnsorted = (arr1, arr2) => arr1.length === arr2.length && arr2.every(arr2Item => arr1.includes(arr2Item)) && arr1.every(arr1Item => arr2.includes(arr1Item));
 
 const filterByCapabilities = (filterArray, modelToFilter) => API.get(`/api/${modelToFilter}?expand=resources&attributes=id,name,capabilities`)
@@ -56,7 +57,10 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         id: 'name',
         label: __('Volume Name'),
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [
+          { type: validatorTypes.REQUIRED },
+          async (value) => validateName("cloud_volumes", value)
+        ],
       },
       ...(idx === -1 ? fields : [
         ...fields.slice(0, idx),
@@ -116,7 +120,10 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             label: __('Service Name'),
             condition: { when: 'mode', is: 'Advanced' },
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              { type: validatorTypes.REQUIRED },
+              async (value) => validateName("storage_services", value)
+            ],
           },
         ]
       },
