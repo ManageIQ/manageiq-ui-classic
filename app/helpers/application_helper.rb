@@ -769,6 +769,7 @@ module ApplicationHelper
        flavor
        floating_ip
        host
+       host_initiator_group
        host_aggregate
        load_balancer
        miq_template
@@ -791,6 +792,7 @@ module ApplicationHelper
        services
        storage
        templates
+       volume_mapping
        vm].include?(@layout)
   end
 

@@ -210,6 +210,7 @@ module ApplicationHelper::PageLayouts
       floating_ip
       host
       host_aggregate
+      host_initiator_group
       load_balancer
       miq_template
       network_port
@@ -231,6 +232,7 @@ module ApplicationHelper::PageLayouts
       storage_resource
       host_initiator
       templates
+      volume_mapping
       vm
     ]
 
