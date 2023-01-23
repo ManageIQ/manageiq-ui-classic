@@ -35,7 +35,7 @@ describe Menu::DefaultMenu do
     it "shows correct content for Storage submenu" do
       menu = Menu::DefaultMenu.storage_menu_section.items.map(&:name)
       result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups", "Volume Types", "Volume Mappings",
-        "Host Initiators", "Host Initiator Groups", "Storages", "Storage Resources", "Object Store Containers", "Object Store Objects"]
+                "Host Initiators", "Host Initiator Groups", "Storages", "Storage Resources", "Storage Services", "Object Store Containers", "Object Store Objects"]
 
       expect(menu).to eq(result)
     end

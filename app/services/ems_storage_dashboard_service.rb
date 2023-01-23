@@ -28,7 +28,7 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def attributes_data
     attributes = if @ems.supports?(:block_storage)
-                   %i[physical_storages storage_resources cloud_volumes volume_mappings host_initiators host_initiator_groups]
+                   %i[physical_storages storage_resources cloud_volumes volume_mappings host_initiators host_initiator_groups storage_services]
                  else
                    %i[cloud_object_store_containers cloud_object_store_objects]
                  end
@@ -40,6 +40,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :volume_mappings               => 'pficon pficon-topology',
       :host_initiators               => 'pficon pficon-virtual-machine',
       :host_initiator_groups         => 'ff ff-relationship',
+      :storage_services              => 'pficon pficon-services',
       :cloud_object_store_containers => 'ff ff-cloud-object-store',
       :cloud_object_store_objects    => 'fa fa-star',
     }
@@ -51,6 +52,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :volume_mappings               => 'volume_mappings',
       :host_initiators               => 'host_initiators',
       :host_initiator_groups         => 'host_initiator_groups',
+      :storage_services              => 'storage_services',
       :cloud_object_store_containers => 'cloud_object_store_containers',
       :cloud_object_store_objects    => 'cloud_object_store_objects',
     }
@@ -62,6 +64,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :volume_mappings               => _('Volume Mappings'),
       :host_initiators               => _('Host Initiators'),
       :host_initiator_groups         => _('Host Initiator Groups'),
+      :storage_services              => _('Storage Services'),
       :cloud_object_store_containers => _('Containers'),
       :cloud_object_store_objects    => _('Objects'),
     }

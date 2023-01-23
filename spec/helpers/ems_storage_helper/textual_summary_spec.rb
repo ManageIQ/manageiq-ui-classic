@@ -19,6 +19,7 @@ describe EmsStorageHelper::TextualSummary do
       volume_mappings
       physical_storages
       storage_resources
+      storage_services
     ]
 
     include_examples "textual_group", "Status", %i[refresh_status refresh_date]
@@ -44,6 +45,7 @@ describe EmsStorageHelper::TextualSummary do
       volume_mappings
       physical_storages
       storage_resources
+      storage_services
       cloud_volume_types
     ]
   end

@@ -1,0 +1,2 @@
+<%= render :partial => "layouts/flash_msg" %>
+<%= react 'StorageServiceForm', :redirect => previous_breadcrumb_url, :storageManagerId => @storage_manager ? @storage_manager.id.to_s : nil %>

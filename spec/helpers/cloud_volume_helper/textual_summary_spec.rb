@@ -3,6 +3,7 @@ describe CloudVolumeHelper::TextualSummary do
     parent_ems_cloud
     ems
     storage_resource
+    storage_service
     availability_zone
     cloud_tenant
     base_snapshot

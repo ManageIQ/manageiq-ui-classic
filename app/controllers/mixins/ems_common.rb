@@ -110,6 +110,7 @@ module Mixins
           security_policy_rules
           storage_managers
           storage_resources
+          storage_services
           storages
           vms
         ]
@@ -263,6 +264,7 @@ module Mixins
         when "host_initiator_new"               then javascript_redirect(:action => 'new', :controller => 'host_initiator', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "host_initiator_group_new"         then javascript_redirect(:action => 'new', :controller => 'host_initiator_group', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "volume_mapping_new"               then javascript_redirect(:action => 'new', :controller => 'volume_mapping', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "storage_service_new"              then javascript_redirect(:action => 'new', :controller => 'storage_service', :storage_manager_id => block_storage_manager_id(params[:id]))
 
         # Edit Tags for Network Manager Relationship pages
         when "availability_zone_tag"            then tag(AvailabilityZone)
