@@ -12,19 +12,24 @@ const MiqPagination = ({
     page, pageSizes, pageSize, totalItems, onPageChange,
   },
 }) => (
-  <Pagination
-    className="miq-pagination"
-    itemsPerPageText={__('Items per page:')}
-    backwardText={__('Previous page')}
-    forwardText={__('Next page')}
-    itemRangeText={(min, max) => getItemRangeText(min, max, totalItems)}
-    pageRangeText={(current, total) => getPageRangeText(current, total)}
-    page={page}
-    pageSizes={pageSizes}
-    pageSize={pageSize}
-    totalItems={totalItems}
-    onChange={(action) => onPageChange(action.page, action.pageSize)}
-  />
+  <fieldset className="miq-fieldset">
+    <legend className="miq-fieldset-legend legend-search">{__('Pagination')}</legend>
+    <div className="miq-fieldset-content">
+      <Pagination
+        className="miq-pagination"
+        itemsPerPageText={__('Items per page:')}
+        backwardText={__('Previous page')}
+        forwardText={__('Next page')}
+        itemRangeText={(min, max) => getItemRangeText(min, max, totalItems)}
+        pageRangeText={(current, total) => getPageRangeText(current, total)}
+        page={page}
+        pageSizes={pageSizes}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        onChange={(action) => onPageChange(action.page, action.pageSize)}
+      />
+    </div>
+  </fieldset>
 );
 
 MiqPagination.propTypes = {
