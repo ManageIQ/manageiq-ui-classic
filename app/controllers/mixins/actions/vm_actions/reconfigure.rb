@@ -46,9 +46,7 @@ module Mixins
 
         # reconfiguration for VMs only
         def vm_reconfigure
-          unless role_allows?(:feature => 'vm_reconfigure_all', :any => true)
-            raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
-          end
+          assert_privileges('vm_reconfigure_all', :any => true)
 
           # if coming in to edit from miq_request list view
           recs = checked_or_params

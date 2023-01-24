@@ -76,15 +76,18 @@ describe ApplicationController do
     end
 
     it "should not raise an error for feature that user has access to" do
+      expect($audit_log).to receive(:success)
       expect { controller.send(:assert_privileges, "host_compare") }.not_to raise_error
     end
 
     it "should raise an error for feature that user does not have access to" do
       msg = "The user is not authorized for this task or item."
+      expect($audit_log).to receive(:failure)
       expect { controller.send(:assert_privileges, "host_edit") }.to raise_error(MiqException::RbacPrivilegeException, msg)
     end
 
     it "should not raise an error for common hidden feature under a hidden parent" do
+      expect($audit_log).to receive(:success)
       expect { controller.send(:assert_privileges, "perf_reload") }.not_to raise_error
     end
   end
@@ -486,7 +489,6 @@ describe ApplicationController do
 
     it 'fails if the feature is not found' do
       allow(controller).to receive(:features).and_return(features)
-      allow(controller).to receive(:assert_privileges).and_return(false)
 
       expect { controller.send(:assert_accordion_and_tree_privileges, 'infra_networking_tree') }.to raise_error(MiqException::RbacPrivilegeException)
     end
