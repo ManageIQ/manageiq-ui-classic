@@ -1104,10 +1104,11 @@ class ApplicationController < ActionController::Base
                "%#{stxt}%"
              end
 
-      id = @search_text if /^\d+$/.match?(@search_text)
+      id = @search_text.to_i if /^\d+$/.match?(@search_text)
       condition = [[]]
-      if id
-        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id.to_i)
+      # also search by id if it is an int and not bigger then the max of bigint
+      if id && id <= 9223372036854775807
+        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id)
       end
 
       if ::Settings.server.case_sensitive_name_search
