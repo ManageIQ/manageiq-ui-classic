@@ -37,93 +37,47 @@ module OpsController::Settings::Tags
     end
   end
 
+  def cancel_category
+    if params[:id] == "new"
+      add_flash(_("Add of new Category was cancelled by the user"))
+    else
+      category = Classification.find(params[:id])
+      add_flash(_("Edit of Category \"%{name}\" was cancelled by the user") % {:name => category.name})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => "root")
+  end
+
+  def add_category
+    category = Classification.find(params[:id])
+    add_flash(_("Category \"%{name}\" was added") % {:name => category.name})
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => "root")
+  end
+
+  def save_category
+    category = Classification.find(params[:id])
+    add_flash(_("Category \"%{name}\" was saved") % {:name => category.name})
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => "root")
+  end
+
+  def category_form
+    replace_right_cell(:nodetype => "ce")
+  end
+
   def category_edit
     assert_privileges("region_edit")
 
     case params[:button]
     when "cancel"
-      @category = session[:edit][:category] if session[:edit] && session[:edit][:category]
-      if !@category || @category.id.blank?
-        add_flash(_("Add of new Category was cancelled by the user"))
-      else
-        add_flash(_("Edit of Category \"%{name}\" was cancelled by the user") % {:name => @category.name})
-      end
-      get_node_info(x_node)
-      @category = @edit = session[:edit] = nil # clean out the saved info
-      replace_right_cell(:nodetype => @nodetype)
-    when "save", "add"
-      id = params[:id] || "new"
-      return unless load_edit("category_edit__#{id}", "replace_cell__explorer")
-
-      @ldap_group = @edit[:ldap_group] if @edit && @edit[:ldap_group]
-      @category = @edit[:category] if @edit && @edit[:category]
-      if @edit[:new][:name].blank?
-        add_flash(_("Name is required"), :error)
-      end
-      if @edit[:new][:description].blank?
-        add_flash(_("Description is required"), :error)
-      end
-      if @edit[:new][:example_text].blank?
-        add_flash(_("Long Description is required"), :error)
-      end
-      unless @flash_array.nil?
-        javascript_flash
-        return
-      end
-      if params[:button] == "add"
-        begin
-          Classification.create_category!(:name         => @edit[:new][:name],
-                                          :description  => @edit[:new][:description],
-                                          :single_value => @edit[:new][:single_value],
-                                          :perf_by_tag  => @edit[:new][:perf_by_tag],
-                                          :example_text => @edit[:new][:example_text],
-                                          :show         => @edit[:new][:show])
-        rescue => bang
-          add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
-          javascript_flash
-        else
-          @category = Classification.find_by(:description => @edit[:new][:description])
-          AuditEvent.success(build_created_audit(@category, @edit))
-          add_flash(_("Category \"%{name}\" was added") % {:name => @category.name})
-          get_node_info(x_node)
-          @category = @edit = session[:edit] = nil # clean out the saved info
-          replace_right_cell(:nodetype => "root")
-        end
-      else
-        update_category = Classification.find(@category.id)
-        category_set_record_vars(update_category)
-        begin
-          update_category.save!
-        rescue
-          update_category.errors.each do |error|
-            add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
-          end
-          @in_a_form = true
-          session[:changed] = @changed
-          @changed = true
-          javascript_flash
-        else
-          add_flash(_("Category \"%{name}\" was saved") % {:name => update_category.name})
-          AuditEvent.success(build_saved_audit(update_category, params[:button] == "add"))
-          session[:edit] = nil # clean out the saved info
-          get_node_info(x_node)
-          @category = @edit = session[:edit] = nil # clean out the saved info
-          replace_right_cell(:nodetype => "root")
-        end
-      end
-    when "reset", nil # Reset or first time in
-      if params[:id]
-        @category = Classification.find(params[:id])
-        category_set_form_vars
-      else
-        category_set_new_form_vars
-      end
-      @in_a_form = true
-      session[:changed] = false
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "ce")
+      cancel_category
+    when "add"
+      add_category
+    when "save"
+      save_category
+    when nil
+      category_form
     end
   end
 
