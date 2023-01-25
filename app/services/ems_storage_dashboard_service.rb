@@ -37,7 +37,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :physical_storages             => 'pficon pficon-container-node',
       :storage_resources             => 'pficon pficon-resource-pool',
       :cloud_volumes                 => 'pficon pficon-volume',
-      :volume_mappings               => 'pficon pficon-service',
+      :volume_mappings               => 'pficon pficon-topology',
       :host_initiators               => 'pficon pficon-virtual-machine',
       :host_initiator_groups         => 'ff ff-relationship',
       :cloud_object_store_containers => 'ff ff-cloud-object-store',

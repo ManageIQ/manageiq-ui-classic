@@ -13,7 +13,7 @@ module EmsStorageHelper::TextualSummary
   def textual_group_relationships
     relationships = %i[
                        parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
-                       cloud_object_store_containers custom_button_events host_initiators volume_mappings physical_storages storage_resources
+                       cloud_object_store_containers custom_button_events host_initiators host_initiator_groups volume_mappings physical_storages storage_resources
       ]
     relationships.push(:cloud_volume_types) if @record.kind_of?(ManageIQ::Providers::Openstack::StorageManager::CinderManager)
     TextualGroup.new(_("Relationships"), relationships)
@@ -89,6 +89,10 @@ module EmsStorageHelper::TextualSummary
 
   def textual_host_initiators
     textual_link(@record.try(:host_initiators), :label => _('Host Initiators'))
+  end
+
+  def textual_host_initiator_groups
+    textual_link(@record.try(:host_initiator_groups), :label => _('Host Initiator Groups'))
   end
 
   def textual_physical_storages
