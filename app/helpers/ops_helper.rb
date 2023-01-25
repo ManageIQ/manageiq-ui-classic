@@ -2,6 +2,7 @@ module OpsHelper
   include_concern 'TextualSummary'
   include_concern 'MyServer'
   include VmwareConsoleHelper
+  include SettingsAnalysisProfileHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
