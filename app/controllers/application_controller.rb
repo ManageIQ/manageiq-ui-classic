@@ -1877,8 +1877,9 @@ class ApplicationController < ActionController::Base
     role_name   = current_user.miq_user_role.name rescue nil
     http_method = request.respond_to?(:request_method) ? request.request_method : nil
     path        = request.respond_to?(:filtered_path)  ? request.filtered_path  : nil
+    request_id  = request.respond_to?(:request_id)     ? request.request_id     : nil
 
-    msg = "Username [#{username}], Role [#{role_name}], Method [#{http_method}], Path [#{path}] #{details}"
+    msg = "Username [#{username}], Role [#{role_name}], Request [#{request_id}], Method [#{http_method}], Path [#{path}] #{details}"
 
     pass ? $audit_log.success(msg) : $audit_log.failure(msg)
   end
