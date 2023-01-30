@@ -16,3 +16,16 @@
     display: block;
   }
 }
+
+.miq-custom-tab-content-header {
+  display: flex;
+  flex-direction: row;
+
+  .tab-content-header-title {
+    display: flex;
+    flex-grow: 1;
+  }
+  .tab-content-header-actions {
+    display: flex;
+  }
+}

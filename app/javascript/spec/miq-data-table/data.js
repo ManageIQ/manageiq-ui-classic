@@ -376,7 +376,7 @@ export const chargebackRateData = () => {
 /** Table data with multiple rows within a cell, ie 'text' contains an array or a string.
  * Usage eg: Overview / Chargeback / Rates / Item (Summary)
  */
- export const complexTableData = () => {
+export const complexTableData = () => {
   const cells = [
     { text: 'CPU&amp;' },
     { text: ['Allocated CPU Count', 'vCPUs Allocated over Time Period'] },
