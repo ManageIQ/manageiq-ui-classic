@@ -1,4 +1,5 @@
 /* global miqDeferred */
+import * as registry from '../../miq-component/registry';
 
 ManageIQ.angular.app.component('widgetWrapper', {
   bindings: {
@@ -60,7 +61,13 @@ ManageIQ.angular.app.component('widgetWrapper', {
       $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
         .then((response) => {
           vm.widgetModel = null;
-          return API.wait_for_task(response.data.task_id).then(() => vm.refreshWidgetHTML(true));
+          return API.wait_for_task(response.data.task_id).then(() => {
+            const dashboardWidget = registry.getDefinition('DashboardWidget');
+            if (dashboardWidget && dashboardWidget.instances) {
+              dashboardWidget.instances = new Set([]);
+            }
+            vm.refreshWidgetHTML(true);
+          });
         })
         .catch((e) => {
           vm.error = true;
