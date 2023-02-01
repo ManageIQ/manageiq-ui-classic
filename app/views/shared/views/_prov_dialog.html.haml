@@ -428,6 +428,13 @@
             :label                    => _("Placement Groups"),
             :prefix                   => "/miq_request/",
             :keys                     => keys})
+      - keys = [:shared_processor_pool]
+      = render(:partial => "/miq_request/prov_dialog_fieldset",
+        :locals         => {:workflow => wf,
+            :dialog                   => dialog,
+            :label                    => _("Shared Processor Pools"),
+            :prefix                   => "/miq_request/",
+            :keys                     => keys})
       - keys = %i[migratable pin_policy]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
