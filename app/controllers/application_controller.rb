@@ -894,6 +894,8 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_invalid_session(timed_out = nil)
+    log_privileges(false, "Invalid Session")
+
     timed_out = PrivilegeCheckerService.new.user_session_timed_out?(session, current_user) if timed_out.nil?
     reset_session
 
@@ -972,10 +974,13 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    return if action_name == 'auth_error'
+    if action_name == 'auth_error'
+      log_privileges(false, "Authentication Error Redirect")
+      return
+    end
 
     pass = %w[button x_button].include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
-    $audit_log.failure("Username [#{current_userid}], Role ID [#{current_user.miq_user_role.try(:id)}] attempted to access area [#{controller_name}], type [Action], task [#{action_name}]") unless pass
+    log_privileges(pass, "Action: #{action_name}")
   end
 
   def cleanup_action
@@ -1852,10 +1857,31 @@ class ApplicationController < ActionController::Base
     identify_record(params[:id], controller_to_model)
   end
 
-  def assert_privileges(*features)
-    if features.none? { |feature| role_allows?(:feature => feature) }
-      raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
-    end
+  def assert_privileges(*features, any: false)
+    msg = "Features checked: #{features.join(', ')}"
+
+    pass =
+      if any
+        role_allows?(:feature => features.first, :any => true)
+      else
+        features.any? { |feature| role_allows?(:feature => feature) }
+      end
+
+    log_privileges(pass, msg)
+    raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.') unless pass
+  end
+
+  def log_privileges(pass, details = nil)
+    # This is called with or without a current user and possibly a fake request such as in test.
+    username    = current_userid rescue nil
+    role_name   = current_user.miq_user_role.name rescue nil
+    http_method = request.respond_to?(:request_method) ? request.request_method : nil
+    path        = request.respond_to?(:filtered_path)  ? request.filtered_path  : nil
+    request_id  = request.respond_to?(:request_id)     ? request.request_id     : nil
+
+    msg = "Username [#{username}], Role [#{role_name}], Request [#{request_id}], Method [#{http_method}], Path [#{path}] #{details}"
+
+    pass ? $audit_log.success(msg) : $audit_log.failure(msg)
   end
 
   # Method tests, whether the user has rights to access records sent in request
@@ -1998,6 +2024,8 @@ class ApplicationController < ActionController::Base
 
   def build_accordions_and_trees(x_node_to_set = nil)
     allowed_features = build_accordions_and_trees_only
+
+    # TODO: should we handle this through assert_privileges?
     raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.") if allowed_features.empty?
 
     set_active_elements(allowed_features.first, x_node_to_set)
@@ -2005,9 +2033,9 @@ class ApplicationController < ActionController::Base
 
   def assert_accordion_and_tree_privileges(tree_name)
     feature = features.find { |feat| feat.tree_name.to_sym == tree_name.to_sym }
-    if feature.present? && !ApplicationHelper.role_allows?(:feature => feature.role, :any => feature.role_any)
-      raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
-    end
+    return if feature.blank?
+
+    assert_privileges(feature.role, :any => feature.role_any)
   end
 
   def fetch_name_from_object(klass, id)

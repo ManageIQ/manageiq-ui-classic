@@ -9,6 +9,7 @@ module Mixins
           when "miq_request_edit"
             assert_privileges("miq_request_edit")
           else
+            # TODO: should we handle this through assert_privileges?
             raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
           end
           # if coming in to edit from miq_request list view
