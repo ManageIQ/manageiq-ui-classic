@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { parseCondition } from '@data-driven-forms/react-form-renderer';
-import validateName from '../../helpers/validate-names.js';
+import validateName from '../../helpers/validate-names';
 
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
@@ -19,14 +19,18 @@ const storageManagers = (supports) => API.get(`/api/providers?expand=resources&a
   });
 
 // storage manager functions:
-const equalsUnsorted = (arr1, arr2) => arr1.length === arr2.length && arr2.every(arr2Item => arr1.includes(arr2Item)) && arr1.every(arr1Item => arr2.includes(arr1Item));
+const equalsUnsorted = (arr1, arr2) => arr1.length === arr2.length
+  && arr2.every(arr2Item => arr1.includes(arr2Item))
+  && arr1.every(arr1Item => arr2.includes(arr1Item));
 
 const filterByCapabilities = (filterArray, modelToFilter) => API.get(`/api/${modelToFilter}?expand=resources&attributes=id,name,capabilities`)
   .then(({ resources }) => {
     const valueArray = [];
     resources.forEach((resource) => {
       const capsToFilter = resource["capabilities"].map(({ uuid }) => uuid);
-      if (equalsUnsorted(filterArray, capsToFilter)) { valueArray.push(resource) }
+      if (equalsUnsorted(filterArray, capsToFilter)) {
+        valueArray.push(resource);
+      }
     });
     if (valueArray.length === 0 && modelToFilter !== 'storage_resources') {
       return [{label: `no ${modelToFilter} with selected capabilities`, value: -1}]
@@ -59,7 +63,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         isRequired: true,
         validate: [
           { type: validatorTypes.REQUIRED },
-          async (value) => validateName("cloud_volumes", value)
+          async(value) => validateName('cloud_volumes', value, edit),
         ],
       },
       ...(idx === -1 ? fields : [
