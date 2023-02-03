@@ -45,7 +45,7 @@
                 = _("Host platform")
               .col-md-8
                 = select_tag('user_assigned_os',
-                            options_for_select([["<#{_('Choose')}>", nil]] + Host.host_create_os_types.to_a, disabled: ["<#{_('Choose')}>", nil]),
+                            options_for_select([["<#{_('Choose')}>", nil]], disabled: ["<#{_('Choose')}>", nil]),
                             "ng-model"                    => "hostModel.user_assigned_os",
                             "checkchange"                 => "",
                             "ng-required"                 => "!hostModel.operating_system",
