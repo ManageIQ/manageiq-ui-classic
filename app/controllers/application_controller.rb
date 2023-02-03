@@ -980,7 +980,7 @@ class ApplicationController < ActionController::Base
     end
 
     pass = %w[button x_button].include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
-    log_privileges(pass, "Action: #{action_name}")
+    log_privileges(pass)
   end
 
   def cleanup_action
