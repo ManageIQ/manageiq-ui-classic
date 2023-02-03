@@ -980,7 +980,7 @@ class ApplicationController < ActionController::Base
     end
 
     pass = %w[button x_button].include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
-    log_privileges(pass, "Action: #{action_name}")
+    log_privileges(pass)
   end
 
   def cleanup_action
@@ -1875,11 +1875,12 @@ class ApplicationController < ActionController::Base
     # This is called with or without a current user and possibly a fake request such as in test.
     username    = current_userid rescue nil
     role_name   = current_user.miq_user_role.name rescue nil
-    http_method = request.respond_to?(:request_method) ? request.request_method : nil
-    path        = request.respond_to?(:filtered_path)  ? request.filtered_path  : nil
-    request_id  = request.respond_to?(:request_id)     ? request.request_id     : nil
+    http_method = request.respond_to?(:request_method) ? request.request_method   : nil
+    path        = request.respond_to?(:filtered_path)  ? request.filtered_path    : nil
+    request_id  = request.respond_to?(:request_id)     ? request.request_id       : nil
+    session_id  = request.respond_to?(:session)        ? request.session.try(:id) : nil
 
-    msg = "Username [#{username}], Role [#{role_name}], Request [#{request_id}], Method [#{http_method}], Path [#{path}] #{details}"
+    msg = "Username [#{username}], Role [#{role_name}], Session [#{session_id}], Request [#{request_id}], Method [#{http_method}], Path [#{path}] #{details}"
 
     pass ? $audit_log.success(msg) : $audit_log.failure(msg)
   end
