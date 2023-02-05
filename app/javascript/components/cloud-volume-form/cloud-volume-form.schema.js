@@ -62,7 +62,24 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         label: __('Volume Name'),
         isRequired: true,
         validate: [
-          { type: validatorTypes.REQUIRED },
+          {
+            type: validatorTypes.REQUIRED,
+          },
+          {
+            type: 'pattern',
+            pattern: '^[a-zA-Z0-9\-_. ]*$',
+            message: __('The name can contain letters, numbers, spaces, periods, dashes and underscores'),
+          },
+          {
+            type: 'pattern',
+            pattern: '^[^ ]+( +[^ ]+)*$',
+            message: __('The name must not begin or end with a space'),
+          },
+          {
+            type: 'pattern',
+            pattern: '^[a-zA-Z_]',
+            message: __('The name must begin with a letter or an underscore'),
+          },
           async(value) => validateName('cloud_volumes', value, edit),
         ],
       },
