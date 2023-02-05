@@ -26,6 +26,12 @@ const storageManagers = (supports) =>
 const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
   .then((result) => result.capabilities);
 
+const validateServiceHasResources = (serviceId) =>
+  API.get(`/api/storage_services/${serviceId}?attributes=name,storage_resources`)
+    .then((response) => (response.storage_resources.length === 0
+      ? sprintf(__('Storage service "%s" has no attached storage resources'), response.name)
+      : undefined));
+
 const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
   const idx = fields.findIndex((field) => field.name === 'volume_type');
   const supports = edit ? 'supports_cloud_volume' : 'supports_cloud_volume_create';
@@ -99,6 +105,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             validate: [
               { type: validatorTypes.REQUIRED },
               { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },
+              async(value) => validateServiceHasResources(value),
             ],
             resolveProps: (_props, _field, { getState }) => {
               const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
@@ -116,7 +123,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             component: 'enhanced-select',
             name: 'storage_resource_id',
             id: 'storage_resource_id',
-            label: __('Storage Resource'),
+            label: __('Storage Resource (if no option appears then no storage resource with selected capabilities was found)'),
             condition: { when: 'mode', is: 'Advanced' },
             onInputChange: () => null,
             isRequired: true,
