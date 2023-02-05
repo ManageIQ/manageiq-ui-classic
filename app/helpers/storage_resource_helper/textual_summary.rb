@@ -17,6 +17,10 @@ module StorageResourceHelper::TextualSummary
   end
 
   def textual_group_relationships
+    TextualGroup.new(
+      _("Relationships"),
+      %i[ems physical_storage]
+    )
   end
 
   #
@@ -33,6 +37,14 @@ module StorageResourceHelper::TextualSummary
 
   def textual_logical_total
     {:label => _("Total Size"), :value => number_to_human_size(@record.logical_total, :precision => 2)}
+  end
+
+  def textual_ems
+    textual_link(@record.ext_management_system)
+  end
+
+  def textual_physical_storage
+    textual_link(@record.physical_storage)
   end
 
   def textual_group_capabilities
