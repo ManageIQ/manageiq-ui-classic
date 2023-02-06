@@ -75,7 +75,11 @@ module PhysicalStorageHelper::TextualSummary
   end
 
   def textual_model
-    {:label => _("Model"), :value => @record.asset_detail&.model}
+    if @record.ext_management_system.kind_of?(ManageIQ::Providers::Autosde::StorageManager)
+      {:label => _("Model"), :value => @record.physical_storage_family.name}
+    else
+      {:label => _("Model"), :value => @record.asset_detail&.model}
+    end
   end
 
   def textual_contact
