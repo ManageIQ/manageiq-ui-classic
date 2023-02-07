@@ -18,5 +18,6 @@ module.exports = {
   ],
   plugins: [
     require('@babel/plugin-proposal-class-properties').default,
+    require('angularjs-annotate').default,
   ],
 };
