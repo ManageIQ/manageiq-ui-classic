@@ -17,7 +17,7 @@ module.exports = {
     require('@babel/preset-react').default,
   ],
   plugins: [
+    require('@babel/angularjs-annotate').default,
     require('@babel/plugin-proposal-class-properties').default,
-    require('angularjs-annotate').default,
   ],
 };
