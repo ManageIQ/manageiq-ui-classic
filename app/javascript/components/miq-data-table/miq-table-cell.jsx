@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, TableCell, TextInput, Toggle } from 'carbon-components-react';
+import {
+  Button, TableCell, TextInput, Toggle,
+} from 'carbon-components-react';
 import classNames from 'classnames';
 import {
   CellAction, hasIcon, hasImage, hasButton, hasTextInput, hasToggle, isObject, isArray, isNumber, decimalCount,
@@ -46,12 +48,15 @@ const MiqTableCell = ({
   );
 
   /** Function to render an image in cell. */
-  const cellImage = (item) => (
-    <div className={cellClass}>
-      <img src={item.image} alt={item.image} className="image" />
-      {truncateText}
-    </div>
-  );
+  const cellImage = ({ image }) => {
+    const altText = image.split('/').pop().split('.')[0];
+    return (
+      <div className={cellClass}>
+        <img src={image} alt={altText} className="image" />
+        {truncateText}
+      </div>
+    );
+  };
 
   /** Fuction to render icon(s) in cell. */
   const renderIcon = (icon, style, showText) => (

@@ -48,7 +48,6 @@ const MiqDataTable = ({
         onClick: (event) => onCellClick(row, CellAction.itemSelect, event),
       })}
       checked={isRowSelected(row.id)}
-
     />
   );
 

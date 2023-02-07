@@ -379,3 +379,32 @@
   min-width: 10rem;
   width: fit-content;
 }
+
+.miq-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  .miq-fieldset-legend {
+    font-size: 14px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    font-weight: 400;
+    color: #000;
+    background: inherit;
+
+    &.legend-search {
+      color: #FFF;
+    }
+  }
+
+  .miq-fieldset-content {
+    display: flex;
+    flex-direction: row;
+    margin-top: -23px;
+    flex-grow: 1;
+  }
+}

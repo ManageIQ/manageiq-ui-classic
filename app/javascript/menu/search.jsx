@@ -35,20 +35,25 @@ const MenuSearch = ({
       <div className="menu-search">
         <SideNavItems>
           <SideNavItem className="padded vertical-center">
-            <div
-              tabIndex="0"
-              className="search_div"
-              role="button"
-              onClick={toggle}
-              onKeyPress={toggle}
-            >
-              <TooltipIcon
-                direction="right"
-                tooltipText={__('Find')}
-              >
-                <Search20 />
-              </TooltipIcon>
-            </div>
+            <fieldset className="miq-fieldset">
+              <legend className="miq-fieldset-legend legend-search">{__('Choose a Filter')}</legend>
+              <div className="miq-fieldset-content">
+                <div
+                  tabIndex="0"
+                  className="search_div"
+                  role="button"
+                  onClick={toggle}
+                  onKeyPress={toggle}
+                >
+                  <TooltipIcon
+                    direction="right"
+                    tooltipText={__('Find')}
+                  >
+                    <Search20 />
+                  </TooltipIcon>
+                </div>
+              </div>
+            </fieldset>
           </SideNavItem>
         </SideNavItems>
       </div>
@@ -83,12 +88,17 @@ const MenuSearch = ({
     <div className="menu-search">
       <SideNavItems>
         <SideNavItem className="padded">
-          <Search
-            size="sm"
-            placeholder={__('Find')}
-            labelText={__('Find') /* hidden in css */}
-            onChange={(event) => searchResults(event.target.value)}
-          />
+          <fieldset className="miq-fieldset">
+            <legend className="miq-fieldset-legend legend-search">{__('Choose a Filter')}</legend>
+            <div className="miq-fieldset-content">
+              <Search
+                size="sm"
+                placeholder={__('Find')}
+                labelText={__('Find') /* hidden in css */}
+                onChange={(event) => searchResults(event.target.value)}
+              />
+            </div>
+          </fieldset>
         </SideNavItem>
       </SideNavItems>
     </div>

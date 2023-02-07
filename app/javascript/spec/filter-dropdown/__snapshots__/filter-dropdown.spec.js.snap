@@ -50,169 +50,184 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
     <div
       className="select_filter"
     >
-      <Select
-        defaultValue="placeholder-item"
-        disabled={false}
-        helperText=""
-        id="select_filter_dropdown"
-        inline={false}
-        invalid={false}
-        invalidText=""
-        labelText="Select"
-        light={false}
-        noLabel={true}
-        onChange={[Function]}
+      <fieldset
+        className="miq-fieldset"
       >
-        <div
-          className="bx--form-item"
+        <legend
+          className="miq-fieldset-legend legend-filter-dropdown"
         >
-          <div
-            className="bx--select"
+          Choose a Filter
+        </legend>
+        <div
+          className="miq-fieldset-content"
+        >
+          <Select
+            aria-label="Choose a Filter"
+            defaultValue="placeholder-item"
+            disabled={false}
+            helperText=""
+            id="select_filter_dropdown"
+            inline={false}
+            invalid={false}
+            invalidText=""
+            labelText="Select"
+            light={false}
+            noLabel={true}
+            onChange={[Function]}
           >
             <div
-              className="bx--select-input__wrapper"
-              data-invalid={null}
+              className="bx--form-item"
             >
-              <select
-                className="bx--select-input"
-                defaultValue="placeholder-item"
-                id="select_filter_dropdown"
-                onChange={[Function]}
+              <div
+                className="bx--select"
               >
-                <SelectItem
-                  disabled={true}
-                  hidden={true}
-                  text="Choose a Filter"
-                  value="placeholder-item"
+                <div
+                  className="bx--select-input__wrapper"
+                  data-invalid={null}
                 >
-                  <option
-                    className="bx--select-option"
-                    disabled={true}
-                    hidden={true}
-                    value="placeholder-item"
-                  >
-                    Choose a Filter
-                  </option>
-                </SelectItem>
-                <SelectItemGroup
-                  disabled={false}
-                  label="Global Filters"
-                >
-                  <optgroup
-                    className="bx--select-optgroup"
-                    disabled={false}
-                    label="Global Filters"
+                  <select
+                    aria-label="Choose a Filter"
+                    className="bx--select-input"
+                    defaultValue="placeholder-item"
+                    id="select_filter_dropdown"
+                    onChange={[Function]}
                   >
                     <SelectItem
-                      disabled={false}
-                      hidden={false}
-                      key="0"
-                      text="ALL (Default)"
-                      value={0}
+                      disabled={true}
+                      hidden={true}
+                      text="Choose a Filter"
+                      value="placeholder-item"
                     >
                       <option
                         className="bx--select-option"
-                        disabled={false}
-                        hidden={false}
-                        value={0}
+                        disabled={true}
+                        hidden={true}
+                        value="placeholder-item"
                       >
-                        ALL (Default)
+                        Choose a Filter
                       </option>
                     </SelectItem>
-                    <SelectItem
+                    <SelectItemGroup
                       disabled={false}
-                      hidden={false}
-                      key="1"
-                      text="ALL (Default)"
-                      value={1}
+                      label="Global Filters"
                     >
-                      <option
-                        className="bx--select-option"
+                      <optgroup
+                        className="bx--select-optgroup"
                         disabled={false}
-                        hidden={false}
-                        value={1}
+                        label="Global Filters"
                       >
-                        ALL (Default)
-                      </option>
-                    </SelectItem>
-                    <SelectItem
-                      disabled={false}
-                      hidden={false}
-                      key="2"
-                      text="ALL (Default)"
-                      value={2}
-                    >
-                      <option
-                        className="bx--select-option"
-                        disabled={false}
-                        hidden={false}
-                        value={2}
-                      >
-                        ALL (Default)
-                      </option>
-                    </SelectItem>
-                  </optgroup>
-                </SelectItemGroup>
-              </select>
-              <ForwardRef(ChevronDown16)
-                className="bx--select__arrow"
-              >
-                <Icon
-                  className="bx--select__arrow"
-                  fill="currentColor"
-                  height={16}
-                  preserveAspectRatio="xMidYMid meet"
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
+                        <SelectItem
+                          disabled={false}
+                          hidden={false}
+                          key="0"
+                          text="ALL (Default)"
+                          value={0}
+                        >
+                          <option
+                            className="bx--select-option"
+                            disabled={false}
+                            hidden={false}
+                            value={0}
+                          >
+                            ALL (Default)
+                          </option>
+                        </SelectItem>
+                        <SelectItem
+                          disabled={false}
+                          hidden={false}
+                          key="1"
+                          text="ALL (Default)"
+                          value={1}
+                        >
+                          <option
+                            className="bx--select-option"
+                            disabled={false}
+                            hidden={false}
+                            value={1}
+                          >
+                            ALL (Default)
+                          </option>
+                        </SelectItem>
+                        <SelectItem
+                          disabled={false}
+                          hidden={false}
+                          key="2"
+                          text="ALL (Default)"
+                          value={2}
+                        >
+                          <option
+                            className="bx--select-option"
+                            disabled={false}
+                            hidden={false}
+                            value={2}
+                          >
+                            ALL (Default)
+                          </option>
+                        </SelectItem>
+                      </optgroup>
+                    </SelectItemGroup>
+                  </select>
+                  <ForwardRef(ChevronDown16)
                     className="bx--select__arrow"
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronDown16)>
+                    <Icon
+                      className="bx--select__arrow"
+                      fill="currentColor"
+                      height={16}
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width={16}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="bx--select__arrow"
+                        fill="currentColor"
+                        focusable="false"
+                        height={16}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width={16}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                      </svg>
+                    </Icon>
+                  </ForwardRef(ChevronDown16)>
+                </div>
+              </div>
             </div>
-          </div>
+          </Select>
+          <Button
+            className="default_button"
+            id="set_default"
+            onClick={[Function]}
+            size="sm"
+            title={"Select a filter to set it as my default"}
+            type="submit"
+          >
+            <button
+              aria-describedby={null}
+              aria-pressed={null}
+              className="default_button bx--btn bx--btn--sm bx--btn--primary"
+              disabled={false}
+              id="set_default"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              tabIndex={0}
+              title={"Select a filter to set it as my default"}
+              type="submit"
+            >
+              Set Default
+            </button>
+          </Button>
         </div>
-      </Select>
-      <Button
-        className="default_button"
-        id="set_default"
-        onClick={[Function]}
-        size="sm"
-        title={"Select a filter to set it as my default"}
-        type="submit"
-      >
-        <button
-          aria-describedby={null}
-          aria-pressed={null}
-          className="default_button bx--btn bx--btn--sm bx--btn--primary"
-          disabled={false}
-          id="set_default"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          tabIndex={0}
-          title={"Select a filter to set it as my default"}
-          type="submit"
-        >
-          Set Default
-        </button>
-      </Button>
+      </fieldset>
     </div>
   </FilterDropdown>
 </Provider>
