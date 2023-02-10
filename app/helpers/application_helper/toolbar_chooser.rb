@@ -346,7 +346,7 @@ class ApplicationHelper::ToolbarChooser
     to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
                     cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts host_initiators host_initiator_groups
                     volume_mappings network_ports network_routers network_services orchestration_stacks resource_pools
-                    security_groups security_policies security_policy_rules storages physical_storages]
+                    security_groups security_policies security_policy_rules storages physical_storages storage_services]
     to_display_center = %w[stack_orchestration_template cloud_object_store_objects generic_objects physical_servers guest_devices]
     performance_layouts = %w[vm host ems_container]
 
@@ -440,6 +440,7 @@ class ApplicationHelper::ToolbarChooser
             physical_storage
             placement_group
             container_template
+            storage_service
             resource_pool
             timeline
             usage

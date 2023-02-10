@@ -2361,6 +2361,26 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :storage_service   => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        index
+        show
+        show_list
+        new
+      ],
+      :post => %w[
+        button
+        listnav_search_selected
+        quick_search
+        show_list
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
     :volume_mapping => {
       :get  => %w[
         download_data

@@ -65,6 +65,7 @@ module ApplicationHelper
         security_policy
         security_policy_rule
         services
+        storage_service
       ]
       list_vm_specific_layouts = %w[
         offline

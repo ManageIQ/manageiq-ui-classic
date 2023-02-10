@@ -1173,6 +1173,8 @@ StorageController:
 - x_search_by_name
 - x_show
 StorageResourceController: []
+StorageServiceController:
+- index
 SupportController:
 - index
 - report_data

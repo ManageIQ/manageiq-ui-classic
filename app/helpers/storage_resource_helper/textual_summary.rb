@@ -12,7 +12,6 @@ module StorageResourceHelper::TextualSummary
         name
         logical_free
         logical_total
-        capabilities
       ]
     )
   end
@@ -36,14 +35,39 @@ module StorageResourceHelper::TextualSummary
     {:label => _("Total Size"), :value => number_to_human_size(@record.logical_total, :precision => 2)}
   end
 
-  def textual_capabilities
-    {:label => _("Capabilities"), :value => parse_capabilities(@record.capabilities)}
+  def textual_group_capabilities
+    capabilities = @record.capabilities.map do |c|
+      [c["name"], c["value"]]
+    end
+
+    TextualMultilabel.new(
+      _("Capabilities"),
+      :labels => [_("Capability"), _("Value")],
+      :values => capabilities
+    )
   end
 
-  def parse_capabilities(capabilities)
-    caps = capabilities.map do |capability|
-      "#{capability['name']}: #{capability['value']}"
+  def textual_group_storage_services
+    services = @record.storage_services.map do |s|
+      [textual_link(s), s.description]
     end
-    caps.join(", ")
+
+    TextualMultilabel.new(
+      _("Storage Services"),
+      :labels => [_("Storage Service"), _("Description")],
+      :values => services
+    )
+  end
+
+  def textual_group_cloud_volumes
+    volumes = @record.cloud_volumes.map do |v|
+      [textual_link(v), number_to_human_size(v.size), v.health_state, textual_link(v.storage_service)]
+    end
+
+    TextualMultilabel.new(
+      _("Volumes"),
+      :labels => [_("Volume"), _("Size"), _("Health State"), _("Storage Service")],
+      :values => volumes
+    )
   end
 end

@@ -140,6 +140,7 @@ import SettingsCompanyCategories from '../components/settings-company-categories
 import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
 import HostInitiatorGroupForm from '../components/host-initiator-group-form';
+import StorageServiceForm from '../components/storage-service-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import ZoneForm from '../components/zone-form';
 
@@ -290,6 +291,7 @@ ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('HostInitiatorForm', HostInitiatorForm);
 ManageIQ.component.addReact('HostInitiatorGroupForm', HostInitiatorGroupForm);
+ManageIQ.component.addReact('StorageServiceForm', StorageServiceForm);
 ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
 ManageIQ.component.addReact('VmCommonRenameForm', VmCommonRenameForm);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);

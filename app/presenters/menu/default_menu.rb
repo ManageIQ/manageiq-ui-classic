@@ -160,6 +160,7 @@ module Menu
           Menu::Item.new('host_initiator_group',         N_('Host Initiator Groups'),   'host_initiator_group',         {:feature => 'host_initiator_group_show_list'},         '/host_initiator_group/show_list'),
           Menu::Item.new('physical_storage',             N_('Storages'),                'physical_storage',             {:feature => 'physical_storage_show_list'},             '/physical_storage/show_list'),
           Menu::Item.new('storage_resource',             N_('Storage Resources'),       'storage_resource',             {:feature => 'storage_resource_show_list'},             '/storage_resource/show_list'),
+          Menu::Item.new('storage_service',              N_('Storage Services'),        'storage_service',              {:feature => 'storage_service_show_list'},              '/storage_service/show_list'),
           Menu::Item.new('cloud_object_store_container', N_('Object Store Containers'), 'cloud_object_store_container', {:feature => 'cloud_object_store_container_show_list'}, '/cloud_object_store_container/show_list'),
           Menu::Item.new('cloud_object_store_object',    N_('Object Store Objects'),    'cloud_object_store_object',    {:feature => 'cloud_object_store_object_show_list'},    '/cloud_object_store_object/show_list'),
         ])

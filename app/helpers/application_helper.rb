@@ -251,7 +251,7 @@ module ApplicationHelper
       if controller == "ems_storage" && action == "show"
         return ems_storages_path
       end
-    
+
       if request[:controller] == 'service' && view.db == 'GenericObject'
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
@@ -727,6 +727,7 @@ module ApplicationHelper
 
   def display_adv_search?
     %w[auth_key_pair_cloud
+       storage_service
        storage_resource
        host_initiator
        physical_storage
@@ -1060,6 +1061,7 @@ module ApplicationHelper
                              container_service
                              container_template
                              storage_resource
+                             storage_service
                              host_initiator
                              ems_storage
                              ems_cloud
