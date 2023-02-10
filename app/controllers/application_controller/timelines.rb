@@ -26,7 +26,6 @@ module ApplicationController::Timelines
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "miqScrollTop();" if @flash_array.present?
-      page.replace("tl_div", :partial => "layouts/tl_detail")
       page << "ManageIQ.calendar.calDateFrom = new Date(#{@tl_options.date.start});" unless @tl_options.date.start.nil?
       page << "ManageIQ.calendar.calDateTo = new Date(#{@tl_options.date.end});" unless @tl_options.date.end.nil?
       page << 'miqBuildCalendar();'

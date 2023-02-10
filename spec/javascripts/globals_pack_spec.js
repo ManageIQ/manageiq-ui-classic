@@ -55,14 +55,6 @@ describe('packs/global.js', function() {
     });
   });
 
-  context('d3 plugins', function() {
-    it('loads patternfly-timeline', function() {
-      expect(d3.chart.timeline).toBeDefined();
-      expect(d3.chart.timeline().start).toBeDefined();
-      expect(d3.chart.timeline().end).toBeDefined();
-    });
-  });
-
   context('codemirror', function() {
     it('loads codemirror', function() {
       expect(window.CodeMirror).toBeDefined();

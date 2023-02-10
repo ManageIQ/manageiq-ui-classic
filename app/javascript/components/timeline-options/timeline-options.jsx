@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import createSchemaSimple from './timeline-options-simple.schema';
 import mapper from '../../forms/mappers/componentMapper';
 
-const TimelineOptions = ({ url }) => {
+const TimelineOptions = ({ submitChosenFormOptions }) => {
   const [{
     isLoading, timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels,
   }, setState] = useState({
@@ -25,7 +25,7 @@ const TimelineOptions = ({ url }) => {
         // Management Events
         Object.entries(data.EmsEvent.group_names).forEach((entry) => {
           const [key, value] = entry;
-          managementGroupNames.push({ label: value, value });
+          managementGroupNames.push({ label: value, value: key });
         });
         Object.entries(data.EmsEvent.group_levels).forEach((entry) => {
           const [key, value] = entry;
@@ -59,18 +59,15 @@ const TimelineOptions = ({ url }) => {
   });
 
   const onSubmit = (values) => {
-    miqSparkleOn();
-    const show = values.timelineEvents === 'EmsEvent' ? 'timeline' : 'policy_timeline';
     const categories = values.timelineEvents === 'EmsEvent' ? values.managementGroupNames : values.policyGroupNames;
-    const vmData = {
-      tl_show: show,
-      tl_categories: categories,
-      tl_levels: values.managementGroupLevels ? values.managementGroupLevels : [],
-      tl_result: values.policyGroupLevels ? values.policyGroupLevels : 'success',
+    const newData = {
+      type: values.timelineEvents,
+      group: categories,
+      group_level: values.managementGroupLevels ? values.managementGroupLevels : [values.policyGroupLevels],
+      start_date: values.startDate,
+      end_date: values.endDate,
     };
-    window.ManageIQ.calendar.calDateFrom = values.startDate;
-    window.ManageIQ.calendar.calDateTo = values.endDate;
-    window.miqJqueryRequest(url, { beforeSend: true, data: vmData });
+    submitChosenFormOptions(newData);
   };
 
   return !isLoading && (
@@ -88,11 +85,11 @@ const TimelineOptions = ({ url }) => {
 };
 
 TimelineOptions.propTypes = {
-  url: PropTypes.string,
+  submitChosenFormOptions: PropTypes.func,
 };
 
 TimelineOptions.defaultProps = {
-  url: '',
+  submitChosenFormOptions: undefined,
 };
 
 export default TimelineOptions;
