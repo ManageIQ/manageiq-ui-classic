@@ -1,5 +1,11 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 
+const getOneWeekAgo = () => {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return [oneWeekAgo];
+};
+
 const createSchemaSimple = (
   timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels
 ) => ({
@@ -141,12 +147,14 @@ const createSchemaSimple = (
               id: 'startDate',
               name: 'startDate',
               label: __('Start Date'),
+              initialValue: getOneWeekAgo(),
             },
             {
               component: 'date-picker',
               id: 'endDate',
               name: 'endDate',
               label: __('End Date'),
+              initialValue: [new Date()],
             },
           ],
         },

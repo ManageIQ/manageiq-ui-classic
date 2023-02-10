@@ -58,8 +58,6 @@ require('moment-strftime');
 require('moment-timezone');
 require('moment-duration-format')(window.moment);
 
-require('@pf3/timeline');
-
 window.CodeMirror = require('codemirror');
 require('codemirror/mode/css/css.js'); // not referenced directly, needed by htmlmixed
 require('codemirror/mode/htmlmixed/htmlmixed.js');
@@ -73,6 +71,3 @@ require('codemirror/theme/eclipse.css');
 
 // bootstrap-datepicker language catalogs
 require('./bootstrap-datepicker-languages.js');
-
-// added d3 7.X.X as alias for d3 add ins
-require('d3-7.6.1');

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show Timeline Chart should render empty chart 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <TimelineChart
+    buildTableData={[Function]}
+    data={Array []}
+    title=""
+  >
+    <div>
+      <e
+        className="line_charts"
+        data={Array []}
+        options={
+          Object {
+            "axes": Object {
+              "bottom": Object {
+                "mapsTo": "date",
+                "scaleType": "time",
+                "title": "Date",
+              },
+              "left": Object {
+                "mapsTo": "value",
+                "scaleType": "linear",
+                "title": "# of Events",
+              },
+            },
+            "height": "400px",
+            "legend": Object {
+              "clickable": true,
+            },
+            "points": Object {
+              "enabled": true,
+              "fillOpacity": 1,
+              "filled": true,
+              "radius": 3,
+            },
+            "title": "",
+            "tooltip": Object {
+              "totalLabel": "Total Events",
+            },
+            "zoomBar": Object {
+              "top": Object {
+                "className": "zoom-bar",
+                "enabled": true,
+                "type": "graph_view",
+              },
+            },
+          }
+        }
+      >
+        <div
+          className="chart-holder"
+        />
+      </e>
+    </div>
+  </TimelineChart>
+</Provider>
+`;

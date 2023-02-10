@@ -30,7 +30,6 @@ require('./miq_list_grid.js');
 require('./miq_toolbar.js');
 require('./miq_c3.js');
 require('./miq_explorer.js');
-require('./miq_timeline.js');
 
 if (process.env.NODE_ENV === 'development') {
   require('./miq_debug.js');

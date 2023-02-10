@@ -1,7 +1,7 @@
 .tenant-quota-data-table {
   .miq-data-table {
     margin-bottom: 32px;
-  } 
+  }
 
   .bx--btn-set {
     margin-bottom: 48px;
@@ -15,15 +15,20 @@
     .bx--front-line, .bx--label, .bx--toggle-input {
       display: none;
     }
-  
+
     .bx--toggle-input__label {
       margin-bottom: 0px;
-  
+
       .bx--toggle__switch {
         margin-top: 0px;
       }
     }
   }
+}
+
+.timeline-data-table {
+  margin-top: 70px;
+  margin-bottom: 20px;
 }
 
 .miq-data-table {

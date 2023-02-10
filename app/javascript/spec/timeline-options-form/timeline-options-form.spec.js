@@ -2,14 +2,17 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
+import { Button, Select } from 'carbon-components-react';
 import TimelineOptions from '../../components/timeline-options/timeline-options';
 import { sampleReponse, sampleSubmitPressedValues, sampleVmData } from './sample-data';
 import { mount, shallow } from '../helpers/mountForm';
-import { Button } from 'carbon-components-react';
-import '../../oldjs/miq_application' // for miqJqueryRequest
+import mapper from '../../forms/mappers/componentMapper';
+import '../../oldjs/miq_application'; // for miqJqueryRequest
 
 describe('Show Timeline Options form component', () => {
   let submitSpy;
+
+  const dummySubmitChosenFormOptions = (dummyValue) => { };
 
   beforeEach(() => {
     fetchMock
@@ -30,11 +33,15 @@ describe('Show Timeline Options form component', () => {
   it('should render form', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<TimelineOptions url="sample/url" />);
+      wrapper = mount(<TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />);
     });
     setImmediate(() => {
       wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(wrapper.find(Select)).toHaveLength(1);
+      expect(wrapper.find(Button)).toHaveLength(1);
+      expect(wrapper.find(mapper['date-picker'])).toHaveLength(2);
+      // expect(toJson(wrapper)).toMatchSnapshot();
+      // We cant do toMatchSnapshot because the select date fields change dynamically to the current date
       done();
     });
   });
@@ -46,7 +53,7 @@ describe('Show Timeline Options form component', () => {
   it('should not submit values when form is empty', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<TimelineOptions url="sample/url" />);
+      wrapper = mount(<TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />);
     });
     setImmediate(() => {
       wrapper.update();
