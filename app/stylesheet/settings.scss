@@ -1,0 +1,20 @@
+.attribute-value-field-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  .attribute-value-row-count {
+    min-width: 30px;
+    align-items: center;
+    display: flex;
+    height: 48px;
+  }
+}
+
+.bx--list-box__wrapper {
+  margin-bottom: 2rem;
+}
+
+.bx--checkbox-wrapper{
+  margin-bottom: 2rem !important;
+}
