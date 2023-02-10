@@ -2348,6 +2348,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        index
         show
         show_list
       ],
@@ -3232,7 +3233,6 @@ Rails.application.routes.draw do
     ems_storage
     miq_ae_customization
     pxe
-    storage_resource
   ].freeze
 
   root :to => 'dashboard#login'

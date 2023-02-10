@@ -19,8 +19,13 @@ class StorageResourceController < ApplicationController
     super
   end
 
-  def breadcrumb_name(_model)
-    _('Storage Resources')
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Storage")},
+        {:title => _("Storage Resources"), :url => controller_url},
+      ],
+    }
   end
 
   def download_summary_pdf
