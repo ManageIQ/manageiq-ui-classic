@@ -11,7 +11,8 @@ const changeValue = (value, loadSchema, emptySchema) => {
   }
 };
 
-const storageManagers = (supports) => API.get(`/api/providers?expand=resources&attributes=id,name,${supports}&filter[]=${supports}=true`)
+const storageManagers = (supports) =>
+  API.get(`/api/providers?expand=resources&attributes=id,name,${supports}&filter[]=${supports}=true`)
   .then(({ resources }) => {
     const storageManagersOptions = resources.map(({ id, name }) => ({ label: name, value: id }));
     storageManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
@@ -20,10 +21,11 @@ const storageManagers = (supports) => API.get(`/api/providers?expand=resources&a
 
 // storage manager functions:
 const equalsUnsorted = (arr1, arr2) => arr1.length === arr2.length
-  && arr2.every(arr2Item => arr1.includes(arr2Item))
-  && arr1.every(arr1Item => arr2.includes(arr1Item));
+  && arr2.every((arr2Item) => arr1.includes(arr2Item))
+  && arr1.every((arr1Item) => arr2.includes(arr1Item));
 
-const filterByCapabilities = (filterArray, modelToFilter) => API.get(`/api/${modelToFilter}?expand=resources&attributes=id,name,capabilities`)
+const filterByCapabilities = (filterArray, modelToFilter, isMulti) =>
+  API.get(`/api/${modelToFilter}?expand=resources&attributes=id,name,capabilities`)
   .then(({ resources }) => {
     const valueArray = [];
     resources.forEach((resource) => {
@@ -32,10 +34,17 @@ const filterByCapabilities = (filterArray, modelToFilter) => API.get(`/api/${mod
         valueArray.push(resource);
       }
     });
-    if (valueArray.length === 0 && modelToFilter !== 'storage_resources') {
-      return [{label: `no ${modelToFilter} with selected capabilities`, value: -1}]
+
+    const options = valueArray.map(({ name, id }) => ({ label: name, value: id }))
+
+    if (options.length === 0 ) {
+      options.unshift({label: sprintf(__('No %s with selected capabilities.'), modelToFilter), value: '-1'});
     }
-    return valueArray.map(({ name, id }) => ({ label: name, value: id }));
+    if (!isMulti) {
+      options.unshift({label: `<${__('Choose')}>`, value: '-2'});
+    }
+
+    return options;
   });
 
 const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
@@ -107,12 +116,15 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             condition: { when: 'mode', is: 'Basic' },
             onInputChange: () => null,
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              { type: validatorTypes.REQUIRED },
+              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },
+            ],
             resolveProps: (_props, _field, { getState }) => {
               const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
               return {
                 key: JSON.stringify(capabilityValues),
-                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_services'),
+                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_services', false),
               };
             },
           },
@@ -120,17 +132,20 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             component: 'enhanced-select',
             name: 'storage_resource_id',
             id: 'storage_resource_id',
-            label: __('Storage Resource (if no option appears then no storage resource with selected capabilities was found)'),
+            label: __('Storage Resource'),
             condition: { when: 'mode', is: 'Advanced' },
             onInputChange: () => null,
             isRequired: true,
-            validate: [{ type: validatorTypes.REQUIRED }],
+            validate: [
+              { type: validatorTypes.REQUIRED },
+              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' }
+            ],
             isMulti: true,
             resolveProps: (_props, _field, { getState }) => {
               const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
               return {
                 key: JSON.stringify(capabilityValues),
-                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_resources'),
+                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_resources', true),
               };
             },
           },
