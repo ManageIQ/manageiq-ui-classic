@@ -32,7 +32,8 @@ module ApplicationHelper::Toolbar::Service::VmdbMixin
                                                                       :api_url        => 'services',
                                                                       :async_delete   => true,
                                                                       :redirect_url   => '/service/show_list',
-                                                                      :component_name => 'RemoveGenericItemModal'}}
+                                                                      :component_name => 'RemoveGenericItemModal'}},
+                                        :onwhen       => "1+"
                                       ),
                                       included_class.separator,
                                       included_class.button(
