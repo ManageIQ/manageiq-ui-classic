@@ -1889,14 +1889,10 @@ class ApplicationController < ActionController::Base
   # Params:
   #   klass - class of accessed objects
   #   ids   - array of accessed object ids
+  # TODO: drop this method and just use Rbac in sql queries
   def assert_rbac(klass, ids)
-    filtered, = Rbac.search(
-      :targets        => ids.map(&:to_i),
-      :user           => current_user,
-      :class          => klass,
-      :results_format => :ids
-    )
-    raise _("Unauthorized object or action") unless ids.length == filtered.length
+    num_visible = Rbac.filtered(klass.where(:id => ids), :user => current_user).count
+    raise _("Unauthorized object or action") unless ids.length == num_visible
   end
 
   def last_screen_url
