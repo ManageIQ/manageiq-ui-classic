@@ -51,7 +51,6 @@ window._ = require('lodash');
 window.numeral = require('numeral');
 window.sprintf = require('sprintf-js').sprintf;
 window.c3 = require('c3');
-window.d3 = require('d3');
 
 window.moment = require('moment');
 require('moment-strftime');
