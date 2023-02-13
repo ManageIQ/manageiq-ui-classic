@@ -1,6 +1,8 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { parseCondition } from '@data-driven-forms/react-form-renderer';
-import validateName from '../../helpers/validate-names';
+import validateName from '../../helpers/storage_manager/validate-names';
+import filterResourcesByCapabilities from '../../helpers/storage_manager/filter-resources-by-capabilities';
+import filterServicesByCapabilities from '../../helpers/storage_manager/filter-service-by-capabilities';
 
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
@@ -13,43 +15,21 @@ const changeValue = (value, loadSchema, emptySchema) => {
 
 const storageManagers = (supports) =>
   API.get(`/api/providers?expand=resources&attributes=id,name,${supports}&filter[]=${supports}=true`)
-  .then(({ resources }) => {
-    const storageManagersOptions = resources.map(({ id, name }) => ({ label: name, value: id }));
-    storageManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
-    return storageManagersOptions;
-  });
-
-// storage manager functions:
-const equalsUnsorted = (arr1, arr2) => arr1.length === arr2.length
-  && arr2.every((arr2Item) => arr1.includes(arr2Item))
-  && arr1.every((arr1Item) => arr2.includes(arr1Item));
-
-const filterByCapabilities = (filterArray, modelToFilter, isMulti) =>
-  API.get(`/api/${modelToFilter}?expand=resources&attributes=id,name,capabilities`)
-  .then(({ resources }) => {
-    const valueArray = [];
-    resources.forEach((resource) => {
-      const capsToFilter = resource["capabilities"].map(({ uuid }) => uuid);
-      if (equalsUnsorted(filterArray, capsToFilter)) {
-        valueArray.push(resource);
-      }
+    .then(({ resources }) => {
+      const storageManagersOptions = resources.map(({ id, name }) => ({ label: name, value: id }));
+      storageManagersOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
+      return storageManagersOptions;
     });
 
-    const options = valueArray.map(({ name, id }) => ({ label: name, value: id }))
+// storage manager functions:
 
-    if (options.length === 0 ) {
-      options.unshift({label: sprintf(__('No %s with selected capabilities.'), modelToFilter), value: '-1'});
-    }
-    if (!isMulti) {
-      options.unshift({label: `<${__('Choose')}>`, value: '-2'});
-    }
-
-    return options;
-  });
+const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
+  .then((result) => result.capabilities);
 
 const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
   const idx = fields.findIndex((field) => field.name === 'volume_type');
   const supports = edit ? 'supports_cloud_volume' : 'supports_cloud_volume_create';
+  let providerCapabilities;
 
   return ({
     fields: [
@@ -76,7 +56,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
           },
           {
             type: 'pattern',
-            pattern: '^[a-zA-Z0-9\-_. ]*$',
+            pattern: '^[a-zA-Z0-9-_. ]*$',
             message: __('The name can contain letters, numbers, spaces, periods, dashes and underscores'),
           },
           {
@@ -113,7 +93,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             name: 'storage_service_id',
             id: 'storage_service_id',
             label: __('Storage Service'),
-            condition: { when: 'mode', is: 'Basic' },
+            condition: { and: [{ when: 'mode', is: 'Basic' }, { when: 'ems_id', isNotEmpty: true }] },
             onInputChange: () => null,
             isRequired: true,
             validate: [
@@ -122,9 +102,13 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             ],
             resolveProps: (_props, _field, { getState }) => {
               const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
+              const emsId = getState().values.ems_id;
               return {
                 key: JSON.stringify(capabilityValues),
-                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_services', false),
+                loadOptions: async() => {
+                  providerCapabilities = await getProviderCapabilities(emsId);
+                  return filterServicesByCapabilities(capabilityValues, providerCapabilities);
+                },
               };
             },
           },
@@ -138,14 +122,18 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             isRequired: true,
             validate: [
               { type: validatorTypes.REQUIRED },
-              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' }
+              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },
             ],
             isMulti: true,
             resolveProps: (_props, _field, { getState }) => {
               const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
+              const emsId = getState().values.ems_id;
               return {
                 key: JSON.stringify(capabilityValues),
-                loadOptions: () => filterByCapabilities(capabilityValues, 'storage_resources', true),
+                loadOptions: async() => {
+                  providerCapabilities = await getProviderCapabilities(emsId);
+                  return filterResourcesByCapabilities(capabilityValues, providerCapabilities);
+                },
               };
             },
           },
@@ -158,12 +146,12 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             isRequired: true,
             validate: [
               { type: validatorTypes.REQUIRED },
-              async (value) => validateName("storage_services", value)
+              async(value) => validateName('storage_services', value),
             ],
           },
-        ]
+        ],
       },
-    ]
+    ],
   });
 };
 

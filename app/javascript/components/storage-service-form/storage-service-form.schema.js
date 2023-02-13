@@ -1,11 +1,11 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import validateName from '../../helpers/validate-names';
-import loadCapabilities from '../../helpers/load-capabilities';
+import validateName from '../../helpers/storage_manager/validate-names';
+import loadProviderCapabilities from '../../helpers/storage_manager/load-provider-capabilities';
 
 const loadProviders = () =>
   API.get(
-    '/api/providers?expand=resources&attributes=id,name,supports_block_storage' +
-    '&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
+    '/api/providers?expand=resources&attributes=id,name,supports_block_storage'
+    + '&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
@@ -42,7 +42,7 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
         isRequired: true,
         validate: [
           { type: validatorTypes.REQUIRED },
-          async(value) => validateName("storage_services", value, edit),
+          async(value) => validateName('storage_services', value, edit),
         ],
       },
       {
@@ -58,7 +58,7 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
         id: 'required_capabilities',
         label: __('Required Capabilities'),
         placeholder: __('<Choose>'),
-        loadOptions: () => (emsId ? loadCapabilities('providers', emsId, 'abstract_capability') : Promise.resolve([])),
+        loadOptions: () => (emsId ? loadProviderCapabilities(emsId) : Promise.resolve([])),
         isDisabled: edit,
         isRequired: true,
         isMulti: true,

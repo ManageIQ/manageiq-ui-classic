@@ -52,7 +52,7 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
         : __('Add of new Storage Service was cancelled by the user.'),
       initialValues && initialValues.name,
     );
-    miqRedirectBack(message, 'warning', '/storage_services/show_list');
+    miqRedirectBack(message, 'warning', '/storage_service/show_list');
   };
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
