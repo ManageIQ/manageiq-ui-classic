@@ -19,6 +19,31 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupCenter < ApplicationHelper::
             :confirm => N_("Refresh relationships and power states for all items related to this Host Initiator Cluster?"),
             :options => {:feature => :refresh}
           ),
+          api_button(
+            :host_initiator_group_delete,
+            nil,
+            t = N_('Delete the Host Initiator Group'),
+            t,
+            :icon         => "pficon pficon-delete fa-lg",
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete},
+            :api          => {
+              :action => 'delete',
+              :entity => 'host_initiator_groups'
+            },
+            :confirm      => N_("Are you sure you want to delete this Host Initiator Group?"),
+            :send_checked => true
+          ),
+          button(
+            :host_initiator_group_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit this Host Initiator Group'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :update}
+          ),
         ]
       ),
     ]

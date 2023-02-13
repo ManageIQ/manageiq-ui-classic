@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
             :options      => {:feature      => :delete,
-                              :parent_class => "HostInitiator"},
+                              :parent_class => "StorageService"},
             :api          => {
               :action => 'delete',
               :entity => 'storage_services'

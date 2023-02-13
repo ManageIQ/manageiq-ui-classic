@@ -21,7 +21,8 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
     value: id,
   })));
 
-const createSchema = (state, setState, ems, initialValues, storageId, setStorageId) => {
+// const createSchema = (state, setState, ems, initialValues, storageId, setStorageId) => {
+const createSchema = (edit, ems, initialValues, state, setState) => {
   let emsId = state.ems_id;
   if (initialValues && initialValues.ems_id) {
     emsId = initialValues.ems_id;
@@ -63,7 +64,6 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         includeEmpty: true,
         validate: [{ type: validatorTypes.REQUIRED }],
         loadOptions: () => (emsId ? loadStorages(emsId) : Promise.resolve([])),
-        onChange: (value) => setStorageId(value),
         key: `physical_storage_id-${emsId}`,
         condition: {
           when: 'ems_id',
