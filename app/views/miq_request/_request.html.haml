@@ -122,10 +122,10 @@
               :title                 => t)
           %span#buttons_off
             = button_tag(t, :class => "btn btn-primary disabled")
-  - if RequestLog.exists?(:resource_id => @miq_request.id)
+  - if @miq_request.request_logs.any?
     %h3
       = _("Request Logs")
-      = react('RequestsTable', {:initialData => RequestLog.where(:resource_id => @miq_request.id)})
+      = react('RequestsTable', {:initialData => @miq_request.request_logs})
     %br
   - if @miq_request.workflow_class
     = render :partial => "prov_wf", :locals => {:wf => @miq_request.workflow_class.new({:src_vm_id => @miq_request.source_id}, current_user), :show => true}
