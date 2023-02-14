@@ -102,6 +102,7 @@ import ServiceDialogFromForm from '../components/service-dialog-from-form/servic
 import ServiceDetailStdout from '../components/service-detail-stdout';
 import SettingsTimeProfileForm from '../components/settings-time-profile-form';
 import SettingsCategoryForm from '../components/settings-category-form';
+import SettingsZone from '../components/settings-zone';
 import SubnetForm from '../components/subnet-form';
 import EditServiceForm from '../components/edit-service-form';
 import ServiceRequestDefault from '../components/service-request-default';
@@ -260,6 +261,7 @@ ManageIQ.component.addReact('ServersDataChart', ServersDataChart);
 ManageIQ.component.addReact('SettingsTimeProfileForm', SettingsTimeProfileForm);
 ManageIQ.component.addReact('SettingsCategoryForm', SettingsCategoryForm);
 ManageIQ.component.addReact('SettingsCompanyCategories', SettingsCompanyCategories);
+ManageIQ.component.addReact('SettingsZone', SettingsZone);
 ManageIQ.component.addReact('SubnetForm', SubnetForm);
 ManageIQ.component.addReact('TableListView', TableListView);
 ManageIQ.component.addReact('TableListViewWrapper', TableListViewWrapper);
