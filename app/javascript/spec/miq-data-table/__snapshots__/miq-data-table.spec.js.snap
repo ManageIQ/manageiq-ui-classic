@@ -11,9 +11,10 @@ exports[`Data table component should render a data table with cells which have m
     locale="en"
     overflowMenuOnHover={true}
     rows={Array []}
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -61,9 +62,10 @@ exports[`Data table component should render a simple data tabe with pagination a
         },
       ]
     }
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -101,9 +103,10 @@ exports[`Data table component should render a simple data table 1`] = `
     locale="en"
     overflowMenuOnHover={true}
     rows={Array []}
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -160,9 +163,10 @@ exports[`Data table component should render a simple non-clickable data table 1`
         },
       ]
     }
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -359,9 +363,10 @@ exports[`Data table component should render a static-gtl-view data table with ch
         },
       ]
     }
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -1186,9 +1191,10 @@ exports[`Data table component should render a static-gtl-view data table with ch
         },
       ]
     }
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -1702,9 +1708,10 @@ exports[`Data table component should render a static-gtl-view data table with ic
         },
       ]
     }
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />
@@ -1742,9 +1749,10 @@ exports[`Data table component should render strings without double escaping stri
     locale="en"
     overflowMenuOnHover={true}
     rows={Array []}
-    size="normal"
+    size="lg"
     sortDirection="ASC"
     sortRow={[Function]}
+    stickyHeader={false}
     translateWithId={[Function]}
   >
     <Component />

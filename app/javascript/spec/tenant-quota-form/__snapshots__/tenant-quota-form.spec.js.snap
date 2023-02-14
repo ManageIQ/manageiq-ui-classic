@@ -130,7 +130,10 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
           ]
         }
         showPagination={false}
+        size="lg"
         sortable={false}
+        stickyHeader={false}
+        truncateText={true}
       >
         <div
           className="miq-data-table"
@@ -226,21 +229,23 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                 },
               ]
             }
-            size="normal"
+            size="lg"
             sortDirection="ASC"
             sortRow={[Function]}
+            stickyHeader={false}
             translateWithId={[Function]}
           >
             <Table
               isSortable={false}
               overflowMenuOnHover={true}
-              size="normal"
+              size="lg"
+              stickyHeader={false}
             >
               <div
                 className="bx--data-table-content"
               >
                 <table
-                  className="bx--data-table bx--data-table--normal bx--data-table--no-border"
+                  className="bx--data-table bx--data-table--lg bx--data-table--no-border"
                 >
                   <TableHead>
                     <thead>
@@ -458,6 +463,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -651,6 +657,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -783,6 +790,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -985,6 +993,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -1135,6 +1144,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -1328,6 +1338,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -1460,6 +1471,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -1662,6 +1674,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -1921,7 +1934,10 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
           ]
         }
         showPagination={false}
+        size="lg"
         sortable={false}
+        stickyHeader={false}
+        truncateText={true}
       >
         <div
           className="miq-data-table"
@@ -2017,21 +2033,23 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                 },
               ]
             }
-            size="normal"
+            size="lg"
             sortDirection="ASC"
             sortRow={[Function]}
+            stickyHeader={false}
             translateWithId={[Function]}
           >
             <Table
               isSortable={false}
               overflowMenuOnHover={true}
-              size="normal"
+              size="lg"
+              stickyHeader={false}
             >
               <div
                 className="bx--data-table-content"
               >
                 <table
-                  className="bx--data-table bx--data-table--normal bx--data-table--no-border"
+                  className="bx--data-table bx--data-table--lg bx--data-table--no-border"
                 >
                   <TableHead>
                     <thead>
@@ -2249,6 +2267,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -2442,6 +2461,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -2574,6 +2594,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -2747,6 +2768,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -2897,6 +2919,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -3090,6 +3113,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -3222,6 +3246,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""
@@ -3424,6 +3449,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                                 "isSelected": false,
                               }
                             }
+                            truncate={true}
                           >
                             <TableCell
                               className=""

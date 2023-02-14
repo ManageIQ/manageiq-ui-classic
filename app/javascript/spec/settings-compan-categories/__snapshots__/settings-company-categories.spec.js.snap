@@ -395,7 +395,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
       ]
     }
     showPagination={false}
+    size="lg"
     sortable={false}
+    stickyHeader={false}
+    truncateText={true}
   >
     <div
       className="miq-data-table settings-company-categories-list"
@@ -569,21 +572,23 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             },
           ]
         }
-        size="normal"
+        size="lg"
         sortDirection="ASC"
         sortRow={[Function]}
+        stickyHeader={false}
         translateWithId={[Function]}
       >
         <Table
           isSortable={false}
           overflowMenuOnHover={true}
-          size="normal"
+          size="lg"
+          stickyHeader={false}
         >
           <div
             className="bx--data-table-content"
           >
             <table
-              className="bx--data-table bx--data-table--normal bx--data-table--no-border"
+              className="bx--data-table bx--data-table--lg bx--data-table--no-border"
             >
               <TableHead>
                 <thead>
@@ -884,6 +889,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1040,6 +1046,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1196,6 +1203,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1352,6 +1360,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1508,6 +1517,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1664,6 +1674,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -1827,6 +1838,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2035,6 +2047,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2191,6 +2204,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2347,6 +2361,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2503,6 +2518,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2659,6 +2675,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2815,6 +2832,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -2978,6 +2996,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3186,6 +3205,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3342,6 +3362,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3498,6 +3519,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3654,6 +3676,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3810,6 +3833,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -3966,6 +3990,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4129,6 +4154,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4337,6 +4363,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4493,6 +4520,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4649,6 +4677,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4805,6 +4834,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -4961,6 +4991,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -5117,6 +5148,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
@@ -5280,6 +5312,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                             "isSelected": false,
                           }
                         }
+                        truncate={true}
                       >
                         <TableCell
                           className=""
