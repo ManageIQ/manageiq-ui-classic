@@ -1,24 +1,7 @@
 - if @sb[:active_tab] == "settings_list"
   - if @zones
     = render(:partial => "layouts/flash_msg")
-    - if @zones.empty?
-      = render :partial => 'layouts/info_msg',
-               :locals  => {:message => _("No Zones found.")}
-    - else
-      %table.table.table-striped.table-bordered.table-hover
-        %tbody
-          - @zones.sort_by(&:description).each do |z|
-            %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{z.id}');", :title => _("View this Zone's settings")}
-              %td.table-view-pf-select
-                %i.pficon.pficon-zone
-              %td
-                - if my_zone_name == z.name
-                  %b
-                    = h(ui_lookup(:model => z.class.to_s)) + ":"
-                    = h(z.description) + _(" (current)")
-                - else
-                  = h(ui_lookup(:model => z.class.to_s))
-                  \: #{h(z.description)}
+    = react('SettingsZone', {:initialData => settings_zone_list(@zones, my_zone_name)})
   - else
     - tree_node = x_node
     - if tree_node == "xx-msc"
