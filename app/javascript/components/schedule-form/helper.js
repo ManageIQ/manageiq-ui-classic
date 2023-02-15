@@ -1,10 +1,24 @@
+/* eslint-disable camelcase */
 import { API, http } from '../../http_api';
+
+export const scheduleConst = {
+  automation: 'automation_request',
+  all: 'all',
+  once: 'Once',
+  vm: 'vm',
+};
 
 /** Function which returns the data needed for timezone drop-down-list */
 export const timeZoneData = (timezones) => timezones.map((timezone) => ({ value: timezone.name, label: timezone.description }));
 
+/** Function to check if an item is object. if yes, returns true, else returns false */
+export const isObject = (data) => typeof (data) === 'object';
+
 /** Function to check if an item is array. if yes, returns true, else returns false */
 const isArray = (item) => Array.isArray(item);
+
+/** Function to check if schedule action is automation */
+const isAutomation = (actionType) => actionType === scheduleConst.automation;
 
 /** To swap the index of the recieved array when api gives the array ['value', 'label]
 * occurs when we select the sub action options */
@@ -41,7 +55,7 @@ export const getSubActionOptions = (value, filterOptions) => {
 /** Function to load the filter options when the 'Action' drop-down-list selection is changed  */
 export const actionChange = (value, filterOptions, setData, data) => {
   data.initialValues.action_typ = value;
-  if (value === 'automation_request') {
+  if (isAutomation(value)) {
     Promise.all([
       http.post('/ops/automate_schedules_set_vars/new'),
       API.get('/api/zones/?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending'),
@@ -49,7 +63,7 @@ export const actionChange = (value, filterOptions, setData, data) => {
       setData({
         ...data,
         displayFields: {
-          ...data.displayFields, hideFilterType: true, hideTarget: true, hideAutomationFields: false,
+          ...data.displayFields, filterType: true, target: true, automationFields: false,
         },
         options: {
           ...data.options,
@@ -60,11 +74,11 @@ export const actionChange = (value, filterOptions, setData, data) => {
       });
     });
   } else {
-    data.initialValues.filter_typ = 'all';
+    data.initialValues.filter_typ = scheduleConst.all;
     setData({
       ...data,
       displayFields: {
-        ...data.displayFields, hideFilterType: false, hideAutomationFields: true, hideObjectItem: true, hideTarget: true,
+        ...data.displayFields, filterType: false, automationFields: true, objectItem: true, target: true,
       },
       options: {
         ...data.options,
@@ -76,12 +90,12 @@ export const actionChange = (value, filterOptions, setData, data) => {
 
 /** Function to load the object items when the 'Object Type' drop-down-list selection is changed  */
 export const objectTypeChange = (value, setData, data) => {
-  if (value && data.displayFields.hideAutomationFields === false) {
+  if (value && data.displayFields.automationFields === false) {
     http.post(`/ops/fetch_target_ids/?target_class=${value}`).then(({ targets }) => {
       setData({
         ...data,
         displayFields: {
-          ...data.displayFields, hideObjectItem: false,
+          ...data.displayFields, objectItem: false,
         },
         options: {
           ...data.options,
@@ -92,16 +106,16 @@ export const objectTypeChange = (value, setData, data) => {
   }
 };
 
-/** Function to load the target options when the 'Filter' drop-down-list selection is changed  */
+/** Function to load the target options when the 'Filter' drop-down list selection is changed  */
 export const subActionChange = (value, setData, data) => {
   data.initialValues.filter_type = value;
-  if (value !== 'all' && data.displayFields.hideFilterType === false) {
+  if (value !== scheduleConst.all && data.displayFields.filterType === false) {
     http.post('/ops/schedule_form_filter_type_field_changed/new',
       { filter_type: value, action_type: data.initialValues.action_typ }).then((response) => {
       setData({
         ...data,
         displayFields: {
-          ...data.displayFields, hideTarget: false,
+          ...data.displayFields, target: false,
         },
         options: {
           ...data.options,
@@ -113,7 +127,7 @@ export const subActionChange = (value, setData, data) => {
     setData({
       ...data,
       displayFields: {
-        ...data.displayFields, hideTarget: true,
+        ...data.displayFields, target: true,
       },
     });
   }
@@ -156,9 +170,9 @@ export const runChange = (value) => timerOptions(runTypes[value]);
 
 /** Function to load the object items when the 'Object Type' drop-down-list selection is changed  */
 export const runOptionChange = (value, setData, data) => {
-  data.displayFields.hideEveryTime = false;
-  if (value === 'Once') {
-    data.displayFields.hideEveryTime = true;
+  data.displayFields.everyTime = false;
+  if (value === scheduleConst.once) {
+    data.displayFields.everyTime = true;
   }
 
   setData({
@@ -207,8 +221,51 @@ export const restructureScheduleResponse = (response) => {
       restructuredResponse[`value_${index + 1}`] = '';
     });
   }
-
   return { ...response, ...restructuredResponse };
+};
+
+/** Set edit form select box options from schedule response */
+const restructureInitialOptions = (scheduleResponse, filterOptions, timezones, resources) => {
+  const {
+    instance_names, target_classes, targets, action_type, filtered_item_list, filter_value, schedule_timer_type,
+  } = scheduleResponse;
+  let options = {};
+
+  if (isAutomation(action_type)) {
+    options = {
+      request: restructureOptions(instance_names),
+      objectType: restructureOptions(target_classes),
+      objectItem: restructureOptions(targets),
+    };
+  } else {
+    options = { subAction: getSubActionOptions(action_type, filterOptions) };
+
+    if (filter_value) options.target = restructureOptions(filtered_item_list, true);
+  }
+
+  if (schedule_timer_type !== scheduleConst.once) options.everyTime = runChange(schedule_timer_type);
+
+  return {
+    ...options,
+    timezone: timeZoneData(timezones),
+    zone: resources.map((item) => ({ label: item.description, value: item.id })),
+  };
+};
+
+/** Set edit form display values based on schedule response */
+const restructureInitialDisplayFields = ({ action_type }) => {
+  let displayFields = {};
+  const automation = isAutomation(action_type);
+  if (automation) {
+    displayFields = {
+      objectItem: false,
+      filterType: true,
+    };
+  }
+  return {
+    ...displayFields,
+    automationFields: !automation,
+  };
 };
 
 /** Function to set the values in edit form */
@@ -218,32 +275,28 @@ export const setInitialData = (recordId, data, setData, filterOptions) => {
     API.get('/api'),
     API.get('/api/zones/?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending'),
   ]).then(([scheduleResponse, { timezones }, { resources }]) => {
-    if (scheduleResponse.action_type === 'automation_request') {
-      data.options.request = restructureOptions(scheduleResponse.instance_names);
-      data.options.objectType = restructureOptions(scheduleResponse.target_classes);
-      data.options.objectItem = restructureOptions(scheduleResponse.targets);
-      data.displayFields.hideObjectItem = false;
-      data.displayFields.hideFilterType = true;
-    } else {
-      data.options.subAction = getSubActionOptions(scheduleResponse.action_type, filterOptions);
-      if (scheduleResponse.filter_value) {
-        data.options.target = restructureOptions(scheduleResponse.filtered_item_list, true);
-      }
-    }
-    if (scheduleResponse.schedule_timer_type !== 'Once') {
-      data.options.everyTime = runChange(scheduleResponse.schedule_timer_type);
-    }
-    data.timerInit = scheduleResponse.schedule_timer_value;
     setData({
       ...data,
+      timerInit: scheduleResponse.schedule_timer_value,
       initialValues: { ...data.initialValues, ...restructureScheduleResponse(scheduleResponse) },
-      displayFields: { ...data.displayFields, hideAutomationFields: scheduleResponse.action_type !== 'automation_request' },
-      options: {
-        ...data.options,
-        timezone: timeZoneData(timezones),
-        zone: resources.map((item) => ({ label: item.description, value: item.id })),
-      },
+      options: { ...data.options, ...restructureInitialOptions(scheduleResponse, filterOptions, timezones, resources) },
+      displayFields: { ...data.displayFields, ...restructureInitialDisplayFields(scheduleResponse) },
       isLoading: false,
     });
   });
+};
+
+/** Function to restructure the formdata for save submission */
+export const getSubmitData = (formData) => {
+  let ui_attrs = [];
+  if (isAutomation(formData.action_typ)) {
+    ui_attrs = [...Array(5)].map((_item, i) => ([formData[`attribute_${i + 1}`], formData[`value_${i + 1}`]]));
+  }
+  return {
+    ...formData,
+    start_date: isObject(formData.start_date[0]) ? formData.start_date[0] : new Date(formData.start_date),
+    start_hour: isObject(formData.start_hour) ? formData.start_hour.getHours() : formData.start_hour.split(':')[0],
+    start_min: isObject(formData.start_hour) ? formData.start_hour.getMinutes() : formData.start_hour.split(':')[1],
+    ui_attrs,
+  };
 };

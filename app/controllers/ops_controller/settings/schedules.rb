@@ -710,7 +710,7 @@ module OpsController::Settings::Schedules
                                   (@storage_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     @filter_options = [
-      {:keys => [:vm], :option => @vm_options_for_select},
+      {:keys => [:vm, :vm_check_compliance], :option => @vm_options_for_select},
       {:keys => [:miq_template], :option => @template_options_for_select},
       {:keys => [:host, :host_check_compliance], :option => @host_options_for_select},
       {:keys => [:container_image, :container_image_check_compliance], :option => @container_image_options_for_select},

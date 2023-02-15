@@ -47,7 +47,7 @@ export const filterField = (setData, data) => ({
   name: 'filter_typ',
   label: __('Filter'),
   onChange: (value) => subActionChange(value, setData, data),
-  hideField: data.displayFields.hideFilterType,
+  hideField: data.displayFields.filterType,
   options: data.options.subAction,
   isRequired: true,
 });
@@ -57,12 +57,12 @@ export const targetField = (data) => ({
   id: 'filter_value',
   name: 'filter_value',
   label: __('Filter Item'),
-  hideField: data.displayFields.hideTarget,
+  hideField: data.displayFields.target,
   options: data.options.target,
   placeholder: __('<Choose>'),
   includeEmpty: true,
   isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideTarget }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.target }],
 });
 
 export const zoneField = (data) => ({
@@ -72,10 +72,10 @@ export const zoneField = (data) => ({
   label: __('Zone'),
   placeholder: __('<Choose>'),
   includeEmpty: true,
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
   options: data.options.zone,
   isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideAutomationFields }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.automationFields }],
 });
 
 export const plainField = (name, text, data) => ({
@@ -83,7 +83,7 @@ export const plainField = (name, text, data) => ({
   name,
   label: text,
   element: 'h3',
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
 });
 
 export const systemField = (data) => ({
@@ -91,12 +91,12 @@ export const systemField = (data) => ({
   id: 'system',
   name: 'instance_name',
   label: __('System/Process'),
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
   options: data.options.request,
   placeholder: __('<Choose>'),
   includeEmpty: true,
   isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideAutomationFields }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.automationFields }],
 });
 
 export const objectMessageField = (data) => ({
@@ -104,9 +104,9 @@ export const objectMessageField = (data) => ({
   id: 'message',
   name: 'object_message',
   label: __('Message'),
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
   isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideAutomationFields }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.automationFields }],
 });
 
 export const objectRequestField = (data) => ({
@@ -114,9 +114,9 @@ export const objectRequestField = (data) => ({
   id: 'request',
   name: 'object_request',
   label: __('Request'),
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
   isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideAutomationFields }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.automationFields }],
 });
 
 export const objectTypeField = (setData, data) => ({
@@ -124,7 +124,7 @@ export const objectTypeField = (setData, data) => ({
   id: 'object_type',
   name: 'target_class',
   onChange: (value) => objectTypeChange(value, setData, data),
-  hideField: data.displayFields.hideAutomationFields,
+  hideField: data.displayFields.automationFields,
   placeholder: __('<Choose>'),
   includeEmpty: true,
   options: data.options.objectType,
@@ -133,14 +133,14 @@ export const objectTypeField = (setData, data) => ({
   isSearchable: true,
   isClearable: true,
   simpleValue: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideAutomationFields }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.automationFields }],
 });
 
 export const objectItemField = (data) => ({
   component: componentTypes.SELECT,
   id: 'object_item',
   name: 'target_id',
-  hideField: data.displayFields.hideObjectItem,
+  hideField: data.displayFields.objectItem,
   options: data.options.objectItem,
   placeholder: __('<Choose>'),
   includeEmpty: true,
@@ -149,7 +149,7 @@ export const objectItemField = (data) => ({
   isSearchable: true,
   isClearable: true,
   simpleValue: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.hideObjectItem }],
+  validate: [{ type: 'customRequired', hideField: data.displayFields.objectItem }],
 });
 
 const attributeValueField = (count) => ({
@@ -221,7 +221,7 @@ export const timerValueField = (data) => ({
   id: 'timer_value',
   name: 'timer_value',
   label: __('Every'),
-  hideField: data.displayFields.hideEveryTime,
+  hideField: data.displayFields.everyTime,
   options: data.options.everyTime,
   isRequired: true,
   initializeOnMount: true,
@@ -261,25 +261,25 @@ export const startTimeField = () => ({
   validate: [{ type: validatorTypes.REQUIRED }],
 });
 
-export const scheduleFormFields = (actionOptions, filterOptions, setData, data) => ({
-  name: () => nameField(),
-  description: () => descriptionField(),
-  active: () => activeField(),
-  action: () => actionField(actionOptions, filterOptions, setData, data),
-  filter: () => filterField(setData, data),
-  target: () => targetField(data),
-  zone: () => zoneField(data),
-  objectDetails: () => plainField('object_details', __('Object Details'), data),
-  system: () => systemField(data),
-  objectMessage: () => objectMessageField(data),
-  objectRequest: () => objectRequestField(data),
-  objectAttributes: () => plainField('object_attributes', __('Object'), data),
-  objectType: () => objectTypeField(setData, data),
-  objectField: () => objectItemField(data),
-  attributeValue: () => attributeValueFields(data, attributeValueLimit),
-  run: () => runField(setData, data),
-  timerValue: () => timerValueField(data),
-  timezone: () => timezoneField(data),
-  startDate: () => startDateField(),
-  startTime: () => startTimeField(data),
-});
+export const scheduleFormFields = (actionOptions, filterOptions, setData, data) => ([
+  nameField(),
+  descriptionField(),
+  activeField(),
+  actionField(actionOptions, filterOptions, setData, data),
+  filterField(setData, data),
+  targetField(data),
+  zoneField(data),
+  plainField('object_details', __('Object Details'), data),
+  systemField(data),
+  objectMessageField(data),
+  objectRequestField(data),
+  plainField('object_attributes', __('Object'), data),
+  objectTypeField(setData, data),
+  objectItemField(data),
+  attributeValueFields(data, attributeValueLimit),
+  runField(setData, data),
+  timerValueField(data),
+  timezoneField(data),
+  startDateField(),
+  startTimeField(data),
+]);

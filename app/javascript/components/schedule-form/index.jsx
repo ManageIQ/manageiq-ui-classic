@@ -6,15 +6,15 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import { createSchema } from './schedule-form.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { timeZoneData, setInitialData, getSubActionOptions } from './helper';
+import {
+  timeZoneData, setInitialData, getSubActionOptions, getSubmitData, scheduleConst,
+} from './helper';
 
 const ScheduleForm = ({
   recordId, actionOptions, filterOptions,
 }) => {
-  const newRecord = recordId === 'new';
-
   const [data, setData] = useState({
-    initialValues: { filter_type: 'all', action_typ: 'vm' },
+    initialValues: { filter_type: scheduleConst.all, action_typ: scheduleConst.vm },
     isLoading: true,
     options: {
       timezone: [],
@@ -27,23 +27,25 @@ const ScheduleForm = ({
       everyTime: [],
     },
     displayFields: {
-      hideTarget: true,
-      hideFilterType: false,
-      hideAutomationFields: true,
-      hideObjectItem: true,
-      hideEveryTime: true,
+      target: true,
+      filterType: false,
+      automationFields: true,
+      objectItem: true,
+      everyTime: true,
     },
     timerInit: 1,
   });
 
   useEffect(() => {
-    if (newRecord) {
+    if (recordId === 'new') {
       API.get('/api').then(({ timezones }) => {
         setData({
           ...data,
           isLoading: false,
           options: {
-            ...data.options, timezone: timeZoneData(timezones), subAction: getSubActionOptions('vm', filterOptions),
+            ...data.options,
+            timezone: timeZoneData(timezones),
+            subAction: getSubActionOptions(scheduleConst.vm, filterOptions),
           },
         });
       });
@@ -53,20 +55,9 @@ const ScheduleForm = ({
   }, [recordId]);
 
   const onSubmit = (formData) => {
-    let ui_attrs = [];
-    if (formData.action_typ === 'automation_request') {
-      ui_attrs = [...Array(5)].map((_item, i) => ([formData[`attribute_${i + 1}`], formData[`value_${i + 1}`]]));
-    }
-    const values = {
-      ...formData,
-      start_date: typeof formData.start_date[0] === 'object' ? formData.start_date[0] : new Date(formData.start_date),
-      start_hour: typeof (formData.start_hour) === 'object' ? formData.start_hour.getHours() : formData.start_hour.split(':')[0],
-      start_min: typeof (formData.start_hour) === 'object' ? formData.start_hour.getMinutes() : formData.start_hour.split(':')[1],
-      ui_attrs,
-    };
     miqSparkleOn();
     const URL = `/ops/schedule_edit/${recordId}?button=save`;
-    miqAjaxButton(URL, values);
+    miqAjaxButton(URL, getSubmitData(formData));
   };
 
   const onCancel = (data) => {
