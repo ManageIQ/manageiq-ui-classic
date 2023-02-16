@@ -14,7 +14,9 @@ module Menu
           automation_menu_section,
 
           control_menu_section,
-          monitor_menu_section,
+
+          # TODO: Remove all monitor related code
+          # monitor_menu_section,
 
           settings_menu_section,
           logout_item,
