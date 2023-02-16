@@ -985,18 +985,6 @@ Rails.application.routes.draw do
       )
     },
 
-    :alerts_overview      => {
-      :get => %w(
-        show
-      )
-    },
-
-    :alerts_list      => {
-      :get => %w(
-        show
-        class_icons
-      )
-    },
 
     :dashboard                => {
       :get  => %w(
