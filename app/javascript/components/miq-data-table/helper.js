@@ -7,6 +7,7 @@ export const CellElements = {
   text: 'text',
   textinput: 'is_textinput',
   toggle: 'is_toggle',
+  link: 'is_link',
 };
 
 /** Click events in a cell.  */
@@ -40,6 +41,7 @@ export const hasImage = (keys, data) => keys.includes(CellElements.image) && dat
 export const hasButton = (keys) => keys.includes(CellElements.button);
 export const hasTextInput = (keys) => keys.includes(CellElements.textinput);
 export const hasToggle = (keys) => keys.includes(CellElements.toggle);
+export const hasLink = (keys) => keys.includes(CellElements.link);
 export const hasText = (data) => Object.keys(data).includes(CellElements.text);
 const hasValue = (data) => Object.keys(data).includes('value');
 

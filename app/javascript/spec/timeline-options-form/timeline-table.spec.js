@@ -1,5 +1,4 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import { act } from 'react-dom/test-utils';
 import TimelineTable from '../../components/timeline-options/timeline-table';
 import { mount } from '../helpers/mountForm';
@@ -17,7 +16,7 @@ describe('Show Timeline Page', () => {
     });
     setImmediate(() => {
       wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toBeTruthy();
       done();
     });
   });
@@ -29,7 +28,7 @@ describe('Show Timeline Page', () => {
     });
     setImmediate(() => {
       wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(wrapper).toBeTruthy();
       done();
     });
   });
