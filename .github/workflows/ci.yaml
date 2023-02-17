@@ -22,10 +22,6 @@ jobs:
         - spec:javascript
         - spec:jest
         - spec:routes
-        include:
-        - ruby-version: '2.7'
-          node-version: 14
-          test-suite: spec
     services:
       postgres:
         image: manageiq/postgresql:10
