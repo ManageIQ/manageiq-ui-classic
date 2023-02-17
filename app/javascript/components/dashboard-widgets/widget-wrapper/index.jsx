@@ -59,6 +59,26 @@ const WidgetWrapper = ({
     }
   });
 
+  /** Function to assign style to the OverflowMenu to display the list on the top of its menu button.
+   * Note: The open={true} property for the OverflowMenu is not working as expected. Therefore,
+   * we are unable to set the direction={"top"|"bottom"}
+  */
+  const overflowMenuDirection = (widgetId, widgetButtons) => {
+    const widgetMenu = document.getElementById(`${widgetId}-menu`);
+    if (widgetMenu) {
+      const rowHeight = 30; // Height of a row item in the OverflowMenu list.
+      const dimensions = widgetMenu.getBoundingClientRect();
+      const overflowMenuHeight = rowHeight * JSON.parse(widgetButtons).length;
+      const visibleMenuHeight = dimensions.bottom + overflowMenuHeight;
+      if (visibleMenuHeight > window.innerHeight) {
+        const overflowMenu = document.getElementsByClassName('bx--overflow-menu-options--open')[0];
+        if (overflowMenu) {
+          overflowMenu.style.top = `${dimensions.top - overflowMenuHeight}px`;
+        }
+      }
+    }
+  };
+
   return (
     <div className="card-pf card-pf-view">
       <div className="card-pf-body">
@@ -67,6 +87,7 @@ const WidgetWrapper = ({
             className="widget-overflow-menu"
             id={`${widgetId}-menu`}
             flipped
+            onOpen={() => overflowMenuDirection(widgetId, widgetButtons)}
           >
             {getOverflowButtons(widgetButtons, widgetId, widgetType, widgetTitle, setState, widgetModel, widgetLastRun, widgetNextRun)}
           </OverflowMenu>
