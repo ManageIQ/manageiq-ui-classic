@@ -120,10 +120,11 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             component: 'enhanced-select',
             name: 'storage_resource_id',
             id: 'storage_resource_id',
-            label: __('Storage Resource (if no option appears then no storage resource with selected capabilities was found)'),
+            label: __('Storage Resources (if no option appears then no storage resource with selected capabilities was found)'),
             condition: { when: 'mode', is: 'Advanced' },
             onInputChange: () => null,
             isRequired: true,
+            helperText: __('Select storage resources to attach to the new service. The new Volume(s) will be created on these resources.'),
             validate: [
               { type: validatorTypes.REQUIRED },
               { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },

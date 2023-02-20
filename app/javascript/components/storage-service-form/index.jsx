@@ -5,6 +5,8 @@ import { Loading } from 'carbon-components-react';
 import createSchema from './storage-service-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import EditingContext from '../physical-storage-form/editing-context';
+import mapper from '../../forms/mappers/componentMapper';
+import enhancedSelect from '../../helpers/enhanced-select';
 
 const StorageServiceForm = ({ recordId, storageManagerId }) => {
   const [state, setState] = useState({});
@@ -57,12 +59,18 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
 
+  const componentMapper = {
+    ...mapper,
+    'enhanced-select': enhancedSelect,
+  };
+
   return (
     <div>
       { !isLoading && (
         <EditingContext.Provider value={{ storageManagerId, setState }}>
           <MiqFormRenderer
             schema={createSchema(!!recordId, !!storageManagerId, initialValues, state, setState)}
+            componentMapper={componentMapper}
             initialValues={initialValues}
             canReset={!!recordId}
             onSubmit={onSubmit}
