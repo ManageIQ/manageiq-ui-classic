@@ -143,67 +143,75 @@ module OpsController::Settings::Tags
     end
   end
 
-  # AJAX driven routine to add/update a classification entry
-  def ce_accept
-    assert_privileges("region_edit")
-
-    ce_get_form_vars
-    if session[:entry] == "new"
-      entry = @cat.entries.create(:name        => params["entry"]["name"],
-                                  :description => params["entry"]["description"])
-    else
-      entry = @cat.entries.find(session[:entry].id)
-      if entry.name == params["entry"]["name"] && entry.description == params["entry"]["description"]
-        no_changes = true
-      else
-        entry.name        = params["entry"]["name"]
-        entry.description = params["entry"]["description"]
-        entry.save
+  # Method to return all categories and their information required for the list.
+  def all_categories
+    categories = Classification.categories.sort_by(&:description)
+    render :json => {
+      :categories => categories.map do |category|
+        {:id => category.id, :name => category.name, :description => category.description}
       end
+    }
+  end
+
+  # Method to return a category and their entries.
+  def category_information
+    category = Classification.find_by(:id => params[:id])
+    render :json => {
+      :category => category,
+      :entries  => category.entries.sort_by(&:name).map do |entry|
+        {:id => entry.id, :name => entry.name, :description => entry.description}
+      end
+    }
+  end
+
+  # Method to return an entry from a selected category.
+  def category_entries
+    category = Classification.find_by(:id => params[:id])
+    entries = category.entries
+    entry = entries.find_by(:id => params[:entry_id])
+    render :json => {:id => entry.id, :name => entry.name, :description => entry.description}
+  end
+
+  # Method which gets executed on category entry add/edit form submission.
+  def ce_accept
+    category = Classification.find_by(:id => params[:id])
+    case params[:button]
+    when "add"
+      entry = category.entries.create(:name => params[:name], :description => params[:description])
+      response = {:type => 'success', :entry => entry, :category_id => params[:id]}
+    when "save"
+      entry = category.entries.find(params[:entry_id])
+      session[:entry] = entry
+      entry.name        = params[:name]
+      entry.description = params[:description]
+      entry.save
+      response = {:type => 'success', :entry => entry, :category_id => params[:id]}
     end
     unless entry.errors.empty?
-      entry.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
-      javascript_flash(:focus => 'entry_name')
-      return
+      response[:type] = 'danger'
+      response[:message] = error_message(entry.errors)
     end
-    if session[:entry] == "new"
-      AuditEvent.success(ce_created_audit(entry))
+    render :json => response
+  end
+
+  # Method to delete a classification entry.
+  def ce_delete
+    category = Classification.find_by(:id => params[:id])
+    entry = category.entries.find_by(:id => params[:entry_id])
+    if entry.destroy
+      render :json => {:type => 'success', :entry => entry, :category_id => params[:id]}
     else
-      AuditEvent.success(ce_saved_audit(entry)) unless no_changes
-    end
-    ce_build_screen # Build the Classification Edit screen
-    render :update do |page|
-      page << javascript_prologue
-      page.replace(:tab_div, :partial => "settings_co_tags_tab")
-      unless no_changes
-        page << jquery_pulsate_element("#{entry.id}_tr")
-      end
+      render :json => {:type => 'danger', :entry => entry, :message => error_message(entry.errors), :category_id => params[:id]}
     end
   end
 
-  # AJAX driven routine to delete a classification entry
-  def ce_delete
-    assert_privileges("region_edit")
-
-    ce_get_form_vars
-    entry = @cat.entries.find(params[:id])
-    audit = {:event        => "classification_entry_delete",
-             :message      => _("Category %{description} [%{name}] record deleted") % {:description => @cat.description,
-                                                                                       :name        => entry.name},
-             :target_id    => entry.id,
-             :target_class => "Classification",
-             :userid       => session[:userid]}
-    if entry.destroy
-      AuditEvent.success(audit)
-      ce_build_screen # Build the Classification Edit screen
-      render :update do |page|
-        page << javascript_prologue
-        page.replace(:tab_div, :partial => "settings_co_tags_tab")
-      end
-    else
-      entry.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
-      javascript_flash(:focus => 'entry_name')
+  def error_message(errors)
+    message = ""
+    errors.each do |error|
+      msg = error.type || error.message
+      message += "#{error.attribute.to_s.capitalize} #{msg}"
     end
+    message
   end
 
   def ce_get_form_vars

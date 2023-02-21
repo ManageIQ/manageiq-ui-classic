@@ -206,6 +206,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
         className="label_header object_item"
       >
         <MiqStructuredListInputs
+          action={[Function]}
           value={
             Object {
               "input": "text_area",

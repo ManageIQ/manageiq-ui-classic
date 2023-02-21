@@ -2392,6 +2392,9 @@ Rails.application.routes.draw do
 
     :ops                      => {
       :get  => %w(
+        all_categories
+        category_entries
+        category_information
         dialog_load
         explorer
         fetch_audit_log
