@@ -201,7 +201,7 @@ describe OpsController do
     expect(response).to have_http_status(204)
 
     audit_event = AuditEvent.where(:target_id => schedule.id).first
-    expect(audit_event.attributes['message']).to include("description changed to new_description")
+    expect(audit_event.attributes['message']).to include("description:[old_schedule_desc] to [new_description]")
   end
 
   describe "#settings_update" do
@@ -213,7 +213,7 @@ describe OpsController do
                                   :name        => "not the default",
                                   :description => "Not the Default Zone")
 
-        current = double("current", :[] => {:server => {:zone => "default"}}).as_null_object
+        current = Settings.to_hash.deep_merge(:server => {:zone => "default"})
         new = Settings.to_hash.deep_merge(:server => {:zone => zone.name})
 
         edit = {:new => new, :current => current}

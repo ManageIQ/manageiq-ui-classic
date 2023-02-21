@@ -1174,7 +1174,7 @@ class MiqAeClassController < ApplicationController
       javascript_flash(:spinner_off => true)
     else
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
-      AuditEvent.success(build_saved_audit_hash_angular(old_namespace_attributes, ae_ns, false))
+      AuditEvent.success(build_saved_audit(ae_ns, :new => ae_ns.attributes.clone, :current => old_namespace_attributes))
       @sb[:action] = session[:edit] = nil # clean out the saved info
       @in_a_form = false
       replace_right_cell(:replace_trees => [:ae])
@@ -1193,6 +1193,8 @@ class MiqAeClassController < ApplicationController
 
   def add_update_method_add
     method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
+    old_method_attributes = method.attributes.clone
+
     method.name = params["name"]
     method.display_name = params["display_name"]
     method.location = params["location"]
@@ -1211,9 +1213,12 @@ class MiqAeClassController < ApplicationController
       add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
-      old_method_attributes = method.attributes.clone
       add_flash(_('Automate Method "%{name}" was saved') % {:name => method.name})
-      AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
+      if params[:button] == "add"
+        AuditEvent.success(build_created_audit(method, :new => method.attributes.clone))
+      else
+        AuditEvent.success(build_saved_audit(method, :new => method.attributes.clone, :current => old_method_attributes))
+      end
       replace_right_cell(:replace_trees => [:ae])
       nil
     end

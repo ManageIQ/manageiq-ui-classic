@@ -421,7 +421,7 @@ module OpsController::Settings::Common
         else
           MiqServer.my_server.add_settings_for_resource(@update)
         end
-        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
+        AuditEvent.success(build_config_audit(@edit))
         if @sb[:active_tab] == "settings_server"
           add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
                       {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
