@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -81,15 +82,28 @@ const MiqTableCell = ({
     return renderIcon(className, style, showText);
   };
 
+  /** Function to execute a button click event
+   * 'callbackAction' is added to row so that, the event can be executed within the parent component. eg: SettingsCompanyTags
+   * the onClick property executes a javascript function. Eg: "miqOrderService(#{record.id}); in catalogs_helper.rb"
+   * ToDo: 'onClick' can be removed and make use of the 'callbackAction', so that we can avoid the 'eval' feature.
+  */
+  const cellButtonEvent = (item, event) => {
+    if (item.callback) {
+      onCellClick({ ...row, callbackAction: item.callback }, CellAction.buttonCallback, event);
+    } else {
+      // eslint-disable-next-line no-unused-expressions
+      (item.onclick ? eval(item.onclick) : undefined);
+    }
+  };
+
   /** Function to render a Button inside cell. */
   /** Button was used only for 'Services / Catalogs' & the miqOrderService() was directely called on its click event. */
-  /* eslint-disable no-eval */
   const cellButton = (item) => (
     <div className={cellClass}>
       <Button
-        onClick={() => (item.onclick ? eval(item.onclick) : undefined)}
+        onClick={(e) => cellButtonEvent(item,e)}
         disabled={item.disabled}
-        onKeyPress={() => (item.onclick ? eval(item.onclick) : undefined)}
+        onKeyPress={(e) => cellButtonEvent(item,e)}
         tabIndex={0}
         title={item.title ? item.title : truncateText}
         kind={item.kind ? item.kind : 'primary'}

@@ -229,3 +229,11 @@ table.miq_preview {
     }
   }
 }
+
+.settings-company-tags-list, .settings-company-categories-list {
+  margin-bottom: 20px;
+
+  table thead tr th:last-child{
+    width: 135px;
+  }
+}

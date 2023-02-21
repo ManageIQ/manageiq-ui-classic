@@ -51,6 +51,7 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
         className="label_header object_item"
       >
         <MiqStructuredListInputs
+          action={[Function]}
           value={
             Object {
               "input": "text_area",

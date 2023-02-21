@@ -107,7 +107,7 @@ const MiqStructuredList = ({
   );
 
   /** Function to render textarea / checkbox / react components */
-  const renderInputContent = ({ value }) => <MiqStructuredListInputs value={value} />;
+  const renderInputContent = ({ value }) => <MiqStructuredListInputs value={value} action={(data) => onClick(data)} />;
 
   const renderMultiContents = (row) => {
     const content = renderContent(row);
