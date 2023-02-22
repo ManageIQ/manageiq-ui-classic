@@ -144,6 +144,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 import PhysicalStorageForm from '../components/physical-storage-form';
 import SearchBar from '../components/search-bar';
 import SettingsCompanyCategories from '../components/settings-company-categories';
+import SettingsLabelTagMapping from '../components/settings-label-tag-mapping';
 import VisualSettingsForm from '../components/visual-settings-form';
 import HostInitiatorForm from '../components/host-initiator-form';
 import HostInitiatorGroupForm from '../components/host-initiator-group-form';
@@ -268,6 +269,7 @@ ManageIQ.component.addReact('SettingsCompanyCategories', SettingsCompanyCategori
 ManageIQ.component.addReact('SettingsZone', SettingsZone);
 ManageIQ.component.addReact('SettingsCompanyTags', SettingsCompanyTags);
 ManageIQ.component.addReact('SettingsCompanyTagsEntryForm', SettingsCompanyTagsEntryForm);
+ManageIQ.component.addReact('SettingsLabelTagMapping', SettingsLabelTagMapping);
 ManageIQ.component.addReact('SubnetForm', SubnetForm);
 ManageIQ.component.addReact('TableListView', TableListView);
 ManageIQ.component.addReact('TableListViewWrapper', TableListViewWrapper);

@@ -29,3 +29,13 @@
     display: flex;
   }
 }
+.miq-custom-tab-content-notification {
+  display: flex;
+  flex-grow: 1;
+
+  .alert {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+}
