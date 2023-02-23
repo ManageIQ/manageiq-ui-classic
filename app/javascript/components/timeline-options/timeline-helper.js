@@ -40,10 +40,16 @@ const smartAndOrStatements = (group, array) => {
 };
 
 /** Function to build the URL to get all events that fall under the user selected parameters. */
-export const buildUrl = (values) => {
+export const buildUrl = (values, pageFilters) => {
   // TODO: Different timeline show different data, ensure all necesary data is pulled
   let url = `/api/event_streams?limit=5000&offset=0&expand=resources`;
-  url += `&attributes=group,group_level,group_name,id,event_type,ems_id,type,timestamp,created_on,host,source`;
+  url += `&attributes=group,group_level,group_name,id,event_type,ems_id,type,timestamp,created_on,host,source,message`;
+  url += `,vm,ext_management_system`; // TODO heavy stuff to call in, but needed to be displayed in table
+
+  // Page determined values
+  Object.entries(pageFilters[values.type]).forEach(([key, value]) => {
+    url += `&filter[]=${key}=${value}`;
+  });
 
   // User set values
   url += `&filter[]=type=${values.type}`;
@@ -96,14 +102,27 @@ export const buildDataTableObject = (pointChoice) => {
       event_type: event.event_type,
       source: event.source,
       group_level: event.group_level,
-      provider: '', // TODO hyperlink
-      provider_username: '',
-      message: '',
-      host: (event.host === null) ? '' : event.host.name, // TODO hyperlink
-      source_vm: '', // TODO hyperlink
-      source_vm_location: '',
-      timestamp: event.timestamp, // is Zulu time, should convert to user's timezone
+      timestamp: event.timestamp,
+      provider: {
+        is_link: true,
+        href: (event.ext_management_system === null) ? '' : `/ems_infra/show/${event.ext_management_system.id}`,
+        label: (event.ext_management_system === null) ? '' : event.ext_management_system.name,
+      },
+      // provider_username: '', // unclear where to get this information from
+      message: (event.message === null) ? '' : event.message,
+      host: {
+        is_link: true,
+        href: (event.host === null) ? '' : `/host/show/${event.host.id}`,
+        label: (event.host === null) ? '' : event.host.name,
+      },
+      source_vm: {
+        is_link: true,
+        href: (event.vm === null) ? '' : `/vm_infra/show/${event.vm.id}`,
+        label: (event.vm === null) ? '' : event.vm.name,
+      },
+      source_vm_location: (event.vm === null) ? '' : event.vm.location,
       id: event.id,
+      // cluster: '', // unclear how to get
     };
     tableData.push(eventObj);
   });

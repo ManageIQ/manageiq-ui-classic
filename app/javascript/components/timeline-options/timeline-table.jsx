@@ -18,17 +18,13 @@ const TimelineTable = ({ data }) => {
       key: 'group_level',
       header: __('Group Level'),
     },
-    // {
-    //   key: 'provider',
-    //   header: __('Provider'),
-    // },
+    {
+      key: 'provider',
+      header: __('Provider'),
+    },
     // {
     //   key: 'provider_username',
     //   header: __('Provider User Name'),
-    // },
-    // {
-    //   key: 'message',
-    //   header: __('Message'),
     // },
     {
       key: 'host',
@@ -43,8 +39,8 @@ const TimelineTable = ({ data }) => {
     //   header: __('Source VM Location'),
     // },
     {
-      key: 'timestamp',
-      header: __('Date Time'),
+      key: 'message',
+      header: __('Message'),
     },
   ];
   /**
@@ -55,11 +51,19 @@ const TimelineTable = ({ data }) => {
    * for the VM & Templates page
    */
 
+  const TimestampLabel = (
+    <label className="bx--label">
+      {sprintf(__('This is a group of events that happened on %s.'), Date(data[0].timestamp))}
+    </label>
+  );
+
   return (
     <div className="timeline-data-table">
+      {TimestampLabel}
       <MiqDataTable
         rows={data}
         headers={headers}
+        truncateText={false}
       />
     </div>
 
@@ -67,11 +71,19 @@ const TimelineTable = ({ data }) => {
 };
 
 TimelineTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any),
+  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
 };
 
 TimelineTable.defaultProps = {
-  data: [],
+  data: [{
+    timestamp: '',
+    event_type: '',
+    source: '',
+    group_level: '',
+    provider: '',
+    host: '',
+    message: '',
+  }],
 };
 
 export default TimelineTable;
