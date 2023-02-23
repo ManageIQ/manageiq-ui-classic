@@ -15,7 +15,7 @@ module StorageServiceHelper::TextualSummary
 
   def textual_group_capabilities
     capabilities = @record.capabilities.map do |c|
-      [c["name"], c["value"]]
+      [c.first, c.last]
     end
 
     TextualMultilabel.new(
@@ -43,10 +43,9 @@ module StorageServiceHelper::TextualSummary
       [textual_link(v), number_to_human_size(v.size), v.health_state, textual_link(v.storage_resource)]
     end
 
-    TextualMultilabel.new(
-      _("Volumes"),
-      :labels => [_("Volume"), _("Size"), _("Health State"), _("Storage Resource")],
-      :values => volumes
+    TextualMiqDataTable.new(
+      :headers => [_("Volume"), _("Size"), _("Health State"), _("Storage Resource")],
+      :rows    => volumes
     )
   end
 

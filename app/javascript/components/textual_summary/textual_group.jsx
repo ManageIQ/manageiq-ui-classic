@@ -7,6 +7,7 @@ import OperationRanges from './operation_ranges';
 import MultilinkTable from './multilink_table';
 import TableListView from './table_list_view';
 import EmptyGroup from './empty_group';
+import DataTable from './data_table';
 
 const renderComponent = (props) => {
   const { group, onClick } = props;
@@ -45,6 +46,14 @@ const renderComponent = (props) => {
           headers={group.headers}
           values={group.values}
           colOrder={group.colOrder}
+        />
+      );
+    case 'DataTable':
+      return (
+        <DataTable
+          headers={group.headers}
+          rows={group.rows}
+          onClick={onClick}
         />
       );
     case 'EmptyGroup':
