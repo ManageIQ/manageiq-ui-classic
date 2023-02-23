@@ -63,7 +63,7 @@ Jasmine.configure do |config|
   end
 
   config.chrome_cli_options = {
-    'headless' => nil,
+    'headless' => 'new',
     'disable-gpu' => nil,
     'remote-debugging-port' => 9222,
   }
