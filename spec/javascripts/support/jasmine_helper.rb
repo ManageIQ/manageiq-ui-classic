@@ -62,6 +62,11 @@ Jasmine.configure do |config|
     Jasmine::Runners::ChromeHeadless.new(formatter, jasmine_server_url, config)
   end
 
+  # use google-chrome-beta if available, otherwise use the default
+  if system('which google-chrome-beta &>/dev/null')
+    config.chrome_binary = 'google-chrome-beta'
+  end
+
   config.chrome_cli_options = {
     'headless' => 'new',
     'disable-gpu' => nil,
