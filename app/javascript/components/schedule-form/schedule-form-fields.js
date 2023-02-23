@@ -90,7 +90,7 @@ export const systemField = (data) => ({
   component: componentTypes.SELECT,
   id: 'system',
   name: 'instance_name',
-  label: __('System/Proess'),
+  label: __('System/Process'),
   hideField: data.displayFields.hideAutomationFields,
   options: data.options.request,
   placeholder: __('<Choose>'),
