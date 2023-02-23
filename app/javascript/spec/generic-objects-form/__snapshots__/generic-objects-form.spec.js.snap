@@ -269,6 +269,7 @@ exports[`Generic Object Form Component should render adding a new generic object
       validate={[Function]}
       validatorMapper={
         Object {
+          "dateRange": [Function],
           "file": [Function],
           "syntax": [Function],
         }
@@ -534,6 +535,7 @@ exports[`Generic Object Form Component should render adding a new generic object
         validate={[Function]}
         validatorMapper={
           Object {
+            "dateRange": [Function],
             "file": [Function],
             "syntax": [Function],
           }
@@ -795,6 +797,7 @@ exports[`Generic Object Form Component should render adding a new generic object
           validate={[Function]}
           validatorMapper={
             Object {
+              "dateRange": [Function],
               "file": [Function],
               "syntax": [Function],
             }
@@ -4922,6 +4925,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
       validate={[Function]}
       validatorMapper={
         Object {
+          "dateRange": [Function],
           "file": [Function],
           "syntax": [Function],
         }
@@ -5245,6 +5249,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
         validate={[Function]}
         validatorMapper={
           Object {
+            "dateRange": [Function],
             "file": [Function],
             "syntax": [Function],
           }
@@ -5563,6 +5568,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
           validate={[Function]}
           validatorMapper={
             Object {
+              "dateRange": [Function],
               "file": [Function],
               "syntax": [Function],
             }
@@ -12553,6 +12559,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
       validate={[Function]}
       validatorMapper={
         Object {
+          "dateRange": [Function],
           "file": [Function],
           "syntax": [Function],
         }
@@ -12873,6 +12880,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
         validate={[Function]}
         validatorMapper={
           Object {
+            "dateRange": [Function],
             "file": [Function],
             "syntax": [Function],
           }
@@ -13188,6 +13196,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
           validate={[Function]}
           validatorMapper={
             Object {
+              "dateRange": [Function],
               "file": [Function],
               "syntax": [Function],
             }

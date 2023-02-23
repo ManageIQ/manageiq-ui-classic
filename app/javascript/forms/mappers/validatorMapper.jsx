@@ -24,17 +24,28 @@ const fileValidator = ({ maxSize }) => {
       return sprintf(
         n__(
           `File is too large, maximum allowed size is %s bytes. Current file has %s byte`,
-          `File is too large, maximum allowed size is %s bytes. Current file has %s bytes`, 
+          `File is too large, maximum allowed size is %s bytes. Current file has %s bytes`,
           fileSize
-        ), 
+        ),
         maxSize, fileSize);
     }
   };
 };
 
+// custom validator that makes sure that the startDate comes before the endDate
+const dateRangeValidator = (validatorSchema) => (value, allValues) => {
+  if (allValues.startDate && allValues.endDate) {
+    if (allValues.startDate[0] > allValues.endDate[0]) {
+      return __(`Start Date must come before End Date`);
+    }
+  }
+  return undefined;
+};
+
 const validMapper = {
   'file': fileValidator,
   'syntax': syntaxValidator,
+  'dateRange': dateRangeValidator,
 };
 
 export default validMapper;

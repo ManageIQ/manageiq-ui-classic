@@ -1,6 +1,4 @@
 %h1
   = @title
 = render :partial => "layouts/flash_msg"
-= react 'TimelinePage'
-
-= _("* Dates/Times on this page are based on time zone: %{time_zone}.") % {:time_zone => session[:user_tz]}
+= react 'TimelinePage', :pageFilters => defined?(@record.event_stream_filters) ? @record.event_stream_filters : {}, :timezone => session[:user_tz]

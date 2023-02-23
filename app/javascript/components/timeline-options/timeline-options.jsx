@@ -3,12 +3,23 @@ import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchemaSimple from './timeline-options-simple.schema';
 import mapper from '../../forms/mappers/componentMapper';
+import validatorMapper from '../../forms/mappers/validatorMapper';
+
+const getOneWeekAgo = () => {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return [oneWeekAgo];
+};
 
 const TimelineOptions = ({ submitChosenFormOptions }) => {
   const [{
-    isLoading, timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels,
+    isLoading, timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels, initialValues,
   }, setState] = useState({
     isLoading: true,
+    initialValues: {
+      startDate: getOneWeekAgo(),
+      endDate: [new Date()],
+    },
   });
 
   useEffect(() => {
@@ -37,10 +48,10 @@ const TimelineOptions = ({ submitChosenFormOptions }) => {
           const [key, value] = entry;
           policyGroupNames.push({ label: value, value: key });
         });
-        // NOTE: data.MiqEvent.group_levels does not have the expected `Both` option
-        policyGroupLevels.push({ label: __('Success'), value: 'success' });
-        policyGroupLevels.push({ label: __('Failure'), value: 'failure' });
-        policyGroupLevels.push({ label: __('Both'), value: 'both' });
+        Object.entries(data.MiqEvent.group_levels).forEach((entry) => {
+          const [key, value] = entry;
+          policyGroupLevels.push({ label: value, value: key });
+        });
 
         // TODO: is there a way to make the above more elegant/shorter?
         // NOTE: group_names for MiqEvents and MiqEvents includes the 'Other' option,
@@ -68,15 +79,22 @@ const TimelineOptions = ({ submitChosenFormOptions }) => {
       end_date: values.endDate,
     };
     submitChosenFormOptions(newData);
+    setState((state) => ({
+      ...state,
+      initialValues: values,
+    }));
   };
 
   return !isLoading && (
     <>
+      <input type="hidden" id="ignore_form_changes" />
       <MiqFormRenderer
         componentMapper={mapper}
+        validatorMapper={validatorMapper}
         schema={createSchemaSimple(
           timelineEvents, managementGroupNames, managementGroupLevels, policyGroupNames, policyGroupLevels,
         )}
+        initialValues={initialValues}
         onSubmit={onSubmit}
         buttonsLabels={{ submitLabel: __('Apply') }}
       />

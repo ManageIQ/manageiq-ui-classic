@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, TableCell, TextInput, Toggle,
+  Button, TableCell, TextInput, Toggle, Link,
 } from 'carbon-components-react';
 import classNames from 'classnames';
 import {
-  CellAction, hasIcon, hasImage, hasButton, hasTextInput, hasToggle, isObject, isArray, isNumber, decimalCount,
+  CellAction, hasIcon, hasImage, hasButton, hasTextInput, hasToggle, hasLink, isObject, isArray, isNumber, decimalCount,
 } from './helper';
 
 const MiqTableCell = ({
@@ -152,6 +152,18 @@ const MiqTableCell = ({
     </div>
   );
 
+  /** Function to render a Link inside cell. */
+  /* eslint-disable no-eval */
+  const cellLink = (item, id) => (
+    <div className={cellClass}>
+      <Link
+        href={item.href}
+      >
+        {item.label}
+      </Link>
+    </div>
+  );
+
   /** Determines which component has to be rendered inside a cell.
    * Also to determine if a click event necesseary for a cell or its component . */
   const cellComponent = () => {
@@ -171,6 +183,8 @@ const MiqTableCell = ({
       if (hasToggle(keys)) return { ...content, component: cellToggle(data, id), cellClick: false };
 
       if (hasTextInput(keys)) return { ...content, component: cellTextInput(data, id), cellClick: false };
+
+      if (hasLink(keys)) return { ...content, component: cellLink(data, id), cellClick: false };
 
       return { ...content, component: cellText() };
     }
