@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import MiqFormRenderer, { useFormApi } from '@@ddf';
-import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import { Button } from 'carbon-components-react';
+import MiqFormRenderer from '@@ddf';
 import createSchema from './clone-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 const CloneCloudVolumeForm = ({ recordId }) => {
-  const [{ isLoading, fields }, setState] = useState({ isLoading: true, fields: [] });
-
+  const [{ isLoading, fields, initialValues }, setState] = useState({ isLoading: true, fields: [] });
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
     setState((state) => ({
       ...state,
@@ -39,7 +35,8 @@ const CloneCloudVolumeForm = ({ recordId }) => {
 
     request.then(() => {
       const message = sprintf(
-        __('Cloning of Cloud Volume has been successfully queued.'));
+        __('Cloning of Cloud Volume has been successfully queued.')
+      );
 
       miqRedirectBack(message, 'success', '/cloud_volume/show_list');
     }).catch(miqSparkleOff);
@@ -48,80 +45,23 @@ const CloneCloudVolumeForm = ({ recordId }) => {
   const onCancel = () => {
     miqSparkleOn();
     const message = sprintf(
-      __('Cloning Cloud Volume was cancelled by the user.'));
+      __('Cloning Cloud Volume was cancelled by the user.')
+    );
 
     miqRedirectBack(message, 'warning', '/cloud_volume/show_list');
   };
 
   return !isLoading && (
-    <div className="tasks-form">
-      <MiqFormRenderer
-        schema={createSchema(fields)}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        canReset
-        FormTemplate={(props) => <FormTemplate {...props} fields={fields} />}
-        buttonsLabels={{ submitLabel: __('Clone')}}
-      />
-    </div>
+    <MiqFormRenderer
+      schema={createSchema(fields)}
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      onCancel={onCancel}
+      canReset
+      buttonsLabels={{ submitLabel: __('Clone') }}
+    />
   );
 };
-
-const verifyIsDisabled = (values) => {
-  let isDisabled = true;
-  if (values.name){
-    isDisabled = false;
-  }
-  return isDisabled;
-};
-
-const FormTemplate = ({
-  fields, formFields,
-}) => {
-  const {
-    handleSubmit, onReset, onCancel, getState,
-  } = useFormApi();
-  const { valid, pristine } = getState();
-  const submitLabel = __('Clone');
-  return (
-    <form onSubmit={handleSubmit}>
-      {formFields}
-      <FormSpy>
-        {({ values }) => (
-          <div className="custom-button-wrapper">
-            <Button
-              disabled={verifyIsDisabled(values)}
-              kind="primary"
-              className="btnRight"
-              type="submit"
-              id="submit"
-              variant="contained"
-            >
-              {submitLabel}
-            </Button>
-
-            <Button
-              disabled={!valid && pristine}
-              kind="secondary"
-              className="btnRight"
-              variant="contained"
-              onClick={onReset}
-              type="button"
-              id="reset"
-            >
-              { __('Reset')}
-            </Button>
-
-            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
-              { __('Cancel')}
-            </Button>
-          </div>
-        )}
-      </FormSpy>
-    </form>
-  );
-};
-
 
 CloneCloudVolumeForm.propTypes = {
   recordId: PropTypes.string,
@@ -130,15 +70,4 @@ CloneCloudVolumeForm.defaultProps = {
   recordId: undefined,
 };
 
-FormTemplate.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.any),
-  formFields: PropTypes.arrayOf(PropTypes.any),
-};
-
-FormTemplate.defaultProps = {
-  fields: [],
-  formFields: [],
-};
-
 export default CloneCloudVolumeForm;
-
