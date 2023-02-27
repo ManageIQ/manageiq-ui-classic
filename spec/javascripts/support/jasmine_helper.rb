@@ -62,8 +62,18 @@ Jasmine.configure do |config|
     Jasmine::Runners::ChromeHeadless.new(formatter, jasmine_server_url, config)
   end
 
+  # use google-chrome-beta if available, otherwise use the default
+  if system('which google-chrome-beta &>/dev/null')
+    config.chrome_binary = 'google-chrome-beta'
+  end
+
+  # Determine the chrome binary and which version, so we can choose the correct headless mode
+  chrome_binary = Jasmine::Runners::ChromeHeadless.new(nil, nil, config).chrome_binary
+  chrome_version = `"#{chrome_binary}" --version`.strip
+  headless_mode = Gem::Version.new(chrome_version.sub(/ beta$/, "-beta").split(" ").last) >= Gem::Version.new("110.0.5481.30") ? "new" : nil
+
   config.chrome_cli_options = {
-    'headless' => 'new',
+    'headless' => headless_mode,
     'disable-gpu' => nil,
     'remote-debugging-port' => 9222,
   }
@@ -78,4 +88,7 @@ Jasmine.configure do |config|
 
   # serve weback-compiled packs from public/packs/ on /packs/
   config.add_rack_path('/packs', -> { WebpackPack.new })
+
+  cli_options = Jasmine::Runners::ChromeHeadless.new(nil, nil, config).cli_options_string
+  puts "Jasmine using #{chrome_version}: \"#{chrome_binary}\" #{cli_options}"
 end
