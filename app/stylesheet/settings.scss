@@ -15,12 +15,23 @@
   margin-bottom: 2rem;
 }
 
-.bx--checkbox-wrapper{
-  margin-bottom: 2rem !important;
+div:has(.bx--checkbox-wrapper){
+  margin-bottom: 2rem;
+}
+
+.bx--form-item.bx--checkbox-wrapper{
+  margin-bottom: 0.25rem !important;
 }
 
 .schedule_form {
   label[for="time_zone"]:before, label[for="target_class"]:before, label[for="target_id"]:before {
+    content:"* ";
+    color: red;
+  }
+}
+
+.live_migrate_form {
+  label[for="destination_host"]:before {
     content:"* ";
     color: red;
   }

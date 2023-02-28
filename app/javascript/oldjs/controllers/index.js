@@ -18,4 +18,3 @@ require('./ops/pglogical_replication_form_controller.js');
 require('./playbook-reusable-code-mixin.js');
 require('./reconfigure/reconfigure_form_controller.js');
 require('./tree_view_controller.js');
-require('./vm_cloud/vm_cloud_live_migrate_form_controller.js');
