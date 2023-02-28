@@ -19,12 +19,14 @@
   div:has(.bx--checkbox-wrapper){
     margin-bottom: 2rem;
   }
+div:has(.bx--checkbox-wrapper){
+  margin-bottom: 2rem;
 }
 
 .bx--form-item.bx--checkbox-wrapper{
   margin-bottom: 0.25rem !important;
 }
-
+}
 .evacuate_form {
   label[for="destination_host"]:before {
     content:"* ";
