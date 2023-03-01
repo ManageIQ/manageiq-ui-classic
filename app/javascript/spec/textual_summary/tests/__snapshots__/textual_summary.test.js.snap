@@ -1760,14 +1760,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=cloud_networks"
+                                                  href="/ems_network/39?display=cloud_networks"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=cloud_networks"
                                                     rel={null}
-                                                    to="/ems_network/39?display=cloud_networks"
                                                   >
                                                     <div
                                                       className="content"
@@ -1853,14 +1851,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=cloud_subnets"
+                                                  href="/ems_network/39?display=cloud_subnets"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=cloud_subnets"
                                                     rel={null}
-                                                    to="/ems_network/39?display=cloud_subnets"
                                                   >
                                                     <div
                                                       className="content"
@@ -1946,14 +1942,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=network_routers"
+                                                  href="/ems_network/39?display=network_routers"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=network_routers"
                                                     rel={null}
-                                                    to="/ems_network/39?display=network_routers"
                                                   >
                                                     <div
                                                       className="content"
@@ -2039,14 +2033,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=security_groups"
+                                                  href="/ems_network/39?display=security_groups"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=security_groups"
                                                     rel={null}
-                                                    to="/ems_network/39?display=security_groups"
                                                   >
                                                     <div
                                                       className="content"
@@ -2132,14 +2124,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=floating_ips"
+                                                  href="/ems_network/39?display=floating_ips"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=floating_ips"
                                                     rel={null}
-                                                    to="/ems_network/39?display=floating_ips"
                                                   >
                                                     <div
                                                       className="content"
@@ -2225,14 +2215,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=network_ports"
+                                                  href="/ems_network/39?display=network_ports"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=network_ports"
                                                     rel={null}
-                                                    to="/ems_network/39?display=network_ports"
                                                   >
                                                     <div
                                                       className="content"
@@ -2318,14 +2306,12 @@ exports[`TextualSummary renders just fine 1`] = `
                                               >
                                                 <Link
                                                   className="cell_link"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=load_balancers"
+                                                  href="/ems_network/39?display=load_balancers"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
-                                                    onClick={[Function]}
+                                                    href="/ems_network/39?display=load_balancers"
                                                     rel={null}
-                                                    to="/ems_network/39?display=load_balancers"
                                                   >
                                                     <div
                                                       className="content"
