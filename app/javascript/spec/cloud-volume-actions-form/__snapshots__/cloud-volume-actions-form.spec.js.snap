@@ -3797,8 +3797,10 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onInputChange={[Function]}
                                                 options={Array []}
                                                 placeholder="Loading..."
+                                                value=""
                                               >
                                                 <Select
                                                   disabled={false}
@@ -3817,6 +3819,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  value=""
                                                 >
                                                   <div
                                                     className="bx--form-item"
@@ -3849,6 +3852,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
+                                                          value=""
                                                         >
                                                           <SelectItem
                                                             disabled={false}
@@ -4911,8 +4915,10 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onInputChange={[Function]}
                                                 options={Array []}
                                                 placeholder="Loading..."
+                                                value=""
                                               >
                                                 <Select
                                                   disabled={false}
@@ -4931,6 +4937,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  value=""
                                                 >
                                                   <div
                                                     className="bx--form-item"
@@ -4963,6 +4970,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
+                                                          value=""
                                                         >
                                                           <SelectItem
                                                             disabled={false}
