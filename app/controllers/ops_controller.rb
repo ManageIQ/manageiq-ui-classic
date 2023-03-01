@@ -814,42 +814,6 @@ class OpsController < ApplicationController
     reload_trees_by_presenter(presenter, trees)
   end
 
-  # Build the audit object when a profile is saved
-  def build_saved_audit(record, add = false)
-    name = record.respond_to?(:name) ? record.name : record.description
-    msg = if add
-            "[%{name}] Record added (" % {:name => name}
-          else
-            "[%{name}] Record updated (" % {:name => name}
-          end
-    event = "#{record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
-    i = 0
-    @edit[:new].each_key do |k|
-      if @edit[:new][k] != @edit[:current][k]
-        if k.to_s.ends_with?("password", "_pwd") # Asterisk out password fields
-          msg = "%{message} %{key}:[*] to [*]" % {:message => msg, :key => k.to_s}
-        else
-          msg += ", " if i.positive?
-          i += 1
-          msg = if k == :members
-                  "%{message} %{key}:[%{old_value}] to [new_value]" %
-                    {:message   => msg,
-                     :key       => k.to_s,
-                     :old_value => @edit[:current][k].keys.join(","),
-                     :new_value => @edit[:new][k].keys.join(",")}
-                else
-                  "%{message} %{key}:[%{old_value}] to [%{new_value}]" % {:message   => msg,
-                                                                          :key       => k.to_s,
-                                                                          :old_value => @edit[:current][k].to_s,
-                                                                          :new_value => @edit[:new][k].to_s}
-                end
-        end
-      end
-    end
-    msg += ")"
-    {:event => event, :target_id => record.id, :target_class => record.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
   def identify_tl_or_perf_record
     identify_record(@sb[:record_id], @sb[:record_class].constantize)
   end

@@ -179,7 +179,7 @@ class HostController < ApplicationController
         valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate) # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
-          AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
+          AuditEvent.success(build_saved_audit(@host, :new => @host.attributes.clone, :current => old_host_attributes))
           flash_and_redirect(_("Host \"%{name}\" was saved") % {:name => @host.name})
           nil
         else

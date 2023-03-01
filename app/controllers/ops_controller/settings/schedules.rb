@@ -94,7 +94,11 @@ module OpsController::Settings::Schedules
         add_flash(_("Error when adding a new schedule: %{message}") % {:message => bang.message}, :error)
         javascript_flash
       else
-        AuditEvent.success(build_saved_audit_hash_angular(old_schedule_attributes, schedule, params[:button] == "add"))
+        if params[:button] == "add"
+          AuditEvent.success(build_created_audit(schedule, :new => schedule.attributes.clone))
+        else
+          AuditEvent.success(build_saved_audit(schedule, :new => schedule.attributes.clone, :current => old_schedule_attributes))
+        end
         add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name})
         if params[:button] == "add"
           self.x_node = "xx-msc"

@@ -176,40 +176,6 @@ module OpsController::Settings::AnalysisProfiles
     end
   end
 
-  # Build the audit object when a record is created, including all of the new fields
-  def ap_build_created_audit_set(scanitemset)
-    msg = "[#{scanitemset.name}] Record created ("
-    event = "scanitemset_record_add"
-    i = 0
-    @edit[:new].each_key do |k|
-      msg += ", " if i.positive?
-      i += 1
-      msg = if k == :members # Check for members array
-              msg + k.to_s + ":[" + @edit[:new][k].keys.join(",") + "]"
-            else
-              msg + k.to_s + ":[" + @edit[:new][k].to_s + "]"
-            end
-    end
-    msg += ")"
-    {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
-  # Build the audit object when a record is saved, including all of the changed fields
-  def ap_build_saved_audit(scanitemset)
-    msg = "[#{scanitemset.name}] Record updated ("
-    event = "scanitemset_record_update"
-    i = 0
-    @edit[:new].each_key do |k|
-      next if @edit[:new][k] == @edit[:current][k]
-
-      msg += ", " if i.positive?
-      i += 1
-      msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
-    end
-    msg += ")"
-    {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
   def ap_copy
     assert_privileges("ap_copy")
     @_params[:typ] = "copy"
@@ -282,9 +248,9 @@ module OpsController::Settings::AnalysisProfiles
               add_flash(_("Error during '%{title}': %{message}") % {:title => title, :message => bang.message}, :error)
             end
             if params[:button] == "save"
-              AuditEvent.success(ap_build_saved_audit(scanitemset))
+              AuditEvent.success(build_saved_audit(scanitemset, @edit))
             else
-              AuditEvent.success(ap_build_created_audit_set(scanitemset))
+              AuditEvent.success(build_created_audit(scanitemset, @edit))
             end
             add_flash(_("Analysis Profile \"%{name}\" was saved") % {:name => get_record_display_name(scanitemset)})
             aps_list
