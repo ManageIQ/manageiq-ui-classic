@@ -897,8 +897,10 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
+                                      onInputChange={[Function]}
                                       options={Array []}
                                       placeholder="Loading..."
+                                      value="2"
                                     >
                                       <Select
                                         disabled={false}
@@ -917,6 +919,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
+                                        value="2"
                                       >
                                         <div
                                           className="bx--form-item"
@@ -949,6 +952,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                value="2"
                                               >
                                                 <SelectItem
                                                   disabled={false}
@@ -1380,8 +1384,10 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onInputChange={[Function]}
                                                 options={Array []}
                                                 placeholder="Loading..."
+                                                value=""
                                               >
                                                 <Select
                                                   disabled={false}
@@ -1400,6 +1406,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  value=""
                                                 >
                                                   <div
                                                     className="bx--form-item"
@@ -1432,6 +1439,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
+                                                          value=""
                                                         >
                                                           <SelectItem
                                                             disabled={false}
