@@ -343,7 +343,7 @@ module OpsController::OpsRbac
         group = MiqGroup.find_by(:description => grp)
         group.sequence = i + 1
         if group.save
-          AuditEvent.success(build_saved_audit(group, params[:button] == "add"))
+          AuditEvent.success(build_saved_audit(group, @edit))
         else
           group.errors.each do |error|
             add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
@@ -677,7 +677,7 @@ module OpsController::OpsRbac
       record.update!(:miq_groups => Rbac.filtered(MiqGroup.where(:id => rbac_user_get_group_ids))) if key == :user # only set miq_groups if everything is valid
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
-      AuditEvent.success(build_saved_audit(record, add_pressed))
+      AuditEvent.success(build_saved_audit(record, @edit))
       subkey = key == :group ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
       add_flash(_("Outdated filters were removed from group \"%{name}\"") % {:name => @edit[:new][subkey]}) if what == "group" && @edit[:current][:deleted_belongsto_filters].present?

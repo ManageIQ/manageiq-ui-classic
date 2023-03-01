@@ -534,67 +534,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Build an audit object when configuration is changed in configuration and ops controllers
-  def build_config_audit(new, current)
-    if controller_name == "ops" && @sb[:active_tab] == "settings_server"
-      server = MiqServer.find(@sb[:selected_server_id])
-      msg = "#{server.name} [#{server.id}] in zone #{server.my_zone} VMDB config updated"
-    else
-      msg = "VMDB config updated"
-    end
-
-    {
-      :event   => "vmdb_config_update",
-      :userid  => session[:userid],
-      :message => build_audit_msg(new, current, msg)
-    }
-  end
-
-  PASSWORD_FIELDS = %i[password _pwd amazon_secret token].freeze
-
-  def filter_config(data)
-    @parameter_filter ||=
-      ActiveSupport::ParameterFilter.new(
-        Rails.application.config.filter_parameters + PASSWORD_FIELDS
-      )
-    return data.map { |e| filter_config(e) } if data.kind_of?(Array)
-
-    data.kind_of?(Hash) ? @parameter_filter.filter(data) : data
-  end
-
-  def password_field?(k)
-    PASSWORD_FIELDS.any? { |p| k.to_s.ends_with?(p.to_s) }
-  end
-
-  def build_audit_msg(new, current, msg_in)
-    msg_arr = []
-    new.each_key do |k|
-      if !k.to_s.ends_with?("password2", "verify") &&
-         (current.nil? || (new[k] != current[k]))
-        if password_field?(k) # Asterisk out password fields
-          msg_arr << "#{k}:[*]" + (current.nil? ? '' : ' to [*]')
-        elsif new[k].kind_of?(Hash) # If the field is a hash,
-          # Make current a blank hash for following comparisons
-          current[k] = {} if !current.nil? && current[k].nil?
-          #   process keys of the current and new hashes
-          (new[k].keys | (current.nil? ? [] : current[k].keys)).each do |hk|
-            next if current.present? && (new[k][hk] == current[k][hk])
-
-            msg_arr << if password_field?(hk) # Asterisk out password fields
-                         "#{hk}:[*]" + (current.nil? ? '' :  ' to [*]')
-                       else
-                         "#{hk}:[" + (current.nil? ? "" : "#{filter_config(current[k][hk])}] to [") +
-                         "#{filter_config(new[k][hk])}]"
-                       end
-          end
-        else
-          msg_arr << "#{k}:[" + (current.nil? ? "" : "#{filter_config(current[k])}] to [") + "#{filter_config(new[k])}]"
-        end
-      end
-    end
-    "#{msg_in} (#{msg_arr.join(', ')})"
-  end
-
   # Disable client side caching of the response being sent
   def disable_client_cache
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
@@ -1454,57 +1393,79 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Build the audit object when a record is created, including all of the new fields
-  #   params - rec = db record, eh = edit hash containing new values
+  # Build the audit payload when a record is created, including all of the new fields
+  #
+  # @param rec [ActiveRecord::Base] Database record
+  # @param eh [Hash] edit hash containing new values
   def build_created_audit(rec, eh)
-    {
-      :event        => "#{rec.class.to_s.downcase}_record_add",
-      :target_id    => rec.id,
-      :target_class => rec.class.base_class.name,
-      :userid       => session[:userid],
-      :message      => build_audit_msg(eh[:new], nil, "[#{eh[:new][:name]}] Record created")
-    }
+    build_audit_payload(rec, eh[:new], nil, "#{rec.class.to_s.downcase}_record_add", "Record created")
   end
 
-  def build_saved_audit_hash_angular(old_record_attributes, new_record, add)
-    name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
-    msg   = if add
-              "[#{name}] Record added ("
-            else
-              "[#{name}] Record updated ("
-            end
-    event = "#{new_record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
+  # Build the audit payload when a record is created, including all of the changed fields
+  #
+  # @param rec [ActiveRecord::Base] Database record
+  # @param eh [Hash] edit hash containing current and new values
+  def build_saved_audit(rec, eh)
+    build_audit_payload(rec, eh[:new], eh[:current], "#{rec.class.to_s.downcase}_record_update", "Record updated")
+  end
 
-    attribute_difference = new_record.attributes.to_a - old_record_attributes.to_a
-    attribute_difference = Hash[*attribute_difference.flatten]
-
-    difference_messages = []
-
-    attribute_difference.each do |key, value|
-      difference_messages << "#{key} changed to #{value}"
+  # Build the audit payload when configuration is changed in configuration and ops controllers
+  #
+  # @param eh [Hash] edit hash containing current and new values
+  def build_config_audit(eh)
+    if controller_name == "ops" && @sb[:active_tab] == "settings_server"
+      server = MiqServer.find(@sb[:selected_server_id])
+      message = "Server [#{server.name}] (#{server.id}) in Zone [#{server.my_zone}] VMDB config updated"
+    else
+      message = "VMDB config updated"
     end
 
-    msg = msg + difference_messages.join(", ") + ")"
-
-    {
-      :event        => event,
-      :target_id    => new_record.id,
-      :target_class => new_record.class.base_class.name,
-      :userid       => session[:userid],
-      :message      => msg
-    }
+    build_audit_payload(nil, eh[:new], eh[:current], "vmdb_config_update", message, "")
   end
 
-  # Build the audit object when a record is saved, including all of the changed fields
-  #   params - rec = db record, eh = edit hash containing current and new values
-  def build_saved_audit(rec, eh)
+  def build_audit_payload(rec, eh_new, eh_current, event, message, description = nil)
+    description ||= eh_new[:name]
+    description ||= rec[:name] if rec
+    message = "[#{description}] #{message}" if description.present?
+
+    changes = build_audit_payload_changes(eh_new, eh_current)
+    message = "#{message} (#{changes})" if changes
+
     {
-      :event        => "#{rec.class.to_s.downcase}_record_update",
-      :target_id    => rec.id,
-      :target_class => rec.class.base_class.name,
-      :userid       => session[:userid],
-      :message      => build_audit_msg(eh[:new], eh[:current], "[#{eh[:new][:name] || rec[:name]}] Record updated")
-    }
+      :event   => event,
+      :userid  => session[:userid],
+      :message => message
+    }.tap do |payload|
+      if rec
+        payload[:target_id]    = rec.id
+        payload[:target_class] = rec.class.base_class.name
+      end
+    end
+  end
+
+  def build_audit_payload_changes(new, current)
+    if current
+      current = current.deep_clone
+      diff = Vmdb::Settings::HashDiffer.diff(current, new)
+      Vmdb::Settings.mask_passwords!(current)
+    else
+      diff = new.deep_clone
+    end
+    Vmdb::Settings.mask_passwords!(diff)
+
+    # Pull the keys out of current that match the diff's keys and format as a list from/to changes
+    #
+    # TODO: Move this into the Vmdb::Settings::HashDiffer class as a method that
+    #       returns the diff with both sides included
+    changes = []
+    Vmdb::SettingsWalker.walk(diff) do |_key, value, key_path, _settings|
+      next if value.kind_of?(Hash) || value.kind_of?(Array) # skip full hashes and arrays
+
+      change = {:key => key_path.join("/"), :to => value}
+      change[:from] = current.dig(*key_path) if current
+      changes << change
+    end
+    changes.map { |c| "#{c[:key]}:#{"[#{c[:from]}] to " if c.key?(:from)}[#{c[:to]}]" }.join(", ").presence
   end
 
   #
