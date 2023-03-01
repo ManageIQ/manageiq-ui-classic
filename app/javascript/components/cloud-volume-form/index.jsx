@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './cloud-volume-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { FormSpy } from '../../forms/data-driven-form';
 import mapper from '../../forms/mappers/componentMapper';
-import Select from '../select';
+import enhancedSelect from '../../helpers/enhanced-select';
 
 const CloudVolumeForm = ({ recordId, storageManagerId }) => {
   const [{ fields, initialValues, isLoading }, setState] = useState({ fields: [], isLoading: !!recordId || !!storageManagerId });
@@ -76,16 +75,14 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
     return errors;
   };
 
-  const enhancedSelect = (props) => <FormSpy subscription={{ values: true }}>{() => <Select {...props} />}</FormSpy>;
-
   const componentMapper = {
     ...mapper,
     'enhanced-select': enhancedSelect,
-  }
+  };
 
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(fields, !!recordId, !!storageManagerId, loadSchema, emptySchema)}
+      schema={createSchema(fields, !!recordId, !!storageManagerId, loadSchema, emptySchema, storageManagerId)}
       componentMapper={componentMapper}
       initialValues={initialValues}
       canReset={!!recordId}
