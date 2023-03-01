@@ -2624,8 +2624,10 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
+                                      onInputChange={[Function]}
                                       options={Array []}
                                       placeholder="Loading..."
+                                      value=""
                                     >
                                       <Select
                                         disabled={false}
@@ -2644,6 +2646,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
+                                        value=""
                                       >
                                         <div
                                           className="bx--form-item"
@@ -2676,6 +2679,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                value=""
                                               >
                                                 <SelectItem
                                                   disabled={false}
@@ -3529,8 +3533,10 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
+                                      onInputChange={[Function]}
                                       options={Array []}
                                       placeholder="Loading..."
+                                      value=""
                                     >
                                       <Select
                                         disabled={false}
@@ -3549,6 +3555,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
+                                        value=""
                                       >
                                         <div
                                           className="bx--form-item"
@@ -3581,6 +3588,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                value=""
                                               >
                                                 <SelectItem
                                                   disabled={false}
