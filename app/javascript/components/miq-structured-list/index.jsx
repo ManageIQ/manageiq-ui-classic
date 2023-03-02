@@ -112,7 +112,7 @@ const MiqStructuredList = ({
   const renderMultiContents = (row) => {
     const content = renderContent(row);
     return row.link
-      ? <Link to={row.link} onClick={(e) => onClick(row, e)} className="cell_link">{content}</Link>
+      ? <Link href={row.link} className="cell_link">{content}</Link>
       : content;
   };
 
