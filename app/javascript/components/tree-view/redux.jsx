@@ -160,7 +160,7 @@ TreeView.propTypes = {
   click_url: PropTypes.string,
   callBack: PropTypes.func.isRequired,
   hierarchical_check: PropTypes.bool,
-  silent_activate: PropTypes.objectOf(PropTypes.any),
+  silent_activate: PropTypes.bool || undefined,
   select_node: PropTypes.string,
 };
 
