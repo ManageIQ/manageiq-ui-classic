@@ -206,6 +206,7 @@ module ContainerServiceMixin
   def hourly_metrics
     MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
                 .where(:resource => @resource)
+                .order('timestamp')
   end
 
   def daily_metrics
@@ -214,6 +215,7 @@ module ContainerServiceMixin
 
     @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
                                      .where(:resource => @resource)
-                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
+                                     .where('timestamp > ?', 30.days.ago.utc)
+                                     .order('timestamp')
   end
 end
