@@ -19,20 +19,6 @@ export const getProviderInfo = (data) => {
   return providerStatus;
 };
 
-export const getAlertInfo = (data) => {
-  const alertStatus = {
-    title: __('Alerts'),
-    notifications: [
-      {
-        iconClass: data.alerts.notifications[0].iconClass,
-        href: data.alerts.href,
-        count: data.alerts.notifications[0].count,
-        dataAvailable: data.alerts.dataAvailable,
-      },
-    ],
-  };
-  return alertStatus;
-};
 export const getAggStatusInfo = (data, providerId) => {
   const attributes = ['nodes', 'containers', 'registries', 'projects', 'pods', 'services', 'images', 'routes'];
   const attrHsh = {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from 'carbon-components-react';
 import PfAggregateStatusCard from '../pf_aggregate_status_card';
-import { getProviderInfo, getAlertInfo, getAggStatusInfo } from './helper';
+import { getProviderInfo, getAggStatusInfo } from './helper';
 
 const ContainerDashboardCards = ({ providerId }) => {
   const [data, setCardData] = useState({ loading: true });
@@ -23,22 +23,14 @@ const ContainerDashboardCards = ({ providerId }) => {
 
   if (data.loading === false) {
     const providerStatus = getProviderInfo(data);
-    const alertStatus = getAlertInfo(data);
     const AggStatus = getAggStatusInfo(data, providerId);
 
     return !data.loading && (
       <div>
-        <div className="col-xs-12 col-sm-12 col-md-2 ">
+        <div className="col-xs-12 col-sm-12 col-md-4 ">
           <PfAggregateStatusCard
             layout="tall"
             data={providerStatus}
-            showTopBorder
-          />
-        </div>
-        <div className="col-xs-12 col-sm-12 col-md-2 e">
-          <PfAggregateStatusCard
-            layout="tall"
-            data={alertStatus}
             showTopBorder
           />
         </div>

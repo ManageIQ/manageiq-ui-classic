@@ -16,7 +16,6 @@ class ContainerDashboardService < DashboardService
     {
       :status    => status,
       :providers => providers,
-      :alerts    => alerts,
     }.compact
   end
 
@@ -129,37 +128,6 @@ class ContainerDashboardService < DashboardService
     end
     all_providers_info = @ems.present? ? nil : {:count => ManageIQ::Providers::ContainerManager.count, :href => '/ems_container/show_list'}
     return result.values, all_providers_info
-  end
-
-  def alerts
-    providers = @ems.present? ? [@ems] : ManageIQ::Providers::ContainerManager.includes(:authentications)
-
-    has_alerts = providers.any? do |prov|
-      prov.monitoring_manager.present?
-    end
-
-    relation = MiqAlertStatus.where(:ems_id => providers.pluck(:id))
-    alerts_status = relation.present? && has_alerts ? relation.where(:resolved => [false, nil]).group(:severity).count.values_at('error', 'warning') : [nil, nil]
-
-    errors = alerts_status[0] || 0
-    warnings = alerts_status[1] || 0
-
-    errors_struct = errors.positive? ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
-    warnings_struct = warnings.positive? ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
-    notifications = if (errors + warnings).positive?
-                      [errors_struct, warnings_struct].compact
-                    elsif alerts_status == [nil, nil]
-                      [{}]
-                    else
-                      [{:iconClass => "pficon-large pficon-ok"}]
-                    end
-
-    {
-      :count         => (errors + warnings).positive? ? (errors + warnings) : nil,
-      :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
-      :notifications => notifications,
-      :dataAvailable => has_alerts
-    }
   end
 
   def build_provider_status(provider_type)
