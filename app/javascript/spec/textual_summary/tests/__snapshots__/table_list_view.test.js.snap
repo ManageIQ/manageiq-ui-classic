@@ -292,14 +292,12 @@ exports[`TableListView renders just fine... 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                           rel={null}
-                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                         >
                                           <div
                                             className="content"
@@ -370,14 +368,12 @@ exports[`TableListView renders just fine... 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                           rel={null}
-                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                         >
                                           <div
                                             className="content"

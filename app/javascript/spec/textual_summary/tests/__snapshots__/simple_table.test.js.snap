@@ -783,14 +783,12 @@ exports[`Simple Table renders just fine... 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="some_link"
+                                        href="some_link"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="some_link"
                                           rel={null}
-                                          to="some_link"
                                         >
                                           <div
                                             className="content"

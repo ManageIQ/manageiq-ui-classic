@@ -704,14 +704,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=1&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=1&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=1&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=1&status=running"
                                         >
                                           <div
                                             className="content"
@@ -782,14 +780,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=1&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=1&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=1&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=1&status=all"
                                         >
                                           <div
                                             className="content"
@@ -924,14 +920,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=2&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=2&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=2&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=2&status=running"
                                         >
                                           <div
                                             className="content"
@@ -1002,14 +996,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=2&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=2&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=2&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=2&status=all"
                                         >
                                           <div
                                             className="content"
@@ -1144,14 +1136,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=3&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=3&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=3&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=3&status=running"
                                         >
                                           <div
                                             className="content"
@@ -1222,14 +1212,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=3&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=3&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=3&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=3&status=all"
                                         >
                                           <div
                                             className="content"
@@ -1364,14 +1352,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=4&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=4&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=4&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=4&status=running"
                                         >
                                           <div
                                             className="content"
@@ -1442,14 +1428,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=4&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=4&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=4&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=4&status=all"
                                         >
                                           <div
                                             className="content"
@@ -1584,14 +1568,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=5&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=5&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=5&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=5&status=running"
                                         >
                                           <div
                                             className="content"
@@ -1662,14 +1644,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=5&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=5&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=5&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=5&status=all"
                                         >
                                           <div
                                             className="content"
@@ -1804,14 +1784,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=6&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=6&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=6&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=6&status=running"
                                         >
                                           <div
                                             className="content"
@@ -1882,14 +1860,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=6&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=6&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=6&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=6&status=all"
                                         >
                                           <div
                                             className="content"
@@ -2074,14 +2050,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=7&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=7&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=7&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=7&status=all"
                                         >
                                           <div
                                             className="content"
@@ -2216,14 +2190,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=8&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=8&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=8&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=8&status=running"
                                         >
                                           <div
                                             className="content"
@@ -2294,14 +2266,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=8&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=8&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=8&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=8&status=all"
                                         >
                                           <div
                                             className="content"
@@ -2436,14 +2406,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=9&status=running"
+                                        href="/host/host_services/18?db=host&host_service_group=9&status=running"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=9&status=running"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=9&status=running"
                                         >
                                           <div
                                             className="content"
@@ -2514,14 +2482,12 @@ exports[`MultilinkTable renders just fine 1`] = `
                                     >
                                       <Link
                                         className="cell_link"
-                                        onClick={[Function]}
-                                        to="/host/host_services/18?db=host&host_service_group=9&status=all"
+                                        href="/host/host_services/18?db=host&host_service_group=9&status=all"
                                       >
                                         <a
                                           className="bx--link cell_link"
-                                          onClick={[Function]}
+                                          href="/host/host_services/18?db=host&host_service_group=9&status=all"
                                           rel={null}
-                                          to="/host/host_services/18?db=host&host_service_group=9&status=all"
                                         >
                                           <div
                                             className="content"
