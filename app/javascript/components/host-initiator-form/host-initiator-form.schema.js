@@ -62,7 +62,16 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'name',
         label: __('Name:'),
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [
+          {
+            type: validatorTypes.REQUIRED,
+          },
+          {
+            type: 'max-length',
+            threshold: 15,
+            message: __('The name should have up to 15 characters.'),
+          },
+        ],
       },
       {
         component: componentTypes.SELECT,
