@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dropdown from 'carbon-components-react/es/components/Dropdown';
+import { Dropdown } from 'carbon-components-react';
 import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import { Collaborate20 } from '@carbon/icons-react';
 import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
@@ -41,13 +41,24 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
     </SideNavItem>
   );
 
-  const multiGroup = (
+  const multiGroup_old = (
     <Dropdown
       ariaLabel={__('Change current group')}
       id="miq-nav-group-switch-dropdown"
       initialSelectedItem={currentOption}
       items={options}
       label={__('Change current group')}
+      onChange={groupChange}
+    />
+  );
+  
+  const multiGroup = (
+    <Dropdown
+      hideLabel
+      id="miq-nav-group-switch-dropdown"
+      label={__('Change current group')}
+      items={options}
+      selectedItem={currentOption}
       onChange={groupChange}
     />
   );
