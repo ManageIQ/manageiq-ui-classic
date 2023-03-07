@@ -1,6 +1,5 @@
 /** function that use to filter the services/resources by capabilities. */
-const arrayIncludes = (including, included) => including.length >= included.length
-  && included.every((includedItem) => including.includes(includedItem));
+const arrayIncludes = (including, included) => included.every((includedItem) => including.includes(includedItem));
 
 const getCapabilityUuid = (providerCapabilities, capabilityName, capabilityValue) => {
   const capVals = providerCapabilities[capabilityName];

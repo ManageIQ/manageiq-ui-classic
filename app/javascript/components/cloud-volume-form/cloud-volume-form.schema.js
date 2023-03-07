@@ -89,7 +89,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         component: componentTypes.SUB_FORM,
         name: 'resource_type_selection',
         id: 'resource_type_selection',
-        condition: { when: 'required_capabilities', isNotEmpty: true },
+        condition: { when: 'compression', isNotEmpty: true },
         fields: [
           {
             component: 'enhanced-select',
@@ -101,12 +101,18 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             isRequired: true,
             validate: [
               { type: validatorTypes.REQUIRED },
-              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },
+              { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'No storage service supports all selected capabilities' },
               async(value) => validateServiceHasResources(value),
             ],
             resolveProps: (_props, _field, { getState }) => {
-              const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
-              const emsId = getState().values.ems_id;
+              const stateValues = getState().values;
+              const emsId = stateValues.ems_id;
+              const capabilityValues = [];
+
+              const capabilityNames = fields.find((object) => object.id === 'required_capabilities')
+                .fields.map((capability) => capability.id);
+              capabilityNames.forEach((capabilityName) => capabilityValues.push(stateValues[capabilityName]));
+
               return {
                 key: JSON.stringify(capabilityValues),
                 loadOptions: async() => {
@@ -120,19 +126,25 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             component: 'enhanced-select',
             name: 'storage_resource_id',
             id: 'storage_resource_id',
-            label: __('Storage Resources (if no option appears then no storage resource with selected capabilities was found)'),
+            label: __('Storage Resource(s)'),
             condition: { when: 'mode', is: 'Advanced' },
             onInputChange: () => null,
             isRequired: true,
-            helperText: __('Select storage resources to attach to the new service. The new Volume(s) will be created on these resources.'),
+            helperText: __('Select storage resources to attach to the service. The new Volume(s) will be created on these resources.'),
             validate: [
               { type: validatorTypes.REQUIRED },
               { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: 'Required' },
             ],
             isMulti: true,
             resolveProps: (_props, _field, { getState }) => {
-              const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
-              const emsId = getState().values.ems_id;
+              const stateValues = getState().values;
+              const emsId = stateValues.ems_id;
+              const capabilityValues = [];
+
+              const capabilityNames = fields.find((object) => object.id === 'required_capabilities')
+                .fields.map((capability) => capability.id);
+              capabilityNames.forEach((capabilityName) => capabilityValues.push(stateValues[capabilityName]));
+
               return {
                 key: JSON.stringify(capabilityValues),
                 loadOptions: async() => {
