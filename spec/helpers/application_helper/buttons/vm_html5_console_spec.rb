@@ -6,21 +6,15 @@ describe ApplicationHelper::Button::VmHtml5Console do
   describe '#visible?' do
     subject { button.visible? }
 
-    SUPPORTED_CONSOLE_TYPES = %i[vnc spice webmks].freeze
-
-    SUPPORTED_CONSOLE_TYPES.each do |type|
-      context("#{type} console") do
-        before do
-          SUPPORTED_CONSOLE_TYPES.each do |t|
-            allow(record).to receive(:console_supported?).with(t.to_s).and_return(t == type)
-          end
-        end
-
-        it { is_expected.to be_truthy }
-      end
+    context("html5_console supported") do
+      before { stub_supports(record, :html5_console) }
+      it { is_expected.to be_truthy }
     end
 
-    it { is_expected.to be_falsey }
+    context("html5_console supported") do
+      before { stub_supports_not(record, :html5_console) }
+      it { is_expected.to be_falsey }
+    end
   end
 
   describe '#disabled?' do

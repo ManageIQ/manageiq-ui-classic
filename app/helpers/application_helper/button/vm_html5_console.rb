@@ -2,7 +2,7 @@ class ApplicationHelper::Button::VmHtml5Console < ApplicationHelper::Button::Bas
   needs :@record
 
   def visible?
-    %w[vnc webmks spice].any? { |type| @record.send(:console_supported?, type) }
+    @record.supports?(:html5_console)
   end
 
   def disabled?
