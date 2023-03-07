@@ -2,7 +2,7 @@
 // but in the storage_manager models the capability name is saved under different keys, instead of 'abstract_capability'.
 // the parameter fieldName enables to dynamically access the correct key.
 
-const loadProviderCapabilities = (providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
+export const loadProviderCapabilities = (providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
   .then(({ capabilities }) => {
     const options = [];
     Object.keys(capabilities).forEach((key) => {
@@ -11,5 +11,3 @@ const loadProviderCapabilities = (providerId) => API.get(`/api/providers/${provi
     });
     return options;
   });
-
-export default loadProviderCapabilities;

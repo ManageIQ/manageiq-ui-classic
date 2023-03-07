@@ -9,7 +9,9 @@ const filterServicesByCapabilities = async(filterArray, providerCapabilities) =>
         Object.keys(resource.capabilities).forEach((key) => {
           capsToFilter.push(getCapabilityUuid(providerCapabilities, key, resource.capabilities[key]));
         });
-        if (arrayIncludes(filterArray, capsToFilter)) {
+        capsToFilter.push('-1'); // to filter-in the N/A option of capabilities
+
+        if (arrayIncludes(capsToFilter, filterArray)) {
           valueArray.push(resource);
         }
       });

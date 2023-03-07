@@ -3,6 +3,7 @@ import { parseCondition } from '@data-driven-forms/react-form-renderer';
 import validateName from '../../helpers/storage_manager/validate-names';
 import filterResourcesByCapabilities from '../../helpers/storage_manager/filter-resources-by-capabilities';
 import filterServicesByCapabilities from '../../helpers/storage_manager/filter-service-by-capabilities';
+import { getProviderCapabilities } from '../../helpers/storage_manager/filter-by-capabilities-utils';
 
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
@@ -22,9 +23,6 @@ const storageManagers = (supports) =>
     });
 
 // storage manager functions:
-
-const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
-  .then((result) => result.capabilities);
 
 const validateServiceHasResources = (serviceId) =>
   API.get(`/api/storage_services/${serviceId}?attributes=name,storage_resources`)
@@ -92,7 +90,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         component: componentTypes.SUB_FORM,
         name: 'resource_type_selection',
         id: 'resource_type_selection',
-        condition: { when: 'required_capabilities', isNotEmpty: true },
+        condition: { when: 'compression', isNotEmpty: true },
         fields: [
           {
             component: 'enhanced-select',
@@ -108,7 +106,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
               async(value) => validateServiceHasResources(value),
             ],
             resolveProps: (_props, _field, { getState }) => {
-              const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
+              const capabilityValues = [getState().values.compression, getState().values.thin_provision];
               const emsId = getState().values.ems_id;
               return {
                 key: JSON.stringify(capabilityValues),
@@ -133,7 +131,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             ],
             isMulti: true,
             resolveProps: (_props, _field, { getState }) => {
-              const capabilityValues = getState().values.required_capabilities.map(({ value }) => value);
+              const capabilityValues = [getState().values.compression, getState().values.thin_provision];
               const emsId = getState().values.ems_id;
               return {
                 key: JSON.stringify(capabilityValues),
