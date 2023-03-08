@@ -1,13 +1,16 @@
 import { componentTypes } from '@@ddf';
 
 const findUser = (searchHere) => {
-  if (searchHere.users.length > 1) {
-    return [{
-      label: searchHere.selectedUser.charAt(0).toUpperCase() + searchHere.selectedUser.slice(1),
-      value: searchHere.selectedUser,
-    }];
-  } if (searchHere.users.length === 1) {
-    return [searchHere.users[0]];
+  if (searchHere.users.length >= 1) {
+    const obj = [];
+    searchHere.users.forEach((user) => {
+      if (user.value !== 'all') {
+        obj.push({ label: user.label, value: user.value });
+      }
+    });
+    obj.sort((a, b) => a.label - b.label); // sort by alphabetical order
+    obj.splice(0, 0, { label: __('All'), value: 'all' }); // make "All" the first option
+    return obj;
   }
   return [{
     label: __('None Available'),

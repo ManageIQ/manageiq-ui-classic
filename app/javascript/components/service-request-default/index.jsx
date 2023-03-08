@@ -55,6 +55,13 @@ const onSubmitData = (values, miqRequestInitialOptions) => {
     ]);
   }
 
+  if (values.selectedUser && (values.selectedUser !== 'all')) {
+    submitThis.push([
+      'with_requester',
+      values.selectedUser,
+    ]);
+  }
+
   sendDataWithRx({ type: 'setScope', namedScope: submitThis });
 };
 
