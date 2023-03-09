@@ -125,6 +125,13 @@ class ApplicationController < ActionController::Base
 
   AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
 
+  # **************************************************************************************************
+  # NOTE, this is the default error handler.                                                         *
+  # Any unrescued exception will unwind the stack until it reaches the default error handler here.   *
+  # See the error_handler method to see how we try to generically rescue exceptions.                 *
+  # **************************************************************************************************
+  rescue_from StandardError, :with => :error_handler
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
@@ -160,9 +167,6 @@ class ApplicationController < ActionController::Base
   def self.session_key_prefix
     table_name
   end
-
-  # This will rescue any un-handled exceptions
-  rescue_from StandardError, :with => :error_handler
 
   def self.handle_exceptions?
     Thread.current[:application_controller_handles_exceptions] != false
