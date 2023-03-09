@@ -1,0 +1,3644 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show Service Request Page should render 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <ServiceRequestDefault
+    miqRequestInitialOptions={
+      Object {
+        "reasonText": null,
+        "requestType": Array [
+          "MiqProvisionConfiguredSystemRequest",
+          "MiqProvisionRequest",
+          "OrchestrationStackRetireRequest",
+          "PhysicalServerProvisionRequest",
+          "PhysicalServerFirmwareUpdateRequest",
+          "ServiceRetireRequest",
+          "ServiceReconfigureRequest",
+          "ServiceTemplateProvisionRequest",
+          "VmCloudReconfigureRequest",
+          "VmMigrateRequest",
+          "VmReconfigureRequest",
+          "VmRetireRequest",
+        ],
+        "selectedPeriod": 7,
+        "selectedType": "all",
+        "selectedUser": "all",
+        "states": Array [
+          Object {
+            "checked": true,
+            "label": "Pending Approval",
+            "value": "pending_approval",
+          },
+          Object {
+            "checked": true,
+            "label": "Approved",
+            "value": "approved",
+          },
+          Object {
+            "checked": true,
+            "label": "Denied",
+            "value": "denied",
+          },
+        ],
+        "timePeriods": Array [
+          Object {
+            "label": "Last 24 Hours",
+            "value": 1,
+          },
+          Object {
+            "label": "Last 7 Days",
+            "value": 7,
+          },
+          Object {
+            "label": "Last 365 Days",
+            "value": 365,
+          },
+        ],
+        "types": Array [
+          Object {
+            "label": "All",
+            "value": "all",
+          },
+          Object {
+            "label": "Foreman Provision",
+            "value": "provision_via_foreman",
+          },
+          Object {
+            "label": "VM Provision",
+            "value": "template",
+          },
+          Object {
+            "label": "VM Clone",
+            "value": "clone_to_vm",
+          },
+          Object {
+            "label": "VM Publish",
+            "value": "clone_to_template",
+          },
+          Object {
+            "label": "Orchestration Stack Retire",
+            "value": "orchestration_stack_retire",
+          },
+          Object {
+            "label": "Physical Server Provision",
+            "value": "provision_physical_server",
+          },
+          Object {
+            "label": "Physical Server Firmware Update",
+            "value": "physical_server_firmware_update",
+          },
+          Object {
+            "label": "Service Retire",
+            "value": "service_retire",
+          },
+          Object {
+            "label": "Service Reconfigure",
+            "value": "service_reconfigure",
+          },
+          Object {
+            "label": "Service Provision",
+            "value": "clone_to_service",
+          },
+          Object {
+            "label": "VM Cloud Reconfigure",
+            "value": "vm_cloud_reconfigure",
+          },
+          Object {
+            "label": "VM Migrate",
+            "value": "vm_migrate",
+          },
+          Object {
+            "label": "VM Reconfigure",
+            "value": "vm_reconfigure",
+          },
+          Object {
+            "label": "VM Retire",
+            "value": "vm_retire",
+          },
+        ],
+        "users": Array [
+          Object {
+            "label": "Administrator",
+            "value": 1,
+          },
+          Object {
+            "label": "All",
+            "value": "all",
+          },
+        ],
+      }
+    }
+  >
+    <div
+      className="service-request-form"
+    >
+      <Connect(MiqFormRenderer)
+        FormTemplate={[Function]}
+        canReset={true}
+        onReset={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "selectedUser",
+                "isRequired": true,
+                "label": "Requester:",
+                "name": "selectedUser",
+                "options": Array [
+                  Object {
+                    "label": "All",
+                    "value": "all",
+                  },
+                  Object {
+                    "label": "Administrator",
+                    "value": 1,
+                  },
+                ],
+              },
+              Object {
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "component": "checkbox",
+                    "id": "approvalStateCheckboxes",
+                    "initialValue": Array [
+                      "pending_approval",
+                      "approved",
+                      "denied",
+                    ],
+                    "isRequired": true,
+                    "label": "Approval State:",
+                    "name": "approvalStateCheckboxes",
+                    "options": Array [
+                      Object {
+                        "label": "Pending Approval",
+                        "value": "pending_approval",
+                      },
+                      Object {
+                        "label": "Approved",
+                        "value": "approved",
+                      },
+                      Object {
+                        "label": "Denied",
+                        "value": "denied",
+                      },
+                    ],
+                  },
+                ],
+                "id": "approval_state",
+                "name": "approval_state",
+              },
+              Object {
+                "component": "select",
+                "id": "types",
+                "isRequired": true,
+                "label": "Type:",
+                "name": "types",
+                "options": Array [
+                  Object {
+                    "label": "All",
+                    "value": "all",
+                  },
+                  Object {
+                    "label": "Foreman Provision",
+                    "value": "provision_via_foreman",
+                  },
+                  Object {
+                    "label": "VM Provision",
+                    "value": "template",
+                  },
+                  Object {
+                    "label": "VM Clone",
+                    "value": "clone_to_vm",
+                  },
+                  Object {
+                    "label": "VM Publish",
+                    "value": "clone_to_template",
+                  },
+                  Object {
+                    "label": "Orchestration Stack Retire",
+                    "value": "orchestration_stack_retire",
+                  },
+                  Object {
+                    "label": "Physical Server Provision",
+                    "value": "provision_physical_server",
+                  },
+                  Object {
+                    "label": "Physical Server Firmware Update",
+                    "value": "physical_server_firmware_update",
+                  },
+                  Object {
+                    "label": "Service Retire",
+                    "value": "service_retire",
+                  },
+                  Object {
+                    "label": "Service Reconfigure",
+                    "value": "service_reconfigure",
+                  },
+                  Object {
+                    "label": "Service Provision",
+                    "value": "clone_to_service",
+                  },
+                  Object {
+                    "label": "VM Cloud Reconfigure",
+                    "value": "vm_cloud_reconfigure",
+                  },
+                  Object {
+                    "label": "VM Migrate",
+                    "value": "vm_migrate",
+                  },
+                  Object {
+                    "label": "VM Reconfigure",
+                    "value": "vm_reconfigure",
+                  },
+                  Object {
+                    "label": "VM Retire",
+                    "value": "vm_retire",
+                  },
+                ],
+              },
+              Object {
+                "component": "select",
+                "id": "selectedPeriod",
+                "initialValue": 7,
+                "isRequired": true,
+                "label": "Request Date:",
+                "name": "selectedPeriod",
+                "options": Array [
+                  Object {
+                    "label": "Last 24 Hours",
+                    "value": 1,
+                  },
+                  Object {
+                    "label": "Last 7 Days",
+                    "value": 7,
+                  },
+                  Object {
+                    "label": "Last 365 Days",
+                    "value": 365,
+                  },
+                ],
+              },
+              Object {
+                "component": "text-field",
+                "id": "reasonText",
+                "label": "Reason:",
+                "maxLength": 128,
+                "name": "reasonText",
+              },
+            ],
+          }
+        }
+      >
+        <MiqFormRenderer
+          FormTemplate={[Function]}
+          buttonsLabels={Object {}}
+          canReset={true}
+          className="form-react"
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          disableSubmit={
+            Array [
+              "pristine",
+              "invalid",
+            ]
+          }
+          dispatch={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "selectedUser",
+                  "isRequired": true,
+                  "label": "Requester:",
+                  "name": "selectedUser",
+                  "options": Array [
+                    Object {
+                      "label": "All",
+                      "value": "all",
+                    },
+                    Object {
+                      "label": "Administrator",
+                      "value": 1,
+                    },
+                  ],
+                },
+                Object {
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "component": "checkbox",
+                      "id": "approvalStateCheckboxes",
+                      "initialValue": Array [
+                        "pending_approval",
+                        "approved",
+                        "denied",
+                      ],
+                      "isRequired": true,
+                      "label": "Approval State:",
+                      "name": "approvalStateCheckboxes",
+                      "options": Array [
+                        Object {
+                          "label": "Pending Approval",
+                          "value": "pending_approval",
+                        },
+                        Object {
+                          "label": "Approved",
+                          "value": "approved",
+                        },
+                        Object {
+                          "label": "Denied",
+                          "value": "denied",
+                        },
+                      ],
+                    },
+                  ],
+                  "id": "approval_state",
+                  "name": "approval_state",
+                },
+                Object {
+                  "component": "select",
+                  "id": "types",
+                  "isRequired": true,
+                  "label": "Type:",
+                  "name": "types",
+                  "options": Array [
+                    Object {
+                      "label": "All",
+                      "value": "all",
+                    },
+                    Object {
+                      "label": "Foreman Provision",
+                      "value": "provision_via_foreman",
+                    },
+                    Object {
+                      "label": "VM Provision",
+                      "value": "template",
+                    },
+                    Object {
+                      "label": "VM Clone",
+                      "value": "clone_to_vm",
+                    },
+                    Object {
+                      "label": "VM Publish",
+                      "value": "clone_to_template",
+                    },
+                    Object {
+                      "label": "Orchestration Stack Retire",
+                      "value": "orchestration_stack_retire",
+                    },
+                    Object {
+                      "label": "Physical Server Provision",
+                      "value": "provision_physical_server",
+                    },
+                    Object {
+                      "label": "Physical Server Firmware Update",
+                      "value": "physical_server_firmware_update",
+                    },
+                    Object {
+                      "label": "Service Retire",
+                      "value": "service_retire",
+                    },
+                    Object {
+                      "label": "Service Reconfigure",
+                      "value": "service_reconfigure",
+                    },
+                    Object {
+                      "label": "Service Provision",
+                      "value": "clone_to_service",
+                    },
+                    Object {
+                      "label": "VM Cloud Reconfigure",
+                      "value": "vm_cloud_reconfigure",
+                    },
+                    Object {
+                      "label": "VM Migrate",
+                      "value": "vm_migrate",
+                    },
+                    Object {
+                      "label": "VM Reconfigure",
+                      "value": "vm_reconfigure",
+                    },
+                    Object {
+                      "label": "VM Retire",
+                      "value": "vm_retire",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "id": "selectedPeriod",
+                  "initialValue": 7,
+                  "isRequired": true,
+                  "label": "Request Date:",
+                  "name": "selectedPeriod",
+                  "options": Array [
+                    Object {
+                      "label": "Last 24 Hours",
+                      "value": 1,
+                    },
+                    Object {
+                      "label": "Last 7 Days",
+                      "value": 7,
+                    },
+                    Object {
+                      "label": "Last 365 Days",
+                      "value": 365,
+                    },
+                  ],
+                },
+                Object {
+                  "component": "text-field",
+                  "id": "reasonText",
+                  "label": "Reason:",
+                  "maxLength": 128,
+                  "name": "reasonText",
+                },
+              ],
+            }
+          }
+          showFormControls={true}
+        >
+          <FormRenderer
+            FormTemplate={[Function]}
+            clearOnUnmount={false}
+            componentMapper={
+              Object {
+                "checkbox": [Function],
+                "code-editor": [Function],
+                "date-picker": [Function],
+                "dual-list-select": [Function],
+                "edit-password-field": [Function],
+                "field-array": [Function],
+                "file-upload": [Function],
+                "font-icon-picker": [Function],
+                "font-icon-picker-ddf": [Function],
+                "multi-select": [Function],
+                "password-field": [Function],
+                "plain-text": [Function],
+                "radio": [Function],
+                "select": [Function],
+                "slider": [Function],
+                "spy-field": [Function],
+                "sub-form": [Function],
+                "switch": [Function],
+                "tabs": [Function],
+                "text-field": [Function],
+                "textarea": [Function],
+                "time-picker": [Function],
+                "tree-selector": [Function],
+                "tree-view": [Function],
+                "validate-credentials": [Function],
+                "wizard": [Function],
+              }
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            onReset={[Function]}
+            onSubmit={[Function]}
+            schema={
+              Object {
+                "fields": Array [
+                  Object {
+                    "component": "select",
+                    "id": "selectedUser",
+                    "isRequired": true,
+                    "label": "Requester:",
+                    "name": "selectedUser",
+                    "options": Array [
+                      Object {
+                        "label": "All",
+                        "value": "all",
+                      },
+                      Object {
+                        "label": "Administrator",
+                        "value": 1,
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "sub-form",
+                    "fields": Array [
+                      Object {
+                        "component": "checkbox",
+                        "id": "approvalStateCheckboxes",
+                        "initialValue": Array [
+                          "pending_approval",
+                          "approved",
+                          "denied",
+                        ],
+                        "isRequired": true,
+                        "label": "Approval State:",
+                        "name": "approvalStateCheckboxes",
+                        "options": Array [
+                          Object {
+                            "label": "Pending Approval",
+                            "value": "pending_approval",
+                          },
+                          Object {
+                            "label": "Approved",
+                            "value": "approved",
+                          },
+                          Object {
+                            "label": "Denied",
+                            "value": "denied",
+                          },
+                        ],
+                      },
+                    ],
+                    "id": "approval_state",
+                    "name": "approval_state",
+                  },
+                  Object {
+                    "component": "select",
+                    "id": "types",
+                    "isRequired": true,
+                    "label": "Type:",
+                    "name": "types",
+                    "options": Array [
+                      Object {
+                        "label": "All",
+                        "value": "all",
+                      },
+                      Object {
+                        "label": "Foreman Provision",
+                        "value": "provision_via_foreman",
+                      },
+                      Object {
+                        "label": "VM Provision",
+                        "value": "template",
+                      },
+                      Object {
+                        "label": "VM Clone",
+                        "value": "clone_to_vm",
+                      },
+                      Object {
+                        "label": "VM Publish",
+                        "value": "clone_to_template",
+                      },
+                      Object {
+                        "label": "Orchestration Stack Retire",
+                        "value": "orchestration_stack_retire",
+                      },
+                      Object {
+                        "label": "Physical Server Provision",
+                        "value": "provision_physical_server",
+                      },
+                      Object {
+                        "label": "Physical Server Firmware Update",
+                        "value": "physical_server_firmware_update",
+                      },
+                      Object {
+                        "label": "Service Retire",
+                        "value": "service_retire",
+                      },
+                      Object {
+                        "label": "Service Reconfigure",
+                        "value": "service_reconfigure",
+                      },
+                      Object {
+                        "label": "Service Provision",
+                        "value": "clone_to_service",
+                      },
+                      Object {
+                        "label": "VM Cloud Reconfigure",
+                        "value": "vm_cloud_reconfigure",
+                      },
+                      Object {
+                        "label": "VM Migrate",
+                        "value": "vm_migrate",
+                      },
+                      Object {
+                        "label": "VM Reconfigure",
+                        "value": "vm_reconfigure",
+                      },
+                      Object {
+                        "label": "VM Retire",
+                        "value": "vm_retire",
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "select",
+                    "id": "selectedPeriod",
+                    "initialValue": 7,
+                    "isRequired": true,
+                    "label": "Request Date:",
+                    "name": "selectedPeriod",
+                    "options": Array [
+                      Object {
+                        "label": "Last 24 Hours",
+                        "value": 1,
+                      },
+                      Object {
+                        "label": "Last 7 Days",
+                        "value": 7,
+                      },
+                      Object {
+                        "label": "Last 365 Days",
+                        "value": 365,
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "text-field",
+                    "id": "reasonText",
+                    "label": "Reason:",
+                    "maxLength": 128,
+                    "name": "reasonText",
+                  },
+                  Object {
+                    "component": "spy-field",
+                    "initialize": undefined,
+                    "name": "spy-field",
+                  },
+                ],
+              }
+            }
+          >
+            <ReactFinalForm
+              decorators={
+                Array [
+                  [Function],
+                ]
+              }
+              dispatch={[Function]}
+              initialValues={Object {}}
+              mutators={
+                Object {
+                  "concat": [Function],
+                  "insert": [Function],
+                  "move": [Function],
+                  "pop": [Function],
+                  "push": [Function],
+                  "remove": [Function],
+                  "removeBatch": [Function],
+                  "shift": [Function],
+                  "swap": [Function],
+                  "unshift": [Function],
+                  "update": [Function],
+                }
+              }
+              onSubmit={[Function]}
+              render={[Function]}
+              subscription={
+                Object {
+                  "pristine": true,
+                  "submitting": true,
+                  "valid": true,
+                }
+              }
+            >
+              <FormTemplate
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="selectedUser"
+                      isRequired={true}
+                      label="Requester:"
+                      name="selectedUser"
+                      options={
+                        Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Administrator",
+                            "value": 1,
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="sub-form"
+                      fields={
+                        Array [
+                          Object {
+                            "component": "checkbox",
+                            "id": "approvalStateCheckboxes",
+                            "initialValue": Array [
+                              "pending_approval",
+                              "approved",
+                              "denied",
+                            ],
+                            "isRequired": true,
+                            "label": "Approval State:",
+                            "name": "approvalStateCheckboxes",
+                            "options": Array [
+                              Object {
+                                "label": "Pending Approval",
+                                "value": "pending_approval",
+                              },
+                              Object {
+                                "label": "Approved",
+                                "value": "approved",
+                              },
+                              Object {
+                                "label": "Denied",
+                                "value": "denied",
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                      id="approval_state"
+                      name="approval_state"
+                    />,
+                    <SingleField
+                      component="select"
+                      id="types"
+                      isRequired={true}
+                      label="Type:"
+                      name="types"
+                      options={
+                        Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Foreman Provision",
+                            "value": "provision_via_foreman",
+                          },
+                          Object {
+                            "label": "VM Provision",
+                            "value": "template",
+                          },
+                          Object {
+                            "label": "VM Clone",
+                            "value": "clone_to_vm",
+                          },
+                          Object {
+                            "label": "VM Publish",
+                            "value": "clone_to_template",
+                          },
+                          Object {
+                            "label": "Orchestration Stack Retire",
+                            "value": "orchestration_stack_retire",
+                          },
+                          Object {
+                            "label": "Physical Server Provision",
+                            "value": "provision_physical_server",
+                          },
+                          Object {
+                            "label": "Physical Server Firmware Update",
+                            "value": "physical_server_firmware_update",
+                          },
+                          Object {
+                            "label": "Service Retire",
+                            "value": "service_retire",
+                          },
+                          Object {
+                            "label": "Service Reconfigure",
+                            "value": "service_reconfigure",
+                          },
+                          Object {
+                            "label": "Service Provision",
+                            "value": "clone_to_service",
+                          },
+                          Object {
+                            "label": "VM Cloud Reconfigure",
+                            "value": "vm_cloud_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Migrate",
+                            "value": "vm_migrate",
+                          },
+                          Object {
+                            "label": "VM Reconfigure",
+                            "value": "vm_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Retire",
+                            "value": "vm_retire",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="select"
+                      id="selectedPeriod"
+                      initialValue={7}
+                      isRequired={true}
+                      label="Request Date:"
+                      name="selectedPeriod"
+                      options={
+                        Array [
+                          Object {
+                            "label": "Last 24 Hours",
+                            "value": 1,
+                          },
+                          Object {
+                            "label": "Last 7 Days",
+                            "value": 7,
+                          },
+                          Object {
+                            "label": "Last 365 Days",
+                            "value": 365,
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="text-field"
+                      id="reasonText"
+                      label="Reason:"
+                      maxLength={128}
+                      name="reasonText"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "selectedUser",
+                        "isRequired": true,
+                        "label": "Requester:",
+                        "name": "selectedUser",
+                        "options": Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Administrator",
+                            "value": 1,
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "sub-form",
+                        "fields": Array [
+                          Object {
+                            "component": "checkbox",
+                            "id": "approvalStateCheckboxes",
+                            "initialValue": Array [
+                              "pending_approval",
+                              "approved",
+                              "denied",
+                            ],
+                            "isRequired": true,
+                            "label": "Approval State:",
+                            "name": "approvalStateCheckboxes",
+                            "options": Array [
+                              Object {
+                                "label": "Pending Approval",
+                                "value": "pending_approval",
+                              },
+                              Object {
+                                "label": "Approved",
+                                "value": "approved",
+                              },
+                              Object {
+                                "label": "Denied",
+                                "value": "denied",
+                              },
+                            ],
+                          },
+                        ],
+                        "id": "approval_state",
+                        "name": "approval_state",
+                      },
+                      Object {
+                        "component": "select",
+                        "id": "types",
+                        "isRequired": true,
+                        "label": "Type:",
+                        "name": "types",
+                        "options": Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Foreman Provision",
+                            "value": "provision_via_foreman",
+                          },
+                          Object {
+                            "label": "VM Provision",
+                            "value": "template",
+                          },
+                          Object {
+                            "label": "VM Clone",
+                            "value": "clone_to_vm",
+                          },
+                          Object {
+                            "label": "VM Publish",
+                            "value": "clone_to_template",
+                          },
+                          Object {
+                            "label": "Orchestration Stack Retire",
+                            "value": "orchestration_stack_retire",
+                          },
+                          Object {
+                            "label": "Physical Server Provision",
+                            "value": "provision_physical_server",
+                          },
+                          Object {
+                            "label": "Physical Server Firmware Update",
+                            "value": "physical_server_firmware_update",
+                          },
+                          Object {
+                            "label": "Service Retire",
+                            "value": "service_retire",
+                          },
+                          Object {
+                            "label": "Service Reconfigure",
+                            "value": "service_reconfigure",
+                          },
+                          Object {
+                            "label": "Service Provision",
+                            "value": "clone_to_service",
+                          },
+                          Object {
+                            "label": "VM Cloud Reconfigure",
+                            "value": "vm_cloud_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Migrate",
+                            "value": "vm_migrate",
+                          },
+                          Object {
+                            "label": "VM Reconfigure",
+                            "value": "vm_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Retire",
+                            "value": "vm_retire",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "select",
+                        "id": "selectedPeriod",
+                        "initialValue": 7,
+                        "isRequired": true,
+                        "label": "Request Date:",
+                        "name": "selectedPeriod",
+                        "options": Array [
+                          Object {
+                            "label": "Last 24 Hours",
+                            "value": 1,
+                          },
+                          Object {
+                            "label": "Last 7 Days",
+                            "value": 7,
+                          },
+                          Object {
+                            "label": "Last 365 Days",
+                            "value": 365,
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "text-field",
+                        "id": "reasonText",
+                        "label": "Reason:",
+                        "maxLength": 128,
+                        "name": "reasonText",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+              >
+                <FormTemplate
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="selectedUser"
+                        isRequired={true}
+                        label="Requester:"
+                        name="selectedUser"
+                        options={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "value": "all",
+                            },
+                            Object {
+                              "label": "Administrator",
+                              "value": 1,
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="sub-form"
+                        fields={
+                          Array [
+                            Object {
+                              "component": "checkbox",
+                              "id": "approvalStateCheckboxes",
+                              "initialValue": Array [
+                                "pending_approval",
+                                "approved",
+                                "denied",
+                              ],
+                              "isRequired": true,
+                              "label": "Approval State:",
+                              "name": "approvalStateCheckboxes",
+                              "options": Array [
+                                Object {
+                                  "label": "Pending Approval",
+                                  "value": "pending_approval",
+                                },
+                                Object {
+                                  "label": "Approved",
+                                  "value": "approved",
+                                },
+                                Object {
+                                  "label": "Denied",
+                                  "value": "denied",
+                                },
+                              ],
+                            },
+                          ]
+                        }
+                        id="approval_state"
+                        name="approval_state"
+                      />,
+                      <SingleField
+                        component="select"
+                        id="types"
+                        isRequired={true}
+                        label="Type:"
+                        name="types"
+                        options={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "value": "all",
+                            },
+                            Object {
+                              "label": "Foreman Provision",
+                              "value": "provision_via_foreman",
+                            },
+                            Object {
+                              "label": "VM Provision",
+                              "value": "template",
+                            },
+                            Object {
+                              "label": "VM Clone",
+                              "value": "clone_to_vm",
+                            },
+                            Object {
+                              "label": "VM Publish",
+                              "value": "clone_to_template",
+                            },
+                            Object {
+                              "label": "Orchestration Stack Retire",
+                              "value": "orchestration_stack_retire",
+                            },
+                            Object {
+                              "label": "Physical Server Provision",
+                              "value": "provision_physical_server",
+                            },
+                            Object {
+                              "label": "Physical Server Firmware Update",
+                              "value": "physical_server_firmware_update",
+                            },
+                            Object {
+                              "label": "Service Retire",
+                              "value": "service_retire",
+                            },
+                            Object {
+                              "label": "Service Reconfigure",
+                              "value": "service_reconfigure",
+                            },
+                            Object {
+                              "label": "Service Provision",
+                              "value": "clone_to_service",
+                            },
+                            Object {
+                              "label": "VM Cloud Reconfigure",
+                              "value": "vm_cloud_reconfigure",
+                            },
+                            Object {
+                              "label": "VM Migrate",
+                              "value": "vm_migrate",
+                            },
+                            Object {
+                              "label": "VM Reconfigure",
+                              "value": "vm_reconfigure",
+                            },
+                            Object {
+                              "label": "VM Retire",
+                              "value": "vm_retire",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="select"
+                        id="selectedPeriod"
+                        initialValue={7}
+                        isRequired={true}
+                        label="Request Date:"
+                        name="selectedPeriod"
+                        options={
+                          Array [
+                            Object {
+                              "label": "Last 24 Hours",
+                              "value": 1,
+                            },
+                            Object {
+                              "label": "Last 7 Days",
+                              "value": 7,
+                            },
+                            Object {
+                              "label": "Last 365 Days",
+                              "value": 365,
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="text-field"
+                        id="reasonText"
+                        label="Reason:"
+                        maxLength={128}
+                        name="reasonText"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "selectedUser",
+                          "isRequired": true,
+                          "label": "Requester:",
+                          "name": "selectedUser",
+                          "options": Array [
+                            Object {
+                              "label": "All",
+                              "value": "all",
+                            },
+                            Object {
+                              "label": "Administrator",
+                              "value": 1,
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "sub-form",
+                          "fields": Array [
+                            Object {
+                              "component": "checkbox",
+                              "id": "approvalStateCheckboxes",
+                              "initialValue": Array [
+                                "pending_approval",
+                                "approved",
+                                "denied",
+                              ],
+                              "isRequired": true,
+                              "label": "Approval State:",
+                              "name": "approvalStateCheckboxes",
+                              "options": Array [
+                                Object {
+                                  "label": "Pending Approval",
+                                  "value": "pending_approval",
+                                },
+                                Object {
+                                  "label": "Approved",
+                                  "value": "approved",
+                                },
+                                Object {
+                                  "label": "Denied",
+                                  "value": "denied",
+                                },
+                              ],
+                            },
+                          ],
+                          "id": "approval_state",
+                          "name": "approval_state",
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "types",
+                          "isRequired": true,
+                          "label": "Type:",
+                          "name": "types",
+                          "options": Array [
+                            Object {
+                              "label": "All",
+                              "value": "all",
+                            },
+                            Object {
+                              "label": "Foreman Provision",
+                              "value": "provision_via_foreman",
+                            },
+                            Object {
+                              "label": "VM Provision",
+                              "value": "template",
+                            },
+                            Object {
+                              "label": "VM Clone",
+                              "value": "clone_to_vm",
+                            },
+                            Object {
+                              "label": "VM Publish",
+                              "value": "clone_to_template",
+                            },
+                            Object {
+                              "label": "Orchestration Stack Retire",
+                              "value": "orchestration_stack_retire",
+                            },
+                            Object {
+                              "label": "Physical Server Provision",
+                              "value": "provision_physical_server",
+                            },
+                            Object {
+                              "label": "Physical Server Firmware Update",
+                              "value": "physical_server_firmware_update",
+                            },
+                            Object {
+                              "label": "Service Retire",
+                              "value": "service_retire",
+                            },
+                            Object {
+                              "label": "Service Reconfigure",
+                              "value": "service_reconfigure",
+                            },
+                            Object {
+                              "label": "Service Provision",
+                              "value": "clone_to_service",
+                            },
+                            Object {
+                              "label": "VM Cloud Reconfigure",
+                              "value": "vm_cloud_reconfigure",
+                            },
+                            Object {
+                              "label": "VM Migrate",
+                              "value": "vm_migrate",
+                            },
+                            Object {
+                              "label": "VM Reconfigure",
+                              "value": "vm_reconfigure",
+                            },
+                            Object {
+                              "label": "VM Retire",
+                              "value": "vm_retire",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "select",
+                          "id": "selectedPeriod",
+                          "initialValue": 7,
+                          "isRequired": true,
+                          "label": "Request Date:",
+                          "name": "selectedPeriod",
+                          "options": Array [
+                            Object {
+                              "label": "Last 24 Hours",
+                              "value": 1,
+                            },
+                            Object {
+                              "label": "Last 7 Days",
+                              "value": 7,
+                            },
+                            Object {
+                              "label": "Last 365 Days",
+                              "value": 365,
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "text-field",
+                          "id": "reasonText",
+                          "label": "Reason:",
+                          "maxLength": 128,
+                          "name": "reasonText",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                >
+                  <form
+                    onSubmit={[Function]}
+                  >
+                    <SingleField
+                      component="select"
+                      id="selectedUser"
+                      isRequired={true}
+                      key="selectedUser"
+                      label="Requester:"
+                      name="selectedUser"
+                      options={
+                        Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Administrator",
+                            "value": 1,
+                          },
+                        ]
+                      }
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "select",
+                            "id": "selectedUser",
+                            "isRequired": true,
+                            "label": "Requester:",
+                            "name": "selectedUser",
+                            "options": Array [
+                              Object {
+                                "label": "All",
+                                "value": "all",
+                              },
+                              Object {
+                                "label": "Administrator",
+                                "value": 1,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <SelectWithOnChange
+                            component="select"
+                            id="selectedUser"
+                            isRequired={true}
+                            label="Requester:"
+                            name="selectedUser"
+                            options={
+                              Array [
+                                Object {
+                                  "label": "All",
+                                  "value": "all",
+                                },
+                                Object {
+                                  "label": "Administrator",
+                                  "value": 1,
+                                },
+                              ]
+                            }
+                            placeholder="<Choose>"
+                          >
+                            <Select
+                              component="select"
+                              id="selectedUser"
+                              isRequired={true}
+                              label="Requester:"
+                              loadingMessage="Loading..."
+                              name="selectedUser"
+                              options={
+                                Array [
+                                  Object {
+                                    "label": "All",
+                                    "value": "all",
+                                  },
+                                  Object {
+                                    "label": "Administrator",
+                                    "value": 1,
+                                  },
+                                ]
+                              }
+                              placeholder="<Choose>"
+                            >
+                              <Select
+                                SelectComponent={[Function]}
+                                id="selectedUser"
+                                invalid={false}
+                                invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
+                                labelText={
+                                  <IsRequired>
+                                    Requester:
+                                  </IsRequired>
+                                }
+                                loadOptionsChangeCounter={1}
+                                loadingMessage="Loading..."
+                                name="selectedUser"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "All",
+                                      "value": "all",
+                                    },
+                                    Object {
+                                      "label": "Administrator",
+                                      "value": 1,
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                                pluckSingleValue={true}
+                                simpleValue={false}
+                                value=""
+                              >
+                                <ClearedSelect
+                                  className=""
+                                  closeMenuOnSelect={true}
+                                  hideSelectedOptions={false}
+                                  id="selectedUser"
+                                  invalidText=""
+                                  isClearable={false}
+                                  isFetching={false}
+                                  isSearchable={false}
+                                  labelText={
+                                    <IsRequired>
+                                      Requester:
+                                    </IsRequired>
+                                  }
+                                  name="selectedUser"
+                                  noOptionsMessage={[Function]}
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onFocus={[Function]}
+                                  onInputChange={[Function]}
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "All",
+                                        "value": "all",
+                                      },
+                                      Object {
+                                        "label": "Administrator",
+                                        "value": 1,
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                  value=""
+                                >
+                                  <Select
+                                    className=""
+                                    disabled={false}
+                                    helperText=""
+                                    id="selectedUser"
+                                    inline={false}
+                                    invalid={false}
+                                    invalidText=""
+                                    labelText={
+                                      <IsRequired>
+                                        Requester:
+                                      </IsRequired>
+                                    }
+                                    light={false}
+                                    name="selectedUser"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    value=""
+                                  >
+                                    <div
+                                      className="bx--form-item"
+                                    >
+                                      <div
+                                        className="bx--select"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="selectedUser"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                            >
+                                              *
+                                            </span>
+                                            Requester:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--select-input__wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <select
+                                            className="bx--select-input"
+                                            id="selectedUser"
+                                            name="selectedUser"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            value=""
+                                          >
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="all"
+                                              label="All"
+                                              text="All"
+                                              value="all"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="All"
+                                                value="all"
+                                              >
+                                                All
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="1"
+                                              label="Administrator"
+                                              text="Administrator"
+                                              value={1}
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Administrator"
+                                                value={1}
+                                              >
+                                                Administrator
+                                              </option>
+                                            </SelectItem>
+                                          </select>
+                                          <ForwardRef(ChevronDown16)
+                                            className="bx--select__arrow"
+                                          >
+                                            <Icon
+                                              className="bx--select__arrow"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 16 16"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--select__arrow"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 16 16"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(ChevronDown16)>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Select>
+                                </ClearedSelect>
+                              </Select>
+                            </Select>
+                          </SelectWithOnChange>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <SingleField
+                      component="sub-form"
+                      fields={
+                        Array [
+                          Object {
+                            "component": "checkbox",
+                            "id": "approvalStateCheckboxes",
+                            "initialValue": Array [
+                              "pending_approval",
+                              "approved",
+                              "denied",
+                            ],
+                            "isRequired": true,
+                            "label": "Approval State:",
+                            "name": "approvalStateCheckboxes",
+                            "options": Array [
+                              Object {
+                                "label": "Pending Approval",
+                                "value": "pending_approval",
+                              },
+                              Object {
+                                "label": "Approved",
+                                "value": "approved",
+                              },
+                              Object {
+                                "label": "Denied",
+                                "value": "denied",
+                              },
+                            ],
+                          },
+                        ]
+                      }
+                      id="approval_state"
+                      key="approval_state"
+                      name="approval_state"
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "sub-form",
+                            "fields": Array [
+                              Object {
+                                "component": "checkbox",
+                                "id": "approvalStateCheckboxes",
+                                "initialValue": Array [
+                                  "pending_approval",
+                                  "approved",
+                                  "denied",
+                                ],
+                                "isRequired": true,
+                                "label": "Approval State:",
+                                "name": "approvalStateCheckboxes",
+                                "options": Array [
+                                  Object {
+                                    "label": "Pending Approval",
+                                    "value": "pending_approval",
+                                  },
+                                  Object {
+                                    "label": "Approved",
+                                    "value": "approved",
+                                  },
+                                  Object {
+                                    "label": "Denied",
+                                    "value": "denied",
+                                  },
+                                ],
+                              },
+                            ],
+                            "id": "approval_state",
+                            "name": "approval_state",
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <SubForm
+                            DescriptionElement="p"
+                            TitleElement="h3"
+                            component="sub-form"
+                            fields={
+                              Array [
+                                Object {
+                                  "component": "checkbox",
+                                  "id": "approvalStateCheckboxes",
+                                  "initialValue": Array [
+                                    "pending_approval",
+                                    "approved",
+                                    "denied",
+                                  ],
+                                  "isRequired": true,
+                                  "label": "Approval State:",
+                                  "name": "approvalStateCheckboxes",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Pending Approval",
+                                      "value": "pending_approval",
+                                    },
+                                    Object {
+                                      "label": "Approved",
+                                      "value": "approved",
+                                    },
+                                    Object {
+                                      "label": "Denied",
+                                      "value": "denied",
+                                    },
+                                  ],
+                                },
+                              ]
+                            }
+                            id="approval_state"
+                            name="approval_state"
+                          >
+                            <div
+                              className=""
+                              id="approval_state"
+                              name="approval_state"
+                            >
+                              <SingleField
+                                component="checkbox"
+                                id="approvalStateCheckboxes"
+                                initialValue={
+                                  Array [
+                                    "pending_approval",
+                                    "approved",
+                                    "denied",
+                                  ]
+                                }
+                                isRequired={true}
+                                key="approvalStateCheckboxes"
+                                label="Approval State:"
+                                name="approvalStateCheckboxes"
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "Pending Approval",
+                                      "value": "pending_approval",
+                                    },
+                                    Object {
+                                      "label": "Approved",
+                                      "value": "approved",
+                                    },
+                                    Object {
+                                      "label": "Denied",
+                                      "value": "denied",
+                                    },
+                                  ]
+                                }
+                              >
+                                <FormConditionWrapper
+                                  field={
+                                    Object {
+                                      "component": "checkbox",
+                                      "id": "approvalStateCheckboxes",
+                                      "initialValue": Array [
+                                        "pending_approval",
+                                        "approved",
+                                        "denied",
+                                      ],
+                                      "isRequired": true,
+                                      "label": "Approval State:",
+                                      "name": "approvalStateCheckboxes",
+                                      "options": Array [
+                                        Object {
+                                          "label": "Pending Approval",
+                                          "value": "pending_approval",
+                                        },
+                                        Object {
+                                          "label": "Approved",
+                                          "value": "approved",
+                                        },
+                                        Object {
+                                          "label": "Denied",
+                                          "value": "denied",
+                                        },
+                                      ],
+                                    }
+                                  }
+                                >
+                                  <FormFieldHideWrapper
+                                    hideField={false}
+                                  >
+                                    <Checkbox
+                                      component="checkbox"
+                                      id="approvalStateCheckboxes"
+                                      initialValue={
+                                        Array [
+                                          "pending_approval",
+                                          "approved",
+                                          "denied",
+                                        ]
+                                      }
+                                      isRequired={true}
+                                      label="Approval State:"
+                                      name="approvalStateCheckboxes"
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "Pending Approval",
+                                            "value": "pending_approval",
+                                          },
+                                          Object {
+                                            "label": "Approved",
+                                            "value": "approved",
+                                          },
+                                          Object {
+                                            "label": "Denied",
+                                            "value": "denied",
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <MultipleChoiceList
+                                        Checkbox={[Function]}
+                                        Wrapper={[Function]}
+                                        component="checkbox"
+                                        id="approvalStateCheckboxes"
+                                        initialValue={
+                                          Array [
+                                            "pending_approval",
+                                            "approved",
+                                            "denied",
+                                          ]
+                                        }
+                                        isRequired={true}
+                                        label="Approval State:"
+                                        name="approvalStateCheckboxes"
+                                        options={
+                                          Array [
+                                            Object {
+                                              "label": "Pending Approval",
+                                              "value": "pending_approval",
+                                            },
+                                            Object {
+                                              "label": "Approved",
+                                              "value": "approved",
+                                            },
+                                            Object {
+                                              "label": "Denied",
+                                              "value": "denied",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Wrapper
+                                          isRequired={true}
+                                          label="Approval State:"
+                                          meta={
+                                            Object {
+                                              "active": false,
+                                              "data": Object {},
+                                              "dirty": false,
+                                              "dirtySinceLastSubmit": false,
+                                              "error": undefined,
+                                              "initial": Array [
+                                                "pending_approval",
+                                                "approved",
+                                                "denied",
+                                              ],
+                                              "invalid": false,
+                                              "length": 3,
+                                              "modified": false,
+                                              "modifiedSinceLastSubmit": false,
+                                              "pristine": true,
+                                              "submitError": undefined,
+                                              "submitFailed": false,
+                                              "submitSucceeded": false,
+                                              "submitting": false,
+                                              "touched": false,
+                                              "valid": true,
+                                              "validating": false,
+                                              "visited": false,
+                                            }
+                                          }
+                                          name="approvalStateCheckboxes"
+                                          rest={
+                                            Object {
+                                              "id": "approvalStateCheckboxes",
+                                            }
+                                          }
+                                          showError={false}
+                                        >
+                                          <FormGroup
+                                            hasMargin={true}
+                                            invalid={false}
+                                            legendText={
+                                              <IsRequired>
+                                                Approval State:
+                                              </IsRequired>
+                                            }
+                                            message={false}
+                                            messageText=""
+                                          >
+                                            <fieldset
+                                              className="bx--fieldset"
+                                            >
+                                              <legend
+                                                className="bx--label"
+                                              >
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                                  >
+                                                    *
+                                                  </span>
+                                                  Approval State:
+                                                </IsRequired>
+                                              </legend>
+                                              <SingleCheckbox
+                                                Checkbox={[Function]}
+                                                aria-label="Pending Approval"
+                                                id="approvalStateCheckboxes-pending_approval"
+                                                key="approvalStateCheckboxes-pending_approval"
+                                                label="Pending Approval"
+                                                name="approvalStateCheckboxes"
+                                                option={
+                                                  Object {
+                                                    "label": "Pending Approval",
+                                                    "value": "pending_approval",
+                                                  }
+                                                }
+                                                value="pending_approval"
+                                              >
+                                                <SingleCheckboxInCommon
+                                                  aria-label="Pending Approval"
+                                                  checked={true}
+                                                  id="approvalStateCheckboxes-pending_approval"
+                                                  label="Pending Approval"
+                                                  meta={
+                                                    Object {
+                                                      "active": false,
+                                                      "data": Object {},
+                                                      "dirty": false,
+                                                      "dirtySinceLastSubmit": false,
+                                                      "error": undefined,
+                                                      "initial": Array [
+                                                        "pending_approval",
+                                                        "approved",
+                                                        "denied",
+                                                      ],
+                                                      "invalid": false,
+                                                      "length": 3,
+                                                      "modified": false,
+                                                      "modifiedSinceLastSubmit": false,
+                                                      "pristine": true,
+                                                      "submitError": undefined,
+                                                      "submitFailed": false,
+                                                      "submitSucceeded": false,
+                                                      "submitting": false,
+                                                      "touched": false,
+                                                      "valid": true,
+                                                      "validating": false,
+                                                      "visited": false,
+                                                    }
+                                                  }
+                                                  name="approvalStateCheckboxes"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  option={
+                                                    Object {
+                                                      "label": "Pending Approval",
+                                                      "value": "pending_approval",
+                                                    }
+                                                  }
+                                                  type="checkbox"
+                                                  value="pending_approval"
+                                                >
+                                                  <Checkbox
+                                                    aria-label="Pending Approval"
+                                                    checked={true}
+                                                    id="approvalStateCheckboxes-pending_approval"
+                                                    indeterminate={false}
+                                                    label="Pending Approval"
+                                                    labelText="Pending Approval"
+                                                    name="approvalStateCheckboxes"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="checkbox"
+                                                    value="pending_approval"
+                                                  >
+                                                    <div
+                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                    >
+                                                      <input
+                                                        aria-label="Pending Approval"
+                                                        checked={true}
+                                                        className="bx--checkbox"
+                                                        id="approvalStateCheckboxes-pending_approval"
+                                                        label="Pending Approval"
+                                                        name="approvalStateCheckboxes"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="checkbox"
+                                                        value="pending_approval"
+                                                      />
+                                                      <label
+                                                        className="bx--checkbox-label"
+                                                        htmlFor="approvalStateCheckboxes-pending_approval"
+                                                        title={null}
+                                                      >
+                                                        <Text
+                                                          className="bx--checkbox-label-text"
+                                                        >
+                                                          <span
+                                                            className="bx--checkbox-label-text"
+                                                            dir="auto"
+                                                          >
+                                                            Pending Approval
+                                                          </span>
+                                                        </Text>
+                                                      </label>
+                                                    </div>
+                                                  </Checkbox>
+                                                </SingleCheckboxInCommon>
+                                              </SingleCheckbox>
+                                              <SingleCheckbox
+                                                Checkbox={[Function]}
+                                                aria-label="Approved"
+                                                id="approvalStateCheckboxes-approved"
+                                                key="approvalStateCheckboxes-approved"
+                                                label="Approved"
+                                                name="approvalStateCheckboxes"
+                                                option={
+                                                  Object {
+                                                    "label": "Approved",
+                                                    "value": "approved",
+                                                  }
+                                                }
+                                                value="approved"
+                                              >
+                                                <SingleCheckboxInCommon
+                                                  aria-label="Approved"
+                                                  checked={true}
+                                                  id="approvalStateCheckboxes-approved"
+                                                  label="Approved"
+                                                  meta={
+                                                    Object {
+                                                      "active": false,
+                                                      "data": Object {},
+                                                      "dirty": false,
+                                                      "dirtySinceLastSubmit": false,
+                                                      "error": undefined,
+                                                      "initial": Array [
+                                                        "pending_approval",
+                                                        "approved",
+                                                        "denied",
+                                                      ],
+                                                      "invalid": false,
+                                                      "length": 3,
+                                                      "modified": false,
+                                                      "modifiedSinceLastSubmit": false,
+                                                      "pristine": true,
+                                                      "submitError": undefined,
+                                                      "submitFailed": false,
+                                                      "submitSucceeded": false,
+                                                      "submitting": false,
+                                                      "touched": false,
+                                                      "valid": true,
+                                                      "validating": false,
+                                                      "visited": false,
+                                                    }
+                                                  }
+                                                  name="approvalStateCheckboxes"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  option={
+                                                    Object {
+                                                      "label": "Approved",
+                                                      "value": "approved",
+                                                    }
+                                                  }
+                                                  type="checkbox"
+                                                  value="approved"
+                                                >
+                                                  <Checkbox
+                                                    aria-label="Approved"
+                                                    checked={true}
+                                                    id="approvalStateCheckboxes-approved"
+                                                    indeterminate={false}
+                                                    label="Approved"
+                                                    labelText="Approved"
+                                                    name="approvalStateCheckboxes"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="checkbox"
+                                                    value="approved"
+                                                  >
+                                                    <div
+                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                    >
+                                                      <input
+                                                        aria-label="Approved"
+                                                        checked={true}
+                                                        className="bx--checkbox"
+                                                        id="approvalStateCheckboxes-approved"
+                                                        label="Approved"
+                                                        name="approvalStateCheckboxes"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="checkbox"
+                                                        value="approved"
+                                                      />
+                                                      <label
+                                                        className="bx--checkbox-label"
+                                                        htmlFor="approvalStateCheckboxes-approved"
+                                                        title={null}
+                                                      >
+                                                        <Text
+                                                          className="bx--checkbox-label-text"
+                                                        >
+                                                          <span
+                                                            className="bx--checkbox-label-text"
+                                                            dir="auto"
+                                                          >
+                                                            Approved
+                                                          </span>
+                                                        </Text>
+                                                      </label>
+                                                    </div>
+                                                  </Checkbox>
+                                                </SingleCheckboxInCommon>
+                                              </SingleCheckbox>
+                                              <SingleCheckbox
+                                                Checkbox={[Function]}
+                                                aria-label="Denied"
+                                                id="approvalStateCheckboxes-denied"
+                                                key="approvalStateCheckboxes-denied"
+                                                label="Denied"
+                                                name="approvalStateCheckboxes"
+                                                option={
+                                                  Object {
+                                                    "label": "Denied",
+                                                    "value": "denied",
+                                                  }
+                                                }
+                                                value="denied"
+                                              >
+                                                <SingleCheckboxInCommon
+                                                  aria-label="Denied"
+                                                  checked={true}
+                                                  id="approvalStateCheckboxes-denied"
+                                                  label="Denied"
+                                                  meta={
+                                                    Object {
+                                                      "active": false,
+                                                      "data": Object {},
+                                                      "dirty": false,
+                                                      "dirtySinceLastSubmit": false,
+                                                      "error": undefined,
+                                                      "initial": Array [
+                                                        "pending_approval",
+                                                        "approved",
+                                                        "denied",
+                                                      ],
+                                                      "invalid": false,
+                                                      "length": 3,
+                                                      "modified": false,
+                                                      "modifiedSinceLastSubmit": false,
+                                                      "pristine": true,
+                                                      "submitError": undefined,
+                                                      "submitFailed": false,
+                                                      "submitSucceeded": false,
+                                                      "submitting": false,
+                                                      "touched": false,
+                                                      "valid": true,
+                                                      "validating": false,
+                                                      "visited": false,
+                                                    }
+                                                  }
+                                                  name="approvalStateCheckboxes"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  option={
+                                                    Object {
+                                                      "label": "Denied",
+                                                      "value": "denied",
+                                                    }
+                                                  }
+                                                  type="checkbox"
+                                                  value="denied"
+                                                >
+                                                  <Checkbox
+                                                    aria-label="Denied"
+                                                    checked={true}
+                                                    id="approvalStateCheckboxes-denied"
+                                                    indeterminate={false}
+                                                    label="Denied"
+                                                    labelText="Denied"
+                                                    name="approvalStateCheckboxes"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    type="checkbox"
+                                                    value="denied"
+                                                  >
+                                                    <div
+                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                    >
+                                                      <input
+                                                        aria-label="Denied"
+                                                        checked={true}
+                                                        className="bx--checkbox"
+                                                        id="approvalStateCheckboxes-denied"
+                                                        label="Denied"
+                                                        name="approvalStateCheckboxes"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="checkbox"
+                                                        value="denied"
+                                                      />
+                                                      <label
+                                                        className="bx--checkbox-label"
+                                                        htmlFor="approvalStateCheckboxes-denied"
+                                                        title={null}
+                                                      >
+                                                        <Text
+                                                          className="bx--checkbox-label-text"
+                                                        >
+                                                          <span
+                                                            className="bx--checkbox-label-text"
+                                                            dir="auto"
+                                                          >
+                                                            Denied
+                                                          </span>
+                                                        </Text>
+                                                      </label>
+                                                    </div>
+                                                  </Checkbox>
+                                                </SingleCheckboxInCommon>
+                                              </SingleCheckbox>
+                                              <HelperTextBlock
+                                                errorText={false}
+                                              />
+                                            </fieldset>
+                                          </FormGroup>
+                                        </Wrapper>
+                                      </MultipleChoiceList>
+                                    </Checkbox>
+                                  </FormFieldHideWrapper>
+                                </FormConditionWrapper>
+                              </SingleField>
+                            </div>
+                          </SubForm>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <SingleField
+                      component="select"
+                      id="types"
+                      isRequired={true}
+                      key="types"
+                      label="Type:"
+                      name="types"
+                      options={
+                        Array [
+                          Object {
+                            "label": "All",
+                            "value": "all",
+                          },
+                          Object {
+                            "label": "Foreman Provision",
+                            "value": "provision_via_foreman",
+                          },
+                          Object {
+                            "label": "VM Provision",
+                            "value": "template",
+                          },
+                          Object {
+                            "label": "VM Clone",
+                            "value": "clone_to_vm",
+                          },
+                          Object {
+                            "label": "VM Publish",
+                            "value": "clone_to_template",
+                          },
+                          Object {
+                            "label": "Orchestration Stack Retire",
+                            "value": "orchestration_stack_retire",
+                          },
+                          Object {
+                            "label": "Physical Server Provision",
+                            "value": "provision_physical_server",
+                          },
+                          Object {
+                            "label": "Physical Server Firmware Update",
+                            "value": "physical_server_firmware_update",
+                          },
+                          Object {
+                            "label": "Service Retire",
+                            "value": "service_retire",
+                          },
+                          Object {
+                            "label": "Service Reconfigure",
+                            "value": "service_reconfigure",
+                          },
+                          Object {
+                            "label": "Service Provision",
+                            "value": "clone_to_service",
+                          },
+                          Object {
+                            "label": "VM Cloud Reconfigure",
+                            "value": "vm_cloud_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Migrate",
+                            "value": "vm_migrate",
+                          },
+                          Object {
+                            "label": "VM Reconfigure",
+                            "value": "vm_reconfigure",
+                          },
+                          Object {
+                            "label": "VM Retire",
+                            "value": "vm_retire",
+                          },
+                        ]
+                      }
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "select",
+                            "id": "types",
+                            "isRequired": true,
+                            "label": "Type:",
+                            "name": "types",
+                            "options": Array [
+                              Object {
+                                "label": "All",
+                                "value": "all",
+                              },
+                              Object {
+                                "label": "Foreman Provision",
+                                "value": "provision_via_foreman",
+                              },
+                              Object {
+                                "label": "VM Provision",
+                                "value": "template",
+                              },
+                              Object {
+                                "label": "VM Clone",
+                                "value": "clone_to_vm",
+                              },
+                              Object {
+                                "label": "VM Publish",
+                                "value": "clone_to_template",
+                              },
+                              Object {
+                                "label": "Orchestration Stack Retire",
+                                "value": "orchestration_stack_retire",
+                              },
+                              Object {
+                                "label": "Physical Server Provision",
+                                "value": "provision_physical_server",
+                              },
+                              Object {
+                                "label": "Physical Server Firmware Update",
+                                "value": "physical_server_firmware_update",
+                              },
+                              Object {
+                                "label": "Service Retire",
+                                "value": "service_retire",
+                              },
+                              Object {
+                                "label": "Service Reconfigure",
+                                "value": "service_reconfigure",
+                              },
+                              Object {
+                                "label": "Service Provision",
+                                "value": "clone_to_service",
+                              },
+                              Object {
+                                "label": "VM Cloud Reconfigure",
+                                "value": "vm_cloud_reconfigure",
+                              },
+                              Object {
+                                "label": "VM Migrate",
+                                "value": "vm_migrate",
+                              },
+                              Object {
+                                "label": "VM Reconfigure",
+                                "value": "vm_reconfigure",
+                              },
+                              Object {
+                                "label": "VM Retire",
+                                "value": "vm_retire",
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <SelectWithOnChange
+                            component="select"
+                            id="types"
+                            isRequired={true}
+                            label="Type:"
+                            name="types"
+                            options={
+                              Array [
+                                Object {
+                                  "label": "All",
+                                  "value": "all",
+                                },
+                                Object {
+                                  "label": "Foreman Provision",
+                                  "value": "provision_via_foreman",
+                                },
+                                Object {
+                                  "label": "VM Provision",
+                                  "value": "template",
+                                },
+                                Object {
+                                  "label": "VM Clone",
+                                  "value": "clone_to_vm",
+                                },
+                                Object {
+                                  "label": "VM Publish",
+                                  "value": "clone_to_template",
+                                },
+                                Object {
+                                  "label": "Orchestration Stack Retire",
+                                  "value": "orchestration_stack_retire",
+                                },
+                                Object {
+                                  "label": "Physical Server Provision",
+                                  "value": "provision_physical_server",
+                                },
+                                Object {
+                                  "label": "Physical Server Firmware Update",
+                                  "value": "physical_server_firmware_update",
+                                },
+                                Object {
+                                  "label": "Service Retire",
+                                  "value": "service_retire",
+                                },
+                                Object {
+                                  "label": "Service Reconfigure",
+                                  "value": "service_reconfigure",
+                                },
+                                Object {
+                                  "label": "Service Provision",
+                                  "value": "clone_to_service",
+                                },
+                                Object {
+                                  "label": "VM Cloud Reconfigure",
+                                  "value": "vm_cloud_reconfigure",
+                                },
+                                Object {
+                                  "label": "VM Migrate",
+                                  "value": "vm_migrate",
+                                },
+                                Object {
+                                  "label": "VM Reconfigure",
+                                  "value": "vm_reconfigure",
+                                },
+                                Object {
+                                  "label": "VM Retire",
+                                  "value": "vm_retire",
+                                },
+                              ]
+                            }
+                            placeholder="<Choose>"
+                          >
+                            <Select
+                              component="select"
+                              id="types"
+                              isRequired={true}
+                              label="Type:"
+                              loadingMessage="Loading..."
+                              name="types"
+                              options={
+                                Array [
+                                  Object {
+                                    "label": "All",
+                                    "value": "all",
+                                  },
+                                  Object {
+                                    "label": "Foreman Provision",
+                                    "value": "provision_via_foreman",
+                                  },
+                                  Object {
+                                    "label": "VM Provision",
+                                    "value": "template",
+                                  },
+                                  Object {
+                                    "label": "VM Clone",
+                                    "value": "clone_to_vm",
+                                  },
+                                  Object {
+                                    "label": "VM Publish",
+                                    "value": "clone_to_template",
+                                  },
+                                  Object {
+                                    "label": "Orchestration Stack Retire",
+                                    "value": "orchestration_stack_retire",
+                                  },
+                                  Object {
+                                    "label": "Physical Server Provision",
+                                    "value": "provision_physical_server",
+                                  },
+                                  Object {
+                                    "label": "Physical Server Firmware Update",
+                                    "value": "physical_server_firmware_update",
+                                  },
+                                  Object {
+                                    "label": "Service Retire",
+                                    "value": "service_retire",
+                                  },
+                                  Object {
+                                    "label": "Service Reconfigure",
+                                    "value": "service_reconfigure",
+                                  },
+                                  Object {
+                                    "label": "Service Provision",
+                                    "value": "clone_to_service",
+                                  },
+                                  Object {
+                                    "label": "VM Cloud Reconfigure",
+                                    "value": "vm_cloud_reconfigure",
+                                  },
+                                  Object {
+                                    "label": "VM Migrate",
+                                    "value": "vm_migrate",
+                                  },
+                                  Object {
+                                    "label": "VM Reconfigure",
+                                    "value": "vm_reconfigure",
+                                  },
+                                  Object {
+                                    "label": "VM Retire",
+                                    "value": "vm_retire",
+                                  },
+                                ]
+                              }
+                              placeholder="<Choose>"
+                            >
+                              <Select
+                                SelectComponent={[Function]}
+                                id="types"
+                                invalid={false}
+                                invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
+                                labelText={
+                                  <IsRequired>
+                                    Type:
+                                  </IsRequired>
+                                }
+                                loadOptionsChangeCounter={1}
+                                loadingMessage="Loading..."
+                                name="types"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "All",
+                                      "value": "all",
+                                    },
+                                    Object {
+                                      "label": "Foreman Provision",
+                                      "value": "provision_via_foreman",
+                                    },
+                                    Object {
+                                      "label": "VM Provision",
+                                      "value": "template",
+                                    },
+                                    Object {
+                                      "label": "VM Clone",
+                                      "value": "clone_to_vm",
+                                    },
+                                    Object {
+                                      "label": "VM Publish",
+                                      "value": "clone_to_template",
+                                    },
+                                    Object {
+                                      "label": "Orchestration Stack Retire",
+                                      "value": "orchestration_stack_retire",
+                                    },
+                                    Object {
+                                      "label": "Physical Server Provision",
+                                      "value": "provision_physical_server",
+                                    },
+                                    Object {
+                                      "label": "Physical Server Firmware Update",
+                                      "value": "physical_server_firmware_update",
+                                    },
+                                    Object {
+                                      "label": "Service Retire",
+                                      "value": "service_retire",
+                                    },
+                                    Object {
+                                      "label": "Service Reconfigure",
+                                      "value": "service_reconfigure",
+                                    },
+                                    Object {
+                                      "label": "Service Provision",
+                                      "value": "clone_to_service",
+                                    },
+                                    Object {
+                                      "label": "VM Cloud Reconfigure",
+                                      "value": "vm_cloud_reconfigure",
+                                    },
+                                    Object {
+                                      "label": "VM Migrate",
+                                      "value": "vm_migrate",
+                                    },
+                                    Object {
+                                      "label": "VM Reconfigure",
+                                      "value": "vm_reconfigure",
+                                    },
+                                    Object {
+                                      "label": "VM Retire",
+                                      "value": "vm_retire",
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                                pluckSingleValue={true}
+                                simpleValue={false}
+                                value=""
+                              >
+                                <ClearedSelect
+                                  className=""
+                                  closeMenuOnSelect={true}
+                                  hideSelectedOptions={false}
+                                  id="types"
+                                  invalidText=""
+                                  isClearable={false}
+                                  isFetching={false}
+                                  isSearchable={false}
+                                  labelText={
+                                    <IsRequired>
+                                      Type:
+                                    </IsRequired>
+                                  }
+                                  name="types"
+                                  noOptionsMessage={[Function]}
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onFocus={[Function]}
+                                  onInputChange={[Function]}
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "All",
+                                        "value": "all",
+                                      },
+                                      Object {
+                                        "label": "Foreman Provision",
+                                        "value": "provision_via_foreman",
+                                      },
+                                      Object {
+                                        "label": "VM Provision",
+                                        "value": "template",
+                                      },
+                                      Object {
+                                        "label": "VM Clone",
+                                        "value": "clone_to_vm",
+                                      },
+                                      Object {
+                                        "label": "VM Publish",
+                                        "value": "clone_to_template",
+                                      },
+                                      Object {
+                                        "label": "Orchestration Stack Retire",
+                                        "value": "orchestration_stack_retire",
+                                      },
+                                      Object {
+                                        "label": "Physical Server Provision",
+                                        "value": "provision_physical_server",
+                                      },
+                                      Object {
+                                        "label": "Physical Server Firmware Update",
+                                        "value": "physical_server_firmware_update",
+                                      },
+                                      Object {
+                                        "label": "Service Retire",
+                                        "value": "service_retire",
+                                      },
+                                      Object {
+                                        "label": "Service Reconfigure",
+                                        "value": "service_reconfigure",
+                                      },
+                                      Object {
+                                        "label": "Service Provision",
+                                        "value": "clone_to_service",
+                                      },
+                                      Object {
+                                        "label": "VM Cloud Reconfigure",
+                                        "value": "vm_cloud_reconfigure",
+                                      },
+                                      Object {
+                                        "label": "VM Migrate",
+                                        "value": "vm_migrate",
+                                      },
+                                      Object {
+                                        "label": "VM Reconfigure",
+                                        "value": "vm_reconfigure",
+                                      },
+                                      Object {
+                                        "label": "VM Retire",
+                                        "value": "vm_retire",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                  value=""
+                                >
+                                  <Select
+                                    className=""
+                                    disabled={false}
+                                    helperText=""
+                                    id="types"
+                                    inline={false}
+                                    invalid={false}
+                                    invalidText=""
+                                    labelText={
+                                      <IsRequired>
+                                        Type:
+                                      </IsRequired>
+                                    }
+                                    light={false}
+                                    name="types"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    value=""
+                                  >
+                                    <div
+                                      className="bx--form-item"
+                                    >
+                                      <div
+                                        className="bx--select"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="types"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                            >
+                                              *
+                                            </span>
+                                            Type:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--select-input__wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <select
+                                            className="bx--select-input"
+                                            id="types"
+                                            name="types"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            value=""
+                                          >
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="all"
+                                              label="All"
+                                              text="All"
+                                              value="all"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="All"
+                                                value="all"
+                                              >
+                                                All
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="provision_via_foreman"
+                                              label="Foreman Provision"
+                                              text="Foreman Provision"
+                                              value="provision_via_foreman"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Foreman Provision"
+                                                value="provision_via_foreman"
+                                              >
+                                                Foreman Provision
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="template"
+                                              label="VM Provision"
+                                              text="VM Provision"
+                                              value="template"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Provision"
+                                                value="template"
+                                              >
+                                                VM Provision
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="clone_to_vm"
+                                              label="VM Clone"
+                                              text="VM Clone"
+                                              value="clone_to_vm"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Clone"
+                                                value="clone_to_vm"
+                                              >
+                                                VM Clone
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="clone_to_template"
+                                              label="VM Publish"
+                                              text="VM Publish"
+                                              value="clone_to_template"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Publish"
+                                                value="clone_to_template"
+                                              >
+                                                VM Publish
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="orchestration_stack_retire"
+                                              label="Orchestration Stack Retire"
+                                              text="Orchestration Stack Retire"
+                                              value="orchestration_stack_retire"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Orchestration Stack Retire"
+                                                value="orchestration_stack_retire"
+                                              >
+                                                Orchestration Stack Retire
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="provision_physical_server"
+                                              label="Physical Server Provision"
+                                              text="Physical Server Provision"
+                                              value="provision_physical_server"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Physical Server Provision"
+                                                value="provision_physical_server"
+                                              >
+                                                Physical Server Provision
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="physical_server_firmware_update"
+                                              label="Physical Server Firmware Update"
+                                              text="Physical Server Firmware Update"
+                                              value="physical_server_firmware_update"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Physical Server Firmware Update"
+                                                value="physical_server_firmware_update"
+                                              >
+                                                Physical Server Firmware Update
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="service_retire"
+                                              label="Service Retire"
+                                              text="Service Retire"
+                                              value="service_retire"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Service Retire"
+                                                value="service_retire"
+                                              >
+                                                Service Retire
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="service_reconfigure"
+                                              label="Service Reconfigure"
+                                              text="Service Reconfigure"
+                                              value="service_reconfigure"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Service Reconfigure"
+                                                value="service_reconfigure"
+                                              >
+                                                Service Reconfigure
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="clone_to_service"
+                                              label="Service Provision"
+                                              text="Service Provision"
+                                              value="clone_to_service"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Service Provision"
+                                                value="clone_to_service"
+                                              >
+                                                Service Provision
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="vm_cloud_reconfigure"
+                                              label="VM Cloud Reconfigure"
+                                              text="VM Cloud Reconfigure"
+                                              value="vm_cloud_reconfigure"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Cloud Reconfigure"
+                                                value="vm_cloud_reconfigure"
+                                              >
+                                                VM Cloud Reconfigure
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="vm_migrate"
+                                              label="VM Migrate"
+                                              text="VM Migrate"
+                                              value="vm_migrate"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Migrate"
+                                                value="vm_migrate"
+                                              >
+                                                VM Migrate
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="vm_reconfigure"
+                                              label="VM Reconfigure"
+                                              text="VM Reconfigure"
+                                              value="vm_reconfigure"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Reconfigure"
+                                                value="vm_reconfigure"
+                                              >
+                                                VM Reconfigure
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="vm_retire"
+                                              label="VM Retire"
+                                              text="VM Retire"
+                                              value="vm_retire"
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="VM Retire"
+                                                value="vm_retire"
+                                              >
+                                                VM Retire
+                                              </option>
+                                            </SelectItem>
+                                          </select>
+                                          <ForwardRef(ChevronDown16)
+                                            className="bx--select__arrow"
+                                          >
+                                            <Icon
+                                              className="bx--select__arrow"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 16 16"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--select__arrow"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 16 16"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(ChevronDown16)>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Select>
+                                </ClearedSelect>
+                              </Select>
+                            </Select>
+                          </SelectWithOnChange>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <SingleField
+                      component="select"
+                      id="selectedPeriod"
+                      initialValue={7}
+                      isRequired={true}
+                      key="selectedPeriod"
+                      label="Request Date:"
+                      name="selectedPeriod"
+                      options={
+                        Array [
+                          Object {
+                            "label": "Last 24 Hours",
+                            "value": 1,
+                          },
+                          Object {
+                            "label": "Last 7 Days",
+                            "value": 7,
+                          },
+                          Object {
+                            "label": "Last 365 Days",
+                            "value": 365,
+                          },
+                        ]
+                      }
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "select",
+                            "id": "selectedPeriod",
+                            "initialValue": 7,
+                            "isRequired": true,
+                            "label": "Request Date:",
+                            "name": "selectedPeriod",
+                            "options": Array [
+                              Object {
+                                "label": "Last 24 Hours",
+                                "value": 1,
+                              },
+                              Object {
+                                "label": "Last 7 Days",
+                                "value": 7,
+                              },
+                              Object {
+                                "label": "Last 365 Days",
+                                "value": 365,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <SelectWithOnChange
+                            component="select"
+                            id="selectedPeriod"
+                            initialValue={7}
+                            isRequired={true}
+                            label="Request Date:"
+                            name="selectedPeriod"
+                            options={
+                              Array [
+                                Object {
+                                  "label": "Last 24 Hours",
+                                  "value": 1,
+                                },
+                                Object {
+                                  "label": "Last 7 Days",
+                                  "value": 7,
+                                },
+                                Object {
+                                  "label": "Last 365 Days",
+                                  "value": 365,
+                                },
+                              ]
+                            }
+                            placeholder="<Choose>"
+                          >
+                            <Select
+                              component="select"
+                              id="selectedPeriod"
+                              initialValue={7}
+                              isRequired={true}
+                              label="Request Date:"
+                              loadingMessage="Loading..."
+                              name="selectedPeriod"
+                              options={
+                                Array [
+                                  Object {
+                                    "label": "Last 24 Hours",
+                                    "value": 1,
+                                  },
+                                  Object {
+                                    "label": "Last 7 Days",
+                                    "value": 7,
+                                  },
+                                  Object {
+                                    "label": "Last 365 Days",
+                                    "value": 365,
+                                  },
+                                ]
+                              }
+                              placeholder="<Choose>"
+                            >
+                              <Select
+                                SelectComponent={[Function]}
+                                id="selectedPeriod"
+                                invalid={false}
+                                invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
+                                labelText={
+                                  <IsRequired>
+                                    Request Date:
+                                  </IsRequired>
+                                }
+                                loadOptionsChangeCounter={1}
+                                loadingMessage="Loading..."
+                                name="selectedPeriod"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "Last 24 Hours",
+                                      "value": 1,
+                                    },
+                                    Object {
+                                      "label": "Last 7 Days",
+                                      "value": 7,
+                                    },
+                                    Object {
+                                      "label": "Last 365 Days",
+                                      "value": 365,
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                                pluckSingleValue={true}
+                                simpleValue={false}
+                                value={7}
+                              >
+                                <ClearedSelect
+                                  className=""
+                                  closeMenuOnSelect={true}
+                                  hideSelectedOptions={false}
+                                  id="selectedPeriod"
+                                  invalidText=""
+                                  isClearable={false}
+                                  isFetching={false}
+                                  isSearchable={false}
+                                  labelText={
+                                    <IsRequired>
+                                      Request Date:
+                                    </IsRequired>
+                                  }
+                                  name="selectedPeriod"
+                                  noOptionsMessage={[Function]}
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onFocus={[Function]}
+                                  onInputChange={[Function]}
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "Last 24 Hours",
+                                        "value": 1,
+                                      },
+                                      Object {
+                                        "label": "Last 7 Days",
+                                        "value": 7,
+                                      },
+                                      Object {
+                                        "label": "Last 365 Days",
+                                        "value": 365,
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                  value={7}
+                                >
+                                  <Select
+                                    className=""
+                                    disabled={false}
+                                    helperText=""
+                                    id="selectedPeriod"
+                                    inline={false}
+                                    invalid={false}
+                                    invalidText=""
+                                    labelText={
+                                      <IsRequired>
+                                        Request Date:
+                                      </IsRequired>
+                                    }
+                                    light={false}
+                                    name="selectedPeriod"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    value={7}
+                                  >
+                                    <div
+                                      className="bx--form-item"
+                                    >
+                                      <div
+                                        className="bx--select"
+                                      >
+                                        <label
+                                          className="bx--label"
+                                          htmlFor="selectedPeriod"
+                                        >
+                                          <IsRequired>
+                                            <span
+                                              aria-hidden="true"
+                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                            >
+                                              *
+                                            </span>
+                                            Request Date:
+                                          </IsRequired>
+                                        </label>
+                                        <div
+                                          className="bx--select-input__wrapper"
+                                          data-invalid={null}
+                                        >
+                                          <select
+                                            className="bx--select-input"
+                                            id="selectedPeriod"
+                                            name="selectedPeriod"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            value={7}
+                                          >
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="1"
+                                              label="Last 24 Hours"
+                                              text="Last 24 Hours"
+                                              value={1}
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Last 24 Hours"
+                                                value={1}
+                                              >
+                                                Last 24 Hours
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="7"
+                                              label="Last 7 Days"
+                                              text="Last 7 Days"
+                                              value={7}
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Last 7 Days"
+                                                value={7}
+                                              >
+                                                Last 7 Days
+                                              </option>
+                                            </SelectItem>
+                                            <SelectItem
+                                              disabled={false}
+                                              hidden={false}
+                                              key="365"
+                                              label="Last 365 Days"
+                                              text="Last 365 Days"
+                                              value={365}
+                                            >
+                                              <option
+                                                className="bx--select-option"
+                                                disabled={false}
+                                                hidden={false}
+                                                label="Last 365 Days"
+                                                value={365}
+                                              >
+                                                Last 365 Days
+                                              </option>
+                                            </SelectItem>
+                                          </select>
+                                          <ForwardRef(ChevronDown16)
+                                            className="bx--select__arrow"
+                                          >
+                                            <Icon
+                                              className="bx--select__arrow"
+                                              fill="currentColor"
+                                              height={16}
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 16 16"
+                                              width={16}
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <svg
+                                                aria-hidden={true}
+                                                className="bx--select__arrow"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height={16}
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 16 16"
+                                                width={16}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                />
+                                              </svg>
+                                            </Icon>
+                                          </ForwardRef(ChevronDown16)>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Select>
+                                </ClearedSelect>
+                              </Select>
+                            </Select>
+                          </SelectWithOnChange>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <SingleField
+                      component="text-field"
+                      id="reasonText"
+                      key="reasonText"
+                      label="Reason:"
+                      maxLength={128}
+                      name="reasonText"
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "text-field",
+                            "id": "reasonText",
+                            "label": "Reason:",
+                            "maxLength": 128,
+                            "name": "reasonText",
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <TextField
+                            component="text-field"
+                            id="reasonText"
+                            label="Reason:"
+                            maxLength={128}
+                            name="reasonText"
+                          >
+                            <TextInput
+                              id="reasonText"
+                              invalid={false}
+                              invalidText=""
+                              key="reasonText"
+                              labelText="Reason:"
+                              maxLength={128}
+                              name="reasonText"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              value=""
+                              warn={false}
+                              warnText=""
+                            >
+                              <div
+                                className="bx--form-item bx--text-input-wrapper"
+                              >
+                                <label
+                                  className="bx--label"
+                                  htmlFor="reasonText"
+                                >
+                                  Reason:
+                                </label>
+                                <div
+                                  className="bx--text-input__field-outer-wrapper"
+                                >
+                                  <div
+                                    className="bx--text-input__field-wrapper"
+                                    data-invalid={null}
+                                  >
+                                    <input
+                                      className="bx--text-input bx--text-input--md"
+                                      disabled={false}
+                                      id="reasonText"
+                                      maxLength={128}
+                                      name="reasonText"
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </TextInput>
+                          </TextField>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <SingleField
+                      component="spy-field"
+                      key="spy-field"
+                      name="spy-field"
+                    >
+                      <FormConditionWrapper
+                        field={
+                          Object {
+                            "component": "spy-field",
+                            "initialize": undefined,
+                            "name": "spy-field",
+                          }
+                        }
+                      >
+                        <FormFieldHideWrapper
+                          hideField={false}
+                        >
+                          <SpyField
+                            component="spy-field"
+                            name="spy-field"
+                          >
+                            <FormSpy
+                              onChange={[Function]}
+                              subscription={
+                                Object {
+                                  "pristine": true,
+                                  "valid": true,
+                                }
+                              }
+                            />
+                          </SpyField>
+                        </FormFieldHideWrapper>
+                      </FormConditionWrapper>
+                    </SingleField>
+                    <FormSpy>
+                      <div
+                        className="custom-button-wrapper"
+                      >
+                        <button
+                          className="bx--btn bx--btn--primary btnRight"
+                          disabled={false}
+                          id="submit"
+                          type="submit"
+                          variant="contained"
+                        >
+                          Apply
+                        </button>
+                        <button
+                          className="bx--btn bx--btn--secondary btnRight"
+                          disabled={false}
+                          id="reset"
+                          onClick={[Function]}
+                          type="button"
+                          variant="contained"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </FormSpy>
+                  </form>
+                </FormTemplate>
+              </FormTemplate>
+            </ReactFinalForm>
+          </FormRenderer>
+        </MiqFormRenderer>
+      </Connect(MiqFormRenderer)>
+    </div>
+  </ServiceRequestDefault>
+</Provider>
+`;
