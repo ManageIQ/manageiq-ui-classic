@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 import {
-  CellAction, headerData, rowData,
+  CellAction, headerData, rowData, rowHasCheckbox,
 } from '../../miq-data-table/helper';
 
 export const DataTable = ({
@@ -38,7 +38,7 @@ export const DataTable = ({
     onPageChange,
   };
 
-  const defaultHeaders = headerData(columns, hasCheckbox);
+  const defaultHeaders = headerData(columns, rowHasCheckbox(rows, hasCheckbox));
 
   const sortData = (column) => {
     const isFilteredBy = settings.sort_col === column.col_idx;
@@ -55,7 +55,7 @@ export const DataTable = ({
 
   defaultHeaders.headerItems = appendSortData(defaultHeaders.headerItems);
 
-  const tempRows = rowData(defaultHeaders.headerKeys, rows, hasCheckbox);
+  const tempRows = rowData(defaultHeaders.headerKeys, rows, rowHasCheckbox(rows, hasCheckbox));
   const [miqRows] = useState(tempRows.rowItems);
   if (tempRows.merged) {
     defaultHeaders.headerKeys.splice(0, 1);
