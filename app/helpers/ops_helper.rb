@@ -6,6 +6,7 @@ module OpsHelper
   include SettingsTagsTabsHelper
   include ZonesHelper
   include SettingsTabHelper
+  include SettingsLabelTagMappingHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
