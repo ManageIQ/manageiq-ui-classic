@@ -182,15 +182,17 @@ class ApplicationController < ActionController::Base
             _("Action not implemented")
           when ::AbstractController::ActionNotFound # Prevent Rails showing all known controller actions
             _("Unknown Action")
+          when ::MiqException::RbacPrivilegeException
+            _("The user is not authorized for this task or item")
           else
             e.message
           end
 
-    render_exception(msg)
+    render_exception(msg, e)
   end
   private :error_handler
 
-  def render_exception(msg)
+  def render_exception(msg, error)
     respond_to do |format|
       format.js do
         render :update do |page|
@@ -214,9 +216,14 @@ class ApplicationController < ActionController::Base
         end
       end
       format.html do # HTML, send error screen
-        @layout = "exception"
-        response.status = 500
-        render(:template => "layouts/exception", :locals => {:message => msg})
+        case error
+        when ::MiqException::RbacPrivilegeException
+          redirect_to(:controller => 'dashboard', :action => "auth_error")
+        else
+          @layout = "exception"
+          response.status = 500
+          render(:template => "layouts/exception", :locals => {:message => msg})
+        end
       end
       format.any { head :not_found } # Anything else, just send 404
     end
