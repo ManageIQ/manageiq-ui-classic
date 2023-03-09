@@ -121,6 +121,13 @@
     height: 32px;
     margin-bottom: 8px;
 
+    .bx--list-box--expanded .bx--list-box__menu {
+      position: fixed;
+      width: 224px;
+      margin-left: 16px;
+      margin-top: 1px;
+    }
+
     & .bx--dropdown,
     & > li {
       height: 32px;
