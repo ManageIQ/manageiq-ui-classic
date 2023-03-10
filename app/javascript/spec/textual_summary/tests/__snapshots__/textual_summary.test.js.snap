@@ -1761,11 +1761,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=cloud_networks"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=cloud_networks"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=cloud_networks"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=cloud_networks"
                                                   >
                                                     <div
                                                       className="content"
@@ -1852,11 +1856,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=cloud_subnets"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=cloud_subnets"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=cloud_subnets"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=cloud_subnets"
                                                   >
                                                     <div
                                                       className="content"
@@ -1943,11 +1951,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=network_routers"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=network_routers"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=network_routers"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=network_routers"
                                                   >
                                                     <div
                                                       className="content"
@@ -2034,11 +2046,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=security_groups"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=security_groups"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=security_groups"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=security_groups"
                                                   >
                                                     <div
                                                       className="content"
@@ -2125,11 +2141,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=floating_ips"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=floating_ips"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=floating_ips"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=floating_ips"
                                                   >
                                                     <div
                                                       className="content"
@@ -2216,11 +2236,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=network_ports"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=network_ports"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=network_ports"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=network_ports"
                                                   >
                                                     <div
                                                       className="content"
@@ -2307,11 +2331,15 @@ exports[`TextualSummary renders just fine 1`] = `
                                                 <Link
                                                   className="cell_link"
                                                   href="/ems_network/39?display=load_balancers"
+                                                  onClick={[Function]}
+                                                  to="/ems_network/39?display=load_balancers"
                                                 >
                                                   <a
                                                     className="bx--link cell_link"
                                                     href="/ems_network/39?display=load_balancers"
+                                                    onClick={[Function]}
                                                     rel={null}
+                                                    to="/ems_network/39?display=load_balancers"
                                                   >
                                                     <div
                                                       className="content"

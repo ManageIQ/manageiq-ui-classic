@@ -293,11 +293,15 @@ exports[`TableListView renders just fine... 1`] = `
                                       <Link
                                         className="cell_link"
                                         href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                        onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                       >
                                         <a
                                           className="bx--link cell_link"
                                           href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                          onClick={[Function]}
                                           rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                         >
                                           <div
                                             className="content"
@@ -369,11 +373,15 @@ exports[`TableListView renders just fine... 1`] = `
                                       <Link
                                         className="cell_link"
                                         href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                        onClick={[Function]}
+                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                       >
                                         <a
                                           className="bx--link cell_link"
                                           href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                          onClick={[Function]}
                                           rel={null}
+                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                         >
                                           <div
                                             className="content"
