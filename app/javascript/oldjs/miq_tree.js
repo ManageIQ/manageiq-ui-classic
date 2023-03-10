@@ -149,13 +149,9 @@ window.miqTreeToggleExpand = function(treename, expand_mode) {
  * @param  {Object} tree  The tree object itself.
  * @return {Array}        Array of keys.
  */
-window.miqGetSelectedKeys = function(tree) {
-  return Object.values(tree).filter(function(entry) {
-    return (entry.state && entry.state.checked);
-  }).map(function(entry) {
-    return entry.attr.key;
-  });
-}
+window.miqGetSelectedKeys = (tree) => Object.values(tree)
+  .filter((entry) => (entry.state && entry.state.checked))
+  .map((entry) => entry.attr.key);
 
 // Generic OnCheck handler for the checkboxes in tree
 window.miqOnCheckGeneric = function(key, checked) {
@@ -173,14 +169,16 @@ window.miqOnCheckSections = function(key, checked, tree) {
 }
 
 // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
-window.miqOnCheckGenealogy = function(key, checked, tree) {
-  var selectedKeys = miqGetSelectedKeys(tree);
+window.miqOnCheckGenealogy = (key, checked, tree) => {
+  Object.values(tree).find((item) => item.attr && item.attr.key === key).state.checked = checked;
+  const selectedKeys = window.miqGetSelectedKeys(tree);
 
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
-  miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
-}
+  miqJqueryRequest(`${ManageIQ.tree.checkUrl}?all_checked=${selectedKeys}`,
+    { beforeSend: true, complete: true });
+};
 
 // Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
 window.miqOnCheckTenantTree = function(key) {
@@ -193,7 +191,6 @@ window.miqOnCheckTenantTree = function(key) {
 window.miqCheckAll = function(cb, treeName) {
   // Set the checkboxes according to the master checkbox
   ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});
-
   // Map the selected nodes into an array of keys
   var selectedKeys = [];
   var tree = ManageIQ.redux.store.getState()[treeName];
