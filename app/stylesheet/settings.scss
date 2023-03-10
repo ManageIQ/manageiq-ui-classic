@@ -19,6 +19,13 @@
   margin-bottom: 2rem !important;
 }
 
+.evacuate_form {
+  label[for="destination_host"]:before {
+    content:"* ";
+    color: red;
+  }
+}
+
 .schedule_form {
   label[for="time_zone"]:before, label[for="target_class"]:before, label[for="target_id"]:before {
     content:"* ";

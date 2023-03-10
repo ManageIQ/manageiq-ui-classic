@@ -7,4 +7,3 @@ require('./provider-option-field-input.js');
 require('./provier-option-section.js');
 require('./sanitize.js');
 require('./verify-button.js');
-require('./vm_cloud/vm_cloud_evacuate_form.js');
