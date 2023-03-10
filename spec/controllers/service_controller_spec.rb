@@ -92,8 +92,11 @@ describe ServiceController do
       controller.instance_variable_set(:@breadcrumbs, [])
 
       get :show, :params => {:id => service_with_go.id, :display => 'generic_objects'}
+
       expect(response.status).to eq(200)
       expect(assigns(:breadcrumbs)).to eq([{:name => "Services with a GO (All Generic Objects)", :url => "/service/show/#{service_with_go.id}?display=generic_objects"}])
+      expect(response.body).to have_content("Services with a GO")
+      expect(response.body).to have_content(service_with_go.generic_objects.first.name)
     end
 
     describe "#button" do
