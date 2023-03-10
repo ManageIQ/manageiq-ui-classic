@@ -17,7 +17,7 @@ describe ServiceController do
       :name                      => 'go_assoc',
       :services                  => [service]
     )
-    service.add_resource(go)
+    service.add_resource!(go)
 
     service
   end
