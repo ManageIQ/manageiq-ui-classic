@@ -1,5 +1,8 @@
-- if @display == 'instances'
-  = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+- if %w(generic_objects custom_button_events instances).include?(@display)
+  - if @lastaction == 'generic_object' && @item
+    = render :partial => 'layouts/textual_groups_generic'
+  - else
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @ownershipitems
   = render :partial => "shared/views/ownership"
 - elsif @showtype == 'main'
