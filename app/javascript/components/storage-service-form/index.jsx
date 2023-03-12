@@ -5,9 +5,12 @@ import createSchema from './storage-service-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import enhancedSelect from '../../helpers/enhanced-select';
+import GetCompliantResources from './get-compliant-resources';
 
 const StorageServiceForm = ({ recordId, storageManagerId }) => {
-  const [{ fields, initialValues, isLoading }, setState] = useState({ fields: [], isLoading: !!recordId || !!storageManagerId });
+  const [{ fields, initialValues, isLoading }, setState] = useState({
+    fields: [], isLoading: !!recordId || !!storageManagerId,
+  });
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
   const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
@@ -86,6 +89,7 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
   const componentMapper = {
     ...mapper,
     'enhanced-select': enhancedSelect,
+    'compliance-button': GetCompliantResources,
   };
 
   const schema = createSchema(fields, !!recordId, !!storageManagerId, loadSchema, emptySchema);
