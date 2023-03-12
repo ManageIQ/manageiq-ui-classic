@@ -266,6 +266,7 @@ module Mixins
         when "host_initiator_group_edit"        then javascript_redirect(:action => 'edit', :controller => 'host_initiator_group', :id => checked_or_params)
         when "volume_mapping_new"               then javascript_redirect(:action => 'new', :controller => 'volume_mapping', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "storage_service_new"              then javascript_redirect(:action => 'new', :controller => 'storage_service', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "storage_service_edit"             then javascript_redirect(:action => "edit", :controller => "storage_service", :id => checked_or_params)
 
         # Edit Tags for Network Manager Relationship pages
         when "availability_zone_tag"            then tag(AvailabilityZone)

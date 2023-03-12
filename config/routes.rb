@@ -2355,6 +2355,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        edit
         index
         show
         show_list

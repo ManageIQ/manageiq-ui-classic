@@ -26,6 +26,17 @@ class StorageServiceController < ApplicationController
                     :url  => "/#{controller_name}/new")
   end
 
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("storage_service_edit")
+    @service = find_record_with_rbac(StorageService, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Storage Service \"%{name}\"") % {:name => @service.name},
+      :url  => "/storage_service/edit/#{@service.id}"
+    )
+  end
+
   def show
     if params[:id].nil?
       @breadcrumbs.clear
@@ -65,6 +76,8 @@ class StorageServiceController < ApplicationController
     case pressed
     when 'storage_service_new'
       javascript_redirect(:action => 'new')
+    when "storage_service_edit"
+      javascript_redirect(:action => "edit", :id => checked_item_id)
     else
       return false
     end

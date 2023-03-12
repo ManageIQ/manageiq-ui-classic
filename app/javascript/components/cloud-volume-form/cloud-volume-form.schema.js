@@ -29,6 +29,11 @@ const validateServiceHasResources = (serviceId) =>
       ? sprintf(__('Storage service "%s" has no attached storage resources'), response.name)
       : undefined));
 
+const filterSelectedResources = (selectedResources, compliantResources) => {
+  const compliantResourcesIds = compliantResources.map((compliantResource) => compliantResource.value);
+  return selectedResources.filter((selectedResource) => compliantResourcesIds.includes(selectedResource.value));
+};
+
 const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
   const idx = fields.findIndex((field) => field.name === 'volume_type');
   const supports = edit ? 'supports_cloud_volume' : 'supports_cloud_volume_create';
@@ -140,6 +145,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
               const stateValues = getState().values;
               const emsId = stateValues.ems_id;
               const capabilityValues = [];
+              const selectedResources = stateValues.storage_resource_id ? stateValues.storage_resource_id : [];
 
               const capabilityNames = fields.find((object) => object.id === 'required_capabilities')
                 .fields.map((capability) => capability.id);
@@ -149,7 +155,10 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
                 key: JSON.stringify(capabilityValues),
                 loadOptions: async() => {
                   providerCapabilities = await getProviderCapabilities(emsId);
-                  return filterResourcesByCapabilities(capabilityValues, providerCapabilities);
+                  const filteredResources = await filterResourcesByCapabilities(capabilityValues, providerCapabilities);
+                  stateValues.storage_resource_id = filterSelectedResources(selectedResources, filteredResources);
+
+                  return filteredResources;
                 },
               };
             },
