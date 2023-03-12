@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import { Loading } from 'carbon-components-react';
 import createSchema from './storage-service-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import EditingContext from '../physical-storage-form/editing-context';
 import mapper from '../../forms/mappers/componentMapper';
 import enhancedSelect from '../../helpers/enhanced-select';
 
 const StorageServiceForm = ({ recordId, storageManagerId }) => {
-  const [state, setState] = useState({});
-  const { isLoading, initialValues } = state;
+  const [{ fields, initialValues, isLoading }, setState] = useState({ fields: [], isLoading: !!recordId || !!storageManagerId });
   const submitLabel = !!recordId ? __('Save') : __('Add');
 
-  const loadSchema = (appendState = {}) => () => {
+  const loadSchema = (appendState = {}) => ({ data: { form_schema: { fields } } }) => {
     setState((state) => ({
       ...state,
       ...appendState,
+      fields,
+    }));
+  };
+
+  const emptySchema = (appendState = {}) => {
+    const fields = [];
+    setState((state) => ({
+      ...state,
+      ...appendState,
+      fields,
     }));
   };
 
   useEffect(() => {
     if (recordId) {
       API.get(`/api/storage_services/${recordId}`).then((initialValues) => {
-        API.options(`/api/storage_services?ems_id=${initialValues.ems_id}`)
-          .then(loadSchema({ initialValues: { ...initialValues, edit: 'yes' }, isLoading: false }));
+        API.options(`/api/storage_services/${recordId}?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
       });
     }
     if (storageManagerId) {
@@ -33,18 +39,24 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
     }
   }, [recordId, storageManagerId]);
 
+  const redirectUrl = storageManagerId ? `/ems_storage/${storageManagerId}?display=storage_services#/` : '/storage_service/show_list';
+
   const onSubmit = ({ edit: _edit, ...values }) => {
-    miqSparkleOn();
-    const request = recordId ? API.patch(`/api/storage_services/${recordId}`, values) : API.post('/api/storage_services', values);
-    request.then(() => {
-      const message = sprintf(
-        recordId
-          ? __('Modification of Storage Service "%s" has been successfully queued.')
-          : __('Add of Storage Service "%s" has been successfully queued.'),
-        values.name,
-      );
-      miqRedirectBack(message, undefined, '/storage_service/show_list');
-    }).catch(miqSparkleOff);
+    if (values.ems_id !== '-1') {
+      miqSparkleOn();
+
+      const request = recordId ? API.patch(`/api/storage_services/${recordId}`, values) : API.post('/api/storage_services', values);
+      request.then(() => {
+        const message = sprintf(
+          recordId
+            ? __('Modification of Storage Service "%s" has been successfully queued.')
+            : __('Add of Storage Service "%s" has been successfully queued.'),
+          values.name,
+        );
+
+        miqRedirectBack(message, undefined, redirectUrl);
+      }).catch(miqSparkleOff);
+    }
   };
 
   const onCancel = () => {
@@ -54,33 +66,40 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
         : __('Add of new Storage Service was cancelled by the user.'),
       initialValues && initialValues.name,
     );
-    miqRedirectBack(message, 'warning', '/storage_service/show_list');
+    miqRedirectBack(message, 'warning', redirectUrl);
   };
 
-  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
+  const validation = (values) => {
+    const errors = {};
+    if (values.ems_id === '-1') {
+      errors.ems_id = __('Required');
+    }
+    return errors;
+  };
 
   const componentMapper = {
     ...mapper,
     'enhanced-select': enhancedSelect,
   };
 
-  return (
-    <div>
-      { !isLoading && (
-        <EditingContext.Provider value={{ storageManagerId, setState }}>
-          <MiqFormRenderer
-            schema={createSchema(!!recordId, !!storageManagerId, initialValues, state, setState)}
-            componentMapper={componentMapper}
-            initialValues={initialValues}
-            canReset={!!recordId}
-            onSubmit={onSubmit}
-            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
-            onCancel={onCancel}
-            buttonsLabels={{ submitLabel }}
-          />
-        </EditingContext.Provider>
-      ) }
-    </div>
+  const schema = createSchema(fields, !!recordId, !!storageManagerId, loadSchema, emptySchema);
+  const requiredCapabilities = schema.fields.find((field) => field.name === 'required_capabilities');
+  if (requiredCapabilities) {
+    delete requiredCapabilities.resolveProps;
+  }
+
+  return !isLoading && (
+    <MiqFormRenderer
+      schema={schema}
+      componentMapper={componentMapper}
+      initialValues={initialValues}
+      canReset={!!recordId}
+      validate={validation}
+      onSubmit={onSubmit}
+      onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+      onCancel={onCancel}
+      buttonsLabels={{ submitLabel }}
+    />
   );
 };
 
