@@ -34,6 +34,7 @@ const ScheduleForm = ({
       everyTime: true,
     },
     timerInit: 1,
+    filterValue: '',
   });
 
   useEffect(() => {

@@ -249,18 +249,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                     "component": "select",
                     "hideField": true,
                     "id": "filter_value",
-                    "includeEmpty": true,
-                    "isRequired": true,
+                    "initialValue": "",
+                    "initializeOnMount": true,
                     "label": "Filter Item",
                     "name": "filter_value",
                     "options": Array [],
-                    "placeholder": "<Choose>",
-                    "validate": Array [
-                      Object {
-                        "hideField": true,
-                        "type": "customRequired",
-                      },
-                    ],
                   },
                   Object {
                     "component": "select",
@@ -900,18 +893,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                       "component": "select",
                       "hideField": true,
                       "id": "filter_value",
-                      "includeEmpty": true,
-                      "isRequired": true,
+                      "initialValue": "",
+                      "initializeOnMount": true,
                       "label": "Filter Item",
                       "name": "filter_value",
                       "options": Array [],
-                      "placeholder": "<Choose>",
-                      "validate": Array [
-                        Object {
-                          "hideField": true,
-                          "type": "customRequired",
-                        },
-                      ],
                     },
                     Object {
                       "component": "select",
@@ -1543,18 +1529,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                         "component": "select",
                         "hideField": true,
                         "id": "filter_value",
-                        "includeEmpty": true,
-                        "isRequired": true,
+                        "initialValue": "",
+                        "initializeOnMount": true,
                         "label": "Filter Item",
                         "name": "filter_value",
                         "options": Array [],
-                        "placeholder": "<Choose>",
-                        "validate": Array [
-                          Object {
-                            "hideField": true,
-                            "type": "customRequired",
-                          },
-                        ],
                       },
                       Object {
                         "component": "select",
@@ -2186,18 +2165,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -2755,18 +2727,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -3335,18 +3300,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -3910,18 +3868,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -4505,18 +4456,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -5080,18 +5024,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -5666,18 +5603,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "component": "select",
                                   "hideField": true,
                                   "id": "filter_value",
-                                  "includeEmpty": true,
-                                  "isRequired": true,
+                                  "initialValue": "",
+                                  "initializeOnMount": true,
                                   "label": "Filter Item",
                                   "name": "filter_value",
                                   "options": Array [],
-                                  "placeholder": "<Choose>",
-                                  "validate": Array [
-                                    Object {
-                                      "hideField": true,
-                                      "type": "customRequired",
-                                    },
-                                  ],
                                 },
                                 Object {
                                   "component": "select",
@@ -6229,18 +6159,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       "component": "select",
                                       "hideField": true,
                                       "id": "filter_value",
-                                      "includeEmpty": true,
-                                      "isRequired": true,
+                                      "initialValue": "",
+                                      "initializeOnMount": true,
                                       "label": "Filter Item",
                                       "name": "filter_value",
                                       "options": Array [],
-                                      "placeholder": "<Choose>",
-                                      "validate": Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ],
                                     },
                                     Object {
                                       "component": "select",
@@ -6796,18 +6719,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                         "component": "select",
                                         "hideField": true,
                                         "id": "filter_value",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
+                                        "initialValue": "",
+                                        "initializeOnMount": true,
                                         "label": "Filter Item",
                                         "name": "filter_value",
                                         "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "hideField": true,
-                                            "type": "customRequired",
-                                          },
-                                        ],
                                       },
                                       Object {
                                         "component": "select",
@@ -8408,39 +8324,23 @@ exports[`Schedule form component should render edit form when filter_type is not
                                     component="select"
                                     hideField={true}
                                     id="filter_value"
-                                    includeEmpty={true}
-                                    isRequired={true}
+                                    initialValue=""
+                                    initializeOnMount={true}
                                     key="filter_value"
                                     label="Filter Item"
                                     name="filter_value"
                                     options={Array []}
-                                    placeholder="<Choose>"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ]
-                                    }
                                   >
                                     <FormConditionWrapper
                                       field={
                                         Object {
                                           "component": "select",
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         }
                                       }
                                     >
@@ -8453,45 +8353,23 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           <SelectWithOnChange
                                             component="select"
                                             id="filter_value"
-                                            includeEmpty={true}
-                                            isRequired={true}
+                                            initialValue=""
+                                            initializeOnMount={true}
                                             label="Filter Item"
                                             name="filter_value"
                                             options={Array []}
                                             placeholder="<Choose>"
-                                            validate={
-                                              Array [
-                                                Object {
-                                                  "hideField": true,
-                                                  "type": "customRequired",
-                                                },
-                                              ]
-                                            }
                                           >
                                             <Select
                                               component="select"
                                               id="filter_value"
-                                              isRequired={true}
+                                              initialValue=""
+                                              initializeOnMount={true}
                                               label="Filter Item"
                                               loadingMessage="Loading..."
                                               name="filter_value"
-                                              options={
-                                                Array [
-                                                  Object {
-                                                    "label": "<Choose>",
-                                                    "value": undefined,
-                                                  },
-                                                ]
-                                              }
+                                              options={Array []}
                                               placeholder="<Choose>"
-                                              validate={
-                                                Array [
-                                                  Object {
-                                                    "hideField": true,
-                                                    "type": "customRequired",
-                                                  },
-                                                ]
-                                              }
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
@@ -8500,25 +8378,14 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 invalidText=""
                                                 isClearable={false}
                                                 isSearchable={false}
-                                                labelText={
-                                                  <IsRequired>
-                                                    Filter Item
-                                                  </IsRequired>
-                                                }
+                                                labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
                                                 name="filter_value"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                options={
-                                                  Array [
-                                                    Object {
-                                                      "label": "<Choose>",
-                                                      "value": undefined,
-                                                    },
-                                                  ]
-                                                }
+                                                options={Array []}
                                                 placeholder="<Choose>"
                                                 pluckSingleValue={true}
                                                 simpleValue={false}
@@ -8533,25 +8400,14 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   isClearable={false}
                                                   isFetching={false}
                                                   isSearchable={false}
-                                                  labelText={
-                                                    <IsRequired>
-                                                      Filter Item
-                                                    </IsRequired>
-                                                  }
+                                                  labelText="Filter Item"
                                                   name="filter_value"
                                                   noOptionsMessage={[Function]}
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onInputChange={[Function]}
-                                                  options={
-                                                    Array [
-                                                      Object {
-                                                        "label": "<Choose>",
-                                                        "value": undefined,
-                                                      },
-                                                    ]
-                                                  }
+                                                  options={Array []}
                                                   placeholder="<Choose>"
                                                   value=""
                                                 >
@@ -8563,11 +8419,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                     inline={false}
                                                     invalid={false}
                                                     invalidText=""
-                                                    labelText={
-                                                      <IsRequired>
-                                                        Filter Item
-                                                      </IsRequired>
-                                                    }
+                                                    labelText="Filter Item"
                                                     light={false}
                                                     name="filter_value"
                                                     onBlur={[Function]}
@@ -8585,15 +8437,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           className="bx--label"
                                                           htmlFor="filter_value"
                                                         >
-                                                          <IsRequired>
-                                                            <span
-                                                              aria-hidden="true"
-                                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                            >
-                                                              *
-                                                            </span>
-                                                            Filter Item
-                                                          </IsRequired>
+                                                          Filter Item
                                                         </label>
                                                         <div
                                                           className="bx--select-input__wrapper"
@@ -8607,26 +8451,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
                                                             value=""
-                                                          >
-                                                            <SelectItem
-                                                              disabled={false}
-                                                              hidden={false}
-                                                              key="0"
-                                                              label="<Choose>"
-                                                              text="<Choose>"
-                                                              value=""
-                                                            >
-                                                              <option
-                                                                className="bx--select-option"
-                                                                disabled={false}
-                                                                hidden={false}
-                                                                label="<Choose>"
-                                                                value=""
-                                                              >
-                                                                &lt;Choose&gt;
-                                                              </option>
-                                                            </SelectItem>
-                                                          </select>
+                                                          />
                                                           <ForwardRef(ChevronDown16)
                                                             className="bx--select__arrow"
                                                           >
@@ -13557,18 +13382,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
@@ -14027,6 +13845,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 "active": undefined,
                                 "dirty": true,
                                 "dirtyFields": Object {
+                                  "filter_value": true,
                                   "time_zone": true,
                                 },
                                 "dirtyFieldsSinceLastSubmit": Object {
@@ -14092,6 +13911,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "enabled": undefined,
                                   "filter_typ": "all",
                                   "filter_type": "all",
+                                  "filter_value": "",
                                   "name": "Schedule Name 1",
                                   "schedule_description": "Schedule Description 1",
                                   "schedule_name": "Schedule Name 1",
@@ -14118,7 +13938,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "description": false,
                                   "enabled": false,
                                   "filter_typ": false,
-                                  "filter_value": false,
+                                  "filter_value": true,
                                   "instance_name": false,
                                   "name": false,
                                   "object_message": false,
@@ -14319,18 +14139,11 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
@@ -15210,18 +15023,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                     "component": "select",
                     "hideField": true,
                     "id": "filter_value",
-                    "includeEmpty": true,
-                    "isRequired": true,
+                    "initialValue": "",
+                    "initializeOnMount": true,
                     "label": "Filter Item",
                     "name": "filter_value",
                     "options": Array [],
-                    "placeholder": "<Choose>",
-                    "validate": Array [
-                      Object {
-                        "hideField": true,
-                        "type": "customRequired",
-                      },
-                    ],
                   },
                   Object {
                     "component": "select",
@@ -16003,18 +15809,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                       "component": "select",
                       "hideField": true,
                       "id": "filter_value",
-                      "includeEmpty": true,
-                      "isRequired": true,
+                      "initialValue": "",
+                      "initializeOnMount": true,
                       "label": "Filter Item",
                       "name": "filter_value",
                       "options": Array [],
-                      "placeholder": "<Choose>",
-                      "validate": Array [
-                        Object {
-                          "hideField": true,
-                          "type": "customRequired",
-                        },
-                      ],
                     },
                     Object {
                       "component": "select",
@@ -16788,18 +16587,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                         "component": "select",
                         "hideField": true,
                         "id": "filter_value",
-                        "includeEmpty": true,
-                        "isRequired": true,
+                        "initialValue": "",
+                        "initializeOnMount": true,
                         "label": "Filter Item",
                         "name": "filter_value",
                         "options": Array [],
-                        "placeholder": "<Choose>",
-                        "validate": Array [
-                          Object {
-                            "hideField": true,
-                            "type": "customRequired",
-                          },
-                        ],
                       },
                       Object {
                         "component": "select",
@@ -17573,18 +17365,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -18208,18 +17993,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -18854,18 +18632,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -19495,18 +19266,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -20156,18 +19920,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -20797,18 +20554,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -21449,18 +21199,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "component": "select",
                                   "hideField": true,
                                   "id": "filter_value",
-                                  "includeEmpty": true,
-                                  "isRequired": true,
+                                  "initialValue": "",
+                                  "initializeOnMount": true,
                                   "label": "Filter Item",
                                   "name": "filter_value",
                                   "options": Array [],
-                                  "placeholder": "<Choose>",
-                                  "validate": Array [
-                                    Object {
-                                      "hideField": true,
-                                      "type": "customRequired",
-                                    },
-                                  ],
                                 },
                                 Object {
                                   "component": "select",
@@ -22078,18 +21821,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       "component": "select",
                                       "hideField": true,
                                       "id": "filter_value",
-                                      "includeEmpty": true,
-                                      "isRequired": true,
+                                      "initialValue": "",
+                                      "initializeOnMount": true,
                                       "label": "Filter Item",
                                       "name": "filter_value",
                                       "options": Array [],
-                                      "placeholder": "<Choose>",
-                                      "validate": Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ],
                                     },
                                     Object {
                                       "component": "select",
@@ -22711,18 +22447,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                         "component": "select",
                                         "hideField": true,
                                         "id": "filter_value",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
+                                        "initialValue": "",
+                                        "initializeOnMount": true,
                                         "label": "Filter Item",
                                         "name": "filter_value",
                                         "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "hideField": true,
-                                            "type": "customRequired",
-                                          },
-                                        ],
                                       },
                                       Object {
                                         "component": "select",
@@ -24187,39 +23916,23 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                     component="select"
                                     hideField={true}
                                     id="filter_value"
-                                    includeEmpty={true}
-                                    isRequired={true}
+                                    initialValue=""
+                                    initializeOnMount={true}
                                     key="filter_value"
                                     label="Filter Item"
                                     name="filter_value"
                                     options={Array []}
-                                    placeholder="<Choose>"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ]
-                                    }
                                   >
                                     <FormConditionWrapper
                                       field={
                                         Object {
                                           "component": "select",
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         }
                                       }
                                     >
@@ -24232,45 +23945,23 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           <SelectWithOnChange
                                             component="select"
                                             id="filter_value"
-                                            includeEmpty={true}
-                                            isRequired={true}
+                                            initialValue=""
+                                            initializeOnMount={true}
                                             label="Filter Item"
                                             name="filter_value"
                                             options={Array []}
                                             placeholder="<Choose>"
-                                            validate={
-                                              Array [
-                                                Object {
-                                                  "hideField": true,
-                                                  "type": "customRequired",
-                                                },
-                                              ]
-                                            }
                                           >
                                             <Select
                                               component="select"
                                               id="filter_value"
-                                              isRequired={true}
+                                              initialValue=""
+                                              initializeOnMount={true}
                                               label="Filter Item"
                                               loadingMessage="Loading..."
                                               name="filter_value"
-                                              options={
-                                                Array [
-                                                  Object {
-                                                    "label": "<Choose>",
-                                                    "value": undefined,
-                                                  },
-                                                ]
-                                              }
+                                              options={Array []}
                                               placeholder="<Choose>"
-                                              validate={
-                                                Array [
-                                                  Object {
-                                                    "hideField": true,
-                                                    "type": "customRequired",
-                                                  },
-                                                ]
-                                              }
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
@@ -24279,25 +23970,14 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 invalidText=""
                                                 isClearable={false}
                                                 isSearchable={false}
-                                                labelText={
-                                                  <IsRequired>
-                                                    Filter Item
-                                                  </IsRequired>
-                                                }
+                                                labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
                                                 name="filter_value"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                options={
-                                                  Array [
-                                                    Object {
-                                                      "label": "<Choose>",
-                                                      "value": undefined,
-                                                    },
-                                                  ]
-                                                }
+                                                options={Array []}
                                                 placeholder="<Choose>"
                                                 pluckSingleValue={true}
                                                 simpleValue={false}
@@ -24312,25 +23992,14 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                   isClearable={false}
                                                   isFetching={false}
                                                   isSearchable={false}
-                                                  labelText={
-                                                    <IsRequired>
-                                                      Filter Item
-                                                    </IsRequired>
-                                                  }
+                                                  labelText="Filter Item"
                                                   name="filter_value"
                                                   noOptionsMessage={[Function]}
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onInputChange={[Function]}
-                                                  options={
-                                                    Array [
-                                                      Object {
-                                                        "label": "<Choose>",
-                                                        "value": undefined,
-                                                      },
-                                                    ]
-                                                  }
+                                                  options={Array []}
                                                   placeholder="<Choose>"
                                                   value=""
                                                 >
@@ -24342,11 +24011,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                     inline={false}
                                                     invalid={false}
                                                     invalidText=""
-                                                    labelText={
-                                                      <IsRequired>
-                                                        Filter Item
-                                                      </IsRequired>
-                                                    }
+                                                    labelText="Filter Item"
                                                     light={false}
                                                     name="filter_value"
                                                     onBlur={[Function]}
@@ -24364,15 +24029,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           className="bx--label"
                                                           htmlFor="filter_value"
                                                         >
-                                                          <IsRequired>
-                                                            <span
-                                                              aria-hidden="true"
-                                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                            >
-                                                              *
-                                                            </span>
-                                                            Filter Item
-                                                          </IsRequired>
+                                                          Filter Item
                                                         </label>
                                                         <div
                                                           className="bx--select-input__wrapper"
@@ -24386,26 +24043,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
                                                             value=""
-                                                          >
-                                                            <SelectItem
-                                                              disabled={false}
-                                                              hidden={false}
-                                                              key="0"
-                                                              label="<Choose>"
-                                                              text="<Choose>"
-                                                              value=""
-                                                            >
-                                                              <option
-                                                                className="bx--select-option"
-                                                                disabled={false}
-                                                                hidden={false}
-                                                                label="<Choose>"
-                                                                value=""
-                                                              >
-                                                                &lt;Choose&gt;
-                                                              </option>
-                                                            </SelectItem>
-                                                          </select>
+                                                          />
                                                           <ForwardRef(ChevronDown16)
                                                             className="bx--select__arrow"
                                                           >
@@ -31845,18 +31483,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
@@ -32402,6 +32033,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 "active": undefined,
                                 "dirty": true,
                                 "dirtyFields": Object {
+                                  "filter_value": true,
                                   "target_id": true,
                                   "time_zone": true,
                                 },
@@ -32415,7 +32047,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "description": true,
                                   "enabled": true,
                                   "filter_typ": true,
-                                  "filter_value": true,
                                   "instance_name": true,
                                   "name": true,
                                   "object_message": true,
@@ -32594,7 +32225,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "description": false,
                                   "enabled": false,
                                   "filter_typ": false,
-                                  "filter_value": false,
+                                  "filter_value": true,
                                   "instance_name": false,
                                   "name": false,
                                   "object_message": false,
@@ -32665,7 +32296,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "enabled": "1",
                                   "filter_typ": null,
                                   "filter_type": null,
-                                  "filter_value": null,
                                   "filtered_item_list": null,
                                   "instance_name": "GenericObject",
                                   "instance_names": Array [
@@ -32877,18 +32507,11 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
@@ -33773,18 +33396,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                     "component": "select",
                     "hideField": true,
                     "id": "filter_value",
-                    "includeEmpty": true,
-                    "isRequired": true,
+                    "initialValue": "",
+                    "initializeOnMount": true,
                     "label": "Filter Item",
                     "name": "filter_value",
                     "options": Array [],
-                    "placeholder": "<Choose>",
-                    "validate": Array [
-                      Object {
-                        "hideField": true,
-                        "type": "customRequired",
-                      },
-                    ],
                   },
                   Object {
                     "component": "select",
@@ -34347,18 +33963,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                       "component": "select",
                       "hideField": true,
                       "id": "filter_value",
-                      "includeEmpty": true,
-                      "isRequired": true,
+                      "initialValue": "",
+                      "initializeOnMount": true,
                       "label": "Filter Item",
                       "name": "filter_value",
                       "options": Array [],
-                      "placeholder": "<Choose>",
-                      "validate": Array [
-                        Object {
-                          "hideField": true,
-                          "type": "customRequired",
-                        },
-                      ],
                     },
                     Object {
                       "component": "select",
@@ -34913,18 +34522,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                         "component": "select",
                         "hideField": true,
                         "id": "filter_value",
-                        "includeEmpty": true,
-                        "isRequired": true,
+                        "initialValue": "",
+                        "initializeOnMount": true,
                         "label": "Filter Item",
                         "name": "filter_value",
                         "options": Array [],
-                        "placeholder": "<Choose>",
-                        "validate": Array [
-                          Object {
-                            "hideField": true,
-                            "type": "customRequired",
-                          },
-                        ],
                       },
                       Object {
                         "component": "select",
@@ -35479,18 +35081,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -35998,18 +35593,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                             "component": "select",
                             "hideField": true,
                             "id": "filter_value",
-                            "includeEmpty": true,
-                            "isRequired": true,
+                            "initialValue": "",
+                            "initializeOnMount": true,
                             "label": "Filter Item",
                             "name": "filter_value",
                             "options": Array [],
-                            "placeholder": "<Choose>",
-                            "validate": Array [
-                              Object {
-                                "hideField": true,
-                                "type": "customRequired",
-                              },
-                            ],
                           },
                           Object {
                             "component": "select",
@@ -36528,18 +36116,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -37053,18 +36634,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                               "component": "select",
                               "hideField": true,
                               "id": "filter_value",
-                              "includeEmpty": true,
-                              "isRequired": true,
+                              "initialValue": "",
+                              "initializeOnMount": true,
                               "label": "Filter Item",
                               "name": "filter_value",
                               "options": Array [],
-                              "placeholder": "<Choose>",
-                              "validate": Array [
-                                Object {
-                                  "hideField": true,
-                                  "type": "customRequired",
-                                },
-                              ],
                             },
                             Object {
                               "component": "select",
@@ -37598,18 +37172,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -38123,18 +37690,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "component": "select",
                                 "hideField": true,
                                 "id": "filter_value",
-                                "includeEmpty": true,
-                                "isRequired": true,
+                                "initialValue": "",
+                                "initializeOnMount": true,
                                 "label": "Filter Item",
                                 "name": "filter_value",
                                 "options": Array [],
-                                "placeholder": "<Choose>",
-                                "validate": Array [
-                                  Object {
-                                    "hideField": true,
-                                    "type": "customRequired",
-                                  },
-                                ],
                               },
                               Object {
                                 "component": "select",
@@ -38659,18 +38219,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                   "component": "select",
                                   "hideField": true,
                                   "id": "filter_value",
-                                  "includeEmpty": true,
-                                  "isRequired": true,
+                                  "initialValue": "",
+                                  "initializeOnMount": true,
                                   "label": "Filter Item",
                                   "name": "filter_value",
                                   "options": Array [],
-                                  "placeholder": "<Choose>",
-                                  "validate": Array [
-                                    Object {
-                                      "hideField": true,
-                                      "type": "customRequired",
-                                    },
-                                  ],
                                 },
                                 Object {
                                   "component": "select",
@@ -39172,18 +38725,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       "component": "select",
                                       "hideField": true,
                                       "id": "filter_value",
-                                      "includeEmpty": true,
-                                      "isRequired": true,
+                                      "initialValue": "",
+                                      "initializeOnMount": true,
                                       "label": "Filter Item",
                                       "name": "filter_value",
                                       "options": Array [],
-                                      "placeholder": "<Choose>",
-                                      "validate": Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ],
                                     },
                                     Object {
                                       "component": "select",
@@ -39689,18 +39235,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                         "component": "select",
                                         "hideField": true,
                                         "id": "filter_value",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
+                                        "initialValue": "",
+                                        "initializeOnMount": true,
                                         "label": "Filter Item",
                                         "name": "filter_value",
                                         "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "hideField": true,
-                                            "type": "customRequired",
-                                          },
-                                        ],
                                       },
                                       Object {
                                         "component": "select",
@@ -41251,39 +40790,23 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                     component="select"
                                     hideField={true}
                                     id="filter_value"
-                                    includeEmpty={true}
-                                    isRequired={true}
+                                    initialValue=""
+                                    initializeOnMount={true}
                                     key="filter_value"
                                     label="Filter Item"
                                     name="filter_value"
                                     options={Array []}
-                                    placeholder="<Choose>"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "hideField": true,
-                                          "type": "customRequired",
-                                        },
-                                      ]
-                                    }
                                   >
                                     <FormConditionWrapper
                                       field={
                                         Object {
                                           "component": "select",
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         }
                                       }
                                     >
@@ -41296,45 +40819,23 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           <SelectWithOnChange
                                             component="select"
                                             id="filter_value"
-                                            includeEmpty={true}
-                                            isRequired={true}
+                                            initialValue=""
+                                            initializeOnMount={true}
                                             label="Filter Item"
                                             name="filter_value"
                                             options={Array []}
                                             placeholder="<Choose>"
-                                            validate={
-                                              Array [
-                                                Object {
-                                                  "hideField": true,
-                                                  "type": "customRequired",
-                                                },
-                                              ]
-                                            }
                                           >
                                             <Select
                                               component="select"
                                               id="filter_value"
-                                              isRequired={true}
+                                              initialValue=""
+                                              initializeOnMount={true}
                                               label="Filter Item"
                                               loadingMessage="Loading..."
                                               name="filter_value"
-                                              options={
-                                                Array [
-                                                  Object {
-                                                    "label": "<Choose>",
-                                                    "value": undefined,
-                                                  },
-                                                ]
-                                              }
+                                              options={Array []}
                                               placeholder="<Choose>"
-                                              validate={
-                                                Array [
-                                                  Object {
-                                                    "hideField": true,
-                                                    "type": "customRequired",
-                                                  },
-                                                ]
-                                              }
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
@@ -41343,25 +40844,14 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 invalidText=""
                                                 isClearable={false}
                                                 isSearchable={false}
-                                                labelText={
-                                                  <IsRequired>
-                                                    Filter Item
-                                                  </IsRequired>
-                                                }
+                                                labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
                                                 name="filter_value"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                options={
-                                                  Array [
-                                                    Object {
-                                                      "label": "<Choose>",
-                                                      "value": undefined,
-                                                    },
-                                                  ]
-                                                }
+                                                options={Array []}
                                                 placeholder="<Choose>"
                                                 pluckSingleValue={true}
                                                 simpleValue={false}
@@ -41376,25 +40866,14 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   isClearable={false}
                                                   isFetching={false}
                                                   isSearchable={false}
-                                                  labelText={
-                                                    <IsRequired>
-                                                      Filter Item
-                                                    </IsRequired>
-                                                  }
+                                                  labelText="Filter Item"
                                                   name="filter_value"
                                                   noOptionsMessage={[Function]}
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onInputChange={[Function]}
-                                                  options={
-                                                    Array [
-                                                      Object {
-                                                        "label": "<Choose>",
-                                                        "value": undefined,
-                                                      },
-                                                    ]
-                                                  }
+                                                  options={Array []}
                                                   placeholder="<Choose>"
                                                   value=""
                                                 >
@@ -41406,11 +40885,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                     inline={false}
                                                     invalid={false}
                                                     invalidText=""
-                                                    labelText={
-                                                      <IsRequired>
-                                                        Filter Item
-                                                      </IsRequired>
-                                                    }
+                                                    labelText="Filter Item"
                                                     light={false}
                                                     name="filter_value"
                                                     onBlur={[Function]}
@@ -41428,15 +40903,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           className="bx--label"
                                                           htmlFor="filter_value"
                                                         >
-                                                          <IsRequired>
-                                                            <span
-                                                              aria-hidden="true"
-                                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                            >
-                                                              *
-                                                            </span>
-                                                            Filter Item
-                                                          </IsRequired>
+                                                          Filter Item
                                                         </label>
                                                         <div
                                                           className="bx--select-input__wrapper"
@@ -41450,26 +40917,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
                                                             value=""
-                                                          >
-                                                            <SelectItem
-                                                              disabled={false}
-                                                              hidden={false}
-                                                              key="0"
-                                                              label="<Choose>"
-                                                              text="<Choose>"
-                                                              value=""
-                                                            >
-                                                              <option
-                                                                className="bx--select-option"
-                                                                disabled={false}
-                                                                hidden={false}
-                                                                label="<Choose>"
-                                                                value=""
-                                                              >
-                                                                &lt;Choose&gt;
-                                                              </option>
-                                                            </SelectItem>
-                                                          </select>
+                                                          />
                                                           <ForwardRef(ChevronDown16)
                                                             className="bx--select__arrow"
                                                           >
@@ -45876,18 +45324,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
@@ -46296,6 +45737,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "active": undefined,
                                 "dirty": true,
                                 "dirtyFields": Object {
+                                  "filter_value": true,
                                   "timer_value": true,
                                 },
                                 "dirtyFieldsSinceLastSubmit": Object {
@@ -46350,6 +45792,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "initialValues": Object {
                                   "action_typ": "vm",
                                   "filter_type": "all",
+                                  "filter_value": "",
                                   "timer_typ": "Once",
                                   "timer_value": 1,
                                 },
@@ -46359,7 +45802,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                   "description": false,
                                   "enabled": false,
                                   "filter_typ": false,
-                                  "filter_value": false,
+                                  "filter_value": true,
                                   "instance_name": false,
                                   "name": false,
                                   "object_message": false,
@@ -46534,18 +45977,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           "component": "select",
                                           "hideField": true,
                                           "id": "filter_value",
-                                          "includeEmpty": true,
-                                          "isRequired": true,
+                                          "initialValue": "",
+                                          "initializeOnMount": true,
                                           "label": "Filter Item",
                                           "name": "filter_value",
                                           "options": Array [],
-                                          "placeholder": "<Choose>",
-                                          "validate": Array [
-                                            Object {
-                                              "hideField": true,
-                                              "type": "customRequired",
-                                            },
-                                          ],
                                         },
                                         Object {
                                           "component": "select",
