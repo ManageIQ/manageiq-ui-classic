@@ -69,6 +69,9 @@ namespace :spec do
     exit 0
   end
 
+  desc "Run security specs from core"
+  task :security => ["app:test:security"]
+
   namespace :jest do
     desc 'Run Jest tests with node debugger'
     task :debug do
