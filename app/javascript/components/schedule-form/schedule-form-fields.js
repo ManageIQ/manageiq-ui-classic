@@ -59,10 +59,8 @@ export const targetField = (data) => ({
   label: __('Filter Item'),
   hideField: data.displayFields.target,
   options: data.options.target,
-  placeholder: __('<Choose>'),
-  includeEmpty: true,
-  isRequired: true,
-  validate: [{ type: 'customRequired', hideField: data.displayFields.target }],
+  initializeOnMount: true,
+  initialValue: data.filterValue,
 });
 
 export const zoneField = (data) => ({

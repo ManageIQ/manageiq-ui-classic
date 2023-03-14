@@ -106,12 +106,21 @@ export const objectTypeChange = (value, setData, data) => {
   }
 };
 
+/** Function to get the default filter value. */
+export const getFilterValue = (data, response) => {
+  if (response.filtered_item_list[0][0] && data.filterValue) {
+    return response.filtered_item_list[0][0];
+  }
+  return data.initialValues.filter_value;
+};
+
 /** Function to load the target options when the 'Filter' drop-down list selection is changed  */
 export const subActionChange = (value, setData, data) => {
   data.initialValues.filter_type = value;
   if (value !== scheduleConst.all && data.displayFields.filterType === false) {
     http.post('/ops/schedule_form_filter_type_field_changed/new',
       { filter_type: value, action_type: data.initialValues.action_typ }).then((response) => {
+      data.filterValue = getFilterValue(data, response);
       setData({
         ...data,
         displayFields: {
