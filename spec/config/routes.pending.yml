@@ -263,7 +263,6 @@ ConditionController:
 - reload
 - search_clear
 ConfigurationController:
-- index
 - report_data
 - show
 - tree_autoload
