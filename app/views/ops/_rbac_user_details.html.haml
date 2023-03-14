@@ -1,50 +1,33 @@
-- change_stored_password ||= _("Change")
-- cancel_password_change ||= _("Cancel")
-- stored_password_placeholder = "●●●●●●●●"
-- pfx ||= ""
-
 - if @edit
+  - change_stored_password ||= _("Change")
+  - cancel_password_change ||= _("Cancel")
+  - stored_password_placeholder = "●●●●●●●●"
+  - pfx ||= ""
   - url = url_for_only_path(:action => 'rbac_user_field_changed', :id => (@edit[:user_id] || "new"))
-- observe_url_json = {:interval => '.5', :url => url}.to_json
-- disabled = @edit && @edit[:new][:userid] == "admin"
-
-= render :partial => "layouts/flash_msg"
-#user_info
-  %h3
-    = _("User Information")
-  .form-horizontal
-    - unless @edit
+  - observe_url_json = {:interval => '.5', :url => url}.to_json
+  - disabled = @edit && @edit[:new][:userid] == "admin"
+  = render :partial => "layouts/flash_msg"
+  #user_info
+    %h3
+      = _("User Information")
+    .form-horizontal
       .form-group
         %label.col-md-2.control-label
-          = _("ID")
+          = _("Full Name")
         .col-md-8
-          %p.form-control-static
-            = h(@record.id)
-    .form-group
-      %label.col-md-2.control-label
-        = _("Full Name")
-      .col-md-8
-        - if !@edit
-          %p.form-control-static
-            = h(@record.name)
-        - else
           = text_field_tag("name",
-                           @edit[:new][:name],
-                           :autocomplete      => 'off',
-                           :maxlength         => 50,
-                           :disabled          => disabled,
-                           :class             => "form-control",
-                           "data-miq_observe" => observe_url_json)
+                            @edit[:new][:name],
+                          :autocomplete      => 'off',
+                          :maxlength         => 50,
+                          :disabled          => disabled,
+                          :class             => "form-control",
+                          "data-miq_observe" => observe_url_json)
           - unless @edit[:new][:userid] == "admin"
             = javascript_tag(javascript_focus('name'))
-    .form-group
-      %label.col-md-2.control-label
-        = _("Username")
-      .col-md-8
-        - if !@edit
-          %p.form-control-static
-            = h(@record.userid)
-        - else
+      .form-group
+        %label.col-md-2.control-label
+          = _("Username")
+        .col-md-8
           = text_field_tag("userid",
                            @edit[:new][:userid],
                            :autocomplete      => 'off',
@@ -52,7 +35,6 @@
                            :disabled          => disabled,
                            :class             => "form-control",
                            "data-miq_observe" => observe_url_json)
-    - if @edit
       - db_mode = ::Settings.authentication.mode
       - if db_mode == "database" || (db_mode != "database" && disabled)
         .form-group
@@ -79,7 +61,6 @@
                                           "style"   => "display:none;cursor: pointer; cursor: hand;",
                                           "onclick" => "cancelPasswordChange('#{pfx}', '#{url}')"}
                     = cancel_password_change
-
         .form-group{:id    => "verify_group",
                     :style => @edit[:new][:userid].blank? ? "display:block" : "display:none"}
           %label.col-md-2.control-label
@@ -91,57 +72,21 @@
                                  :maxlength         => 50,
                                  :class             => "form-control",
                                  "data-miq_observe" => observe_url_json)
-
-    .form-group
-      %label.col-md-2.control-label
-        = _("E-mail Address")
-      .col-md-8
-        - if !@edit
-          %p.form-control-static
-            = h(@record.email)
-        - else
-          = text_field_tag("email",
-                           @edit[:new][:email],
-                           :autocomplete      => 'off',
-                           :maxlength         => 253,
-                           :class             => "form-control",
-                           "data-miq_observe" => observe_url_json)
-    - unless @edit
       .form-group
         %label.col-md-2.control-label
-          = _("Current Group")
+          = _("E-mail Address")
         .col-md-8
-          - params = {}
-          - if @record.current_group
-            - if role_allows?(:feature => "rbac_group_show")
-              - params = {:class   => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{@record.current_group.id}');",
-                          :title => _("View this Group")}
-            %i.ff.ff-group{params}
-            = link_to(@record.current_group.description, "#", params)
-    .form-group
-      %label.col-md-2.control-label
-        - if !@edit
-          = _("Groups")
-        - else
+          = text_field_tag("email",
+                          @edit[:new][:email],
+                          :autocomplete      => 'off',
+                          :maxlength         => 253,
+                          :class             => "form-control",
+                          "data-miq_observe" => observe_url_json)
+      .form-group
+        %label.col-md-2.control-label
           = _("Available Groups")
-      .col-md-2
-        - groups = @record.present? && @record.miq_groups.present? ? @record.miq_groups.order(:description) : []
-        - if @edit.blank?
-          - if role_allows?(:feature => "rbac_group_show")
-            - groups.each do |group|
-              - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{group.id}');",
-                          :title   => _("View this Group")}
-              %i.ff.ff-group{params}
-              = link_to(group.description, "#", params)
-              %br
-          - else
-            - groups.each do |group|
-              %i.ff.ff-group
-              = link_to(group.description, "#")
-              %br
-        - else
+        .col-md-2
+          - groups = @record.present? && @record.miq_groups.present? ? @record.miq_groups.order(:description) : []
           - if disabled
             %p.form-control-static
               - groups.each do |group|
@@ -150,37 +95,20 @@
           - else
             - select_groups = @edit[:new][:userid].blank? ? @edit[:new][:group] : groups.map(&:id)
             = select_tag('chosen_group',
-                         options_for_select(@edit[:groups], select_groups),
-                         :class    => "selectpicker",
-                         :multiple => true,
-                         :title    => "&lt;#{_('Choose one or more Groups')}&gt;",
-                         :style    => "overflow-x: scroll;")
+                        options_for_select(@edit[:groups], select_groups),
+                        :class    => "selectpicker",
+                        :multiple => true,
+                        :title    => "&lt;#{_('Choose one or more Groups')}&gt;",
+                        :style    => "overflow-x: scroll;")
             :javascript
               miqInitSelectPicker();
               miqSelectPickerEvent('chosen_group', "#{url}")
-    - if @edit
       .form-group
         %label.col-md-2.control-label
           = _("Selected Groups")
         .col-md-4
           = render :partial => "ops/rbac_group_selected"
-    - unless @edit
-      .form-group
-        %label.col-md-2.control-label
-          = _("Role")
-        .col-md-8
-          - if @record.current_group && @record.current_group.miq_user_role
-            - if role_allows?(:feature => "rbac_user_show")
-              - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@record.current_group.miq_user_role.id}');",
-                          :title   => _("View this Role")}
-            - else
-              - params = {}
-            %i.ff.ff-user-role{params}
-            = link_to(@record.miq_user_role_name, "#", params)
-          - else
-            %p.form-control-static
-              = h(@record.miq_user_role_name)
-  %hr
-  - unless @edit
-    = render :partial => "rbac_tag_box"
+    %hr
+- else
+  = settings_users_summary(@record)
+  = render :partial => "rbac_tag_box"
