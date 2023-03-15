@@ -22,6 +22,7 @@ jobs:
         - spec:javascript
         - spec:jest
         - spec:routes
+        - spec:security
     services:
       postgres:
         image: manageiq/postgresql:13
