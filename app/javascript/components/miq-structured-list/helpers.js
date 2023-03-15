@@ -1,4 +1,5 @@
 /* eslint-disable no-eval */
+import PropTypes from 'prop-types';
 import { TreeViewRedux } from '../tree-view';
 import CatalogResource from '../data-tables/catalog-resource';
 import MiqDataTable from '../miq-data-table';
@@ -37,3 +38,24 @@ export const rowClickEvent = (rows, index) => {
     miqSparkleOff();
   }
 };
+
+export const valueProps = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.array,
+  PropTypes.bool,
+  PropTypes.shape({}),
+]);
+
+export const rowProps = PropTypes.shape({
+  icon: PropTypes.string,
+  image: PropTypes.string,
+  button: PropTypes.string,
+  expandable: PropTypes.bool,
+  bold: PropTypes.bool,
+  style: PropTypes.string,
+  link: PropTypes.string,
+  value: valueProps,
+  label: PropTypes.string,
+  sub_items: PropTypes.arrayOf(PropTypes.any),
+});

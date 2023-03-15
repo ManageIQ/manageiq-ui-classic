@@ -270,43 +270,105 @@ exports[`TagGroup renders just fine 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "no-hover",
+                                      "icon": "pficon pficon-zone",
+                                      "label": "Managed by Zone",
+                                      "value": "default",
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "no-hover",
+                                        "icon": "pficon pficon-zone",
+                                        "label": "Managed by Zone",
+                                        "value": "default",
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="cell icon"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <i
-                                            className="pficon pficon-zone"
-                                            style={
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
                                               Object {
-                                                "background": undefined,
-                                                "color": undefined,
+                                                "hoverClass": "no-hover",
+                                                "icon": "pficon pficon-zone",
+                                                "label": "Managed by Zone",
+                                                "value": "default",
                                               }
                                             }
-                                          />
+                                          >
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "icon": "pficon pficon-zone",
+                                                  "label": "Managed by Zone",
+                                                  "value": "default",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                className="content"
+                                              >
+                                                <CellIcon
+                                                  row={
+                                                    Object {
+                                                      "hoverClass": "no-hover",
+                                                      "icon": "pficon pficon-zone",
+                                                      "label": "Managed by Zone",
+                                                      "value": "default",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="cell icon"
+                                                  >
+                                                    <i
+                                                      className="pficon pficon-zone"
+                                                      style={
+                                                        Object {
+                                                          "background": undefined,
+                                                          "color": undefined,
+                                                        }
+                                                      }
+                                                    />
+                                                  </div>
+                                                </CellIcon>
+                                                <CellText
+                                                  value="default"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    default
+                                                  </div>
+                                                </CellText>
+                                              </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                        <div
-                                          className="expand wrap_text"
-                                        >
-                                          default
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -348,97 +410,246 @@ exports[`TagGroup renders just fine 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "no-hover",
+                                      "label": "My Company X Tags",
+                                      "value": Array [
+                                        Object {
+                                          "icon": "fa fa-tag",
+                                          "label": "Dan Test",
+                                          "value": Array [
+                                            "Test 1",
+                                          ],
+                                        },
+                                        Object {
+                                          "icon": "fa fa-tag",
+                                          "label": "Demo bla",
+                                          "value": Array [
+                                            "Policy",
+                                            "2",
+                                          ],
+                                        },
+                                      ],
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "no-hover",
+                                        "label": "My Company X Tags",
+                                        "value": Array [
+                                          Object {
+                                            "icon": "fa fa-tag",
+                                            "label": "Dan Test",
+                                            "value": Array [
+                                              "Test 1",
+                                            ],
+                                          },
+                                          Object {
+                                            "icon": "fa fa-tag",
+                                            "label": "Demo bla",
+                                            "value": Array [
+                                              "Policy",
+                                              "2",
+                                            ],
+                                          },
+                                        ],
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="multi_row_cell"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="sub_row_item"
-                                            key="0"
-                                            title=""
-                                          >
-                                            <div
-                                              className="cell icon"
-                                            >
-                                              <i
-                                                className="fa fa-tag"
-                                                style={
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "My Company X Tags",
+                                                "value": Array [
                                                   Object {
-                                                    "background": undefined,
-                                                    "color": undefined,
-                                                  }
+                                                    "icon": "fa fa-tag",
+                                                    "label": "Dan Test",
+                                                    "value": Array [
+                                                      "Test 1",
+                                                    ],
+                                                  },
+                                                  Object {
+                                                    "icon": "fa fa-tag",
+                                                    "label": "Demo bla",
+                                                    "value": Array [
+                                                      "Policy",
+                                                      "2",
+                                                    ],
+                                                  },
+                                                ],
+                                              }
+                                            }
+                                          >
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "My Company X Tags",
+                                                  "value": Array [
+                                                    Object {
+                                                      "icon": "fa fa-tag",
+                                                      "label": "Dan Test",
+                                                      "value": Array [
+                                                        "Test 1",
+                                                      ],
+                                                    },
+                                                    Object {
+                                                      "icon": "fa fa-tag",
+                                                      "label": "Demo bla",
+                                                      "value": Array [
+                                                        "Policy",
+                                                        "2",
+                                                      ],
+                                                    },
+                                                  ],
                                                 }
-                                              />
-                                            </div>
-                                            <div
-                                              className="sub_label"
-                                              title="Dan Test"
-                                            >
-                                              Dan Test
-                                            </div>
-                                            <div
-                                              className="sub_value"
+                                              }
                                             >
                                               <div
-                                                className="expand wrap_text"
+                                                className="content"
                                               >
-                                                Test 1
+                                                <div
+                                                  className="multi_row_cell"
+                                                >
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="0"
+                                                    title=""
+                                                  >
+                                                    <CellIcon
+                                                      row={
+                                                        Object {
+                                                          "icon": "fa fa-tag",
+                                                          "label": "Dan Test",
+                                                          "value": Array [
+                                                            "Test 1",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="cell icon"
+                                                      >
+                                                        <i
+                                                          className="fa fa-tag"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                              "color": undefined,
+                                                            }
+                                                          }
+                                                        />
+                                                      </div>
+                                                    </CellIcon>
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Dan Test"
+                                                    >
+                                                      Dan Test
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value={
+                                                          Array [
+                                                            "Test 1",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Test 1
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="1"
+                                                    title=""
+                                                  >
+                                                    <CellIcon
+                                                      row={
+                                                        Object {
+                                                          "icon": "fa fa-tag",
+                                                          "label": "Demo bla",
+                                                          "value": Array [
+                                                            "Policy",
+                                                            "2",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="cell icon"
+                                                      >
+                                                        <i
+                                                          className="fa fa-tag"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                              "color": undefined,
+                                                            }
+                                                          }
+                                                        />
+                                                      </div>
+                                                    </CellIcon>
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Demo bla"
+                                                    >
+                                                      Demo bla
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value={
+                                                          Array [
+                                                            "Policy",
+                                                            "2",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Policy,2
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="1"
-                                            title=""
-                                          >
-                                            <div
-                                              className="cell icon"
-                                            >
-                                              <i
-                                                className="fa fa-tag"
-                                                style={
-                                                  Object {
-                                                    "background": undefined,
-                                                    "color": undefined,
-                                                  }
-                                                }
-                                              />
-                                            </div>
-                                            <div
-                                              className="sub_label"
-                                              title="Demo bla"
-                                            >
-                                              Demo bla
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                Policy,2
-                                              </div>
-                                            </div>
-                                          </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -480,112 +691,303 @@ exports[`TagGroup renders just fine 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "label": "Other Tags",
+                                      "title": "All Other Tags",
+                                      "value": Array [
+                                        Object {
+                                          "icon": "fa fa-tag",
+                                          "label": "Test",
+                                          "value": Array [
+                                            "Test 1",
+                                          ],
+                                        },
+                                        Object {
+                                          "icon": "fa fa-tag",
+                                          "label": "Demo 2",
+                                          "value": Array [
+                                            "Policy",
+                                            "2",
+                                            "3",
+                                          ],
+                                        },
+                                        Object {
+                                          "link": "You clicked on Demo 3",
+                                          "title": "Click to display the item",
+                                          "value": Array [
+                                            "Demo 3",
+                                          ],
+                                        },
+                                      ],
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "label": "Other Tags",
+                                        "title": "All Other Tags",
+                                        "value": Array [
+                                          Object {
+                                            "icon": "fa fa-tag",
+                                            "label": "Test",
+                                            "value": Array [
+                                              "Test 1",
+                                            ],
+                                          },
+                                          Object {
+                                            "icon": "fa fa-tag",
+                                            "label": "Demo 2",
+                                            "value": Array [
+                                              "Policy",
+                                              "2",
+                                              "3",
+                                            ],
+                                          },
+                                          Object {
+                                            "link": "You clicked on Demo 3",
+                                            "title": "Click to display the item",
+                                            "value": Array [
+                                              "Demo 3",
+                                            ],
+                                          },
+                                        ],
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="multi_row_cell"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="sub_row_item"
-                                            key="0"
-                                            title=""
-                                          >
-                                            <div
-                                              className="cell icon"
-                                            >
-                                              <i
-                                                className="fa fa-tag"
-                                                style={
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "label": "Other Tags",
+                                                "title": "All Other Tags",
+                                                "value": Array [
                                                   Object {
-                                                    "background": undefined,
-                                                    "color": undefined,
-                                                  }
-                                                }
-                                              />
-                                            </div>
-                                            <div
-                                              className="sub_label"
-                                              title="Test"
-                                            >
-                                              Test
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                Test 1
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="1"
-                                            title=""
-                                          >
-                                            <div
-                                              className="cell icon"
-                                            >
-                                              <i
-                                                className="fa fa-tag"
-                                                style={
+                                                    "icon": "fa fa-tag",
+                                                    "label": "Test",
+                                                    "value": Array [
+                                                      "Test 1",
+                                                    ],
+                                                  },
                                                   Object {
-                                                    "background": undefined,
-                                                    "color": undefined,
-                                                  }
-                                                }
-                                              />
-                                            </div>
-                                            <div
-                                              className="sub_label"
-                                              title="Demo 2"
-                                            >
-                                              Demo 2
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                Policy,2,3
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="2"
-                                            title="Click to display the item"
+                                                    "icon": "fa fa-tag",
+                                                    "label": "Demo 2",
+                                                    "value": Array [
+                                                      "Policy",
+                                                      "2",
+                                                      "3",
+                                                    ],
+                                                  },
+                                                  Object {
+                                                    "link": "You clicked on Demo 3",
+                                                    "title": "Click to display the item",
+                                                    "value": Array [
+                                                      "Demo 3",
+                                                    ],
+                                                  },
+                                                ],
+                                              }
+                                            }
                                           >
-                                            <div
-                                              className="sub_value"
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "label": "Other Tags",
+                                                  "title": "All Other Tags",
+                                                  "value": Array [
+                                                    Object {
+                                                      "icon": "fa fa-tag",
+                                                      "label": "Test",
+                                                      "value": Array [
+                                                        "Test 1",
+                                                      ],
+                                                    },
+                                                    Object {
+                                                      "icon": "fa fa-tag",
+                                                      "label": "Demo 2",
+                                                      "value": Array [
+                                                        "Policy",
+                                                        "2",
+                                                        "3",
+                                                      ],
+                                                    },
+                                                    Object {
+                                                      "link": "You clicked on Demo 3",
+                                                      "title": "Click to display the item",
+                                                      "value": Array [
+                                                        "Demo 3",
+                                                      ],
+                                                    },
+                                                  ],
+                                                }
+                                              }
                                             >
                                               <div
-                                                className="expand wrap_text"
+                                                className="content"
                                               >
-                                                Demo 3
+                                                <div
+                                                  className="multi_row_cell"
+                                                >
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="0"
+                                                    title=""
+                                                  >
+                                                    <CellIcon
+                                                      row={
+                                                        Object {
+                                                          "icon": "fa fa-tag",
+                                                          "label": "Test",
+                                                          "value": Array [
+                                                            "Test 1",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="cell icon"
+                                                      >
+                                                        <i
+                                                          className="fa fa-tag"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                              "color": undefined,
+                                                            }
+                                                          }
+                                                        />
+                                                      </div>
+                                                    </CellIcon>
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Test"
+                                                    >
+                                                      Test
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value={
+                                                          Array [
+                                                            "Test 1",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Test 1
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="1"
+                                                    title=""
+                                                  >
+                                                    <CellIcon
+                                                      row={
+                                                        Object {
+                                                          "icon": "fa fa-tag",
+                                                          "label": "Demo 2",
+                                                          "value": Array [
+                                                            "Policy",
+                                                            "2",
+                                                            "3",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="cell icon"
+                                                      >
+                                                        <i
+                                                          className="fa fa-tag"
+                                                          style={
+                                                            Object {
+                                                              "background": undefined,
+                                                              "color": undefined,
+                                                            }
+                                                          }
+                                                        />
+                                                      </div>
+                                                    </CellIcon>
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Demo 2"
+                                                    >
+                                                      Demo 2
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value={
+                                                          Array [
+                                                            "Policy",
+                                                            "2",
+                                                            "3",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Policy,2,3
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="2"
+                                                    title="Click to display the item"
+                                                  >
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value={
+                                                          Array [
+                                                            "Demo 3",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Demo 3
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>

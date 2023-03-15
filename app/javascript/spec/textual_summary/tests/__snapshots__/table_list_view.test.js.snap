@@ -278,45 +278,104 @@ exports[`TableListView renders just fine... 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "explorer": true,
+                                      "label": "vim_performance_states",
+                                      "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                      "name": "vim_performance_states",
+                                      "title": "vim_performance_states",
+                                      "value": "676,150",
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "explorer": true,
+                                        "label": "vim_performance_states",
+                                        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                        "name": "vim_performance_states",
+                                        "title": "vim_performance_states",
+                                        "value": "676,150",
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <Link
-                                        className="cell_link"
-                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
-                                        onClick={[Function]}
-                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
-                                        <a
-                                          className="bx--link cell_link"
-                                          href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
-                                          onClick={[Function]}
-                                          rel={null}
-                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                        <div
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="content"
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "explorer": true,
+                                                "label": "vim_performance_states",
+                                                "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                                "name": "vim_performance_states",
+                                                "title": "vim_performance_states",
+                                                "value": "676,150",
+                                              }
+                                            }
                                           >
-                                            <div
-                                              className="expand wrap_text"
+                                            <Link
+                                              className="cell_link"
+                                              href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                              onClick={[Function]}
+                                              to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
                                             >
-                                              676,150
-                                            </div>
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                              <a
+                                                className="bx--link cell_link"
+                                                href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                                onClick={[Function]}
+                                                rel={null}
+                                                to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                              >
+                                                <SummaryValueItemContent
+                                                  row={
+                                                    Object {
+                                                      "explorer": true,
+                                                      "label": "vim_performance_states",
+                                                      "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                                      "name": "vim_performance_states",
+                                                      "title": "vim_performance_states",
+                                                      "value": "676,150",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <CellText
+                                                      value="676,150"
+                                                    >
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        676,150
+                                                      </div>
+                                                    </CellText>
+                                                  </div>
+                                                </SummaryValueItemContent>
+                                              </a>
+                                            </Link>
+                                          </SummaryValueItem>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -358,45 +417,104 @@ exports[`TableListView renders just fine... 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "explorer": true,
+                                      "label": "miq_report_result_details",
+                                      "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                      "name": "miq_report_result_details",
+                                      "title": "miq_report_result_details",
+                                      "value": "280,848",
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "explorer": true,
+                                        "label": "miq_report_result_details",
+                                        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                        "name": "miq_report_result_details",
+                                        "title": "miq_report_result_details",
+                                        "value": "280,848",
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <Link
-                                        className="cell_link"
-                                        href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
-                                        onClick={[Function]}
-                                        to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
-                                        <a
-                                          className="bx--link cell_link"
-                                          href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
-                                          onClick={[Function]}
-                                          rel={null}
-                                          to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                        <div
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="content"
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "explorer": true,
+                                                "label": "miq_report_result_details",
+                                                "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                                "name": "miq_report_result_details",
+                                                "title": "miq_report_result_details",
+                                                "value": "280,848",
+                                              }
+                                            }
                                           >
-                                            <div
-                                              className="expand wrap_text"
+                                            <Link
+                                              className="cell_link"
+                                              href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                              onClick={[Function]}
+                                              to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
                                             >
-                                              280,848
-                                            </div>
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                              <a
+                                                className="bx--link cell_link"
+                                                href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                                onClick={[Function]}
+                                                rel={null}
+                                                to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                              >
+                                                <SummaryValueItemContent
+                                                  row={
+                                                    Object {
+                                                      "explorer": true,
+                                                      "label": "miq_report_result_details",
+                                                      "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                                      "name": "miq_report_result_details",
+                                                      "title": "miq_report_result_details",
+                                                      "value": "280,848",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <CellText
+                                                      value="280,848"
+                                                    >
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        280,848
+                                                      </div>
+                                                    </CellText>
+                                                  </div>
+                                                </SummaryValueItemContent>
+                                              </a>
+                                            </Link>
+                                          </SummaryValueItem>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>

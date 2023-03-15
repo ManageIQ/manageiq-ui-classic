@@ -16,19 +16,15 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            bar
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Event Group",
+            "value": "bar",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className=""
@@ -40,19 +36,15 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            policy description
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Attached to Policy",
+            "value": "policy description",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -71,17 +63,21 @@ exports[`MiqEventDefinitionStructuredList should render event definition policy 
       tabIndex={0}
       title="View this Model Alert"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "icon": "pficon pficon-warning-triangle-o",
+                "value": "Policy description",
+              },
+            ],
+            "onclick": "DoNav('/miq_policy/show/1');",
+            "title": "View this Model Alert",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>

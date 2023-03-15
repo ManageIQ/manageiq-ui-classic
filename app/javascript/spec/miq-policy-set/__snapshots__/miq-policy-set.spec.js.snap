@@ -16,19 +16,15 @@ exports[`MiqPolicySetStructuredList should render policy set info structured lis
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            bar
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Description",
+            "value": "bar",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -47,21 +43,19 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
       tabIndex={0}
       title=""
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <MiqStructuredListInputs
-          action={[Function]}
-          value={
-            Object {
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "value": Object {
               "input": "text_area",
               "readonly": true,
               "rows": 4,
               "text": "text area description",
-            }
+            },
           }
-        />
-      </FeatureToggle(StructuredListCell)>
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -80,17 +74,23 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       tabIndex={0}
       title="View this Container Image Policy"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "bold": true,
+                "icon": "pficon pficon-image",
+                "value": "Container Image Compliance",
+              },
+              "OpenSCAP",
+            ],
+            "onclick": "DoNav('/miq_policy/show/1');",
+            "title": "View this Container Image Policy",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className="clickable"
@@ -99,17 +99,23 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       tabIndex={1}
       title="View this Container Image Policy"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "bold": true,
+                "icon": "pficon pficon-image",
+                "value": "Container Image Control",
+              },
+              "My scan",
+            ],
+            "onclick": "DoNav('/miq_policy/show/17');",
+            "title": "View this Container Image Policy",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className="clickable"
@@ -118,17 +124,23 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       tabIndex={2}
       title="View this Container Image Policy"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "bold": true,
+                "icon": "pficon pficon-image",
+                "value": "Container Image Control",
+              },
+              "Schedule compliance",
+            ],
+            "onclick": "DoNav('/miq_policy/show/3');",
+            "title": "View this Container Image Policy",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className="clickable"
@@ -137,17 +149,23 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       tabIndex={3}
       title="View this Container Node Policy"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "bold": true,
+                "icon": "pficon pficon-container-node",
+                "value": "Container Node Control",
+              },
+              "loic Node",
+            ],
+            "onclick": "DoNav('/miq_policy/show/18');",
+            "title": "View this Container Node Policy",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className="clickable"
@@ -156,17 +174,23 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       tabIndex={4}
       title="View this VM and Instance Policy"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "bold": true,
+                "icon": "pficon pficon-virtual-machine",
+                "value": "VM and Instance Control",
+              },
+              "OpenStack Application",
+            ],
+            "onclick": "DoNav('/miq_policy/show/16');",
+            "title": "View this VM and Instance Policy",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>

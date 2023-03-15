@@ -367,166 +367,218 @@ exports[`Simple Table renders just fine... 1`] = `
                                 role="row"
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="0"
+                                <SummaryValue
                                   onClick={[Function]}
-                                  title=""
+                                  row={
+                                    Array [
+                                      null,
+                                      "-1",
+                                      "outbound",
+                                      0,
+                                      0,
+                                      "0.0.0.0/0",
+                                    ]
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueArray
                                     onClick={[Function]}
-                                    title=""
+                                    row={
+                                      Array [
+                                        null,
+                                        "-1",
+                                        "outbound",
+                                        0,
+                                        0,
+                                        "0.0.0.0/0",
+                                      ]
+                                    }
                                   >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="0"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="1"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        -1
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="2"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={null}
+                                          >
+                                            <div
+                                              className="wrap_text"
+                                            />
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="1"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        outbound
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="3"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="-1"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              -1
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="2"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        0
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="4"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="outbound"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              outbound
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="3"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        0
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="5"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={0}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              0
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="4"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        0.0.0.0/0
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={0}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              0
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="5"
+                                      onClick={[Function]}
+                                      title=""
+                                    >
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="0.0.0.0/0"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              0.0.0.0/0
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueArray>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -552,166 +604,218 @@ exports[`Simple Table renders just fine... 1`] = `
                                 role="row"
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="0"
+                                <SummaryValue
                                   onClick={[Function]}
-                                  title=""
+                                  row={
+                                    Array [
+                                      null,
+                                      "TCP",
+                                      "inbound",
+                                      22,
+                                      22,
+                                      "0.0.0.0/0",
+                                    ]
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueArray
                                     onClick={[Function]}
-                                    title=""
+                                    row={
+                                      Array [
+                                        null,
+                                        "TCP",
+                                        "inbound",
+                                        22,
+                                        22,
+                                        "0.0.0.0/0",
+                                      ]
+                                    }
                                   >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="0"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="1"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        TCP
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="2"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={null}
+                                          >
+                                            <div
+                                              className="wrap_text"
+                                            />
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="1"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        inbound
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="3"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="TCP"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              TCP
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="2"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        22
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="4"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="inbound"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              inbound
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="3"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        22
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="5"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={22}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              22
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="4"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        0.0.0.0/0
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={22}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              22
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="5"
+                                      onClick={[Function]}
+                                      title=""
+                                    >
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="0.0.0.0/0"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              0.0.0.0/0
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueArray>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -737,197 +841,270 @@ exports[`Simple Table renders just fine... 1`] = `
                                 role="row"
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="0"
+                                <SummaryValue
                                   onClick={[Function]}
-                                  title=""
+                                  row={
+                                    Array [
+                                      null,
+                                      Object {
+                                        "link": "some_link",
+                                        "value": Array [
+                                          "TCP",
+                                        ],
+                                      },
+                                      "inbound",
+                                      80,
+                                      80,
+                                      "0.0.0.0/0",
+                                    ]
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueArray
                                     onClick={[Function]}
-                                    title=""
+                                    row={
+                                      Array [
+                                        null,
+                                        Object {
+                                          "link": "some_link",
+                                          "value": Array [
+                                            "TCP",
+                                          ],
+                                        },
+                                        "inbound",
+                                        80,
+                                        80,
+                                        "0.0.0.0/0",
+                                      ]
+                                    }
                                   >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="0"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="1"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <Link
-                                        className="cell_link"
-                                        href="some_link"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
                                         onClick={[Function]}
-                                        to="some_link"
+                                        title=""
                                       >
-                                        <a
-                                          className="bx--link cell_link"
-                                          href="some_link"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
                                           onClick={[Function]}
-                                          rel={null}
-                                          to="some_link"
+                                          role="cell"
+                                          title=""
                                         >
-                                          <div
-                                            className="content"
+                                          <CellText
+                                            value={null}
                                           >
                                             <div
-                                              className="multi_row_cell"
+                                              className="wrap_text"
+                                            />
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="1"
+                                      onClick={[Function]}
+                                      title=""
+                                    >
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "link": "some_link",
+                                                "value": Array [
+                                                  "TCP",
+                                                ],
+                                              }
+                                            }
+                                          >
+                                            <Link
+                                              className="cell_link"
+                                              href="some_link"
+                                              onClick={[Function]}
+                                              to="some_link"
                                             >
-                                              <div
-                                                className="sub_row_item"
-                                                key="0"
-                                                title=""
+                                              <a
+                                                className="bx--link cell_link"
+                                                href="some_link"
+                                                onClick={[Function]}
+                                                rel={null}
+                                                to="some_link"
                                               >
-                                                <div
-                                                  className="sub_value"
+                                                <SummaryValueItemContent
+                                                  row={
+                                                    Object {
+                                                      "link": "some_link",
+                                                      "value": Array [
+                                                        "TCP",
+                                                      ],
+                                                    }
+                                                  }
                                                 >
                                                   <div
-                                                    className="wrap_text"
-                                                  />
-                                                </div>
-                                              </div>
+                                                    className="content"
+                                                  >
+                                                    <div
+                                                      className="multi_row_cell"
+                                                    >
+                                                      <div
+                                                        className="sub_row_item"
+                                                        key="0"
+                                                        title=""
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </SummaryValueItemContent>
+                                              </a>
+                                            </Link>
+                                          </SummaryValueItem>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="2"
+                                      onClick={[Function]}
+                                      title=""
+                                    >
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="inbound"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              inbound
                                             </div>
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="2"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="3"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        inbound
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="3"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={80}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              80
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="4"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        80
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="4"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value={80}
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              80
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value array_item"
+                                      key="5"
                                       onClick={[Function]}
-                                      role="cell"
                                       title=""
                                     >
-                                      <div
-                                        className="expand wrap_text"
+                                      <StructuredListCell
+                                        className="content_value array_item"
+                                        head={false}
+                                        noWrap={false}
+                                        onClick={[Function]}
+                                        title=""
                                       >
-                                        80
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="5"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <div
-                                        className="expand wrap_text"
-                                      >
-                                        0.0.0.0/0
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                        <div
+                                          className="content_value array_item bx--structured-list-td"
+                                          onClick={[Function]}
+                                          role="cell"
+                                          title=""
+                                        >
+                                          <CellText
+                                            value="0.0.0.0/0"
+                                          >
+                                            <div
+                                              className="expand wrap_text"
+                                            >
+                                              0.0.0.0/0
+                                            </div>
+                                          </CellText>
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueArray>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>

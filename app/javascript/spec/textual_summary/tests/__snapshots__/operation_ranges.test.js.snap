@@ -245,113 +245,240 @@ exports[`Operation Ranges renders just fine... 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "no-hover",
+                                      "label": "CPU",
+                                      "value": Array [
+                                        Object {
+                                          "label": "Max",
+                                          "value": "Not Available",
+                                        },
+                                        Object {
+                                          "label": "High",
+                                          "value": "0 MHz",
+                                        },
+                                        Object {
+                                          "label": "Average",
+                                          "value": "0 MHz",
+                                        },
+                                        Object {
+                                          "label": "Low",
+                                          "value": "0 MHz",
+                                        },
+                                      ],
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "no-hover",
+                                        "label": "CPU",
+                                        "value": Array [
+                                          Object {
+                                            "label": "Max",
+                                            "value": "Not Available",
+                                          },
+                                          Object {
+                                            "label": "High",
+                                            "value": "0 MHz",
+                                          },
+                                          Object {
+                                            "label": "Average",
+                                            "value": "0 MHz",
+                                          },
+                                          Object {
+                                            "label": "Low",
+                                            "value": "0 MHz",
+                                          },
+                                        ],
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="multi_row_cell"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="sub_row_item"
-                                            key="0"
-                                            title=""
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "CPU",
+                                                "value": Array [
+                                                  Object {
+                                                    "label": "Max",
+                                                    "value": "Not Available",
+                                                  },
+                                                  Object {
+                                                    "label": "High",
+                                                    "value": "0 MHz",
+                                                  },
+                                                  Object {
+                                                    "label": "Average",
+                                                    "value": "0 MHz",
+                                                  },
+                                                  Object {
+                                                    "label": "Low",
+                                                    "value": "0 MHz",
+                                                  },
+                                                ],
+                                              }
+                                            }
                                           >
-                                            <div
-                                              className="sub_label"
-                                              title="Max"
-                                            >
-                                              Max
-                                            </div>
-                                            <div
-                                              className="sub_value"
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "CPU",
+                                                  "value": Array [
+                                                    Object {
+                                                      "label": "Max",
+                                                      "value": "Not Available",
+                                                    },
+                                                    Object {
+                                                      "label": "High",
+                                                      "value": "0 MHz",
+                                                    },
+                                                    Object {
+                                                      "label": "Average",
+                                                      "value": "0 MHz",
+                                                    },
+                                                    Object {
+                                                      "label": "Low",
+                                                      "value": "0 MHz",
+                                                    },
+                                                  ],
+                                                }
+                                              }
                                             >
                                               <div
-                                                className="expand wrap_text"
+                                                className="content"
                                               >
-                                                Not Available
+                                                <div
+                                                  className="multi_row_cell"
+                                                >
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="0"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Max"
+                                                    >
+                                                      Max
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="Not Available"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Not Available
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="1"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="High"
+                                                    >
+                                                      High
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0 MHz"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0 MHz
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="2"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Average"
+                                                    >
+                                                      Average
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0 MHz"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0 MHz
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="3"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Low"
+                                                    >
+                                                      Low
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0 MHz"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0 MHz
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="1"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="High"
-                                            >
-                                              High
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0 MHz
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="2"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="Average"
-                                            >
-                                              Average
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0 MHz
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="3"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="Low"
-                                            >
-                                              Low
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0 MHz
-                                              </div>
-                                            </div>
-                                          </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -393,113 +520,240 @@ exports[`Operation Ranges renders just fine... 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "no-hover",
+                                      "label": "CPU Usage",
+                                      "value": Array [
+                                        Object {
+                                          "label": "Max",
+                                          "value": "Not Available",
+                                        },
+                                        Object {
+                                          "label": "High",
+                                          "value": "0.00%",
+                                        },
+                                        Object {
+                                          "label": "Average",
+                                          "value": "0.00%",
+                                        },
+                                        Object {
+                                          "label": "Low",
+                                          "value": "0.00%",
+                                        },
+                                      ],
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "no-hover",
+                                        "label": "CPU Usage",
+                                        "value": Array [
+                                          Object {
+                                            "label": "Max",
+                                            "value": "Not Available",
+                                          },
+                                          Object {
+                                            "label": "High",
+                                            "value": "0.00%",
+                                          },
+                                          Object {
+                                            "label": "Average",
+                                            "value": "0.00%",
+                                          },
+                                          Object {
+                                            "label": "Low",
+                                            "value": "0.00%",
+                                          },
+                                        ],
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="multi_row_cell"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          <div
-                                            className="sub_row_item"
-                                            key="0"
-                                            title=""
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "CPU Usage",
+                                                "value": Array [
+                                                  Object {
+                                                    "label": "Max",
+                                                    "value": "Not Available",
+                                                  },
+                                                  Object {
+                                                    "label": "High",
+                                                    "value": "0.00%",
+                                                  },
+                                                  Object {
+                                                    "label": "Average",
+                                                    "value": "0.00%",
+                                                  },
+                                                  Object {
+                                                    "label": "Low",
+                                                    "value": "0.00%",
+                                                  },
+                                                ],
+                                              }
+                                            }
                                           >
-                                            <div
-                                              className="sub_label"
-                                              title="Max"
-                                            >
-                                              Max
-                                            </div>
-                                            <div
-                                              className="sub_value"
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "CPU Usage",
+                                                  "value": Array [
+                                                    Object {
+                                                      "label": "Max",
+                                                      "value": "Not Available",
+                                                    },
+                                                    Object {
+                                                      "label": "High",
+                                                      "value": "0.00%",
+                                                    },
+                                                    Object {
+                                                      "label": "Average",
+                                                      "value": "0.00%",
+                                                    },
+                                                    Object {
+                                                      "label": "Low",
+                                                      "value": "0.00%",
+                                                    },
+                                                  ],
+                                                }
+                                              }
                                             >
                                               <div
-                                                className="expand wrap_text"
+                                                className="content"
                                               >
-                                                Not Available
+                                                <div
+                                                  className="multi_row_cell"
+                                                >
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="0"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Max"
+                                                    >
+                                                      Max
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="Not Available"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          Not Available
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="1"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="High"
+                                                    >
+                                                      High
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0.00%"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0.00%
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="2"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Average"
+                                                    >
+                                                      Average
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0.00%"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0.00%
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                  <div
+                                                    className="sub_row_item"
+                                                    key="3"
+                                                    title=""
+                                                  >
+                                                    <div
+                                                      className="sub_label"
+                                                      title="Low"
+                                                    >
+                                                      Low
+                                                    </div>
+                                                    <div
+                                                      className="sub_value"
+                                                    >
+                                                      <CellText
+                                                        value="0.00%"
+                                                      >
+                                                        <div
+                                                          className="expand wrap_text"
+                                                        >
+                                                          0.00%
+                                                        </div>
+                                                      </CellText>
+                                                    </div>
+                                                  </div>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="1"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="High"
-                                            >
-                                              High
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0.00%
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="2"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="Average"
-                                            >
-                                              Average
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0.00%
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div
-                                            className="sub_row_item"
-                                            key="3"
-                                            title=""
-                                          >
-                                            <div
-                                              className="sub_label"
-                                              title="Low"
-                                            >
-                                              Low
-                                            </div>
-                                            <div
-                                              className="sub_value"
-                                            >
-                                              <div
-                                                className="expand wrap_text"
-                                              >
-                                                0.00%
-                                              </div>
-                                            </div>
-                                          </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>

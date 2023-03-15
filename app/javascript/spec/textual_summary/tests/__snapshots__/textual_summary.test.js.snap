@@ -457,30 +457,77 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Region",
+                                                "value": "US East (N. Virginia)",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Region",
+                                                  "value": "US East (N. Virginia)",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="expand wrap_text"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    US East (N. Virginia)
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Region",
+                                                          "value": "US East (N. Virginia)",
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Region",
+                                                            "value": "US East (N. Virginia)",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value="US East (N. Virginia)"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              US East (N. Virginia)
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -522,30 +569,77 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Type",
+                                                "value": "Amazon EC2 Network",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Type",
+                                                  "value": "Amazon EC2 Network",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="expand wrap_text"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    Amazon EC2 Network
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Type",
+                                                          "value": "Amazon EC2 Network",
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Type",
+                                                            "value": "Amazon EC2 Network",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value="Amazon EC2 Network"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              Amazon EC2 Network
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -587,28 +681,75 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Management Engine GUID",
+                                                "value": null,
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Management Engine GUID",
+                                                  "value": null,
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="wrap_text"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
+                                                  >
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Management Engine GUID",
+                                                          "value": null,
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Management Engine GUID",
+                                                            "value": null,
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value={null}
+                                                          >
+                                                            <div
+                                                              className="wrap_text"
+                                                            />
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -886,30 +1027,81 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Default Credentials",
+                                                "title": "Ok",
+                                                "value": "Valid",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Default Credentials",
+                                                  "title": "Ok",
+                                                  "value": "Valid",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="expand wrap_text"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    Valid
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Default Credentials",
+                                                          "title": "Ok",
+                                                          "value": "Valid",
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Default Credentials",
+                                                            "title": "Ok",
+                                                            "value": "Valid",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value="Valid"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              Valid
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -951,30 +1143,81 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "SmartState Docker Credentials",
+                                                "title": "Ok",
+                                                "value": "Valid",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "SmartState Docker Credentials",
+                                                  "title": "Ok",
+                                                  "value": "Valid",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="expand wrap_text"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    Valid
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "SmartState Docker Credentials",
+                                                          "title": "Ok",
+                                                          "value": "Valid",
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "SmartState Docker Credentials",
+                                                            "title": "Ok",
+                                                            "value": "Valid",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value="Valid"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              Valid
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1016,57 +1259,128 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Last Refresh",
+                                                "title": null,
+                                                "value": Array [
+                                                  Object {
+                                                    "value": "Success - 4 Months Ago",
+                                                  },
+                                                  Object {
+                                                    "value": null,
+                                                  },
+                                                ],
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Last Refresh",
+                                                  "title": null,
+                                                  "value": Array [
+                                                    Object {
+                                                      "value": "Success - 4 Months Ago",
+                                                    },
+                                                    Object {
+                                                      "value": null,
+                                                    },
+                                                  ],
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="multi_row_cell"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="sub_row_item"
-                                                      key="0"
-                                                      title=""
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Last Refresh",
+                                                          "title": null,
+                                                          "value": Array [
+                                                            Object {
+                                                              "value": "Success - 4 Months Ago",
+                                                            },
+                                                            Object {
+                                                              "value": null,
+                                                            },
+                                                          ],
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="sub_value"
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Last Refresh",
+                                                            "title": null,
+                                                            "value": Array [
+                                                              Object {
+                                                                "value": "Success - 4 Months Ago",
+                                                              },
+                                                              Object {
+                                                                "value": null,
+                                                              },
+                                                            ],
+                                                          }
+                                                        }
                                                       >
                                                         <div
-                                                          className="expand wrap_text"
+                                                          className="content"
                                                         >
-                                                          Success - 4 Months Ago
+                                                          <div
+                                                            className="multi_row_cell"
+                                                          >
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="0"
+                                                              title=""
+                                                            >
+                                                              <div
+                                                                className="sub_value"
+                                                              >
+                                                                <CellText
+                                                                  value="Success - 4 Months Ago"
+                                                                >
+                                                                  <div
+                                                                    className="expand wrap_text"
+                                                                  >
+                                                                    Success - 4 Months Ago
+                                                                  </div>
+                                                                </CellText>
+                                                              </div>
+                                                            </div>
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="1"
+                                                              title=""
+                                                            />
+                                                          </div>
                                                         </div>
-                                                      </div>
-                                                    </div>
-                                                    <div
-                                                      className="sub_row_item"
-                                                      key="1"
-                                                      title=""
-                                                    >
-                                                      <div
-                                                        className="sub_value"
-                                                      >
-                                                        <div
-                                                          className="wrap_text"
-                                                        />
-                                                      </div>
-                                                    </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1108,30 +1422,77 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "label": "Last Refresh Date",
+                                                "value": "2018-01-20T23:35:50.908Z",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "label": "Last Refresh Date",
+                                                  "value": "2018-01-20T23:35:50.908Z",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="expand wrap_text"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    2018-01-20T23:35:50.908Z
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "no-hover",
+                                                          "label": "Last Refresh Date",
+                                                          "value": "2018-01-20T23:35:50.908Z",
+                                                        }
+                                                      }
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "label": "Last Refresh Date",
+                                                            "value": "2018-01-20T23:35:50.908Z",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellText
+                                                            value="2018-01-20T23:35:50.908Z"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              2018-01-20T23:35:50.908Z
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1668,43 +2029,110 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "icon": "pficon pficon-cloud-tenant",
+                                                "image": null,
+                                                "label": "Cloud Tenants",
+                                                "value": "0",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "icon": "pficon pficon-cloud-tenant",
+                                                  "image": null,
+                                                  "label": "Cloud Tenants",
+                                                  "value": "0",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="cell icon"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <i
-                                                      className="pficon pficon-cloud-tenant"
-                                                      style={
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
                                                         Object {
-                                                          "background": undefined,
-                                                          "color": undefined,
+                                                          "hoverClass": "no-hover",
+                                                          "icon": "pficon pficon-cloud-tenant",
+                                                          "image": null,
+                                                          "label": "Cloud Tenants",
+                                                          "value": "0",
                                                         }
                                                       }
-                                                    />
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "icon": "pficon pficon-cloud-tenant",
+                                                            "image": null,
+                                                            "label": "Cloud Tenants",
+                                                            "value": "0",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellIcon
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "no-hover",
+                                                                "icon": "pficon pficon-cloud-tenant",
+                                                                "image": null,
+                                                                "label": "Cloud Tenants",
+                                                                "value": "0",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              className="cell icon"
+                                                            >
+                                                              <i
+                                                                className="pficon pficon-cloud-tenant"
+                                                                style={
+                                                                  Object {
+                                                                    "background": undefined,
+                                                                    "color": undefined,
+                                                                  }
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </CellIcon>
+                                                          <CellText
+                                                            value="0"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              0
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                  <div
-                                                    className="expand wrap_text"
-                                                  >
-                                                    0
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1746,60 +2174,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "ff ff-cloud-network",
+                                                "image": null,
+                                                "label": "Cloud Networks",
+                                                "link": "/ems_network/39?display=cloud_networks",
+                                                "title": "Show all Cloud Networks",
+                                                "value": "1",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "ff ff-cloud-network",
+                                                  "image": null,
+                                                  "label": "Cloud Networks",
+                                                  "link": "/ems_network/39?display=cloud_networks",
+                                                  "title": "Show all Cloud Networks",
+                                                  "value": "1",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=cloud_networks"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=cloud_networks"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=cloud_networks"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=cloud_networks"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "ff ff-cloud-network",
+                                                          "image": null,
+                                                          "label": "Cloud Networks",
+                                                          "link": "/ems_network/39?display=cloud_networks",
+                                                          "title": "Show all Cloud Networks",
+                                                          "value": "1",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Cloud Networks"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=cloud_networks"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=cloud_networks"
                                                       >
-                                                        <i
-                                                          className="ff ff-cloud-network"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=cloud_networks"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=cloud_networks"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "ff ff-cloud-network",
+                                                                "image": null,
+                                                                "label": "Cloud Networks",
+                                                                "link": "/ems_network/39?display=cloud_networks",
+                                                                "title": "Show all Cloud Networks",
+                                                                "value": "1",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Cloud Networks"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        1
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "ff ff-cloud-network",
+                                                                    "image": null,
+                                                                    "label": "Cloud Networks",
+                                                                    "link": "/ems_network/39?display=cloud_networks",
+                                                                    "title": "Show all Cloud Networks",
+                                                                    "value": "1",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Cloud Networks"
+                                                                >
+                                                                  <i
+                                                                    className="ff ff-cloud-network"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Cloud Networks"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="1"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  1
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1841,60 +2346,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "pficon pficon-network",
+                                                "image": null,
+                                                "label": "Cloud Subnets",
+                                                "link": "/ems_network/39?display=cloud_subnets",
+                                                "title": "Show all Cloud Subnets",
+                                                "value": "6",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "pficon pficon-network",
+                                                  "image": null,
+                                                  "label": "Cloud Subnets",
+                                                  "link": "/ems_network/39?display=cloud_subnets",
+                                                  "title": "Show all Cloud Subnets",
+                                                  "value": "6",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=cloud_subnets"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=cloud_subnets"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=cloud_subnets"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=cloud_subnets"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "pficon pficon-network",
+                                                          "image": null,
+                                                          "label": "Cloud Subnets",
+                                                          "link": "/ems_network/39?display=cloud_subnets",
+                                                          "title": "Show all Cloud Subnets",
+                                                          "value": "6",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Cloud Subnets"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=cloud_subnets"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=cloud_subnets"
                                                       >
-                                                        <i
-                                                          className="pficon pficon-network"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=cloud_subnets"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=cloud_subnets"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "pficon pficon-network",
+                                                                "image": null,
+                                                                "label": "Cloud Subnets",
+                                                                "link": "/ems_network/39?display=cloud_subnets",
+                                                                "title": "Show all Cloud Subnets",
+                                                                "value": "6",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Cloud Subnets"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        6
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "pficon pficon-network",
+                                                                    "image": null,
+                                                                    "label": "Cloud Subnets",
+                                                                    "link": "/ems_network/39?display=cloud_subnets",
+                                                                    "title": "Show all Cloud Subnets",
+                                                                    "value": "6",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Cloud Subnets"
+                                                                >
+                                                                  <i
+                                                                    className="pficon pficon-network"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Cloud Subnets"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="6"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  6
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -1936,60 +2518,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "pficon pficon-route",
+                                                "image": null,
+                                                "label": "Network Routers",
+                                                "link": "/ems_network/39?display=network_routers",
+                                                "title": "Show all Network Routers",
+                                                "value": "1",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "pficon pficon-route",
+                                                  "image": null,
+                                                  "label": "Network Routers",
+                                                  "link": "/ems_network/39?display=network_routers",
+                                                  "title": "Show all Network Routers",
+                                                  "value": "1",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=network_routers"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=network_routers"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=network_routers"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=network_routers"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "pficon pficon-route",
+                                                          "image": null,
+                                                          "label": "Network Routers",
+                                                          "link": "/ems_network/39?display=network_routers",
+                                                          "title": "Show all Network Routers",
+                                                          "value": "1",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Network Routers"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=network_routers"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=network_routers"
                                                       >
-                                                        <i
-                                                          className="pficon pficon-route"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=network_routers"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=network_routers"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "pficon pficon-route",
+                                                                "image": null,
+                                                                "label": "Network Routers",
+                                                                "link": "/ems_network/39?display=network_routers",
+                                                                "title": "Show all Network Routers",
+                                                                "value": "1",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Network Routers"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        1
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "pficon pficon-route",
+                                                                    "image": null,
+                                                                    "label": "Network Routers",
+                                                                    "link": "/ems_network/39?display=network_routers",
+                                                                    "title": "Show all Network Routers",
+                                                                    "value": "1",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Network Routers"
+                                                                >
+                                                                  <i
+                                                                    className="pficon pficon-route"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Network Routers"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="1"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  1
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2031,60 +2690,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "pficon pficon-cloud-security",
+                                                "image": null,
+                                                "label": "Security Groups",
+                                                "link": "/ems_network/39?display=security_groups",
+                                                "title": "Show all Security Groups",
+                                                "value": "18",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "pficon pficon-cloud-security",
+                                                  "image": null,
+                                                  "label": "Security Groups",
+                                                  "link": "/ems_network/39?display=security_groups",
+                                                  "title": "Show all Security Groups",
+                                                  "value": "18",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=security_groups"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=security_groups"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=security_groups"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=security_groups"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "pficon pficon-cloud-security",
+                                                          "image": null,
+                                                          "label": "Security Groups",
+                                                          "link": "/ems_network/39?display=security_groups",
+                                                          "title": "Show all Security Groups",
+                                                          "value": "18",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Security Groups"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=security_groups"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=security_groups"
                                                       >
-                                                        <i
-                                                          className="pficon pficon-cloud-security"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=security_groups"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=security_groups"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "pficon pficon-cloud-security",
+                                                                "image": null,
+                                                                "label": "Security Groups",
+                                                                "link": "/ems_network/39?display=security_groups",
+                                                                "title": "Show all Security Groups",
+                                                                "value": "18",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Security Groups"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        18
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "pficon pficon-cloud-security",
+                                                                    "image": null,
+                                                                    "label": "Security Groups",
+                                                                    "link": "/ems_network/39?display=security_groups",
+                                                                    "title": "Show all Security Groups",
+                                                                    "value": "18",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Security Groups"
+                                                                >
+                                                                  <i
+                                                                    className="pficon pficon-cloud-security"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Security Groups"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="18"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  18
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2126,60 +2862,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "ff ff-floating-ip",
+                                                "image": null,
+                                                "label": "Floating IPs",
+                                                "link": "/ems_network/39?display=floating_ips",
+                                                "title": "Show all Floating IPs",
+                                                "value": "14",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "ff ff-floating-ip",
+                                                  "image": null,
+                                                  "label": "Floating IPs",
+                                                  "link": "/ems_network/39?display=floating_ips",
+                                                  "title": "Show all Floating IPs",
+                                                  "value": "14",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=floating_ips"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=floating_ips"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=floating_ips"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=floating_ips"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "ff ff-floating-ip",
+                                                          "image": null,
+                                                          "label": "Floating IPs",
+                                                          "link": "/ems_network/39?display=floating_ips",
+                                                          "title": "Show all Floating IPs",
+                                                          "value": "14",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Floating IPs"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=floating_ips"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=floating_ips"
                                                       >
-                                                        <i
-                                                          className="ff ff-floating-ip"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=floating_ips"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=floating_ips"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "ff ff-floating-ip",
+                                                                "image": null,
+                                                                "label": "Floating IPs",
+                                                                "link": "/ems_network/39?display=floating_ips",
+                                                                "title": "Show all Floating IPs",
+                                                                "value": "14",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Floating IPs"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        14
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "ff ff-floating-ip",
+                                                                    "image": null,
+                                                                    "label": "Floating IPs",
+                                                                    "link": "/ems_network/39?display=floating_ips",
+                                                                    "title": "Show all Floating IPs",
+                                                                    "value": "14",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Floating IPs"
+                                                                >
+                                                                  <i
+                                                                    className="ff ff-floating-ip"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Floating IPs"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="14"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  14
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2221,60 +3034,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "ff ff-network-port",
+                                                "image": null,
+                                                "label": "Network Ports",
+                                                "link": "/ems_network/39?display=network_ports",
+                                                "title": "Show all Network Ports",
+                                                "value": "26",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "ff ff-network-port",
+                                                  "image": null,
+                                                  "label": "Network Ports",
+                                                  "link": "/ems_network/39?display=network_ports",
+                                                  "title": "Show all Network Ports",
+                                                  "value": "26",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=network_ports"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=network_ports"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=network_ports"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=network_ports"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "ff ff-network-port",
+                                                          "image": null,
+                                                          "label": "Network Ports",
+                                                          "link": "/ems_network/39?display=network_ports",
+                                                          "title": "Show all Network Ports",
+                                                          "value": "26",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Network Ports"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=network_ports"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=network_ports"
                                                       >
-                                                        <i
-                                                          className="ff ff-network-port"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=network_ports"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=network_ports"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "ff ff-network-port",
+                                                                "image": null,
+                                                                "label": "Network Ports",
+                                                                "link": "/ems_network/39?display=network_ports",
+                                                                "title": "Show all Network Ports",
+                                                                "value": "26",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Network Ports"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        26
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "ff ff-network-port",
+                                                                    "image": null,
+                                                                    "label": "Network Ports",
+                                                                    "link": "/ems_network/39?display=network_ports",
+                                                                    "title": "Show all Network Ports",
+                                                                    "value": "26",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Network Ports"
+                                                                >
+                                                                  <i
+                                                                    className="ff ff-network-port"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Network Ports"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="26"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  26
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2316,60 +3206,137 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "",
+                                                "icon": "ff ff-load-balancer",
+                                                "image": null,
+                                                "label": "Load Balancers",
+                                                "link": "/ems_network/39?display=load_balancers",
+                                                "title": "Show all Load Balancers",
+                                                "value": "2",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "",
+                                                  "icon": "ff ff-load-balancer",
+                                                  "image": null,
+                                                  "label": "Load Balancers",
+                                                  "link": "/ems_network/39?display=load_balancers",
+                                                  "title": "Show all Load Balancers",
+                                                  "value": "2",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <Link
-                                                  className="cell_link"
-                                                  href="/ems_network/39?display=load_balancers"
-                                                  onClick={[Function]}
-                                                  to="/ems_network/39?display=load_balancers"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
-                                                  <a
-                                                    className="bx--link cell_link"
-                                                    href="/ems_network/39?display=load_balancers"
-                                                    onClick={[Function]}
-                                                    rel={null}
-                                                    to="/ems_network/39?display=load_balancers"
+                                                  <div
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <div
-                                                      className="content"
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
+                                                        Object {
+                                                          "hoverClass": "",
+                                                          "icon": "ff ff-load-balancer",
+                                                          "image": null,
+                                                          "label": "Load Balancers",
+                                                          "link": "/ems_network/39?display=load_balancers",
+                                                          "title": "Show all Load Balancers",
+                                                          "value": "2",
+                                                        }
+                                                      }
                                                     >
-                                                      <div
-                                                        className="cell icon"
-                                                        title="Show all Load Balancers"
+                                                      <Link
+                                                        className="cell_link"
+                                                        href="/ems_network/39?display=load_balancers"
+                                                        onClick={[Function]}
+                                                        to="/ems_network/39?display=load_balancers"
                                                       >
-                                                        <i
-                                                          className="ff ff-load-balancer"
-                                                          style={
-                                                            Object {
-                                                              "background": undefined,
-                                                              "color": undefined,
+                                                        <a
+                                                          className="bx--link cell_link"
+                                                          href="/ems_network/39?display=load_balancers"
+                                                          onClick={[Function]}
+                                                          rel={null}
+                                                          to="/ems_network/39?display=load_balancers"
+                                                        >
+                                                          <SummaryValueItemContent
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "",
+                                                                "icon": "ff ff-load-balancer",
+                                                                "image": null,
+                                                                "label": "Load Balancers",
+                                                                "link": "/ems_network/39?display=load_balancers",
+                                                                "title": "Show all Load Balancers",
+                                                                "value": "2",
+                                                              }
                                                             }
-                                                          }
-                                                          title="Show all Load Balancers"
-                                                        />
-                                                      </div>
-                                                      <div
-                                                        className="expand wrap_text"
-                                                      >
-                                                        2
-                                                      </div>
-                                                    </div>
-                                                  </a>
-                                                </Link>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                          >
+                                                            <div
+                                                              className="content"
+                                                            >
+                                                              <CellIcon
+                                                                row={
+                                                                  Object {
+                                                                    "hoverClass": "",
+                                                                    "icon": "ff ff-load-balancer",
+                                                                    "image": null,
+                                                                    "label": "Load Balancers",
+                                                                    "link": "/ems_network/39?display=load_balancers",
+                                                                    "title": "Show all Load Balancers",
+                                                                    "value": "2",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <div
+                                                                  className="cell icon"
+                                                                  title="Show all Load Balancers"
+                                                                >
+                                                                  <i
+                                                                    className="ff ff-load-balancer"
+                                                                    style={
+                                                                      Object {
+                                                                        "background": undefined,
+                                                                        "color": undefined,
+                                                                      }
+                                                                    }
+                                                                    title="Show all Load Balancers"
+                                                                  />
+                                                                </div>
+                                                              </CellIcon>
+                                                              <CellText
+                                                                value="2"
+                                                              >
+                                                                <div
+                                                                  className="expand wrap_text"
+                                                                >
+                                                                  2
+                                                                </div>
+                                                              </CellText>
+                                                            </div>
+                                                          </SummaryValueItemContent>
+                                                        </a>
+                                                      </Link>
+                                                    </SummaryValueItem>
+                                                  </div>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2411,43 +3378,115 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "background": "green",
+                                                "hoverClass": "",
+                                                "icon": "fa fa-play",
+                                                "image": null,
+                                                "label": "Power State",
+                                                "value": "On",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "background": "green",
+                                                  "hoverClass": "",
+                                                  "icon": "fa fa-play",
+                                                  "image": null,
+                                                  "label": "Power State",
+                                                  "value": "On",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="cell icon backgrounded-icon"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <i
-                                                      className="fa fa-play"
-                                                      style={
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
                                                         Object {
                                                           "background": "green",
-                                                          "color": undefined,
+                                                          "hoverClass": "",
+                                                          "icon": "fa fa-play",
+                                                          "image": null,
+                                                          "label": "Power State",
+                                                          "value": "On",
                                                         }
                                                       }
-                                                    />
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "background": "green",
+                                                            "hoverClass": "",
+                                                            "icon": "fa fa-play",
+                                                            "image": null,
+                                                            "label": "Power State",
+                                                            "value": "On",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellIcon
+                                                            row={
+                                                              Object {
+                                                                "background": "green",
+                                                                "hoverClass": "",
+                                                                "icon": "fa fa-play",
+                                                                "image": null,
+                                                                "label": "Power State",
+                                                                "value": "On",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              className="cell icon backgrounded-icon"
+                                                            >
+                                                              <i
+                                                                className="fa fa-play"
+                                                                style={
+                                                                  Object {
+                                                                    "background": "green",
+                                                                    "color": undefined,
+                                                                  }
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </CellIcon>
+                                                          <CellText
+                                                            value="On"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              On
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                  <div
-                                                    className="expand wrap_text"
-                                                  >
-                                                    On
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2671,43 +3710,105 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "icon": "pficon pficon-zone",
+                                                "label": "Managed by Zone",
+                                                "value": "Amazon Zone",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "icon": "pficon pficon-zone",
+                                                  "label": "Managed by Zone",
+                                                  "value": "Amazon Zone",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="cell icon"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <i
-                                                      className="pficon pficon-zone"
-                                                      style={
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
                                                         Object {
-                                                          "background": undefined,
-                                                          "color": undefined,
+                                                          "hoverClass": "no-hover",
+                                                          "icon": "pficon pficon-zone",
+                                                          "label": "Managed by Zone",
+                                                          "value": "Amazon Zone",
                                                         }
                                                       }
-                                                    />
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "icon": "pficon pficon-zone",
+                                                            "label": "Managed by Zone",
+                                                            "value": "Amazon Zone",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellIcon
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "no-hover",
+                                                                "icon": "pficon pficon-zone",
+                                                                "label": "Managed by Zone",
+                                                                "value": "Amazon Zone",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              className="cell icon"
+                                                            >
+                                                              <i
+                                                                className="pficon pficon-zone"
+                                                                style={
+                                                                  Object {
+                                                                    "background": undefined,
+                                                                    "color": undefined,
+                                                                  }
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </CellIcon>
+                                                          <CellText
+                                                            value="Amazon Zone"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              Amazon Zone
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                  <div
-                                                    className="expand wrap_text"
-                                                  >
-                                                    Amazon Zone
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>
@@ -2749,43 +3850,105 @@ exports[`TextualSummary renders just fine 1`] = `
                                               </div>
                                             </StructuredListCell>
                                           </FeatureToggle(StructuredListCell)>
-                                          <FeatureToggle(StructuredListCell)
-                                            className="content_value object_item"
+                                          <SummaryValue
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "no-hover",
+                                                "icon": "fa fa-tag",
+                                                "label": "My Company Tags",
+                                                "value": "No My Company Tags have been assigned",
+                                              }
+                                            }
                                           >
-                                            <StructuredListCell
-                                              className="content_value object_item"
-                                              head={false}
-                                              noWrap={false}
+                                            <SummaryValueObject
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "no-hover",
+                                                  "icon": "fa fa-tag",
+                                                  "label": "My Company Tags",
+                                                  "value": "No My Company Tags have been assigned",
+                                                }
+                                              }
                                             >
-                                              <div
-                                                className="content_value object_item bx--structured-list-td"
-                                                role="cell"
+                                              <FeatureToggle(StructuredListCell)
+                                                className="content_value object_item"
                                               >
-                                                <div
-                                                  className="content"
+                                                <StructuredListCell
+                                                  className="content_value object_item"
+                                                  head={false}
+                                                  noWrap={false}
                                                 >
                                                   <div
-                                                    className="cell icon"
+                                                    className="content_value object_item bx--structured-list-td"
+                                                    role="cell"
                                                   >
-                                                    <i
-                                                      className="fa fa-tag"
-                                                      style={
+                                                    <SummaryValueItem
+                                                      onClick={[Function]}
+                                                      row={
                                                         Object {
-                                                          "background": undefined,
-                                                          "color": undefined,
+                                                          "hoverClass": "no-hover",
+                                                          "icon": "fa fa-tag",
+                                                          "label": "My Company Tags",
+                                                          "value": "No My Company Tags have been assigned",
                                                         }
                                                       }
-                                                    />
+                                                    >
+                                                      <SummaryValueItemContent
+                                                        row={
+                                                          Object {
+                                                            "hoverClass": "no-hover",
+                                                            "icon": "fa fa-tag",
+                                                            "label": "My Company Tags",
+                                                            "value": "No My Company Tags have been assigned",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          className="content"
+                                                        >
+                                                          <CellIcon
+                                                            row={
+                                                              Object {
+                                                                "hoverClass": "no-hover",
+                                                                "icon": "fa fa-tag",
+                                                                "label": "My Company Tags",
+                                                                "value": "No My Company Tags have been assigned",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              className="cell icon"
+                                                            >
+                                                              <i
+                                                                className="fa fa-tag"
+                                                                style={
+                                                                  Object {
+                                                                    "background": undefined,
+                                                                    "color": undefined,
+                                                                  }
+                                                                }
+                                                              />
+                                                            </div>
+                                                          </CellIcon>
+                                                          <CellText
+                                                            value="No My Company Tags have been assigned"
+                                                          >
+                                                            <div
+                                                              className="expand wrap_text"
+                                                            >
+                                                              No My Company Tags have been assigned
+                                                            </div>
+                                                          </CellText>
+                                                        </div>
+                                                      </SummaryValueItemContent>
+                                                    </SummaryValueItem>
                                                   </div>
-                                                  <div
-                                                    className="expand wrap_text"
-                                                  >
-                                                    No My Company Tags have been assigned
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </StructuredListCell>
-                                          </FeatureToggle(StructuredListCell)>
+                                                </StructuredListCell>
+                                              </FeatureToggle(StructuredListCell)>
+                                            </SummaryValueObject>
+                                          </SummaryValue>
                                         </div>
                                       </StructuredListRow>
                                     </FeatureToggle(StructuredListRow)>

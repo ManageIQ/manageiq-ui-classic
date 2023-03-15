@@ -13,17 +13,21 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
       tabIndex={0}
       title="View this Alert"
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "cells": Array [
+              Object {
+                "icon": "pficon pficon-warning-triangle-o",
+                "value": "Alert description",
+              },
+            ],
+            "onclick": "DoNav('/miq_alert/show/1');",
+            "title": "View this Alert",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -45,17 +49,14 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "The Enterprise",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className=""
@@ -69,63 +70,25 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       >
         Object class
       </FeatureToggle(StructuredListCell)>
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="multi_row_cell"
-          >
-            <div
-              className="sub_row_item"
-              key="0"
-              title=""
-            >
-              <div
-                className="sub_value"
-              >
-                <div
-                  className="expand wrap_text"
-                >
-                  path1
-                </div>
-              </div>
-            </div>
-            <div
-              className="sub_row_item"
-              key="1"
-              title=""
-            >
-              <div
-                className="sub_value"
-              >
-                <div
-                  className="expand wrap_text"
-                >
-                  path2
-                </div>
-              </div>
-            </div>
-            <div
-              className="sub_row_item"
-              key="2"
-              title=""
-            >
-              <div
-                className="sub_value"
-              >
-                <div
-                  className="expand wrap_text"
-                >
-                  path3
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Object class",
+            "value": Array [
+              Object {
+                "value": "path1",
+              },
+              Object {
+                "value": "path2",
+              },
+              Object {
+                "value": "path3",
+              },
+            ],
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -147,19 +110,15 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            bar
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Description",
+            "value": "bar",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
     <FeatureToggle(StructuredListRow)
       className=""
@@ -171,19 +130,15 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       <FeatureToggle(StructuredListCell)
         className="label_header"
       />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            Mode
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "label": "Mode",
+            "value": "Mode",
+          }
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>
@@ -202,21 +157,19 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
       tabIndex={0}
       title=""
     >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-      >
-        <MiqStructuredListInputs
-          action={[Function]}
-          value={
-            Object {
+      <SummaryValue
+        onClick={[Function]}
+        row={
+          Object {
+            "value": Object {
               "input": "text_area",
               "readonly": true,
               "rows": 4,
               "text": "text area description",
-            }
+            },
           }
-        />
-      </FeatureToggle(StructuredListCell)>
+        }
+      />
     </FeatureToggle(StructuredListRow)>
   </FeatureToggle(StructuredListBody)>
 </FeatureToggle(StructuredListWrapper)>

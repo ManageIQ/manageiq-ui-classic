@@ -179,30 +179,77 @@ exports[`GenericGroup renders just fine 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "bar",
+                                      "label": "foo",
+                                      "value": "bar",
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "bar",
+                                        "label": "foo",
+                                        "value": "bar",
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="expand wrap_text"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          bar
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "bar",
+                                                "label": "foo",
+                                                "value": "bar",
+                                              }
+                                            }
+                                          >
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "bar",
+                                                  "label": "foo",
+                                                  "value": "bar",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                className="content"
+                                              >
+                                                <CellText
+                                                  value="bar"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    bar
+                                                  </div>
+                                                </CellText>
+                                              </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
@@ -244,30 +291,77 @@ exports[`GenericGroup renders just fine 1`] = `
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <SummaryValue
+                                  onClick={[Function]}
+                                  row={
+                                    Object {
+                                      "hoverClass": "bar",
+                                      "label": "mrkef?",
+                                      "value": "v zime!",
+                                    }
+                                  }
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <SummaryValueObject
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "bar",
+                                        "label": "mrkef?",
+                                        "value": "v zime!",
+                                      }
+                                    }
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
+                                    <FeatureToggle(StructuredListCell)
+                                      className="content_value object_item"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="content_value object_item"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="expand wrap_text"
+                                          className="content_value object_item bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          v zime!
+                                          <SummaryValueItem
+                                            onClick={[Function]}
+                                            row={
+                                              Object {
+                                                "hoverClass": "bar",
+                                                "label": "mrkef?",
+                                                "value": "v zime!",
+                                              }
+                                            }
+                                          >
+                                            <SummaryValueItemContent
+                                              row={
+                                                Object {
+                                                  "hoverClass": "bar",
+                                                  "label": "mrkef?",
+                                                  "value": "v zime!",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                className="content"
+                                              >
+                                                <CellText
+                                                  value="v zime!"
+                                                >
+                                                  <div
+                                                    className="expand wrap_text"
+                                                  >
+                                                    v zime!
+                                                  </div>
+                                                </CellText>
+                                              </div>
+                                            </SummaryValueItemContent>
+                                          </SummaryValueItem>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </SummaryValueObject>
+                                </SummaryValue>
                               </div>
                             </StructuredListRow>
                           </FeatureToggle(StructuredListRow)>
