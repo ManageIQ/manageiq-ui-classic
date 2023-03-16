@@ -12,6 +12,7 @@ import ProtocolSelector from './protocol-selector';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
+import debouncePromise from '../../helpers/promise-debounce';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
@@ -19,16 +20,28 @@ const findSkipSubmits = (schema, items) => {
   return [...found, ...children];
 };
 
-const commonFields = [
+const asyncValidator = (value = '', itemId) =>
+  API.get(`/api/providers?filter[]=name=${value}&expand=resources`)
+    .then((json) => {
+      if (json.resources.find(({ id, name }) => name === value && id !== itemId)) {
+        throw __('Name has already been taken');
+      }
+      if (value === '' || value === undefined) {
+        throw __('Required');
+      }
+      return undefined;
+    });
+
+const asyncValidatorDebounced = debouncePromise(asyncValidator);
+
+const commonFields = (type) => [
   {
     component: componentTypes.TEXT_FIELD,
     id: 'name',
     name: 'name',
     label: __('Name'),
     isRequired: true,
-    validate: [{
-      type: validatorTypes.REQUIRED,
-    }],
+    validate: [(value) => asyncValidatorDebounced(value, type)],
   },
   {
     component: componentTypes.SELECT,
@@ -48,7 +61,7 @@ const commonFields = [
 
 const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
   ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
-    ...commonFields,
+    ...commonFields(type),
     {
       component: componentTypes.SUB_FORM,
       id: type,
@@ -178,7 +191,12 @@ const ProviderForm = ({
       };
 
       const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
-      request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
+      request
+        .then(() => miqRedirectBack(message, 'success', redirect))
+        .catch(({ data: { error: { message } } }) => {
+          add_flash(message, 'error');
+          miqSparkleOff();
+        });
     }
   };
 
