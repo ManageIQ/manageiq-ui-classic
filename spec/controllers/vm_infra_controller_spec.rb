@@ -1,3 +1,5 @@
+require 'capybara/rspec'
+
 describe VmInfraController do
   let(:host_1x1)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB)) }
   let(:host_2x2)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu2x2, :ram1GB)) }
@@ -510,78 +512,6 @@ describe VmInfraController do
   it 'can run Utilization' do
     post :x_button, :params => {:display => "performance",  :pressed => 'vm_perf', :id => vm_vmware.id}
     expect(response.status).to eq(200)
-  end
-
-  it 'the reconfigure tab for a vm with max_cpu_cores_per_socket <= 1 should not display the cpu_cores_per_socket dropdown' do
-    vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_1x1,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
-
-    get :show, :params => {:id => vm.id}
-    expect(response).to redirect_to(:action => 'explorer')
-
-    post :explorer
-    expect(response.status).to eq(200)
-
-    post :x_button, :params => {:pressed => 'vm_reconfigure', :id => vm.id}
-    expect(response.status).to eq(200)
-    expect(response.body).to_not include('Total Processors')
-  end
-
-  it 'the reconfigure tab for a vm with max_cpu_cores_per_socket > 1 should display the cpu_cores_per_socket dropdown' do
-    vm = FactoryBot.create(:vm_vmware,
-                           :ext_management_system => FactoryBot.create(:ems_infra),
-                           :host     => host_2x2,
-                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
-
-    get :show, :params => {:id => vm.id}
-    expect(response).to redirect_to(:action => 'explorer')
-
-    post :explorer
-    expect(response.status).to eq(200)
-
-    post :x_button, :params => {:pressed => 'vm_reconfigure', :id => vm.id}
-    expect(response.status).to eq(200)
-    expect(response.body).to include('Total Processors')
-  end
-
-  it 'the reconfigure tab for a single vmware vm should display the list of disks' do
-    vm = FactoryBot.create(:vm_vmware,
-                           :ext_management_system => FactoryBot.create(:ems_infra),
-                           :host     => host_2x2,
-                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
-
-    get :show, :params => {:id => vm.id}
-    expect(response).to redirect_to(:action => 'explorer')
-
-    post :explorer
-    expect(response.status).to eq(200)
-
-    post :x_button, :params => {:pressed => 'vm_reconfigure', :id => vm.id}
-    expect(response.status).to eq(200)
-    expect(response.body).to include('Disks')
-  end
-
-  it 'the reconfigure tab displays the submit and cancel buttons' do
-    vm = FactoryBot.create(:vm_vmware,
-                           :ext_management_system => FactoryBot.create(:ems_infra),
-                           :host     => host_2x2,
-                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
-
-    get :show, :params => {:id => vm.id}
-    expect(response).to redirect_to(:action => 'explorer')
-
-    post :explorer
-    expect(response.status).to eq(200)
-
-    post :x_button, :params => {:pressed => 'vm_reconfigure', :id => vm.id}
-    expect(response.status).to eq(200)
-    expect(response.body).to include("miq-button alt='Submit'")
-    expect(response.body).to include("miq-button alt='Cancel'")
   end
 
   context "breadcrumbs" do

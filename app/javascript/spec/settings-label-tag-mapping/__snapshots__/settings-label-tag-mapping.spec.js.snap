@@ -458,6 +458,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                   <TableRow>
                     <tr>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="resource_entity"
@@ -467,6 +468,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -477,6 +479,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="resource_label"
@@ -486,6 +489,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -496,6 +500,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="tag_category"
@@ -505,6 +510,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -515,6 +521,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="actions"
@@ -524,6 +531,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -3045,6 +3053,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                   <TableRow>
                     <tr>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="resource_entity"
@@ -3054,6 +3063,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -3064,6 +3074,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="resource_label"
@@ -3073,6 +3084,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -3083,6 +3095,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="tag_category"
@@ -3092,6 +3105,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div
@@ -3102,6 +3116,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         </th>
                       </TableHeader>
                       <TableHeader
+                        className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={false}
                         key="actions"
@@ -3111,6 +3126,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         translateWithId={[Function]}
                       >
                         <th
+                          className="miq-data-table-header"
                           scope="col"
                         >
                           <div

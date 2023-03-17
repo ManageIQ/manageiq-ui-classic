@@ -237,3 +237,35 @@ table.miq_preview {
     width: 135px;
   }
 }
+
+.reconfigure-add-button {
+  margin-bottom: 10px;
+}
+
+.disk-table {
+  .bx--form-item{
+    margin-bottom: 0px !important;
+  }
+}
+
+.header-button {
+  width: 100px !important;
+}
+
+.reconfigure-form {
+  .disk-table-list {
+    .bx--table-header-label {
+      white-space: normal !important;
+    }
+  }
+  .bx--btn--ghost:hover, .bx--btn--ghost:active{
+    background-color: transparent !important;
+  }
+  .bx--btn--ghost:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  .bx--btn--ghost span {
+    min-width: 50px !important;
+  }
+}

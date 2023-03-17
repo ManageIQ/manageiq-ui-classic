@@ -695,6 +695,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -705,6 +706,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -719,7 +721,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-15"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -794,6 +796,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Free Space"
@@ -804,6 +807,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -818,7 +822,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-16"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -893,6 +897,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Total Space"
@@ -903,6 +908,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -917,7 +923,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-17"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -992,6 +998,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Storage Clusters"
@@ -1002,6 +1009,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -1016,7 +1024,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-18"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -6565,6 +6573,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -6575,6 +6584,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -6589,7 +6599,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-9"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -6664,6 +6674,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Total VMs"
@@ -6674,6 +6685,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -6688,7 +6700,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-10"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -6763,6 +6775,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Platform"
@@ -6773,6 +6786,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -6787,7 +6801,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-11"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -6862,6 +6876,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Version"
@@ -6872,6 +6887,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -6886,7 +6902,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-12"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -6961,6 +6977,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="State"
@@ -6971,6 +6988,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -6985,7 +7003,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-13"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -7060,6 +7078,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Maintenance"
@@ -7070,6 +7089,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -7084,7 +7104,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-14"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -15903,6 +15923,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -15913,6 +15934,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -15927,7 +15949,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-19"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -17360,6 +17382,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -17370,6 +17393,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -17384,7 +17408,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-20"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -17459,6 +17483,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Description"
@@ -17469,6 +17494,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -17483,7 +17509,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-21"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -19970,6 +19996,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -19980,6 +20007,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -19994,7 +20022,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-22"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -20069,6 +20097,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Description"
@@ -20079,6 +20108,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -20093,7 +20123,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-23"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -20168,6 +20198,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Last Updated"
@@ -20178,6 +20209,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -20192,7 +20224,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-24"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24469,6 +24501,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                     <TableRow>
                       <tr>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={true}
                           isSortable={true}
                           key="Name"
@@ -24479,6 +24512,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="descending"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24493,7 +24527,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-1"
-                              className="bx--table-sort bx--table-sort--active bx--table-sort--ascending"
+                              className="miq-data-table-header bx--table-sort bx--table-sort--active bx--table-sort--ascending"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24568,6 +24602,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Operating System"
@@ -24578,6 +24613,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24592,7 +24628,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-2"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24667,6 +24703,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Platform"
@@ -24677,6 +24714,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24691,7 +24729,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-3"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24766,6 +24804,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="CPUs"
@@ -24776,6 +24815,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24790,7 +24830,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-4"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24865,6 +24905,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Memory"
@@ -24875,6 +24916,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24889,7 +24931,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-5"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -24964,6 +25006,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Disk Size"
@@ -24974,6 +25017,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -24988,7 +25032,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-6"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -25063,6 +25107,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Provider"
@@ -25073,6 +25118,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -25087,7 +25133,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-7"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
@@ -25162,6 +25208,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                           </th>
                         </TableHeader>
                         <TableHeader
+                          className="miq-data-table-header"
                           isSortHeader={false}
                           isSortable={true}
                           key="Snapshots"
@@ -25172,6 +25219,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                         >
                           <th
                             aria-sort="none"
+                            className="miq-data-table-header"
                             scope="col"
                           >
                             <div
@@ -25186,7 +25234,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
                             </div>
                             <button
                               aria-describedby="table-sort-8"
-                              className="bx--table-sort"
+                              className="miq-data-table-header bx--table-sort"
                               onClick={[Function]}
                               type="button"
                             >
