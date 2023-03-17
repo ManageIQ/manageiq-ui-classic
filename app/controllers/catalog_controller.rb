@@ -300,6 +300,18 @@ class CatalogController < ApplicationController
         if params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
         end
+        if params[:provisioning_entry_point_type]
+          @edit[:new][:fqname] = ""
+          page.replace_html("provision_entry_point", :partial => "provision_entry_points")
+        end
+        if params[:reconfigure_entry_point_type]
+          @edit[:new][:reconfigure_fqname] = ""
+          page.replace_html("reconfigure_entry_point", :partial => "reconfigure_entry_points")
+        end
+        if params[:retirement_entry_point_type]
+          @edit[:new][:retire_fqname] = ""
+          page.replace_html("retirement_entry_point", :partial => "retirement_entry_points")
+        end
         %w[fqname reconfigure_fqname retire_fqname].each do |name|
           if params[name.to_sym] && @edit[:new][name.to_sym].present?
             page << "$('##{name}_remove').attr('disabled', false);"
@@ -650,6 +662,15 @@ class CatalogController < ApplicationController
     at_tree_select_toggle(:automate_catalog, get_ae_tree_edit_key(@edit[:ae_field_typ]))
     x_node_set(@edit[:active_id], :automate_catalog_tree) if params[:button] == 'submit'
     session[:edit] = @edit
+  end
+
+  def embededded_workflows_modal
+    render :update do |page|
+      page << javascript_prologue
+      page << javascript_show(params[:type])
+      page << javascript_show("#{params[:type]}_modal")
+      page << "$('##{params[:type]}_modal').addClass('modal fade in');"
+    end
   end
 
   def ae_tree_select_discard

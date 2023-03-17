@@ -314,6 +314,7 @@ Rails.application.routes.draw do
         atomic_st_edit
         automate_button_field_changed
         playbook_options_field_changed
+        embededded_workflows_modal
         explorer
         group_create
         group_reorder_field_changed
@@ -3180,6 +3181,27 @@ Rails.application.routes.draw do
                policy_post +
                pre_prov_post +
                snap_post
+    },
+
+    :workflow => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
+    :workflow_credential => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
+    :workflow_repository => {
+      :get => %w(
+        show_list
+        show
+      ),
     },
 
     :firmware_registry => {

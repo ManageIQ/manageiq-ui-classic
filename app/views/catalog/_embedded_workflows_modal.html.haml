@@ -1,0 +1,23 @@
+.modal.fade{"tabindex"         => "-1",
+            "id"               => "#{entry_point}_modal",
+            "role"             => "dialog",
+            "aria-labelledby"  => "ep_modal_label",
+            "aria-describedby" => "modal",
+            "aria-hidden"      => "true",
+            "data-keyboard"    => "false",
+            "data-backdrop"    => "static",
+            :style             => "display: none"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal"}
+          %span{"aria-hidden" => "true"}
+            &times;
+          %span.sr-only
+            Close
+        %h4.modal-title
+          = _("Select an embededded workflow for provisioning entry point")
+
+      .modal-body
+        = react('WorkflowEntryPoints', {:fieldName => field_name, :entryPoint => entry_point})
+      .modal-footer

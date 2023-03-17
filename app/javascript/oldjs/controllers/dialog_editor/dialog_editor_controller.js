@@ -8,6 +8,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   // options for tree selector
   vm.treeOptions = {
     load: DialogEditorHttp.treeSelectorLoadData,
+    loadWorkflows: DialogEditorHttp.treeSelectorLoadWorkflows,
     lazyLoad: DialogEditorHttp.treeSelectorLazyLoadData,
   };
 

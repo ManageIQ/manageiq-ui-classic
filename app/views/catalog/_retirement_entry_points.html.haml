@@ -1,0 +1,29 @@
+- if params[:retirement_entry_point_type] && params[:retirement_entry_point_type] != "nil"
+  - url = url_for(:id => "#{@edit[:rec_id] || "new"}",
+    :action => @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed")
+
+  - if params[:retirement_entry_point_type] == "embedded_workflows"
+    = hidden_div_if(@edit, :id => "retirement_entry_workflows") do
+      = render(:partial => 'embedded_workflows_modal', :locals => {:field_name => :retire_fqname, :entry_point => "retirement_entry_workflows" })
+    - modal = {:open => "miqShowEmbededdedWorkflowsModal('retirement_entry_workflows'); miqButtons('hide', 'automate');",:close => "miqAjax('#{url_for_only_path(:action => 'ae_tree_select_discard', :typ => 'provision')}');"}
+  - elsif params[:retirement_entry_point_type] == "embedded_automate"
+    - modal = {:open => "miqShowAE_Tree('retire'); miqButtons('hide', 'automate');", :close => "miqAjax('#{url_for_only_path(:action => 'ae_tree_select_discard', :typ => 'retire')}');"}
+  
+  .col-md-12{:title => @edit[:new][:retire_fqname], :style => "padding: 3px;"}
+    .input-group
+      = text_field_tag("retire_fqname",
+                        @edit[:new][:retire_fqname],
+                        :class             => "form-control",
+                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      %span.input-group-btn
+        #retire_fqname_div
+          %button.btn.btn-default{"onclick" => modal[:open],
+                                  "title"   => _('Click to select Reconfigure Entry Point')}
+            %i.ff.ff-load-balancer
+          %button.btn.btn-default{"id"           => "retire_fqname_remove",
+                                  "onclick"      => modal[:close],
+                                  "title"        => _('Remove this Reconfigure Entry Point'),
+                                  "data-confirm" => _("Are you sure you want to remove this Retirement Entry Point?"),
+                                  "disabled"     => @edit[:new][:retire_fqname].nil?}
+            %i.pficon.pficon-close
+      %span.input-group-addon{:style => "visibility:hidden"}

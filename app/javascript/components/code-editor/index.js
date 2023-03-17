@@ -51,6 +51,9 @@ const CodeEditor = (props) => {
           { modes.map((mode) => <RadioButton value={mode} labelText={mode} key={mode} />) }
         </RadioButtonGroup>
       )}
+      {
+        console.log(codeMode)
+      }
       <CodeMirror
         className={`miq-codemirror ${error ? 'has-error' : ''}`}
         options={{

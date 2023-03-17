@@ -35,3 +35,46 @@
     cursor: default !important;
   }
 }
+
+ul.nav.nav-list.workflows {
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+
+  li {
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+  }
+}
+
+.tree_selector_wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  margin-top: 10px;
+
+  .tree_selector_title_wrapper {
+    display: flex;
+    flex-direction: row;
+    background: lightgray;
+    padding: 5px;
+
+    .tree_selector_dialog_title {
+      display: flex;
+      flex-grow: 1;
+      font-weight: bold;
+      padding: 5px 0;
+      font-size: 14px;
+    }
+    .tree_selector_action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 30px;
+    }
+  }
+  .tree_selector_content_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+}

@@ -954,6 +954,12 @@ window.miqShowAE_Tree = function(typ) {
   return true;
 };
 
+window.miqShowEmbededdedWorkflowsModal = function(type) {
+  const url = `/${ManageIQ.controller}/embededded_workflows_modal`;
+  miqJqueryRequest(miqPassFields(url, { type }));
+  return true;
+};
+
 // Toggle the user options div in the page header (:onclick from layouts/user_options)
 window.miqChangeGroup = function(id) {
   miqSparkleOn();
