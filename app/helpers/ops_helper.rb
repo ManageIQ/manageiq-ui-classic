@@ -11,6 +11,7 @@ module OpsHelper
   include SettingsServerDescHelper
   include SettingsUsersHelper
   include SettingsZoneHelper
+  include SettingsRbacTagHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
