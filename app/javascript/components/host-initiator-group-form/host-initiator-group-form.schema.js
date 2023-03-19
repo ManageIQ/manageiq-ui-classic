@@ -1,4 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
+import validateName from '../../helpers/storage_manager/validate-names';
 
 export const portTypes = [
   { label: __('ISCSI'), value: 'ISCSI' },
@@ -8,7 +9,8 @@ export const portTypes = [
 
 const loadProviders = () =>
   API.get(
-    '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_create_host_initiator_group=true',
+    '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage='
+    + 'true&filter[]=supports_create_host_initiator_group=true',
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
 
@@ -46,7 +48,10 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'name',
         label: __('Name:'),
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [
+          { type: validatorTypes.REQUIRED },
+          async(value) => validateName('host_initiator_groups', value, false),
+        ],
       },
       {
         component: componentTypes.SELECT,
