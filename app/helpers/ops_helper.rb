@@ -9,6 +9,7 @@ module OpsHelper
   include SettingsLabelTagMappingHelper
   include SettingsScheduleHelper
   include SettingsServerDescHelper
+  include SettingsUsersHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}

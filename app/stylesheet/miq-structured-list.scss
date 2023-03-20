@@ -6,6 +6,13 @@
 
   margin-bottom: 2rem;
 
+  .display_flex {
+    display: flex;
+  }
+  .cursor_pointer {
+    cursor: pointer;
+  }
+
   .list_cell {
     padding: 5px 0 5px 0;
   }

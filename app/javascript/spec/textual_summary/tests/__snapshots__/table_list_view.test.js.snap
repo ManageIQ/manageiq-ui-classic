@@ -280,15 +280,18 @@ exports[`TableListView renders just fine... 1`] = `
                                 </FeatureToggle(StructuredListCell)>
                                 <FeatureToggle(StructuredListCell)
                                   className="content_value object_item"
+                                  title="vim_performance_states"
                                 >
                                   <StructuredListCell
                                     className="content_value object_item"
                                     head={false}
                                     noWrap={false}
+                                    title="vim_performance_states"
                                   >
                                     <div
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
+                                      title="vim_performance_states"
                                     >
                                       <Link
                                         className="cell_link"
@@ -360,15 +363,18 @@ exports[`TableListView renders just fine... 1`] = `
                                 </FeatureToggle(StructuredListCell)>
                                 <FeatureToggle(StructuredListCell)
                                   className="content_value object_item"
+                                  title="miq_report_result_details"
                                 >
                                   <StructuredListCell
                                     className="content_value object_item"
                                     head={false}
                                     noWrap={false}
+                                    title="miq_report_result_details"
                                   >
                                     <div
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
+                                      title="miq_report_result_details"
                                     >
                                       <Link
                                         className="cell_link"

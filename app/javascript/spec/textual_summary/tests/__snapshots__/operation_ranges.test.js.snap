@@ -247,15 +247,18 @@ exports[`Operation Ranges renders just fine... 1`] = `
                                 </FeatureToggle(StructuredListCell)>
                                 <FeatureToggle(StructuredListCell)
                                   className="content_value object_item"
+                                  title=""
                                 >
                                   <StructuredListCell
                                     className="content_value object_item"
                                     head={false}
                                     noWrap={false}
+                                    title=""
                                   >
                                     <div
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
+                                      title=""
                                     >
                                       <div
                                         className="content"
@@ -395,15 +398,18 @@ exports[`Operation Ranges renders just fine... 1`] = `
                                 </FeatureToggle(StructuredListCell)>
                                 <FeatureToggle(StructuredListCell)
                                   className="content_value object_item"
+                                  title=""
                                 >
                                   <StructuredListCell
                                     className="content_value object_item"
                                     head={false}
                                     noWrap={false}
+                                    title=""
                                   >
                                     <div
                                       className="content_value object_item bx--structured-list-td"
                                       role="cell"
+                                      title=""
                                     >
                                       <div
                                         className="content"

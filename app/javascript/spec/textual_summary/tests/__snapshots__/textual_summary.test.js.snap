@@ -459,15 +459,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -524,15 +527,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -589,15 +595,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -888,15 +897,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Ok"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Ok"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Ok"
                                               >
                                                 <div
                                                   className="content"
@@ -953,15 +965,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Ok"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Ok"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Ok"
                                               >
                                                 <div
                                                   className="content"
@@ -1018,15 +1033,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title={null}
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title={null}
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title={null}
                                               >
                                                 <div
                                                   className="content"
@@ -1110,15 +1128,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -1670,15 +1691,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -1748,15 +1772,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Cloud Networks"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Cloud Networks"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Cloud Networks"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -1843,15 +1870,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Cloud Subnets"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Cloud Subnets"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Cloud Subnets"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -1938,15 +1968,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Network Routers"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Network Routers"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Network Routers"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -2033,15 +2066,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Security Groups"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Security Groups"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Security Groups"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -2128,15 +2164,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Floating IPs"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Floating IPs"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Floating IPs"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -2223,15 +2262,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Network Ports"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Network Ports"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Network Ports"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -2318,15 +2360,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title="Show all Load Balancers"
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title="Show all Load Balancers"
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title="Show all Load Balancers"
                                               >
                                                 <Link
                                                   className="cell_link"
@@ -2413,15 +2458,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -2673,15 +2721,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"
@@ -2751,15 +2802,18 @@ exports[`TextualSummary renders just fine 1`] = `
                                           </FeatureToggle(StructuredListCell)>
                                           <FeatureToggle(StructuredListCell)
                                             className="content_value object_item"
+                                            title=""
                                           >
                                             <StructuredListCell
                                               className="content_value object_item"
                                               head={false}
                                               noWrap={false}
+                                              title=""
                                             >
                                               <div
                                                 className="content_value object_item bx--structured-list-td"
                                                 role="cell"
+                                                title=""
                                               >
                                                 <div
                                                   className="content"

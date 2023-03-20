@@ -15,6 +15,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title=""
       >
         <div
           className="content color"
@@ -36,6 +37,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title=""
       >
         <div
           className="content color"
@@ -57,6 +59,7 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title=""
       >
         <div
           className="content color"
@@ -91,6 +94,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -115,6 +119,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -139,6 +144,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -161,6 +167,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -185,6 +192,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -209,6 +217,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -233,6 +242,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -257,6 +267,7 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -291,6 +302,7 @@ exports[`MiqAlertStructuredList should render alert management event structured 
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -325,6 +337,7 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -349,6 +362,7 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -402,6 +416,7 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content color"
@@ -433,6 +448,7 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Alert Profile"
       >
         <div
           className="content"
@@ -452,6 +468,7 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Alert Profile"
       >
         <div
           className="content"
@@ -471,6 +488,7 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Alert Profile"
       >
         <div
           className="content"
@@ -500,6 +518,7 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Action"
       >
         <div
           className="content"
@@ -519,6 +538,7 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Action"
       >
         <div
           className="content"
@@ -538,6 +558,7 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Action"
       >
         <div
           className="content"
@@ -570,6 +591,7 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -623,6 +645,7 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -676,6 +699,7 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -710,6 +734,7 @@ exports[`MiqAlertStructuredList should render alert timeline event structured li
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"

@@ -18,6 +18,7 @@ exports[`MiqPolicySetStructuredList should render policy set info structured lis
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -49,6 +50,7 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title=""
       >
         <MiqStructuredListInputs
           action={[Function]}
@@ -82,6 +84,7 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Container Image Policy"
       >
         <div
           className="content"
@@ -101,6 +104,7 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Container Image Policy"
       >
         <div
           className="content"
@@ -120,6 +124,7 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Container Image Policy"
       >
         <div
           className="content"
@@ -139,6 +144,7 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Container Node Policy"
       >
         <div
           className="content"
@@ -158,6 +164,7 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this VM and Instance Policy"
       >
         <div
           className="content"
