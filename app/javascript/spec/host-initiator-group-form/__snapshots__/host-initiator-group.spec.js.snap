@@ -58,6 +58,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                 Object {
                   "type": "required",
                 },
+                [Function],
               ],
             },
             Object {
@@ -163,6 +164,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                   Object {
                     "type": "required",
                   },
+                  [Function],
                 ],
               },
               Object {
@@ -260,6 +262,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                     Object {
                       "type": "required",
                     },
+                    [Function],
                   ],
                 },
                 Object {
@@ -358,6 +361,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                         Object {
                           "type": "required",
                         },
+                        [Function],
                       ]
                     }
                   />,
@@ -422,6 +426,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                         Object {
                           "type": "required",
                         },
+                        [Function],
                       ],
                     },
                     Object {
@@ -495,6 +500,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                           Object {
                             "type": "required",
                           },
+                          [Function],
                         ]
                       }
                     />,
@@ -565,6 +571,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                           Object {
                             "type": "required",
                           },
+                          [Function],
                         ],
                       },
                       Object {
@@ -653,6 +660,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                             Object {
                               "type": "required",
                             },
+                            [Function],
                           ]
                         }
                       />,
@@ -723,6 +731,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                             Object {
                               "type": "required",
                             },
+                            [Function],
                           ],
                         },
                         Object {
@@ -1022,6 +1031,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                               Object {
                                 "type": "required",
                               },
+                              [Function],
                             ]
                           }
                         >
@@ -1037,6 +1047,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                   Object {
                                     "type": "required",
                                   },
+                                  [Function],
                                 ],
                               }
                             }
@@ -1055,6 +1066,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                     Object {
                                       "type": "required",
                                     },
+                                    [Function],
                                   ]
                                 }
                               >
@@ -1585,6 +1597,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                       Object {
                                         "type": "required",
                                       },
+                                      [Function],
                                     ]
                                   }
                                 />,
@@ -1691,7 +1704,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                   "physical_storage_id": false,
                                 },
                                 "valid": false,
-                                "validating": false,
+                                "validating": true,
                                 "values": Object {
                                   "ems_id": "2",
                                   "name": "my_group",
@@ -1737,6 +1750,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                       Object {
                                         "type": "required",
                                       },
+                                      [Function],
                                     ],
                                   },
                                   Object {
