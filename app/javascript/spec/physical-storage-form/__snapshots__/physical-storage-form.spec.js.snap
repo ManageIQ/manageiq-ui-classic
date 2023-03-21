@@ -95,6 +95,54 @@ exports[`Physical storage form component should render adding form variant 1`] =
                   "label": "System Type:",
                   "loadOptions": [Function],
                   "name": "physical_storage_family_id",
+                  "onChange": [Function],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "radio",
+                  "condition": Object {
+                    "isNotEmpty": true,
+                    "when": "physical_storage_family_id",
+                  },
+                  "id": "capabilities",
+                  "isRequired": true,
+                  "label": "Capabilities",
+                  "name": "capabilities",
+                  "options": Array [
+                    Object {
+                      "label": "Default",
+                      "value": "Default",
+                    },
+                    Object {
+                      "label": "Custom",
+                      "value": "Custom",
+                    },
+                  ],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "select",
+                  "condition": Object {
+                    "is": "Custom",
+                    "when": "capabilities",
+                  },
+                  "id": "enabled_capability_values",
+                  "includeEmpty": false,
+                  "isDisabled": false,
+                  "isMulti": true,
+                  "isRequired": true,
+                  "label": "Enabled capability values:",
+                  "loadOptions": [Function],
+                  "name": "enabled_capability_values",
+                  "simpleValue": true,
                   "validate": Array [
                     Object {
                       "type": "required",
@@ -319,6 +367,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                     "label": "System Type:",
                     "loadOptions": [Function],
                     "name": "physical_storage_family_id",
+                    "onChange": [Function],
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "radio",
+                    "condition": Object {
+                      "isNotEmpty": true,
+                      "when": "physical_storage_family_id",
+                    },
+                    "id": "capabilities",
+                    "isRequired": true,
+                    "label": "Capabilities",
+                    "name": "capabilities",
+                    "options": Array [
+                      Object {
+                        "label": "Default",
+                        "value": "Default",
+                      },
+                      Object {
+                        "label": "Custom",
+                        "value": "Custom",
+                      },
+                    ],
+                    "validate": Array [
+                      Object {
+                        "type": "required",
+                      },
+                    ],
+                  },
+                  Object {
+                    "component": "select",
+                    "condition": Object {
+                      "is": "Custom",
+                      "when": "capabilities",
+                    },
+                    "id": "enabled_capability_values",
+                    "includeEmpty": false,
+                    "isDisabled": true,
+                    "isMulti": true,
+                    "isRequired": true,
+                    "label": "Enabled capability values:",
+                    "loadOptions": [Function],
+                    "name": "enabled_capability_values",
+                    "simpleValue": true,
                     "validate": Array [
                       Object {
                         "type": "required",
@@ -526,6 +622,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                       "label": "System Type:",
                       "loadOptions": [Function],
                       "name": "physical_storage_family_id",
+                      "onChange": [Function],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "radio",
+                      "condition": Object {
+                        "isNotEmpty": true,
+                        "when": "physical_storage_family_id",
+                      },
+                      "id": "capabilities",
+                      "isRequired": true,
+                      "label": "Capabilities",
+                      "name": "capabilities",
+                      "options": Array [
+                        Object {
+                          "label": "Default",
+                          "value": "Default",
+                        },
+                        Object {
+                          "label": "Custom",
+                          "value": "Custom",
+                        },
+                      ],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "select",
+                      "condition": Object {
+                        "is": "Custom",
+                        "when": "capabilities",
+                      },
+                      "id": "enabled_capability_values",
+                      "includeEmpty": false,
+                      "isDisabled": true,
+                      "isMulti": true,
+                      "isRequired": true,
+                      "label": "Enabled capability values:",
+                      "loadOptions": [Function],
+                      "name": "enabled_capability_values",
+                      "simpleValue": true,
                       "validate": Array [
                         Object {
                           "type": "required",
@@ -725,6 +869,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                         "label": "System Type:",
                         "loadOptions": [Function],
                         "name": "physical_storage_family_id",
+                        "onChange": [Function],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "radio",
+                        "condition": Object {
+                          "isNotEmpty": true,
+                          "when": "physical_storage_family_id",
+                        },
+                        "id": "capabilities",
+                        "isRequired": true,
+                        "label": "Capabilities",
+                        "name": "capabilities",
+                        "options": Array [
+                          Object {
+                            "label": "Default",
+                            "value": "Default",
+                          },
+                          Object {
+                            "label": "Custom",
+                            "value": "Custom",
+                          },
+                        ],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "select",
+                        "condition": Object {
+                          "is": "Custom",
+                          "when": "capabilities",
+                        },
+                        "id": "enabled_capability_values",
+                        "includeEmpty": false,
+                        "isDisabled": true,
+                        "isMulti": true,
+                        "isRequired": true,
+                        "label": "Enabled capability values:",
+                        "loadOptions": [Function],
+                        "name": "enabled_capability_values",
+                        "simpleValue": true,
                         "validate": Array [
                           Object {
                             "type": "required",
@@ -923,6 +1115,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                             "label": "System Type:",
                             "loadOptions": [Function],
                             "name": "physical_storage_family_id",
+                            "onChange": [Function],
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "radio",
+                            "condition": Object {
+                              "isNotEmpty": true,
+                              "when": "physical_storage_family_id",
+                            },
+                            "id": "capabilities",
+                            "isRequired": true,
+                            "label": "Capabilities",
+                            "name": "capabilities",
+                            "options": Array [
+                              Object {
+                                "label": "Default",
+                                "value": "Default",
+                              },
+                              Object {
+                                "label": "Custom",
+                                "value": "Custom",
+                              },
+                            ],
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "condition": Object {
+                              "is": "Custom",
+                              "when": "capabilities",
+                            },
+                            "id": "enabled_capability_values",
+                            "includeEmpty": false,
+                            "isDisabled": true,
+                            "isMulti": true,
+                            "isRequired": true,
+                            "label": "Enabled capability values:",
+                            "loadOptions": [Function],
+                            "name": "enabled_capability_values",
+                            "simpleValue": true,
                             "validate": Array [
                               Object {
                                 "type": "required",
@@ -1087,6 +1327,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                             "label": "System Type:",
                             "loadOptions": [Function],
                             "name": "physical_storage_family_id",
+                            "onChange": [Function],
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "radio",
+                            "condition": Object {
+                              "isNotEmpty": true,
+                              "when": "physical_storage_family_id",
+                            },
+                            "id": "capabilities",
+                            "isRequired": true,
+                            "label": "Capabilities",
+                            "name": "capabilities",
+                            "options": Array [
+                              Object {
+                                "label": "Default",
+                                "value": "Default",
+                              },
+                              Object {
+                                "label": "Custom",
+                                "value": "Custom",
+                              },
+                            ],
+                            "validate": Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ],
+                          },
+                          Object {
+                            "component": "select",
+                            "condition": Object {
+                              "is": "Custom",
+                              "when": "capabilities",
+                            },
+                            "id": "enabled_capability_values",
+                            "includeEmpty": false,
+                            "isDisabled": true,
+                            "isMulti": true,
+                            "isRequired": true,
+                            "label": "Enabled capability values:",
+                            "loadOptions": [Function],
+                            "name": "enabled_capability_values",
+                            "simpleValue": true,
                             "validate": Array [
                               Object {
                                 "type": "required",
@@ -1260,6 +1548,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                               "label": "System Type:",
                               "loadOptions": [Function],
                               "name": "physical_storage_family_id",
+                              "onChange": [Function],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "radio",
+                              "condition": Object {
+                                "isNotEmpty": true,
+                                "when": "physical_storage_family_id",
+                              },
+                              "id": "capabilities",
+                              "isRequired": true,
+                              "label": "Capabilities",
+                              "name": "capabilities",
+                              "options": Array [
+                                Object {
+                                  "label": "Default",
+                                  "value": "Default",
+                                },
+                                Object {
+                                  "label": "Custom",
+                                  "value": "Custom",
+                                },
+                              ],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "condition": Object {
+                                "is": "Custom",
+                                "when": "capabilities",
+                              },
+                              "id": "enabled_capability_values",
+                              "includeEmpty": false,
+                              "isDisabled": true,
+                              "isMulti": true,
+                              "isRequired": true,
+                              "label": "Enabled capability values:",
+                              "loadOptions": [Function],
+                              "name": "enabled_capability_values",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -1430,6 +1766,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                               "label": "System Type:",
                               "loadOptions": [Function],
                               "name": "physical_storage_family_id",
+                              "onChange": [Function],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "radio",
+                              "condition": Object {
+                                "isNotEmpty": true,
+                                "when": "physical_storage_family_id",
+                              },
+                              "id": "capabilities",
+                              "isRequired": true,
+                              "label": "Capabilities",
+                              "name": "capabilities",
+                              "options": Array [
+                                Object {
+                                  "label": "Default",
+                                  "value": "Default",
+                                },
+                                Object {
+                                  "label": "Custom",
+                                  "value": "Custom",
+                                },
+                              ],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
+                            },
+                            Object {
+                              "component": "select",
+                              "condition": Object {
+                                "is": "Custom",
+                                "when": "capabilities",
+                              },
+                              "id": "enabled_capability_values",
+                              "includeEmpty": false,
+                              "isDisabled": true,
+                              "isMulti": true,
+                              "isRequired": true,
+                              "label": "Enabled capability values:",
+                              "loadOptions": [Function],
+                              "name": "enabled_capability_values",
+                              "simpleValue": true,
                               "validate": Array [
                                 Object {
                                   "type": "required",
@@ -1618,6 +2002,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 "label": "System Type:",
                                 "loadOptions": [Function],
                                 "name": "physical_storage_family_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "radio",
+                                "condition": Object {
+                                  "isNotEmpty": true,
+                                  "when": "physical_storage_family_id",
+                                },
+                                "id": "capabilities",
+                                "isRequired": true,
+                                "label": "Capabilities",
+                                "name": "capabilities",
+                                "options": Array [
+                                  Object {
+                                    "label": "Default",
+                                    "value": "Default",
+                                  },
+                                  Object {
+                                    "label": "Custom",
+                                    "value": "Custom",
+                                  },
+                                ],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "select",
+                                "condition": Object {
+                                  "is": "Custom",
+                                  "when": "capabilities",
+                                },
+                                "id": "enabled_capability_values",
+                                "includeEmpty": false,
+                                "isDisabled": true,
+                                "isMulti": true,
+                                "isRequired": true,
+                                "label": "Enabled capability values:",
+                                "loadOptions": [Function],
+                                "name": "enabled_capability_values",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -1788,6 +2220,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                 "label": "System Type:",
                                 "loadOptions": [Function],
                                 "name": "physical_storage_family_id",
+                                "onChange": [Function],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "radio",
+                                "condition": Object {
+                                  "isNotEmpty": true,
+                                  "when": "physical_storage_family_id",
+                                },
+                                "id": "capabilities",
+                                "isRequired": true,
+                                "label": "Capabilities",
+                                "name": "capabilities",
+                                "options": Array [
+                                  Object {
+                                    "label": "Default",
+                                    "value": "Default",
+                                  },
+                                  Object {
+                                    "label": "Custom",
+                                    "value": "Custom",
+                                  },
+                                ],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              },
+                              Object {
+                                "component": "select",
+                                "condition": Object {
+                                  "is": "Custom",
+                                  "when": "capabilities",
+                                },
+                                "id": "enabled_capability_values",
+                                "includeEmpty": false,
+                                "isDisabled": true,
+                                "isMulti": true,
+                                "isRequired": true,
+                                "label": "Enabled capability values:",
+                                "loadOptions": [Function],
+                                "name": "enabled_capability_values",
+                                "simpleValue": true,
                                 "validate": Array [
                                   Object {
                                     "type": "required",
@@ -1967,6 +2447,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   "label": "System Type:",
                                   "loadOptions": [Function],
                                   "name": "physical_storage_family_id",
+                                  "onChange": [Function],
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                },
+                                Object {
+                                  "component": "radio",
+                                  "condition": Object {
+                                    "isNotEmpty": true,
+                                    "when": "physical_storage_family_id",
+                                  },
+                                  "id": "capabilities",
+                                  "isRequired": true,
+                                  "label": "Capabilities",
+                                  "name": "capabilities",
+                                  "options": Array [
+                                    Object {
+                                      "label": "Default",
+                                      "value": "Default",
+                                    },
+                                    Object {
+                                      "label": "Custom",
+                                      "value": "Custom",
+                                    },
+                                  ],
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ],
+                                },
+                                Object {
+                                  "component": "select",
+                                  "condition": Object {
+                                    "is": "Custom",
+                                    "when": "capabilities",
+                                  },
+                                  "id": "enabled_capability_values",
+                                  "includeEmpty": false,
+                                  "isDisabled": true,
+                                  "isMulti": true,
+                                  "isRequired": true,
+                                  "label": "Enabled capability values:",
+                                  "loadOptions": [Function],
+                                  "name": "enabled_capability_values",
+                                  "simpleValue": true,
                                   "validate": Array [
                                     Object {
                                       "type": "required",
@@ -2125,6 +2653,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       "label": "System Type:",
                                       "loadOptions": [Function],
                                       "name": "physical_storage_family_id",
+                                      "onChange": [Function],
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                    Object {
+                                      "component": "radio",
+                                      "condition": Object {
+                                        "isNotEmpty": true,
+                                        "when": "physical_storage_family_id",
+                                      },
+                                      "id": "capabilities",
+                                      "isRequired": true,
+                                      "label": "Capabilities",
+                                      "name": "capabilities",
+                                      "options": Array [
+                                        Object {
+                                          "label": "Default",
+                                          "value": "Default",
+                                        },
+                                        Object {
+                                          "label": "Custom",
+                                          "value": "Custom",
+                                        },
+                                      ],
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                    Object {
+                                      "component": "select",
+                                      "condition": Object {
+                                        "is": "Custom",
+                                        "when": "capabilities",
+                                      },
+                                      "id": "enabled_capability_values",
+                                      "includeEmpty": false,
+                                      "isDisabled": true,
+                                      "isMulti": true,
+                                      "isRequired": true,
+                                      "label": "Enabled capability values:",
+                                      "loadOptions": [Function],
+                                      "name": "enabled_capability_values",
+                                      "simpleValue": true,
                                       "validate": Array [
                                         Object {
                                           "type": "required",
@@ -2284,6 +2860,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         "label": "System Type:",
                                         "loadOptions": [Function],
                                         "name": "physical_storage_family_id",
+                                        "onChange": [Function],
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "radio",
+                                        "condition": Object {
+                                          "isNotEmpty": true,
+                                          "when": "physical_storage_family_id",
+                                        },
+                                        "id": "capabilities",
+                                        "isRequired": true,
+                                        "label": "Capabilities",
+                                        "name": "capabilities",
+                                        "options": Array [
+                                          Object {
+                                            "label": "Default",
+                                            "value": "Default",
+                                          },
+                                          Object {
+                                            "label": "Custom",
+                                            "value": "Custom",
+                                          },
+                                        ],
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "component": "select",
+                                        "condition": Object {
+                                          "is": "Custom",
+                                          "when": "capabilities",
+                                        },
+                                        "id": "enabled_capability_values",
+                                        "includeEmpty": false,
+                                        "isDisabled": true,
+                                        "isMulti": true,
+                                        "isRequired": true,
+                                        "label": "Enabled capability values:",
+                                        "loadOptions": [Function],
+                                        "name": "enabled_capability_values",
+                                        "simpleValue": true,
                                         "validate": Array [
                                           Object {
                                             "type": "required",
@@ -2447,6 +3071,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           "label": "System Type:",
                                           "loadOptions": [Function],
                                           "name": "physical_storage_family_id",
+                                          "onChange": [Function],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "radio",
+                                          "condition": Object {
+                                            "isNotEmpty": true,
+                                            "when": "physical_storage_family_id",
+                                          },
+                                          "id": "capabilities",
+                                          "isRequired": true,
+                                          "label": "Capabilities",
+                                          "name": "capabilities",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Default",
+                                              "value": "Default",
+                                            },
+                                            Object {
+                                              "label": "Custom",
+                                              "value": "Custom",
+                                            },
+                                          ],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "select",
+                                          "condition": Object {
+                                            "is": "Custom",
+                                            "when": "capabilities",
+                                          },
+                                          "id": "enabled_capability_values",
+                                          "includeEmpty": false,
+                                          "isDisabled": true,
+                                          "isMulti": true,
+                                          "isRequired": true,
+                                          "label": "Enabled capability values:",
+                                          "loadOptions": [Function],
+                                          "name": "enabled_capability_values",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -2886,6 +3558,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                       label="System Type:"
                                       loadOptions={[Function]}
                                       name="physical_storage_family_id"
+                                      onChange={[Function]}
                                       validate={
                                         Array [
                                           Object {
@@ -2911,6 +3584,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                             "label": "System Type:",
                                             "loadOptions": [Function],
                                             "name": "physical_storage_family_id",
+                                            "onChange": [Function],
                                             "validate": Array [
                                               Object {
                                                 "type": "required",
@@ -2936,6 +3610,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               "label": "System Type:",
                                               "loadOptions": [Function],
                                               "name": "physical_storage_family_id",
+                                              "onChange": [Function],
                                               "validate": Array [
                                                 Object {
                                                   "type": "required",
@@ -2974,6 +3649,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   "label": "System Type:",
                                                   "loadOptions": [Function],
                                                   "name": "physical_storage_family_id",
+                                                  "onChange": [Function],
                                                   "validate": Array [
                                                     Object {
                                                       "type": "required",
@@ -3005,6 +3681,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     "label": "System Type:",
                                                     "loadOptions": [Function],
                                                     "name": "physical_storage_family_id",
+                                                    "onChange": [Function],
                                                     "validate": Array [
                                                       Object {
                                                         "type": "required",
@@ -3035,6 +3712,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       "label": "System Type:",
                                                       "loadOptions": [Function],
                                                       "name": "physical_storage_family_id",
+                                                      "onChange": [Function],
                                                       "validate": Array [
                                                         Object {
                                                           "type": "required",
@@ -3045,6 +3723,435 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   values={
                                                     Object {
                                                       "ems_id": "",
+                                                    }
+                                                  }
+                                                />
+                                              </ConditionTriggerWrapper>
+                                            </ConditionTriggerDetector>
+                                          </ForwardRef(Field)>
+                                        </ConditionTriggerDetector>
+                                      </FormConditionWrapper>
+                                    </SingleField>
+                                    <SingleField
+                                      component="radio"
+                                      condition={
+                                        Object {
+                                          "isNotEmpty": true,
+                                          "when": "physical_storage_family_id",
+                                        }
+                                      }
+                                      id="capabilities"
+                                      isRequired={true}
+                                      key="capabilities"
+                                      label="Capabilities"
+                                      name="capabilities"
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "Default",
+                                            "value": "Default",
+                                          },
+                                          Object {
+                                            "label": "Custom",
+                                            "value": "Custom",
+                                          },
+                                        ]
+                                      }
+                                      validate={
+                                        Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <FormConditionWrapper
+                                        condition={
+                                          Object {
+                                            "isNotEmpty": true,
+                                            "when": "physical_storage_family_id",
+                                          }
+                                        }
+                                        field={
+                                          Object {
+                                            "component": "radio",
+                                            "id": "capabilities",
+                                            "isDisabled": undefined,
+                                            "isRequired": true,
+                                            "label": "Capabilities",
+                                            "name": "capabilities",
+                                            "options": Array [
+                                              Object {
+                                                "label": "Default",
+                                                "value": "Default",
+                                              },
+                                              Object {
+                                                "label": "Custom",
+                                                "value": "Custom",
+                                              },
+                                            ],
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                      >
+                                        <ConditionTriggerDetector
+                                          condition={
+                                            Object {
+                                              "isNotEmpty": true,
+                                              "when": "physical_storage_family_id",
+                                            }
+                                          }
+                                          field={
+                                            Object {
+                                              "component": "radio",
+                                              "id": "capabilities",
+                                              "isDisabled": undefined,
+                                              "isRequired": true,
+                                              "label": "Capabilities",
+                                              "name": "capabilities",
+                                              "options": Array [
+                                                Object {
+                                                  "label": "Default",
+                                                  "value": "Default",
+                                                },
+                                                Object {
+                                                  "label": "Custom",
+                                                  "value": "Custom",
+                                                },
+                                              ],
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          triggers={
+                                            Array [
+                                              "physical_storage_family_id",
+                                            ]
+                                          }
+                                        >
+                                          <ForwardRef(Field)
+                                            name="physical_storage_family_id"
+                                            subscription={
+                                              Object {
+                                                "value": true,
+                                              }
+                                            }
+                                          >
+                                            <ConditionTriggerDetector
+                                              condition={
+                                                Object {
+                                                  "isNotEmpty": true,
+                                                  "when": "physical_storage_family_id",
+                                                }
+                                              }
+                                              field={
+                                                Object {
+                                                  "component": "radio",
+                                                  "id": "capabilities",
+                                                  "isDisabled": undefined,
+                                                  "isRequired": true,
+                                                  "label": "Capabilities",
+                                                  "name": "capabilities",
+                                                  "options": Array [
+                                                    Object {
+                                                      "label": "Default",
+                                                      "value": "Default",
+                                                    },
+                                                    Object {
+                                                      "label": "Custom",
+                                                      "value": "Custom",
+                                                    },
+                                                  ],
+                                                  "validate": Array [
+                                                    Object {
+                                                      "type": "required",
+                                                    },
+                                                  ],
+                                                }
+                                              }
+                                              triggers={Array []}
+                                              values={
+                                                Object {
+                                                  "physical_storage_family_id": "",
+                                                }
+                                              }
+                                            >
+                                              <ConditionTriggerWrapper
+                                                condition={
+                                                  Object {
+                                                    "isNotEmpty": true,
+                                                    "when": "physical_storage_family_id",
+                                                  }
+                                                }
+                                                field={
+                                                  Object {
+                                                    "component": "radio",
+                                                    "id": "capabilities",
+                                                    "isDisabled": undefined,
+                                                    "isRequired": true,
+                                                    "label": "Capabilities",
+                                                    "name": "capabilities",
+                                                    "options": Array [
+                                                      Object {
+                                                        "label": "Default",
+                                                        "value": "Default",
+                                                      },
+                                                      Object {
+                                                        "label": "Custom",
+                                                        "value": "Custom",
+                                                      },
+                                                    ],
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ],
+                                                  }
+                                                }
+                                                values={
+                                                  Object {
+                                                    "physical_storage_family_id": "",
+                                                  }
+                                                }
+                                              >
+                                                <Component
+                                                  condition={
+                                                    Object {
+                                                      "isNotEmpty": true,
+                                                      "when": "physical_storage_family_id",
+                                                    }
+                                                  }
+                                                  field={
+                                                    Object {
+                                                      "component": "radio",
+                                                      "id": "capabilities",
+                                                      "isDisabled": undefined,
+                                                      "isRequired": true,
+                                                      "label": "Capabilities",
+                                                      "name": "capabilities",
+                                                      "options": Array [
+                                                        Object {
+                                                          "label": "Default",
+                                                          "value": "Default",
+                                                        },
+                                                        Object {
+                                                          "label": "Custom",
+                                                          "value": "Custom",
+                                                        },
+                                                      ],
+                                                      "validate": Array [
+                                                        Object {
+                                                          "type": "required",
+                                                        },
+                                                      ],
+                                                    }
+                                                  }
+                                                  values={
+                                                    Object {
+                                                      "physical_storage_family_id": "",
+                                                    }
+                                                  }
+                                                />
+                                              </ConditionTriggerWrapper>
+                                            </ConditionTriggerDetector>
+                                          </ForwardRef(Field)>
+                                        </ConditionTriggerDetector>
+                                      </FormConditionWrapper>
+                                    </SingleField>
+                                    <SingleField
+                                      component="select"
+                                      condition={
+                                        Object {
+                                          "is": "Custom",
+                                          "when": "capabilities",
+                                        }
+                                      }
+                                      id="enabled_capability_values"
+                                      includeEmpty={false}
+                                      isDisabled={true}
+                                      isMulti={true}
+                                      isRequired={true}
+                                      key="enabled_capability_values"
+                                      label="Enabled capability values:"
+                                      loadOptions={[Function]}
+                                      name="enabled_capability_values"
+                                      simpleValue={true}
+                                      validate={
+                                        Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <FormConditionWrapper
+                                        condition={
+                                          Object {
+                                            "is": "Custom",
+                                            "when": "capabilities",
+                                          }
+                                        }
+                                        field={
+                                          Object {
+                                            "component": "select",
+                                            "id": "enabled_capability_values",
+                                            "includeEmpty": false,
+                                            "isDisabled": true,
+                                            "isMulti": true,
+                                            "isRequired": true,
+                                            "label": "Enabled capability values:",
+                                            "loadOptions": [Function],
+                                            "name": "enabled_capability_values",
+                                            "simpleValue": true,
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
+                                              },
+                                            ],
+                                          }
+                                        }
+                                      >
+                                        <ConditionTriggerDetector
+                                          condition={
+                                            Object {
+                                              "is": "Custom",
+                                              "when": "capabilities",
+                                            }
+                                          }
+                                          field={
+                                            Object {
+                                              "component": "select",
+                                              "id": "enabled_capability_values",
+                                              "includeEmpty": false,
+                                              "isDisabled": true,
+                                              "isMulti": true,
+                                              "isRequired": true,
+                                              "label": "Enabled capability values:",
+                                              "loadOptions": [Function],
+                                              "name": "enabled_capability_values",
+                                              "simpleValue": true,
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          triggers={
+                                            Array [
+                                              "capabilities",
+                                            ]
+                                          }
+                                        >
+                                          <ForwardRef(Field)
+                                            name="capabilities"
+                                            subscription={
+                                              Object {
+                                                "value": true,
+                                              }
+                                            }
+                                          >
+                                            <ConditionTriggerDetector
+                                              condition={
+                                                Object {
+                                                  "is": "Custom",
+                                                  "when": "capabilities",
+                                                }
+                                              }
+                                              field={
+                                                Object {
+                                                  "component": "select",
+                                                  "id": "enabled_capability_values",
+                                                  "includeEmpty": false,
+                                                  "isDisabled": true,
+                                                  "isMulti": true,
+                                                  "isRequired": true,
+                                                  "label": "Enabled capability values:",
+                                                  "loadOptions": [Function],
+                                                  "name": "enabled_capability_values",
+                                                  "simpleValue": true,
+                                                  "validate": Array [
+                                                    Object {
+                                                      "type": "required",
+                                                    },
+                                                  ],
+                                                }
+                                              }
+                                              triggers={Array []}
+                                              values={
+                                                Object {
+                                                  "capabilities": "",
+                                                }
+                                              }
+                                            >
+                                              <ConditionTriggerWrapper
+                                                condition={
+                                                  Object {
+                                                    "is": "Custom",
+                                                    "when": "capabilities",
+                                                  }
+                                                }
+                                                field={
+                                                  Object {
+                                                    "component": "select",
+                                                    "id": "enabled_capability_values",
+                                                    "includeEmpty": false,
+                                                    "isDisabled": true,
+                                                    "isMulti": true,
+                                                    "isRequired": true,
+                                                    "label": "Enabled capability values:",
+                                                    "loadOptions": [Function],
+                                                    "name": "enabled_capability_values",
+                                                    "simpleValue": true,
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ],
+                                                  }
+                                                }
+                                                values={
+                                                  Object {
+                                                    "capabilities": "",
+                                                  }
+                                                }
+                                              >
+                                                <Component
+                                                  condition={
+                                                    Object {
+                                                      "is": "Custom",
+                                                      "when": "capabilities",
+                                                    }
+                                                  }
+                                                  field={
+                                                    Object {
+                                                      "component": "select",
+                                                      "id": "enabled_capability_values",
+                                                      "includeEmpty": false,
+                                                      "isDisabled": true,
+                                                      "isMulti": true,
+                                                      "isRequired": true,
+                                                      "label": "Enabled capability values:",
+                                                      "loadOptions": [Function],
+                                                      "name": "enabled_capability_values",
+                                                      "simpleValue": true,
+                                                      "validate": Array [
+                                                        Object {
+                                                          "type": "required",
+                                                        },
+                                                      ],
+                                                    }
+                                                  }
+                                                  values={
+                                                    Object {
+                                                      "capabilities": "",
                                                     }
                                                   }
                                                 />
@@ -4504,6 +5611,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           "label": "System Type:",
                                           "loadOptions": [Function],
                                           "name": "physical_storage_family_id",
+                                          "onChange": [Function],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "radio",
+                                          "condition": Object {
+                                            "isNotEmpty": true,
+                                            "when": "physical_storage_family_id",
+                                          },
+                                          "id": "capabilities",
+                                          "isRequired": true,
+                                          "label": "Capabilities",
+                                          "name": "capabilities",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Default",
+                                              "value": "Default",
+                                            },
+                                            Object {
+                                              "label": "Custom",
+                                              "value": "Custom",
+                                            },
+                                          ],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "select",
+                                          "condition": Object {
+                                            "is": "Custom",
+                                            "when": "capabilities",
+                                          },
+                                          "id": "enabled_capability_values",
+                                          "includeEmpty": false,
+                                          "isDisabled": true,
+                                          "isMulti": true,
+                                          "isRequired": true,
+                                          "label": "Enabled capability values:",
+                                          "loadOptions": [Function],
+                                          "name": "enabled_capability_values",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",
@@ -4739,6 +5894,54 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           "label": "System Type:",
                                           "loadOptions": [Function],
                                           "name": "physical_storage_family_id",
+                                          "onChange": [Function],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "radio",
+                                          "condition": Object {
+                                            "isNotEmpty": true,
+                                            "when": "physical_storage_family_id",
+                                          },
+                                          "id": "capabilities",
+                                          "isRequired": true,
+                                          "label": "Capabilities",
+                                          "name": "capabilities",
+                                          "options": Array [
+                                            Object {
+                                              "label": "Default",
+                                              "value": "Default",
+                                            },
+                                            Object {
+                                              "label": "Custom",
+                                              "value": "Custom",
+                                            },
+                                          ],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                        Object {
+                                          "component": "select",
+                                          "condition": Object {
+                                            "is": "Custom",
+                                            "when": "capabilities",
+                                          },
+                                          "id": "enabled_capability_values",
+                                          "includeEmpty": false,
+                                          "isDisabled": true,
+                                          "isMulti": true,
+                                          "isRequired": true,
+                                          "label": "Enabled capability values:",
+                                          "loadOptions": [Function],
+                                          "name": "enabled_capability_values",
+                                          "simpleValue": true,
                                           "validate": Array [
                                             Object {
                                               "type": "required",

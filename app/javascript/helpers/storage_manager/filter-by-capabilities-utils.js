@@ -7,4 +7,7 @@ const getCapabilityUuid = (providerCapabilities, capabilityName, capabilityValue
   return capVals.find((capVal) => capVal.value === capabilityValue).uuid;
 };
 
-export { arrayIncludes, getCapabilityUuid };
+const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
+  .then((result) => result.capabilities);
+
+export { arrayIncludes, getCapabilityUuid, getProviderCapabilities };

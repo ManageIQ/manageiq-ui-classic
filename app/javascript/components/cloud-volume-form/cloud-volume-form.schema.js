@@ -3,6 +3,7 @@ import { parseCondition } from '@data-driven-forms/react-form-renderer';
 import validateName from '../../helpers/storage_manager/validate-names';
 import filterResourcesByCapabilities from '../../helpers/storage_manager/filter-resources-by-capabilities';
 import filterServicesByCapabilities from '../../helpers/storage_manager/filter-service-by-capabilities';
+import { getProviderCapabilities } from '../../helpers/storage_manager/filter-by-capabilities-utils';
 
 const changeValue = (value, loadSchema, emptySchema) => {
   if (value === '-1') {
@@ -22,10 +23,6 @@ const storageManagers = (supports) =>
     });
 
 // storage manager functions:
-
-const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
-  .then((result) => result.capabilities);
-
 const validateServiceHasResources = (serviceId) =>
   API.get(`/api/storage_services/${serviceId}?attributes=name,storage_resources`)
     .then((response) => (response.storage_resources.length === 0

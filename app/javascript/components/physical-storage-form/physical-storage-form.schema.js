@@ -1,5 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import React from 'react';
+import { loadProviderCapabilities, parseCapabilitiesForPhysical } from '../../helpers/storage_manager/load-provider-capabilities';
+import { getProviderCapabilities } from '../../helpers/storage_manager/filter-by-capabilities-utils';
 
 const loadProviders = () =>
   API.get(
@@ -14,8 +16,9 @@ const loadFamilies = (id) => API.get(`/api/providers/${id}?attributes=type,physi
     value: id,
   })));
 
-const createSchema = (edit, ems, initialValues, state, setState) => {
+const createSchema = (edit, ems, initialValues, state, setState, familyId, setFamilyId) => {
   let emsId = state.ems_id;
+  let providerCapabilities;
   if (initialValues && initialValues.ems_id) {
     emsId = initialValues.ems_id;
   }
@@ -59,11 +62,54 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
             isDisabled: edit,
             validate: [{ type: validatorTypes.REQUIRED }],
             loadOptions: () => (emsId ? loadFamilies(emsId) : Promise.resolve([])),
+            onChange: (value) => setFamilyId(value),
             includeEmpty: true,
             key: `physical_storage_family_id-${emsId}`,
             condition: {
               when: 'ems_id',
               isNotEmpty: true,
+            },
+          },
+          {
+            component: componentTypes.RADIO,
+            id: 'capabilities',
+            name: 'capabilities',
+            label: __('Capabilities'),
+            isRequired: true,
+            validate: [{ type: validatorTypes.REQUIRED }],
+            options: [
+              {
+                label: __('Default'),
+                value: 'Default',
+              },
+              {
+                label: __('Custom'),
+                value: 'Custom',
+              },
+            ],
+            condition: {
+              when: 'physical_storage_family_id',
+              isNotEmpty: true,
+            },
+          },
+          {
+            component: componentTypes.SELECT,
+            name: 'enabled_capability_values',
+            id: 'enabled_capability_values',
+            label: __('Enabled capability values:'),
+            isRequired: true,
+            validate: [{ type: validatorTypes.REQUIRED }],
+            isMulti: true,
+            simpleValue: true,
+            isDisabled: edit,
+            loadOptions: async() => {
+              providerCapabilities = await getProviderCapabilities(emsId);
+              return parseCapabilitiesForPhysical(providerCapabilities, familyId);
+            },
+            includeEmpty: false,
+            condition: {
+              when: 'capabilities',
+              is: 'Custom',
             },
           },
           {
@@ -121,8 +167,8 @@ const createSchema = (edit, ems, initialValues, state, setState) => {
               or: [{ when: 'edit_authentication', is: true }, { when: 'edit', is: '' }],
             },
           },
-        ]
-      }
+        ],
+      },
     ],
   });
 };
