@@ -1,6 +1,3 @@
-- if @edit
-  - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
-  - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
 - mode = ::Settings.authentication.mode
 - oidc_enabled = ::Settings.authentication.oidc_enabled
 - saml_enabled = ::Settings.authentication.saml_enabled
@@ -22,26 +19,20 @@
               - @deleted_belongsto_filters.each do |deleted_filter|
                 %li
                   %strong= h(deleted_filter)
-#group_info
+- if @edit
+  - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
+  - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
+  = render :partial => "ldap_auth_users"
+
+  #group_info
   %h3
     = _("Group Information")
-  - if @edit
-    = render :partial => "ldap_auth_users"
   .form-horizontal
-    - unless @edit
-      .form-group
-        %label.col-md-2.control-label
-          = _("ID")
-        .col-md-8
-          %p.form-control-static
-            = h(@group.id)
     .form-group
       %label.col-md-2.control-label
         = _("Description")
       .col-md-8
-        - if !@edit
-          = h(@group.description)
-        - else
+        - if @edit
           = text_field_tag("description",
                            @edit[:new][:description],
                            :maxlength         => 50,
@@ -59,9 +50,7 @@
       %label.col-md-2.control-label
         = _("Detailed Description")
       .col-md-8
-        - if !@edit
-          = h(@group.detailed_description)
-        - else
+        - if @edit
           = text_field_tag("detailed_description",
                            @edit[:new][:detailed_description],
                            :maxlength         => 255,
@@ -72,17 +61,7 @@
       %label.col-md-2.control-label
         = _("Role")
       .col-md-8
-        - if !@edit
-          - if @group.miq_user_role
-            - if role_allows?(:feature => "rbac_role_show")
-              - params = {:class   => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@group.miq_user_role.id}');",
-                          :title   => _("View this Role")}
-            - else
-              - params = {}
-            %i.ff.ff-user-role{params}
-            = link_to(@group.miq_user_role.name, "#", params)
-        - else
+        - if @edit
           - disabled_item = ["<Choose a Role>", nil]
           - selected_item = @edit[:new][:role] || disabled_item
           = select_tag('group_role',
@@ -95,43 +74,12 @@
       %label.col-md-2.control-label
         = _("Project/Tenant")
       .col-md-8
-        - if !@edit
-          - if @group.tenant
-            - tenant = @group.tenant
-            - params = {:class => "pficon pficon-#{tenant.divisible ? "tenant" : "project"}"}
-            - if role_allows?(:feature => "rbac_tenant_view")
-              - params[:class] = "#{params[:class]} pointer"
-              - params[:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{tenant.id}');"
-              - params[:title] = tenant.divisible ? _("View this Tenant") : _("View this Project")
-            %i{params}
-            = h(tenant.name)
-        - else
+        - if @edit
           = select_tag('group_tenant',
               grouped_options_for_select(@edit[:projects_tenants], @edit[:new][:group_tenant]),
                :class  => "selectpicker")
           :javascript
             miqSelectPickerEvent("group_tenant", "#{combo_url}")
-
-    - unless @edit
-      .form-group
-        %label.col-md-2.control-label
-          = _("Users in this Group")
-        .col-md-8
-          - if role_allows?(:feature => "rbac_user_show")
-            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
-              - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{u.id}');",
-                          :title => _("View this User")}
-              %i.pficon.pficon-user{params}
-              = link_to(u.name, "#", params)
-              %br
-          - else
-            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
-              %i.pficon.pficon-user
-              = link_to(u.name, "#")
-              %br
-    - unless @edit
-      = render :partial => "rbac_tag_box"
     - if @edit
       #group_lookup{:style => "display:none"}
         %hr
@@ -148,18 +96,6 @@
                                :class             => "form-control",
                                "data-miq_observe" => {:interval => '.5',
                                                       :url      => url}.to_json)
-
-          - unless mode == "httpd"
-            .form-group#user_name_form_group
-              %label.col-md-2.control-label
-                = _("Username")
-              .col-md-8
-                = text_field_tag("user_id",
-                                 @edit[:new][:user_id],
-                                 :maxlength         => 255,
-                                 :class             => "form-control",
-                                 "data-miq_observe" => {:interval => '.5',
-                                                        :url      => url}.to_json)
 
             .form-group#user_password_form_group
               %label.col-md-2.control-label
@@ -183,27 +119,28 @@
                       :remote                => true,
                       "data-method"          => :post,
                       :title                 => t)
+- unless @edit
+  = group_rbac_details_summary(@group)
+  = render :partial => "rbac_tag_box"
+%hr
+%h3
+  = @edit ? _("Assign Filters") : _("Assigned Filters (read only)")
 
-  %hr
-  %h3
-    = @edit ? _("Assign Filters") : _("Assigned Filters (read only)")
+#rbac_group_tabs
+  %ul.nav.nav-tabs{'role' => 'tablist'}
+    = miq_tab_header('rbac_customer_tags', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_customer_tags')"}) do
+      = _("%{current_tenant} Tags") % {:current_tenant => current_tenant.name}
+    = miq_tab_header('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_hosts_clusters')"}) do
+      = _("Clusters, Datastores, Hosts, Managers & Providers")
+    = miq_tab_header('rbac_vms_templates', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_vms_templates')"}) do
+      = _("VMs & Templates")
 
-  #rbac_group_tabs
-    %ul.nav.nav-tabs{'role' => 'tablist'}
-      = miq_tab_header('rbac_customer_tags', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_customer_tags')"}) do
-        = _("%{current_tenant} Tags") % {:current_tenant => current_tenant.name}
-      = miq_tab_header('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_hosts_clusters')"}) do
-        = _("Clusters, Datastores, Hosts, Managers & Providers")
-      = miq_tab_header('rbac_vms_templates', @sb[:active_rbac_group_tab], {:onclick => "rbacGroupLoadTab('rbac_vms_templates')"}) do
-        = _("VMs & Templates")
-
-    .tab-content
-      = miq_tab_content('rbac_customer_tags', @sb[:active_rbac_group_tab], {:lazy => true}) do
-        = render :partial => 'ops/rbac_group/customer_tags'
-      = miq_tab_content('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:lazy => true}) do
-        = render :partial => 'ops/rbac_group/hosts_clusters'
-      = miq_tab_content('rbac_vms_templates', @sb[:active_rbac_group_tab], {:lazy => true}) do
-        = render :partial => 'ops/rbac_group/vms_templates'
-
+  .tab-content
+    = miq_tab_content('rbac_customer_tags', @sb[:active_rbac_group_tab], {:lazy => true}) do
+      = render :partial => 'ops/rbac_group/customer_tags'
+    = miq_tab_content('rbac_hosts_clusters', @sb[:active_rbac_group_tab], {:lazy => true}) do
+      = render :partial => 'ops/rbac_group/hosts_clusters'
+    = miq_tab_content('rbac_vms_templates', @sb[:active_rbac_group_tab], {:lazy => true}) do
+      = render :partial => 'ops/rbac_group/vms_templates'
 :javascript
   miq_tabs_init('#rbac_group_tabs');
