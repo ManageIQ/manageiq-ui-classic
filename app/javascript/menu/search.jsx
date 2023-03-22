@@ -36,7 +36,7 @@ const MenuSearch = ({
         <SideNavItems>
           <SideNavItem className="padded vertical-center">
             <fieldset className="miq-fieldset">
-              <legend className="miq-fieldset-legend legend-search">{__('Choose a Filter')}</legend>
+              <legend className="miq-fieldset-legend legend-search">{expanded ? __('Choose a Filter') : undefined}</legend>
               <div className="miq-fieldset-content">
                 <div
                   tabIndex="0"
