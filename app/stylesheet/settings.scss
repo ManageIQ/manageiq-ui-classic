@@ -15,8 +15,10 @@
   margin-bottom: 2rem;
 }
 
-div:has(.bx--checkbox-wrapper){
-  margin-bottom: 2rem;
+.evacuate_form, .schedule_form, .live_migrate_form{
+  div:has(.bx--checkbox-wrapper){
+    margin-bottom: 2rem;
+  }
 }
 
 .bx--form-item.bx--checkbox-wrapper{
