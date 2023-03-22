@@ -10,6 +10,7 @@ module OpsHelper
   include SettingsScheduleHelper
   include SettingsServerDescHelper
   include SettingsUsersHelper
+  include SettingsZoneHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
