@@ -1,10 +1,10 @@
 module ApplicationHelper
-  include_concern 'ViewsShared'
-  include_concern 'Flash'
-  include_concern 'Listnav'
-  include_concern 'Navbar'
-  include_concern 'PageLayouts'
-  include_concern 'Tasks'
+  include ApplicationHelper::ViewsShared
+  include ApplicationHelper::Flash
+  include ApplicationHelper::Listnav
+  include ApplicationHelper::Navbar
+  include ApplicationHelper::PageLayouts
+  include ApplicationHelper::Tasks
   include Sandbox
   include JsHelper
   include StiRoutingHelper
