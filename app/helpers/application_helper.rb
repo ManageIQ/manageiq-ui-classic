@@ -5,7 +5,7 @@ module ApplicationHelper
   include ApplicationHelper::Navbar
   include ApplicationHelper::PageLayouts
   include ApplicationHelper::Tasks
-  include Sandbox
+  include Mixins::Sandbox
   include JsHelper
   include StiRoutingHelper
   include ToolbarHelper
