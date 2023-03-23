@@ -1,5 +1,5 @@
 class ContainerNodeController < ApplicationController
-  include ContainersCommonMixin
+  include Mixins::ContainersCommonMixin
   include ContainersExternalLoggingSupportMixin
   include Mixins::BreadcrumbsMixin
 
