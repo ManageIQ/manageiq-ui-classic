@@ -1,6 +1,6 @@
 class CatalogController < ApplicationController
   include AutomateTreeHelper
-  include ServiceDialogCreationMixin
+  include Mixins::ServiceDialogCreationMixin
   include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges

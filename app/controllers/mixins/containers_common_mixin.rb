@@ -1,7 +1,7 @@
 module Mixins
   module ContainersCommonMixin
     extend ActiveSupport::Concern
-    include ServiceDialogCreationMixin
+    include Mixins::ServiceDialogCreationMixin
 
     def button
       @edit = session[:edit] # Restore @edit for adv search box
