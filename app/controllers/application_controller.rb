@@ -1,12 +1,6 @@
 # rubocop:disable Lint/EmptyWhen
 require 'open-uri'
 
-# Need to make sure models are autoloaded
-MiqCompare
-MiqFilter
-MiqExpression
-MiqSearch
-
 class ApplicationController < ActionController::Base
   include Vmdb::Logging
 
