@@ -94,26 +94,26 @@ describe TextualMixins::TextualDevices do
 
     context "with model type parsed" do
       let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :model => 'Vmxnet3')]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
+      it { is_expected.to eq([TextualMixins::Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "without vswitch and portgroup" do
       let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
+      it { is_expected.to eq([TextualMixins::Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with vswitch and portgroup" do
       let(:switch) { FactoryBot.create(:switch, :name => 'test_switch1', :shared => 'false') }
       let(:lan) { FactoryBot.create(:lan, :name => "VM NFS Network", :switch => switch) }
       let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :lan => lan)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
+      it { is_expected.to eq([TextualMixins::Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with dvswitch and dvportgroup" do
       let(:switch) { FactoryBot.create(:switch, :name => 'test_switch1', :shared => 'true') }
       let(:lan) { FactoryBot.create(:lan, :name => "VM NFS Network", :switch => switch) }
       let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :lan => lan)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Distributed Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
+      it { is_expected.to eq([TextualMixins::Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Distributed Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
   end
 end
