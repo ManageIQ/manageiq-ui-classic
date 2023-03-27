@@ -1,5 +1,7 @@
 class GtlFormatter
   extend ActionView::Helpers::DateHelper
+
+  # TODO: make sure we can autoload this properly without loading core first
   include QuadiconHelper
 
   VIEW_WITH_CUSTOM_ICON = %w[
