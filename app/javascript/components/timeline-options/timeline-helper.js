@@ -90,6 +90,7 @@ export const buildChartDataObject = (rawData) => {
       datasets.push(obj);
     }
   });
+  datasets.sort((a, b) => new Date(b.date) - new Date(a.date));
   return datasets;
 };
 
