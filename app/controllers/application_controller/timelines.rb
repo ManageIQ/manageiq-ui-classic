@@ -21,7 +21,6 @@ module ApplicationController::Timelines
     end
 
     @timeline = true
-    add_flash(_("No events available for this timeline"), :warning) if @tl_options.date.start.nil? && @tl_options.date.end.nil?
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
