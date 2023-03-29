@@ -22,6 +22,32 @@ describe ServiceController do
     service
   end
 
+  describe "#service_retire_now" do
+    let(:service)          { FactoryBot.create(:service, :service_template => service_template, :name => "foo") }
+    let(:service_template) { FactoryBot.create(:service_template, :name => "bar") }
+
+    it "creates a ServiceRetireRequest" do
+      expect(controller).to receive(:assert_privileges)
+      expect(controller).to receive(:javascript_redirect).with({:action => "show_list", :controller => "miq_request"})
+
+      controller.instance_variable_set(:@record, service)
+      controller.params = {:id => service.id}
+      controller.send(:service_retire_now)
+
+      expect(ServiceRetireRequest.count).to eq(1)
+      expect(ServiceRetireRequest.first).to have_attributes(
+        :description    => "Service Retire for: #{service.name}",
+        :approval_state => "pending_approval",
+        :type           => "ServiceRetireRequest",
+        :request_type   => "service_retire",
+        :request_state  => "pending",
+        :message        => "Service Retire - Request Created",
+        :status         => "Ok",
+        :options        => {:src_ids => [service.id]}
+      )
+    end
+  end
+
   describe "#service_reconfigure" do
     let(:service) { instance_double("Service", :id => 321, :service_template => service_template, :name => "foo name") }
     let(:service_template) { instance_double("ServiceTemplate", :name => "the name") }
