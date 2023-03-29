@@ -123,6 +123,10 @@ class ServiceController < ApplicationController
 
   private
 
+  def record_class
+    Service
+  end
+
   def sanitize_output(stdout)
     htm = stdout.gsub('"', '\"')
 
