@@ -30,6 +30,17 @@ class HostInitiatorGroupController < ApplicationController
                     :url  => "/#{controller_name}/new")
   end
 
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("host_initiator_group_edit")
+    @host_initiator_group = find_record_with_rbac(HostInitiatorGroup, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Host Initiator group \"%{name}\"") % {:name => @host_initiator_group.name},
+      :url  => "/host_initiator_group/edit/#{@host_initiator_group.id}"
+    )
+  end
+
   def show
     if params[:id].nil?
       @breadcrumbs.clear
@@ -69,6 +80,8 @@ class HostInitiatorGroupController < ApplicationController
     case pressed
     when 'host_initiator_group_new'
       javascript_redirect(:action => 'new')
+    when 'host_initiator_group_edit'
+      javascript_redirect(:action => 'edit', :id => checked_item_id)
     else
       return false
     end

@@ -47,6 +47,7 @@ module ApplicationHelper
         guest_device
         host
         host_aggregate
+        host_initiator_group
         load_balancer
         miq_template
         network_port
