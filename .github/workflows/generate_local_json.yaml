@@ -58,6 +58,6 @@ jobs:
         delete-branch: true
         labels: internationalization
         push-to-fork: miq-bot/manageiq-ui-classic
-        title: Update json Translations ${{github.event.repository.updated_at}}
+        title: Update Json Translations ${{github.event.repository.updated_at}}
         body: Update the locale Translations in the json files. (verify  its actually pulling from core).
         token: ${{ secrets.PR_TOKEN }}
