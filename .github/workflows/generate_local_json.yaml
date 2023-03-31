@@ -1,0 +1,63 @@
+name: "Generate locale json from core test"
+
+on: [push]
+jobs:
+  locale_update_all:
+    if: github.repository_owner == 'ManageIQ'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: manageiq/postgresql:13
+        env:
+          POSTGRESQL_USER: root
+          POSTGRESQL_PASSWORD: smartvm
+          POSTGRESQL_DATABASE: vmdb_i18n
+        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 5
+        ports:
+        - 5432:5432
+    env:
+      PGHOST: localhost
+      PGPASSWORD: smartvm
+      RAILS_ENV: i18n
+      SKIP_TEST_RESET: true
+      SKIP_DATABASE_SETUP: true
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up system
+      run: bin/before_install
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "3.0"
+        bundler-cache: true
+      timeout-minutes: 30
+    - name: Prepare dependencies
+      run: bin/setup
+    - name: Setup database
+      run: bundle exec rake evm:db:reset
+    - name: Run locale:po_to_json
+      run: bundle exec rake locale:po_to_json
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        add-paths: |
+          app/javascript/oldjs/locale/de.json
+          app/javascript/oldjs/locale/en.json
+          app/javascript/oldjs/locale/es.json
+          app/javascript/oldjs/locale/fr.json
+          app/javascript/oldjs/locale/it.json
+          app/javascript/oldjs/locale/ja.json
+          app/javascript/oldjs/locale/ko.json
+          app/javascript/oldjs/locale/pt_BR.json
+          app/javascript/oldjs/locale/zh_CN.json
+          app/javascript/oldjs/locale/zh_TW.json
+        commit-message: Update Json ${{github.event.repository.updated_at}}
+        branch: po_to_json_from_core
+        author: ManageIQ Bot <bot@manageiq.org>
+        committer: ManageIQ Bot <bot@manageiq.org>
+        delete-branch: true
+        labels: internationalization
+        push-to-fork: miq-bot/manageiq-ui-classic
+        title: Update json Translations ${{github.event.repository.updated_at}}
+        body: Update the locale Translations in the json files. (verify  its actually pulling from core).
+        token: ${{ secrets.PR_TOKEN }}
