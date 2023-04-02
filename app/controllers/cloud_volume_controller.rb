@@ -24,23 +24,29 @@ class CloudVolumeController < ApplicationController
     'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
     'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
     'cloud_volume_backup_restore'  => [:backup_restore,  'backup_select'],
+    'cloud_volume_refresh'  => [nil,  'cloud_volume_refresh'],
   }.freeze
 
   def specific_buttons(pressed)
     return false unless BUTTON_TO_ACTION_MAPPING.include?(pressed)
-
-    validate_action, ui_action = BUTTON_TO_ACTION_MAPPING[pressed]
-    if validate_action
-      validate_results = validate_item_supports_action_button(validate_action, CloudVolume)
-      if validate_results[:action_supported]
-        javascript_redirect(:action => ui_action, :id => checked_item_id)
-      else
-        render_flash(validate_results[:message], :error)
-      end
+    if pressed == "cloud_volume_refresh"
+      @record = find_record_with_rbac(CloudVolume, checked_item_id)
+      EmsRefresh.refresh(@record.ext_management_system)
+      add_flash(_("Refresh storage manager successfully initiated for cloud volume- #{@record.name}"))
+      render_flash
     else
-      javascript_redirect(:action => ui_action, :id => checked_item_id)
+      validate_action, ui_action = BUTTON_TO_ACTION_MAPPING[pressed]
+      if validate_action
+        validate_results = validate_item_supports_action_button(validate_action, CloudVolume)
+        if validate_results[:action_supported]
+          javascript_redirect(:action => ui_action, :id => checked_item_id)
+        else
+          render_flash(validate_results[:message], :error)
+        end
+      else
+        javascript_redirect(:action => ui_action, :id => checked_item_id)
+      end
     end
-
     true
   end
 
