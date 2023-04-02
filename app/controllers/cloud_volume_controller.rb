@@ -19,16 +19,17 @@ class CloudVolumeController < ApplicationController
     'cloud_volume_attach'          => [:attach,   'attach'],
     'cloud_volume_clone'           => [:clone,    'clone'],
     'cloud_volume_detach'          => [:detach,   'detach'],
-    'cloud_volume_edit'            => [:update,           'edit'],
+    'cloud_volume_edit'            => [:update, 'edit'],
     'cloud_volume_new'             => [nil,              'new'],
     'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
     'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
     'cloud_volume_backup_restore'  => [:backup_restore,  'backup_select'],
-    'cloud_volume_refresh'  => [nil,  'cloud_volume_refresh'],
+    'cloud_volume_refresh'         => [nil, 'cloud_volume_refresh'],
   }.freeze
 
   def specific_buttons(pressed)
     return false unless BUTTON_TO_ACTION_MAPPING.include?(pressed)
+
     if pressed == "cloud_volume_refresh"
       @record = find_record_with_rbac(CloudVolume, checked_item_id)
       EmsRefresh.refresh(@record.ext_management_system)

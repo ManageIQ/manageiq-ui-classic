@@ -93,9 +93,9 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        :url_parms    => 'main_div',
                        :send_checked => true,
                        :enabled      => false,
-                       :klass     => ApplicationHelper::Button::PolymorphicConditionalButton,
-                       :options   => {:feature      => :update,
-                                      :parent_class => "CloudVolume"},
+                       :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
+                       :options      => {:feature      => :update,
+                                         :parent_class => "CloudVolume"},
                        :onwhen       => '1'
                      ),
                      button(
@@ -123,35 +123,36 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        'fa fa-refresh fa-lg',
                        N_('Refresh relationships and power states for all items related to this cloud volume'),
                        N_('Refresh Relationships and Power States'),
-                       :image   => "refresh",
-                       :confirm => N_("Refresh relationships and power states for all items related to this Cloud volume?"),
+                       :image        => "refresh",
+                       :confirm      => N_("Refresh relationships and power states for all items related to this Cloud volume?"),
                        :send_checked => true,
                        :enabled      => false,
                        :onwhen       => '1',
-                       :options => {:feature => :refresh}
+                       :options      => {:feature => :refresh}
                      ),
                    ]
                  )
                ])
   button_group('cloud_volume_policy', [
-    select(
-      :cloud_volume_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :enabled => "false",
-      :onwhen  => "1+",
-      :items   => [
-        button(
-          :cloud_volume_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for the selected items'),
-          N_('Edit Tags'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+"),
-      ]
-    ),
-  ])
+                 select(
+                   :cloud_volume_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :enabled => "false",
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :cloud_volume_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for the selected items'),
+                       N_('Edit Tags'),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1+"
+                     ),
+                   ]
+                 ),
+               ])
 end
