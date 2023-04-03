@@ -11,22 +11,11 @@
       .row
         .col-md-12.col-lg-12
           #dialog_tabs
-            %ul.nav.nav-tabs{'role' => 'tablist'}
+            - catalog_tab_labels = st_prov_show_tab_configuration(wf)            
+            = react('MiqCustomTab', {:containerId => 'st-prov-show-tabs-content',
+                          :tabLabels => catalog_tab_labels,
+                          :type => 'CATALOG_SUMMARY'})
+            #st-prov-show-tabs-content.miq_custom_tabs_container
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = tab_index == 0 ? {:class => "active"} : {}
-                = miq_tab_header(tab.id, nil, options) do
-                  = _(tab.label)
-            .tab-content
-              - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = tab_index == 0 ? {:class => "active"} : {}
-                = miq_tab_content(tab.id, nil, options) do
-                  - tab.dialog_groups.each do |group|
-                    %div{:id => "group_#{group.id}_div"}
-                      %h3{:title => "#{group.description}"}
-                        = _(group.label)
-                      - unless group.dialog_fields.empty?
-                        .form-horizontal
-                          - group.dialog_fields.each do |field|
-                            = render :partial => "miq_request/request_dialog_details",
-                                     :locals => {:wf => wf, :field => field}
-                      %hr
+                = st_prov_show_tab_content(tab.id, tab_index) do
+                  = st_prov_show_tab_info(tab, wf)

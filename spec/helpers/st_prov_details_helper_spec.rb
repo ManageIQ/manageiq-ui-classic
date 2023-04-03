@@ -1,5 +1,6 @@
-# rubocop:disable  Style/OpenStructUse
-describe 'miq_request/_request_dialog_details.html.haml' do
+describe StProvDetailsHelper do
+  include StProvDetailsHelper
+
   let(:wf) { FactoryBot.create(:miq_provision_virt_workflow) }
   let(:dialog) do
     FactoryBot.create(:miq_dialog, :name => "vm", :description => "test", :content => {
@@ -20,7 +21,7 @@ describe 'miq_request/_request_dialog_details.html.haml' do
                                 :visible => true,
                                 :label   => 'Select Integer',
                                 :name    => 'select2',
-                                :value   => 100,
+                                :value   => '100',
                                 :type    => 'DialogFieldDropDownList'
                               },
                               :string       => {
@@ -52,31 +53,30 @@ describe 'miq_request/_request_dialog_details.html.haml' do
 
     it 'page should display the multi select' do
       field = OpenStruct.new(dialog.content[:dialogs][:customize][:fields][:multi_select])
-      render :partial => 'miq_request/request_dialog_details', :locals => {:wf => wf, :field => field}
-      expect(response.body).to include('Select Box')
-      expect(response.body).to include('1, 2')
+      response = request_dialog_details(wf, field)
+      expect(response[:cells][:label]).to include('Select Box')
+      expect(response[:cells][:value]).to include('1, 2')
     end
 
     it 'page should display the integer value' do
       field = OpenStruct.new(dialog.content[:dialogs][:customize][:fields][:integer])
-      render :partial => 'miq_request/request_dialog_details', :locals => {:wf => wf, :field => field}
-      expect(response.body).to include('Select Integer')
-      expect(response.body).to include('100')
+      response = request_dialog_details(wf, field)
+      expect(response[:cells][:label]).to include('Select Integer')
+      expect(response[:cells][:value]).to include('100')
     end
 
     it 'page should display the string value' do
       field = OpenStruct.new(dialog.content[:dialogs][:customize][:fields][:string])
-      render :partial => 'miq_request/request_dialog_details', :locals => {:wf => wf, :field => field}
-      expect(response.body).to include('Select String')
-      expect(response.body).to include('Multiverse of madness')
+      response = request_dialog_details(wf, field)
+      expect(response[:cells][:label]).to include('Select String')
+      expect(response[:cells][:value]).to include('Multiverse of madness')
     end
 
     it 'page should display the blank value as none' do
       field = OpenStruct.new(dialog.content[:dialogs][:customize][:fields][:none])
-      render :partial => 'miq_request/request_dialog_details', :locals => {:wf => wf, :field => field}
-      expect(response.body).to include('Select None')
-      expect(response.body).to include('&lt;None&gt;')
+      response = request_dialog_details(wf, field)
+      expect(response[:cells][:label]).to include('Select None')
+      expect(response[:cells][:value]).to include('')
     end
   end
 end
-# rubocop:enable  Style/OpenStructUse
