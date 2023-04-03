@@ -1143,23 +1143,23 @@ class CatalogController < ApplicationController
   end
 
   def set_resource_action(st)
-    d = @edit[:new][:dialog_id].nil? ? nil : Dialog.where(:id => @edit[:new][:dialog_id]).first
+    dialog = Dialog.find_by(:id => @edit[:new][:dialog_id]) if @edit[:new][:dialog_id]
+
     actions = [
       {:name => 'Provision', :edit_key => :fqname},
       {:name => 'Reconfigure', :edit_key => :reconfigure_fqname},
       {:name => 'Retirement', :edit_key => :retire_fqname}
     ]
+
     actions.each do |action|
+      fqname = @edit[:new][action[:edit_key]]
+
       ra = st.resource_actions.find_by(:action => action[:name])
-      if ra.nil? && @edit[:new][action[:edit_key]].present?
-        attrs = {:action        => action[:name],
-                 :ae_attributes => {:service_action => action[:name]}}
-        ra = st.resource_actions.build(attrs)
-      end
-      if @edit[:new][action[:edit_key]].blank?
-        st.resource_actions.where(:action => action[:name]).first.try(:destroy)
+      if fqname.present?
+        ra ||= st.resource_actions.new(:action => action[:name], :ae_attributes => {:service_action => action[:name]})
+        ra.update!(:dialog => dialog, :fqname => fqname)
       else
-        ra.update(:dialog => d, :fqname => @edit[:new][action[:edit_key]])
+        ra&.destroy
       end
     end
   end
