@@ -1146,20 +1146,24 @@ class CatalogController < ApplicationController
     dialog = Dialog.find_by(:id => @edit[:new][:dialog_id]) if @edit[:new][:dialog_id]
 
     actions = [
-      {:name => 'Provision', :edit_key => :fqname},
-      {:name => 'Reconfigure', :edit_key => :reconfigure_fqname},
-      {:name => 'Retirement', :edit_key => :retire_fqname}
+      {:name => 'Provision',   :edit_fqname_key => :fqname,             :edit_workflow_key => :workflow_id},
+      {:name => 'Reconfigure', :edit_fqname_key => :reconfigure_fqname, :edit_workflow_key => :reconfigure_workflow_id},
+      {:name => 'Retirement',  :edit_fqname_key => :retire_fqname,      :edit_workflow_key => :retire_workflow_id}
     ]
 
     actions.each do |action|
-      fqname = @edit[:new][action[:edit_key]]
+      fqname      = @edit[:new][action[:edit_fqname_key]]
+      workflow_id = @edit[:new][action[:edit_workflow_key]]
 
       ra = st.resource_actions.find_by(:action => action[:name])
       if fqname.present?
-        ra ||= st.resource_actions.new(:action => action[:name], :ae_attributes => {:service_action => action[:name]})
+        ra ||= st.resource_actions.new(:type => "ResourceActionAutomate", :action => action[:name], :ae_attributes => {:service_action => action[:name]})
         ra.update!(:dialog => dialog, :fqname => fqname)
+      elsif workflow_id.present?
+        ra ||= st.resource_actions.new(:type => "ResourceActionEmbeddedWorkflow", :action => action[:name], :ae_attributes => {:service_action => action[:name]})
+        ra.update!(:dialog => dialog, :workflow_id => workflow_id)
       else
-        ra&.destroy
+        ra&.destroy!
       end
     end
   end
