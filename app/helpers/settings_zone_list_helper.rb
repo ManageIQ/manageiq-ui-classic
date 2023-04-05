@@ -1,4 +1,4 @@
-module ZonesHelper
+module SettingsZoneListHelper
   private
 
   def settings_zone_list(zones, my_zone_name)

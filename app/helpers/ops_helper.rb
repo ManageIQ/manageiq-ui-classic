@@ -4,7 +4,7 @@ module OpsHelper
   include VmwareConsoleHelper
   include SettingsAnalysisProfileHelper
   include SettingsTagsTabsHelper
-  include ZonesHelper
+  include SettingsZoneListHelper
   include SettingsTabHelper
   include SettingsLabelTagMappingHelper
   include SettingsScheduleHelper
