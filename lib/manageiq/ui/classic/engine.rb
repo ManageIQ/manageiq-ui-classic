@@ -29,7 +29,6 @@ module ManageIQ
         #
         #   https://bugs.ruby-lang.org/issues/14372
         #
-        config.autoload_paths << root.join('app', 'controllers', 'mixins').to_s
         config.autoload_paths << root.join('lib').to_s
 
         # The branding information needs to be stored outside the folder where the main
