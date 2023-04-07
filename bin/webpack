@@ -22,7 +22,7 @@ end
 
 newenv  = {
   "NODE_PATH"    => NODE_MODULES_PATH.shellescape,
-  "NODE_OPTIONS" => "--max_old_space_size=4096 --openssl-legacy-provider expo start --web"
+  "NODE_OPTIONS" => "--max_old_space_size=4096 --openssl-legacy-provider"
 }
 cmdline = ["yarn", "run", "webpack", "--config", WEBPACK_CONFIG] + ARGV
 
