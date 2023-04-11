@@ -1,7 +1,8 @@
 - catalog_tab_labels, catalog_condition = catalog_tab_edit_configuration(@edit[:new])
-= react('MiqCustomTab', {:containerId => 'catalog-tabs-edit',
-                         :tabLabels => catalog_tab_labels,
-                         :type => 'CATALOG_EDIT'})
+.miq_custom_tab_wrapper
+  = react('MiqCustomTab', {:containerId => 'catalog-tabs-edit',
+                          :tabLabels => catalog_tab_labels,
+                          :type => 'CATALOG_EDIT'})
 
 #catalog-tabs-edit.miq_custom_tabs_container
   = catalog_tab_content(:basic) do

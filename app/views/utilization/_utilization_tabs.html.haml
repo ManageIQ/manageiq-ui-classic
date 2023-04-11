@@ -1,18 +1,11 @@
-#utilization_tabs
-  %ul.nav.nav-tabs{'role' => 'tablist'}
-    = miq_tab_header('summary', @sb[:active_tab]) do
-      = _('Summary')
-    = miq_tab_header('details', @sb[:active_tab]) do
-      = _('Details')
-    = miq_tab_header('report', @sb[:active_tab]) do
-      = _('Report')
-  .tab-content
-    = miq_tab_content('summary', @sb[:active_tab]) do
+#utilization-tabs-wrapper.miq_custom_tab_wrapper
+  = react('MiqCustomTab', {:containerId => 'utilization-tabs',
+                           :tabLabels => utilization_tab_configuration,
+                           :type => 'UTILIZATION'})
+  #utilization-tabs.miq_custom_tabs_container
+    = utilization_tab_content(:summary) do
       = render :partial => "utilization_summary"
-    = miq_tab_content('details', @sb[:active_tab]) do
+    = utilization_tab_content(:details) do
       = render :partial => "utilization_details"
-    = miq_tab_content('report', @sb[:active_tab]) do
+    = utilization_tab_content(:report) do
       = render :partial => "utilization_report"
-
-:javascript
-  miq_tabs_init('#utilization_tabs', '/utilization/change_tab');
