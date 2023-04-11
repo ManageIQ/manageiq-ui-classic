@@ -1757,7 +1757,6 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         tree_autoload
-        update
         users
         wait_for_task
       ) +
