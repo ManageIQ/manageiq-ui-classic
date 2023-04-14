@@ -11,6 +11,10 @@ class StorageServiceController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def breadcrumb_name(_model)
+    _("Storage Services")
+  end
+
   def new
     assert_privileges("storage_service_new")
 
