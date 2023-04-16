@@ -11,13 +11,16 @@ class ApplicationHelper::Toolbar::VolumeMappingCenter < ApplicationHelper::Toolb
           button(
             :volume_mapping_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to this Volume Mapping'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "volumeMappingToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to this Volume Mapping?"),
-            :options => {:feature => :refresh}
+            N_('Refresh the provider of this volume mapping'),
+            N_('Refresh the provider'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the provider of this volume mapping?"),
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'volume_mappings'
+            },
+            :send_checked => true
           ),
           api_button(
             :volume_mapping_delete,

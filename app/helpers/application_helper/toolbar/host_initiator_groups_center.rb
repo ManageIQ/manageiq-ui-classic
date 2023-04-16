@@ -11,13 +11,19 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupsCenter < ApplicationHelper:
           button(
             :host_initiator_group_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to these Host Initiator Groups'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "hostInitiatorGroupToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to these Host Initiator Clusters?"),
-            :options => {:feature => :refresh}
+            N_('Refresh the provider of the selected host initiator group(s)'),
+            N_('Refresh the provider'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the provider of the selected host initiator group(s)?"),
+            :options      => {:feature      => :refresh,
+                              :parent_class => "HostInitiatorGroup"},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'host_initiator_groups'
+            },
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1+'
           ),
           button(
             :host_initiator_group_new,

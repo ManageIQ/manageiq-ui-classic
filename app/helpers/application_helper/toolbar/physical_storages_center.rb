@@ -11,14 +11,18 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
           button(
             :physical_storage_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to these Physical Storages'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :confirm => N_("Refresh relationships and power states for all items related to these Physical Storages?"),
+            N_('Refresh the provider of the selected physical storage(s)'),
+            N_('Refresh the provider'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the provider of the selected physical storage(s)?"),
             :send_checked => true,
             :enabled      => false,
-            :onwhen       => '1',
-            :options => {:feature => :refresh}
+            :onwhen       => '1+',
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'physical_storages'
+            }
           ),
           button(
             :physical_storage_new,

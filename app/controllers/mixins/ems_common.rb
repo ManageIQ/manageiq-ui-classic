@@ -261,11 +261,17 @@ module Mixins
         when "storage_tag"                      then tag(Storage)
         when "physical_storage_new"             then javascript_redirect(:action => 'new', :controller => 'physical_storage', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "physical_storage_edit"            then javascript_redirect(:action => "edit", :controller => "physical_storage", :id => checked_or_params)
+        when "physical_storage_refresh"         then refresh_or_capture_emss("refresh_ems", _("Refresh"))
         when "host_initiator_new"               then javascript_redirect(:action => 'new', :controller => 'host_initiator', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "host_initiator_refresh"           then refresh_or_capture_emss("refresh_ems", _("Refresh"))
         when "host_initiator_group_new"         then javascript_redirect(:action => 'new', :controller => 'host_initiator_group', :storage_manager_id => block_storage_manager_id(params[:id]))
         when "host_initiator_group_edit"        then javascript_redirect(:action => 'edit', :controller => 'host_initiator_group', :id => checked_or_params)
+        when "host_initiator_group_refresh"     then refresh_or_capture_emss("refresh_ems", _("Refresh"))
         when "volume_mapping_new"               then javascript_redirect(:action => 'new', :controller => 'volume_mapping', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "volume_mapping_refresh"           then refresh_or_capture_emss("refresh_ems", _("Refresh"))
         when "storage_service_new"              then javascript_redirect(:action => 'new', :controller => 'storage_service', :storage_manager_id => block_storage_manager_id(params[:id]))
+        when "storage_service_refresh"          then refresh_or_capture_emss("refresh_ems", _("Refresh"))
+        when "cloud_volume_refresh"             then refresh_or_capture_emss("refresh_ems", _("Refresh"))
         when "storage_service_edit"             then javascript_redirect(:action => "edit", :controller => "storage_service", :id => checked_or_params)
 
         # Edit Tags for Network Manager Relationship pages

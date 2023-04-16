@@ -11,20 +11,18 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
           button(
             :host_initiator_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to these Host Initiators'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "hostInitiatorToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to these Host Initiators?"),
-            :options => {:feature => :refresh}
-          ),
-          button(
-            :host_initiator_new,
-            'pficon pficon-add-circle-o fa-lg',
-            t = N_('Define a new host initiator'),
-            t,
-            :klass => ApplicationHelper::Button::HostInitiatorNew
+            N_('Refresh the provider of the selected host initiator(s)'),
+            N_('Refresh the provider'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the provider of the selected host initiator(s)?"),
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'host_initiators'
+            },
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1+'
           ),
           api_button(
             :host_initiator_delete,
