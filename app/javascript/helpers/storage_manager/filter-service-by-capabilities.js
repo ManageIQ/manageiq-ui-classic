@@ -9,6 +9,8 @@ const filterServicesByCapabilities = async(filterArray, providerCapabilities) =>
         Object.keys(resource.capabilities).forEach((key) => {
           capsToFilter.push(getCapabilityUuid(providerCapabilities, key, resource.capabilities[key]));
         });
+        capsToFilter.push('-1'); // to filter-in the N/A option of capabilities
+
         if (arrayIncludes(capsToFilter, filterArray)) {
           valueArray.push(resource);
         }
@@ -17,7 +19,7 @@ const filterServicesByCapabilities = async(filterArray, providerCapabilities) =>
       const options = valueArray.map(({ name, id }) => ({ label: name, value: id }));
 
       if (options.length === 0) {
-        options.unshift({ label: sprintf(__('No storage service with selected capabilities.')), value: '-1' });
+        options.unshift({ label: sprintf(__('Not found')), value: '-1' });
       }
 
       options.unshift({ label: `<${__('Choose')}>`, value: '-2' });

@@ -40,6 +40,8 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
     }
   }, [recordId, storageManagerId]);
 
+  const redirectUrl = storageManagerId ? `/ems_storage/${storageManagerId}?display=cloud_volumes#/` : '/cloud_volume/show_list';
+
   const onSubmit = ({ edit: _edit, ...values }) => {
     if (values.ems_id !== '-1') {
       miqSparkleOn();
@@ -52,7 +54,7 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
             : __('Add of Cloud Volume "%s" has been successfully queued.'),
           values.name,
         );
-        miqRedirectBack(message, undefined, '/cloud_volume/show_list');
+        miqRedirectBack(message, undefined, redirectUrl);
       }).catch(miqSparkleOff);
     }
   };
@@ -64,7 +66,7 @@ const CloudVolumeForm = ({ recordId, storageManagerId }) => {
         : __('Add of new Cloud Volume was cancelled by the user.'),
       initialValues && initialValues.name,
     );
-    miqRedirectBack(message, 'warning', '/cloud_volume/show_list');
+    miqRedirectBack(message, 'warning', redirectUrl);
   };
 
   const validation = (values) => {
