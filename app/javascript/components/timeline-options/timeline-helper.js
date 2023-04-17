@@ -98,7 +98,8 @@ export const buildChartDataObject = (rawData) => {
 export const buildDataTableObject = (pointChoice) => {
   const tableData = [];
   pointChoice.eventsObj.forEach((event) => {
-    // TODO: Different timeline show different data, ensure all necesary data is included
+    // TODO: Different timeline show different data, ensure all necessary data is included
+    const emsUrl = event.ext_management_system.type.includes('StorageManager') ? 'ems_storage' : 'ems_infra/show';
     const eventObj = {
       event_type: event.event_type,
       source: event.source,
@@ -106,7 +107,7 @@ export const buildDataTableObject = (pointChoice) => {
       timestamp: event.timestamp,
       provider: {
         is_link: true,
-        href: (event.ext_management_system === null) ? '' : `/ems_infra/show/${event.ext_management_system.id}`,
+        href: (event.ext_management_system === null) ? '' : `/${emsUrl}/${event.ext_management_system.id}`,
         label: (event.ext_management_system === null) ? '' : event.ext_management_system.name,
       },
       // provider_username: '', // unclear where to get this information from
