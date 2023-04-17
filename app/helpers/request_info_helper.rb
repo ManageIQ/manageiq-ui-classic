@@ -83,8 +83,10 @@ module RequestInfoHelper
     if data[:vms]
       unless clones.include?(edit[:wf].request_type)
         rows += [prov_row_item(data[:none_index], none_cells(edit[:vm_headers].length - 1))]
-        rows += data[:vms].map do |vm|
-          prov_row_item(vm.id.to_s, prov_vm_grid_cells(vm, edit))
+        if data[:vms]
+          rows += data[:vms].map do |vm|
+            prov_row_item(vm.id.to_s, prov_vm_grid_cells(vm, edit))
+          end
         end
       end
     else
@@ -98,8 +100,10 @@ module RequestInfoHelper
     options = edit || data[:options_data]
     headers = prov_grid_host_header(edit, options, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(edit[:host_columns].length - 1))]
-    rows += data[:hosts].map do |host|
-      prov_row_item(host.id.to_s, prov_host_grid_cells(host, options))
+    if data[:hosts]
+      rows += data[:hosts].map do |host|
+        prov_row_item(host.id.to_s, prov_host_grid_cells(host, options))
+      end
     end
     {:headers => headers, :rows => rows, :selected => :placement_host_name, :none_index => data[:none_index]}
   end
@@ -108,8 +112,10 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    rows += data[:pxe_img].map do |pxe_img|
-      prov_row_item(pxe_img.id.to_s, prov_pxe_img_cells(pxe_img))
+    if data[:pxe_img]
+      rows += data[:pxe_img].map do |pxe_img|
+        prov_row_item(pxe_img.id.to_s, prov_pxe_img_cells(pxe_img))
+      end
     end
     {:headers => headers, :rows => rows, :selected => :pxe_image_id, :none_index => data[:none_index]}
   end
@@ -118,8 +124,10 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    rows += data[:iso_img].map do |iso|
-      prov_row_item(iso.id.to_s, prov_iso_img_cells(iso))
+    if data[:iso_img]
+      rows += data[:iso_img].map do |iso|
+        prov_row_item(iso.id.to_s, prov_iso_img_cells(iso))
+      end
     end
     {:headers => headers, :rows => rows, :selected => :iso_image_id, :none_index => data[:none_index]}
   end
@@ -128,8 +136,10 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    rows += data[:datastores].map do |ds|
-      prov_row_item(ds.id.to_s, prov_ds_grid_cells(ds, edit))
+    if data[:datastores]
+      rows += data[:datastores].map do |ds|
+        prov_row_item(ds.id.to_s, prov_ds_grid_cells(ds, edit))
+      end
     end
     selected_key = %w[miq_template service_template vm].include?(edit[:org_controller]) ? :placement_ds_name : :attached_ds
     {:headers => headers, :rows => rows, :selected => selected_key, :none_index => data[:none_index]}
@@ -139,8 +149,10 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    rows += data[:templates].map do |template|
-      prov_row_item(template.id.to_s, prov_template_cells(template))
+    if data[:template]
+      rows += data[:templates].map do |template|
+        prov_row_item(template.id.to_s, prov_template_cells(template))
+      end
     end
     {:headers => headers, :rows => rows, :selected => :customization_template_id, :none_index => data[:none_index]}
   end
@@ -151,8 +163,10 @@ module RequestInfoHelper
     rows = []
     unless data[:spec_required]
       rows += [prov_row_item(data[:none_index], none_cells(count))]
-      rows += data[:vc].map do |vc|
-        prov_row_item(vc.id.to_s, prov_vc_cells(vc))
+      if data[:vc]
+        rows += data[:vc].map do |vc|
+          prov_row_item(vc.id.to_s, prov_vc_cells(vc))
+        end
       end
     end
     {:headers => headers, :rows => rows, :selected => :sysprep_custom_spec, :none_index => data[:none_index]}
@@ -162,8 +176,10 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    rows += data[:window_image].map do |window|
-      prov_row_item(window.id.to_s, prov_window_image_cells(window))
+    if data[:window_image]
+      rows += data[:window_image].map do |window|
+        prov_row_item(window.id.to_s, prov_window_image_cells(window))
+      end
     end
     {:headers => headers, :rows => rows, :selected => :customization_template_id, :none_index => data[:none_index]}
   end
