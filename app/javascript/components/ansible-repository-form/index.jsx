@@ -31,7 +31,7 @@ const AnsibleRepositoryForm = ({ repositoryId }) => {
         });
       miqSparkleOff();
     } else if (isLoading) {
-      API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
+      API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager')
         .then((response) => {
           if (!response.resources.length) {
             add_flash('error', __('Embedded Ansible Provider not found.'));
