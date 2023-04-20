@@ -4,7 +4,7 @@ import { DonutChart, AreaChart } from '@carbon/charts-react';
 import { getConvertedData } from '../helpers';
 import EmptyChart from '../emptyChart';
 
-const UtilizationMemoryDonutChart = ({ data, config }) => {
+const UtilizationMemoryDonutChart = ({ data, config, title }) => {
   const memoryData = data.memory ? data.memory : data.xy_data.memory;
   const donutChartData = [
     {
@@ -18,6 +18,7 @@ const UtilizationMemoryDonutChart = ({ data, config }) => {
   ];
 
   const donutOptions = {
+    title: `${title} - ${config.title}`,
     donut: {
       center: {
         label: __('GB Used'),
@@ -117,6 +118,7 @@ UtilizationMemoryDonutChart.propTypes = {
     availableDataName: PropTypes.string.isRequired,
     sparklineTooltip: PropTypes.func.isRequired,
   }).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default UtilizationMemoryDonutChart;
