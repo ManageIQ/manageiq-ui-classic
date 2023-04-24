@@ -56,11 +56,25 @@ const UtilizationChartGraph = ({
       <div className="card-pf-body">
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 example-trend-container">
-            {processData.cpu.dataAvailable ? <UtilizationDonutChart data={data.metricsData} config={chartConfig[cpuConfig]} />
+            {processData.cpu.dataAvailable
+              ? (
+                <UtilizationDonutChart
+                  data={data.metricsData}
+                  config={chartConfig[cpuConfig]}
+                  title={title}
+                />
+              )
               : <EmptyChart />}
           </div>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 example-trend-container">
-            {processData.memory.dataAvailable ? <UtilizationMemoryDonutChart data={data.metricsData} config={chartConfig[memoryConfig]} />
+            {processData.memory.dataAvailable
+              ? (
+                <UtilizationMemoryDonutChart
+                  data={data.metricsData}
+                  config={chartConfig[memoryConfig]}
+                  title={title}
+                />
+              )
               : <EmptyChart />}
           </div>
         </div>
