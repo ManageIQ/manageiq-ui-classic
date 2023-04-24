@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const { env, publicPath } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
 const nodeModules = '../../node_modules';
-const appBasePath = (env.NODE_ENV === 'production') ? '/packs/' : '../../assets/images/layout/';// Need different paths for developement and prod envs.
+const appBasePath = '../../assets/images/layout/';
 
 let babelOptions = merge(babelrc, {
   babelrc: false,
@@ -67,11 +67,12 @@ module.exports = [
       {
         loader: 'sass-loader',
         options: {
+          sourceMap: true,
           prependData: () => {
             return `$img-base-path: '${appBasePath}';`;// Path variable for login and about modal images.
           },
           sassOptions: {
-            sourceMap: true,
+            outputStyle: 'compressed',
             includePaths: [
               `${nodeModules}/bootstrap-sass/assets/stylesheets`,
               `${nodeModules}/bootstrap/scss`,
