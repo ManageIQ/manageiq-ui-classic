@@ -17,11 +17,11 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def self.model
-    ManageIQ::Providers::EmbeddedAutomationManager::Authentication
+    ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Authentication
   end
 
   def display_repositories
-    nested_list(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+    nested_list(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource)
   end
 
   def show_searchbar?
@@ -37,7 +37,7 @@ class AnsibleCredentialController < ApplicationController
     when 'ansible_credential_tag'
       tag(self.class.model)
     when "ansible_repository_tag" # repositories from nested list
-      tag(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+      tag(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource)
     end
   end
 
@@ -50,7 +50,7 @@ class AnsibleCredentialController < ApplicationController
 
   def edit
     assert_privileges('embedded_automation_manager_credentials_edit')
-    auth = ManageIQ::Providers::EmbeddedAutomationManager::Authentication.find(params[:id].to_i)
+    auth = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Authentication.find(params[:id].to_i)
     drop_breadcrumb(:name => _("Edit a Credential \"%{name}\"") % {:name => auth.name},
                     :url  => "/ansible_credential/edit/#{params[:id]}")
     @in_a_form = true
