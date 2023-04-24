@@ -108,14 +108,14 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :klass       => ApplicationHelper::Button::VmHtml5Console
           ),
           included_class.button(
-            :vm_native_console,
+            :vm_management_console,
             'pficon pficon-screen fa-lg',
             N_('Open a management console for this VM'),
             N_('Management Console'),
             :keepSpinner => true,
             :url         => "management_console",
             :klass       => ApplicationHelper::Button::GenericFeatureButton,
-            :options     => {:feature => :native_console}
+            :options     => {:feature => :management_console}
           ),
         ]
       ),
