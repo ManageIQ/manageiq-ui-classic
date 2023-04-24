@@ -27,7 +27,13 @@ const HeatChart = ({
         <h2 className="card-pf-title">{title}</h2>
       </div>
       <div className="card-pf-body">
-        <HeatMapChartGraph data={data.vms} dataPoint1={dataPoint1} dataPoint2={dataPoint2} dataPointAvailable={dataPointAvailable} />
+        <HeatMapChartGraph
+          data={data.vms}
+          dataPoint1={dataPoint1}
+          dataPoint2={dataPoint2}
+          dataPointAvailable={dataPointAvailable}
+          title={title}
+        />
       </div>
     </div>
   );

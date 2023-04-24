@@ -4,7 +4,7 @@ import { DonutChart, AreaChart } from '@carbon/charts-react';
 import { getConvertedData } from '../helpers';
 import EmptyChart from '../emptyChart';
 
-const UtilizationDonutChart = ({ data, config }) => {
+const UtilizationDonutChart = ({ data, config, title }) => {
   const cpuData = data.cpu ? data.cpu : data.xy_data.cpu;
   const donutChartData = [
     {
@@ -18,6 +18,7 @@ const UtilizationDonutChart = ({ data, config }) => {
   ];
 
   const donutOptions = {
+    title: `${title} - ${config.title}`,
     donut: {
       center: {
         label: __('Cores Used'),
@@ -119,6 +120,7 @@ UtilizationDonutChart.propTypes = {
     availableDataName: PropTypes.string.isRequired,
     sparklineTooltip: PropTypes.func.isRequired,
   }).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default UtilizationDonutChart;

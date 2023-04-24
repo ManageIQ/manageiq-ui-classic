@@ -5,7 +5,7 @@ import { getHeatMapData } from '../helpers';
 import EmptyChart from '../emptyChart';
 
 const HeatMapChartGraph = ({
-  data, dataPoint1, dataPoint2, dataPointAvailable,
+  data, dataPoint1, dataPoint2, dataPointAvailable, title,
 }) => {
   const heatmapCpuData = getHeatMapData(data[dataPoint1]);
   const heatmapMemoryData = getHeatMapData(data[dataPoint2]);
@@ -49,6 +49,7 @@ const HeatMapChartGraph = ({
   };
 
   const heatmapCpuOptions = {
+    title: sprintf(__('%s - CPU'), title),
     axes: {
       bottom: {
         visible: false,
@@ -83,6 +84,7 @@ const HeatMapChartGraph = ({
   };
 
   const heatmapMemoryOptions = {
+    title: sprintf(__('%s - Memory'), title),
     axes: {
       bottom: {
         visible: false,
@@ -156,6 +158,7 @@ HeatMapChartGraph.propTypes = {
   dataPoint1: PropTypes.string.isRequired,
   dataPoint2: PropTypes.string.isRequired,
   dataPointAvailable: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default HeatMapChartGraph;
