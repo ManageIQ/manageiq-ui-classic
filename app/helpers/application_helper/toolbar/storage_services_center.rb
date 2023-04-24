@@ -26,6 +26,19 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
             t,
             :klass => ApplicationHelper::Button::StorageServiceNew
           ),
+          button(
+            :storage_service_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit selected Storage Service'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :enabled      => false,
+            :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
+            :options      => {:feature      => :update,
+                              :parent_class => "StorageService"},
+            :onwhen       => '1'
+          ),
           api_button(
             :storage_service_delete,
             nil,

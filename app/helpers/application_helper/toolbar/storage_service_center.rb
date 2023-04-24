@@ -19,6 +19,16 @@ class ApplicationHelper::Toolbar::StorageServiceCenter < ApplicationHelper::Tool
             :confirm => N_("Refresh relationships and power states for all items related to this Storage Service?"),
             :options => {:feature => :refresh}
           ),
+          button(
+            :storage_service_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit this Storage Service'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :update}
+          ),
           api_button(
             :storage_service_delete,
             nil,

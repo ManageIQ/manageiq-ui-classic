@@ -23,9 +23,14 @@ const storageManagers = (supports) =>
 const getProviderCapabilities = async(providerId) => API.get(`/api/providers/${providerId}?attributes=capabilities`)
   .then((result) => result.capabilities);
 
+const filterSelectedResources = (selectedResources, compliantResources) => {
+  const compliantResourcesIds = compliantResources.map((compliantResource) => compliantResource.value);
+  return selectedResources.filter((selectedResource) => compliantResourcesIds.includes(selectedResource.value));
+};
+
 const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
   const idx = fields.findIndex((field) => field.name === 'required_capabilities');
-  const supports = edit ? 'supports_storage_service' : 'supports_storage_service_create';
+  const supports = edit ? 'supports_storage_services' : 'supports_storage_service_create';
   let providerCapabilities;
 
   return ({
@@ -53,8 +58,8 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
           },
           {
             type: 'pattern',
-            pattern: '^[a-zA-Z0-9-_. ]*$',
-            message: __('The name can contain letters, numbers, spaces, periods, dashes and underscores'),
+            pattern: '^[a-zA-Z0-9-_. :]*$',
+            message: __('The name can contain letters, numbers, spaces, periods, colons, dashes and underscores'),
           },
           {
             type: 'pattern',
@@ -94,7 +99,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         condition: { when: 'compression', isNotEmpty: true },
         onInputChange: () => null,
         isRequired: true,
-        helperText: __('Select storage resources to attach to the new service. Volumes for this service will be created on these resources.'),
+        helperText: __('Select storage resources to attach to the service. Volumes for this service will be created on these resources.'),
         validate: [
           { type: validatorTypes.REQUIRED },
           { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
@@ -103,6 +108,7 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         resolveProps: (_props, _field, { getState }) => {
           const stateValues = getState().values;
           const emsId = stateValues.ems_id;
+          const selectedResources = stateValues.storage_resource_id ? stateValues.storage_resource_id : [];
           const capabilityValues = [];
 
           const capabilityNames = fields.find((object) => object.id === 'required_capabilities')
@@ -113,7 +119,10 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
             key: JSON.stringify(capabilityValues),
             loadOptions: async() => {
               providerCapabilities = await getProviderCapabilities(emsId);
-              return filterResourcesByCapabilities(capabilityValues, providerCapabilities);
+              const filteredResources = await filterResourcesByCapabilities(capabilityValues, providerCapabilities);
+              stateValues.storage_resource_id = filterSelectedResources(selectedResources, filteredResources);
+
+              return filteredResources;
             },
           };
         },

@@ -29,9 +29,15 @@ const StorageServiceForm = ({ recordId, storageManagerId }) => {
 
   useEffect(() => {
     if (recordId) {
-      API.get(`/api/storage_services/${recordId}`).then((initialValues) => {
-        API.options(`/api/storage_services/${recordId}?ems_id=${initialValues.ems_id}`).then(loadSchema({ initialValues, isLoading: false }));
-      });
+      API.get(`/api/storage_services/${recordId}?attributes=storage_resources`)
+        .then((initialValues) => {
+          initialValues.storage_resource_id = [];
+          initialValues.storage_resources.forEach((resource) =>
+            initialValues.storage_resource_id.push({ label: resource.name, value: resource.id }));
+
+          API.options(`/api/storage_services/${recordId}?ems_id=${initialValues.ems_id}`)
+            .then(loadSchema({ initialValues, isLoading: false }));
+        });
     }
     if (storageManagerId) {
       API.options(`/api/storage_services?ems_id=${storageManagerId}`)
