@@ -15,20 +15,24 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
   end
 
   def x_get_tree_ns_kids(object, count_only)
-    if object.respond_to?(:ae_namespaces) && filter_ae_objects(object.ae_namespaces).size == 1
+    namespaces = filter_ae_objects(object.try(:ae_namespaces))
+    classes = filter_ae_objects(object.try(:ae_classes))
+
+    if namespaces.size == 1
       open_node("aen-#{object.id}")
-      open_node("aen-#{object.ae_namespaces.first.id}")
+      open_node("aen-#{namespaces.first.id}")
     end
 
-    if object.respond_to?(:ae_classes) && filter_ae_objects(object.ae_classes).size == 1
+    if classes.size == 1
       open_node("aen-#{object.id}")
-      open_node("aec-#{object.ae_classes.first.id}")
+      open_node("aec-#{classes.first.id}")
     end
 
-    count_only_or_objects(count_only, filter_ae_objects(object.ae_namespaces + object.ae_classes), %i[display_name name])
+    count_only_or_objects(count_only, namespaces + classes, %i[display_name name])
   end
 
   def filter_ae_objects(objects)
+    return [] if objects.blank?
     return objects unless @sb[:cached_waypoint_ids]
     klass_name = objects.first.class.name
     objects.select { |obj| @sb[:cached_waypoint_ids].include?("#{klass_name}::#{obj.id}") }
