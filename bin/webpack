@@ -20,9 +20,20 @@ unless File.exist?(WEBPACK_CONFIG)
   exit!
 end
 
+# HACK: Check if --openssl-legacy-provider flag is available and use it.
+#   If nodejs is compiled with openssl 3, then this flag is available
+#   If nodejs is compiled with openssl 1.1, then this flag is not available
+#     and will fail if we hardcode it into NODE_OPTIONS
+#
+# This can be removed once we upgrade webpack as then we don't need the
+# flag anymore.
+has_legacy_openssl = system('node --help | grep -qs "\\--openssl-legacy-provider"')
+node_options = "--max_old_space_size=4096"
+node_options << " --openssl-legacy-provider" if has_legacy_openssl
+
 newenv  = {
   "NODE_PATH"    => NODE_MODULES_PATH.shellescape,
-  "NODE_OPTIONS" => "--max_old_space_size=4096 --openssl-legacy-provider"
+  "NODE_OPTIONS" => node_options
 }
 cmdline = ["yarn", "run", "webpack", "--config", WEBPACK_CONFIG] + ARGV
 
