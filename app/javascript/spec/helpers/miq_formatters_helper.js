@@ -1,4 +1,4 @@
-global.window = global;
+global.window ??= global;
 window._ = require('lodash');
 window.sprintf = require('sprintf-js').sprintf;
 
