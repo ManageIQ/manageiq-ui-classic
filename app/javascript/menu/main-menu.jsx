@@ -130,7 +130,10 @@ export const MainMenu = ({
       <Navbar
         isSideNavExpanded={expanded}
         open={openMenu}
-        onClickSideNavExpand={() => setExpanded(!expanded)}
+        onClickSideNavExpand={() => {
+          if (expanded) setSection(null);
+          setExpanded(!expanded);
+        }}
         applianceName={applianceName}
         currentUser={currentUser}
         brandUrl={brandUrl}
