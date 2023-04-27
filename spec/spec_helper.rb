@@ -8,7 +8,7 @@ require 'rails-controller-testing'
 require 'rspec/rails'
 
 Rails::Controller::Testing.install
-require 'manageiq-ui-classic'
+require 'manageiq/ui/classic'
 
 support_path = Pathname.new(__dir__).join('support')
 Dir[support_path.join("**/*.rb")].each { |f| require f }

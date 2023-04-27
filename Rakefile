@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'bundler/gem_tasks'
 require 'English'
 
-require 'manageiq-ui-classic'
+require 'manageiq/ui/classic'
 ManageIQ::UI::Classic::Engine.load_tasks
 
 begin
