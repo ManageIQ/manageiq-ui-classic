@@ -1,7 +1,7 @@
 -# wf					The workflow object currently in use
 -# dialog			The name (symbol) of the selected dialog
 - if (@options && @options[:wf]) || (@edit && @edit[:wf])
-  #prov_wf_div
+  #prov_wf_div.miq_custom_tab_wrapper
     - options = @options || @edit[:new]
     - wf = options[:wf] || @edit[:wf]
     - tabname = (@tabactive || options[:current_tab_key]).to_s

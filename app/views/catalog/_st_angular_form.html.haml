@@ -1,7 +1,8 @@
 - @angular_form = true
-= react('MiqCustomTab', {:containerId => 'catalog-tabs-generic-edit',
-                         :tabLabels => catalog_tab_edit_generic_configuration,
-                         :type => 'CATALOG_EDIT'})
+.miq_custom_tab_wrapper
+  = react('MiqCustomTab', {:containerId => 'catalog-tabs-generic-edit',
+                          :tabLabels => catalog_tab_edit_generic_configuration,
+                          :type => 'CATALOG_EDIT'})
 
 
 %form.form-horizontal#form_div{"name" => "angularForm",
