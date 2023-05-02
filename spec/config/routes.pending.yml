@@ -1460,3 +1460,12 @@ VmOrTemplateController:
 - x_show
 VolumeMappingController:
 - index
+WorkflowController:
+- report_data
+- index
+WorkflowCredentialController:
+- report_data
+- index
+WorkflowRepositoryController:
+- report_data
+- index

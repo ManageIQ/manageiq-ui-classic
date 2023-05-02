@@ -188,6 +188,7 @@ module Menu
           automation_manager_menu_section,
           configuration_menu_section,
           ansible_menu_section,
+          workflow_menu_section,
           automate_menu_section,
         ])
       end
@@ -207,6 +208,16 @@ module Menu
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository/show_list'),
           Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential/show_list'),
         ])
+      end
+
+      def workflow_menu_section
+        if Settings.prototype.ems_workflows.enabled
+          Menu::Section.new(:embedded_workflow_automation_manager, N_("Embedded Workflow"), nil, [
+            Menu::Item.new('embedded_workflow',            N_('Workflows'),    'embedded_workflow',            {:feature => 'embedded_workflow_view', :any => true},            '/workflow/show_list'),
+            Menu::Item.new('embedded_workflow_repository', N_('Repositories'), 'embedded_workflow_repository', {:feature => 'embedded_workflow_repository_view', :any => true}, '/workflow_repository/show_list'),
+            Menu::Item.new('embedded_workflow_credential', N_('Credentials'),  'embedded_workflowcredentials', {:feature => 'embedded_workflow_credential_view', :any => true}, '/workflow_credential/show_list'),
+          ])
+        end
       end
 
       def automate_menu_section

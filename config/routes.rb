@@ -3182,6 +3182,28 @@ Rails.application.routes.draw do
                snap_post
     },
 
+
+    :workflow => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
+    :workflow_credential => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
+    :workflow_repository => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
     :firmware_registry => {
       :get => %w[
         download_data
