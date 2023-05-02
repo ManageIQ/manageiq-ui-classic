@@ -32,6 +32,7 @@ class GtlFormatter
     'archived'                  => 'fa fa-archive',
     'orphaned'                  => 'ff ff-orphaned',
     'retired'                   => 'fa fa-clock-o',
+    'non_operational'           => 'pficon pficon-exclamation',
     'suspended'                 => 'pficon pficon-asleep',
     'standby'                   => 'pficon pficon-asleep',
     'paused'                    => 'pficon pficon-asleep',
