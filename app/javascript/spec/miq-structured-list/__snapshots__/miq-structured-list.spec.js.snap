@@ -2478,7 +2478,7 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
   >
     <FeatureToggle(StructuredListWrapper)
       ariaLabel="Structured list"
-      className="miq-structured-list table_list_view"
+      className="miq-structured-list bordered-list table_list_view"
     >
       <FeatureToggle(StructuredListBody)>
         <FeatureToggle(StructuredListRow)

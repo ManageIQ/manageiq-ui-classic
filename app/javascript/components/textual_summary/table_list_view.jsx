@@ -30,14 +30,13 @@ export default function TableListView(props) {
 
   /** Function to generate rows for structured list. */
   const miqListRows = (list) => {
-    const data = [];
-    list.map((item) => data.push({ ...item, label: item.name }));
-    return data;
+    const headerKeys = props.headers.map((item) => (item.key));
+    return list.map((item) => (headerKeys.map((header) => item[header])));
   };
 
   return (
     <MiqStructuredList
-      headers={headers}
+      headers={headers.map((item) => item.label)}
       rows={miqListRows(values)}
       title={title}
       mode="table_list_view"
@@ -48,7 +47,7 @@ export default function TableListView(props) {
 
 TableListView.propTypes = {
   title: PropTypes.string.isRequired,
-  headers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  headers: PropTypes.arrayOf(PropTypes.shape({ key: PropTypes.string, label: PropTypes.string })).isRequired,
   values: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClick: PropTypes.func.isRequired,
 };

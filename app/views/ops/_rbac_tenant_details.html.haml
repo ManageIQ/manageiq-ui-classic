@@ -1,7 +1,7 @@
 = render :partial => 'layouts/textual_groups_generic'
 #tenant_info
   .row
-    .col-md-12.col-lg-10
+    .col-md-12.col-lg-12
       = react 'TableListViewWrapper', TextualListview.data(textual_tenant_quota_allocations)
       %p
         = _("Note: Total quota can be restricted by quotas defined at upper levels")
