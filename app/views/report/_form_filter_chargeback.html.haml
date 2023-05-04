@@ -1,5 +1,5 @@
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
-- if %w(MeteringVm ChargebackVm).include?(@edit[:new][:model])
+- if %w(ChargebackVm).include?(@edit[:new][:model])
   %h3
     = _('Chargeback Resources')
   .form-horizontal
@@ -45,17 +45,14 @@
   - if @edit[:cb_users]
     .form-group
       %label.control-label.col-md-2
-        - if @edit[:new][:model].include?('Metering')
-          = _('Show usage by')
-        - else
-          = _('Show Costs by')
+        = _('Show Costs by')
       .col-md-8
         - opts = [["<#{_('Choose')}>", nil]]
-        - if @edit[:new][:model] == "ChargebackContainerProject" || @edit[:new][:model] == "MeteringContainerProject"
+        - if @edit[:new][:model] == "ChargebackContainerProject"
           - opts += [[ui_lookup(:model => @edit[:new][:cb_model]), "entity"], ["%s Tag" % current_tenant.name, "tag"]]
-        - elsif @edit[:new][:model] == "ChargebackVm" || @edit[:new][:model] == "MeteringVm"
+        - elsif @edit[:new][:model] == "ChargebackVm"
           - opts += [[_('Owner'), "owner"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"], [_('Tenant'), "tenant"]]
-        - elsif @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
+        - elsif @edit[:new][:model] == "ChargebackContainerImage"
           - opts += [[ui_lookup(:model => @edit[:new][:cb_model]), "entity"], ["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"]]
         - elsif @edit[:new][:model] == "ChargebackConfiguredSystem"
           - opts += [["%{tenant_name} Tag" % {:tenant_name => current_tenant.name}, "tag"]]
@@ -157,9 +154,9 @@
       = _('Group by')
     .col-md-8
       - opts = [[(_("Date and %{chargeback_model}")  % {:chargeback_model => @edit[:new][:cb_model]} ), "date"], ["#{_('Date Only')}", "date-only"]]
-      - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
-      - opts += [["#{_('Project')}", "project"], [_('Label'), 'label'], ["#{_('Tag')}", "tag"]] if @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
-      - opts += [["#{_('Tenant')}", "tenant"]] if %w(ChargebackVm MeteringVm).include?(@edit[:new][:model])
+      - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage"
+      - opts += [["#{_('Project')}", "project"], [_('Label'), 'label'], ["#{_('Tag')}", "tag"]] if @edit[:new][:model] == "ChargebackContainerImage"
+      - opts += [["#{_('Tenant')}", "tenant"]] if %w(ChargebackVm).include?(@edit[:new][:model])
       - selected_group_by_option = @edit[:new][:cb_groupby] == 'vm' ? 'date' : @edit[:new][:cb_groupby] # legacy reports can have 'vm', TODO: remove after migration
       = select_tag("cb_groupby", options_for_select(opts, selected_group_by_option), :class => "selectpicker")
       :javascript
@@ -197,10 +194,7 @@
 .form-horizontal
   .form-group
     %label.control-label.col-md-2
-      - if @edit[:new][:model].include?('Metering')
-        = _('Show usage by')
-      - else
-        = _('Show Costs by')
+      = _('Show Costs by')
     .col-md-8
       = select_tag("cb_interval",
         options_for_select([[_("Day"), "daily"], [_("Week"), "weekly"], [_("Month"), "monthly"]], @edit[:new][:cb_interval]),

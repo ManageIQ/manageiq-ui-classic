@@ -185,7 +185,7 @@ module ReportController::Reports::Editor
     build_tabs
 
     get_time_profiles # Get time profiles list (global and user specific)
-    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model]) && [ChargebackContainerImage, ChargebackContainerProject, MeteringContainerImage, MeteringContainerProject].include?(@edit[:new][:model].safe_constantize)
+    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model]) && [ChargebackContainerImage, ChargebackContainerProject].include?(@edit[:new][:model].safe_constantize)
     refresh_chargeback_filter_tab if Chargeback.db_is_chargeback?(@edit[:new][:model])
     case @sb[:miq_tab].split("_")[1]
     when "1" # Select columns
@@ -1280,7 +1280,7 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_interval_size] = options[:interval_size]
       @edit[:new][:cb_end_interval_offset] = options[:end_interval_offset]
       @edit[:new][:cb_groupby] = options[:groupby]
-      cb_entities_by_provider if [ChargebackContainerImage, ChargebackContainerProject, MeteringContainerImage, MeteringContainerProject].include?(@rpt.db.safe_constantize)
+      cb_entities_by_provider if [ChargebackContainerImage, ChargebackContainerProject].include?(@rpt.db.safe_constantize)
     end
 
     # Build trend limit cols array
